@@ -242,7 +242,7 @@
 
       /* gutter */
       .gutter {
-        width: 50px;
+        width: 64px;
         flex-shrink: 0;
         background: var(--bg);
         padding: 8px 0 80px;
@@ -251,11 +251,53 @@
       .gutter div {
         min-height: 19px;
         line-height: 19px;
-        text-align: right;
-        padding-right: 12px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-end;
+        padding-right: 8px;
         font-size: 12px;
         color: var(--lnum);
         user-select: none;
+      }
+      .fold-icon {
+        width: 16px;
+        height: 19px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        color: transparent;
+        cursor: default;
+        flex-shrink: 0;
+        border-radius: 3px;
+        margin-right: 2px;
+        transition: color 0.1s, background 0.1s;
+      }
+      .fold-icon.foldable {
+        color: #4d4d4d;
+        cursor: pointer;
+      }
+      .fold-icon.foldable:hover {
+        color: #c5c5c5;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .fold-icon.collapsed {
+        color: #c5c5c5;
+      }
+      .fold-hint {
+        display: none;
+        color: #858585;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        padding: 0 5px;
+        font-size: 11px;
+        cursor: pointer;
+        margin-left: 4px;
+        vertical-align: middle;
+      }
+      .fold-hint:hover {
+        color: #ccc;
+        border-color: #666;
       }
 
       /* code area */
@@ -369,35 +411,101 @@
       }
 
       @media print {
+        @page {
+          size: A4 portrait;
+          margin: 14mm 10mm 14mm 10mm;
+        }
+
+        /* force color printing */
+        * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        /* hide all UI chrome */
         .menubar,
         .titlebar,
-        .statusbar {
-          display: none;
+        .statusbar,
+        .fold-icon,
+        .fold-hint,
+        .badge {
+          display: none !important;
         }
+
+        html,
         body {
-          background: #fff;
-          color: #000;
+          background: #fff !important;
+          color: #1e1e1e !important;
+          font-size: 11px !important;
+          line-height: 17px !important;
         }
-        .k {
-          color: #0000ff;
+
+        /* editor */
+        .editor {
+          display: flex;
         }
-        .s {
-          color: #a31515;
+
+        /* gutter */
+        .gutter {
+          width: 44px !important;
+          background: #f7f7f7 !important;
+          border-right: 1px solid #e0e0e0 !important;
+          padding-bottom: 0 !important;
         }
-        .n {
-          color: #09885a;
+
+        .gutter div {
+          min-height: 17px !important;
+          line-height: 17px !important;
+          font-size: 10px !important;
+          color: #bbb !important;
+          height: auto !important;
         }
-        .b {
-          color: #0000ff;
+
+        /* code */
+        .code {
+          overflow: visible !important;
+          padding-right: 0 !important;
+          padding-bottom: 0 !important;
         }
-        .c {
-          color: #008000;
+
+        .l {
+          min-height: 17px !important;
+          break-inside: avoid;
         }
+
+        .l:hover {
+          background: none !important;
+        }
+
+        /* reveal all folded lines */
+        .l,
+        .gutter div {
+          display: flex !important;
+        }
+
+        .t {
+          white-space: pre-wrap !important;
+          word-break: break-word !important;
+          color: #1e1e1e !important;
+        }
+
+        /* indent guides off */
         .i::after {
           display: none;
         }
-        .l:hover {
-          background: none;
+
+        /* syntax colors – VS Code light theme palette */
+        .k  { color: #0070c1 !important; }
+        .s  { color: #a31515 !important; }
+        .n  { color: #098658 !important; }
+        .b  { color: #0000ff !important; }
+        .nl { color: #0000ff !important; }
+        .c  { color: #008000 !important; font-style: italic; }
+        .p  { color: #444    !important; }
+
+        a {
+          color: inherit !important;
+          text-decoration: none !important;
         }
       }
     </style>
@@ -1094,18 +1202,64 @@
       const C = document.getElementById("C");
       const lnEl = document.getElementById("ln");
 
+      // Compute fold regions: openIdx -> closeIdx
+      function computeFolds() {
+        const folds = {};
+        const stack = [];
+        L.forEach(([depth, html], idx) => {
+          const text = html.replace(/<[^>]*>/g, "").trim();
+          if (!text) return;
+          const firstChar = text[0];
+          const lastMeaningful = text.replace(/[,\s]+$/, "").slice(-1);
+          if (firstChar === "}" || firstChar === "]") {
+            for (let i = stack.length - 1; i >= 0; i--) {
+              if (stack[i].depth === depth) {
+                folds[stack[i].idx] = idx;
+                stack.splice(i, 1);
+                break;
+              }
+            }
+          }
+          if (lastMeaningful === "{" || lastMeaningful === "[") {
+            stack.push({ idx, depth });
+          }
+        });
+        return folds;
+      }
+
+      const FOLDS = computeFolds();
+      const foldState = {};
+      Object.keys(FOLDS).forEach((k) => (foldState[k] = "open"));
+
       let gHTML = "";
       let cHTML = "";
 
+      // For empty lines, infer guide depth from surrounding non-empty lines
+      function guideDepth(idx) {
+        const [depth, content] = L[idx];
+        if (content !== "") return depth;
+        let prev = 0, next = 0;
+        for (let i = idx - 1; i >= 0; i--) { if (L[i][1] !== "") { prev = L[i][0]; break; } }
+        for (let i = idx + 1; i < L.length; i++) { if (L[i][1] !== "") { next = L[i][0]; break; } }
+        return (prev > 0 && next > 0) ? Math.min(prev, next) : Math.max(prev, next);
+      }
+
       L.forEach(([depth, content], idx) => {
         const num = idx + 1;
-
-        // indent spans
+        const gd = guideDepth(idx);
         let indents = "";
-        for (let d = 0; d < depth; d++) indents += `<span class="i"></span>`;
+        for (let d = 0; d < gd; d++) indents += `<span class="i"></span>`;
 
-        gHTML += `<div data-n="${num}">${num}</div>`;
-        cHTML += `<div class="l" data-n="${num}">${indents}<span class="t">${content}</span></div>`;
+        const isFoldable = FOLDS[idx] !== undefined;
+        const foldBtn = isFoldable
+          ? `<span class="fold-icon foldable" data-open="${idx}">▾</span>`
+          : `<span class="fold-icon"></span>`;
+        const foldHint = isFoldable
+          ? `<span class="fold-hint" data-open="${idx}">…</span>`
+          : "";
+
+        gHTML += `<div data-n="${num}" data-gi="${idx}">${foldBtn}${num}</div>`;
+        cHTML += `<div class="l" data-n="${num}" data-li="${idx}">${indents}<span class="t">${content}${foldHint}</span></div>`;
       });
 
       G.innerHTML = gHTML;
@@ -1121,6 +1275,40 @@
 
       syncGutterHeights();
       new ResizeObserver(syncGutterHeights).observe(C);
+
+      function toggleFold(openIdx) {
+        const closeIdx = FOLDS[openIdx];
+        const collapsing = foldState[openIdx] === "open";
+        for (let i = openIdx + 1; i < closeIdx; i++) {
+          const cl = C.querySelector(`[data-li="${i}"]`);
+          const gl = G.querySelector(`[data-gi="${i}"]`);
+          const d = collapsing ? "none" : "";
+          if (cl) cl.style.display = d;
+          if (gl) gl.style.display = d;
+        }
+        const icon = G.querySelector(`.fold-icon[data-open="${openIdx}"]`);
+        const hint = C.querySelector(`.fold-hint[data-open="${openIdx}"]`);
+        if (collapsing) {
+          foldState[openIdx] = "closed";
+          if (icon) { icon.textContent = "▸"; icon.classList.add("collapsed"); }
+          if (hint) hint.style.display = "";
+        } else {
+          foldState[openIdx] = "open";
+          if (icon) { icon.textContent = "▾"; icon.classList.remove("collapsed"); }
+          if (hint) hint.style.display = "none";
+        }
+        syncGutterHeights();
+      }
+
+      G.addEventListener("click", (e) => {
+        const btn = e.target.closest(".fold-icon.foldable");
+        if (btn) toggleFold(parseInt(btn.dataset.open));
+      });
+
+      C.addEventListener("click", (e) => {
+        const hint = e.target.closest(".fold-hint");
+        if (hint) toggleFold(parseInt(hint.dataset.open));
+      });
 
       // sync line hover between gutter and code
       C.addEventListener("mousemove", (e) => {
