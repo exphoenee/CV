@@ -1,0 +1,15 @@
+# Screenshots and temp files
+*.png
+*.jpg
+*.jpeg
+
+# Playwright output
+.playwright-mcp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"\\(Get-Content 'c:\\\\CV\\\\cv.html' -Raw\\) -replace '\\(?m\\)</span\\\\s*\\\\n\\(\\\\s*\\)><span>[^<]+</span>', '</span>' | Set-Content 'c:\\\\CV\\\\cv.html' -NoNewline\")",
+      "Bash(python3 -c ' *)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "Bash(python3 -m http.server 8765)"
+    ]
+  }
+}
