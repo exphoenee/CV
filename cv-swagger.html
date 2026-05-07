@@ -1453,21 +1453,29 @@
       <h3>Contact Viktor</h3>
       <button class="hire-close" id="hire-close" type="button">&#x2715;</button>
     </div>
-    <form action="https://formspree.io/f/ABCDE" method="POST">
+    <div data-fs-success style="display:none;padding:40px 20px;text-align:center">
+      <p style="color:#49cc90;font-weight:700;font-size:16px;margin:0 0 4px">Thanks for reaching out!</p>
+      <p style="color:#3b4151;font-size:14px;margin:0">Your message was sent successfully. I'll get back to you soon.</p>
+    </div>
+    <div data-fs-error style="display:none;padding:8px 20px 0;color:#d9534f;font-size:13px"></div>
+    <form id="hire-form">
       <input type="hidden" name="_subject" id="hire-subject" value="Hire inquiry from CV">
       <div class="hire-field">
         <label for="hire-name">Your name</label>
-        <input id="hire-name" type="text" name="name" required placeholder="Jane Smith">
+        <input id="hire-name" type="text" name="name" required placeholder="Jane Smith" data-fs-field>
+        <span data-fs-error="name" style="color:#d9534f;font-size:12px"></span>
       </div>
       <div class="hire-field">
         <label for="hire-email">Your email</label>
-        <input id="hire-email" type="email" name="email" required placeholder="your@email.com">
+        <input id="hire-email" type="email" name="email" required placeholder="your@email.com" data-fs-field>
+        <span data-fs-error="email" style="color:#d9534f;font-size:12px"></span>
       </div>
       <div class="hire-field">
         <label for="hire-message">Message</label>
-        <textarea id="hire-message" name="message" required rows="5" placeholder="Hi Viktor, we'd like to..."></textarea>
+        <textarea id="hire-message" name="message" required rows="5" placeholder="Hi Viktor, we'd like to..." data-fs-field></textarea>
+        <span data-fs-error="message" style="color:#d9534f;font-size:12px"></span>
       </div>
-      <button type="submit" class="hire-submit">Send</button>
+      <button type="submit" class="hire-submit" data-fs-submit-btn>Send</button>
     </form>
   </div>
 </div>
@@ -1490,6 +1498,13 @@
 
     function openModal(subject) {
       document.getElementById('hire-subject').value = subject || 'Hire inquiry from CV';
+      var form = document.getElementById('hire-form');
+      form.reset();
+      form.style.display = '';
+      var fsSuccess = document.querySelector('#hire-modal [data-fs-success]');
+      if (fsSuccess) fsSuccess.style.display = 'none';
+      var fsError = document.querySelector('#hire-modal [data-fs-error]');
+      if (fsError) fsError.style.display = 'none';
       modal.style.display = '';
     }
 
@@ -1516,6 +1531,10 @@
       if (e.key === 'Escape') closeModal();
     });
   })();
+
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#hire-form', formId: 'mrejlned' });
 </script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>

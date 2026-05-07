@@ -372,142 +372,55 @@
         color: inherit;
         text-decoration: none;
       }
-      a:hover {
-        text-decoration: underline;
-      }
-
-      .badge {
-        display: inline-block;
-        background: var(--accent);
-        color: #fff;
-        font-size: 10px;
-        padding: 0 6px;
-        border-radius: 3px;
-        margin-left: 10px;
-        vertical-align: 2px;
-        letter-spacing: 0.04em;
-        line-height: 16px;
-        font-style: normal;
-      }
-
-      /* statusbar */
-      .statusbar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: var(--accent);
-        color: #fff;
-        font-size: 12px;
-        height: 22px;
-        display: flex;
-        align-items: center;
-        padding: 0 14px;
-        gap: 20px;
-        z-index: 200;
-      }
-      .statusbar .r {
-        margin-left: auto;
-      }
-
-      @media print {
-        @page {
-          size: A4 portrait;
-          margin: 14mm 10mm 14mm 10mm;
-        }
-
-        /* force color printing */
-        * {
-          -webkit-print-color-adjust: exact !important;
-          print-color-adjust: exact !important;
-        }
-
-        /* hide all UI chrome */
-        .menubar,
-        .titlebar,
-        .statusbar,
-        .fold-icon,
-        .fold-hint,
-        .badge {
-          display: none !important;
-        }
-
-        html,
-        body {
-          background: #fff !important;
-          color: #1e1e1e !important;
-          font-size: 11px !important;
-          line-height: 17px !important;
-        }
-
-        /* editor */
-        .editor {
-          display: flex;
-        }
-
-        /* gutter */
-        .gutter {
-          width: 44px !important;
-          background: #f7f7f7 !important;
-          border-right: 1px solid #e0e0e0 !important;
-          padding-bottom: 0 !important;
-        }
-
-        .gutter div {
-          min-height: 17px !important;
-          line-height: 17px !important;
-          font-size: 10px !important;
-          color: #bbb !important;
-          height: auto !important;
-        }
-
-        /* code */
-        .code {
-          overflow: visible !important;
-          padding-right: 0 !important;
-          padding-bottom: 0 !important;
-        }
-
-        .l {
-          min-height: 17px !important;
-          break-inside: avoid;
-        }
-
-        .l:hover {
-          background: none !important;
-        }
-
-        /* reveal all folded lines */
-        .l,
-        .gutter div {
-          display: flex !important;
-        }
-
-        .t {
-          white-space: pre-wrap !important;
-          word-break: break-word !important;
-          color: #1e1e1e !important;
-        }
-
-        /* indent guides off */
-        .i::after {
-          display: none;
-        }
-
-        /* syntax colors – VS Code light theme palette */
-        .k  { color: #0070c1 !important; }
-        .s  { color: #a31515 !important; }
-        .n  { color: #098658 !important; }
-        .b  { color: #0000ff !important; }
-        .nl { color: #0000ff !important; }
-        .c  { color: #008000 !important; font-style: italic; }
-        .p  { color: #444    !important; }
-
-        a {
-          color: inherit !important;
+        a:hover {
           text-decoration: none !important;
         }
       }
+
+      /* hire modal */
+      .hire-backdrop {
+        position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 9000;
+      }
+      .hire-dialog {
+        position: fixed; top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9001; background: #252526; border-radius: 8px;
+        box-shadow: 0 8px 48px rgba(0,0,0,.5);
+        width: 440px; max-width: 96vw;
+        font-family: "Segoe UI", system-ui, sans-serif;
+        border: 1px solid var(--border);
+      }
+      .hire-dialog-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 14px 20px; border-bottom: 1px solid var(--border);
+      }
+      .hire-dialog-header h3 { margin: 0; font-size: 14px; color: #cccccc; font-weight: 600; }
+      .hire-close {
+        background: none; border: none; cursor: pointer;
+        font-size: 18px; color: #858585; line-height: 1; padding: 0 4px;
+      }
+      .hire-close:hover { color: #cccccc; }
+      .hire-dialog form { padding: 20px; }
+      .hire-field { margin-bottom: 14px; }
+      .hire-field label {
+        display: block; font-size: 11px; font-weight: 600;
+        color: #cccccc; margin-bottom: 4px;
+      }
+      .hire-field input, .hire-field textarea {
+        width: 100%; box-sizing: border-box;
+        background: #3c3c3c; border: 1px solid #555; border-radius: 4px;
+        padding: 8px 10px; font-size: 13px; color: #d4d4d4;
+        font-family: "Segoe UI", system-ui, sans-serif; outline: none;
+      }
+      .hire-field input:focus, .hire-field textarea:focus { border-color: var(--accent); }
+      .hire-field textarea { resize: vertical; min-height: 80px; font-family: inherit; }
+      .hire-submit {
+        background: var(--accent); color: #fff; border: none; border-radius: 4px;
+        padding: 8px 20px; font-size: 13px; font-weight: 600;
+        cursor: pointer; font-family: inherit;
+      }
+      .hire-submit:hover { filter: brightness(1.1); }
+      .hire-submit:disabled { opacity: .5; cursor: default; }
     </style>
   </head>
   <body>
@@ -521,7 +434,7 @@
         <button class="menubar-item">Go</button>
         <button class="menubar-item">Run</button>
         <button class="menubar-item">Terminal</button>
-        <button class="menubar-item">Help</button>
+        <button class="menubar-item" id="hire-json-btn" style="font-weight:700;color:#f48771">Hire</button>
       </div>
       <div class="menubar-center">
         <button class="menubar-nav" disabled aria-label="Back">
@@ -1316,5 +1229,72 @@
         if (row) lnEl.textContent = row.dataset.n;
       });
     </script>
+
+<!-- HIRE MODAL -->
+<div id="hire-json-modal" style="display:none">
+  <div class="hire-backdrop" id="hire-json-backdrop"></div>
+  <div class="hire-dialog">
+    <div class="hire-dialog-header">
+      <h3>Contact Viktor</h3>
+      <button class="hire-close" id="hire-json-close" type="button">&#x2715;</button>
+    </div>
+    <div data-fs-success style="display:none;padding:40px 20px;text-align:center">
+      <p style="color:#49cc90;font-weight:700;font-size:15px;margin:0 0 4px">Thanks for reaching out!</p>
+      <p style="color:#cccccc;font-size:13px;margin:0">Your message was sent successfully. I'll get back to you soon.</p>
+    </div>
+    <div data-fs-error style="display:none;padding:8px 20px 0;color:#f48771;font-size:12px"></div>
+    <form id="hire-json-form">
+      <input type="hidden" name="_subject" value="Hire inquiry from CV — json">
+      <div class="hire-field">
+        <label for="hire-json-name">Your name</label>
+        <input id="hire-json-name" type="text" name="name" required placeholder="Jane Smith" data-fs-field>
+        <span data-fs-error="name" style="color:#f48771;font-size:11px"></span>
+      </div>
+      <div class="hire-field">
+        <label for="hire-json-email">Your email</label>
+        <input id="hire-json-email" type="email" name="email" required placeholder="your@email.com" data-fs-field>
+        <span data-fs-error="email" style="color:#f48771;font-size:11px"></span>
+      </div>
+      <div class="hire-field">
+        <label for="hire-json-message">Message</label>
+        <textarea id="hire-json-message" name="message" required rows="5" placeholder="Hi Viktor, we'd like to..." data-fs-field></textarea>
+        <span data-fs-error="message" style="color:#f48771;font-size:11px"></span>
+      </div>
+      <button type="submit" class="hire-submit" data-fs-submit-btn>Send</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var modal = document.getElementById('hire-json-modal');
+
+    function openModal() {
+      var form = document.getElementById('hire-json-form');
+      form.reset();
+      form.style.display = '';
+      var fsSuccess = document.querySelector('#hire-json-modal [data-fs-success]');
+      if (fsSuccess) fsSuccess.style.display = 'none';
+      var fsError = document.querySelector('#hire-json-modal [data-fs-error]');
+      if (fsError) fsError.style.display = 'none';
+      modal.style.display = '';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    document.getElementById('hire-json-btn').addEventListener('click', openModal);
+    document.getElementById('hire-json-close').addEventListener('click', closeModal);
+    document.getElementById('hire-json-backdrop').addEventListener('click', closeModal);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  })();
+
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#hire-json-form', formId: 'mrejlned' });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
   </body>
 </html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Viktor Bozzay — CV</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      background: #0f0f0f;
+      color: #d4d4d4;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      text-align: center;
+      padding: 60px 48px;
+      background: #1a1a1a;
+      border-radius: 16px;
+      border: 1px solid #2a2a2a;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+      max-width: 520px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 4px;
+      letter-spacing: -.02em;
+    }
+    h1 small {
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      color: #888;
+      margin-top: 6px;
+      letter-spacing: 0;
+    }
+    .divider {
+      width: 40px;
+      height: 3px;
+      background: #ff7024;
+      border-radius: 2px;
+      margin: 24px auto;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 32px;
+    }
+    .btns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      background: #252525;
+      color: #d4d4d4;
+      border: 1px solid #333;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .15s, border-color .15s, transform .1s;
+    }
+    .btn:hover {
+      background: #2d2d2d;
+      border-color: #ff7024;
+      transform: translateY(-1px);
+    }
+    .btn:active {
+      transform: scale(.98);
+    }
+    .btn .label {
+      display: block;
+      color: #ff7024;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 3px;
+    }
+    .btn .desc {
+      display: block;
+      font-size: 12px;
+      color: #888;
+    }
+    .btn-hire {
+      border-color: #ff7024;
+      background: #ff702411;
+    }
+    .btn-hire:hover {
+      background: #ff702422;
+    }
+    .btn-hire .label {
+      color: #ff7024;
+    }
+    .footer {
+      margin-top: 28px;
+      font-size: 11px;
+      color: #555;
+    }
+    .footer a {
+      color: #777;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      color: #ff7024;
+    }
+
+    /* hire modal */
+    .hire-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 9000;
+    }
+    .hire-dialog {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9001; background: #1a1a1a; border-radius: 12px;
+      box-shadow: 0 8px 48px rgba(0,0,0,.5);
+      width: 440px; max-width: 96vw;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      border: 1px solid #2a2a2a;
+    }
+    .hire-dialog-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid #2a2a2a;
+    }
+    .hire-dialog-header h3 { margin: 0; font-size: 15px; color: #fff; font-weight: 600; }
+    .hire-close {
+      background: none; border: none; cursor: pointer;
+      font-size: 18px; color: #666; line-height: 1; padding: 0 4px;
+    }
+    .hire-close:hover { color: #fff; }
+    .hire-dialog form { padding: 20px; }
+    .hire-field { margin-bottom: 14px; }
+    .hire-field label {
+      display: block; font-size: 11px; font-weight: 600;
+      color: #aaa; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em;
+    }
+    .hire-field input, .hire-field textarea {
+      width: 100%; box-sizing: border-box;
+      background: #252525; border: 1px solid #333; border-radius: 6px;
+      padding: 10px 12px; font-size: 14px; color: #d4d4d4;
+      font-family: inherit; outline: none;
+    }
+    .hire-field input:focus, .hire-field textarea:focus { border-color: #ff7024; }
+    .hire-field textarea { resize: vertical; min-height: 90px; }
+    .hire-submit {
+      background: #ff7024; color: #fff; border: none; border-radius: 6px;
+      padding: 10px 24px; font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+    }
+    .hire-submit:hover { background: #e5621a; }
+    .hire-submit:disabled { opacity: .5; cursor: default; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>
+      Viktor Bozzay
+      <small>Frontend Tech Lead &middot; Pécs, HU</small>
+    </h1>
+    <div class="divider"></div>
+    <p class="subtitle">Choose how to view my CV</p>
+    <div class="btns">
+      <a class="btn" href="cv-plain.html">
+        <span class="label">I'm a Human</span>
+        <span class="desc">Clean, readable CV</span>
+      </a>
+      <a class="btn" href="cv-swagger.html">
+        <span class="label">I'm a Frontend Developer</span>
+        <span class="desc">Swagger-style API docs</span>
+      </a>
+      <a class="btn" href="cv-json.html">
+        <span class="label">I'm a Backend Developer</span>
+        <span class="desc">JSON / VS Code view</span>
+      </a>
+    </div>
+    <div class="btns" style="margin-top:12px">
+      <button class="btn btn-hire" id="hire-index-btn">
+        <span class="label">Hire Me</span>
+        <span class="desc">Send me a message</span>
+      </button>
+    </div>
+    <div class="footer">
+      <a href="mailto:bozzay.viktor@gmail.com">bozzay.viktor@gmail.com</a>
+    </div>
+  </div>
+
+<!-- HIRE MODAL -->
+<div id="hire-index-modal" style="display:none">
+  <div class="hire-backdrop" id="hire-index-backdrop"></div>
+  <div class="hire-dialog">
+    <div class="hire-dialog-header">
+      <h3>Contact Viktor</h3>
+      <button class="hire-close" id="hire-index-close" type="button">&#x2715;</button>
+    </div>
+    <div data-fs-success style="display:none;padding:40px 20px;text-align:center">
+      <p style="color:#49cc90;font-weight:700;font-size:15px;margin:0 0 4px">Thanks for reaching out!</p>
+      <p style="color:#aaa;font-size:13px;margin:0">Your message was sent successfully. I'll get back to you soon.</p>
+    </div>
+    <div data-fs-error style="display:none;padding:8px 20px 0;color:#f48771;font-size:12px"></div>
+    <form id="hire-index-form">
+      <input type="hidden" name="_subject" value="Hire inquiry from index">
+      <div class="hire-field">
+        <label for="hire-index-name">Your name</label>
+        <input id="hire-index-name" type="text" name="name" required placeholder="Jane Smith" data-fs-field>
+        <span data-fs-error="name" style="color:#f48771;font-size:11px"></span>
+      </div>
+      <div class="hire-field">
+        <label for="hire-index-email">Your email</label>
+        <input id="hire-index-email" type="email" name="email" required placeholder="your@email.com" data-fs-field>
+        <span data-fs-error="email" style="color:#f48771;font-size:11px"></span>
+      </div>
+      <div class="hire-field">
+        <label for="hire-index-message">Message</label>
+        <textarea id="hire-index-message" name="message" required rows="5" placeholder="Hi Viktor, we'd like to..." data-fs-field></textarea>
+        <span data-fs-error="message" style="color:#f48771;font-size:11px"></span>
+      </div>
+      <button type="submit" class="hire-submit" data-fs-submit-btn>Send</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var modal = document.getElementById('hire-index-modal');
+
+    function openModal() {
+      var form = document.getElementById('hire-index-form');
+      form.reset();
+      form.style.display = '';
+      var fsSuccess = document.querySelector('#hire-index-modal [data-fs-success]');
+      if (fsSuccess) fsSuccess.style.display = 'none';
+      var fsError = document.querySelector('#hire-index-modal [data-fs-error]');
+      if (fsError) fsError.style.display = 'none';
+      modal.style.display = '';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    document.getElementById('hire-index-btn').addEventListener('click', openModal);
+    document.getElementById('hire-index-close').addEventListener('click', closeModal);
+    document.getElementById('hire-index-backdrop').addEventListener('click', closeModal);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  })();
+
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#hire-index-form', formId: 'mrejlned' });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+</body>
+</html>
