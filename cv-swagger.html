@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>viktor_bozzay — CV API</title>
+  <link rel="stylesheet" type="text/css" href="swagger-template/E-Core API Documentation_files/swagger-ui.css">
+  <style>
+    html { box-sizing: border-box; overflow-y: scroll; }
+    *, *:before, *:after { box-sizing: inherit; }
+    body { margin: 0; background: #fafafa; }
+
+    .operation-tag-content { display: none; }
+    .opblock-tag-section.is-open .operation-tag-content { display: block; }
+    .opblock-tag-section:not(.is-open) .expand-operation .arrow { transform: rotate(-90deg); }
+
+    .opblock-body { display: none; }
+    .opblock.is-open .opblock-body { display: block; }
+    .opblock.is-open .opblock-control-arrow .arrow { transform: rotate(180deg); }
+    .arrow { transition: transform 0.2s ease; }
+
+    /* hire button */
+    .try-out__btn.hire-trigger {
+      background: transparent;
+      border: 2px solid #ff7024;
+      color: #ff7024;
+      font-weight: 700;
+    }
+    .try-out__btn.hire-trigger:hover {
+      background: #ff7024;
+      color: #fff;
+    }
+
+    /* hire modal */
+    .hire-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 9000;
+    }
+    .hire-dialog {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9001; background: #fff; border-radius: 4px;
+      box-shadow: 0 4px 32px rgba(0,0,0,.3);
+      width: 480px; max-width: 96vw;
+      font-family: "Titillium Web", sans-serif;
+    }
+    .hire-dialog-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid #d8dde7;
+    }
+    .hire-dialog-header h3 { margin: 0; font-size: 18px; color: #3b4151; }
+    .hire-close {
+      background: none; border: none; cursor: pointer;
+      font-size: 20px; color: #7d8493; line-height: 1; padding: 0 4px;
+    }
+    .hire-close:hover { color: #3b4151; }
+    .hire-dialog form { padding: 20px; }
+    .hire-field { margin-bottom: 14px; }
+    .hire-field label {
+      display: block; font-size: 12px; font-weight: 700;
+      color: #3b4151; margin-bottom: 5px; text-transform: uppercase;
+    }
+    .hire-field input, .hire-field textarea {
+      width: 100%; box-sizing: border-box;
+      border: 1px solid #d8dde7; border-radius: 4px;
+      padding: 8px 10px; font-size: 14px; color: #3b4151;
+      font-family: inherit; outline: none;
+    }
+    .hire-field input:focus, .hire-field textarea:focus { border-color: #ff7024; }
+    .hire-field textarea { resize: vertical; min-height: 100px; }
+    .hire-submit {
+      background: #ff7024; color: #fff; border: none; border-radius: 4px;
+      padding: 10px 24px; font-size: 14px; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+    }
+    .hire-submit:hover { background: #e5621a; }
+
+    /* custom cv elements */
+    .cv-badge {
+      display: inline-block; background: #49cc90; color: #fff;
+      font-size: 10px; padding: 1px 7px; border-radius: 3px;
+      margin-left: 10px; font-weight: 700; vertical-align: middle;
+      letter-spacing: .05em; text-transform: uppercase;
+    }
+    .cv-stack { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 0; }
+    .cv-stack-item {
+      background: #f0f3f6; border: 1px solid #d4d8de; border-radius: 3px;
+      padding: 2px 8px; font-size: 11px; font-family: monospace; color: #3b4151;
+    }
+    .cv-kv { margin: 3px 0; }
+    .cv-kv code { background: #f0f3f6; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+    .cv-color-dot {
+      display: inline-block; width: 12px; height: 12px;
+      background: #ff7024; border-radius: 2px; vertical-align: middle; margin-left: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
+  <defs>
+    <symbol viewBox="0 0 20 20" id="unlocked">
+      <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="swagger-ui">
+<section class="swagger-ui swagger-container">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="wrapper">
+    <div class="topbar-wrapper">
+      <a class="link" style="cursor:default;display:flex;align-items:center;gap:10px;text-decoration:none">
+        <img src="assets/swagger.svg" height="36" alt="Swagger">
+        <span style="display:flex;flex-direction:column;line-height:1.3">
+          <span style="color:#fff;font-weight:600;font-size:14px">viktor</span>
+          <span style="color:#85ea2d;font-weight:600;font-size:14px">bozzay</span>
+        </span>
+      </a>
+      <form class="download-url-wrapper" style="flex:1;max-width:640px">
+        <label class="select-label" style="width:100%">
+          <span>Endpoint</span>
+          <div class="servers" style="width:100%">
+            <label style="width:100%">
+              <select style="width:100%">
+                <option>https://bozzayviktor.hu/cv/api — Viktor Bozzay CV API v4.2.0</option>
+              </select>
+            </label>
+          </div>
+        </label>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- INFO -->
+<div class="information-container wrapper">
+  <section class="block col-12"><div><div class="info">
+    <hgroup class="main">
+      <h1 class="title">Viktor Bozzay — Curriculum Vitae API
+        <span>
+          <small><pre class="version"> 4.2.0 </pre></small>
+          <small class="version-stamp"><pre class="version">REST</pre></small>
+        </span>
+      </h1>
+    </hgroup>
+    <div class="description"><div class="renderedMarkdown">
+      <p>Frontend developer who operates at the architecture level — not just building features, but evaluating whether the foundation they sit on is worth keeping. Led full rewrites of legacy systems, migrated codebases to modern stacks, and designed AI-assisted workflows that measurably accelerate delivery. Refactors deliberately: only when evidence justifies it, always with a clear plan.</p>
+      <p>
+        <a href="mailto:bozzay.viktor@gmail.com">bozzay.viktor@gmail.com</a> &nbsp;·&nbsp;
+        <a href="tel:+36306106608">+36 30 610 6608</a> &nbsp;·&nbsp;
+        <a href="https://github.com/exphoenee" target="_blank">github.com/exphoenee</a> &nbsp;·&nbsp;
+        <a href="https://linkedin.com/in/viktorbozzay/" target="_blank">linkedin.com/in/viktorbozzay</a> &nbsp;·&nbsp;
+        <a href="https://www.bozzayviktor.hu" target="_blank">bozzayviktor.hu</a>
+      </p>
+    </div></div>
+  </div></div></section>
+</div>
+
+<!-- SCHEME CONTAINER -->
+<div class="scheme-container">
+  <section class="schemes wrapper block col-12">
+    <div class="schemes-server-container">
+      <div>
+        <span class="servers-title">Location</span>
+        <div class="servers">
+          <label><select><option>Pécs, Hungary — open to remote / hybrid</option></select></label>
+        </div>
+      </div>
+    </div>
+    <div class="auth-wrapper">
+      <button class="btn authorize unlocked" id="hire-btn">
+        <span>Hire</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20">
+          <use href="#unlocked" xlink:href="#unlocked"></use>
+        </svg>
+      </button>
+    </div>
+  </section>
+</div>
+
+<div class="wrapper">
+<section class="block col-12 block-desktop col-12-desktop"><div>
+
+<!-- ════ identity ════════════════════════════════════════════════════ -->
+<div class="opblock-tag-section is-open">
+  <h3 class="opblock-tag no-desc">
+    <span>identity</span><small></small>
+    <button class="expand-operation" title="Collapse operation">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 14.908C17.69 15.176 18.127 15.176 18.397 14.908c.27-.268.271-.701 0-.969L10.489 6.109c-.27-.268-.707-.268-.979 0L1.602 13.939c-.27.268-.27.701 0 .969.271.268.708.268.979 0L10 7.767l7.418 7.141z"/></svg>
+    </button>
+  </h3>
+  <div class="no-margin"><div class="operation-tag-content">
+
+    <!-- GET /identity/profile -->
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/identity/profile</span></a></span>
+            <div class="opblock-summary-description">Name, role, location</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="opblock-description-wrapper"><div class="opblock-description"><div class="renderedMarkdown">
+          <p>Returns the developer's core identity fields.</p>
+        </div></div></div>
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <p class="cv-kv"><code>name</code> Viktor Bozzay</p>
+                  <p class="cv-kv"><code>role</code> Frontend Tech Lead <em>// "Developer" is an understatement</em></p>
+                  <p class="cv-kv"><code>location</code> Pécs, Hungary</p>
+                  <p class="cv-kv"><code>accentColor</code> #ff7024 <span class="cv-color-dot"></span></p>
+                  <p class="cv-kv"><code>deprecated</code> false <em>// still actively maintained</em></p>
+                </div></td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /identity/contact -->
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/identity/contact</span></a></span>
+            <div class="opblock-summary-description">All contact channels</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <p class="cv-kv"><code>email</code> <a href="mailto:bozzay.viktor@gmail.com">bozzay.viktor@gmail.com</a></p>
+                  <p class="cv-kv"><code>phone</code> <a href="tel:+36306106608">+36 30 610 6608</a></p>
+                  <p class="cv-kv"><code>github</code> <a href="https://github.com/exphoenee" target="_blank">github.com/exphoenee</a> <em>// phoenix, with extra e's</em></p>
+                  <p class="cv-kv"><code>linkedin</code> <a href="https://linkedin.com/in/viktorbozzay/" target="_blank">linkedin.com/in/viktorbozzay</a></p>
+                  <p class="cv-kv"><code>website</code> <a href="https://www.bozzayviktor.hu" target="_blank">bozzayviktor.hu</a></p>
+                </div></td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /identity/languages -->
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/identity/languages</span></a></span>
+            <div class="opblock-summary-description">Spoken language proficiencies</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <p class="cv-kv"><code>Hungarian</code> native <em>// no runtime errors</em></p>
+                  <p class="cv-kv"><code>German</code> B2 <em>// can order Schnitzel and read stack traces</em></p>
+                  <p class="cv-kv"><code>English</code> B2 <em>// you're reading this — proof it works</em></p>
+                </div></td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ════ summary ════════════════════════════════════════════════════ -->
+<div class="opblock-tag-section is-open">
+  <h3 class="opblock-tag no-desc">
+    <span>summary</span><small></small>
+    <button class="expand-operation" title="Collapse operation">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 14.908C17.69 15.176 18.127 15.176 18.397 14.908c.27-.268.271-.701 0-.969L10.489 6.109c-.27-.268-.707-.268-.979 0L1.602 13.939c-.27.268-.27.701 0 .969.271.268.708.268.979 0L10 7.767l7.418 7.141z"/></svg>
+    </button>
+  </h3>
+  <div class="no-margin"><div class="operation-tag-content">
+
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/summary</span></a></span>
+            <div class="opblock-summary-description">Professional overview</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <p>Frontend developer who operates at the architecture level — not just building features, but evaluating whether the foundation they sit on is worth keeping. Led full rewrites of legacy systems, migrated codebases to modern stacks, and designed AI-assisted workflows that measurably accelerate delivery. Refactors deliberately: only when evidence justifies it, always with a clear plan. Engineering background means thinking in systems, not just components.</p>
+                  <p><em>// translation: will rewrite your entire codebase if provoked (and the evidence justifies it)</em></p>
+                </div></td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ════ workExperience ═════════════════════════════════════════════ -->
+<div class="opblock-tag-section is-open">
+  <h3 class="opblock-tag no-desc">
+    <span>workExperience</span><small></small>
+    <button class="expand-operation" title="Collapse operation">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 14.908C17.69 15.176 18.127 15.176 18.397 14.908c.27-.268.271-.701 0-.969L10.489 6.109c-.27-.268-.707-.268-.979 0L1.602 13.939c-.27.268-.27.701 0 .969.271.268.708.268.979 0L10 7.767l7.418 7.141z"/></svg>
+    </button>
+  </h3>
+  <div class="no-margin"><div class="operation-tag-content">
+
+    <!-- POST /experience/aegex -->
+    <div class="opblock opblock-post">
+      <div class="opblock-summary opblock-summary-post">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">POST</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/experience/aegex</span></a></span>
+            <div class="opblock-summary-description">Frontend Tech Lead — Aegex Technologies <span class="cv-badge">current</span></div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="opblock-description-wrapper"><div class="opblock-description"><div class="renderedMarkdown">
+          <p>Assessed two legacy systems and drove architectural decisions for modernising each. Full ownership of SafeSy and FACTS from design through delivery. Introduced AI-assisted workflows and a CI pipeline with automated quality checks.</p>
+        </div></div></div>
+        <div class="opblock-section">
+          <div class="opblock-section-header">
+            <h4 class="opblock-title parameter__name">Parameters</h4>
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+          <div class="parameters-container"><div class="table-container">
+            <table class="parameters"><thead><tr>
+              <th class="col_header parameters-col_name">Name</th>
+              <th class="col_header parameters-col_description">Description</th>
+            </tr></thead><tbody>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">period</div>
+                  <div class="parameter__type">string</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description"><div class="renderedMarkdown"><p>2023-11 → null <em>// null = still here</em></p></div></td>
+              </tr>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">teamSize</div>
+                  <div class="parameter__type">integer</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description"><div class="renderedMarkdown"><p>2 <em>// self + 1 mid-level colleague, handled with care</em></p></div></td>
+              </tr>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">stack</div>
+                  <div class="parameter__type">array</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description">
+                  <div class="cv-stack">
+                    <span class="cv-stack-item">Svelte</span><span class="cv-stack-item">React</span><span class="cv-stack-item">TypeScript</span><span class="cv-stack-item">Node.js</span><span class="cv-stack-item">ExpressJS</span><span class="cv-stack-item">MySQL</span><span class="cv-stack-item">Vite</span><span class="cv-stack-item">PNPM</span><span class="cv-stack-item">Jest</span><span class="cv-stack-item">Vitest</span><span class="cv-stack-item">Playwright</span><span class="cv-stack-item">SCSS</span><span class="cv-stack-item">Python</span><span class="cv-stack-item">Claude</span><span class="cv-stack-item">Codex</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody></table>
+          </div></div>
+        </div>
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <p><strong>SafeSy</strong> — Internal manufacturing management (cross-role: production, office, execs, partners)</p>
+                  <ul>
+                    <li>Designed and built the internal Aegex Svelte component library</li>
+                    <li>Manages workflows, inventory, and real-time data tracking across all user roles</li>
+                    <li>Built a subscribable daily email report system</li>
+                    <li>Contributed to Express backend including SQL query development</li>
+                  </ul>
+                  <p><strong>FACTS</strong> — Feedstock and Compliance Tracking System</p>
+                  <ul>
+                    <li>CI pipeline with automated quality checks introduced from scratch</li>
+                    <li>Migrated to a monorepo, extracted shared FACTS/Driver code into a private package</li>
+                    <li>Built a CLI tool for monorepo workflow management</li>
+                    <li>Claude AI-assisted dev workflow cut release cycle 2× (targeting 4×)</li>
+                  </ul>
+                  <p><em>releaseCycle: 30d → 14d (targeting 7) · testCoverage before: 0 // yes, zero. it was not fine.</em></p>
+                </div></td>
+                <td class="response-col_links"><a href="https://facts.aegex.com" target="_blank">facts.aegex.com</a><br><a href="https://driver.aegex.com" target="_blank">driver.aegex.com</a></td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST /experience/telekom -->
+    <div class="opblock opblock-post">
+      <div class="opblock-summary opblock-summary-post">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">POST</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/experience/telekom</span></a></span>
+            <div class="opblock-summary-description">Developer — Deutsche Telekom IT Solutions HU</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="opblock-description-wrapper"><div class="opblock-description"><div class="renderedMarkdown">
+          <p>Agile environment with continuous API integration between frontend and AI backend.</p>
+        </div></div></div>
+        <div class="opblock-section">
+          <div class="opblock-section-header">
+            <h4 class="opblock-title parameter__name">Parameters</h4>
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+          <div class="parameters-container"><div class="table-container">
+            <table class="parameters"><thead><tr>
+              <th class="col_header parameters-col_name">Name</th>
+              <th class="col_header parameters-col_description">Description</th>
+            </tr></thead><tbody>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">period</div>
+                  <div class="parameter__type">string</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description"><div class="renderedMarkdown"><p>2023-07 → 2023-11 <em>// 4 months — short but intense</em></p></div></td>
+              </tr>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">stack</div>
+                  <div class="parameter__type">array</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description">
+                  <div class="cv-stack">
+                    <span class="cv-stack-item">React</span><span class="cv-stack-item">TypeScript</span><span class="cv-stack-item">Node.js</span><span class="cv-stack-item">Jest</span><span class="cv-stack-item">Styled Components</span><span class="cv-stack-item">React Redux</span><span class="cv-stack-item">Webpack</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody></table>
+          </div></div>
+        </div>
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <ul>
+                    <li>Built type-safe UI components integrated with AI-driven backend and real-time analysis display</li>
+                    <li>Created intuitive interfaces for managing and viewing automated test results</li>
+                    <li>Continuous frontend–AI backend integration in fast-paced Agile sprints</li>
+                  </ul>
+                </div></td>
+                <td class="response-col_links"><a href="https://mobiledevice.cloud/order/ai4test" target="_blank">mobiledevice.cloud</a></td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST /experience/scolia -->
+    <div class="opblock opblock-post">
+      <div class="opblock-summary opblock-summary-post">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">POST</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/experience/scolia</span></a></span>
+            <div class="opblock-summary-description">Frontend Developer — Scolia Technologies Ltd.</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="opblock-description-wrapper"><div class="opblock-description"><div class="renderedMarkdown">
+          <p>Frontend for a real-time darts scorekeeping platform — where milliseconds matter and the UI has to keep up with a flying dart. <em>// yes, this is a real product</em></p>
+        </div></div></div>
+        <div class="opblock-section">
+          <div class="opblock-section-header">
+            <h4 class="opblock-title parameter__name">Parameters</h4>
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+          <div class="parameters-container"><div class="table-container">
+            <table class="parameters"><thead><tr>
+              <th class="col_header parameters-col_name">Name</th>
+              <th class="col_header parameters-col_description">Description</th>
+            </tr></thead><tbody>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">period</div>
+                  <div class="parameter__type">string</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description"><div class="renderedMarkdown"><p>2023-01 → 2023-07</p></div></td>
+              </tr>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">stack</div>
+                  <div class="parameter__type">array</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description">
+                  <div class="cv-stack">
+                    <span class="cv-stack-item">React</span><span class="cv-stack-item">Redux Saga</span><span class="cv-stack-item">WebSocket</span><span class="cv-stack-item">Jest</span><span class="cv-stack-item">MongoDB</span><span class="cv-stack-item">SCSS</span><span class="cv-stack-item">Webpack</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody></table>
+          </div></div>
+        </div>
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <ul>
+                    <li>Built responsive, dynamic UIs in close collaboration with the design team</li>
+                    <li>Created interactive visualizations for real-time progress tracking and performance insights</li>
+                    <li>WebSocket-driven live score updates — because darts is apparently a realtime sport</li>
+                  </ul>
+                </div></td>
+                <td class="response-col_links"><a href="https://scoliadarts.com" target="_blank">scoliadarts.com</a></td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST /experience/cubicfox -->
+    <div class="opblock opblock-post">
+      <div class="opblock-summary opblock-summary-post">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">POST</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/experience/cubicfox</span></a></span>
+            <div class="opblock-summary-description">Frontend Developer — Cubicfox</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="opblock-description-wrapper"><div class="opblock-description"><div class="renderedMarkdown">
+          <p>Contributed to establishing the team's code conventions and standards. Redesigned client requirements gathering — clearer specs, fewer revision cycles.</p>
+        </div></div></div>
+        <div class="opblock-section">
+          <div class="opblock-section-header">
+            <h4 class="opblock-title parameter__name">Parameters</h4>
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+          <div class="parameters-container"><div class="table-container">
+            <table class="parameters"><thead><tr>
+              <th class="col_header parameters-col_name">Name</th>
+              <th class="col_header parameters-col_description">Description</th>
+            </tr></thead><tbody>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">period</div>
+                  <div class="parameter__type">string</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description"><div class="renderedMarkdown"><p>2022-09 → 2023-01</p></div></td>
+              </tr>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">stack</div>
+                  <div class="parameter__type">array</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description">
+                  <div class="cv-stack">
+                    <span class="cv-stack-item">React</span><span class="cv-stack-item">Next.js</span><span class="cv-stack-item">TypeScript</span><span class="cv-stack-item">Styled Components</span><span class="cv-stack-item">SCSS</span><span class="cv-stack-item">Jest</span><span class="cv-stack-item">Webpack</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody></table>
+          </div></div>
+        </div>
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <ul>
+                    <li>Responsive, cross-browser UI development with strict quality standards</li>
+                    <li>Established team code conventions — arrived, fixed things, left. classic.</li>
+                    <li>Strong communication, collaboration, and attention to detail</li>
+                    <li>Effective at gathering client requirements and adapting to change</li>
+                  </ul>
+                </div></td>
+                <td class="response-col_links"><a href="https://www.fundmypitch.com" target="_blank">fundmypitch.com</a></td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PUT /experience/cobotx -->
+    <div class="opblock opblock-put">
+      <div class="opblock-summary opblock-summary-put">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">PUT</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/experience/cobotx</span></a></span>
+            <div class="opblock-summary-description">Technical Project Manager — CobotX Technologies</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="opblock-description-wrapper"><div class="opblock-description"><div class="renderedMarkdown">
+          <p>Engineering Manager at a robotics integrator — built and led a team of 4 engineers, bridging mechanical engineering background with software delivery and people management.</p>
+        </div></div></div>
+        <div class="opblock-section">
+          <div class="opblock-section-header">
+            <h4 class="opblock-title parameter__name">Parameters</h4>
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+          <div class="parameters-container"><div class="table-container">
+            <table class="parameters"><thead><tr>
+              <th class="col_header parameters-col_name">Name</th>
+              <th class="col_header parameters-col_description">Description</th>
+            </tr></thead><tbody>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">period</div>
+                  <div class="parameter__type">string</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description"><div class="renderedMarkdown"><p>2021-08 → 2022-08</p></div></td>
+              </tr>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">teamSize</div>
+                  <div class="parameter__type">integer</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description"><div class="renderedMarkdown"><p>4 <em>// engineers, built and led personally</em></p></div></td>
+              </tr>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">robots</div>
+                  <div class="parameter__type">boolean</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description"><div class="renderedMarkdown"><p>true <em>// literal robots. Universal Robots. not metaphorical.</em></p></div></td>
+              </tr>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">stack</div>
+                  <div class="parameter__type">array</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description">
+                  <div class="cv-stack">
+                    <span class="cv-stack-item">Universal Robot</span><span class="cv-stack-item">OnRobot</span><span class="cv-stack-item">Machine Vision</span><span class="cv-stack-item">Python</span><span class="cv-stack-item">OnShape</span><span class="cv-stack-item">PLC</span><span class="cv-stack-item">Industrial Automation</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody></table>
+          </div></div>
+        </div>
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <ul>
+                    <li>Developed hardware/software specifications for PLC and robotics systems</li>
+                    <li>Created capacity and financial plans aligned with the Sales Forecast</li>
+                    <li>Built and led a team of 4 engineers — managed performance and project progress</li>
+                    <li>Set KPIs, improved documentation standards, reported quarterly to management</li>
+                  </ul>
+                </div></td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PUT /experience/webforsol -->
+    <div class="opblock opblock-put">
+      <div class="opblock-summary opblock-summary-put">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">PUT</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/experience/webforsol</span></a></span>
+            <div class="opblock-summary-description">Freelance Full Stack Developer — WebforSol</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="opblock-description-wrapper"><div class="opblock-description"><div class="renderedMarkdown">
+          <p>Freelance full-stack developer delivering custom web solutions. Focus on clean architecture, cost efficiency, and systems easy to extend and maintain.</p>
+        </div></div></div>
+        <div class="opblock-section">
+          <div class="opblock-section-header">
+            <h4 class="opblock-title parameter__name">Parameters</h4>
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+          <div class="parameters-container"><div class="table-container">
+            <table class="parameters"><thead><tr>
+              <th class="col_header parameters-col_name">Name</th>
+              <th class="col_header parameters-col_description">Description</th>
+            </tr></thead><tbody>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">period</div>
+                  <div class="parameter__type">string</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description"><div class="renderedMarkdown"><p>2020-06 → 2022-11</p></div></td>
+              </tr>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">parallelWithCobotx</div>
+                  <div class="parameter__type">boolean</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description"><div class="renderedMarkdown"><p>true <em>// 24h is enough for two jobs, apparently</em></p></div></td>
+              </tr>
+              <tr>
+                <td class="parameters-col_name">
+                  <div class="parameter__name">stack</div>
+                  <div class="parameter__type">array</div>
+                  <div class="parameter__in">(metadata)</div>
+                </td>
+                <td class="parameters-col_description">
+                  <div class="cv-stack">
+                    <span class="cv-stack-item">React</span><span class="cv-stack-item">Next.js</span><span class="cv-stack-item">NestJS</span><span class="cv-stack-item">Node.js</span><span class="cv-stack-item">PHP</span><span class="cv-stack-item">MySQL</span><span class="cv-stack-item">MongoDB</span><span class="cv-stack-item">jQuery</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody></table>
+          </div></div>
+        </div>
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <ul>
+                    <li>Full-stack delivery with React, Next.js, Node.js, MongoDB, MySQL, and PHP/Laravel</li>
+                    <li>Agile methodology practitioner with strong collaboration and adaptability</li>
+                    <li>Effective communication for understanding and meeting evolving client needs</li>
+                  </ul>
+                </div></td>
+                <td class="response-col_links">
+                  <a href="https://szelacoaching.hu" target="_blank">szelacoaching.hu</a><br>
+                  <a href="https://www.pecscoach.hu" target="_blank">pecscoach.hu</a><br>
+                  <a href="https://smartedu.hu" target="_blank">smartedu.hu</a>
+                </td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ════ education ══════════════════════════════════════════════════ -->
+<div class="opblock-tag-section is-open">
+  <h3 class="opblock-tag no-desc">
+    <span>education</span><small></small>
+    <button class="expand-operation" title="Collapse operation">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 14.908C17.69 15.176 18.127 15.176 18.397 14.908c.27-.268.271-.701 0-.969L10.489 6.109c-.27-.268-.707-.268-.979 0L1.602 13.939c-.27.268-.27.701 0 .969.271.268.708.268.979 0L10 7.767l7.418 7.141z"/></svg>
+    </button>
+  </h3>
+  <div class="no-margin"><div class="operation-tag-content">
+
+    <!-- GET /education/quality-manager -->
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/education/quality-manager</span></a></span>
+            <div class="opblock-summary-description">Bachelor's — Quality Manager, 2003–2007</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <p class="cv-kv"><code>institution</code> Faculty of Engineering and Information Technology, University of Pécs</p>
+                  <p class="cv-kv"><code>degree</code> Bachelor's — Quality Manager</p>
+                  <p class="cv-kv"><code>years</code> 2003–2007</p>
+                </div></td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /education/teacher -->
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/education/teacher</span></a></span>
+            <div class="opblock-summary-description">Bachelor's — Machinery Technical Teacher Education, 2001–2004</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <p class="cv-kv"><code>institution</code> Faculty of Engineering and Information Technology, University of Pécs</p>
+                  <p class="cv-kv"><code>degree</code> Bachelor's — Machinery Technical Teacher Education</p>
+                  <p class="cv-kv"><code>years</code> 2001–2004</p>
+                </div></td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /education/engineering -->
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/education/engineering</span></a></span>
+            <div class="opblock-summary-description">BEng — Mechanical Engineering, 2000–2004</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <p class="cv-kv"><code>institution</code> Faculty of Engineering and Information Technology, University of Pécs</p>
+                  <p class="cv-kv"><code>degree</code> BEng — Mechanical Engineering</p>
+                  <p class="cv-kv"><code>years</code> 2000–2004</p>
+                  <p><em>// none of them are frontend. this is fine. (this is fine.)</em></p>
+                </div></td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ════ skills ═════════════════════════════════════════════════════ -->
+<div class="opblock-tag-section is-open">
+  <h3 class="opblock-tag no-desc">
+    <span>skills</span><small></small>
+    <button class="expand-operation" title="Collapse operation">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 14.908C17.69 15.176 18.127 15.176 18.397 14.908c.27-.268.271-.701 0-.969L10.489 6.109c-.27-.268-.707-.268-.979 0L1.602 13.939c-.27.268-.27.701 0 .969.271.268.708.268.979 0L10 7.767l7.418 7.141z"/></svg>
+    </button>
+  </h3>
+  <div class="no-margin"><div class="operation-tag-content">
+
+    <!-- GET /skills/primary -->
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/skills/primary</span></a></span>
+            <div class="opblock-summary-description">Core frontend stack</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description">
+                  <div class="cv-stack">
+                    <span class="cv-stack-item">TypeScript</span><span class="cv-stack-item">JavaScript</span><span class="cv-stack-item">Svelte</span><span class="cv-stack-item">React</span><span class="cv-stack-item">Node.js</span><span class="cv-stack-item">SCSS</span><span class="cv-stack-item">HTML</span><span class="cv-stack-item">CSS</span>
+                  </div>
+                </td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /skills/backend -->
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/skills/backend</span></a></span>
+            <div class="opblock-summary-description">Backend & databases</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description">
+                  <div class="cv-stack">
+                    <span class="cv-stack-item">Express.js</span><span class="cv-stack-item">NestJS</span><span class="cv-stack-item">Python</span><span class="cv-stack-item">PHP</span><span class="cv-stack-item">MySQL</span><span class="cv-stack-item">MongoDB</span>
+                  </div>
+                </td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PATCH /skills/testing -->
+    <div class="opblock opblock-patch">
+      <div class="opblock-summary opblock-summary-patch">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">PATCH</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/skills/testing</span></a></span>
+            <div class="opblock-summary-description">Testing tools <em>// yes, all three</em></div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description">
+                  <div class="cv-stack">
+                    <span class="cv-stack-item">Jest</span><span class="cv-stack-item">Vitest</span><span class="cv-stack-item">Playwright</span>
+                  </div>
+                </td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /skills/tooling -->
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/skills/tooling</span></a></span>
+            <div class="opblock-summary-description">Build tooling</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description">
+                  <div class="cv-stack">
+                    <span class="cv-stack-item">Vite</span><span class="cv-stack-item">Webpack</span><span class="cv-stack-item">PNPM</span><span class="cv-stack-item">Next.js</span>
+                  </div>
+                </td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /skills/ai -->
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/skills/ai</span></a></span>
+            <div class="opblock-summary-description">AI tooling <em>// meta: this CV was probably reviewed by one of these</em></div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description">
+                  <div class="cv-stack">
+                    <span class="cv-stack-item">Claude</span><span class="cv-stack-item">Codex</span>
+                  </div>
+                </td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /skills/robotics -->
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/skills/robotics</span></a></span>
+            <div class="opblock-summary-description">Robotics &amp; industrial <em>// surprise!</em></div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description">
+                  <div class="cv-stack">
+                    <span class="cv-stack-item">Universal Robot</span><span class="cv-stack-item">OnRobot</span><span class="cv-stack-item">Machine Vision</span><span class="cv-stack-item">PLC</span>
+                  </div>
+                </td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELETE /skills/willRefactorYourEntireCodebaseIf -->
+    <div class="opblock opblock-delete">
+      <div class="opblock-summary opblock-summary-delete">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">DELETE</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/skills/willRefactorYourEntireCodebaseIf</span></a></span>
+            <div class="opblock-summary-description">evidence justifies it <em>// (often)</em></div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <p>Technical debt eliminated. Codebase modernised. Team is happier. Shipping faster.</p>
+                  <p><em>// warning: may happen to your repo if provoked</em></p>
+                </div></td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ════ community ══════════════════════════════════════════════════ -->
+<div class="opblock-tag-section is-open">
+  <h3 class="opblock-tag no-desc">
+    <span>community</span><small></small>
+    <button class="expand-operation" title="Collapse operation">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 14.908C17.69 15.176 18.127 15.176 18.397 14.908c.27-.268.271-.701 0-.969L10.489 6.109c-.27-.268-.707-.268-.979 0L1.602 13.939c-.27.268-.27.701 0 .969.271.268.708.268.979 0L10 7.767l7.418 7.141z"/></svg>
+    </button>
+  </h3>
+  <div class="no-margin"><div class="operation-tag-content">
+
+    <!-- POST /community/mentoring -->
+    <div class="opblock opblock-post">
+      <div class="opblock-summary opblock-summary-post">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">POST</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/community/mentoring</span></a></span>
+            <div class="opblock-summary-description">Pro bono after-school programming club mentor</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <p class="cv-kv"><code>school</code> Mátyás Király Street Primary School, Pécs</p>
+                  <p class="cv-kv"><code>since</code> 2026-02</p>
+                  <p class="cv-kv"><code>curriculumDesignedBy</code> Viktor (personally)</p>
+                  <p class="cv-kv"><code>paid</code> false <em>// legend</em></p>
+                  <p><strong>Competition results:</strong></p>
+                  <ul>
+                    <li>🥇 1st — Hack and Code 2026 (Radnóti SZKI)</li>
+                    <li>🥇 1st — 22nd Neumann János Programming Competition</li>
+                    <li>🥉 3rd — 22nd Neumann János Programming Competition</li>
+                  </ul>
+                </div></td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ════ meta ════════════════════════════════════════════════════════ -->
+<div class="opblock-tag-section is-open">
+  <h3 class="opblock-tag no-desc">
+    <span>meta</span><small></small>
+    <button class="expand-operation" title="Collapse operation">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 14.908C17.69 15.176 18.127 15.176 18.397 14.908c.27-.268.271-.701 0-.969L10.489 6.109c-.27-.268-.707-.268-.979 0L1.602 13.939c-.27.268-.27.701 0 .969.271.268.708.268.979 0L10 7.767l7.418 7.141z"/></svg>
+    </button>
+  </h3>
+  <div class="no-margin"><div class="operation-tag-content">
+
+    <!-- GET /meta -->
+    <div class="opblock opblock-get">
+      <div class="opblock-summary opblock-summary-get">
+        <button class="opblock-summary-control">
+          <span class="opblock-summary-method">GET</span>
+          <div class="opblock-summary-path-description-wrapper">
+            <span class="opblock-summary-path"><a class="nostyle"><span>/meta</span></a></span>
+            <div class="opblock-summary-description">About this CV</div>
+          </div>
+        </button>
+        <button class="opblock-control-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true"><path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/></svg></button>
+      </div>
+      <div class="opblock-body">
+        <div class="responses-wrapper">
+          <div class="opblock-section-header"><h4>Responses</h4></div>
+          <div class="responses-inner">
+            <table class="responses-table"><thead><tr class="responses-header">
+              <td class="col_header response-col_status">Code</td>
+              <td class="col_header response-col_description">Description</td>
+              <td class="col_header response-col_links">Links</td>
+            </tr></thead><tbody>
+              <tr class="response">
+                <td class="response-col_status">200</td>
+                <td class="response-col_description"><div class="renderedMarkdown">
+                  <p class="cv-kv"><code>generatedBy</code> human effort + CodersRank + Claude (probably)</p>
+                  <p class="cv-kv"><code>codingPhilosophy</code> deliberate, evidence-driven, system-level thinking</p>
+                  <p class="cv-kv"><code>engineeringBackground</code> true <em>// 3× BEng — thinks in systems, not just components</em></p>
+                  <p class="cv-kv"><code>openToWork</code> null <em>// ask directly: bozzay.viktor@gmail.com</em></p>
+                </div></td>
+                <td class="response-col_links">No links</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="opblock-section">
+          <div class="opblock-section-header" style="justify-content:flex-end">
+            <div class="try-out"><button class="try-out__btn hire-trigger">Hire me</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+</div></section>
+</div>
+
+</section>
+</div>
+
+<!-- HIRE MODAL -->
+<div id="hire-modal" style="display:none">
+  <div class="hire-backdrop" id="hire-backdrop"></div>
+  <div class="hire-dialog">
+    <div class="hire-dialog-header">
+      <h3>Contact Viktor</h3>
+      <button class="hire-close" id="hire-close" type="button">&#x2715;</button>
+    </div>
+    <form action="https://formspree.io/f/ABCDE" method="POST">
+      <input type="hidden" name="_subject" id="hire-subject" value="Hire inquiry from CV">
+      <div class="hire-field">
+        <label for="hire-name">Your name</label>
+        <input id="hire-name" type="text" name="name" required placeholder="Jane Smith">
+      </div>
+      <div class="hire-field">
+        <label for="hire-email">Your email</label>
+        <input id="hire-email" type="email" name="email" required placeholder="your@email.com">
+      </div>
+      <div class="hire-field">
+        <label for="hire-message">Message</label>
+        <textarea id="hire-message" name="message" required rows="5" placeholder="Hi Viktor, we'd like to..."></textarea>
+      </div>
+      <button type="submit" class="hire-submit">Send</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.expand-operation').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      btn.closest('.opblock-tag-section').classList.toggle('is-open');
+    });
+  });
+
+  document.querySelectorAll('.opblock-summary-control, .opblock-control-arrow').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      btn.closest('.opblock').classList.toggle('is-open');
+    });
+  });
+
+  (function() {
+    var modal = document.getElementById('hire-modal');
+
+    function openModal(subject) {
+      document.getElementById('hire-subject').value = subject || 'Hire inquiry from CV';
+      modal.style.display = '';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    document.getElementById('hire-btn').addEventListener('click', function() {
+      openModal('Hire inquiry from CV');
+    });
+
+    document.querySelectorAll('.hire-trigger').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var path = btn.closest('.opblock');
+        var pathEl = path && path.querySelector('.opblock-summary-path span');
+        var subject = pathEl ? 'Hire inquiry — ' + pathEl.textContent : 'Hire inquiry from CV';
+        openModal(subject);
+      });
+    });
+
+    document.getElementById('hire-close').addEventListener('click', closeModal);
+    document.getElementById('hire-backdrop').addEventListener('click', closeModal);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  })();
+</script>
+</body>
+</html>
