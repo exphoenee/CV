@@ -5,30 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Viktor Bozzay — CV</title>
   <style>
+    :root {
+      --bg: #0f0f0f;
+      --text: #d4d4d4;
+      --card-bg: #1a1a1a;
+      --card-border: #2a2a2a;
+      --card-shadow: rgba(0,0,0,.5);
+      --heading: #ffffff;
+      --muted: #888;
+      --muted2: #555;
+      --btn-bg: #252525;
+      --btn-border: #333;
+      --btn-hover-bg: #2d2d2d;
+      --accent: #ff7024;
+      --accent-bg: #ff702411;
+      --accent-bg-hover: #ff702422;
+      --footer-link: #777;
+      --hire-dialog-bg: #1a1a1a;
+      --hire-dialog-border: #2a2a2a;
+      --hire-field-bg: #252525;
+      --hire-field-border: #333;
+      --hire-close: #666;
+      --hire-close-hover: #fff;
+    }
+    .light {
+      --bg: #e4e4e4;
+      --text: #2e2e2e;
+      --card-bg: #ffffff;
+      --card-border: #c8c8c8;
+      --card-shadow: rgba(0,0,0,.1);
+      --heading: #111;
+      --muted: #777;
+      --muted2: #aaa;
+      --btn-bg: #ececec;
+      --btn-border: #c8c8c8;
+      --btn-hover-bg: #e2e2e2;
+      --accent: #e65c00;
+      --accent-bg: #e65c0008;
+      --accent-bg-hover: #e65c0015;
+      --footer-link: #999;
+      --hire-dialog-bg: #ffffff;
+      --hire-dialog-border: #e0e0e0;
+      --hire-field-bg: #f9f9f9;
+      --hire-field-border: #ddd;
+      --hire-close: #999;
+      --hire-close-hover: #333;
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
     body {
-      background: #0f0f0f;
-      color: #d4d4d4;
+      background: var(--bg);
+      color: var(--text);
       font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: background .3s, color .3s;
     }
     .card {
       text-align: center;
       padding: 60px 48px;
-      background: #1a1a1a;
+      background: var(--card-bg);
       border-radius: 16px;
-      border: 1px solid #2a2a2a;
-      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 20px 60px var(--card-shadow);
       max-width: 520px;
       width: 100%;
+      transition: background .3s, border-color .3s, box-shadow .3s;
     }
     h1 {
       font-size: 28px;
       font-weight: 600;
-      color: #ffffff;
+      color: var(--heading);
       margin-bottom: 4px;
       letter-spacing: -.02em;
     }
@@ -36,20 +84,20 @@
       display: block;
       font-size: 14px;
       font-weight: 400;
-      color: #888;
+      color: var(--muted);
       margin-top: 6px;
       letter-spacing: 0;
     }
     .divider {
       width: 40px;
       height: 3px;
-      background: #ff7024;
+      background: var(--accent);
       border-radius: 2px;
       margin: 24px auto;
     }
     .subtitle {
       font-size: 13px;
-      color: #888;
+      color: var(--muted);
       margin-bottom: 32px;
     }
     .btns {
@@ -61,9 +109,9 @@
       display: block;
       width: 100%;
       padding: 16px 24px;
-      background: #252525;
-      color: #d4d4d4;
-      border: 1px solid #333;
+      background: var(--btn-bg);
+      color: var(--text);
+      border: 1px solid var(--btn-border);
       border-radius: 10px;
       font-size: 15px;
       font-weight: 500;
@@ -73,8 +121,8 @@
       transition: background .15s, border-color .15s, transform .1s;
     }
     .btn:hover {
-      background: #2d2d2d;
-      border-color: #ff7024;
+      background: var(--btn-hover-bg);
+      border-color: var(--accent);
       transform: translateY(-1px);
     }
     .btn:active {
@@ -82,7 +130,7 @@
     }
     .btn .label {
       display: block;
-      color: #ff7024;
+      color: var(--accent);
       font-weight: 600;
       font-size: 12px;
       text-transform: uppercase;
@@ -92,29 +140,35 @@
     .btn .desc {
       display: block;
       font-size: 12px;
-      color: #888;
+      color: var(--muted);
     }
     .btn-hire {
-      border-color: #ff7024;
-      background: #ff702411;
+      border-color: var(--accent);
+      background: var(--accent-bg);
+      animation: hire-glow 2s ease-in-out infinite;
     }
     .btn-hire:hover {
-      background: #ff702422;
+      background: var(--accent-bg-hover);
+      animation: none;
     }
     .btn-hire .label {
-      color: #ff7024;
+      color: var(--accent);
+    }
+    @keyframes hire-glow {
+      0%, 100% { box-shadow: 0 0 10px rgba(255,112,36,.1), 0 0 20px rgba(255,112,36,.05); }
+      50%      { box-shadow: 0 0 20px rgba(255,112,36,.5), 0 0 40px rgba(255,112,36,.25), 0 0 60px rgba(255,112,36,.1); }
     }
     .footer {
       margin-top: 28px;
       font-size: 11px;
-      color: #555;
+      color: var(--muted2);
     }
     .footer a {
-      color: #777;
+      color: var(--footer-link);
       text-decoration: none;
     }
     .footer a:hover {
-      color: #ff7024;
+      color: var(--accent);
     }
 
     /* hire modal */
@@ -124,47 +178,56 @@
     .hire-dialog {
       position: fixed; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 9001; background: #1a1a1a; border-radius: 12px;
-      box-shadow: 0 8px 48px rgba(0,0,0,.5);
+      z-index: 9001; background: var(--hire-dialog-bg); border-radius: 12px;
+      box-shadow: 0 8px 48px var(--card-shadow);
       width: 440px; max-width: 96vw;
       font-family: "Segoe UI", system-ui, sans-serif;
-      border: 1px solid #2a2a2a;
+      border: 1px solid var(--hire-dialog-border);
     }
     .hire-dialog-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px; border-bottom: 1px solid #2a2a2a;
+      padding: 16px 20px; border-bottom: 1px solid var(--hire-dialog-border);
     }
-    .hire-dialog-header h3 { margin: 0; font-size: 15px; color: #fff; font-weight: 600; }
+    .hire-dialog-header h3 { margin: 0; font-size: 15px; color: var(--heading); font-weight: 600; }
     .hire-close {
       background: none; border: none; cursor: pointer;
-      font-size: 18px; color: #666; line-height: 1; padding: 0 4px;
+      font-size: 18px; color: var(--hire-close); line-height: 1; padding: 0 4px;
     }
-    .hire-close:hover { color: #fff; }
+    .hire-close:hover { color: var(--hire-close-hover); }
     .hire-dialog form { padding: 20px; }
     .hire-field { margin-bottom: 14px; }
     .hire-field label {
       display: block; font-size: 11px; font-weight: 600;
-      color: #aaa; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em;
+      color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em;
     }
     .hire-field input, .hire-field textarea {
       width: 100%; box-sizing: border-box;
-      background: #252525; border: 1px solid #333; border-radius: 6px;
-      padding: 10px 12px; font-size: 14px; color: #d4d4d4;
+      background: var(--hire-field-bg); border: 1px solid var(--hire-field-border); border-radius: 6px;
+      padding: 10px 12px; font-size: 14px; color: var(--text);
       font-family: inherit; outline: none;
     }
-    .hire-field input:focus, .hire-field textarea:focus { border-color: #ff7024; }
+    .hire-field input:focus, .hire-field textarea:focus { border-color: var(--accent); }
     .hire-field textarea { resize: vertical; min-height: 90px; }
     .hire-submit {
-      background: #ff7024; color: #fff; border: none; border-radius: 6px;
+      background: var(--accent); color: #fff; border: none; border-radius: 6px;
       padding: 10px 24px; font-size: 14px; font-weight: 600;
       cursor: pointer; font-family: inherit;
     }
     .hire-submit:hover { background: #e5621a; }
+    #theme-toggle {
+      position: fixed; top: 1rem; right: 1rem; z-index: 9999;
+      background: none; border: none; outline: none;
+      font-size: 24px; cursor: pointer; line-height: 1; padding: 0;
+    }
     .hire-submit:disabled { opacity: .5; cursor: default; }
   </style>
 </head>
 <body>
+  <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
   <div class="card">
+    <h2>
+      Curriculum Vitae of
+    </h2>
     <h1>
       Viktor Bozzay
       <small>Frontend Tech Lead &middot; Pécs, HU</small>
@@ -172,10 +235,6 @@
     <div class="divider"></div>
     <p class="subtitle">Choose how to view my CV</p>
     <div class="btns">
-      <a class="btn" href="cv-plain.html">
-        <span class="label">I'm a Human</span>
-        <span class="desc">Clean, readable CV</span>
-      </a>
       <a class="btn" href="cv-swagger.html">
         <span class="label">I'm a Frontend Developer</span>
         <span class="desc">Swagger-style API docs</span>
@@ -183,6 +242,10 @@
       <a class="btn" href="cv-json.html">
         <span class="label">I'm a Backend Developer</span>
         <span class="desc">JSON / VS Code view</span>
+      </a>
+            <a class="btn" href="cv-plain.html">
+        <span class="label">I'm a Human</span>
+        <span class="desc">Clean, readable CV</span>
       </a>
     </div>
     <div class="btns" style="margin-top:12px">
@@ -255,6 +318,19 @@
     document.getElementById('hire-index-backdrop').addEventListener('click', closeModal);
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeModal();
+    });
+  })();
+
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var theme = localStorage.getItem('theme');
+    if (theme === 'light') document.body.classList.add('light');
+    btn.textContent = theme === 'light' ? '\u{1F319}' : '\u2600\uFE0F';
+    btn.addEventListener('click', function() {
+      document.body.classList.toggle('light');
+      var isLight = document.body.classList.contains('light');
+      btn.textContent = isLight ? '\u{1F319}' : '\u2600\uFE0F';
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
   })();
 
