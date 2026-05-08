@@ -5,61 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="assets/swagger.svg" />
     <title>Viktor Bozzay - CV API</title>
-
-    <link rel="stylesheet" href="./style/cv-swagger.css">
-</head>
+    <link rel="stylesheet" href="./style/cv-swagger.css" />
+  </head>
   <body>
     <div id="swagger-ui">
       <section class="swagger-ui swagger-container">
-        <!-- TOPBAR -->
         <div class="topbar">
-            <div class="topbar-wrapper">
-              <a
-                class="link"
-                style="
-                  cursor: default;
-                  display: flex;
-                  align-items: center;
-                  gap: 10px;
-                  text-decoration: none;
-                "
+          <div class="topbar-wrapper">
+            <a
+              class="link"
+              style="
+                cursor: default;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                text-decoration: none;
+              "
+              ><img src="assets/swagger.svg" height="36" alt="Swagger" /><span
+                style="display: flex; flex-direction: column; line-height: 1.3"
+                ><span style="color: #fff; font-weight: 600; font-size: 14px">viktor</span
+                ><span style="color: #85ea2d; font-weight: 600; font-size: 14px">bozzay</span></span
+              ></a
+            ><button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">
+              <svg class="light-icon" viewBox="0 0 24 24" height="22">
+                <path
+                  d="M12 2C9.76 2 7.78 3.05 6.5 4.68l9.81 9.82C17.94 13.21 19 11.24 19 9a7 7 0 0 0-7-7M3.28 4 2 5.27 5.04 8.3C5 8.53 5 8.76 5 9c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h5.73l4 4L20 20.72zM9 20v1a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1z"
+                /></svg
+              ><svg class="dark-icon" viewBox="0 0 24 24" height="22">
+                <path
+                  d="M12 2C9.76 2 7.78 3.05 6.5 4.68l9.81 9.82C17.94 13.21 19 11.24 19 9a7 7 0 0 0-7-7M3.28 4 2 5.27 5.04 8.3C5 8.53 5 8.76 5 9c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h5.73l4 4L20 20.72zM9 20v1a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1z"
+                />
+              </svg>
+            </button>
+            <form class="download-url-wrapper" style="flex: 1; max-width: 640px">
+              <label class="select-label" style="width: 100%"
+                ><span>Endpoint</span>
+                <div class="servers" style="width: 100%">
+                  <label style="width: 100%"
+                    ><select style="width: 100%">
+                      <option>https://bozzayviktor.hu/cv/api - Viktor Bozzay CV API v4.2.0</option>
+                    </select></label
+                  >
+                </div></label
               >
-                <img src="assets/swagger.svg" height="36" alt="Swagger" />
-                <span style="display: flex; flex-direction: column; line-height: 1.3">
-                  <span style="color: #fff; font-weight: 600; font-size: 14px">viktor</span>
-                  <span style="color: #85ea2d; font-weight: 600; font-size: 14px">bozzay</span>
-                </span>
-              </a>
-              <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">
-                <svg class="light-icon" viewBox="0 0 24 24" height="22">
-                  <path
-                    d="M12 2C9.76 2 7.78 3.05 6.5 4.68l9.81 9.82C17.94 13.21 19 11.24 19 9a7 7 0 0 0-7-7M3.28 4 2 5.27 5.04 8.3C5 8.53 5 8.76 5 9c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h5.73l4 4L20 20.72zM9 20v1a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1z"
-                  />
-                </svg>
-                <svg class="dark-icon" viewBox="0 0 24 24" height="22">
-                  <path
-                    d="M12 2C9.76 2 7.78 3.05 6.5 4.68l9.81 9.82C17.94 13.21 19 11.24 19 9a7 7 0 0 0-7-7M3.28 4 2 5.27 5.04 8.3C5 8.53 5 8.76 5 9c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h5.73l4 4L20 20.72zM9 20v1a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1z"
-                  />
-                </svg>
-              </button>
-              <form class="download-url-wrapper" style="flex: 1; max-width: 640px">
-                <label class="select-label" style="width: 100%">
-                  <span>Endpoint</span>
-                  <div class="servers" style="width: 100%">
-                    <label style="width: 100%">
-                      <select style="width: 100%">
-                        <option>
-                          https://bozzayviktor.hu/cv/api - Viktor Bozzay CV API v4.2.0
-                        </option>
-                      </select>
-                    </label>
-                  </div>
-                </label>
-              </form>
-            </div>
+            </form>
+          </div>
         </div>
-
-        <!-- INFO -->
         <div class="information-container wrapper">
           <section class="block col-12">
             <div>
@@ -67,10 +58,10 @@
                 <hgroup class="main">
                   <h1 class="title">
                     Viktor Bozzay - Curriculum Vitae API
-                    <span>
-                      <small><pre class="version"> 4.2.0 </pre></small>
-                      <small class="version-stamp"><pre class="version">REST</pre></small>
-                    </span>
+                    <span
+                      ><small><pre class="version">4.2.0 </pre></small
+                      ><small class="version-stamp"><pre class="version">REST</pre></small></span
+                    >
                   </h1>
                 </hgroup>
                 <div class="description">
@@ -83,16 +74,13 @@
                       deliberately: only when evidence justifies it, always with a clear plan.
                     </p>
                     <p>
-                      <a href="mailto:bozzay.viktor@gmail.com">bozzay.viktor@gmail.com</a>
-                      &nbsp;·&nbsp; <a href="tel:+36306106608">+36 30 610 6608</a> &nbsp;·&nbsp;
-                      <a href="https://github.com/exphoenee" target="_blank"
-                        >github.com/exphoenee</a
-                      >
-                      &nbsp;·&nbsp;
+                      <a href="mailto:bozzay.viktor@gmail.com">bozzay.viktor@gmail.com</a
+                      >&nbsp;·&nbsp; <a href="tel:+36306106608">+36 30 610 6608</a>&nbsp;·&nbsp;
+                      <a href="https://github.com/exphoenee" target="_blank">github.com/exphoenee</a
+                      >&nbsp;·&nbsp;
                       <a href="https://linkedin.com/in/viktorbozzay/" target="_blank"
                         >linkedin.com/in/viktorbozzay</a
-                      >
-                      &nbsp;·&nbsp;
+                      >&nbsp;·&nbsp;
                       <a href="https://www.bozzayviktor.hu" target="_blank">bozzayviktor.hu</a>
                     </p>
                   </div>
@@ -101,8 +89,6 @@
             </div>
           </section>
         </div>
-
-        <!-- SCHEME CONTAINER -->
         <div class="scheme-container">
           <section class="schemes wrapper block col-12">
             <div class="schemes-server-container">
@@ -119,23 +105,21 @@
             </div>
             <div class="auth-wrapper">
               <button class="btn authorize unlocked" id="hire-btn">
-                <span>Hire</span>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20">
+                <span>Hire</span
+                ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20">
                   <use href="#unlocked" xlink:href="#unlocked"></use>
                 </svg>
               </button>
             </div>
           </section>
         </div>
-
         <div class="wrapper">
           <section class="block col-12 block-desktop col-12-desktop">
             <div>
-              <!-- ════ identity ════════════════════════════════════════════════════ -->
               <div class="opblock-tag-section is-open" id="operations-tag-identity">
                 <h3 class="opblock-tag no-desc">
-                  <span>identity</span><small></small>
-                  <button class="expand-operation" title="Collapse operation">
+                  <span>identity</span><small></small
+                  ><button class="expand-operation" title="Collapse operation">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -152,7 +136,6 @@
                 </h3>
                 <div class="no-margin">
                   <div class="operation-tag-content">
-                    <!-- GET /identity/profile -->
                     <div class="opblock opblock-get" id="operations-identity-get_identity_profile">
                       <div class="opblock-summary opblock-summary-get">
                         <button class="opblock-summary-control">
@@ -196,9 +179,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -252,18 +234,18 @@
                                   <td class="response-col_status">200</td>
                                   <td class="response-col_description">
                                     <div class="renderedMarkdown">
-                                      <p class="cv-kv"><code>name</code> Viktor Bozzay</p>
+                                      <p class="cv-kv"><code>name</code>Viktor Bozzay</p>
                                       <p class="cv-kv">
-                                        <code>role</code> Frontend Tech Lead
+                                        <code>role</code>Frontend Tech Lead
                                         <em>// "Developer" is an understatement</em>
                                       </p>
-                                      <p class="cv-kv"><code>location</code> Pécs, Hungary</p>
+                                      <p class="cv-kv"><code>location</code>Pécs, Hungary</p>
                                       <p class="cv-kv">
-                                        <code>accentColor</code> #ff7024
+                                        <code>accentColor</code>#ff7024
                                         <span class="cv-color-dot"></span>
                                       </p>
                                       <p class="cv-kv">
-                                        <code>deprecated</code> false
+                                        <code>deprecated</code>false
                                         <em>// still actively maintained</em>
                                       </p>
                                     </div>
@@ -282,7 +264,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -295,8 +277,6 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- GET /identity/contact -->
                     <div class="opblock opblock-get" id="operations-identity-get_identity_contact">
                       <div class="opblock-summary opblock-summary-get">
                         <button class="opblock-summary-control">
@@ -340,9 +320,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -390,33 +369,32 @@
                                   <td class="response-col_description">
                                     <div class="renderedMarkdown">
                                       <p class="cv-kv">
-                                        <code>email</code>
-                                        <a href="mailto:bozzay.viktor@gmail.com"
+                                        <code>email</code
+                                        ><a href="mailto:bozzay.viktor@gmail.com"
                                           >bozzay.viktor@gmail.com</a
                                         >
                                       </p>
                                       <p class="cv-kv">
-                                        <code>phone</code>
-                                        <a href="tel:+36306106608">+36 30 610 6608</a>
+                                        <code>phone</code
+                                        ><a href="tel:+36306106608">+36 30 610 6608</a>
                                       </p>
                                       <p class="cv-kv">
-                                        <code>github</code>
-                                        <a href="https://github.com/exphoenee" target="_blank"
+                                        <code>github</code
+                                        ><a href="https://github.com/exphoenee" target="_blank"
                                           >github.com/exphoenee</a
-                                        >
-                                        <em>// phoenix, with extra e's</em>
+                                        ><em>// phoenix, with extra e's</em>
                                       </p>
                                       <p class="cv-kv">
-                                        <code>linkedin</code>
-                                        <a
+                                        <code>linkedin</code
+                                        ><a
                                           href="https://linkedin.com/in/viktorbozzay/"
                                           target="_blank"
                                           >linkedin.com/in/viktorbozzay</a
                                         >
                                       </p>
                                       <p class="cv-kv">
-                                        <code>website</code>
-                                        <a href="https://www.bozzayviktor.hu" target="_blank"
+                                        <code>website</code
+                                        ><a href="https://www.bozzayviktor.hu" target="_blank"
                                           >bozzayviktor.hu</a
                                         >
                                       </p>
@@ -436,7 +414,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -449,9 +427,10 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- GET /identity/languages -->
-                    <div class="opblock opblock-get" id="operations-identity-get_identity_languages">
+                    <div
+                      class="opblock opblock-get"
+                      id="operations-identity-get_identity_languages"
+                    >
                       <div class="opblock-summary opblock-summary-get">
                         <button class="opblock-summary-control">
                           <span class="opblock-summary-method">GET</span>
@@ -496,9 +475,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -546,14 +524,14 @@
                                   <td class="response-col_description">
                                     <div class="renderedMarkdown">
                                       <p class="cv-kv">
-                                        <code>Hungarian</code> native <em>// no runtime errors</em>
+                                        <code>Hungarian</code>native <em>// no runtime errors</em>
                                       </p>
                                       <p class="cv-kv">
-                                        <code>German</code> B2
+                                        <code>German</code>B2
                                         <em>// can order Schnitzel and read stack traces</em>
                                       </p>
                                       <p class="cv-kv">
-                                        <code>English</code> B2
+                                        <code>English</code>B2
                                         <em>// you're reading this - proof it works</em>
                                       </p>
                                     </div>
@@ -572,7 +550,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -588,12 +566,10 @@
                   </div>
                 </div>
               </div>
-
-              <!-- ════ summary ════════════════════════════════════════════════════ -->
               <div class="opblock-tag-section is-open" id="operations-tag-summary">
                 <h3 class="opblock-tag no-desc">
-                  <span>summary</span><small></small>
-                  <button class="expand-operation" title="Collapse operation">
+                  <span>summary</span><small></small
+                  ><button class="expand-operation" title="Collapse operation">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -653,9 +629,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -734,7 +709,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -750,12 +725,10 @@
                   </div>
                 </div>
               </div>
-
-              <!-- ════ workExperience ═════════════════════════════════════════════ -->
               <div class="opblock-tag-section is-open" id="operations-tag-workExperience">
                 <h3 class="opblock-tag no-desc">
-                  <span>workExperience</span><small></small>
-                  <button class="expand-operation" title="Collapse operation">
+                  <span>workExperience</span><small></small
+                  ><button class="expand-operation" title="Collapse operation">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -772,8 +745,10 @@
                 </h3>
                 <div class="no-margin">
                   <div class="operation-tag-content">
-                    <!-- POST /experience/aegex -->
-                    <div class="opblock opblock-post" id="operations-workExperience-post_experience_aegex">
+                    <div
+                      class="opblock opblock-post"
+                      id="operations-workExperience-post_experience_aegex"
+                    >
                       <div class="opblock-summary opblock-summary-post">
                         <button class="opblock-summary-control">
                           <span class="opblock-summary-method">POST</span>
@@ -819,9 +794,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -880,7 +854,7 @@
                                     </td>
                                     <td class="parameters-col_description">
                                       <div class="renderedMarkdown">
-                                        <p>2023-11 → null <em>// null = still here</em></p>
+                                        <p>2023-11 → null <em>// null=still here</em></p>
                                       </div>
                                     </td>
                                   </tr>
@@ -949,7 +923,7 @@
                                   <td class="response-col_description">
                                     <div class="renderedMarkdown">
                                       <p>
-                                        <strong>SafeSy</strong> - Internal manufacturing management
+                                        <strong>SafeSy</strong>- Internal manufacturing management
                                         (cross-role: production, office, execs, partners)
                                       </p>
                                       <ul>
@@ -968,7 +942,7 @@
                                         </li>
                                       </ul>
                                       <p>
-                                        <strong>FACTS</strong> - Feedstock and Compliance Tracking
+                                        <strong>FACTS</strong>- Feedstock and Compliance Tracking
                                         System
                                       </p>
                                       <ul>
@@ -1008,7 +982,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -1027,9 +1001,10 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- POST /experience/telekom -->
-                    <div class="opblock opblock-post" id="operations-workExperience-post_experience_telekom">
+                    <div
+                      class="opblock opblock-post"
+                      id="operations-workExperience-post_experience_telekom"
+                    >
                       <div class="opblock-summary opblock-summary-post">
                         <button class="opblock-summary-control">
                           <span class="opblock-summary-method">POST</span>
@@ -1074,9 +1049,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -1208,7 +1182,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -1227,9 +1201,10 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- POST /experience/scolia -->
-                    <div class="opblock opblock-post" id="operations-workExperience-post_experience_scolia">
+                    <div
+                      class="opblock opblock-post"
+                      id="operations-workExperience-post_experience_scolia"
+                    >
                       <div class="opblock-summary opblock-summary-post">
                         <button class="opblock-summary-control">
                           <span class="opblock-summary-method">POST</span>
@@ -1274,9 +1249,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -1405,7 +1379,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -1422,9 +1396,10 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- POST /experience/cubicfox -->
-                    <div class="opblock opblock-post" id="operations-workExperience-post_experience_cubicfox">
+                    <div
+                      class="opblock opblock-post"
+                      id="operations-workExperience-post_experience_cubicfox"
+                    >
                       <div class="opblock-summary opblock-summary-post">
                         <button class="opblock-summary-control">
                           <span class="opblock-summary-method">POST</span>
@@ -1469,9 +1444,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -1604,7 +1578,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -1621,9 +1595,10 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- PUT /experience/cobotx -->
-                    <div class="opblock opblock-put" id="operations-workExperience-put_experience_cobotx">
+                    <div
+                      class="opblock opblock-put"
+                      id="operations-workExperience-put_experience_cobotx"
+                    >
                       <div class="opblock-summary opblock-summary-put">
                         <button class="opblock-summary-control">
                           <span class="opblock-summary-method">PUT</span>
@@ -1668,9 +1643,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -1833,7 +1807,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -1846,9 +1820,10 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- PUT /experience/webforsol -->
-                    <div class="opblock opblock-put" id="operations-workExperience-put_experience_webforsol">
+                    <div
+                      class="opblock opblock-put"
+                      id="operations-workExperience-put_experience_webforsol"
+                    >
                       <div class="opblock-summary opblock-summary-put">
                         <button class="opblock-summary-control">
                           <span class="opblock-summary-method">PUT</span>
@@ -1893,9 +1868,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2039,7 +2013,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -2047,11 +2021,11 @@
                                   <td class="response-col_links">
                                     <a href="https://szelacoaching.hu" target="_blank"
                                       >szelacoaching.hu</a
-                                    ><br />
-                                    <a href="https://www.pecscoach.hu" target="_blank"
+                                    ><br /><a href="https://www.pecscoach.hu" target="_blank"
                                       >pecscoach.hu</a
-                                    ><br />
-                                    <a href="https://smartedu.hu" target="_blank">smartedu.hu</a>
+                                    ><br /><a href="https://smartedu.hu" target="_blank"
+                                      >smartedu.hu</a
+                                    >
                                   </td>
                                 </tr>
                               </tbody>
@@ -2063,12 +2037,10 @@
                   </div>
                 </div>
               </div>
-
-              <!-- ════ education ══════════════════════════════════════════════════ -->
               <div class="opblock-tag-section is-open" id="operations-tag-education">
                 <h3 class="opblock-tag no-desc">
-                  <span>education</span><small></small>
-                  <button class="expand-operation" title="Collapse operation">
+                  <span>education</span><small></small
+                  ><button class="expand-operation" title="Collapse operation">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -2085,8 +2057,10 @@
                 </h3>
                 <div class="no-margin">
                   <div class="operation-tag-content">
-                    <!-- GET /education/quality-manager -->
-                    <div class="opblock opblock-get" id="operations-education-get_education_quality-manager">
+                    <div
+                      class="opblock opblock-get"
+                      id="operations-education-get_education_quality-manager"
+                    >
                       <div class="opblock-summary opblock-summary-get">
                         <button class="opblock-summary-control">
                           <span class="opblock-summary-method">GET</span>
@@ -2131,9 +2105,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2181,13 +2154,13 @@
                                   <td class="response-col_description">
                                     <div class="renderedMarkdown">
                                       <p class="cv-kv">
-                                        <code>institution</code> Faculty of Engineering and
+                                        <code>institution</code>Faculty of Engineering and
                                         Information Technology, University of Pécs
                                       </p>
                                       <p class="cv-kv">
-                                        <code>degree</code> Bachelor's - Quality Manager
+                                        <code>degree</code>Bachelor's - Quality Manager
                                       </p>
-                                      <p class="cv-kv"><code>years</code> 2003–2007</p>
+                                      <p class="cv-kv"><code>years</code>2003–2007</p>
                                     </div>
                                     <section class="response-controls">
                                       <div
@@ -2204,7 +2177,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -2217,9 +2190,10 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- GET /education/teacher -->
-                    <div class="opblock opblock-get" id="operations-education-get_education_teacher">
+                    <div
+                      class="opblock opblock-get"
+                      id="operations-education-get_education_teacher"
+                    >
                       <div class="opblock-summary opblock-summary-get">
                         <button class="opblock-summary-control">
                           <span class="opblock-summary-method">GET</span>
@@ -2264,9 +2238,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2314,14 +2287,14 @@
                                   <td class="response-col_description">
                                     <div class="renderedMarkdown">
                                       <p class="cv-kv">
-                                        <code>institution</code> Faculty of Engineering and
+                                        <code>institution</code>Faculty of Engineering and
                                         Information Technology, University of Pécs
                                       </p>
                                       <p class="cv-kv">
-                                        <code>degree</code> Bachelor's - Machinery Technical Teacher
+                                        <code>degree</code>Bachelor's - Machinery Technical Teacher
                                         Education
                                       </p>
-                                      <p class="cv-kv"><code>years</code> 2001–2004</p>
+                                      <p class="cv-kv"><code>years</code>2001–2004</p>
                                     </div>
                                     <section class="response-controls">
                                       <div
@@ -2338,7 +2311,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -2351,9 +2324,10 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- GET /education/engineering -->
-                    <div class="opblock opblock-get" id="operations-education-get_education_engineering">
+                    <div
+                      class="opblock opblock-get"
+                      id="operations-education-get_education_engineering"
+                    >
                       <div class="opblock-summary opblock-summary-get">
                         <button class="opblock-summary-control">
                           <span class="opblock-summary-method">GET</span>
@@ -2398,9 +2372,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2448,13 +2421,13 @@
                                   <td class="response-col_description">
                                     <div class="renderedMarkdown">
                                       <p class="cv-kv">
-                                        <code>institution</code> Faculty of Engineering and
+                                        <code>institution</code>Faculty of Engineering and
                                         Information Technology, University of Pécs
                                       </p>
                                       <p class="cv-kv">
-                                        <code>degree</code> BEng - Mechanical Engineering
+                                        <code>degree</code>BEng - Mechanical Engineering
                                       </p>
-                                      <p class="cv-kv"><code>years</code> 2000–2004</p>
+                                      <p class="cv-kv"><code>years</code>2000–2004</p>
                                       <p>
                                         <em
                                           >// none of them are frontend. this is fine. (this is
@@ -2477,7 +2450,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -2493,12 +2466,10 @@
                   </div>
                 </div>
               </div>
-
-              <!-- ════ skills ═════════════════════════════════════════════════════ -->
               <div class="opblock-tag-section is-open" id="operations-tag-skills">
                 <h3 class="opblock-tag no-desc">
-                  <span>skills</span><small></small>
-                  <button class="expand-operation" title="Collapse operation">
+                  <span>skills</span><small></small
+                  ><button class="expand-operation" title="Collapse operation">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -2515,7 +2486,6 @@
                 </h3>
                 <div class="no-margin">
                   <div class="operation-tag-content">
-                    <!-- GET /skills/primary -->
                     <div class="opblock opblock-get" id="operations-skills-get_skills_primary">
                       <div class="opblock-summary opblock-summary-get">
                         <button class="opblock-summary-control">
@@ -2559,9 +2529,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2626,8 +2595,6 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- GET /skills/backend -->
                     <div class="opblock opblock-get" id="operations-skills-get_skills_backend">
                       <div class="opblock-summary opblock-summary-get">
                         <button class="opblock-summary-control">
@@ -2671,9 +2638,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2736,8 +2702,6 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- PATCH /skills/testing -->
                     <div class="opblock opblock-patch" id="operations-skills-patch_skills_testing">
                       <div class="opblock-summary opblock-summary-patch">
                         <button class="opblock-summary-control">
@@ -2783,9 +2747,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2845,8 +2808,6 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- GET /skills/tooling -->
                     <div class="opblock opblock-get" id="operations-skills-get_skills_tooling">
                       <div class="opblock-summary opblock-summary-get">
                         <button class="opblock-summary-control">
@@ -2890,9 +2851,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2953,8 +2913,6 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- GET /skills/ai -->
                     <div class="opblock opblock-get" id="operations-skills-get_skills_ai">
                       <div class="opblock-summary opblock-summary-get">
                         <button class="opblock-summary-control">
@@ -3001,9 +2959,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -3062,8 +3019,6 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- GET /skills/robotics -->
                     <div class="opblock opblock-get" id="operations-skills-get_skills_robotics">
                       <div class="opblock-summary opblock-summary-get">
                         <button class="opblock-summary-control">
@@ -3109,9 +3064,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -3172,9 +3126,10 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- DELETE /skills/willRefactorYourEntireCodebaseIf -->
-                    <div class="opblock opblock-delete" id="operations-skills-delete_skills_willRefactorYourEntireCodebaseIf">
+                    <div
+                      class="opblock opblock-delete"
+                      id="operations-skills-delete_skills_willRefactorYourEntireCodebaseIf"
+                    >
                       <div class="opblock-summary opblock-summary-delete">
                         <button class="opblock-summary-control">
                           <span class="opblock-summary-method">DELETE</span>
@@ -3221,9 +3176,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -3293,7 +3247,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -3309,12 +3263,10 @@
                   </div>
                 </div>
               </div>
-
-              <!-- ════ community ══════════════════════════════════════════════════ -->
               <div class="opblock-tag-section is-open" id="operations-tag-community">
                 <h3 class="opblock-tag no-desc">
-                  <span>community</span><small></small>
-                  <button class="expand-operation" title="Collapse operation">
+                  <span>community</span><small></small
+                  ><button class="expand-operation" title="Collapse operation">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -3331,8 +3283,10 @@
                 </h3>
                 <div class="no-margin">
                   <div class="operation-tag-content">
-                    <!-- POST /community/mentoring -->
-                    <div class="opblock opblock-post" id="operations-community-post_community_mentoring">
+                    <div
+                      class="opblock opblock-post"
+                      id="operations-community-post_community_mentoring"
+                    >
                       <div class="opblock-summary opblock-summary-post">
                         <button class="opblock-summary-control">
                           <span class="opblock-summary-method">POST</span>
@@ -3377,9 +3331,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -3427,16 +3380,13 @@
                                   <td class="response-col_description">
                                     <div class="renderedMarkdown">
                                       <p class="cv-kv">
-                                        <code>school</code> Mátyás Király Street Primary School,
-                                        Pécs
+                                        <code>school</code>Mátyás Király Street Primary School, Pécs
                                       </p>
-                                      <p class="cv-kv"><code>since</code> 2026-02</p>
+                                      <p class="cv-kv"><code>since</code>2026-02</p>
                                       <p class="cv-kv">
-                                        <code>curriculumDesignedBy</code> Viktor (personally)
+                                        <code>curriculumDesignedBy</code>Viktor (personally)
                                       </p>
-                                      <p class="cv-kv">
-                                        <code>paid</code> false <em>// legend</em>
-                                      </p>
+                                      <p class="cv-kv"><code>paid</code>false <em>// legend</em></p>
                                       <p><strong>Competition results:</strong></p>
                                       <ul>
                                         <li>🥇 1st - Hack and Code 2026 (Radnóti SZKI)</li>
@@ -3459,7 +3409,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -3475,12 +3425,10 @@
                   </div>
                 </div>
               </div>
-
-              <!-- ════ meta ════════════════════════════════════════════════════════ -->
               <div class="opblock-tag-section is-open" id="operations-tag-meta">
                 <h3 class="opblock-tag no-desc">
-                  <span>meta</span><small></small>
-                  <button class="expand-operation" title="Collapse operation">
+                  <span>meta</span><small></small
+                  ><button class="expand-operation" title="Collapse operation">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -3497,7 +3445,6 @@
                 </h3>
                 <div class="no-margin">
                   <div class="operation-tag-content">
-                    <!-- GET /meta -->
                     <div class="opblock opblock-get" id="operations-meta-get_meta">
                       <div class="opblock-summary opblock-summary-get">
                         <button class="opblock-summary-control">
@@ -3541,9 +3488,8 @@
                               fill="#7d8492"
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
-                          </svg>
-                        </button>
-                        <button class="opblock-control-arrow">
+                          </svg></button
+                        ><button class="opblock-control-arrow">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -3591,19 +3537,19 @@
                                   <td class="response-col_description">
                                     <div class="renderedMarkdown">
                                       <p class="cv-kv">
-                                        <code>generatedBy</code> human effort + CodersRank + Claude
+                                        <code>generatedBy</code>human effort + CodersRank + Claude
                                         (probably)
                                       </p>
                                       <p class="cv-kv">
-                                        <code>codingPhilosophy</code> deliberate, evidence-driven,
+                                        <code>codingPhilosophy</code>deliberate, evidence-driven,
                                         system-level thinking
                                       </p>
                                       <p class="cv-kv">
-                                        <code>engineeringBackground</code> true
+                                        <code>engineeringBackground</code>true
                                         <em>// 3× BEng - thinks in systems, not just components</em>
                                       </p>
                                       <p class="cv-kv">
-                                        <code>openToWork</code> true
+                                        <code>openToWork</code>true
                                         <em>// ask directly: bozzay.viktor@gmail.com</em>
                                       </p>
                                     </div>
@@ -3622,7 +3568,7 @@
                                           </select>
                                         </div>
                                         <small class="response-control-media-type__accept-message"
-                                          >Controls <code>Accept</code> header.</small
+                                          >Controls <code>Accept</code>header.</small
                                         >
                                       </div>
                                     </section>
@@ -3643,8 +3589,6 @@
         </div>
       </section>
     </div>
-
-    <!-- HIRE MODAL -->
     <div id="hire-modal" style="display: none">
       <div class="hire-backdrop" id="hire-backdrop"></div>
       <div class="hire-dialog">
@@ -3667,156 +3611,45 @@
         <form id="hire-form">
           <input type="hidden" name="_subject" id="hire-subject" value="Hire inquiry from CV" />
           <div class="hire-field">
-            <label for="hire-name">Your name</label>
-            <input
+            <label for="hire-name">Your name</label
+            ><input
               id="hire-name"
               type="text"
               name="name"
               required
               placeholder="Jane Smith"
               data-fs-field
-            />
-            <span data-fs-error="name" style="color: #d9534f; font-size: 12px"></span>
+            /><span data-fs-error="name" style="color: #d9534f; font-size: 12px"></span>
           </div>
           <div class="hire-field">
-            <label for="hire-email">Your email</label>
-            <input
+            <label for="hire-email">Your email</label
+            ><input
               id="hire-email"
               type="email"
               name="email"
               required
               placeholder="your@email.com"
               data-fs-field
-            />
-            <span data-fs-error="email" style="color: #d9534f; font-size: 12px"></span>
+            /><span data-fs-error="email" style="color: #d9534f; font-size: 12px"></span>
           </div>
           <div class="hire-field">
-            <label for="hire-message">Message</label>
-            <textarea
+            <label for="hire-message">Message</label
+            ><textarea
               id="hire-message"
               name="message"
               required
               rows="5"
               placeholder="Hi Viktor, we'd like to..."
               data-fs-field
-            ></textarea>
-            <span data-fs-error="message" style="color: #d9534f; font-size: 12px"></span>
+            ></textarea
+            ><span data-fs-error="message" style="color: #d9534f; font-size: 12px"></span>
           </div>
           <button type="submit" class="hire-submit" data-fs-submit-btn>Send</button>
         </form>
       </div>
     </div>
-
     <script>
-      // collapse state persistence
-      var STORAGE_KEY = "cv-collapse-state";
-
-      function saveState(id, isOpen) {
-        var state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-        state[id] = isOpen;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      }
-
-      function loadState(id, defaultValue) {
-        var state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-        if (state[id] === undefined) return defaultValue;
-        return state[id];
-      }
-
-      // Tag section toggles
-      document.querySelectorAll(".expand-operation").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          var section = btn.closest(".opblock-tag-section");
-          section.classList.toggle("is-open");
-          if (section.id) saveState(section.id, section.classList.contains("is-open"));
-        });
-      });
-
-      // Opblock toggles
-      document.querySelectorAll(".opblock-summary-control, .opblock-control-arrow").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          var opblock = btn.closest(".opblock");
-          opblock.classList.toggle("is-open");
-          if (opblock.id) saveState(opblock.id, opblock.classList.contains("is-open"));
-        });
-      });
-
-      // Restore saved states on page load
-      (function restoreSavedStates() {
-        var state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-        Object.keys(state).forEach(function (id) {
-          var el = document.getElementById(id);
-          if (el) {
-            if (state[id]) {
-              el.classList.add("is-open");
-            } else {
-              el.classList.remove("is-open");
-            }
-          }
-        });
-      })();
-
-      (function () {
-        var modal = document.getElementById("hire-modal");
-
-        function openModal(subject) {
-          document.getElementById("hire-subject").value = subject || "Hire inquiry from CV";
-          var form = document.getElementById("hire-form");
-          form.reset();
-          form.style.display = "";
-          var fsSuccess = document.querySelector("#hire-modal [data-fs-success]");
-          if (fsSuccess) fsSuccess.style.display = "none";
-          var fsError = document.querySelector("#hire-modal [data-fs-error]");
-          if (fsError) fsError.style.display = "none";
-          modal.style.display = "";
-        }
-
-        function closeModal() {
-          modal.style.display = "none";
-        }
-
-        document.getElementById("hire-btn").addEventListener("click", function () {
-          openModal("Hire inquiry from CV");
-        });
-
-        document.querySelectorAll(".hire-trigger").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            var path = btn.closest(".opblock");
-            var pathEl = path && path.querySelector(".opblock-summary-path span");
-            var subject = pathEl ? "Hire inquiry - " + pathEl.textContent : "Hire inquiry from CV";
-            openModal(subject);
-          });
-        });
-
-        document.getElementById("hire-close").addEventListener("click", closeModal);
-        document.getElementById("hire-backdrop").addEventListener("click", closeModal);
-        document.addEventListener("keydown", function (e) {
-          if (e.key === "Escape") closeModal();
-        });
-      })();
-
-      // theme toggle
-      (function () {
-        var KEY = "cv-swagger-theme";
-        function setTheme(theme) {
-          document.documentElement.setAttribute("data-theme", theme);
-          localStorage.setItem(KEY, theme);
-        }
-        document.getElementById("theme-toggle").addEventListener("click", function () {
-          var next =
-            document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-          setTheme(next);
-        });
-        var saved = localStorage.getItem(KEY);
-        if (saved) setTheme(saved);
-      })();
-
-      window.formspree =
-        window.formspree ||
-        function () {
-          (formspree.q = formspree.q || []).push(arguments);
-        };
-      formspree("initForm", { formElement: "#hire-form", formId: "mrejlned" });
+      // collapse state persistence var STORAGE_KEY="cv-collapse-state"; function saveState(id, isOpen){ var state=JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); state[id]=isOpen; localStorage.setItem(STORAGE_KEY, JSON.stringify(state));} function loadState(id, defaultValue){ var state=JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); if (state[id]===undefined) return defaultValue; return state[id];} // Tag section toggles document.querySelectorAll(".expand-operation").forEach(function (btn){ btn.addEventListener("click", function (){ var section=btn.closest(".opblock-tag-section"); section.classList.toggle("is-open"); if (section.id) saveState(section.id, section.classList.contains("is-open"));});}); // Opblock toggles document.querySelectorAll(".opblock-summary-control, .opblock-control-arrow").forEach(function (btn){ btn.addEventListener("click", function (){ var opblock=btn.closest(".opblock"); opblock.classList.toggle("is-open"); if (opblock.id) saveState(opblock.id, opblock.classList.contains("is-open"));});}); // Restore saved states on page load (function restoreSavedStates(){ var state=JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); Object.keys(state).forEach(function (id){ var el=document.getElementById(id); if (el){ if (state[id]){ el.classList.add("is-open");} else{ el.classList.remove("is-open");}}});})(); (function (){ var modal=document.getElementById("hire-modal"); function openModal(subject){ document.getElementById("hire-subject").value=subject || "Hire inquiry from CV"; var form=document.getElementById("hire-form"); form.reset(); form.style.display=""; var fsSuccess=document.querySelector("#hire-modal [data-fs-success]"); if (fsSuccess) fsSuccess.style.display="none"; var fsError=document.querySelector("#hire-modal [data-fs-error]"); if (fsError) fsError.style.display="none"; modal.style.display="";} function closeModal(){ modal.style.display="none";} document.getElementById("hire-btn").addEventListener("click", function (){ openModal("Hire inquiry from CV");}); document.querySelectorAll(".hire-trigger").forEach(function (btn){ btn.addEventListener("click", function (){ var path=btn.closest(".opblock"); var pathEl=path && path.querySelector(".opblock-summary-path span"); var subject=pathEl ? "Hire inquiry - " + pathEl.textContent : "Hire inquiry from CV"; openModal(subject);});}); document.getElementById("hire-close").addEventListener("click", closeModal); document.getElementById("hire-backdrop").addEventListener("click", closeModal); document.addEventListener("keydown", function (e){ if (e.key==="Escape") closeModal();});})(); // theme toggle (function (){ var KEY="cv-swagger-theme"; function setTheme(theme){ document.documentElement.setAttribute("data-theme", theme); localStorage.setItem(KEY, theme);} document.getElementById("theme-toggle").addEventListener("click", function (){ var next=document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark"; setTheme(next);}); var saved=localStorage.getItem(KEY); if (saved) setTheme(saved);})(); window.formspree=window.formspree || function (){ (formspree.q=formspree.q || []).push(arguments);}; formspree("initForm",{ formElement: "#hire-form", formId: "mrejlned"});
     </script>
     <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
   </body>

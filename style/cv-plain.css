@@ -1,0 +1,314 @@
+
+      :root {
+        --print-margin: 20mm;
+        --print-margin-bottom: 25mm;
+        --body-font-size: 10pt;
+        --name-font-size: 1.875rem;
+        --role-font-size: 1.125rem;
+        --contacts-font-size: 0.875rem;
+        --intro-font-size: 0.875rem;
+        --block-title-font-size: 1.25rem;
+        --item-title-font-size: 1rem;
+        --item-details-font-size: 0.875rem;
+        --item-description-font-size: 0.875rem;
+        --skill-font-size: 0.875rem;
+        --powered-by-font-size: 10px;
+        --chart-label-font-size: 10px;
+        --chart-legend-font-size: 14px;
+        --chart-tooltip-font-size: 12px;
+        --chart-tooltip-total-font-size: 16px;
+      }
+
+      .name-container {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .name {
+        font-size: var(--name-font-size) !important;
+      }
+
+      .deatils-container {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .role {
+        font-size: var(--role-font-size) !important;
+      }
+
+      .contacts {
+        font-size: var(--contacts-font-size) !important;
+      }
+
+      .intro {
+        font-size: var(--intro-font-size) !important;
+      }
+
+      .blockTitle,
+      .cv-block-title {
+        font-size: var(--block-title-font-size) !important;
+      }
+
+      .itemTitle {
+        font-size: var(--item-title-font-size) !important;
+      }
+
+      .itemDetailsWithDate,
+      .itemDetails {
+        font-size: var(--item-details-font-size) !important;
+      }
+
+      .itemDescription {
+        font-size: var(--item-description-font-size) !important;
+      }
+
+      .skill {
+        font-size: var(--skill-font-size) !important;
+        line-height: 1.2 !important;
+      }
+
+      .poweredBy {
+        font-size: var(--powered-by-font-size) !important;
+      }
+
+      .workExperienceItem {
+        display: grid !important;
+        grid-template-columns: 3rem minmax(0, 1fr) auto;
+        column-gap: 1rem;
+        row-gap: 0.5rem;
+        align-items: center;
+      }
+
+      .workExperienceItem .itemLogo {
+        grid-column: 1;
+        grid-row: 1;
+        margin-right: 0 !important;
+      }
+
+      .workExperienceItem .itemContent {
+        display: contents !important;
+      }
+
+      .workExperienceItem .itemTitle {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: center;
+        width: auto !important;
+        margin-bottom: 0 !important;
+      }
+
+      .workExperienceItem .itemDetailsWithDate {
+        grid-column: 3;
+        grid-row: 1;
+        align-self: center;
+        width: auto !important;
+        margin-bottom: 0 !important;
+        justify-self: end;
+        white-space: nowrap;
+      }
+
+      .workExperienceItem .itemDescription {
+        grid-column: 1 / -1;
+        width: 100% !important;
+        margin-top: 0 !important;
+      }
+
+      .workExperienceItem .itemSkills {
+        grid-column: 1 / -1;
+        width: 100% !important;
+      }
+
+      .educationItem {
+        margin-top: 1rem !important;
+      }
+
+      @page {
+        size: A4;
+        margin: 8mm 8mm;
+
+        @bottom-left {
+          content: "VIKTOR Bozzay CV";
+          font-size: 8pt;
+          color: #999;
+          font-family: inherit;
+        }
+        @bottom-right {
+          content: counter(page) "/" counter(pages);
+          font-size: 8pt;
+          color: #999;
+          font-family: inherit;
+        }
+      }
+
+      .cv-wrapper {
+        display: flex;
+        justify-content: center;
+        padding: 24px 16px;
+      }
+      .cv-wrapper .cvLayout.base.cv {
+        box-shadow: 1px 4px 32px rgba(0,0,0,0.25);
+      }
+      .hire-btn-plain {
+        display: inline-block;
+        margin-left: 12px;
+        padding: 2px 10px;
+        width: 5rem;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        background: #ff7024;
+        cursor: pointer;
+        font-family: inherit;
+        vertical-align: middle;
+        line-height: 1.4;
+        transition: background .15s;
+      }
+      .hire-btn-plain:hover {
+        background: #e5621a;
+      }
+      .hire-btn-plain {
+        align-self: center;
+      }
+
+      @media print {
+        html,
+        body {
+          margin: 0 !important;
+          padding: 0 !important;
+          background: #fff !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        body {
+          font-size: var(--body-font-size);
+          line-height: 1.25;
+        }
+
+        .cv,
+        .cvLayout {
+          width: auto !important;
+          max-width: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          box-shadow: none !important;
+          transform: none !important;
+        }
+        .cvLayout.base.cv {
+          padding: 0 !important;
+        }
+        .cv-wrapper {
+          padding: 0 !important;
+          display: block !important;
+        }
+        .hire-btn-plain {
+          display: none !important;
+        }
+
+        .header {
+          break-inside: avoid;
+          page-break-inside: avoid;
+          margin-bottom: 6mm !important;
+        }
+
+        .cv-block-title,
+        .blockTitle {
+          break-after: avoid;
+          page-break-after: avoid;
+          break-inside: avoid;
+          page-break-inside: avoid;
+          margin-top: 4mm !important;
+          margin-bottom: 2mm !important;
+        }
+
+        .cv-item,
+        .item,
+        .noBreakInside {
+          break-inside: avoid;
+          page-break-inside: avoid;
+          margin-bottom: 3mm !important;
+        }
+
+        .itemContent,
+        .itemDescription,
+        .itemDetails,
+        .itemSkills,
+        .contacts,
+        .intro {
+          break-inside: avoid;
+          page-break-inside: avoid;
+        }
+
+        .itemSkills {
+          display: flex !important;
+          flex-wrap: wrap !important;
+          gap: 2mm 3mm !important;
+          margin-top: 2mm !important;
+        }
+
+        .skill {
+          break-inside: avoid;
+          page-break-inside: avoid;
+        }
+
+        .itemLogo img,
+        .skillImage img {
+          max-width: 100% !important;
+          height: auto !important;
+        }
+
+        a,
+        a:visited {
+          color: inherit !important;
+          text-decoration: none !important;
+        }
+      }
+
+.hire-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 9000;
+}
+.hire-dialog {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9001; background: #fff; border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.2);
+  width: 440px; max-width: 96vw;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+.hire-dialog-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; border-bottom: 1px solid #e0e0e0;
+}
+.hire-dialog-header h3 { margin: 0; font-size: 16px; color: #333; font-weight: 600; }
+.hire-close {
+  background: none; border: none; cursor: pointer;
+  font-size: 20px; color: #999; line-height: 1; padding: 0 4px;
+}
+.hire-close:hover { color: #333; }
+.hire-dialog form { padding: 20px; }
+.hire-field { margin-bottom: 14px; }
+.hire-field label {
+  display: block; font-size: 11px; font-weight: 600;
+  color: #555; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em;
+}
+.hire-field input, .hire-field textarea {
+  width: 100%; box-sizing: border-box;
+  border: 1px solid #ccc; border-radius: 4px;
+  padding: 8px 10px; font-size: 14px; color: #333;
+  font-family: inherit; outline: none;
+}
+.hire-field input:focus, .hire-field textarea:focus { border-color: #ff7024; }
+.hire-field textarea { resize: vertical; min-height: 80px; }
+.hire-submit {
+  background: #ff7024; color: #fff; border: none; border-radius: 4px;
+  padding: 10px 24px; font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.hire-submit:hover { background: #e5621a; }
+.hire-submit:disabled { opacity: .5; cursor: default; }
