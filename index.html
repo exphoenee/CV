@@ -33,7 +33,7 @@
         --hire-close: #666;
         --hire-close-hover: #fff;
       }
-      .light {
+      [data-theme="light"] {
         --bg: #e4e4e4;
         --text: #2e2e2e;
         --card-bg: #ffffff;
@@ -316,6 +316,9 @@
         opacity: 0.5;
         cursor: default;
       }
+      @media print {
+        #theme-toggle { display: none !important; }
+      }
     </style>
   </head>
   <body>
@@ -402,48 +405,8 @@
         </form>
       </div>
     </div>
-    <script>
-      (function () {
-        var modal = document.getElementById("hire-index-modal");
-        function openModal() {
-          var form = document.getElementById("hire-index-form");
-          form.reset();
-          form.style.display = "";
-          var fsSuccess = document.querySelector("#hire-index-modal [data-fs-success]");
-          if (fsSuccess) fsSuccess.style.display = "none";
-          var fsError = document.querySelector("#hire-index-modal [data-fs-error]");
-          if (fsError) fsError.style.display = "none";
-          modal.style.display = "";
-        }
-        function closeModal() {
-          modal.style.display = "none";
-        }
-        document.getElementById("hire-index-btn").addEventListener("click", openModal);
-        document.getElementById("hire-index-close").addEventListener("click", closeModal);
-        document.getElementById("hire-index-backdrop").addEventListener("click", closeModal);
-        document.addEventListener("keydown", function (e) {
-          if (e.key === "Escape") closeModal();
-        });
-      })();
-      (function () {
-        var btn = document.getElementById("theme-toggle");
-        var theme = localStorage.getItem("theme");
-        if (theme === "light") document.body.classList.add("light");
-        btn.textContent = theme === "light" ? "\u{1F319}" : "\u2600\uFE0F";
-        btn.addEventListener("click", function () {
-          document.body.classList.toggle("light");
-          var isLight = document.body.classList.contains("light");
-          btn.textContent = isLight ? "\u{1F319}" : "\u2600\uFE0F";
-          localStorage.setItem("theme", isLight ? "light" : "dark");
-        });
-      })();
-      window.formspree =
-        window.formspree ||
-        function () {
-          (formspree.q = formspree.q || []).push(arguments);
-        };
-      formspree("initForm", { formElement: "#hire-index-form", formId: "mrejlned" });
-    </script>
+    <script defer src="./scripts/shared.js"></script>
+    <script defer src="./scripts/cv-index.js"></script>
     <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
   </body>
 </html>

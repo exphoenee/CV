@@ -782,32 +782,5 @@ C.addEventListener("mousemove", (e) => {
   if (row) lnEl.textContent = row.dataset.n;
 });
 
-// Hire modal for cv-json.html
-(function() {
-  var modal = document.getElementById('hire-json-modal');
-
-  function openModal() {
-    var form = document.getElementById('hire-json-form');
-    form.reset();
-    form.style.display = '';
-    var fsSuccess = document.querySelector('#hire-json-modal [data-fs-success]');
-    if (fsSuccess) fsSuccess.style.display = 'none';
-    var fsError = document.querySelector('#hire-json-modal [data-fs-error]');
-    if (fsError) fsError.style.display = 'none';
-    modal.style.display = '';
-  }
-
-  function closeModal() {
-    modal.style.display = 'none';
-  }
-
-  document.getElementById('hire-json-btn').addEventListener('click', openModal);
-  document.getElementById('hire-json-close').addEventListener('click', closeModal);
-  document.getElementById('hire-json-backdrop').addEventListener('click', closeModal);
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModal();
-  });
-})();
-
-window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
-formspree('initForm', { formElement: '#hire-json-form', formId: 'mrejlned' });
+CV.initHireModal("hire-json");
+CV.initFormspree("#hire-json-form");

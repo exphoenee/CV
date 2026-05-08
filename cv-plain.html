@@ -9,8 +9,31 @@
     <link rel="stylesheet" href="./styles/tailwind-base.css" />
     <link rel="stylesheet" href="./styles/cv-themes.css" />
     <link rel="stylesheet" href="./styles/cv-plain.css" />
+    <style>
+      #theme-toggle {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 9999;
+        background: none;
+        border: none;
+        outline: none;
+        font-size: 24px;
+        cursor: pointer;
+        line-height: 1;
+        padding: 0;
+      }
+      [data-theme="dark"] body,
+      [data-theme="superdark"] body {
+        background: #000;
+      }
+      @media print {
+        #theme-toggle { display: none !important; }
+      }
+    </style>
   </head>
   <body>
+    <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
       <div class="cv-wrapper"><div class="cvLayout base cv" style="--cv-accent-color: #ff7024; transform: scale(1)">
       <div class="header">
         <div class="name-container">
@@ -1101,36 +1124,8 @@
 
 
 
-<script>
-  (function() {
-    var modal = document.getElementById('hire-plain-modal');
-
-    function openModal() {
-      var form = document.getElementById('hire-plain-form');
-      form.reset();
-      form.style.display = '';
-      var fsSuccess = document.querySelector('#hire-plain-modal [data-fs-success]');
-      if (fsSuccess) fsSuccess.style.display = 'none';
-      var fsError = document.querySelector('#hire-plain-modal [data-fs-error]');
-      if (fsError) fsError.style.display = 'none';
-      modal.style.display = '';
-    }
-
-    function closeModal() {
-      modal.style.display = 'none';
-    }
-
-    document.getElementById('hire-plain-btn').addEventListener('click', openModal);
-    document.getElementById('hire-plain-close').addEventListener('click', closeModal);
-    document.getElementById('hire-plain-backdrop').addEventListener('click', closeModal);
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModal();
-    });
-  })();
-
-  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
-  formspree('initForm', { formElement: '#hire-plain-form', formId: 'mrejlned' });
-</script>
+    <script defer src="./scripts/shared.js"></script>
+    <script defer src="./scripts/cv-plain.js"></script>
 <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>

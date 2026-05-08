@@ -325,6 +325,9 @@ body {
   fill: #fff;
   display: block;
 }
+@media print {
+  #theme-toggle { display: none !important; }
+}
 [data-theme="dark"] .swagger-ui,
 [data-theme="dark"] .swagger-ui .info,
 [data-theme="dark"] .swagger-ui .renderedMarkdown p {
