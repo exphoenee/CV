@@ -312,3 +312,8 @@
 }
 .hire-submit:hover { background: #e5621a; }
 .hire-submit:disabled { opacity: .5; cursor: default; }
+
+.codersrank {
+  height: 0.75rem;
+}
+.blockTitle,.cv-block-title{margin-top:1.5rem!important;margin-bottom:.75rem!important}

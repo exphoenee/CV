@@ -1,0 +1,768 @@
+// JSON CV viewer for cv-json.html
+// Renders the CV data as a VS Code-style JSON viewer with fold regions
+
+// [depth, html]
+const L = [
+  [0, `<span class="p">{</span>`],
+  [0, ``],
+
+  [1, `<span class="c">// Viktor Bozzay - curriculum_vitae.json - v4.2.0</span>`],
+  [1, `<span class="c">// Last commit: 2026-05-07 · still actively maintained</span>`],
+  [0, ``],
+
+  [
+    1,
+    `<span class="k">"$schema"</span><span class="p">: </span><span class="s">"https://bozzayviktor.hu/schemas/human/developer/v4.2.json"</span><span class="p">,</span>`,
+  ],
+  [
+    1,
+    `<span class="k">"deprecated"</span><span class="p">: </span><span class="b">false</span><span class="p">,</span>  <span class="c">// still actively maintained</span>`,
+  ],
+  [
+    1,
+    `<span class="k">"license"</span><span class="p">: </span><span class="s">"proprietary"</span><span class="p">,</span>  <span class="c">// not open source (yet)</span>`,
+  ],
+  [0, ``],
+
+  // identity
+  [1, `<span class="k">"identity"</span><span class="p">: {</span>`],
+  [
+    2,
+    `<span class="k">"name"</span><span class="p">: </span><span class="s">"Viktor Bozzay"</span><span class="p">,</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"role"</span><span class="p">: </span><span class="s">"Frontend Tech Lead"</span><span class="p">,</span>  <span class="c">// "Developer" is an understatement</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"location"</span><span class="p">: </span><span class="s">"Pécs, Hungary"</span><span class="p">,</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"accentColor"</span><span class="p">: </span><span class="s">"#ff7024"</span><span class="p">,</span>  <span class="c">// hardcoded in the original HTML - yes, I looked</span>`,
+  ],
+  [2, `<span class="k">"contact"</span><span class="p">: {</span>`],
+  [
+    3,
+    `<span class="k">"email"</span><span class="p">: </span><span class="s">"<a href="mailto:bozzay.viktor@gmail.com">bozzay.viktor@gmail.com</a>"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"phone"</span><span class="p">: </span><span class="s">"<a href="tel:+36306106608">+36306106608</a>"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"github"</span><span class="p">: </span><span class="s">"<a href="https://github.com/exphoenee" target="_blank">github.com/exphoenee</a>"</span><span class="p">,</span>  <span class="c">// phoenix, with extra e's</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"linkedin"</span><span class="p">: </span><span class="s">"<a href="https://linkedin.com/in/viktorbozzay/" target="_blank">linkedin.com/in/viktorbozzay</a>"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"website"</span><span class="p">: </span><span class="s">"<a href="https://www.bozzayviktor.hu" target="_blank">bozzayviktor.hu</a>"</span>`,
+  ],
+  [2, `<span class="p">},</span>`],
+  [2, `<span class="k">"languages"</span><span class="p">: {</span>`],
+  [
+    3,
+    `<span class="k">"Hungarian"</span><span class="p">: </span><span class="s">"native"</span><span class="p">,</span>  <span class="c">// no runtime errors</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"German"</span><span class="p">: </span><span class="s">"B2"</span><span class="p">,</span>  <span class="c">// can order Schnitzel and read stack traces</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"English"</span><span class="p">: </span><span class="s">"B2"</span>  <span class="c">// you're reading this - proof it works</span>`,
+  ],
+  [2, `<span class="p">}</span>`],
+  [1, `<span class="p">},</span>`],
+  [0, ``],
+
+  // summary
+  [
+    1,
+    `<span class="k">"summary"</span><span class="p">: </span><span class="s">"Frontend developer who operates at the architecture level - not just building features, but evaluating whether the foundation they sit on is worth keeping. Led full rewrites of legacy systems, migrated codebases to modern stacks, and designed AI-assisted development workflows that measurably accelerate delivery. Refactors deliberately: only when evidence justifies it, always with a clear plan. Engineering background means thinking in systems, not just components."</span><span class="p">,</span>`,
+  ],
+  [
+    1,
+    `<span class="c">// translation: will rewrite your entire codebase if provoked (and the evidence justifies it)</span>`,
+  ],
+  [0, ``],
+
+  // work experience
+  [1, `<span class="k">"workExperience"</span><span class="p">: [</span>`],
+  [0, ``],
+
+  // aegex
+  [
+    2,
+    `<span class="c">// [0] Aegex Technologies ─────────────────────────────────────────────────</span>`,
+  ],
+  [2, `<span class="p">{</span>`],
+  [
+    3,
+    `<span class="k">"company"</span><span class="p">: </span><span class="s">"Aegex Technologies"</span><span class="p">,</span>  <span class="c">// current</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"title"</span><span class="p">: </span><span class="s">"Frontend Tech Lead"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"period"</span><span class="p">: { </span><span class="k">"from"</span><span class="p">: </span><span class="s">"2023-11"</span><span class="p">, </span><span class="k">"to"</span><span class="p">: </span><span class="nl">null</span><span class="p"> },</span>  <span class="c">// null = still here</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"teamSize"</span><span class="p">: </span><span class="n">2</span><span class="p">,</span>  <span class="c">// self + 1 mid-level colleague, handled with care</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"description"</span><span class="p">: </span><span class="s">"Assessed two legacy systems and drove the architectural decisions for modernizing each. Took full ownership of both SafeSy and FACTS from design through delivery. Introduced AI-assisted workflows and a CI pipeline with automated quality checks; refactoring is ongoing and evidence-driven."</span><span class="p">,</span>`,
+  ],
+  [3, `<span class="k">"projects"</span><span class="p">: {</span>`],
+  [4, `<span class="k">"SafeSy"</span><span class="p">: {</span>`],
+  [
+    5,
+    `<span class="k">"type"</span><span class="p">: </span><span class="s">"Internal manufacturing management system"</span><span class="p">,</span>`,
+  ],
+  [
+    5,
+    `<span class="k">"scope"</span><span class="p">: </span><span class="s">"Cross-role platform - production, office, executives, partners"</span><span class="p">,</span>`,
+  ],
+  [5, `<span class="k">"highlights"</span><span class="p">: [</span>`],
+  [
+    6,
+    `<span class="s">"Designed and built the internal Aegex Svelte component library used across the platform"</span><span class="p">,</span>`,
+  ],
+  [
+    6,
+    `<span class="s">"Manages workflows, inventory, and real-time data tracking across all user roles"</span><span class="p">,</span>`,
+  ],
+  [
+    6,
+    `<span class="s">"Built a subscribable daily email report system"</span><span class="p">,</span>`,
+  ],
+  [
+    6,
+    `<span class="s">"Contributed to Express backend including SQL query development"</span>`,
+  ],
+  [5, `<span class="p">],</span>`],
+  [5, `<span class="p"><span class="k">"ref"</span><span class="p">: </span>[</span>`],
+  [
+    6,
+    `<span class="s">"Not public"</span>`,
+  ],
+  [5, `<span class="p">],</span>`],
+  [4, `<span class="p">},</span>`],
+  [4, `<span class="k">"FACTS"</span><span class="p">: {</span>`],
+  [
+    5,
+    `<span class="k">"type"</span><span class="p">: </span><span class="s">"Feedstock and Compliance Tracking System"</span><span class="p">,</span>`,
+  ],
+  [
+    5,
+    `<span class="k">"releaseCycle_before_days"</span><span class="p">: </span><span class="n">30</span><span class="p">,</span>`,
+  ],
+  [
+    5,
+    `<span class="k">"releaseCycle_after_days"</span><span class="p">: </span><span class="n">14</span><span class="p">,</span>  <span class="c">// targeting 7 - AI-assisted workflow</span>`,
+  ],
+  [
+    5,
+    `<span class="k">"testCoverage_before"</span><span class="p">: </span><span class="n">0</span><span class="p">,</span>  <span class="c">// yes, zero. it was fine. (it was not fine.)</span>`,
+  ],
+  [
+    5,
+    `<span class="k">"qualityIssues_after"</span><span class="p">: </span><span class="s">"near eliminated"</span><span class="p">,</span>`,
+  ],
+  [5, `<span class="k">"highlights"</span><span class="p">: [</span>`],
+  [
+    6,
+    `<span class="s">"CI pipeline with automated quality checks introduced from scratch"</span><span class="p">,</span>`,
+  ],
+  [
+    6,
+    `<span class="s">"Migrated to a monorepo, extracted shared FACTS/Driver code into a private package"</span><span class="p">,</span>`,
+  ],
+  [
+    6,
+    `<span class="s">"Built a CLI tool for monorepo workflow management"</span><span class="p">,</span>`,
+  ],
+  [
+    6,
+    `<span class="s">"Claude AI-assisted dev workflow cut release cycle 2× (targeting 4×)"</span>`,
+  ],
+  [5, `<span class="p">],</span>`],
+  [5, `<span class="k">"ref"</span><span class="p">: [</span>`],
+  [
+    6,
+    `<span class="s">"<a href="https://facts.aegex.com" target="_blank">facts.aegex.com</a>"</span><span class="p">,</span>`,
+  ],
+  [
+    6,
+    `<span class="s">"<a href="https://driver.aegex.com" target="_blank">driver.aegex.com</a>"</span>`,
+  ],
+  [5, `<span class="p">],</span>`],
+  [4, `<span class="p">},</span>`],
+  [3, `<span class="p">},</span>`],
+  [
+    3,
+    `<span class="k">"stack"</span><span class="p">: [</span><span class="s">"Svelte"</span><span class="p">, </span><span class="s">"React"</span><span class="p">, </span><span class="s">"TypeScript"</span><span class="p">, </span><span class="s">"Node.js"</span><span class="p">, </span><span class="s">"ExpressJS"</span><span class="p">, </span><span class="s">"MySQL"</span><span class="p">, </span><span class="s">"Vite"</span><span class="p">, </span><span class="s">"PNPM"</span><span class="p">, </span><span class="s">"Jest"</span><span class="p">, </span><span class="s">"Vitest"</span><span class="p">, </span><span class="s">"Playwright"</span><span class="p">, </span><span class="s">"SCSS"</span><span class="p">, </span><span class="s">"Python"</span><span class="p">, </span><span class="s">"Claude"</span><span class="p">, </span><span class="s">"Codex"</span><span class="p">]</span>`,
+  ],
+  [2, `<span class="p">},</span>`],
+  [0, ``],
+
+  // telekom
+  [
+    2,
+    `<span class="c">// [1] Deutsche Telekom IT Solutions HU ───────────────────────────────────</span>`,
+  ],
+  [2, `<span class="p">{</span>`],
+  [
+    3,
+    `<span class="k">"company"</span><span class="p">: </span><span class="s">"Deutsche Telekom IT Solutions HU"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"title"</span><span class="p">: </span><span class="s">"Developer"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"period"</span><span class="p">: { </span><span class="k">"from"</span><span class="p">: </span><span class="s">"2023-07"</span><span class="p">, </span><span class="k">"to"</span><span class="p">: </span><span class="s">"2023-11"</span><span class="p"> },</span>  <span class="c">// 4 months - short but intense</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"description"</span><span class="p">: </span><span class="s">"Agile environment with continuous API integration between frontend and AI backend."</span><span class="p">,</span>`,
+  ],
+  [3, `<span class="k">"highlights"</span><span class="p">: [</span>`],
+  [
+    4,
+    `<span class="s">"Built type-safe UI components integrated with AI-driven backend and real-time analysis display"</span><span class="p">,</span>`,
+  ],
+  [
+    4,
+    `<span class="s">"Created intuitive interfaces for managing and viewing automated test results"</span><span class="p">,</span>`,
+  ],
+  [
+    4,
+    `<span class="s">"Continuous frontend–AI backend integration in fast-paced Agile sprints"</span>`,
+  ],
+  [3, `<span class="p">],</span>`],
+  [
+    3,
+    `<span class="k">"ref"</span><span class="p">: </span><span class="s">"<a href="https://mobiledevice.cloud/order/ai4test" target="_blank">mobiledevice.cloud/order/ai4test</a>"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"stack"</span><span class="p">: [</span><span class="s">"React"</span><span class="p">, </span><span class="s">"TypeScript"</span><span class="p">, </span><span class="s">"Node.js"</span><span class="p">, </span><span class="s">"Jest"</span><span class="p">, </span><span class="s">"Styled Components"</span><span class="p">, </span><span class="s">"React Redux"</span><span class="p">, </span><span class="s">"Webpack"</span><span class="p">]</span>`,
+  ],
+  [2, `<span class="p">},</span>`],
+  [0, ``],
+
+  // scolia
+  [
+    2,
+    `<span class="c">// [2] Scolia Technologies ─────────────────────────────────────────────────</span>`,
+  ],
+  [2, `<span class="p">{</span>`],
+  [
+    3,
+    `<span class="k">"company"</span><span class="p">: </span><span class="s">"Scolia Technologies Ltd."</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"title"</span><span class="p">: </span><span class="s">"Frontend Developer"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"period"</span><span class="p">: { </span><span class="k">"from"</span><span class="p">: </span><span class="s">"2023-01"</span><span class="p">, </span><span class="k">"to"</span><span class="p">: </span><span class="s">"2023-07"</span><span class="p"> },</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"domain"</span><span class="p">: </span><span class="s">"real-time automatic scorekeeping for steel-tip darts"</span><span class="p">,</span>  <span class="c">// yes, this is a real product</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"description"</span><span class="p">: </span><span class="s">"Frontend for a real-time darts scorekeeping platform - where milliseconds matter and the UI has to keep up with a flying dart."</span><span class="p">,</span>`,
+  ],
+  [3, `<span class="k">"highlights"</span><span class="p">: [</span>`],
+  [
+    4,
+    `<span class="s">"Built responsive, dynamic UIs in close collaboration with the design team"</span><span class="p">,</span>`,
+  ],
+  [
+    4,
+    `<span class="s">"Created interactive visualizations for real-time progress tracking and performance insights"</span><span class="p">,</span>`,
+  ],
+  [
+    4,
+    `<span class="s">"WebSocket-driven live score updates - because darts is apparently a realtime sport"</span>`,
+  ],
+  [3, `<span class="p">],</span>`],
+  [
+    3,
+    `<span class="k">"ref"</span><span class="p">: </span><span class="s">"<a href="https://scoliadarts.com" target="_blank">scoliadarts.com</a>"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"stack"</span><span class="p">: [</span><span class="s">"React"</span><span class="p">, </span><span class="s">"Redux Saga"</span><span class="p">, </span><span class="s">"WebSocket"</span><span class="p">, </span><span class="s">"Jest"</span><span class="p">, </span><span class="s">"MongoDB"</span><span class="p">, </span><span class="s">"SCSS"</span><span class="p">, </span><span class="s">"Webpack"</span><span class="p">]</span>`,
+  ],
+  [2, `<span class="p">},</span>`],
+  [0, ``],
+
+  // cubicfox
+  [
+    2,
+    `<span class="c">// [3] Cubicfox ────────────────────────────────────────────────────────────</span>`,
+  ],
+  [2, `<span class="p">{</span>`],
+  [
+    3,
+    `<span class="k">"company"</span><span class="p">: </span><span class="s">"Cubicfox"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"title"</span><span class="p">: </span><span class="s">"Frontend Developer"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"period"</span><span class="p">: { </span><span class="k">"from"</span><span class="p">: </span><span class="s">"2022-09"</span><span class="p">, </span><span class="k">"to"</span><span class="p">: </span><span class="s">"2023-01"</span><span class="p"> },</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"description"</span><span class="p">: </span><span class="s">"Contributed to establishing the team's code conventions and standards. Redesigned client requirements gathering - clearer specs, fewer revision cycles."</span><span class="p">,</span>`,
+  ],
+  [3, `<span class="k">"highlights"</span><span class="p">: [</span>`],
+  [
+    4,
+    `<span class="s">"Responsive, cross-browser UI development with strict quality standards"</span><span class="p">,</span>`,
+  ],
+  [
+    4,
+    `<span class="s">"Established team code conventions - arrived, fixed things, left. classic."</span><span class="p">,</span>`,
+  ],
+  [
+    4,
+    `<span class="s">"Strong communication, collaboration, and attention to detail"</span><span class="p">,</span>`,
+  ],
+  [
+    4,
+    `<span class="s">"Effective at gathering client requirements and adapting to change"</span>`,
+  ],
+  [3, `<span class="p">],</span>`],
+  [
+    3,
+    `<span class="k">"ref"</span><span class="p">: </span><span class="s">"<a href="https://www.fundmypitch.com" target="_blank">fundmypitch.com</a>"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"stack"</span><span class="p">: [</span><span class="s">"React"</span><span class="p">, </span><span class="s">"Next.js"</span><span class="p">, </span><span class="s">"TypeScript"</span><span class="p">, </span><span class="s">"Styled Components"</span><span class="p">, </span><span class="s">"SCSS"</span><span class="p">, </span><span class="s">"Jest"</span><span class="p">, </span><span class="s">"Webpack"</span><span class="p">]</span>`,
+  ],
+  [2, `<span class="p">},</span>`],
+  [0, ``],
+
+  // cobotx
+  [
+    2,
+    `<span class="c">// [4] CobotX Technologies ─────────────────────────────────────────────────</span>`,
+  ],
+  [2, `<span class="p">{</span>`],
+  [
+    3,
+    `<span class="k">"company"</span><span class="p">: </span><span class="s">"CobotX Technologies"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"title"</span><span class="p">: </span><span class="s">"Technical Project Manager"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"period"</span><span class="p">: { </span><span class="k">"from"</span><span class="p">: </span><span class="s">"2021-08"</span><span class="p">, </span><span class="k">"to"</span><span class="p">: </span><span class="s">"2022-08"</span><span class="p"> },</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"teamSize"</span><span class="p">: </span><span class="n">4</span><span class="p">,</span>  <span class="c">// engineers, built and led personally</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"robots"</span><span class="p">: </span><span class="b">true</span><span class="p">,</span>  <span class="c">// literal robots. Universal Robots. not metaphorical.</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"description"</span><span class="p">: </span><span class="s">"Engineering Manager at a robotics integrator - built and led a team of 4 engineers, bridging mechanical engineering background with software delivery and people management."</span><span class="p">,</span>`,
+  ],
+  [3, `<span class="k">"highlights"</span><span class="p">: [</span>`],
+  [
+    4,
+    `<span class="s">"Developed hardware/software specifications for PLC and robotics systems"</span><span class="p">,</span>`,
+  ],
+  [
+    4,
+    `<span class="s">"Created capacity and financial plans aligned with the Sales Forecast"</span><span class="p">,</span>`,
+  ],
+  [
+    4,
+    `<span class="s">"Built and led a team of 4 engineers - managed performance and project progress"</span><span class="p">,</span>`,
+  ],
+  [
+    4,
+    `<span class="s">"Set KPIs, improved documentation standards, reported quarterly to management"</span>`,
+  ],
+  [3, `<span class="p">],</span>`],
+  [
+    3,
+    `<span class="k">"stack"</span><span class="p">: [</span><span class="s">"Universal Robot"</span><span class="p">, </span><span class="s">"OnRobot"</span><span class="p">, </span><span class="s">"Machine Vision"</span><span class="p">, </span><span class="s">"Python"</span><span class="p">, </span><span class="s">"OnShape"</span><span class="p">, </span><span class="s">"PLC"</span><span class="p">, </span><span class="s">"Industrial Automation"</span><span class="p">]</span>`,
+  ],
+  [2, `<span class="p">},</span>`],
+  [0, ``],
+
+  // webforsol
+  [
+    2,
+    `<span class="c">// [5] WebforSol (Freelance) ───────────────────────────────────────────────</span>`,
+  ],
+  [2, `<span class="p">{</span>`],
+  [
+    3,
+    `<span class="k">"company"</span><span class="p">: </span><span class="s">"WebforSol"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"title"</span><span class="p">: </span><span class="s">"Freelance Full Stack Developer"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"period"</span><span class="p">: { </span><span class="k">"from"</span><span class="p">: </span><span class="s">"2020-06"</span><span class="p">, </span><span class="k">"to"</span><span class="p">: </span><span class="s">"2022-11"</span><span class="p"> },</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"parallel_with_cobotx"</span><span class="p">: </span><span class="b">true</span><span class="p">,</span>  <span class="c">// 24h is enough for two jobs, apparently</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"description"</span><span class="p">: </span><span class="s">"Freelance full-stack developer delivering custom web solutions. Focus on clean architecture, cost efficiency, and systems easy to extend and maintain."</span><span class="p">,</span>`,
+  ],
+  [3, `<span class="k">"highlights"</span><span class="p">: [</span>`],
+  [
+    4,
+    `<span class="s">"Full-stack delivery with React, Next.js, Node.js, MongoDB, MySQL, and PHP/Laravel"</span><span class="p">,</span>`,
+  ],
+  [
+    4,
+    `<span class="s">"Agile methodology practitioner with strong collaboration and adaptability"</span><span class="p">,</span>`,
+  ],
+  [
+    4,
+    `<span class="s">"Effective communication for understanding and meeting evolving client needs"</span>`,
+  ],
+  [3, `<span class="p">],</span>`],
+  [
+    3,
+    `<span class="k">"refs"</span><span class="p">: [</span><span class="s">"<a href="https://szelacoaching.hu" target="_blank">szelacoaching.hu</a>"</span><span class="p">, </span><span class="s">"<a href="https://www.pecscoach.hu" target="_blank">pecscoach.hu</a>"</span><span class="p">, </span><span class="s">"<a href="https://smartedu.hu" target="_blank">smartedu.hu</a>"</span><span class="p">],</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"stack"</span><span class="p">: [</span><span class="s">"React"</span><span class="p">, </span><span class="s">"Next.js"</span><span class="p">, </span><span class="s">"NestJS"</span><span class="p">, </span><span class="s">"Node.js"</span><span class="p">, </span><span class="s">"PHP"</span><span class="p">, </span><span class="s">"MySQL"</span><span class="p">, </span><span class="s">"MongoDB"</span><span class="p">, </span><span class="s">"jQuery"</span><span class="p">]</span>`,
+  ],
+  [2, `<span class="p">}</span>`],
+  [0, ``],
+  [1, `<span class="p">],</span>`],
+  [0, ``],
+
+  // education
+  [1, `<span class="k">"education"</span><span class="p">: [</span>`],
+  [
+    2,
+    `<span class="c">// all three degrees from the same university - he really liked it there</span>`,
+  ],
+  [2, `<span class="p">{</span>`],
+  [
+    3,
+    `<span class="k">"institution"</span><span class="p">: </span><span class="s">"Faculty of Engineering and Information Technology, University of Pécs"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"degree"</span><span class="p">: </span><span class="s">"Bachelor's - Quality Manager"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"years"</span><span class="p">: </span><span class="s">"2003–2007"</span>`,
+  ],
+  [2, `<span class="p">},</span>`],
+  [2, `<span class="p">{</span>`],
+  [
+    3,
+    `<span class="k">"institution"</span><span class="p">: </span><span class="s">"Faculty of Engineering and Information Technology, University of Pécs"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"degree"</span><span class="p">: </span><span class="s">"Bachelor's - Machinery Technical Teacher Education"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"years"</span><span class="p">: </span><span class="s">"2001–2004"</span>`,
+  ],
+  [2, `<span class="p">},</span>`],
+  [2, `<span class="p">{</span>`],
+  [
+    3,
+    `<span class="k">"institution"</span><span class="p">: </span><span class="s">"Faculty of Engineering and Information Technology, University of Pécs"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"degree"</span><span class="p">: </span><span class="s">"BEng - Mechanical Engineering"</span><span class="p">,</span>`,
+  ],
+  [
+    3,
+    `<span class="k">"years"</span><span class="p">: </span><span class="s">"2000–2004"</span>`,
+  ],
+  [2, `<span class="p">}</span>`],
+  [1, `<span class="p">],</span>`],
+  [1, `<span class="c">// none of them are frontend. this is fine. (this is fine.)</span>`],
+  [0, ``],
+
+  // skills
+  [1, `<span class="k">"skills"</span><span class="p">: {</span>`],
+  [
+    2,
+    `<span class="k">"primary"</span><span class="p">: [</span><span class="s">"TypeScript"</span><span class="p">, </span><span class="s">"JavaScript"</span><span class="p">, </span><span class="s">"Svelte"</span><span class="p">, </span><span class="s">"React"</span><span class="p">, </span><span class="s">"Node.js"</span><span class="p">, </span><span class="s">"SCSS"</span><span class="p">, </span><span class="s">"HTML"</span><span class="p">, </span><span class="s">"CSS"</span><span class="p">],</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"backend"</span><span class="p">: [</span><span class="s">"Express.js"</span><span class="p">, </span><span class="s">"NestJS"</span><span class="p">, </span><span class="s">"Python"</span><span class="p">, </span><span class="s">"PHP"</span><span class="p">, </span><span class="s">"MySQL"</span><span class="p">, </span><span class="s">"MongoDB"</span><span class="p">],</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"testing"</span><span class="p">: [</span><span class="s">"Jest"</span><span class="p">, </span><span class="s">"Vitest"</span><span class="p">, </span><span class="s">"Playwright"</span><span class="p">],</span>  <span class="c">// yes, all three</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"tooling"</span><span class="p">: [</span><span class="s">"Vite"</span><span class="p">, </span><span class="s">"Webpack"</span><span class="p">, </span><span class="s">"PNPM"</span><span class="p">, </span><span class="s">"Next.js"</span><span class="p">],</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"ai"</span><span class="p">: [</span><span class="s">"Claude"</span><span class="p">, </span><span class="s">"Codex"</span><span class="p">],</span>  <span class="c">// meta: this CV was probably reviewed by one of these</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"robotics"</span><span class="p">: [</span><span class="s">"Universal Robot"</span><span class="p">, </span><span class="s">"OnRobot"</span><span class="p">, </span><span class="s">"Machine Vision"</span><span class="p">, </span><span class="s">"PLC"</span><span class="p">],</span>  <span class="c">// surprise!</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"willRefactorYourEntireCodebaseIf"</span><span class="p">: </span><span class="s">"evidence justifies it"</span>  <span class="c">// (often)</span>`,
+  ],
+  [1, `<span class="p">},</span>`],
+  [0, ``],
+
+  // community
+  [1, `<span class="k">"community"</span><span class="p">: {</span>`],
+  [
+    2,
+    `<span class="k">"role"</span><span class="p">: </span><span class="s">"Pro bono after-school programming club mentor"</span><span class="p">,</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"school"</span><span class="p">: </span><span class="s">"Mátyás Király Street Primary School, Pécs"</span><span class="p">,</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"since"</span><span class="p">: </span><span class="s">"2026-02"</span><span class="p">,</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"curriculumDesignedBy"</span><span class="p">: </span><span class="s">"Viktor (personally)"</span><span class="p">,</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"paidFor"</span><span class="p">: </span><span class="b">false</span><span class="p">,</span>  <span class="c">// legend</span>`,
+  ],
+  [2, `<span class="k">"competitionResults"</span><span class="p">: [</span>`],
+  [
+    3,
+    `<span class="p">{ </span><span class="k">"place"</span><span class="p">: </span><span class="n">1</span><span class="p">, </span><span class="k">"competition"</span><span class="p">: </span><span class="s">"Hack and Code 2026 (Radnóti SZKI)"</span><span class="p"> },</span>`,
+  ],
+  [
+    3,
+    `<span class="p">{ </span><span class="k">"place"</span><span class="p">: </span><span class="n">1</span><span class="p">, </span><span class="k">"competition"</span><span class="p">: </span><span class="s">"22nd Neumann János Programming Competition"</span><span class="p"> },</span>`,
+  ],
+  [
+    3,
+    `<span class="p">{ </span><span class="k">"place"</span><span class="p">: </span><span class="n">3</span><span class="p">, </span><span class="k">"competition"</span><span class="p">: </span><span class="s">"22nd Neumann János Programming Competition"</span><span class="p"> }</span>`,
+  ],
+  [2, `<span class="p">]</span>`],
+  [1, `<span class="p">},</span>`],
+  [0, ``],
+
+  // meta
+  [1, `<span class="k">"meta"</span><span class="p">: {</span>`],
+  [
+    2,
+    `<span class="k">"generatedBy"</span><span class="p">: </span><span class="s">"human effort + CodersRank + Claude (probably)"</span><span class="p">,</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"codingPhilosophy"</span><span class="p">: </span><span class="s">"deliberate, evidence-driven, system-level thinking"</span><span class="p">,</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"engineeringBackground"</span><span class="p">: </span><span class="b">true</span><span class="p">,</span>  <span class="c">// 3× BEng - thinks in systems, not just components</span>`,
+  ],
+  [
+    2,
+    `<span class="k">"openToWork"</span><span class="p">: </span><span class="nl">null</span>  <span class="c">// ask directly: bozzay.viktor@gmail.com</span>`,
+  ],
+  [1, `<span class="p">}</span>`],
+  [0, ``],
+  [0, `<span class="p">}</span>`],
+];
+
+const G = document.getElementById("G");
+const C = document.getElementById("C");
+const lnEl = document.getElementById("ln");
+
+// Compute fold regions: openIdx -> closeIdx
+function computeFolds() {
+  const folds = {};
+  const stack = [];
+  L.forEach(([depth, html], idx) => {
+    const text = html.replace(/<[^>]*>/g, "").trim();
+    if (!text) return;
+    const firstChar = text[0];
+    const lastMeaningful = text.replace(/[,\s]+$/, "").slice(-1);
+    if (firstChar === "}" || firstChar === "]") {
+      for (let i = stack.length - 1; i >= 0; i--) {
+        if (stack[i].depth === depth) {
+          folds[stack[i].idx] = idx;
+          stack.splice(i, 1);
+          break;
+        }
+      }
+    }
+    if (lastMeaningful === "{" || lastMeaningful === "[") {
+      stack.push({ idx, depth });
+    }
+  });
+  return folds;
+}
+
+const FOLDS = computeFolds();
+const foldState = {};
+Object.keys(FOLDS).forEach((k) => (foldState[k] = "open"));
+
+let gHTML = "";
+let cHTML = "";
+
+// For empty lines, infer guide depth from surrounding non-empty lines
+function guideDepth(idx) {
+  const [depth, content] = L[idx];
+  if (content !== "") return depth;
+  let prev = 0, next = 0;
+  for (let i = idx - 1; i >= 0; i--) { if (L[i][1] !== "") { prev = L[i][0]; break; } }
+  for (let i = idx + 1; i < L.length; i++) { if (L[i][1] !== "") { next = L[i][0]; break; } }
+  return (prev > 0 && next > 0) ? Math.min(prev, next) : Math.max(prev, next);
+}
+
+L.forEach(([depth, content], idx) => {
+  const num = idx + 1;
+  const gd = guideDepth(idx);
+  let indents = "";
+  for (let d = 0; d < gd; d++) indents += `<span class="i"></span>`;
+
+  const isFoldable = FOLDS[idx] !== undefined;
+  const foldBtn = isFoldable
+    ? `<span class="fold-icon foldable" data-open="${idx}">▾</span>`
+    : `<span class="fold-icon"></span>`;
+  const foldHint = isFoldable
+    ? `<span class="fold-hint" data-open="${idx}">…</span>`
+    : "";
+
+  gHTML += `<div data-n="${num}" data-gi="${idx}">${foldBtn}${num}</div>`;
+  cHTML += `<div class="l" data-n="${num}" data-li="${idx}">${indents}<span class="t">${content}${foldHint}</span></div>`;
+});
+
+G.innerHTML = gHTML;
+C.innerHTML = cHTML;
+
+function syncGutterHeights() {
+  const codeLines = C.querySelectorAll(".l");
+  const gutterLines = G.querySelectorAll("div");
+  codeLines.forEach((line, i) => {
+    gutterLines[i].style.height = line.offsetHeight + "px";
+  });
+}
+
+syncGutterHeights();
+new ResizeObserver(syncGutterHeights).observe(C);
+
+function toggleFold(openIdx) {
+  const closeIdx = FOLDS[openIdx];
+  const collapsing = foldState[openIdx] === "open";
+  for (let i = openIdx + 1; i < closeIdx; i++) {
+    const cl = C.querySelector(`[data-li="${i}"]`);
+    const gl = G.querySelector(`[data-gi="${i}"]`);
+    const d = collapsing ? "none" : "";
+    if (cl) cl.style.display = d;
+    if (gl) gl.style.display = d;
+  }
+  const icon = G.querySelector(`.fold-icon[data-open="${openIdx}"]`);
+  const hint = C.querySelector(`.fold-hint[data-open="${openIdx}"]`);
+  if (collapsing) {
+    foldState[openIdx] = "closed";
+    if (icon) { icon.textContent = "▸"; icon.classList.add("collapsed"); }
+    if (hint) hint.style.display = "";
+  } else {
+    foldState[openIdx] = "open";
+    if (icon) { icon.textContent = "▾"; icon.classList.remove("collapsed"); }
+    if (hint) hint.style.display = "none";
+  }
+  syncGutterHeights();
+}
+
+G.addEventListener("click", (e) => {
+  const btn = e.target.closest(".fold-icon.foldable");
+  if (btn) toggleFold(parseInt(btn.dataset.open));
+});
+
+C.addEventListener("click", (e) => {
+  const hint = e.target.closest(".fold-hint");
+  if (hint) toggleFold(parseInt(hint.dataset.open));
+});
+
+// sync line hover between gutter and code
+C.addEventListener("mousemove", (e) => {
+  const row = e.target.closest(".l");
+  if (row) lnEl.textContent = row.dataset.n;
+});
+
+// Hire modal for cv-json.html
+(function() {
+  var modal = document.getElementById('hire-json-modal');
+
+  function openModal() {
+    var form = document.getElementById('hire-json-form');
+    form.reset();
+    form.style.display = '';
+    var fsSuccess = document.querySelector('#hire-json-modal [data-fs-success]');
+    if (fsSuccess) fsSuccess.style.display = 'none';
+    var fsError = document.querySelector('#hire-json-modal [data-fs-error]');
+    if (fsError) fsError.style.display = 'none';
+    modal.style.display = '';
+  }
+
+  function closeModal() {
+    modal.style.display = 'none';
+  }
+
+  document.getElementById('hire-json-btn').addEventListener('click', openModal);
+  document.getElementById('hire-json-close').addEventListener('click', closeModal);
+  document.getElementById('hire-json-backdrop').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+})();
+
+window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+formspree('initForm', { formElement: '#hire-json-form', formId: 'mrejlned' });
