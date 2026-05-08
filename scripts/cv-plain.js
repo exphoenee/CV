@@ -7,7 +7,7 @@ CV.initHireModal("hire-plain");
   var states = isTouch ? ["light", "dark"] : ["light", "dark", "superdark"];
   var icons = isTouch ? ["\u2600\uFE0F", "\u{1F319}"] : ["\u2600\uFE0F", "\u{1F319}", "\u{1F526}"];
   var savedTheme = localStorage.getItem("cv-swagger-theme");
-  var current = (isTouch && savedTheme === "superdark") ? "light" : (savedTheme || "light");
+  var current = (isTouch && savedTheme === "superdark") ? "light" : (savedTheme || CV.getSystemTheme());
   var CURSOR_KEY = "cv-superdark-cursor";
 
   function updateOverlay(x, y) {

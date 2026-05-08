@@ -35,6 +35,10 @@ CV.initHireModal = function (prefix) {
   return { openModal: openModal, closeModal: closeModal };
 };
 
+CV.getSystemTheme = function () {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+};
+
 CV.initThemeToggle = function (config) {
   config = config || {};
   var KEY = config.key || "cv-swagger-theme";
@@ -53,6 +57,7 @@ CV.initThemeToggle = function (config) {
 
   var saved = localStorage.getItem(KEY);
   if (saved) setTheme(saved);
+  else setTheme(CV.getSystemTheme());
 };
 
 CV.saveState = function (key, id, value) {
