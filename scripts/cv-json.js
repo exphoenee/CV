@@ -1,7 +1,3 @@
-// JSON CV viewer for cv-json.html
-// Renders the CV data as a VS Code-style JSON viewer with fold regions
-
-// [depth, html]
 const L = [
   [0, `<span class="p">{</span>`],
   [0, ``],
@@ -145,16 +141,10 @@ const L = [
     6,
     `<span class="s">"Built a subscribable daily email report system"</span><span class="p">,</span>`,
   ],
-  [
-    6,
-    `<span class="s">"Contributed to Express backend including SQL query development"</span>`,
-  ],
+  [6, `<span class="s">"Contributed to Express backend including SQL query development"</span>`],
   [5, `<span class="p">],</span>`],
   [5, `<span class="p"><span class="k">"ref"</span><span class="p">: </span>[</span>`],
-  [
-    6,
-    `<span class="s">"Not public"</span>`,
-  ],
+  [6, `<span class="s">"Not public"</span>`],
   [5, `<span class="p">],</span>`],
   [4, `<span class="p">},</span>`],
   [4, `<span class="k">"FACTS"</span><span class="p">: {</span>`],
@@ -348,10 +338,7 @@ const L = [
     4,
     `<span class="s">"Strong communication, collaboration, and attention to detail"</span><span class="p">,</span>`,
   ],
-  [
-    4,
-    `<span class="s">"Effective at gathering client requirements and adapting to change"</span>`,
-  ],
+  [4, `<span class="s">"Effective at gathering client requirements and adapting to change"</span>`],
   [3, `<span class="p">],</span>`],
   [
     3,
@@ -487,10 +474,7 @@ const L = [
     3,
     `<span class="k">"degree"</span><span class="p">: </span><span class="s">"Bachelor's - Quality Manager"</span><span class="p">,</span>`,
   ],
-  [
-    3,
-    `<span class="k">"years"</span><span class="p">: </span><span class="s">"2003–2007"</span>`,
-  ],
+  [3, `<span class="k">"years"</span><span class="p">: </span><span class="s">"2003–2007"</span>`],
   [2, `<span class="p">},</span>`],
   [2, `<span class="p">{</span>`],
   [
@@ -501,10 +485,7 @@ const L = [
     3,
     `<span class="k">"degree"</span><span class="p">: </span><span class="s">"Bachelor's - Machinery Technical Teacher Education"</span><span class="p">,</span>`,
   ],
-  [
-    3,
-    `<span class="k">"years"</span><span class="p">: </span><span class="s">"2001–2004"</span>`,
-  ],
+  [3, `<span class="k">"years"</span><span class="p">: </span><span class="s">"2001–2004"</span>`],
   [2, `<span class="p">},</span>`],
   [2, `<span class="p">{</span>`],
   [
@@ -515,10 +496,7 @@ const L = [
     3,
     `<span class="k">"degree"</span><span class="p">: </span><span class="s">"BEng - Mechanical Engineering"</span><span class="p">,</span>`,
   ],
-  [
-    3,
-    `<span class="k">"years"</span><span class="p">: </span><span class="s">"2000–2004"</span>`,
-  ],
+  [3, `<span class="k">"years"</span><span class="p">: </span><span class="s">"2000–2004"</span>`],
   [2, `<span class="p">}</span>`],
   [1, `<span class="p">],</span>`],
   [1, `<span class="c">// none of them are frontend. this is fine. (this is fine.)</span>`],
@@ -704,10 +682,21 @@ let cHTML = "";
 function guideDepth(idx) {
   const [depth, content] = L[idx];
   if (content !== "") return depth;
-  let prev = 0, next = 0;
-  for (let i = idx - 1; i >= 0; i--) { if (L[i][1] !== "") { prev = L[i][0]; break; } }
-  for (let i = idx + 1; i < L.length; i++) { if (L[i][1] !== "") { next = L[i][0]; break; } }
-  return (prev > 0 && next > 0) ? Math.min(prev, next) : Math.max(prev, next);
+  let prev = 0,
+    next = 0;
+  for (let i = idx - 1; i >= 0; i--) {
+    if (L[i][1] !== "") {
+      prev = L[i][0];
+      break;
+    }
+  }
+  for (let i = idx + 1; i < L.length; i++) {
+    if (L[i][1] !== "") {
+      next = L[i][0];
+      break;
+    }
+  }
+  return prev > 0 && next > 0 ? Math.min(prev, next) : Math.max(prev, next);
 }
 
 L.forEach(([depth, content], idx) => {
@@ -720,9 +709,7 @@ L.forEach(([depth, content], idx) => {
   const foldBtn = isFoldable
     ? `<span class="fold-icon foldable" data-open="${idx}">▾</span>`
     : `<span class="fold-icon"></span>`;
-  const foldHint = isFoldable
-    ? `<span class="fold-hint" data-open="${idx}">…</span>`
-    : "";
+  const foldHint = isFoldable ? `<span class="fold-hint" data-open="${idx}">…</span>` : "";
 
   gHTML += `<div data-n="${num}" data-gi="${idx}">${foldBtn}${num}</div>`;
   cHTML += `<div class="l" data-n="${num}" data-li="${idx}">${indents}<span class="t">${content}${foldHint}</span></div>`;
@@ -756,11 +743,17 @@ function toggleFold(openIdx) {
   const hint = C.querySelector(`.fold-hint[data-open="${openIdx}"]`);
   if (collapsing) {
     foldState[openIdx] = "closed";
-    if (icon) { icon.textContent = "▸"; icon.classList.add("collapsed"); }
+    if (icon) {
+      icon.textContent = "▸";
+      icon.classList.add("collapsed");
+    }
     if (hint) hint.style.display = "";
   } else {
     foldState[openIdx] = "open";
-    if (icon) { icon.textContent = "▾"; icon.classList.remove("collapsed"); }
+    if (icon) {
+      icon.textContent = "▾";
+      icon.classList.remove("collapsed");
+    }
     if (hint) hint.style.display = "none";
   }
   syncGutterHeights();
