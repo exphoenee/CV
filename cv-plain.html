@@ -30,10 +30,35 @@
       @media print {
         #theme-toggle { display: none !important; }
       }
+      .not-responsive {
+        display: none;
+        position: fixed;
+        inset: 0;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        font-family: system-ui, sans-serif;
+        color: #333;
+        background: #f5f5f5;
+        z-index: 10000;
+      }
+      .not-responsive h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+      .not-responsive p { font-size: 1rem; max-width: 360px; line-height: 1.5; color: #666; }
+      @media (max-width: 650px) {
+        body > :not(.not-responsive) { display: none !important; }
+        .not-responsive { display: flex; }
+      }
     </style>
   </head>
   <body>
     <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
+    <div class="not-responsive">
+      <div>
+        <h2>This page is not responsive</h2>
+        <p>Please view on a notebook or desktop computer, or rotate your device for the full experience.</p>
+      </div>
+    </div>
       <div class="cv-wrapper"><div class="cvLayout base cv" style="--cv-accent-color: #ff7024; transform: scale(1)">
       <div class="header">
         <div class="name-container">
@@ -237,11 +262,20 @@
               Worked in an Agile environment with continuous API integration between frontend and AI
               backend
             </div>
-            <div>
-              🚩 Built type-safe UI components and integrated the AI-driven backend with real-time
-              analysis display
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 16px;
+                margin-top: 12px;
+              "
+            >
+              <div>
+                🚩 Built type-safe UI components and integrated the AI-driven backend with real-time
+                analysis display
+              </div>
+              <div>🚩 Created intuitive interfaces for managing and viewing test results</div>
             </div>
-            <div>🚩 Created intuitive interfaces for managing and viewing test results</div>
           </div>
           <div style="margin: 0 0 8px">
             <div style="font-size: var(--item-details-font-size); margin-bottom: 2px">
@@ -312,9 +346,23 @@
           </div>
           <div class="itemDescription">
             As a frontend developer for Scolia, a real-time automatic scorekeeping solution for
-            steel-tip darts:<br />🚩 Built responsive, dynamic UIs in collaboration with the design
-            team.<br />🚩 Created interactive visualizations for real-time progress tracking and
-            performance insights.<br />
+            steel-tip darts:
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 16px;
+                margin-top: 12px;
+              "
+            >
+              <div>
+                🚩 Built responsive, dynamic UIs in collaboration with the design team.
+              </div>
+              <div>
+                🚩 Created interactive visualizations for real-time progress tracking and
+                performance insights.
+              </div>
+            </div>
           </div>
           <div style="margin: 0 0 8px">
             <div style="font-size: var(--item-details-font-size); margin-bottom: 2px">
@@ -769,17 +817,6 @@
         </div>
       </div>
       <div class="blockTitle noBreakBeforeAfter cv-block-title">
-        <span>Community &amp; Mentorship</span>
-      </div>
-      <div class="item noBreakInside cv-item">
-        <div class="itemDescription">
-          Launched and lead a pro bono after-school IT and programming club at Mátyás Király Street
-          Primary School, Pécs (Feb 2026, ongoing). Designed the full curriculum. Under my
-          mentorship, the team won 1st place at the 2026 "Hack and Code" competition (Radnóti SZKI)
-          and placed 1st and 3rd at the 22nd Neumann János Programming Competition.
-        </div>
-      </div>
-      <div class="blockTitle noBreakBeforeAfter cv-block-title">
         <span>Programming Languages</span>
       </div>
       <div class="">
@@ -1056,6 +1093,17 @@
               ><span>PHP</span>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="blockTitle noBreakBeforeAfter cv-block-title">
+        <span>Community &amp; Mentorship</span>
+      </div>
+      <div class="item noBreakInside cv-item">
+        <div class="itemDescription">
+          Launched and lead a pro bono after-school IT and programming club at Mátyás Király Street
+          Primary School, Pécs (Feb 2026, ongoing). Designed the full curriculum. Under my
+          mentorship, the team won 1st place at the 2026 "Hack and Code" competition (Radnóti SZKI)
+          and placed 1st and 3rd at the 22nd Neumann János Programming Competition.
         </div>
       </div>
         <div class="blockTitle noBreakBeforeAfter cv-block-title">

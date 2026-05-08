@@ -28,6 +28,11 @@
 
       .name {
         font-size: var(--name-font-size) !important;
+        color: var(--cv-accent-color) !important;
+      }
+
+      .role {
+        color: var(--cv-accent-color) !important;
       }
 
       .deatils-container {
@@ -121,8 +126,10 @@
         width: 100% !important;
       }
 
-      .educationItem {
-        margin-top: 1rem !important;
+      .cv-item,
+      .item,
+      .noBreakInside {
+        margin-top: 0 !important;
       }
 
       @page {
@@ -224,7 +231,7 @@
           break-inside: avoid;
           page-break-inside: avoid;
           margin-top: 4mm !important;
-          margin-bottom: 2mm !important;
+          margin-bottom: 1mm !important;
         }
 
         .cv-item,
@@ -232,6 +239,7 @@
         .noBreakInside {
           break-inside: avoid;
           page-break-inside: avoid;
+          margin-top: 0 !important;
           margin-bottom: 3mm !important;
         }
 
@@ -267,6 +275,25 @@
         a:visited {
           color: inherit !important;
           text-decoration: none !important;
+        }
+
+        .work-decor {
+          display: none !important;
+        }
+
+        .workExperienceItem::after {
+          content: '';
+          grid-column: 1 / -1;
+          display: block;
+          width: 6cm;
+          height: 2px;
+          background: var(--cv-accent-color);
+          justify-self: center;
+          margin-top: 2mm;
+          margin-bottom: 3mm;
+        }
+        .workExperienceItem.no-decor::after {
+          display: none !important;
         }
       }
 
@@ -316,4 +343,4 @@
 .codersrank {
   height: 0.75rem;
 }
-.blockTitle,.cv-block-title{margin-top:1.5rem!important;margin-bottom:.75rem!important}
+.blockTitle,.cv-block-title{margin-top:1.5rem!important;margin-bottom:.5rem!important}

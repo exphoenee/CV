@@ -3,9 +3,11 @@ CV.initHireModal("hire-plain");
 (function () {
   var btn = document.getElementById("theme-toggle");
   var overlay = null;
-  var states = ["light", "dark", "superdark"];
-  var icons = ["\u2600\uFE0F", "\u{1F319}", "\u{1F526}"];
-  var current = localStorage.getItem("cv-swagger-theme") || "light";
+  var isTouch = window.matchMedia("(pointer: coarse)").matches;
+  var states = isTouch ? ["light", "dark"] : ["light", "dark", "superdark"];
+  var icons = isTouch ? ["\u2600\uFE0F", "\u{1F319}"] : ["\u2600\uFE0F", "\u{1F319}", "\u{1F526}"];
+  var savedTheme = localStorage.getItem("cv-swagger-theme");
+  var current = (isTouch && savedTheme === "superdark") ? "light" : (savedTheme || "light");
   var CURSOR_KEY = "cv-superdark-cursor";
 
   function updateOverlay(x, y) {
@@ -52,6 +54,32 @@ CV.initHireModal("hire-plain");
   });
 
   apply(current);
+})();
+
+(function () {
+  var decors = ["decor1.svg", "decor2.svg", "decor3.svg", "decor4.svg", "decor5.svg", "decor6.svg"];
+  var items = document.querySelectorAll(".workExperienceItem");
+  if (items.length > 0) items[items.length - 1].classList.add("no-decor");
+  for (var t = 0; t < items.length; t++) {
+    var title = items[t].querySelector(".itemTitle")?.textContent.trim();
+    if (title === "Deutsche Telekom IT Solutions HU" || title === "CobotX Technologies") {
+      items[t].classList.add("no-decor");
+    }
+  }
+
+  for (var i = decors.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = decors[i]; decors[i] = decors[j]; decors[j] = tmp;
+  }
+
+  for (var k = 0; k < items.length - 1; k++) {
+    var img = document.createElement("img");
+    img.src = "./assets/" + decors[k % decors.length];
+    img.alt = "";
+    img.className = "work-decor";
+    img.style.cssText = "display:block;width:400px;max-width:80%;height:30px;object-fit:contain;margin:3mm auto 3mm";
+    items[k].parentNode.insertBefore(img, items[k].nextSibling);
+  }
 })();
 
 CV.initFormspree("#hire-plain-form");
