@@ -596,6 +596,51 @@ const L = [
   [1, `<span class="p">},</span>`],
   [0, ``],
 
+  // hobby projects
+  [1, `<span class="k">"hobbyProjects"</span><span class="p">: [</span>`],
+  [
+    2,
+    `<span class="p">{ </span><span class="k">"name"</span><span class="p">: </span><span class="s">"Real-time Space Travel"</span><span class="p">, </span><span class="k">"url"</span><span class="p">: </span><span class="s">"<a href="https://github.com/exphoenee/realtime_space_travel" target="_blank">github.com/exphoenee/realtime_space_travel</a>"</span><span class="p"> },</span>`,
+  ],
+  [
+    2,
+    `<span class="p">{ </span><span class="k">"name"</span><span class="p">: </span><span class="s">"Sudoku Solver API"</span><span class="p">, </span><span class="k">"url"</span><span class="p">: </span><span class="s">"<a href="https://github.com/exphoenee/SudokuSolver-API" target="_blank">github.com/exphoenee/SudokuSolver-API</a>"</span><span class="p"> },</span>`,
+  ],
+  [
+    2,
+    `<span class="p">{ </span><span class="k">"name"</span><span class="p">: </span><span class="s">"Bullseyes"</span><span class="p">, </span><span class="k">"url"</span><span class="p">: </span><span class="s">"<a href="https://github.com/exphoenee/bullseyes" target="_blank">github.com/exphoenee/bullseyes</a>"</span><span class="p"> },</span>`,
+  ],
+  [
+    2,
+    `<span class="p">{ </span><span class="k">"name"</span><span class="p">: </span><span class="s">"Space Dodge"</span><span class="p">, </span><span class="k">"url"</span><span class="p">: </span><span class="s">"<a href="https://github.com/BZZYFMLY/Space-dodge" target="_blank">github.com/BZZYFMLY/Space-dodge</a>"</span><span class="p"> },</span>`,
+  ],
+  [
+    2,
+    `<span class="p">{ </span><span class="k">"name"</span><span class="p">: </span><span class="s">"Arrganizer"</span><span class="p">, </span><span class="k">"url"</span><span class="p">: </span><span class="s">"<a href="https://github.com/ViktorBozzay/Arrganizer" target="_blank">github.com/ViktorBozzay/Arrganizer</a>"</span><span class="p"> },</span>`,
+  ],
+  [
+    2,
+    `<span class="p">{ </span><span class="k">"name"</span><span class="p">: </span><span class="s">"Space Game"</span><span class="p">, </span><span class="k">"url"</span><span class="p">: </span><span class="s">"<a href="https://github.com/exphoenee/SpaceGame" target="_blank">github.com/exphoenee/SpaceGame</a>"</span><span class="p"> },</span>`,
+  ],
+  [
+    2,
+    `<span class="p">{ </span><span class="k">"name"</span><span class="p">: </span><span class="s">"Rock Paper Scissors"</span><span class="p">, </span><span class="k">"url"</span><span class="p">: </span><span class="s">"<a href="https://github.com/exphoenee/RockPaperScissors" target="_blank">github.com/exphoenee/RockPaperScissors</a>"</span><span class="p"> },</span>`,
+  ],
+  [
+    2,
+    `<span class="p">{ </span><span class="k">"name"</span><span class="p">: </span><span class="s">"Auditorium"</span><span class="p">, </span><span class="k">"url"</span><span class="p">: </span><span class="s">"<a href="https://github.com/exphoenee/auditorium" target="_blank">github.com/exphoenee/auditorium</a>"</span><span class="p"> },</span>`,
+  ],
+  [
+    2,
+    `<span class="p">{ </span><span class="k">"name"</span><span class="p">: </span><span class="s">"domelemjs"</span><span class="p">, </span><span class="k">"url"</span><span class="p">: </span><span class="s">"<a href="https://www.npmjs.com/package/domelemjs" target="_blank">npmjs.com/package/domelemjs</a>"</span><span class="p"> },</span>`,
+  ],
+  [
+    2,
+    `<span class="p">{ </span><span class="k">"name"</span><span class="p">: </span><span class="s">"romannumbersjs"</span><span class="p">, </span><span class="k">"url"</span><span class="p">: </span><span class="s">"<a href="https://www.npmjs.com/package/romannumbersjs" target="_blank">npmjs.com/package/romannumbersjs</a>"</span><span class="p"> }</span>`,
+  ],
+  [1, `<span class="p">],</span>`],
+  [0, ``],
+
   // meta
   [1, `<span class="k">"meta"</span><span class="p">: {</span>`],
   [
