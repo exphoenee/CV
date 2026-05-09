@@ -344,3 +344,6 @@
   height: 0.75rem;
 }
 .blockTitle,.cv-block-title{margin-top:1.5rem!important;margin-bottom:.5rem!important}
+.cv-modal-hidden { display: none; }
+.cv-success-hidden { display: none; padding: 40px 20px; text-align: center; }
+.cv-error-hidden { display: none; padding: 8px 20px 0; color: #d9534f; font-size: 12px; }

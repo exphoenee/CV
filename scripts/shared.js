@@ -8,16 +8,15 @@ CV.initHireModal = function (prefix) {
     if (subjectEl && subject) subjectEl.value = subject;
     var form = document.getElementById(prefix + "-form");
     form.reset();
-    form.style.display = "";
     var fsSuccess = document.querySelector("#" + prefix + "-modal [data-fs-success]");
-    if (fsSuccess) fsSuccess.style.display = "none";
+    if (fsSuccess) fsSuccess.classList.add("cv-success-hidden");
     var fsError = document.querySelector("#" + prefix + "-modal [data-fs-error]");
-    if (fsError) fsError.style.display = "none";
-    modal.style.display = "";
+    if (fsError) fsError.classList.add("cv-error-hidden");
+    modal.classList.remove("cv-modal-hidden");
   }
 
   function closeModal() {
-    modal.style.display = "none";
+    modal.classList.add("cv-modal-hidden");
   }
 
   document.getElementById(prefix + "-btn").addEventListener("click", function () {

@@ -14,7 +14,7 @@
   <body>
     <div class="menubar">
       <div class="menubar-left">
-        <img src="assets/vscode.svg" width="16" height="16" style="margin:0 6px 0 8px;flex-shrink:0;align-self:center;opacity:0.9" alt="VSCode">
+        <img src="assets/vscode.svg" width="16" height="16" class="cv-json-inline-0" alt="VSCode">
         <button class="menubar-item">File</button>
         <button class="menubar-item">Edit</button>
         <button class="menubar-item">Selection</button>
@@ -22,7 +22,7 @@
         <button class="menubar-item">Go</button>
         <button class="menubar-item">Run</button>
         <button class="menubar-item">Terminal</button>
-        <button class="menubar-item" id="hire-json-btn" style="font-weight:700;color:#f48771">Hire</button>
+        <button class="cv-json-inline-1 menubar-item" id="hire-json-btn" >Hire</button>
       </div>
       <div class="menubar-center">
         <button class="menubar-nav" disabled aria-label="Back">
@@ -40,7 +40,7 @@
           <span class="menubar-crumb-folder">CV</span>
           <span class="menubar-crumb-sep">›</span>
           <span class="menubar-crumb-file">
-            <span class="tab-json" style="font-size:11px">{ }</span>
+            <span class="cv-json-inline-2 tab-json" >{ }</span>
             viktor_bozzay.json
           </span>
         </div>
@@ -94,34 +94,34 @@
     <script defer src="./scripts/cv-json.js"></script>
 
 <!-- HIRE MODAL -->
-<div id="hire-json-modal" style="display:none">
+<div id="hire-json-modal" class="cv-modal-hidden">
   <div class="hire-backdrop" id="hire-json-backdrop"></div>
   <div class="hire-dialog">
     <div class="hire-dialog-header">
       <h3>Contact Viktor</h3>
       <button class="hire-close" id="hire-json-close" type="button">&#x2715;</button>
     </div>
-    <div data-fs-success style="display:none;padding:40px 20px;text-align:center">
-      <p style="color:#49cc90;font-weight:700;font-size:15px;margin:0 0 4px">Thanks for reaching out!</p>
-      <p style="color:#cccccc;font-size:13px;margin:0">Your message was sent successfully. I'll get back to you soon.</p>
+    <div data-fs-success class="cv-success-hidden">
+      <p class="cv-json-inline-5">Thanks for reaching out!</p>
+      <p class="cv-json-inline-6">Your message was sent successfully. I'll get back to you soon.</p>
     </div>
-    <div data-fs-error style="display:none;padding:8px 20px 0;color:#f48771;font-size:12px"></div>
+    <div data-fs-error class="cv-error-hidden"></div>
     <form id="hire-json-form">
       <input type="hidden" name="_subject" value="Hire inquiry from CV - json">
       <div class="hire-field">
         <label for="hire-json-name">Your name</label>
         <input id="hire-json-name" type="text" name="name" required placeholder="Jane Smith" data-fs-field>
-        <span data-fs-error="name" style="color:#f48771;font-size:11px"></span>
+        <span data-fs-error="name" class="cv-json-inline-8"></span>
       </div>
       <div class="hire-field">
         <label for="hire-json-email">Your email</label>
         <input id="hire-json-email" type="email" name="email" required placeholder="your@email.com" data-fs-field>
-        <span data-fs-error="email" style="color:#f48771;font-size:11px"></span>
+        <span data-fs-error="email" class="cv-json-inline-8"></span>
       </div>
       <div class="hire-field">
         <label for="hire-json-message">Message</label>
         <textarea id="hire-json-message" name="message" required rows="5" placeholder="Hi Viktor, we'd like to..." data-fs-field></textarea>
-        <span data-fs-error="message" style="color:#f48771;font-size:11px"></span>
+        <span data-fs-error="message" class="cv-json-inline-8"></span>
       </div>
       <button type="submit" class="hire-submit" data-fs-submit-btn>Send</button>
     </form>
