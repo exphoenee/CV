@@ -635,7 +635,7 @@ const L = [
   ],
   [
     2,
-    `<span class="k">"openToWork"</span><span class="p">: </span><span class="nl">null</span>  <span class="c">// ask directly: bozzay.viktor@gmail.com</span>`,
+    `<span class="k">"openToWork"</span><span class="p">: </span><span class="nl">true</span>  <span class="c">// ask directly: bozzay.viktor@gmail.com</span>`,
   ],
   [1, `<span class="p">}</span>`],
   [0, ``],
