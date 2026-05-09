@@ -61,11 +61,11 @@
         padding: 0;
         box-sizing: border-box;
       }
-      html,
-      body {
+      html {
         height: 100%;
       }
       body {
+        min-height: 100%;
         background: var(--bg);
         color: var(--text);
         font-family:
@@ -74,13 +74,13 @@
           -apple-system,
           sans-serif;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        padding: 40px 20px;
         transition:
           background 0.3s,
           color 0.3s;
       }
       .card {
+        margin: auto;
         text-align: center;
         padding: 60px 48px;
         background: var(--card-bg);
@@ -221,6 +221,9 @@
         box-shadow: 0 8px 48px var(--card-shadow);
         width: 440px;
         max-width: 96vw;
+        max-height: 96vh;
+        display: flex;
+        flex-direction: column;
         font-family: "Segoe UI", system-ui, sans-serif;
         border: 1px solid var(--hire-dialog-border);
       }
@@ -251,6 +254,7 @@
       }
       .hire-dialog form {
         padding: 20px;
+        overflow-y: auto;
       }
       .hire-field {
         margin-bottom: 14px;
