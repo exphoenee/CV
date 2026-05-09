@@ -1222,6 +1222,56 @@ a,
 }
 .hire-submit:hover { background: #e5621a; }
 .hire-submit:disabled { opacity: .5; cursor: default; }
+
+/* Dark theme modal */
+[data-theme="dark"] .hire-dialog,
+[data-theme="superdark"] .hire-dialog { background: #1e1e2e; border: 1px solid #444; }
+[data-theme="dark"] .hire-dialog-header,
+[data-theme="superdark"] .hire-dialog-header { border-bottom-color: #444; }
+[data-theme="dark"] .hire-dialog-header h3,
+[data-theme="superdark"] .hire-dialog-header h3 { color: #e0e0e0; }
+[data-theme="dark"] .hire-close,
+[data-theme="superdark"] .hire-close { color: #888; }
+[data-theme="dark"] .hire-close:hover,
+[data-theme="superdark"] .hire-close:hover { color: #ccc; }
+[data-theme="dark"] .hire-field label,
+[data-theme="superdark"] .hire-field label { color: #aaa; }
+[data-theme="dark"] .hire-field input,
+[data-theme="dark"] .hire-field textarea,
+[data-theme="superdark"] .hire-field input,
+[data-theme="superdark"] .hire-field textarea { background: #2a2a3e; border-color: #555; color: #e0e0e0; }
+[data-theme="dark"] .hire-field input:focus,
+[data-theme="dark"] .hire-field textarea:focus,
+[data-theme="superdark"] .hire-field input:focus,
+[data-theme="superdark"] .hire-field textarea:focus { border-color: #ff7024; }
+
+/* Night Vision modal */
+[data-theme="nightvision"] .hire-dialog { background: #051005; border: 1px solid #00ff00; box-shadow: 0 0 20px rgba(0,255,0,0.3); }
+[data-theme="nightvision"] .hire-dialog-header { border-bottom-color: #1a401a; }
+[data-theme="nightvision"] .hire-dialog-header h3 { color: #00ff00; text-shadow: 0 0 5px rgba(0,255,0,0.5); }
+[data-theme="nightvision"] .hire-close { color: #008800; }
+[data-theme="nightvision"] .hire-close:hover { color: #00ff00; }
+[data-theme="nightvision"] .hire-field label { color: #80ff80; }
+[data-theme="nightvision"] .hire-field input,
+[data-theme="nightvision"] .hire-field textarea { background: #0a200a; border-color: #1a601a; color: #80ff80; }
+[data-theme="nightvision"] .hire-field input:focus,
+[data-theme="nightvision"] .hire-field textarea:focus { border-color: #00ff00; box-shadow: 0 0 6px rgba(0,255,0,0.4); }
+[data-theme="nightvision"] .hire-field input::placeholder,
+[data-theme="nightvision"] .hire-field textarea::placeholder { color: #2a602a; }
+
+/* Predator modal */
+[data-theme="predator"] .hire-dialog { background: #0d0000; border: 1px solid #ffcc00; box-shadow: 0 0 30px rgba(255,0,0,0.4); }
+[data-theme="predator"] .hire-dialog-header { border-bottom-color: #440000; }
+[data-theme="predator"] .hire-dialog-header h3 { color: #ffff00; text-shadow: 0 0 8px #ff0000; }
+[data-theme="predator"] .hire-close { color: #880000; }
+[data-theme="predator"] .hire-close:hover { color: #ffcc00; }
+[data-theme="predator"] .hire-field label { color: #ff6600; }
+[data-theme="predator"] .hire-field input,
+[data-theme="predator"] .hire-field textarea { background: #1a0000; border-color: #660000; color: #ff3300; }
+[data-theme="predator"] .hire-field input:focus,
+[data-theme="predator"] .hire-field textarea:focus { border-color: #ffcc00; box-shadow: 0 0 6px rgba(255,204,0,0.4); }
+[data-theme="predator"] .hire-field input::placeholder,
+[data-theme="predator"] .hire-field textarea::placeholder { color: #440000; }
 .codersrank {
   height: 0.75rem;
 }
@@ -1255,3 +1305,104 @@ a,
 .cv-plain-inline-14 { color:#d9534f;font-size:11px; }
 
 
+
+/* Extracted Inline Styles */
+.cv-plain-inline-0 { --cv-accent-color: #ff7024; transform: scale(1); }
+.cv-plain-inline-1 { display: flex; flex-direction: column; }
+.cv-plain-inline-2 { display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 16px;
+                margin-top: 12px; }
+.cv-plain-inline-3 { margin: 0 0 8px; }
+.cv-plain-inline-4 { font-size: var(--item-details-font-size); margin-bottom: 2px; }
+.cv-plain-inline-5 { display: flex;
+                justify-content: space-between;
+                gap: 16px;
+                font-size: var(--item-details-font-size); }
+.cv-plain-inline-6 { font-size: var(--item-details-font-size); }
+.cv-plain-inline-7 { display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 16px;
+                margin: 12px 0; }
+.cv-plain-inline-8 { display: flex; gap: 24px; }
+.cv-modal-hidden { display:none; }
+.cv-success-hidden { display:none;padding:40px 20px;text-align:center; }
+.cv-plain-inline-11 { color:#49cc90;font-weight:700;font-size:15px;margin:0 0 4px; }
+.cv-plain-inline-12 { color:#555;font-size:13px;margin:0; }
+.cv-error-hidden { display:none;padding:8px 20px 0;color:#d9534f;font-size:12px; }
+.cv-plain-inline-14 { color:#d9534f;font-size:11px; }
+
+/* Night Vision Theme */
+[data-theme="nightvision"] body { background-color: #051005 !important; }
+[data-theme="nightvision"] .cvLayout.base.cv { 
+  background-color: #0a200a !important; 
+  color: #80ff80 !important; 
+  border: 1px solid #1a401a; 
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.2) !important;
+  --cv-accent-color: #00ff00 !important;
+}
+[data-theme="nightvision"] .blockTitle, [data-theme="nightvision"] .itemTitle, [data-theme="nightvision"] .role { color: #00ff00 !important; text-shadow: 0 0 5px rgba(0, 255, 0, 0.5); }
+[data-theme="nightvision"] .hire-btn-plain, [data-theme="nightvision"] .hire-submit { background: #008800 !important; color: #00ff00 !important; border: 1px solid #00ff00 !important; }
+[data-theme="nightvision"] .hire-btn-plain:hover, [data-theme="nightvision"] .hire-submit:hover { background: #00aa00 !important; }
+[data-theme="nightvision"] .name { display: block; }
+[data-theme="nightvision"] .name .nv-word { display: inline; white-space: normal; }
+[data-theme="predator"] .name { display: block; }
+[data-theme="predator"] .name .nv-word { display: inline; white-space: normal; }
+[data-theme="superdark"] .name { display: block; }
+[data-theme="superdark"] .name .nv-word { display: inline; white-space: normal; }
+[data-theme="dark"] .name { display: block; }
+[data-theme="dark"] .name .nv-word { display: inline; white-space: normal; }
+[data-theme="light"] .name { display: block; }
+[data-theme="light"] .name .nv-word { display: inline; white-space: normal; }
+[data-theme="nightvision"] .nv-word { display: inline-block; transition: font-size 0.2s; white-space: pre; font-size: var(--nv-fs, 1em); color: var(--nv-c, #80ff80); }
+
+/* Predator Theme */
+[data-theme="predator"] body { background-color: #000 !important; }
+[data-theme="predator"] .cvLayout.base.cv { 
+  background: radial-gradient(circle at center, #220000 0%, #000 100%) !important; 
+  color: #ff3300 !important; 
+  border: 1px solid #440000; 
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.3) !important;
+  --cv-accent-color: #ffcc00 !important;
+}
+[data-theme="predator"] .blockTitle { color: #ffff00 !important; text-shadow: 0 0 8px #ff0000; }
+[data-theme="predator"] .itemTitle { color: #ffcc00 !important; }
+[data-theme="predator"] .hire-btn-plain, [data-theme="predator"] .hire-submit { background: #aa0000 !important; color: #ffff00 !important; border: 1px solid #ffcc00 !important; }
+[data-theme="predator"] .hire-btn-plain:hover, [data-theme="predator"] .hire-submit:hover { background: #cc0000 !important; }
+[data-theme="predator"] a { color: #00ffff !important; }
+[data-theme="predator"] .skill { color: #ff00ff !important; }
+
+.theme-icon-img { width: 24px; height: 24px; object-fit: contain; vertical-align: middle; }
+
+/* Force Light Theme for Print */
+@media print {
+  html, body, html[data-theme] body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cvLayout.base.cv, html[data-theme] .cvLayout.base.cv {
+    padding: 0 !important;
+    background: #fff !important;
+    color: #000 !important;
+    border: none !important;
+    box-shadow: none !important;
+    --cv-accent-color: #ff7024 !important;
+  }
+  .blockTitle, .itemTitle, .role, html[data-theme] .blockTitle, html[data-theme] .itemTitle, html[data-theme] .role {
+    color: var(--cv-accent-color) !important;
+    text-shadow: none !important;
+  }
+  .nv-word, html[data-theme] .nv-word {
+    font-size: 1em !important;
+    color: inherit !important;
+    display: inline !important;
+    white-space: normal !important;
+  }
+  .work-decor {
+    display: none !important;
+  }
+}

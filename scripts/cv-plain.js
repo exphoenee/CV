@@ -4,11 +4,16 @@ CV.initHireModal("hire-plain");
   var btn = document.getElementById("theme-toggle");
   var overlay = null;
   var isTouch = window.matchMedia("(pointer: coarse)").matches;
-  var states = isTouch ? ["light", "dark"] : ["light", "dark", "superdark"];
-  var icons = isTouch ? ["\u2600\uFE0F", "\u{1F319}"] : ["\u2600\uFE0F", "\u{1F319}", "\u{1F526}"];
+  var states = isTouch ? ["light", "dark"] : ["light", "dark", "superdark", "nightvision", "predator"];
+  var icons = isTouch
+    ? ["assets/sun.webp", "assets/moon.webp"]
+    : ["assets/sun.webp", "assets/moon.webp", "assets/flashlight.webp", "assets/nightvision.webp", "assets/predator.webp"];
   var savedTheme = localStorage.getItem("cv-swagger-theme");
-  var current = (isTouch && savedTheme === "superdark") ? "light" : (savedTheme || CV.getSystemTheme());
+  var current = (savedTheme && states.indexOf(savedTheme) !== -1) ? savedTheme : CV.getSystemTheme();
+  if (states.indexOf(current) === -1) current = "light";
+
   var CURSOR_KEY = "cv-superdark-cursor";
+  var wordsWrapped = false;
 
   function updateOverlay(x, y) {
     if (!overlay) return;
@@ -21,11 +26,49 @@ CV.initHireModal("hire-plain");
     localStorage.setItem(CURSOR_KEY, x + "," + y);
   }
 
+  function wrapWords(element) {
+    if (element.nodeType === Node.TEXT_NODE) {
+      if (!element.textContent.trim()) return;
+      const words = element.textContent.split(/(\s+)/);
+      const fragments = document.createDocumentFragment();
+      words.forEach(word => {
+        if (word.trim()) {
+          const span = document.createElement('span');
+          span.className = 'nv-word';
+          span.textContent = word;
+          // Use CSS variable so it only affects Night Vision
+          span.style.setProperty('--nv-fs', (0.96 + Math.random() * 0.09).toFixed(3) + 'em');
+          // Radical green color variation
+          var g = Math.floor(160 + Math.random() * 95);
+          var r = Math.floor(20 + Math.random() * 100);
+          span.style.setProperty('--nv-c', 'rgb(' + r + ',' + g + ',' + r + ')');
+          fragments.appendChild(span);
+        } else {
+          fragments.appendChild(document.createTextNode(word));
+        }
+      });
+      element.replaceWith(fragments);
+    } else if (element.nodeType === Node.ELEMENT_NODE &&
+               element.tagName !== 'SCRIPT' &&
+               element.tagName !== 'STYLE' &&
+               element.tagName !== 'SVG' &&
+               !element.classList.contains('blockTitle')) {
+      const children = Array.from(element.childNodes);
+      children.forEach(child => wrapWords(child));
+    }
+  }
+
   function apply(state) {
     document.documentElement.setAttribute("data-theme", state);
     localStorage.setItem("cv-swagger-theme", state);
     current = state;
-    btn.textContent = icons[states.indexOf(state)];
+
+    var icon = icons[states.indexOf(state)];
+    if (icon.endsWith(".webp")) {
+      btn.innerHTML = '<img src="' + icon + '" class="theme-icon-img" alt="theme icon">';
+    } else {
+      btn.textContent = icon;
+    }
 
     if (state === "superdark") {
       if (!overlay) {
@@ -45,6 +88,11 @@ CV.initHireModal("hire-plain");
       document.documentElement.style.cursor = "";
       if (overlay) overlay.style.display = "none";
       document.removeEventListener("mousemove", onMouseMove);
+    }
+
+    if (state === "nightvision" && !wordsWrapped) {
+      wrapWords(document.querySelector('.cvLayout.base.cv'));
+      wordsWrapped = true;
     }
   }
 
