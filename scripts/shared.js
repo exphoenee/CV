@@ -29,7 +29,10 @@ CV.initHireModal = function (prefix) {
     if (e.key === "Escape") closeModal();
   });
 
-  document.getElementById(prefix + "-form").addEventListener("submit", closeModal);
+  document.getElementById(prefix + "-form").addEventListener("submit", function() {
+    closeModal();
+    if (window.showToast) window.showToast("Message sent successfully.");
+  });
 
   return { openModal: openModal, closeModal: closeModal };
 };

@@ -1,13 +1,33 @@
 CV.initHireModal("hire-plain");
 
+window.showToast = function(message) {
+  var container = document.getElementById("cv-toaster-container");
+  if (!container) return;
+  var toast = document.createElement("div");
+  toast.className = "cv-toast";
+  toast.innerHTML = '<span>' + message + '</span><button class="cv-toast-close" aria-label="Close">×</button>';
+  
+  var closeBtn = toast.querySelector(".cv-toast-close");
+  
+  function removeToast() {
+    toast.classList.add("hiding");
+    setTimeout(function() { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
+  }
+  
+  closeBtn.addEventListener("click", removeToast);
+  setTimeout(removeToast, 3000);
+  
+  container.appendChild(toast);
+};
+
 (function () {
   var btn = document.getElementById("theme-toggle");
   var overlay = null;
   var isTouch = window.matchMedia("(pointer: coarse)").matches;
   var states = isTouch ? ["light", "dark"] : ["light", "dark", "superdark", "nightvision", "predator"];
   var icons = isTouch
-    ? ["assets/sun.webp", "assets/moon.webp"]
-    : ["assets/sun.webp", "assets/moon.webp", "assets/flashlight.webp", "assets/nightvision.webp", "assets/predator.webp"];
+    ? ["assets/images/sun.webp", "assets/images/moon.webp"]
+    : ["assets/images/sun.webp", "assets/images/moon.webp", "assets/images/flashlight.webp", "assets/images/nightvision.webp", "assets/images/predator.webp"];
   var savedTheme = localStorage.getItem("cv-swagger-theme");
   var current = (savedTheme && states.indexOf(savedTheme) !== -1) ? savedTheme : CV.getSystemTheme();
   if (states.indexOf(current) === -1) current = "light";
@@ -98,7 +118,9 @@ CV.initHireModal("hire-plain");
 
   btn.addEventListener("click", function () {
     var idx = states.indexOf(current);
-    apply(states[(idx + 1) % states.length]);
+    var nextState = states[(idx + 1) % states.length];
+    apply(nextState);
+    if (window.showToast) window.showToast("Theme changed to " + nextState);
   });
 
   apply(current);
@@ -122,7 +144,7 @@ CV.initHireModal("hire-plain");
 
   for (var k = 0; k < items.length - 1; k++) {
     var img = document.createElement("img");
-    img.src = "./assets/" + decors[k % decors.length];
+    img.src = "./assets/images/" + decors[k % decors.length];
     img.alt = "";
     img.className = "work-decor";
     img.style.cssText = "display:block;width:400px;max-width:80%;height:30px;object-fit:contain;margin:3mm auto 3mm";
@@ -131,3 +153,146 @@ CV.initHireModal("hire-plain");
 })();
 
 CV.initFormspree("#hire-plain-form");
+
+(function () {
+  var audio = document.getElementById("music-audio");
+  var toggleBtn = document.getElementById("music-toggle");
+  var panel = document.getElementById("music-panel");
+  var playPauseBtn = document.getElementById("music-playpause");
+
+  var customSelect = document.getElementById("custom-genre-select");
+  if (!customSelect) return; // safeguard if HTML is not updated
+  var trigger = customSelect.querySelector(".custom-select-trigger");
+  var triggerText = trigger.querySelector("span");
+  var options = customSelect.querySelectorAll(".custom-option");
+
+  var isOpen = false;
+  var isPlaying = false;
+  var savedGenre = localStorage.getItem("cv-music-genre");
+  var currentValue = options[0].getAttribute("data-value"); // default
+  var currentLabel = options[0].textContent;
+
+  if (savedGenre) {
+    for (var i = 0; i < options.length; i++) {
+      if (options[i].getAttribute("data-value") === savedGenre) {
+        currentValue = savedGenre;
+        currentLabel = options[i].textContent;
+        break;
+      }
+    }
+  }
+  triggerText.textContent = currentLabel;
+
+  function loadTrack() {
+    if (!audio.src || !audio.src.endsWith(currentValue)) {
+      audio.src = currentValue;
+      audio.load();
+    }
+  }
+
+  function updatePlayPause() {
+    playPauseBtn.textContent = isPlaying ? "⏸" : "▶";
+    if (isPlaying) {
+      toggleBtn.classList.add("playing");
+    } else {
+      toggleBtn.classList.remove("playing");
+    }
+  }
+
+  function openPanel() {
+    isOpen = true;
+    panel.classList.remove("music-panel-hidden");
+    toggleBtn.classList.add("active");
+    loadTrack();
+  }
+
+  function closePanel() {
+    isOpen = false;
+    panel.classList.add("music-panel-hidden");
+    toggleBtn.classList.remove("active");
+    customSelect.classList.remove("open");
+  }
+
+  toggleBtn.addEventListener("click", function () {
+    if (isOpen) closePanel();
+    else openPanel();
+  });
+
+  // Custom select logic
+  trigger.addEventListener("click", function() {
+    customSelect.classList.toggle("open");
+  });
+
+  for (var j = 0; j < options.length; j++) {
+    options[j].addEventListener("click", function(e) {
+      currentValue = e.target.getAttribute("data-value");
+      currentLabel = e.target.textContent;
+      triggerText.textContent = currentLabel;
+      customSelect.classList.remove("open");
+      
+      localStorage.setItem("cv-music-genre", currentValue);
+      var wasPlaying = isPlaying;
+      audio.pause();
+      isPlaying = false;
+      loadTrack();
+      var cleanLabel = currentLabel.replace(/^[^\w\s]*\s*/,'').trim();
+      if (window.showToast) window.showToast("Music changed to " + cleanLabel);
+      if (wasPlaying) {
+        audio.play().then(function () { isPlaying = true; updatePlayPause(); }).catch(function(){});
+      }
+      updatePlayPause();
+    });
+  }
+
+  // Close custom select if clicked outside
+  document.addEventListener("click", function(e) {
+    if (!customSelect.contains(e.target)) {
+      customSelect.classList.remove("open");
+    }
+  });
+
+  playPauseBtn.addEventListener("click", function () {
+    var cleanLabel = currentLabel.replace(/^[^\w\s]*\s*/,'').trim();
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      if (window.showToast) window.showToast(cleanLabel + " music paused");
+    } else {
+      loadTrack();
+      audio.play().then(function () { 
+        isPlaying = true; 
+        updatePlayPause(); 
+        if (window.showToast) window.showToast(cleanLabel + " music playing");
+      }).catch(function () {});
+    }
+    updatePlayPause();
+  });
+
+  audio.addEventListener("ended", function () {
+    isPlaying = false;
+    updatePlayPause();
+  });
+
+  updatePlayPause();
+})();
+
+(function() {
+  // First time after 1 minute (60,000 ms)
+  setTimeout(function() {
+    if (window.showToast) window.showToast("Hurry! Somebody almost hired Viktor.");
+    
+    function scheduleNextHurry() {
+      // Randomly between 3 and 5 minutes
+      var minMs = 3 * 60 * 1000;
+      var maxMs = 5 * 60 * 1000;
+      var nextDelay = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
+      
+      setTimeout(function() {
+        if (window.showToast) window.showToast("Hurry! Somebody almost hired Viktor.");
+        scheduleNextHurry();
+      }, nextDelay);
+    }
+    
+    scheduleNextHurry();
+  }, 60 * 1000);
+})();

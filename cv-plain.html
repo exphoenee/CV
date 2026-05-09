@@ -7,50 +7,35 @@
     <meta name="description" content="Viktor Bozzay CV" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23ff7024'/><text x='50' y='66' font-size='44' font-weight='800' font-family='system-ui' fill='white' text-anchor='middle'>VB</text></svg>">
     <link rel="stylesheet" href="./styles/cv-plain.css" />
-    <style>
-      #theme-toggle {
-        position: fixed;
-        top: 1rem;
-        right: 1rem;
-        z-index: 9999;
-        background: none;
-        border: none;
-        outline: none;
-        font-size: 24px;
-        cursor: pointer;
-        line-height: 1;
-        padding: 0;
-      }
-      [data-theme="dark"] body,
-      [data-theme="superdark"] body {
-        background: #000;
-      }
-      @media print {
-        #theme-toggle { display: none !important; }
-      }
-      .not-responsive {
-        display: none;
-        position: fixed;
-        inset: 0;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 2rem;
-        font-family: system-ui, sans-serif;
-        color: #333;
-        background: #f5f5f5;
-        z-index: 10000;
-      }
-      .not-responsive h2 { font-size: 1.5rem; margin-bottom: 1rem; }
-      .not-responsive p { font-size: 1rem; max-width: 360px; line-height: 1.5; color: #666; }
-      @media (max-width: 650px) {
-        body > :not(.not-responsive) { display: none !important; }
-        .not-responsive { display: flex; }
-      }
-    </style>
+
   </head>
   <body>
-    <button id="theme-toggle" aria-label="Toggle theme"><img src="assets/sun.webp" class="theme-icon-img" alt="theme icon"></button>
+    <button id="theme-toggle" aria-label="Toggle theme"><img src="assets/images/sun.webp" class="theme-icon-img" alt="theme icon"></button>
+    <div id="music-player">
+      <button id="music-toggle" aria-label="Toggle music" title="Music">🎵</button>
+      <div id="music-panel" class="music-panel-hidden">
+        <div class="custom-select" id="custom-genre-select">
+          <div class="custom-select-trigger"><span>👾 8bit</span> <span class="arrow">▼</span></div>
+          <div class="custom-select-options">
+            <div class="custom-option" data-value="assets/music/8bit.mp3">👾 8bit</div>
+            <div class="custom-option" data-value="assets/music/blues.mp3">🎸 Blues</div>
+            <div class="custom-option" data-value="assets/music/classic.mp3">🎻 Classic</div>
+            <div class="custom-option" data-value="assets/music/country.mp3">🤠 Country</div>
+            <div class="custom-option" data-value="assets/music/disco.mp3">🕺 Disco</div>
+            <div class="custom-option" data-value="assets/music/funk.mp3">🚌 Funk</div>
+            <div class="custom-option" data-value="assets/music/hungarian_nota.mp3">🎻 Nóta</div>
+            <div class="custom-option" data-value="assets/music/jazz.mp3">🎷 Jazz</div>
+            <div class="custom-option" data-value="assets/music/metal.mp3">🤘 Metal</div>
+            <div class="custom-option" data-value="assets/music/pop.mp3">🎤 Pop</div>
+            <div class="custom-option" data-value="assets/music/rap.mp3">🗣️ Rap</div>
+            <div class="custom-option" data-value="assets/music/reggae.mp3">🌴 Reggae</div>
+            <div class="custom-option" data-value="assets/music/rock.mp3">🎸 Rock</div>
+          </div>
+        </div>
+        <button id="music-playpause" aria-label="Play/Pause">▶</button>
+      </div>
+      <audio id="music-audio" loop></audio>
+    </div>
     <div class="not-responsive">
       <div>
         <h2>This page is not responsive</h2>
@@ -106,7 +91,7 @@
           <img
             alt="Aegex Technologies"
             title="Aegex Technologies"
-            src="./assets/aegex.png"
+            src="./assets/images/aegex.png"
           />
         </div>
         <div class="itemContent">
@@ -127,15 +112,15 @@
             >
               <div>
                 <div><strong>SafeSy</strong> - Internal manufacturing management system</div>
-                <div>🚩 Cross-role platform (production, office, executives, partners) managing workflows, inventory, and real-time data tracking</div>
-                <div>🚩 Designed and built the internal Aegex Svelte component library used across the platform</div>
-                <div>🚩 Built a subscribable daily email report system; contributed to the Express backend including SQL query development</div>
+                <div><i class="bullet-icon"></i> Cross-role platform (production, office, executives, partners) managing workflows, inventory, and real-time data tracking</div>
+                <div><i class="bullet-icon"></i> Designed and built the internal Aegex Svelte component library used across the platform</div>
+                <div><i class="bullet-icon"></i> Built a subscribable daily email report system; contributed to the Express backend including SQL query development</div>
               </div>
               <div>
                 <div><strong>FACTS</strong> - Feedstock and Compliance Tracking System</div>
-                <div>🚩 Release cycle cut from monthly to 2 weeks (targeting 1 week) using a Claude AI-assisted workflow and custom framework tooling</div>
-                <div>🚩 CI pipeline with automated quality checks introduced; test coverage built from zero, quality issues near eliminated</div>
-                <div>🚩 Migrated to a monorepo, extracted shared FACTS/Driver code into a private package, and built a CLI tool for monorepo workflow management</div>
+                <div><i class="bullet-icon"></i> Release cycle cut from monthly to 2 weeks (targeting 1 week) using a Claude AI-assisted workflow and custom framework tooling</div>
+                <div><i class="bullet-icon"></i> CI pipeline with automated quality checks introduced; test coverage built from zero, quality issues near eliminated</div>
+                <div><i class="bullet-icon"></i> Migrated to a monorepo, extracted shared FACTS/Driver code into a private package, and built a CLI tool for monorepo workflow management</div>
               </div>
             </div>
           </div>
@@ -157,75 +142,75 @@
           <div class="itemSkills">
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/svelte.svg" alt="Svelte" title="Svelte" /></span
+                ><img src="./assets/images/svelte.svg" alt="Svelte" title="Svelte" /></span
               ><span>Svelte</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/react.svg" alt="React" title="React" /></span
+                ><img src="./assets/images/react.svg" alt="React" title="React" /></span
               ><span>React</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/ExpressJS.svg" alt="ExpressJS" title="ExpressJS" /></span
+                ><img src="./assets/images/ExpressJS.svg" alt="ExpressJS" title="ExpressJS" /></span
               ><span>ExpressJS</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/typescript.svg" alt="TypeScript" title="TypeScript" /></span
+                ><img src="./assets/images/typescript.svg" alt="TypeScript" title="TypeScript" /></span
               ><span>TypeScript</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/nodeJS.svg" alt="Node.js" title="Node.js" /></span
+                ><img src="./assets/images/nodeJS.svg" alt="Node.js" title="Node.js" /></span
               ><span>Node.js</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/python.svg" alt="Python" title="Python" /></span
+                ><img src="./assets/images/python.svg" alt="Python" title="Python" /></span
               ><span>Python</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/scss.svg" alt="SCSS" title="SCSS" /></span
+              <span class="skillImage"><img src="./assets/images/scss.svg" alt="SCSS" title="SCSS" /></span
               ><span>SCSS</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/vite.svg" alt="Vite" title="Vite" /></span
+              <span class="skillImage"><img src="./assets/images/vite.svg" alt="Vite" title="Vite" /></span
               ><span>Vite</span>
             </div>
 
             <div class="skill">
-              <span class="skillImage"><img src="./assets/pnpm.svg" alt="PNPM" title="PNPM" /></span
+              <span class="skillImage"><img src="./assets/images/pnpm.svg" alt="PNPM" title="PNPM" /></span
               ><span>PNPM</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/mysql.svg" alt="MySQL" title="MySQL" /></span
+                ><img src="./assets/images/mysql.svg" alt="MySQL" title="MySQL" /></span
               ><span>MySQL</span>
             </div>
 
             <div class="skill">
-              <span class="skillImage"><img src="./assets/jest.svg" alt="Jest" title="Jest" /></span
+              <span class="skillImage"><img src="./assets/images/jest.svg" alt="Jest" title="Jest" /></span
               ><span>Jest</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/vitest.svg" alt="Vitest" title="Vitest" /></span
+                ><img src="./assets/images/vitest.svg" alt="Vitest" title="Vitest" /></span
               ><span>Vitest</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/playwright.svg" alt="Playwright" title="Playwright" /></span
+                ><img src="./assets/images/playwright.svg" alt="Playwright" title="Playwright" /></span
               ><span>Playwright</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/claude.svg" alt="Claude" title="Claude" /></span
+                ><img src="./assets/images/claude.svg" alt="Claude" title="Claude" /></span
               ><span>Claude</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/codex.svg" alt="Codex" title="Codex" /></span
+                ><img src="./assets/images/codex.svg" alt="Codex" title="Codex" /></span
               ><span>Codex</span>
             </div>
           </div>
@@ -236,7 +221,7 @@
           <img
             alt="Deutsche Telekom IT Solutions HU"
             title="Deutsche Telekom IT Solutions HU"
-            src="./assets/telekom.png"
+            src="./assets/images/telekom.png"
           />
         </div>
         <div class="itemContent">
@@ -254,10 +239,10 @@
               class="cv-plain-inline-2"
             >
               <div>
-                🚩 Built type-safe UI components and integrated the AI-driven backend with real-time
+                <i class="bullet-icon"></i> Built type-safe UI components and integrated the AI-driven backend with real-time
                 analysis display
               </div>
-              <div>🚩 Created intuitive interfaces for managing and viewing test results</div>
+              <div><i class="bullet-icon"></i> Created intuitive interfaces for managing and viewing test results</div>
             </div>
           </div>
           <div class="cv-plain-inline-3">
@@ -276,38 +261,38 @@
           <div class="itemSkills">
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/react.svg" alt="React" title="React" /></span
+                ><img src="./assets/images/react.svg" alt="React" title="React" /></span
               ><span>React</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/nodeJS.svg" alt="Node.js" title="Node.js" /></span
+                ><img src="./assets/images/nodeJS.svg" alt="Node.js" title="Node.js" /></span
               ><span>Node.js</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/npm.svg" alt="NPM" title="NPM" /></span
+              <span class="skillImage"><img src="./assets/images/npm.svg" alt="NPM" title="NPM" /></span
               ><span>NPM</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/jest.svg" alt="Jest" title="Jest" /></span
+              <span class="skillImage"><img src="./assets/images/jest.svg" alt="Jest" title="Jest" /></span
               ><span>Jest</span>
             </div>
             <div class="skill">
               <span class="skillImage"
                 ><img
-                  src="./assets/styled-components.svg"
+                  src="./assets/images/styled-components.svg"
                   alt="Styled Components"
                   title="Styled Components" /></span
               ><span>Styled Components</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/react redux.svg" alt="React Redux" title="React Redux" /></span
+                ><img src="./assets/images/react redux.svg" alt="React Redux" title="React Redux" /></span
               ><span>React Redux</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/webpack.svg" alt="Webpack" title="Webpack" /></span
+                ><img src="./assets/images/webpack.svg" alt="Webpack" title="Webpack" /></span
               ><span>Webpack</span>
             </div>
           </div>
@@ -318,7 +303,7 @@
           <img
             alt="Scolia Technologies Ltd."
             title="Scolia Technologies Ltd."
-            src="./assets/scolia.png"
+            src="./assets/images/scolia.png"
           />
         </div>
         <div class="itemContent">
@@ -334,10 +319,10 @@
               class="cv-plain-inline-2"
             >
               <div>
-                🚩 Built responsive, dynamic UIs in collaboration with the design team.
+                <i class="bullet-icon"></i> Built responsive, dynamic UIs in collaboration with the design team.
               </div>
               <div>
-                🚩 Created interactive visualizations for real-time progress tracking and
+                <i class="bullet-icon"></i> Created interactive visualizations for real-time progress tracking and
                 performance insights.
               </div>
             </div>
@@ -355,43 +340,43 @@
           <div class="itemSkills">
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/react.svg" alt="React" title="React" /></span
+                ><img src="./assets/images/react.svg" alt="React" title="React" /></span
               ><span>React</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/redux-saga.svg" alt="Redux Saga" title="Redux Saga" /></span
+                ><img src="./assets/images/redux-saga.svg" alt="Redux Saga" title="Redux Saga" /></span
               ><span>Redux Saga</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/jest.svg" alt="Jest" title="Jest" /></span
+              <span class="skillImage"><img src="./assets/images/jest.svg" alt="Jest" title="Jest" /></span
               ><span>Jest</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/mongodb.svg" alt="MongoDB" title="MongoDB" /></span
+                ><img src="./assets/images/mongodb.svg" alt="MongoDB" title="MongoDB" /></span
               ><span>MongoDB</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/scss.svg" alt="SCSS" title="SCSS" /></span
+              <span class="skillImage"><img src="./assets/images/scss.svg" alt="SCSS" title="SCSS" /></span
               ><span>SCSS</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/css.svg" alt="CSS" title="CSS" /></span
+              <span class="skillImage"><img src="./assets/images/css.svg" alt="CSS" title="CSS" /></span
               ><span>CSS</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/html.svg" alt="HTML" title="HTML" /></span
+              <span class="skillImage"><img src="./assets/images/html.svg" alt="HTML" title="HTML" /></span
               ><span>HTML</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/webpack.svg" alt="Webpack" title="Webpack" /></span
+                ><img src="./assets/images/webpack.svg" alt="Webpack" title="Webpack" /></span
               ><span>Webpack</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/websocket.svg" alt="WebSocket" title="WebSocket" /></span
+                ><img src="./assets/images/websocket.svg" alt="WebSocket" title="WebSocket" /></span
               ><span>WebSocket</span>
             </div>
           </div>
@@ -402,7 +387,7 @@
           <img
             alt="Cubicfox"
             title="Cubicfox"
-            src="./assets/cubicfox.png"
+            src="./assets/images/cubicfox.png"
           />
         </div>
         <div class="itemContent">
@@ -420,13 +405,13 @@
             >
               <div>
                 <div><strong>Hard Skills</strong></div>
-                <div>🚩 Responsive, cross-browser UI development</div>
-                <div>🚩 Git workflows and Agile methodologies</div>
+                <div><i class="bullet-icon"></i> Responsive, cross-browser UI development</div>
+                <div><i class="bullet-icon"></i> Git workflows and Agile methodologies</div>
               </div>
               <div>
                 <div><strong>Soft Skills</strong></div>
-                <div>🚩 Strong communication, collaboration, and attention to detail</div>
-                <div>🚩 Effective at gathering client requirements and adapting to change</div>
+                <div><i class="bullet-icon"></i> Strong communication, collaboration, and attention to detail</div>
+                <div><i class="bullet-icon"></i> Effective at gathering client requirements and adapting to change</div>
               </div>
             </div>
           </div>
@@ -443,53 +428,53 @@
           <div class="itemSkills">
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/react.svg" alt="React" title="React" /></span
+                ><img src="./assets/images/react.svg" alt="React" title="React" /></span
               ><span>React</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/javascript.svg" alt="JavaScript" title="JavaScript" /></span
+                ><img src="./assets/images/javascript.svg" alt="JavaScript" title="JavaScript" /></span
               ><span>JavaScript</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/typescript.svg" alt="TypeScript" title="TypeScript" /></span
+                ><img src="./assets/images/typescript.svg" alt="TypeScript" title="TypeScript" /></span
               ><span>TypeScript</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/html.svg" alt="HTML" title="HTML" /></span
+              <span class="skillImage"><img src="./assets/images/html.svg" alt="HTML" title="HTML" /></span
               ><span>HTML</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/css.svg" alt="CSS" title="CSS" /></span
+              <span class="skillImage"><img src="./assets/images/css.svg" alt="CSS" title="CSS" /></span
               ><span>CSS</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/scss.svg" alt="SCSS" title="SCSS" /></span
+              <span class="skillImage"><img src="./assets/images/scss.svg" alt="SCSS" title="SCSS" /></span
               ><span>SCSS</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/npm.svg" alt="NPM" title="NPM" /></span
+              <span class="skillImage"><img src="./assets/images/npm.svg" alt="NPM" title="NPM" /></span
               ><span>NPM</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/jest.svg" alt="Jest" title="Jest" /></span
+              <span class="skillImage"><img src="./assets/images/jest.svg" alt="Jest" title="Jest" /></span
               ><span>Jest</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/webpack.svg" alt="Webpack" title="Webpack" /></span
+                ><img src="./assets/images/webpack.svg" alt="Webpack" title="Webpack" /></span
               ><span>Webpack</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/next.js.svg" alt="Next.js" title="Next.js" /></span
+                ><img src="./assets/images/next.js.svg" alt="Next.js" title="Next.js" /></span
               ><span>Next.js</span>
             </div>
             <div class="skill">
               <span class="skillImage"
                 ><img
-                  src="./assets/styled-components.svg"
+                  src="./assets/images/styled-components.svg"
                   alt="Styled Components"
                   title="Styled Components" /></span
               ><span>Styled Components</span>
@@ -502,7 +487,7 @@
           <img
             alt="CobotX Technologies"
             title="CobotX Technologies"
-            src="./assets/cobotx.png"
+            src="./assets/images/cobotx.png"
           />
         </div>
         <div class="itemContent">
@@ -520,17 +505,17 @@
               <div>
                 <div><strong>Responsibilities</strong></div>
                 <div>
-                  🚩 Developed hardware/software specifications for PLC and robotics systems
+                  <i class="bullet-icon"></i> Developed hardware/software specifications for PLC and robotics systems
                 </div>
-                <div>🚩 Created capacity and financial plans aligned with the Sales Forecast</div>
+                <div><i class="bullet-icon"></i> Created capacity and financial plans aligned with the Sales Forecast</div>
               </div>
               <div>
                 <div><strong>Leadership and Soft Skills</strong></div>
                 <div>
-                  🚩 Built and led a team of 4 engineers, managing performance and project progress
+                  <i class="bullet-icon"></i> Built and led a team of 4 engineers, managing performance and project progress
                 </div>
                 <div>
-                  🚩 Set KPIs, improved documentation standards, and reported quarterly to
+                  <i class="bullet-icon"></i> Set KPIs, improved documentation standards, and reported quarterly to
                   management
                 </div>
               </div>
@@ -540,7 +525,7 @@
             <div class="skill">
               <span class="skillImage"
                 ><img
-                  src="./assets/robot applications.svg"
+                  src="./assets/images/robot applications.svg"
                   alt="Robot Applications"
                   title="Robot Applications" /></span
               ><span>Robot Applications</span>
@@ -548,7 +533,7 @@
             <div class="skill">
               <span class="skillImage"
                 ><img
-                  src="./assets/industrial automation.svg"
+                  src="./assets/images/industrial automation.svg"
                   alt="Industrial Automation"
                   title="Industrial Automation" /></span
               ><span>Industrial Automation</span>
@@ -556,7 +541,7 @@
             <div class="skill">
               <span class="skillImage"
                 ><img
-                  src="./assets/project managment.svg"
+                  src="./assets/images/project managment.svg"
                   alt="Project Management"
                   title="Project Management" /></span
               ><span>Project Management</span>
@@ -564,35 +549,35 @@
             <div class="skill">
               <span class="skillImage"
                 ><img
-                  src="./assets/Universal Robot.svg"
+                  src="./assets/images/Universal Robot.svg"
                   alt="Universal Robot"
                   title="Universal Robot" /></span
               ><span>Universal Robot</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/OnRobot.svg" alt="OnRobot" title="OnRobot" /></span
+                ><img src="./assets/images/OnRobot.svg" alt="OnRobot" title="OnRobot" /></span
               ><span>OnRobot</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/OnShape.svg" alt="OnShape" title="OnShape" /></span
+                ><img src="./assets/images/OnShape.svg" alt="OnShape" title="OnShape" /></span
               ><span>OnShape</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/python.svg" alt="Python" title="Python" /></span
+                ><img src="./assets/images/python.svg" alt="Python" title="Python" /></span
               ><span>Python</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/pycharm.svg" alt="PyCharm" title="PyCharm" /></span
+                ><img src="./assets/images/pycharm.svg" alt="PyCharm" title="PyCharm" /></span
               ><span>PyCharm</span>
             </div>
             <div class="skill">
               <span class="skillImage"
                 ><img
-                  src="./assets/machine vision.svg"
+                  src="./assets/images/machine vision.svg"
                   alt="Machine Vision"
                   title="Machine Vision" /></span
               ><span>Machine Vision</span>
@@ -600,7 +585,7 @@
             <div class="skill">
               <span class="skillImage"
                 ><img
-                  src="./assets/mechanical engineering.svg"
+                  src="./assets/images/mechanical engineering.svg"
                   alt="Mechanical Engineering"
                   title="Mechanical Engineering" /></span
               ><span>Mechanical Engineering</span>
@@ -613,7 +598,7 @@
           <img
             alt="WebforSol"
             title="WebforSol"
-            src="./assets/websol.png"
+            src="./assets/images/websol.png"
           />
         </div>
         <div class="itemContent">
@@ -632,17 +617,17 @@
               <div>
                 <div><strong>Hard Skills</strong></div>
                 <div>
-                  🚩 Full-stack experience with React, Next.js, Node.js, MongoDB, MySQL, and
+                  <i class="bullet-icon"></i> Full-stack experience with React, Next.js, Node.js, MongoDB, MySQL, and
                   PHP/Laravel
                 </div>
               </div>
               <div>
                 <div><strong>Soft Skills</strong></div>
                 <div>
-                  🚩 Agile methodology practitioner with strong collaboration and adaptability
+                  <i class="bullet-icon"></i> Agile methodology practitioner with strong collaboration and adaptability
                 </div>
                 <div>
-                  🚩 Effective communication for understanding and meeting evolving client needs
+                  <i class="bullet-icon"></i> Effective communication for understanding and meeting evolving client needs
                 </div>
               </div>
             </div>
@@ -668,59 +653,59 @@
           <div class="itemSkills">
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/react.svg" alt="React" title="React" /></span
+                ><img src="./assets/images/react.svg" alt="React" title="React" /></span
               ><span>React</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/javascript.svg" alt="JavaScript" title="JavaScript" /></span
+                ><img src="./assets/images/javascript.svg" alt="JavaScript" title="JavaScript" /></span
               ><span>JavaScript</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/jquery.svg" alt="jQuery" title="jQuery" /></span
+                ><img src="./assets/images/jquery.svg" alt="jQuery" title="jQuery" /></span
               ><span>jQuery</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/nodeJS.svg" alt="Node.js" title="Node.js" /></span
+                ><img src="./assets/images/nodeJS.svg" alt="Node.js" title="Node.js" /></span
               ><span>Node.js</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/php.svg" alt="PHP" title="PHP" /></span
+              <span class="skillImage"><img src="./assets/images/php.svg" alt="PHP" title="PHP" /></span
               ><span>PHP</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/mysql.svg" alt="MySQL" title="MySQL" /></span
+                ><img src="./assets/images/mysql.svg" alt="MySQL" title="MySQL" /></span
               ><span>MySQL</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/css.svg" alt="CSS" title="CSS" /></span
+              <span class="skillImage"><img src="./assets/images/css.svg" alt="CSS" title="CSS" /></span
               ><span>CSS</span>
             </div>
             <div class="skill">
               <span class="skillImage"
                 ><img
-                  src="./assets/styled-components.svg"
+                  src="./assets/images/styled-components.svg"
                   alt="Styled Components"
                   title="Styled Components" /></span
               ><span>Styled Components</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/nextjs.svg" alt="Next.js" title="Next.js" /></span
+                ><img src="./assets/images/nextjs.svg" alt="Next.js" title="Next.js" /></span
               ><span>Next.js</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/NestJS.svg" alt="NestJS" title="NestJS" /></span
+                ><img src="./assets/images/NestJS.svg" alt="NestJS" title="NestJS" /></span
               ><span>NestJS</span>
             </div>
             <div class="skill">
               <span class="skillImage"
                 ><img
-                  src="./assets/project managment.svg"
+                  src="./assets/images/project managment.svg"
                   alt="Project Management"
                   title="Project Management" /></span
               ><span>Project Management</span>
@@ -732,35 +717,19 @@
         <span>Education</span>
       </div>
       <div class="item noBreakInside educationItem cv-item">
-        <div class="itemContent">
-          <div class="itemTitle">
+        <div class="itemContent" style="display: flex; flex-direction: column; gap: 8px;">
+          <div class="itemTitle" style="width: 100%; margin-bottom: 0.5rem;">
             Faculty of Engineering and Information Technology - University of Pécs
           </div>
-          <div class="itemDetails itemDetailsWithDate">
-            <div>Bachelor's degree, Quality Manager</div>
-            <div class="">2003 - 2007</div>
-          </div>
-        </div>
-      </div>
-      <div class="item noBreakInside educationItem cv-item">
-        <div class="itemContent">
-          <div class="itemTitle">
-            Faculty of Engineering and Information Technology - University of Pécs
-          </div>
-          <div class="itemDetails itemDetailsWithDate">
-            <div>Bachelor's degree, Machinery Technical Teacher Education</div>
-            <div class="">2001 - 2004</div>
-          </div>
-        </div>
-      </div>
-      <div class="item noBreakInside educationItem cv-item">
-        <div class="itemContent">
-          <div class="itemTitle">
-            Faculty of Engineering and Information Technology - University of Pécs
-          </div>
-          <div class="itemDetails itemDetailsWithDate">
-            <div>Bachelor of Engineering (BEng), Mechanical Engineering</div>
-            <div class="">2000 - 2004</div>
+          <div style="width: 100%; display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; align-items: baseline; font-size: 0.95em;">
+            <div><i class="bullet-icon"></i>Bachelor's degree, Quality Manager</div>
+            <div style="opacity: 0.7; font-size: 0.9em; text-align: right; white-space: nowrap;">2003 - 2007</div>
+            
+            <div><i class="bullet-icon"></i>Bachelor's degree, Machinery Technical Teacher Education</div>
+            <div style="opacity: 0.7; font-size: 0.9em; text-align: right; white-space: nowrap;">2001 - 2004</div>
+            
+            <div><i class="bullet-icon"></i>Bachelor of Engineering (BEng), Mechanical Engineering</div>
+            <div style="opacity: 0.7; font-size: 0.9em; text-align: right; white-space: nowrap;">2000 - 2004</div>
           </div>
         </div>
       </div>
@@ -1019,36 +988,72 @@
           <div class="itemSkills">
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/typescript(1).svg" alt="TypeScript" title="TypeScript" /></span
+                ><img src="./assets/images/typescript(1).svg" alt="TypeScript" title="TypeScript" /></span
               ><span>TypeScript</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/javascript(1).svg" alt="JavaScript" title="JavaScript" /></span
+                ><img src="./assets/images/javascript(1).svg" alt="JavaScript" title="JavaScript" /></span
               ><span>JavaScript</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/css(1).svg" alt="CSS" title="CSS" /></span
+              <span class="skillImage"><img src="./assets/images/css(1).svg" alt="CSS" title="CSS" /></span
               ><span>CSS</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/scss(1).svg" alt="SCSS" title="SCSS" /></span
+                ><img src="./assets/images/scss(1).svg" alt="SCSS" title="SCSS" /></span
               ><span>SCSS</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/html(1).svg" alt="HTML" title="HTML" /></span
+                ><img src="./assets/images/html(1).svg" alt="HTML" title="HTML" /></span
               ><span>HTML</span>
             </div>
             <div class="skill">
               <span class="skillImage"
-                ><img src="./assets/python(1).svg" alt="Python" title="Python" /></span
+                ><img src="./assets/images/python(1).svg" alt="Python" title="Python" /></span
               ><span>Python</span>
             </div>
             <div class="skill">
-              <span class="skillImage"><img src="./assets/php(1).svg" alt="PHP" title="PHP" /></span
+              <span class="skillImage"><img src="./assets/images/php(1).svg" alt="PHP" title="PHP" /></span
               ><span>PHP</span>
+            </div>
+            <div class="skill">
+              <span class="skillImage"><img src="./assets/images/robot applications.svg" alt="Robot Applications" title="Robot Applications" /></span
+              ><span>Robot Applications</span>
+            </div>
+            <div class="skill">
+              <span class="skillImage"><img src="./assets/images/industrial automation.svg" alt="Industrial Automation" title="Industrial Automation" /></span
+              ><span>Industrial Automation</span>
+            </div>
+            <div class="skill">
+              <span class="skillImage"><img src="./assets/images/project managment.svg" alt="Project Management" title="Project Management" /></span
+              ><span>Project Management</span>
+            </div>
+            <div class="skill">
+              <span class="skillImage"><img src="./assets/images/Universal Robot.svg" alt="Universal Robot" title="Universal Robot" /></span
+              ><span>Universal Robot</span>
+            </div>
+            <div class="skill">
+              <span class="skillImage"><img src="./assets/images/OnRobot.svg" alt="OnRobot" title="OnRobot" /></span
+              ><span>OnRobot</span>
+            </div>
+            <div class="skill">
+              <span class="skillImage"><img src="./assets/images/OnShape.svg" alt="OnShape" title="OnShape" /></span
+              ><span>OnShape</span>
+            </div>
+            <div class="skill">
+              <span class="skillImage"><img src="./assets/images/pycharm.svg" alt="PyCharm" title="PyCharm" /></span
+              ><span>PyCharm</span>
+            </div>
+            <div class="skill">
+              <span class="skillImage"><img src="./assets/images/machine vision.svg" alt="Machine Vision" title="Machine Vision" /></span
+              ><span>Machine Vision</span>
+            </div>
+            <div class="skill">
+              <span class="skillImage"><img src="./assets/images/mechanical engineering.svg" alt="Mechanical Engineering" title="Mechanical Engineering" /></span
+              ><span>Mechanical Engineering</span>
             </div>
           </div>
         </div>
@@ -1086,12 +1091,15 @@
       <div class="poweredBy">
         <a href="https://profile.codersrank.io/user/exphoenee/" target="_blank"
           ><span>Powered by</span>&nbsp;
-          <img src="./assets/codersrank.svg" alt="codersrank" class="codersrank">
+          <img src="./assets/images/codersrank.svg" alt="codersrank" class="codersrank">
           </a>
       </div>
     </div>
   </div>
   </div>
+  </div>
+
+<div id="cv-toaster-container"></div>
 
 <!-- HIRE MODAL -->
 <div id="hire-plain-modal" class="cv-modal-hidden">
