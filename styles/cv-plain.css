@@ -1220,7 +1220,63 @@ a,
   padding: 10px 24px; font-size: 14px; font-weight: 600;
   cursor: pointer; font-family: inherit;
 }
-.hire-submit:hover { background: #e5621a; }
+.hire-submit:hover {
+  background: #e65c00;
+}
+
+@media screen and (max-width: 768px) {
+  .base {
+    padding: 1.5rem 1rem;
+    width: 100%;
+    min-height: auto;
+  }
+  .header {
+    flex-direction: column;
+  }
+  .roleContacts {
+    width: 100%;
+  }
+  .intro {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .itemContent, .deatils-container {
+    flex-direction: column;
+  }
+  .itemDetailsWithDate {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .itemDetailsWithDate > div + div {
+    margin-left: 0;
+    margin-top: 0.25rem;
+  }
+  .leonardo_education__3P0l1 .itemTitle,
+  .educationItem .itemTitle,
+  .leonardo_projects__-ZSNR .itemTitle,
+  .leonardo_projectsItem__W-xhV .itemTitle,
+  .leonardo_workExperience__2wlJX .itemTitle,
+  .workExperienceItem .itemTitle {
+    width: 100%;
+  }
+  .cv-plain-inline-2, .cv-plain-inline-7 {
+    display: flex !important;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .cv-plain-inline-5, .cv-plain-inline-8 {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .educationItem [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+  .educationItem [style*="text-align: right"] {
+    text-align: left !important;
+  }
+}
+
 .hire-submit:disabled { opacity: .5; cursor: default; }
 
 /* Dark theme modal */
@@ -1397,26 +1453,7 @@ a,
 [data-theme="nightvision"] body { background-color: #051005; }
 [data-theme="predator"] body { background-color: #000; }
 
-/* Not-responsive overlay */
-.not-responsive {
-  display: none;
-  position: fixed;
-  inset: 0;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 2rem;
-  font-family: system-ui, sans-serif;
-  color: #333;
-  background: #f5f5f5;
-  z-index: 10000;
-}
-.not-responsive h2 { font-size: 1.5rem; margin-bottom: 1rem; }
-.not-responsive p { font-size: 1rem; max-width: 360px; line-height: 1.5; color: #666; }
-@media (max-width: 650px) {
-  body > :not(.not-responsive) { display: none !important; }
-  .not-responsive { display: flex; }
-}
+
 
 /* Bullet icon using mask */
 .bullet-icon {
@@ -1478,11 +1515,7 @@ a,
 [data-theme="predator"] .cv-toast { background: rgba(13,0,0,0.95); border: 1px solid #ffcc00; color: #ff3300; box-shadow: 0 0 12px rgba(255,0,0,0.4); }
 [data-theme="predator"] .cv-toast-close { color: #cc0000; }
 [data-theme="predator"] .cv-toast-close:hover { color: #ff3300; }
-.not-responsive p { font-size: 1rem; max-width: 360px; line-height: 1.5; color: #666; }
-@media (max-width: 650px) {
-  body > :not(.not-responsive) { display: none !important; }
-  .not-responsive { display: flex; }
-}
+
 
 /* Dark theme UI controls & Image filters */
 [data-theme="dark"] #theme-toggle,
