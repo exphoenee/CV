@@ -316,8 +316,8 @@ h1 small {
   margin-top: 12px;
 }
 
-#hire-index-modal {
-  display: none;
+.cv-modal-hidden {
+  display: none !important;
 }
 
 [data-fs-success] {
