@@ -1302,7 +1302,13 @@ body {
    PREDATOR THEME
    ============================================================ */
 
-[data-theme="predator"] body { background-color: #000 !important; }
+[data-theme="predator"] body { 
+  background-color: #000 !important; 
+  cursor: url('../predator-laser.svg') 50 50, crosshair !important;
+}
+[data-theme="predator"] * { 
+  cursor: url('../predator-laser.svg') 50 50, crosshair !important; 
+}
 [data-theme="predator"] .cvLayout.base.cv {
   background: radial-gradient(circle at center, #220000 0%, #000 100%) !important;
   color: #ff3300 !important;
