@@ -1,13 +1,9 @@
 import {
   TILE_TYPES,
-  MAP_GRID,
   TILE_SIZE,
   TILE_SHEET_TILE_SIZE,
-  MAP_WIDTH,
-  MAP_HEIGHT,
-  MAP_OFFSET_COL,
-  MAP_OFFSET_ROW,
-  FULL_MAP_GRID,
+  MAP_IMAGE_SRC,
+  loadMapGridFromImage,
 } from "./map/map.js";
 import {MapRenderer} from "./map/renderMap.js";
 import {CV_STATIONS} from "./world/stations.js";
@@ -42,11 +38,12 @@ class GameEngine {
     this.isFrozen = false;
     this.lastTime = 0;
 
-    // World parameters
-    this.cols = MAP_WIDTH;
-    this.rows = MAP_HEIGHT;
-    this.width = this.cols * TILE_SIZE;
-    this.height = this.rows * TILE_SIZE;
+    // World parameters (set after map image loads)
+    this.cols = 0;
+    this.rows = 0;
+    this.width = 0;
+    this.height = 0;
+    this.fullMapGrid = null;
 
     // Camera
     this.camera = {x: 0, y: 0};
@@ -134,14 +131,25 @@ class GameEngine {
   /**
    * Start loading and build game assets.
    */
-  init() {
-    this.preloadAssets(() => {
-      this.buildWorld();
-      this.setupDialogueListeners();
-      this.setupPauseMenuListeners();
-      // Start main loops
-      requestAnimationFrame((time) => this.loop(time));
-    });
+  async init() {
+    try {
+      const mapData = await loadMapGridFromImage(MAP_IMAGE_SRC);
+      this.fullMapGrid = mapData.fullMapGrid;
+      this.cols = mapData.cols;
+      this.rows = mapData.rows;
+      this.width = this.cols * TILE_SIZE;
+      this.height = this.rows * TILE_SIZE;
+    } catch (err) {
+      console.error("[Map] BMP load failed:", err);
+      return;
+    }
+
+    await new Promise((resolve) => this.preloadAssets(resolve));
+
+    this.buildWorld();
+    this.setupDialogueListeners();
+    this.setupPauseMenuListeners();
+    requestAnimationFrame((time) => this.loop(time));
   }
 
   /**
@@ -150,7 +158,7 @@ class GameEngine {
   buildWorld() {
     // 0. Build map renderer now that tile images are loaded
     this.mapRenderer = new MapRenderer({
-      fullMapGrid: FULL_MAP_GRID,
+      fullMapGrid: this.fullMapGrid,
       tileTypes: TILE_TYPES,
       tileImages: this.tileImages,
       tileSize: TILE_SIZE,
@@ -607,7 +615,7 @@ class GameEngine {
       player: this.player,
       keys: this.keys,
       map: {
-        grid: FULL_MAP_GRID,
+        grid: this.fullMapGrid,
         types: TILE_TYPES,
         tileSize: TILE_SIZE,
       },
