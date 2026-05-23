@@ -3,25 +3,25 @@ import {
   MAP_GRID,
   TILE_SIZE,
   TILE_SHEET_TILE_SIZE,
-  SHEET_TILE_FRAMES,
   MAP_WIDTH,
   MAP_HEIGHT,
   MAP_OFFSET_COL,
   MAP_OFFSET_ROW,
   FULL_MAP_GRID,
-} from "./map.js";
-import {CV_STATIONS} from "./stations.js";
-import {ENTITY_SPAWNS} from "./spawns.js";
-import Player from "./Player.js";
-import Skeleton from "./Skeleton.js";
-import Chicken from "./Chicken.js";
-import Cow from "./Cow.js";
-import Pig from "./Pig.js";
-import Sheep from "./Sheep.js";
-import Tree from "./Tree.js";
-import Fence from "./Fence.js";
-import Chest from "./Chest.js";
-import House from "./House.js";
+} from "./map/map.js";
+import {MapRenderer} from "./map/renderMap.js";
+import {CV_STATIONS} from "./world/stations.js";
+import {ENTITY_SPAWNS} from "./world/spawns.js";
+import Player from "./entities/player/Player.js";
+import Skeleton from "./entities/enemies/Skeleton.js";
+import Chicken from "./entities/npcs/Chicken.js";
+import Cow from "./entities/npcs/Cow.js";
+import Pig from "./entities/npcs/Pig.js";
+import Sheep from "./entities/npcs/Sheep.js";
+import Tree from "./entities/obstacles/Tree.js";
+import Fence from "./entities/obstacles/Fence.js";
+import Chest from "./entities/obstacles/Chest.js";
+import House from "./entities/obstacles/House.js";
 
 class GameEngine {
   constructor() {
@@ -148,6 +148,15 @@ class GameEngine {
    * Construct entities, houses, and obstacles.
    */
   buildWorld() {
+    // 0. Build map renderer now that tile images are loaded
+    this.mapRenderer = new MapRenderer({
+      fullMapGrid: FULL_MAP_GRID,
+      tileTypes: TILE_TYPES,
+      tileImages: this.tileImages,
+      tileSize: TILE_SIZE,
+      sheetTileSize: TILE_SHEET_TILE_SIZE,
+    });
+
     // 1. Spawn Player
     this.player = new Player(ENTITY_SPAWNS.player);
 
@@ -228,7 +237,7 @@ class GameEngine {
     for (let i = 0; i < maxAttempts; i++) {
       const col = 1 + Math.floor(Math.random() * (this.cols - 2));
       const row = 1 + Math.floor(Math.random() * (this.rows - 2));
-      const tileKey = this.getMapTileKey(row, col);
+      const tileKey = this.mapRenderer.getMapTileKey(row, col);
       if (TILE_TYPES[tileKey] && !TILE_TYPES[tileKey].solid) {
         return {x: col * TILE_SIZE, y: row * TILE_SIZE};
       }
@@ -688,7 +697,9 @@ class GameEngine {
     this.ctx.clearRect(0, 0, this.virtualWidth, this.virtualHeight);
 
     // 1. Render Tilemap background layer
-    this.drawTiles();
+    this.mapRenderer.drawTiles(
+      this.ctx, this.camera, this.rows, this.cols, this.virtualWidth, this.virtualHeight
+    );
 
     // 2. Render all entities y-sorted for 2.5D depth ordering
     // Sort objects based on the bottom line of their AABB collision box (depth height)
@@ -704,231 +715,6 @@ class GameEngine {
 
     // 3. Draw Player HUD / Life Hearts
     this.drawHUD();
-  }
-
-  /**
-   * Render repeating tile grids.
-   */
-  drawTiles() {
-    const startCol = Math.floor(this.camera.x / TILE_SIZE);
-    const endCol = Math.ceil((this.camera.x + this.virtualWidth) / TILE_SIZE);
-    const startRow = Math.floor(this.camera.y / TILE_SIZE);
-    const endRow = Math.ceil((this.camera.y + this.virtualHeight) / TILE_SIZE);
-
-    for (let r = Math.max(0, startRow); r < Math.min(this.rows, endRow); r++) {
-      for (
-        let c = Math.max(0, startCol);
-        c < Math.min(this.cols, endCol);
-        c++
-      ) {
-        let tileKey = this.getMapTileKey(r, c);
-        const img = this.tileImages[tileKey];
-        if (!img) continue;
-
-        const frame = this.getTileFrame(tileKey, r, c);
-        if (frame) {
-          this.ctx.drawImage(
-            img,
-            frame.x,
-            frame.y,
-            TILE_SHEET_TILE_SIZE,
-            TILE_SHEET_TILE_SIZE,
-            c * TILE_SIZE - this.camera.x,
-            r * TILE_SIZE - this.camera.y,
-            TILE_SIZE,
-            TILE_SIZE,
-          );
-        } else {
-          this.ctx.drawImage(
-            img,
-            c * TILE_SIZE - this.camera.x,
-            r * TILE_SIZE - this.camera.y,
-            TILE_SIZE,
-            TILE_SIZE,
-          );
-        }
-      }
-    }
-  }
-
-  getTileFrame(tileKey, row, col) {
-    const tileType = TILE_TYPES[tileKey];
-    if (!tileType || !tileType.sheet) return null;
-
-    if (tileType.type === "path") {
-      return this.getPathTileFrame(row, col);
-    }
-    if (tileType.type === "water") {
-      return this.getWaterTileFrame(row, col);
-    }
-    if (tileType.type === "cliff") {
-      return this.getCliffTileFrame(row, col);
-    }
-
-    return null;
-  }
-
-  getPathTileFrame(row, col) {
-    const north = this.isPathTile(row - 1, col);
-    const south = this.isPathTile(row + 1, col);
-    const west = this.isPathTile(row, col - 1);
-    const east = this.isPathTile(row, col + 1);
-
-    const mask =
-      (north ? 8 : 0) | (east ? 4 : 0) | (south ? 2 : 0) | (west ? 1 : 0);
-
-    // If this tile is part of a 3-wide feature (both N+S or both E+W),
-    // choose a decorative variant repeating every 3 tiles along the
-    // stripe direction using modulo 3 on coordinates.
-    if ((north && south) || (east && west)) {
-      let idx;
-      if (north && south && !east && !west) {
-        // vertical 3-wide stripe: vary decoration with both row and column
-        idx = ((col * 3 + row) % 4 + 4) % 4;
-      } else if (east && west && !north && !south) {
-        // horizontal 3-wide stripe: vary decoration with both row and column
-        idx = ((row * 3 + col) % 4 + 4) % 4;
-      } else {
-        // fully surrounded or mixed: use a 2D pattern
-        idx = ((row + col) % 4 + 4) % 4;
-      }
-      return idx === 0
-        ? SHEET_TILE_FRAMES.deco1
-        : idx === 1
-        ? SHEET_TILE_FRAMES.deco2
-        : idx === 2
-        ? SHEET_TILE_FRAMES.deco3
-        : SHEET_TILE_FRAMES.center;
-    }
-
-    switch (mask) {
-      case 0:
-        return SHEET_TILE_FRAMES.straightH; // isolated
-      case 1: // W
-        return SHEET_TILE_FRAMES.edgeW;
-      case 2: // S
-        return SHEET_TILE_FRAMES.edgeS;
-      case 3: // S+W
-        return SHEET_TILE_FRAMES.cornerBL;
-      case 4: // E
-        return SHEET_TILE_FRAMES.edgeE;
-      case 5: // E+W
-        return SHEET_TILE_FRAMES.straightH;
-      case 6: // S+E
-        return SHEET_TILE_FRAMES.cornerBR;
-      case 7: // S+E+W
-        return SHEET_TILE_FRAMES.innerBR;
-      case 8: // N
-        return SHEET_TILE_FRAMES.edgeN;
-      case 9: // N+W
-        return SHEET_TILE_FRAMES.cornerTL;
-      case 10: // N+S
-        return SHEET_TILE_FRAMES.straightV;
-      case 11: // N+S+W or N+E+W depending
-        return SHEET_TILE_FRAMES.innerBL;
-      case 12: // N+E
-        return SHEET_TILE_FRAMES.cornerTR;
-      case 13: // N+E+W
-        return SHEET_TILE_FRAMES.innerTL;
-      case 14: // N+E+S
-        return SHEET_TILE_FRAMES.innerTR;
-      case 15: // All neighbors
-        return SHEET_TILE_FRAMES.deco1;
-      default:
-        return SHEET_TILE_FRAMES.straightH;
-    }
-  }
-
-  getWaterTileFrame(row, col) {
-    const north = this.isWaterTile(row - 1, col);
-    const south = this.isWaterTile(row + 1, col);
-    const west = this.isWaterTile(row, col - 1);
-    const east = this.isWaterTile(row, col + 1);
-
-    const mask =
-      (north ? 8 : 0) | (east ? 4 : 0) | (south ? 2 : 0) | (west ? 1 : 0);
-
-    // Water decorations use strict vertical/horizontal modulo patterns.
-    // Use both row and column to break whole-row/column repetition.
-    if (north && south && !east && !west) {
-      const idx = ((col * 3 + row) % 4 + 4) % 4;
-      return idx === 0
-        ? SHEET_TILE_FRAMES.deco1
-        : idx === 1
-        ? SHEET_TILE_FRAMES.deco2
-        : idx === 2
-        ? SHEET_TILE_FRAMES.deco3
-        : SHEET_TILE_FRAMES.center;
-    }
-
-    if (east && west && !north && !south) {
-      const idx = ((row * 3 + col) % 4 + 4) % 4;
-      return idx === 0
-        ? SHEET_TILE_FRAMES.deco1
-        : idx === 1
-        ? SHEET_TILE_FRAMES.deco2
-        : idx === 2
-        ? SHEET_TILE_FRAMES.deco3
-        : SHEET_TILE_FRAMES.center;
-    }
-
-    switch (mask) {
-      case 0:
-        return SHEET_TILE_FRAMES.straightH;
-      case 1:
-        return SHEET_TILE_FRAMES.edgeW;
-      case 2:
-        return SHEET_TILE_FRAMES.edgeS;
-      case 3:
-        return SHEET_TILE_FRAMES.cornerBL;
-      case 4:
-        return SHEET_TILE_FRAMES.edgeE;
-      case 5:
-        return SHEET_TILE_FRAMES.straightH;
-      case 6:
-        return SHEET_TILE_FRAMES.cornerBR;
-      case 7:
-        return SHEET_TILE_FRAMES.innerBR;
-      case 8:
-        return SHEET_TILE_FRAMES.edgeN;
-      case 9:
-        return SHEET_TILE_FRAMES.cornerTL;
-      case 10:
-        return SHEET_TILE_FRAMES.straightV;
-      case 11:
-        return SHEET_TILE_FRAMES.innerBL;
-      case 12:
-        return SHEET_TILE_FRAMES.cornerTR;
-      case 13:
-        return SHEET_TILE_FRAMES.innerTL;
-      case 14:
-        return SHEET_TILE_FRAMES.innerTR;
-      case 15:
-        return SHEET_TILE_FRAMES.deco2;
-      default:
-        return SHEET_TILE_FRAMES.straightH;
-    }
-  }
-
-  getCliffTileFrame(row, col) {
-    // Use the same path/water layout for cliff edges until a dedicated cliff shape is added.
-    return this.getWaterTileFrame(row, col);
-  }
-
-  getMapTileKey(row, col) {
-    if (!FULL_MAP_GRID || row < 0 || col < 0) return "G";
-    if (row >= FULL_MAP_GRID.length) return "G";
-    const rowData = FULL_MAP_GRID[row];
-    if (!rowData) return "G";
-    return rowData[col] || "G";
-  }
-
-  isPathTile(row, col) {
-    return this.getMapTileKey(row, col) === "P";
-  }
-
-  isWaterTile(row, col) {
-    return this.getMapTileKey(row, col) === "W";
   }
 
   /**

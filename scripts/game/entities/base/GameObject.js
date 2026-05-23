@@ -23,7 +23,7 @@ export default class GameObject {
         this.spriteHeight = spriteHeight;
         this.solid = solid;
         this.ySortOffset = ySortOffset; // Offset from bottom y for depth sorting
-        
+
         // Define actual bounding box for physics collision
         this.collisionBox = collisionBox || {
             offsetX: 0,
@@ -66,8 +66,8 @@ export default class GameObject {
 
     /**
      * Draw the game object to the canvas.
-     * @param {CanvasRenderingContext2D} ctx 
-     * @param {Object} camera 
+     * @param {CanvasRenderingContext2D} ctx
+     * @param {Object} camera
      */
     draw(ctx, camera) {
         if (!this.image || !this.isLoaded) {
@@ -85,7 +85,7 @@ export default class GameObject {
             this.width,
             this.height
         );
-        
+
         // Debug collision box (uncomment in dev if needed)
         /*
         const rect = this.getCollisionRect();

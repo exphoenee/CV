@@ -1,22 +1,23 @@
-import Npc from './Npc.js';
+import Npc from '../base/Npc.js';
 
-export default class Cow extends Npc {
+export default class Sheep extends Npc {
     constructor({ x, y }) {
         super({
             x,
             y,
-            width: 48, // Cow is a bit larger
-            height: 48,
+            width: 38,
+            height: 38,
             spriteWidth: 32,
             spriteHeight: 32,
-            imageSrc: './assets/sprites/Cute/Animals/Cow/Cow.png',
-            speed: 15 // Heavy, slow cow movements
+            imageSrc: './assets/sprites/Cute/Animals/Sheep/Sheep.png',
+            speed: 18
         });
     }
 
     /**
-     * Draw cow sprite using a 2‑row (idle / walk) sheet.
-     * Row 0 = idle, Row 1 = walk. Only left/right directions are needed – flip horizontally for left.
+     * Draw sheep sprite using a 2‑row (idle / walk) sheet.
+     * Row 0 = idle, Row 1 = walk. Two frames per row.
+     * Flip horizontally when facing left.
      */
     draw(ctx, camera) {
         if (!this.image || !this.isLoaded) {

@@ -1,0 +1,1 @@
+E:\Projects\CV\assets\sprites\Cute\Outdoor decoration\Oak_Tree_Small.png ebbe a fájlban van szintán ütközö 3 darab fa, pont mint a nagy fa, csal ezek kicsik

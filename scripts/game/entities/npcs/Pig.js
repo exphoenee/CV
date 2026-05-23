@@ -1,4 +1,4 @@
-import Npc from './Npc.js';
+import Npc from '../base/Npc.js';
 
 export default class Pig extends Npc {
     constructor({ x, y }) {

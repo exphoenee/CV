@@ -1,23 +1,22 @@
-import Npc from './Npc.js';
+import Npc from '../base/Npc.js';
 
-export default class Chicken extends Npc {
+export default class Cow extends Npc {
     constructor({ x, y }) {
         super({
             x,
             y,
-            width: 32,
-            height: 32,
+            width: 48, // Cow is a bit larger
+            height: 48,
             spriteWidth: 32,
             spriteHeight: 32,
-            imageSrc: './assets/sprites/Cute/Animals/Chicken/Chicken.png',
-            speed: 25 // Slower chicken pecking walks
+            imageSrc: './assets/sprites/Cute/Animals/Cow/Cow.png',
+            speed: 15 // Heavy, slow cow movements
         });
     }
 
     /**
-     * Draw chicken sprite using a 2‑row (idle / walk) sheet.
-     * Row 0 = idle, Row 1 = walk. Only two directions are needed –
-     * right (default) and left (horizontal flip). Up/down are treated as right.
+     * Draw cow sprite using a 2‑row (idle / walk) sheet.
+     * Row 0 = idle, Row 1 = walk. Only left/right directions are needed – flip horizontally for left.
      */
     draw(ctx, camera) {
         if (!this.image || !this.isLoaded) {
@@ -31,7 +30,6 @@ export default class Chicken extends Npc {
         const drawX = this.x - camera.x;
         const drawY = this.y - camera.y;
         ctx.save();
-        // Flip horizontally when facing left
         if (this.dir === 'right') {
             ctx.translate(drawX + this.width / 2, 0);
             ctx.scale(-1, 1);

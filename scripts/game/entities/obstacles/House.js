@@ -1,4 +1,4 @@
-import GameObject from './GameObject.js';
+import GameObject from '../base/GameObject.js';
 
 const HOUSE_LABELS = {
     'welcome': { shortLabel: 'Personal HQ', period: 'Contact Info' },
