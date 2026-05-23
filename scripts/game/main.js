@@ -777,6 +777,30 @@ class GameEngine {
     const mask =
       (north ? 8 : 0) | (east ? 4 : 0) | (south ? 2 : 0) | (west ? 1 : 0);
 
+    // If this tile is part of a 3-wide feature (both N+S or both E+W),
+    // choose a decorative variant repeating every 3 tiles along the
+    // stripe direction using modulo 3 on coordinates.
+    if ((north && south) || (east && west)) {
+      let idx;
+      if (north && south && !east && !west) {
+        // vertical 3-wide stripe: vary decoration with both row and column
+        idx = ((col * 3 + row) % 4 + 4) % 4;
+      } else if (east && west && !north && !south) {
+        // horizontal 3-wide stripe: vary decoration with both row and column
+        idx = ((row * 3 + col) % 4 + 4) % 4;
+      } else {
+        // fully surrounded or mixed: use a 2D pattern
+        idx = ((row + col) % 4 + 4) % 4;
+      }
+      return idx === 0
+        ? SHEET_TILE_FRAMES.deco1
+        : idx === 1
+        ? SHEET_TILE_FRAMES.deco2
+        : idx === 2
+        ? SHEET_TILE_FRAMES.deco3
+        : SHEET_TILE_FRAMES.center;
+    }
+
     switch (mask) {
       case 0:
         return SHEET_TILE_FRAMES.straightH; // isolated
@@ -823,6 +847,30 @@ class GameEngine {
 
     const mask =
       (north ? 8 : 0) | (east ? 4 : 0) | (south ? 2 : 0) | (west ? 1 : 0);
+
+    // Water decorations use strict vertical/horizontal modulo patterns.
+    // Use both row and column to break whole-row/column repetition.
+    if (north && south && !east && !west) {
+      const idx = ((col * 3 + row) % 4 + 4) % 4;
+      return idx === 0
+        ? SHEET_TILE_FRAMES.deco1
+        : idx === 1
+        ? SHEET_TILE_FRAMES.deco2
+        : idx === 2
+        ? SHEET_TILE_FRAMES.deco3
+        : SHEET_TILE_FRAMES.center;
+    }
+
+    if (east && west && !north && !south) {
+      const idx = ((row * 3 + col) % 4 + 4) % 4;
+      return idx === 0
+        ? SHEET_TILE_FRAMES.deco1
+        : idx === 1
+        ? SHEET_TILE_FRAMES.deco2
+        : idx === 2
+        ? SHEET_TILE_FRAMES.deco3
+        : SHEET_TILE_FRAMES.center;
+    }
 
     switch (mask) {
       case 0:
