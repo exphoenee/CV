@@ -1,0 +1,418 @@
+/*
+ * cv-game.css
+ * Immersive retro styling, glassmorphism, CRT overlay, and responsive layouts.
+ */
+
+:root {
+    --accent: #ff7024;
+    --accent-glow: rgba(255, 112, 36, 0.4);
+    --bg-dark: #0a0c10;
+    --glass-bg: rgba(13, 17, 23, 0.85);
+    --glass-border: rgba(255, 112, 36, 0.3);
+    --font-pixel: 'Press Start 2P', monospace;
+    --font-ui: 'Outfit', sans-serif;
+    --font-code: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #e2e8f0;
+    font-family: var(--font-ui);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* --- CRT Retro Screen Simulation --- */
+.crt-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0) 50%, rgba(0,0,0,0.4) 100%);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 11;
+    opacity: 0.8;
+}
+
+/* --- Layout & Canvas --- */
+#canvas-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #050608;
+    z-index: 1;
+}
+
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    background-color: #0b0c10;
+    display: block;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+/* --- HUD Top Panel --- */
+.hud-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.btn-hub {
+    pointer-events: auto;
+    font-family: var(--font-pixel);
+    font-size: 11px;
+    text-decoration: none;
+    color: #fff;
+    background: var(--glass-bg);
+    border: 2px solid var(--accent);
+    padding: 10px 16px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px var(--accent-glow);
+    transition: all 0.2s ease;
+}
+
+.btn-hub:hover {
+    background: var(--accent);
+    box-shadow: 0 0 20px var(--accent);
+    transform: translateY(-2px);
+}
+
+.game-title {
+    font-family: var(--font-pixel);
+    font-size: 12px;
+    color: var(--accent);
+    text-shadow: 0 0 10px var(--accent-glow);
+    letter-spacing: 1px;
+}
+
+/* --- Controls Legend Box --- */
+.legend-panel {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    padding: 14px 18px;
+    border-radius: 8px;
+    z-index: 5;
+    pointer-events: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.legend-title {
+    font-family: var(--font-pixel);
+    font-size: 10px;
+    color: var(--accent);
+    margin-bottom: 4px;
+}
+
+.legend-row {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.key {
+    background: #2b303a;
+    border-bottom: 3px solid #1a1c22;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: var(--font-code);
+    font-size: 11px;
+    min-width: 22px;
+    text-align: center;
+    display: inline-block;
+    color: #fff;
+}
+
+/* --- Dialogue Box Overlay --- */
+#dialogue-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.dialogue-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dialogue-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.dialogue-backdrop {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+}
+
+.dialogue-box {
+    position: relative;
+    background: rgba(13, 17, 23, 0.95);
+    border: 3px solid var(--accent);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 550px;
+    height: 80%;
+    max-height: 480px;
+    box-shadow: 0 0 35px var(--accent-glow);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    animation: zoomIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 21;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.dialogue-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-pixel);
+    font-size: 12px;
+    color: var(--accent);
+    border-bottom: 2px dashed rgba(255, 112, 36, 0.3);
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+}
+
+.dialogue-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    border-radius: 50%;
+}
+
+#dialogue-tech {
+    font-family: var(--font-code);
+    font-size: 11px;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+    align-self: flex-start;
+}
+
+#dialogue-text {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #cbd5e1;
+    scrollbar-width: none; /* Hide standard scrolls */
+}
+
+#dialogue-text::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome/Safari */
+}
+
+#dialogue-text h3 {
+    font-family: var(--font-pixel);
+    font-size: 10px;
+    color: #fff;
+    margin-top: 14px;
+    margin-bottom: 8px;
+}
+
+#dialogue-text p {
+    margin-bottom: 10px;
+}
+
+#dialogue-text ul {
+    margin-left: 20px;
+    margin-bottom: 12px;
+}
+
+#dialogue-text li {
+    margin-bottom: 6px;
+}
+
+#dialogue-text hr {
+    border: 0;
+    border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    margin: 14px 0;
+}
+
+/* --- Dialogue Controls Area (ScrollButtons & Exit) --- */
+.dialogue-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 10px;
+    border-top: 2px dashed rgba(255, 112, 36, 0.3);
+    padding-top: 14px;
+    margin-top: 10px;
+}
+
+.dialogue-btn {
+    font-family: var(--font-pixel);
+    font-size: 9px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed var(--accent);
+    color: #fff;
+    padding: 12px 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialogue-btn:hover {
+    background: rgba(255, 112, 36, 0.15);
+    box-shadow: 0 0 10px rgba(255, 112, 36, 0.2);
+}
+
+.dialogue-btn:active {
+    transform: scale(0.96);
+}
+
+.btn-exit {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: #ef4444;
+    color: #fca5a5;
+}
+
+.btn-exit:hover {
+    background: #ef4444;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+}
+
+/* --- Floating Credits Panel --- */
+.credits-panel {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 11px;
+    color: #94a3b8;
+    z-index: 5;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.credits-panel a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.credits-panel a:hover {
+    text-decoration: underline;
+    text-shadow: 0 0 8px var(--accent-glow);
+}
+
+.credits-panel code {
+    background: rgba(255,255,255,0.08);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: var(--font-code);
+    font-size: 10px;
+}
+
+/* --- Mobile View Enhancements --- */
+@media (max-width: 600px) {
+    .hud-container {
+        top: 10px;
+        left: 10px;
+    }
+    
+    .btn-hub {
+        padding: 8px 12px;
+        font-size: 9px;
+    }
+
+    .game-title {
+        display: none;
+    }
+
+    .legend-panel {
+        bottom: 50px;
+        left: 10px;
+        padding: 8px 12px;
+    }
+
+    .credits-panel {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        text-align: center;
+    }
+
+    .dialogue-box {
+        height: 85%;
+        max-height: none;
+    }
+
+    .dialogue-controls {
+        grid-template-columns: 1fr;
+    }
+}

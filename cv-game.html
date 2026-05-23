@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viktor Bozzay — Interactive 2.5D RPG CV</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
+    
+    <!-- Retro & Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="./styles/cv-game.css">
+</head>
+<body>
+    <!-- CRT Grid Overlay for Retro Arcade feel -->
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+
+    <!-- UI Overlay for Game Controls -->
+    <div class="hud-container">
+        <a href="index.html" class="btn-hub">🕹️ Back to Hub</a>
+        <div class="game-title">Viktor's RPG Journey</div>
+    </div>
+
+    <!-- Main Canvas Wrapper -->
+    <div id="canvas-container">
+        <canvas id="game-canvas"></canvas>
+    </div>
+
+    <!-- Responsive Glassmorphic Dialogue Modal (Frozen State CV Stations) -->
+    <div id="dialogue-overlay" class="dialogue-hidden">
+        <div class="dialogue-backdrop"></div>
+        <div class="dialogue-box">
+            <!-- Retro console header -->
+            <div class="dialogue-header">
+                <span class="dialogue-dot"></span>
+                <span id="dialogue-title">Personal HQ</span>
+                <span class="dialogue-dot"></span>
+            </div>
+            
+            <div id="dialogue-tech">Svelte · TypeScript · Express</div>
+            
+            <!-- Dialogue scrolling content -->
+            <div id="dialogue-text">
+                <!-- Populated dynamically by House.js / main.js -->
+            </div>
+
+            <!-- Dialogue Scroll Buttons + Exit Button -->
+            <div class="dialogue-controls">
+                <button id="btn-scroll-up" class="dialogue-btn" title="Scroll Up">▲ Scroll Up</button>
+                <button id="btn-scroll-down" class="dialogue-btn" title="Scroll Down">▼ Scroll Down</button>
+                <button id="btn-scroll-exit" class="dialogue-btn btn-exit" title="Exit House">✖ Exit House</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Help Guide / Controls Legend -->
+    <div class="legend-panel">
+        <div class="legend-title">Controls</div>
+        <div class="legend-row"><span class="key">W</span> <span class="key">A</span> <span class="key">S</span> <span class="key">D</span> Move</div>
+        <div class="legend-row"><span class="key" style="min-width: 80px;">Space</span> Attack</div>
+        <div class="legend-row">Enter doors to read CV!</div>
+    </div>
+
+    <!-- Premium Footer Credits - Highlighting Kenmi-art asset pack -->
+    <div class="credits-panel">
+        Assets by <a href="https://kenmi-art.itch.io/cute-fantasy-rpg" target="_blank">Kenmi-art</a> (Cute Fantasy RPG pack) · Located in <code>/assets/sprites/Cute/</code>
+    </div>
+
+    <!-- Core Module Script Loader -->
+    <script type="module" src="./scripts/game/main.js"></script>
+</body>
+</html>
