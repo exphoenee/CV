@@ -23,15 +23,7 @@ export const ENTITY_SPAWNS = {
         { type: 'Tree', x: 780, y: 50 },
         { type: 'Tree', x: 1020, y: 50 },
         { type: 'Tree', x: 1250, y: 60 },
-        
-        // Fences
-        { type: 'Fence', x: 130, y: 160 },
-        { type: 'Fence', x: 270, y: 160 },
-        { type: 'Fence', x: 370, y: 160 },
-        { type: 'Fence', x: 510, y: 160 },
-        { type: 'Fence', x: 610, y: 160 },
-        { type: 'Fence', x: 750, y: 160 },
-        
+
         // Chests
         { type: 'Chest', x: 120, y: 210 },
         { type: 'Chest', x: 1200, y: 220 }

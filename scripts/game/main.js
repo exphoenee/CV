@@ -19,7 +19,7 @@ import Cow from "./entities/npcs/Cow.js";
 import Pig from "./entities/npcs/Pig.js";
 import Sheep from "./entities/npcs/Sheep.js";
 import Tree from "./entities/obstacles/Tree.js";
-import Fence from "./entities/obstacles/Fence.js";
+
 import Chest from "./entities/obstacles/Chest.js";
 import House from "./entities/obstacles/House.js";
 
@@ -177,8 +177,7 @@ class GameEngine {
     ENTITY_SPAWNS.decorations.forEach((decor) => {
       let obj = null;
       if (decor.type === "Tree") obj = new Tree({x: decor.x, y: decor.y});
-      else if (decor.type === "Fence")
-        obj = new Fence({x: decor.x, y: decor.y});
+
       else if (decor.type === "Chest")
         obj = new Chest({x: decor.x, y: decor.y});
 
