@@ -108,16 +108,11 @@ export function loadMapGridFromImage(imageSrc) {
         mapGrid.push(rowArr);
       }
 
-      const paddingX = Math.floor(width / 2);
-      const paddingY = Math.floor(height / 2);
-      const mapWidth = width + paddingX * 2;
-      const mapHeight = height + paddingY * 2;
-
       resolve({
         mapGrid,
-        fullMapGrid: _buildFullGrid(mapGrid, mapWidth, mapHeight, paddingY, paddingX),
-        cols: mapWidth,
-        rows: mapHeight,
+        fullMapGrid: mapGrid,
+        cols: width,
+        rows: height,
       });
     };
     img.onerror = () => reject(new Error(`Nem sikerült betölteni a térképképet: ${imageSrc}`));
@@ -133,15 +128,3 @@ function _pixelToTileKey(r, g, b) {
   return "G"; // Alapértelmezett: Fű
 }
 
-function _buildFullGrid(mapGrid, fullWidth, fullHeight, offsetRow, offsetCol) {
-  const full = [];
-  for (let r = 0; r < fullHeight; r++) {
-    full.push(new Array(fullWidth).fill("G"));
-  }
-  for (let r = 0; r < mapGrid.length; r++) {
-    for (let c = 0; c < mapGrid[0].length; c++) {
-      full[r + offsetRow][c + offsetCol] = mapGrid[r][c];
-    }
-  }
-  return full;
-}
