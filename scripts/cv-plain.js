@@ -6,17 +6,17 @@ window.showToast = function(message) {
   var toast = document.createElement("div");
   toast.className = "cv-toast";
   toast.innerHTML = '<span>' + message + '</span><button class="cv-toast-close" aria-label="Close">×</button>';
-  
+
   var closeBtn = toast.querySelector(".cv-toast-close");
-  
+
   function removeToast() {
     toast.classList.add("hiding");
     setTimeout(function() { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
   }
-  
+
   closeBtn.addEventListener("click", removeToast);
   setTimeout(removeToast, 3000);
-  
+
   container.appendChild(toast);
 };
 
@@ -165,6 +165,10 @@ CV.initFormspree("#hire-plain-form");
   var trigger = customSelect.querySelector(".custom-select-trigger");
   var triggerText = trigger.querySelector("span");
   var options = customSelect.querySelectorAll(".custom-option");
+  var lyricsBtn = document.getElementById("music-lyrics");
+  var lyricsModal = document.getElementById("lyrics-modal");
+  var lyricsClose = document.getElementById("lyrics-close");
+  var lyricsBackdrop = document.getElementById("lyrics-backdrop");
 
   var isOpen = false;
   var isPlaying = false;
@@ -229,7 +233,7 @@ CV.initFormspree("#hire-plain-form");
       currentLabel = e.target.textContent;
       triggerText.textContent = currentLabel;
       customSelect.classList.remove("open");
-      
+
       localStorage.setItem("cv-music-genre", currentValue);
       var wasPlaying = isPlaying;
       audio.pause();
@@ -259,11 +263,14 @@ CV.initFormspree("#hire-plain-form");
       if (window.showToast) window.showToast(cleanLabel + " music paused");
     } else {
       loadTrack();
-      audio.play().then(function () { 
-        isPlaying = true; 
-        updatePlayPause(); 
-        if (window.showToast) window.showToast(cleanLabel + " music playing");
-      }).catch(function () {});
+      audio
+        .play()
+        .then(function () {
+          isPlaying = true;
+          updatePlayPause();
+          if (window.showToast) window.showToast(cleanLabel + " music playing");
+        })
+        .catch(function () {});
     }
     updatePlayPause();
   });
@@ -273,6 +280,30 @@ CV.initFormspree("#hire-plain-form");
     updatePlayPause();
   });
 
+  function openLyrics() {
+    if (!lyricsModal) return;
+    lyricsModal.classList.remove("cv-modal-hidden");
+  }
+
+  function closeLyrics() {
+    if (!lyricsModal) return;
+    lyricsModal.classList.add("cv-modal-hidden");
+  }
+
+  if (lyricsBtn) lyricsBtn.addEventListener("click", openLyrics);
+  if (lyricsClose) lyricsClose.addEventListener("click", closeLyrics);
+  if (lyricsBackdrop) lyricsBackdrop.addEventListener("click", closeLyrics);
+
+  document.addEventListener("keydown", function (e) {
+    if (
+      e.key === "Escape" &&
+      lyricsModal &&
+      !lyricsModal.classList.contains("cv-modal-hidden")
+    ) {
+      closeLyrics();
+    }
+  });
+
   updatePlayPause();
 })();
 
@@ -280,19 +311,19 @@ CV.initFormspree("#hire-plain-form");
   // First time after 1 minute (60,000 ms)
   setTimeout(function() {
     if (window.showToast) window.showToast("Hurry! Somebody almost hired Viktor.");
-    
+
     function scheduleNextHurry() {
       // Randomly between 3 and 5 minutes
       var minMs = 3 * 60 * 1000;
       var maxMs = 5 * 60 * 1000;
       var nextDelay = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
-      
+
       setTimeout(function() {
         if (window.showToast) window.showToast("Hurry! Somebody almost hired Viktor.");
         scheduleNextHurry();
       }, nextDelay);
     }
-    
+
     scheduleNextHurry();
   }, 60 * 1000);
 })();
