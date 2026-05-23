@@ -610,6 +610,10 @@ const L = [
   ],
   [
     2,
+    `<span class="p">{ </span><span class="k">"name"</span><span class="p">: </span><span class="s">"BA Team"</span><span class="p">, </span><span class="k">"url"</span><span class="p">: </span><span class="s">"<a href="https://exphoenee.github.io/ba-team-docs/#home" target="_blank">exphoenee.github.io/ba-team-docs/#home</a>"</span><span class="p"> },</span>`,
+  ],
+  [
+    2,
     `<span class="p">{ </span><span class="k">"name"</span><span class="p">: </span><span class="s">"domelemjs"</span><span class="p">, </span><span class="k">"url"</span><span class="p">: </span><span class="s">"<a href="https://www.npmjs.com/package/domelemjs" target="_blank">npmjs.com/package/domelemjs</a>"</span><span class="p"> },</span>`,
   ],
   [
