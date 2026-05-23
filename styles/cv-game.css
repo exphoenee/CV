@@ -74,27 +74,22 @@ body {
     z-index: 1;
 }
 
+#game-wrapper {
+    position: relative;
+    display: block;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+    background-color: #0b0c10;
+}
+
 canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     background-color: #0b0c10;
-    display: block;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
-}
-
-/* --- HUD Top Panel --- */
-.hud-container {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 5;
-    pointer-events: none;
 }
 
 .btn-hub {
@@ -118,11 +113,17 @@ canvas {
 }
 
 .game-title {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     font-family: var(--font-pixel);
     font-size: 12px;
     color: var(--accent);
     text-shadow: 0 0 10px var(--accent-glow);
     letter-spacing: 1px;
+    z-index: 5;
+    white-space: nowrap;
 }
 
 /* --- Controls Legend Box --- */
@@ -136,7 +137,7 @@ canvas {
     padding: 14px 18px;
     border-radius: 8px;
     z-index: 5;
-    pointer-events: none;
+    pointer-events: auto;
     box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
@@ -380,11 +381,6 @@ canvas {
 
 /* --- Mobile View Enhancements --- */
 @media (max-width: 600px) {
-    .hud-container {
-        top: 10px;
-        left: 10px;
-    }
-    
     .btn-hub {
         padding: 8px 12px;
         font-size: 9px;
@@ -415,4 +411,243 @@ canvas {
     .dialogue-controls {
         grid-template-columns: 1fr;
     }
+}
+
+/* --- Pause Menu & Music Player Modal --- */
+#pause-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.pause-box {
+    max-width: 400px;
+    max-height: 320px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.pause-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.music-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.music-label {
+    font-family: var(--font-pixel);
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+}
+
+/* Custom Select Dropdown in Retro style */
+.custom-select {
+    position: relative;
+    width: 100%;
+    font-family: var(--font-pixel);
+    font-size: 10px;
+    user-select: none;
+}
+
+.custom-select-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    padding: 10px 14px;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.custom-select-trigger:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.custom-select-options {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: rgba(13, 17, 23, 0.95);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 100;
+    max-height: 150px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) rgba(0,0,0,0.3);
+}
+
+/* Scrollbar styling for options list */
+.custom-select-options::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-select-options::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.3);
+}
+.custom-select-options::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 3px;
+}
+
+.custom-select.open .custom-select-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.custom-option {
+    padding: 8px 14px;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.custom-option:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+.music-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.pause-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+}
+
+.pause-hub-btn {
+    flex: 1;
+    text-align: center;
+    padding: 12px 10px;
+}
+
+.btn-resume-game {
+    flex: 1;
+    background: rgba(34, 197, 94, 0.15) !important;
+    border-color: #22c55e !important;
+    color: #86efac !important;
+}
+
+.btn-resume-game:hover {
+    background: #22c55e !important;
+    color: #fff !important;
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.4) !important;
+}
+
+@media (max-width: 600px) {
+    .pause-box {
+        width: 90%;
+        max-width: 320px;
+        padding: 15px;
+    }
+
+    .pause-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .pause-hub-btn, .btn-resume-game {
+        width: 100%;
+    }
+}
+
+/* Volume control & slider styling */
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px dashed rgba(255, 112, 36, 0.2);
+}
+
+.volume-icon {
+    font-size: 12px;
+    color: var(--accent);
+}
+
+.volume-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.15);
+    outline: none;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.volume-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    cursor: pointer;
+    margin-top: -4px; /* Align to track center */
+    transition: transform 0.1s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.volume-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
 }

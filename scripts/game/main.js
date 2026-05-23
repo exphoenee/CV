@@ -1,4 +1,6 @@
-import { TILE_TYPES, MAP_GRID, TILE_SIZE, CV_STATIONS, ENTITY_SPAWNS } from './map.js';
+import { TILE_TYPES, MAP_GRID, TILE_SIZE } from './map.js';
+import { CV_STATIONS } from './stations.js';
+import { ENTITY_SPAWNS } from './spawns.js';
 import Player from './Player.js';
 import Skeleton from './Skeleton.js';
 import Chicken from './Chicken.js';
@@ -68,7 +70,8 @@ class GameEngine {
      */
     resizeCanvas() {
         const container = document.getElementById('canvas-container');
-        if (!container) return;
+        const wrapper = document.getElementById('game-wrapper');
+        if (!container || !wrapper) return;
 
         const w = container.clientWidth;
         const h = container.clientHeight;
@@ -82,8 +85,9 @@ class GameEngine {
         this.canvas.width = this.virtualWidth;
         this.canvas.height = this.virtualHeight;
         
-        this.canvas.style.width = `${this.virtualWidth * scale}px`;
-        this.canvas.style.height = `${this.virtualHeight * scale}px`;
+        // Scale the wrapper wrapper to center and keep relative overlays perfect
+        wrapper.style.width = `${this.virtualWidth * scale}px`;
+        wrapper.style.height = `${this.virtualHeight * scale}px`;
         
         // Enable crisp rendering
         this.ctx.imageSmoothingEnabled = false;
@@ -123,6 +127,7 @@ class GameEngine {
         this.preloadAssets(() => {
             this.buildWorld();
             this.setupDialogueListeners();
+            this.setupPauseMenuListeners();
             // Start main loops
             requestAnimationFrame((time) => this.loop(time));
         });
@@ -262,6 +267,17 @@ class GameEngine {
             if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
                 e.preventDefault();
             }
+
+            // ESC listener to toggle pause menu
+            if (e.key === 'Escape') {
+                const diagOverlay = document.getElementById('dialogue-overlay');
+                if (diagOverlay && diagOverlay.classList.contains('dialogue-visible')) {
+                    this.closeDialogue();
+                    return;
+                }
+                
+                this.togglePauseMenu();
+            }
         });
 
         window.addEventListener('keyup', (e) => {
@@ -295,6 +311,200 @@ class GameEngine {
                 this.closeDialogue();
             });
         }
+    }
+
+    /**
+     * Pause / Resume Game Menus
+     */
+    togglePauseMenu() {
+        const pauseMenu = document.getElementById('pause-menu');
+        if (!pauseMenu) return;
+
+        const isPaused = pauseMenu.classList.contains('dialogue-visible');
+        if (isPaused) {
+            this.resumeGame();
+        } else {
+            this.pauseGame();
+        }
+    }
+
+    pauseGame() {
+        const pauseMenu = document.getElementById('pause-menu');
+        if (!pauseMenu) return;
+
+        this.isFrozen = true;
+        pauseMenu.classList.remove('dialogue-hidden');
+        pauseMenu.classList.add('dialogue-visible');
+    }
+
+    resumeGame() {
+        const pauseMenu = document.getElementById('pause-menu');
+        if (!pauseMenu) return;
+
+        pauseMenu.classList.remove('dialogue-visible');
+        pauseMenu.classList.add('dialogue-hidden');
+
+        // Close dropdown
+        const customSelect = document.getElementById('game-genre-select');
+        if (customSelect) customSelect.classList.remove('open');
+
+        this.isFrozen = false;
+    }
+
+    /**
+     * Wire up Pause Menu resume/backdrop elements and music player events.
+     */
+    setupPauseMenuListeners() {
+        const resumeBtn = document.getElementById('btn-resume-game');
+        const backdrop = document.getElementById('pause-backdrop');
+
+        if (resumeBtn) {
+            resumeBtn.addEventListener('click', () => this.resumeGame());
+        }
+        if (backdrop) {
+            backdrop.addEventListener('click', () => this.resumeGame());
+        }
+
+        // Music Player Setup
+        const audio = document.getElementById('game-music-audio');
+        const playPauseBtn = document.getElementById('game-music-playpause');
+        const customSelect = document.getElementById('game-genre-select');
+        const volumeSlider = document.getElementById('game-music-volume');
+
+        if (!customSelect || !audio || !playPauseBtn) return;
+
+        const trigger = customSelect.querySelector('.custom-select-trigger');
+        const triggerText = trigger.querySelector('span');
+        const options = customSelect.querySelectorAll('.custom-option');
+
+        let isPlaying = false;
+        let currentValue = options[0].getAttribute('data-value');
+        let currentLabel = options[0].textContent;
+
+        // Restore saved volume preference
+        const savedVolume = localStorage.getItem('cv-music-volume');
+        if (savedVolume !== null) {
+            audio.volume = parseFloat(savedVolume);
+            if (volumeSlider) volumeSlider.value = savedVolume;
+        } else {
+            audio.volume = 0.5;
+            if (volumeSlider) volumeSlider.value = 0.5;
+        }
+
+        if (volumeSlider) {
+            volumeSlider.addEventListener('input', (e) => {
+                const vol = parseFloat(e.target.value);
+                audio.volume = vol;
+                localStorage.setItem('cv-music-volume', vol);
+            });
+        }
+
+        // Restore saved preference
+        const savedGenre = localStorage.getItem('cv-music-genre');
+        if (savedGenre) {
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].getAttribute('data-value') === savedGenre) {
+                    currentValue = savedGenre;
+                    currentLabel = options[i].textContent;
+                    break;
+                }
+            }
+        }
+        triggerText.textContent = currentLabel;
+
+        const loadTrack = () => {
+            if (!audio.src || !audio.src.endsWith(currentValue)) {
+                audio.src = currentValue;
+                audio.load();
+            }
+        };
+
+        const updatePlayPause = () => {
+            playPauseBtn.textContent = isPlaying ? '⏸ Pause' : '▶ Play';
+        };
+
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            customSelect.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!customSelect.contains(e.target)) {
+                customSelect.classList.remove('open');
+            }
+        });
+
+        options.forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                currentValue = e.target.getAttribute('data-value');
+                currentLabel = e.target.textContent;
+                triggerText.textContent = currentLabel;
+                customSelect.classList.remove('open');
+
+                localStorage.setItem('cv-music-genre', currentValue);
+                const wasPlaying = isPlaying;
+
+                audio.pause();
+                isPlaying = false;
+                loadTrack();
+
+                if (wasPlaying) {
+                    audio.play()
+                        .then(() => {
+                            isPlaying = true;
+                            updatePlayPause();
+                        })
+                        .catch(() => {});
+                }
+                updatePlayPause();
+            });
+        });
+
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+            } else {
+                loadTrack();
+                audio.play()
+                    .then(() => {
+                        isPlaying = true;
+                        updatePlayPause();
+                    })
+                    .catch(() => {});
+            }
+            updatePlayPause();
+        });
+
+        audio.addEventListener('ended', () => {
+            isPlaying = false;
+            updatePlayPause();
+        });
+
+        // Try autoplaying default/saved music, with fallback for browser interaction policy
+        loadTrack();
+        audio.play()
+            .then(() => {
+                isPlaying = true;
+                updatePlayPause();
+            })
+            .catch(() => {
+                // Autoplay was blocked: wait for first user interaction (click/keydown) to play
+                const startOnInteraction = () => {
+                    loadTrack();
+                    audio.play()
+                        .then(() => {
+                            isPlaying = true;
+                            updatePlayPause();
+                        })
+                        .catch(() => {});
+                    window.removeEventListener('click', startOnInteraction);
+                    window.removeEventListener('keydown', startOnInteraction);
+                };
+                window.addEventListener('click', startOnInteraction);
+                window.addEventListener('keydown', startOnInteraction);
+                updatePlayPause();
+            });
     }
 
     /**
@@ -402,10 +612,20 @@ class GameEngine {
             }
         }
 
-        // 6. Check chest healing triggers
+        // 6. Check chest healing triggers (using proximity check)
         for (const obs of this.obstacles) {
-            if (obs instanceof Chest && !obs.isUsed && this.player.collidesWith(obs)) {
-                obs.tryHeal(this.player);
+            if (obs instanceof Chest && !obs.isUsed) {
+                const pRect = this.player.getCollisionRect();
+                const oRect = obs.getCollisionRect();
+                const pCenterX = pRect.x + pRect.width / 2;
+                const pCenterY = pRect.y + pRect.height / 2;
+                const oCenterX = oRect.x + oRect.width / 2;
+                const oCenterY = oRect.y + oRect.height / 2;
+                
+                const dist = Math.hypot(pCenterX - oCenterX, pCenterY - oCenterY);
+                if (dist < 36) {
+                    obs.tryHeal(this.player);
+                }
             }
         }
 
