@@ -173,6 +173,7 @@ class GameEngine {
     this.buildWorld();
     this.setupDialogueListeners();
     this.setupPauseMenuListeners();
+    this.initHireModal();
     this.setupStartScreenListeners();
     this.setupGameOverListeners();
     initMobileInput(this);
@@ -791,6 +792,34 @@ class GameEngine {
 
     // Unload event: save state
     window.addEventListener("beforeunload", saveState);
+  }
+
+  initHireModal() {
+    const hireBtn = document.getElementById('hire-btn');
+    const hireModal = document.getElementById('hire-modal');
+    const hireClose = document.getElementById('hire-close');
+    const hireBackdrop = document.getElementById('hire-backdrop');
+
+    if (!hireModal) return;
+
+    const openHire = () => {
+      hireModal.classList.remove('dialogue-hidden');
+      hireModal.classList.add('dialogue-visible');
+      this.isFrozen = true;
+    };
+    const closeHire = () => {
+      hireModal.classList.remove('dialogue-visible');
+      hireModal.classList.add('dialogue-hidden');
+      if (!this.gameOverActive) this.isFrozen = false;
+    };
+
+    hireBtn?.addEventListener('click', openHire);
+    hireClose?.addEventListener('click', closeHire);
+    hireBackdrop?.addEventListener('click', closeHire);
+
+    if (window.formspree) {
+      formspree('initForm', { formElement: '#hire-game-form', formId: 'mrejlned' });
+    }
   }
 
   /**
