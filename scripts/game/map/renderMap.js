@@ -204,7 +204,7 @@ export class MapRenderer {
    */
   getAutoTileFrame(row, col, terrainType) {
     const isFn = terrainType === "cliff"
-      ? (r, c) => this.isWaterTile(r, c)
+      ? (r, c) => this.isCliffTile(r, c)
       : (r, c) => this.getMapTileKey(r, c) === this._terrainKeyFor(terrainType);
 
     return this.maskToFrame(this.computeBitmask(row, col, isFn));
@@ -213,7 +213,8 @@ export class MapRenderer {
   /** Convert a terrain type string to the grid key it matches */
   _terrainKeyFor(type) {
     if (type === "path") return "P";
-    if (type === "water" || type === "cliff") return "W";
+    if (type === "water") return "W";
+    if (type === "cliff") return "C";
     return "G";
   }
 
@@ -257,7 +258,7 @@ export class MapRenderer {
   _getMatcher(tileKey) {
     if (tileKey === "P") return (r, c) => this.isPathTile(r, c);
     if (tileKey === "W") return (r, c) => this.isWaterTile(r, c);
-    if (tileKey === "C") return (r, c) => this.isWaterTile(r, c);
+    if (tileKey === "C") return (r, c) => this.isCliffTile(r, c);
     return () => false;
   }
 
@@ -298,5 +299,9 @@ export class MapRenderer {
 
   isWaterTile(row, col) {
     return this.getMapTileKey(row, col) === "W";
+  }
+
+  isCliffTile(row, col) {
+    return this.getMapTileKey(row, col) === "C";
   }
 }

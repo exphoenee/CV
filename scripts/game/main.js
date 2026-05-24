@@ -18,6 +18,7 @@ import Tree from "./entities/obstacles/Tree.js";
 
 import Chest from "./entities/obstacles/Chest.js";
 import House from "./entities/obstacles/House.js";
+import {initMobileInput} from "./mobile-input.js";
 
 class GameEngine {
   constructor() {
@@ -157,6 +158,7 @@ class GameEngine {
     this.setupPauseMenuListeners();
     this.setupStartScreenListeners();
     this.setupGameOverListeners();
+    initMobileInput(this);
     requestAnimationFrame((time) => this.loop(time));
   }
 
