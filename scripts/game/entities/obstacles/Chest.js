@@ -3,21 +3,21 @@ import GameObject from '../base/GameObject.js';
 export default class Chest extends GameObject {
     constructor({ x, y }) {
         super({
-            x,
-            y,
+          x,
+          y,
+          width: 32,
+          height: 32,
+          spriteWidth: 16,
+          spriteHeight: 16,
+          imageSrc: "./assets/sprites/Cute/Outdoor decoration/Chest.png",
+          solid: true,
+          ySortOffset: 0,
+          collisionBox: {
+            offsetX: 0,
+            offsetY: 9,
             width: 32,
-            height: 32,
-            spriteWidth: 16,
-            spriteHeight: 16,
-            imageSrc: './assets/sprites/Cute/Outdoor decoration/Chest.png',
-            solid: true,
-            ySortOffset: 0,
-            collisionBox: {
-                offsetX: 0,
-                offsetY: 8,
-                width: 32,
-                height: 24
-            }
+            height: 16,
+          },
         });
 
         this.isUsed = false;

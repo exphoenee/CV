@@ -14,21 +14,22 @@ const HOUSE_LABELS = {
 export default class House extends GameObject {
     constructor({ x, y, stationId, cvTitle, cvContent, tech }) {
         super({
-            x,
-            y,
-            width: 96,
-            height: 128,
-            spriteWidth: 96,
-            spriteHeight: 128,
-            imageSrc: './assets/sprites/Cute/Outdoor decoration/House_1_Wood_Base_Blue.png',
-            solid: true,
-            ySortOffset: 0,
-            collisionBox: {
-                offsetX: 6,
-                offsetY: 80,
-                width: 84,
-                height: 48 // The lower house walls are solid
-            }
+          x,
+          y,
+          width: 96,
+          height: 128,
+          spriteWidth: 96,
+          spriteHeight: 128,
+          imageSrc:
+            "./assets/sprites/Cute/Outdoor decoration/House_1_Wood_Base_Blue.png",
+          solid: true,
+          ySortOffset: 0,
+          collisionBox: {
+            offsetX: 15,
+            offsetY: 58,
+            width: 65,
+            height: 55, // The lower house walls are solid
+          },
         });
 
         this.stationId = stationId;
@@ -67,7 +68,7 @@ export default class House extends GameObject {
      */
     draw(ctx, camera) {
         super.draw(ctx, camera);
-        
+
         // Only show label when player is close
         const dx = this.x + this.width / 2 - camera.playerX;
         const dy = this.y + this.height / 2 - camera.playerY;
@@ -77,22 +78,22 @@ export default class House extends GameObject {
         // Draw floating nameplate above the house
         const screenX = this.x + this.width / 2 - camera.x;
         const screenY = this.y - camera.y; // Top of the house
-        
+
         ctx.save();
-        
+
         // Font setup - retro Press Start 2P at 6px is standard and sharp
         ctx.font = '6px "Press Start 2P"';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        
+
         const titleText = this.shortLabel;
         const subText = this.period;
-        
+
         // Measure text sizes
         const titleWidth = ctx.measureText(titleText).width;
         const subWidth = ctx.measureText(subText).width;
         const maxTextWidth = Math.max(titleWidth, subWidth);
-        
+
         // Label dimensions
         const paddingX = 8;
         const paddingY = 6;
@@ -100,12 +101,12 @@ export default class House extends GameObject {
         const boxHeight = subText ? 20 : 12;
         const boxX = screenX - boxWidth / 2;
         const boxY = screenY - boxHeight - 8; // Float 8px above the roof
-        
+
         // Draw Glassmorphic/Retro dark container box
         ctx.fillStyle = 'rgba(10, 12, 16, 0.85)';
         ctx.strokeStyle = 'rgba(255, 112, 36, 0.8)'; // Orange accent border
         ctx.lineWidth = 1;
-        
+
         ctx.beginPath();
         if (ctx.roundRect) {
             ctx.roundRect(boxX, boxY, boxWidth, boxHeight, 4);
@@ -114,13 +115,13 @@ export default class House extends GameObject {
         }
         ctx.fill();
         ctx.stroke();
-        
+
         // Draw Text
         if (subText) {
             // Two-line layout
             ctx.fillStyle = '#ffffff'; // White for workplace/title
             ctx.fillText(titleText, screenX, boxY + 6);
-            
+
             ctx.fillStyle = '#ff7024'; // Orange for dates/period
             ctx.fillText(subText, screenX, boxY + 14);
         } else {
@@ -128,7 +129,7 @@ export default class House extends GameObject {
             ctx.fillStyle = '#ffffff';
             ctx.fillText(titleText, screenX, boxY + 6);
         }
-        
+
         ctx.restore();
     }
 }

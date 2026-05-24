@@ -3,14 +3,15 @@ import Npc from '../base/Npc.js';
 export default class Pig extends Npc {
     constructor({ x, y }) {
         super({
-            x,
-            y,
-            width: 36,
-            height: 36,
-            spriteWidth: 32,
-            spriteHeight: 32,
-            imageSrc: './assets/sprites/Cute/Animals/Pig/Pig.png',
-            speed: 20
+          x,
+          y,
+          width: 36,
+          height: 36,
+          spriteWidth: 32,
+          spriteHeight: 32,
+          imageSrc: "./assets/sprites/Cute/Animals/Pig/Pig.png",
+          speed: 20,
+          collisionBox: {offsetX: 9, offsetY: 15, width: 20, height: 12},
         });
     }
 

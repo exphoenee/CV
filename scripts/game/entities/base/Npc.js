@@ -1,7 +1,7 @@
 import GameObject from './GameObject.js';
 
 export default class Npc extends GameObject {
-    constructor({ x, y, width, height, spriteWidth, spriteHeight, imageSrc, speed = 30 }) {
+    constructor({ x, y, width, height, spriteWidth, spriteHeight, imageSrc, speed = 30, collisionBox }) {
         super({
             x,
             y,
@@ -11,12 +11,7 @@ export default class Npc extends GameObject {
             spriteHeight,
             imageSrc,
             solid: true,
-            collisionBox: {
-                offsetX: 4,
-                offsetY: height / 2,
-                width: width - 8,
-                height: height / 2
-            }
+            collisionBox,
         });
 
         this.speed = speed;

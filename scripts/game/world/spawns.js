@@ -3,7 +3,7 @@
  * Spawn coordinates for player, npcs, enemies, and decorative objects.
  */
 export const ENTITY_SPAWNS = {
-  player: {x: 100, y: 220},
+  player: {x: 100, y: 240},
   npcs: [
     {type: "Chicken", x: 260, y: 250},
     {type: "Chicken", x: 230, y: 260},
@@ -44,9 +44,38 @@ export const ENTITY_SPAWNS = {
     {type: "Tree", x: 1079, y: 615},
     {type: "Tree", x: 1019, y: 653},
 
+    // Small Trees
+    {type: "SmallTree", x: 140, y: 80, variant: 0},
+    {type: "SmallTree", x: 180, y: 90, variant: 1},
+
     // Chests
-    {type: "Chest", x: 120, y: 210},
+    {type: "Chest", x: 130, y: 210},
     {type: "Chest", x: 1200, y: 220},
     {type: "Chest", x: 973, y: 738},
+
+    // --- Spawn area decoration ---
+    // {type: "Flower", x: 60, y: 240, variant: 0},
+    // {type: "Flower", x: 65, y: 260, variant: 3},
+    // {type: "Flower", x: 140, y: 190, variant: 7},
+    // {type: "Flower", x: 150, y: 250, variant: 11},
+    // {type: "Flower", x: 80, y: 290, variant: 2},
+    // {type: "Mushroom", x: 55, y: 200},
+    // {type: "Mushroom", x: 170, y: 210},
+    // {type: "Plant", x: 130, y: 280, variant: 0},
+    // {type: "Plant", x: 45, y: 275, variant: 2},
+    // {type: "Boulder", x: 170, y: 180, variant: 0},
+    // {type: "Boulder", x: 55, y: 310, variant: 1},
+    // {type: "DecorStone", x: 85, y: 185, variant: 0},
+    // {type: "DecorStone", x: 100, y: 310, variant: 1},
+    // {type: "Leaf", x: 155, y: 270, variant: 0},
+    // {type: "Leaf", x: 75, y: 235, variant: 1},
+    // {type: "Stump", x: 140, y: 170},
+    // {type: "Log", x: 155, y: 300},
+    // {type: "Hay", x: 60, y: 280},
+    // {type: "Carrot", x: 135, y: 235},
+    // {type: "GoldBoulder", x: 175, y: 290, variant: 0},
+    // {type: "Sign", x: 110, y: 185, type: "carrot"},
+    // {type: "Basket", x: 90, y: 290, type: "carrot"},
+    // {type: "GoldOre", x: 185, y: 200, variant: 0},
   ],
 };

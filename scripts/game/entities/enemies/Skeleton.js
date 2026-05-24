@@ -3,21 +3,21 @@ import GameObject from '../base/GameObject.js';
 export default class Skeleton extends GameObject {
     constructor({ x, y }) {
         super({
-            x,
-            y,
-            width: 48,
-            height: 48,
-            spriteWidth: 32,
-            spriteHeight: 32,
-            imageSrc: './assets/sprites/Cute/Enemies/Skeleton.png',
-            solid: true,
-            ySortOffset: 0,
-            collisionBox: {
-                offsetX: 12,
-                offsetY: 28,
-                width: 24,
-                height: 20
-            }
+          x,
+          y,
+          width: 48,
+          height: 48,
+          spriteWidth: 32,
+          spriteHeight: 32,
+          imageSrc: "./assets/sprites/Cute/Enemies/Skeleton.png",
+          solid: true,
+          ySortOffset: 0,
+          collisionBox: {
+            offsetX: 14,
+            offsetY: 18,
+            width: 18,
+            height: 20,
+          },
         });
 
         this.spawnX = x;
@@ -25,12 +25,12 @@ export default class Skeleton extends GameObject {
 
         this.speed = 60; // Slightly slower than player
         this.dir = 'down';
-        
+
         // Combat stats
         this.health = 3;
         this.isHit = false;
         this.hitTimer = 0;
-        
+
         // AI States & attack animation variables
         this.detectionRadius = 140; // Proximity aggro range
         this.attackReach = 28;      // Distance at which skeleton attacks player/NPC
@@ -38,7 +38,7 @@ export default class Skeleton extends GameObject {
         this.isAttacking = false;
         this.attackTimer = 0;
         this.attackDuration = 0.3; // 0.3 seconds skeleton attack animation
-        
+
         // Animation
         this.animFrame = 0;
         this.animTimer = 0;
@@ -313,7 +313,7 @@ export default class Skeleton extends GameObject {
     draw(ctx, camera) {
         if (this.isDead && this.deathTimer <= 0) {
             // Fully dead and animation completed, do not render anymore
-            return; 
+            return;
         }
 
         if (!this.image || !this.isLoaded) {
@@ -358,7 +358,7 @@ export default class Skeleton extends GameObject {
         const sourceY = row * this.spriteHeight;
 
         ctx.save();
-        
+
         // Red flashing visual feedback when hit
         if (this.isHit) {
             ctx.filter = 'drop-shadow(0px 0px 6px rgba(255, 0, 0, 0.9))';

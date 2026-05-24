@@ -3,14 +3,15 @@ import Npc from '../base/Npc.js';
 export default class Chicken extends Npc {
     constructor({ x, y }) {
         super({
-            x,
-            y,
-            width: 32,
-            height: 32,
-            spriteWidth: 32,
-            spriteHeight: 32,
-            imageSrc: './assets/sprites/Cute/Animals/Chicken/Chicken.png',
-            speed: 25 // Slower chicken pecking walks
+          x,
+          y,
+          width: 32,
+          height: 32,
+          spriteWidth: 32,
+          spriteHeight: 32,
+          imageSrc: "./assets/sprites/Cute/Animals/Chicken/Chicken.png",
+          speed: 25,
+          collisionBox: {offsetX: 12, offsetY: 16, width: 6, height: 8},
         });
     }
 
