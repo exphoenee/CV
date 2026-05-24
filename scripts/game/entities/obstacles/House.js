@@ -68,6 +68,12 @@ export default class House extends GameObject {
     draw(ctx, camera) {
         super.draw(ctx, camera);
         
+        // Only show label when player is close
+        const dx = this.x + this.width / 2 - camera.playerX;
+        const dy = this.y + this.height / 2 - camera.playerY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 160) return;
+
         // Draw floating nameplate above the house
         const screenX = this.x + this.width / 2 - camera.x;
         const screenY = this.y - camera.y; // Top of the house

@@ -1,8 +1,9 @@
 export function isTouchDevice() {
   return (
-    'ontouchstart' in window ||
+    "ontouchstart" in window ||
     navigator.maxTouchPoints > 0 ||
-    window.matchMedia('(hover: none) and (pointer: coarse)').matches
+    window.matchMedia("(hover: none) and (pointer: coarse)").matches ||
+    window.innerWidth < 600
   );
 }
 
@@ -49,17 +50,19 @@ export function initMobileInput(game) {
     size,
     numberOfDirections: 8,
     lockY: false,
+    priority: ['pointer', 'touch', 'mouse'],
   });
 
   const DIR_MAP = {
-    0:   { w: false, a: false, s: false, d: false },
-    45:  { w: true,  a: false, s: false, d: true  },
-    90:  { w: true,  a: false, s: false, d: false },
-    135: { w: true,  a: true,  s: false, d: false },
-    180: { w: false, a: true,  s: false, d: false },
-    225: { w: false, a: true,  s: true,  d: false },
-    270: { w: false, a: false, s: true,  d: false },
-    315: { w: false, a: false, s: true,  d: true  },
+    0: {w: false, a: false, s: false, d: true},
+    45: {w: true, a: false, s: false, d: true},
+    90: {w: true, a: false, s: false, d: false},
+    135: {w: true, a: true, s: false, d: false},
+    180: {w: false, a: true, s: false, d: false},
+    225: {w: false, a: true, s: true, d: false},
+    270: {w: false, a: false, s: true, d: false},
+    315: {w: false, a: false, s: true, d: true},
+    360: {w: false, a: false, s: false, d: true},
   };
 
   const angleToDir = (angle) => {
@@ -68,9 +71,10 @@ export function initMobileInput(game) {
     return DIR_MAP[snapped] || DIR_MAP[0];
   };
 
-  joystick.on('move', (evt, data) => {
-    if (!data || !data.angle) return;
-    const dir = angleToDir(data.angle);
+  joystick.on('move', (evt) => {
+    const d = evt?.data || evt;
+    if (!d || !d.angle) return;
+    const dir = angleToDir(d.angle);
     Object.entries(dir).forEach(([key, val]) => { game.keys[key] = val; });
   });
 

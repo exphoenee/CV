@@ -354,7 +354,7 @@ export default class Player extends GameObject {
         const py = pBounds.y + pBounds.height / 2 - camera.y;
 
         ctx.beginPath();
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.strokeStyle = 'rgba(255, 112, 36, 0.35)';
         ctx.lineWidth = 4;
         ctx.lineCap = 'round';
 

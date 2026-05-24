@@ -631,6 +631,7 @@ class GameEngine {
           saveTime();
           return;
         }
+        localStorage.setItem("cv-music-time", 0);
         const prevIndex = (currentIndex - 1 + options.length) % options.length;
         selectTrackByIndex(prevIndex);
         fadeOutThen(() => {
@@ -645,6 +646,7 @@ class GameEngine {
     // Next: jump to the next track (wraps to first if at last).
     if (nextBtn) {
       nextBtn.addEventListener("click", () => {
+        localStorage.setItem("cv-music-time", 0);
         const nextIndex = (currentIndex + 1) % options.length;
         selectTrackByIndex(nextIndex);
         fadeOutThen(() => {
@@ -669,6 +671,7 @@ class GameEngine {
     };
 
     let userScrubbing = false;
+    let lastSaveTime = 0;
 
     const updateTrackTime = () => {
       if (userScrubbing) return;
@@ -679,6 +682,11 @@ class GameEngine {
       if (seekSlider && audio.duration) {
         seekSlider.max = audio.duration;
         seekSlider.value = audio.currentTime;
+      }
+      // Auto-save every 3 seconds
+      if (audio.currentTime - lastSaveTime >= 3) {
+        saveTime();
+        lastSaveTime = audio.currentTime;
       }
     };
 
@@ -1018,6 +1026,10 @@ class GameEngine {
       return aBottom - bBottom;
     });
 
+    // Expose player position for proximity checks in draw
+    this.camera.playerX = this.player.x;
+    this.camera.playerY = this.player.y;
+
     this.gameObjects.forEach((obj) => {
       obj.draw(this.ctx, this.camera);
     });
@@ -1040,7 +1052,13 @@ class GameEngine {
     const heartSize = 20;
 
     this.ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-    this.ctx.fillRect(x - 4, y - 4, this.player.maxHealth * (heartSize + 6) + 8, heartSize + 8);
+    this.ctx.beginPath();
+    if (this.ctx.roundRect) {
+      this.ctx.roundRect(x - 4, y - 4, this.player.maxHealth * (heartSize + 6) + 8, heartSize + 8, 6);
+    } else {
+      this.ctx.rect(x - 4, y - 4, this.player.maxHealth * (heartSize + 6) + 8, heartSize + 8);
+    }
+    this.ctx.fill();
 
     if (!this.hearthImage.complete) return;
 
