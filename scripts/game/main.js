@@ -35,7 +35,8 @@ class GameEngine {
     this.setupKeyboardListeners();
 
     // Game states
-    this.isFrozen = false;
+    this.isFrozen = true; // Start frozen until user clicks Start Game
+    this.gameOverActive = false;
     this.lastTime = 0;
 
     // World parameters (set after map image loads)
@@ -149,6 +150,8 @@ class GameEngine {
     this.buildWorld();
     this.setupDialogueListeners();
     this.setupPauseMenuListeners();
+    this.setupStartScreenListeners();
+    this.setupGameOverListeners();
     requestAnimationFrame((time) => this.loop(time));
   }
 
@@ -308,6 +311,17 @@ class GameEngine {
 
       // ESC listener to toggle pause menu
       if (e.key === "Escape") {
+        const startScreen = document.getElementById("start-screen");
+        const gameOverScreen = document.getElementById("game-over-screen");
+
+        // Don't toggle pause if start screen or game over is showing
+        if (
+          (startScreen && startScreen.classList.contains("dialogue-visible")) ||
+          (gameOverScreen && gameOverScreen.classList.contains("dialogue-visible"))
+        ) {
+          return;
+        }
+
         const diagOverlay = document.getElementById("dialogue-overlay");
         if (diagOverlay && diagOverlay.classList.contains("dialogue-visible")) {
           this.closeDialogue();
@@ -406,6 +420,9 @@ class GameEngine {
     // Music Player Setup
     const audio = document.getElementById("game-music-audio");
     const playPauseBtn = document.getElementById("game-music-playpause");
+    const stopBtn = document.getElementById("game-music-stop");
+    const prevBtn = document.getElementById("game-music-prev");
+    const nextBtn = document.getElementById("game-music-next");
     const customSelect = document.getElementById("game-genre-select");
     const volumeSlider = document.getElementById("game-music-volume");
 
@@ -416,6 +433,7 @@ class GameEngine {
     const options = customSelect.querySelectorAll(".custom-option");
 
     let isPlaying = false;
+    let currentIndex = 0;
     let currentValue = options[0].getAttribute("data-value");
     let currentLabel = options[0].textContent;
 
@@ -437,11 +455,12 @@ class GameEngine {
       });
     }
 
-    // Restore saved preference
+    // Restore saved genre preference
     const savedGenre = localStorage.getItem("cv-music-genre");
     if (savedGenre) {
       for (let i = 0; i < options.length; i++) {
         if (options[i].getAttribute("data-value") === savedGenre) {
+          currentIndex = i;
           currentValue = savedGenre;
           currentLabel = options[i].textContent;
           break;
@@ -457,8 +476,26 @@ class GameEngine {
       }
     };
 
+    const selectTrackByIndex = (index) => {
+      currentIndex = index;
+      currentValue = options[currentIndex].getAttribute("data-value");
+      currentLabel = options[currentIndex].textContent;
+      triggerText.textContent = currentLabel;
+      localStorage.setItem("cv-music-genre", currentValue);
+    };
+
+    const play = () => {
+      audio
+        .play()
+        .then(() => {
+          isPlaying = true;
+          updatePlayPause();
+        })
+        .catch(() => {});
+    };
+
     const updatePlayPause = () => {
-      playPauseBtn.textContent = isPlaying ? "⏸ Pause" : "▶ Play";
+      playPauseBtn.textContent = isPlaying ? "⏸" : "▶";
     };
 
     trigger.addEventListener("click", (e) => {
@@ -472,54 +509,103 @@ class GameEngine {
       }
     });
 
-    options.forEach((opt) => {
+    options.forEach((opt, i) => {
       opt.addEventListener("click", (e) => {
-        currentValue = e.target.getAttribute("data-value");
-        currentLabel = e.target.textContent;
-        triggerText.textContent = currentLabel;
+        selectTrackByIndex(i);
         customSelect.classList.remove("open");
 
-        localStorage.setItem("cv-music-genre", currentValue);
         const wasPlaying = isPlaying;
-
         audio.pause();
         isPlaying = false;
         loadTrack();
 
         if (wasPlaying) {
-          audio
-            .play()
-            .then(() => {
-              isPlaying = true;
-              updatePlayPause();
-            })
-            .catch(() => {});
+          play();
         }
         updatePlayPause();
       });
     });
 
+    // Play/Pause toggle
     playPauseBtn.addEventListener("click", () => {
       if (isPlaying) {
         audio.pause();
         isPlaying = false;
       } else {
         loadTrack();
-        audio
-          .play()
-          .then(() => {
-            isPlaying = true;
-            updatePlayPause();
-          })
-          .catch(() => {});
+        play();
       }
       updatePlayPause();
     });
 
+    // Stop: pause and reset playback position to the beginning
+    if (stopBtn) {
+      stopBtn.addEventListener("click", () => {
+        audio.pause();
+        audio.currentTime = 0;
+        isPlaying = false;
+        updatePlayPause();
+      });
+    }
+
+    // Prev: if > 10s into the track, restart from beginning.
+    // Otherwise, jump to the previous track (wraps to last if at first).
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => {
+        if (audio.currentTime > 10) {
+          audio.currentTime = 0;
+          return;
+        }
+        const prevIndex = (currentIndex - 1 + options.length) % options.length;
+        selectTrackByIndex(prevIndex);
+        audio.pause();
+        isPlaying = false;
+        loadTrack();
+        play();
+        updatePlayPause();
+      });
+    }
+
+    // Next: jump to the next track (wraps to first if at last).
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        const nextIndex = (currentIndex + 1) % options.length;
+        selectTrackByIndex(nextIndex);
+        audio.pause();
+        isPlaying = false;
+        loadTrack();
+        play();
+        updatePlayPause();
+      });
+    }
+
+    const trackTimeEl = document.getElementById("track-time");
+
+    const formatTime = (seconds) => {
+      if (isNaN(seconds) || !isFinite(seconds)) return "00:00";
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    };
+
+    const updateTrackTime = () => {
+      if (!trackTimeEl) return;
+      const current = formatTime(audio.currentTime);
+      const total = formatTime(audio.duration);
+      trackTimeEl.textContent = `${current} / ${total}`;
+    };
+
+    audio.addEventListener("loadedmetadata", updateTrackTime);
+    audio.addEventListener("timeupdate", updateTrackTime);
     audio.addEventListener("ended", () => {
       isPlaying = false;
       updatePlayPause();
     });
+
+    // Initial update when audio is ready
+    if (audio.readyState >= 1) {
+      updateTrackTime();
+    }
 
     // Try autoplaying default/saved music, with fallback for browser interaction policy
     loadTrack();
@@ -533,13 +619,7 @@ class GameEngine {
         // Autoplay was blocked: wait for first user interaction (click/keydown) to play
         const startOnInteraction = () => {
           loadTrack();
-          audio
-            .play()
-            .then(() => {
-              isPlaying = true;
-              updatePlayPause();
-            })
-            .catch(() => {});
+          play();
           window.removeEventListener("click", startOnInteraction);
           window.removeEventListener("keydown", startOnInteraction);
         };
@@ -547,6 +627,87 @@ class GameEngine {
         window.addEventListener("keydown", startOnInteraction);
         updatePlayPause();
       });
+  }
+
+  /**
+   * Wire up Start Screen button events.
+   */
+  setupStartScreenListeners() {
+    const startBtn = document.getElementById("btn-start-game");
+    if (startBtn) {
+      startBtn.addEventListener("click", () => this.startGame());
+    }
+  }
+
+  /**
+   * Begin the game — hide start screen, unfreeze loop.
+   */
+  startGame() {
+    const startScreen = document.getElementById("start-screen");
+    startScreen.classList.remove("dialogue-visible");
+    startScreen.classList.add("dialogue-hidden");
+    this.isFrozen = false;
+  }
+
+  /**
+   * Wire up Game Over screen button events.
+   */
+  setupGameOverListeners() {
+    const restartBtn = document.getElementById("btn-restart-game");
+    if (restartBtn) {
+      restartBtn.addEventListener("click", () => this.restartGame());
+    }
+  }
+
+  /**
+   * Show the Game Over overlay and freeze the game.
+   */
+  showGameOver() {
+    this.gameOverActive = true;
+    this.isFrozen = true;
+    const gameOverScreen = document.getElementById("game-over-screen");
+    gameOverScreen.classList.remove("dialogue-hidden");
+    gameOverScreen.classList.add("dialogue-visible");
+  }
+
+  /**
+   * Hide the Game Over overlay.
+   */
+  hideGameOver() {
+    this.gameOverActive = false;
+    const gameOverScreen = document.getElementById("game-over-screen");
+    gameOverScreen.classList.remove("dialogue-visible");
+    gameOverScreen.classList.add("dialogue-hidden");
+  }
+
+  /**
+   * Respawn the player and hide the Game Over screen.
+   */
+  restartGame() {
+    this.player.respawn();
+    this.hideGameOver();
+    this.isFrozen = false;
+
+    // Re-populate enemies/NPCs to original state
+    this.enemies = [];
+    this.npcs = [];
+    ENTITY_SPAWNS.enemies.forEach((enemySpawn) => {
+      const skeleton = new Skeleton({x: enemySpawn.x, y: enemySpawn.y});
+      this.enemies.push(skeleton);
+    });
+    ENTITY_SPAWNS.npcs.forEach((npcSpawn) => {
+      let animal = null;
+      if (npcSpawn.type === "Chicken")
+        animal = new Chicken({x: npcSpawn.x, y: npcSpawn.y});
+      else if (npcSpawn.type === "Cow")
+        animal = new Cow({x: npcSpawn.x, y: npcSpawn.y});
+      else if (npcSpawn.type === "Pig")
+        animal = new Pig({x: npcSpawn.x, y: npcSpawn.y});
+      else if (npcSpawn.type === "Sheep")
+        animal = new Sheep({x: npcSpawn.x, y: npcSpawn.y});
+      if (animal) this.npcs.push(animal);
+    });
+    this.rebuildGameObjectList();
   }
 
   /**
@@ -627,10 +788,16 @@ class GameEngine {
     this.npcs.forEach((npc) => npc.update(dt, worldContext));
     this.enemies.forEach((enemy) => enemy.update(dt, worldContext));
 
-    // 2. Cleanup dead entities
+    // 2. Check player death → game over
+    if (this.player.deathAnimDone && !this.gameOverActive) {
+      this.showGameOver();
+      return;
+    }
+
+    // 3. Cleanup dead entities
     this.cleanupDead();
 
-    // 3. Spawn new skeletons
+    // 4. Spawn new skeletons
     this.enemySpawnTimer += dt;
     if (
       this.enemySpawnTimer >= this.enemySpawnInterval &&
@@ -641,7 +808,7 @@ class GameEngine {
       this.enemySpawnInterval = this._randomInterval(20, 50);
     }
 
-    // 4. Spawn new NPCs
+    // 5. Spawn new NPCs
     this.npcSpawnTimer += dt;
     if (
       this.npcSpawnTimer >= this.npcSpawnInterval &&
@@ -652,7 +819,7 @@ class GameEngine {
       this.npcSpawnInterval = this._randomInterval(30, 50);
     }
 
-    // 5. Check door triggers for entering CV Stations
+    // 6. Check door triggers for entering CV Stations
     for (const obs of this.obstacles) {
       if (obs instanceof House && obs.checkDoorTrigger(this.player)) {
         this.enterHouse(obs);
@@ -660,7 +827,7 @@ class GameEngine {
       }
     }
 
-    // 6. Check chest healing triggers (using proximity check)
+    // 7. Check chest healing triggers (using proximity check)
     for (const obs of this.obstacles) {
       if (obs instanceof Chest && !obs.isUsed) {
         const pRect = this.player.getCollisionRect();
@@ -677,7 +844,7 @@ class GameEngine {
       }
     }
 
-    // 3. Smooth Camera Tracking on Player
+    // 8. Smooth Camera Tracking on Player
     const targetCamX =
       this.player.x + this.player.width / 2 - this.virtualWidth / 2;
     const targetCamY =

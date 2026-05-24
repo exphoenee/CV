@@ -45,6 +45,7 @@ export default class Player extends GameObject {
         // Death state
         this.isDead = false;
         this.deathTimer = 0;
+        this.deathAnimDone = false;
         this.respawnX = x;
         this.respawnY = y;
     }
@@ -59,7 +60,7 @@ export default class Player extends GameObject {
             // Play death animation (4 frames over 1.0s, then stay on frame 3)
             this.animFrame = Math.min(3, Math.floor(((2.0 - this.deathTimer) / 1.0) * 4));
             if (this.deathTimer <= 0) {
-                this.respawn();
+                this.deathAnimDone = true;
             }
             return; // Block actions during death
         }
@@ -242,7 +243,8 @@ export default class Player extends GameObject {
 
         if (this.health <= 0) {
             this.isDead = true;
-            this.deathTimer = 2.0; // Play death row, wait 2 seconds then respawn
+            this.deathTimer = 2.0; // Play death animation
+            this.deathAnimDone = false;
             this.isMoving = false;
             this.isAttacking = false;
         }
@@ -258,6 +260,8 @@ export default class Player extends GameObject {
         this.isDead = false;
         this.isHit = false;
         this.dir = 'down';
+        this.deathAnimDone = false;
+        this.deathTimer = 0;
     }
 
     /**
