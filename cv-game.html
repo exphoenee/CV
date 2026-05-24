@@ -59,6 +59,9 @@
             <button id="info-btn" aria-label="Info">
               <img src="assets/sprites/Cute/Buttons/info.png" alt="Info" draggable="false">
             </button>
+            <button id="hire-btn" aria-label="Hire Me">
+              <span>💼 Hire</span>
+            </button>
 
             <!-- Desktop Tech Boxes (bottom-center) -->
             <div class="tech-boxes desktop-only">
@@ -250,8 +253,45 @@
         </div>
     </div>
 
+    <!-- Hire Me Modal -->
+    <div id="hire-modal" class="dialogue-hidden">
+      <div class="dialogue-backdrop" id="hire-backdrop"></div>
+      <div class="dialogue-box hire-dialog-game">
+        <div class="dialogue-header">
+          <span class="dialogue-dot"></span>
+          <span>Contact Viktor</span>
+          <span class="dialogue-dot"></span>
+        </div>
+        <div data-fs-success class="cv-success-hidden">
+          <p style="font-size:12px;font-family:var(--font-pixel);color:#86efac;">Thanks for reaching out!</p>
+          <p style="font-size:9px;font-family:var(--font-pixel);color:#94a3b8;">Your message was sent successfully. I'll get back to you soon.</p>
+        </div>
+        <div data-fs-error class="cv-error-hidden"></div>
+        <form id="hire-game-form">
+          <input type="hidden" name="_subject" value="Hire inquiry from CV - game">
+          <div class="hire-field">
+            <label for="hire-game-name">Your name</label>
+            <input id="hire-game-name" type="text" name="name" required placeholder="Jane Smith" data-fs-field>
+          </div>
+          <div class="hire-field">
+            <label for="hire-game-email">Your email</label>
+            <input id="hire-game-email" type="email" name="email" required placeholder="your@email.com" data-fs-field>
+          </div>
+          <div class="hire-field">
+            <label for="hire-game-message">Message</label>
+            <textarea id="hire-game-message" name="message" required rows="4" placeholder="Hi Viktor, we'd like to..." data-fs-field></textarea>
+          </div>
+          <div class="hire-actions">
+            <button type="submit" class="dialogue-btn" data-fs-submit-btn>Send</button>
+            <button type="button" id="hire-close" class="dialogue-btn btn-exit">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <!-- NippleJS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/nipplejs@1.0.3/dist/index.js"></script>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 
     <!-- Core Module Script Loader -->
     <script type="module" src="./scripts/game/main.js"></script>
