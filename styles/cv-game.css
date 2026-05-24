@@ -822,23 +822,24 @@ canvas {
     inset: 0;
     pointer-events: none;
     z-index: 6;
+    overflow: hidden;
 }
 #mobile-controls.mobile-visible {
     pointer-events: auto;
 }
 #joystick-zone {
     position: absolute;
-    left: 5%;
-    bottom: 5%;
-    width: min(25vw, 40vh);
+    left: 10%;
+    bottom: 10%;
+    width: min(22vw, 22vh, 110px);
     aspect-ratio: 1;
 }
 #attack-btn {
     position: absolute;
     right: 8%;
-    bottom: 8%;
-    width: 70px;
-    height: 70px;
+    bottom: 10%;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background: rgba(255, 112, 36, 0.2);
     border: 2px solid var(--accent);
@@ -1005,4 +1006,50 @@ canvas {
     #mobile-controls.mobile-visible { display: block; }
     #info-btn.mobile-visible { display: flex; }
     #credits-modal.mobile-visible { display: flex; }
+}
+
+/* --- Landscape orientation overlay (mobile/tablet portrait) --- */
+#rotate-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5, 6, 8, 0.95);
+    backdrop-filter: blur(8px);
+}
+.rotate-box {
+    text-align: center;
+    padding: 30px;
+    max-width: 320px;
+}
+.rotate-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    animation: rotateHint 2s ease-in-out infinite;
+}
+@keyframes rotateHint {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(90deg); }
+}
+.rotate-title {
+    font-family: var(--font-pixel);
+    font-size: 14px;
+    color: var(--accent);
+    margin-bottom: 12px;
+}
+.rotate-desc {
+    font-size: 14px;
+    color: #cbd5e1;
+    margin-bottom: 8px;
+}
+.rotate-hint {
+    font-size: 12px;
+    color: #64748b;
+}
+
+@media (hover: none) and (pointer: coarse) and (orientation: portrait) {
+    #rotate-overlay { display: flex; }
+    #game-wrapper { filter: blur(4px); }
 }

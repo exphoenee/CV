@@ -81,6 +81,16 @@
       </div>
     </div>
 
+    <!-- Landscape orientation overlay (mobile/tablet portrait) -->
+    <div id="rotate-overlay">
+      <div class="rotate-box">
+        <div class="rotate-icon">🔄</div>
+        <div class="rotate-title">Rotate your device</div>
+        <div class="rotate-desc">This game only works in landscape mode.</div>
+        <div class="rotate-hint">Please turn your device sideways.</div>
+      </div>
+    </div>
+
     <!-- Responsive Glassmorphic Dialogue Modal (Frozen State CV Stations) -->
     <div id="dialogue-overlay" class="dialogue-hidden">
         <div class="dialogue-backdrop"></div>
@@ -184,7 +194,7 @@
                 <div class="start-description">
                     Now you can finally experience the challenging life of a career-changing mechanical engineer — from the workshop floor to the tech lead seat. Explore the world, fight skeletons, and uncover the milestones that shaped one developer's journey.
                 </div>
-                <div class="start-controls-note">
+                <div class="start-controls-note desktop-only">
                     <span class="key">W</span> <span class="key">A</span> <span class="key">S</span> <span class="key">D</span> Move &nbsp;·&nbsp; <span class="key" style="min-width: 80px;">Space</span> Attack &nbsp;·&nbsp; <span class="key">ESC</span> Pause
                 </div>
             </div>
@@ -221,7 +231,7 @@
     </div>
 
     <!-- NippleJS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/nipplejs@1.0.3/dist/nipplejs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nipplejs@1.0.3/dist/index.js"></script>
 
     <!-- Core Module Script Loader -->
     <script type="module" src="./scripts/game/main.js"></script>
