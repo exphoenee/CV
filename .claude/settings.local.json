@@ -4,7 +4,12 @@
       "Bash(powershell -Command \"\\(Get-Content 'c:\\\\CV\\\\cv.html' -Raw\\) -replace '\\(?m\\)</span\\\\s*\\\\n\\(\\\\s*\\)><span>[^<]+</span>', '</span>' | Set-Content 'c:\\\\CV\\\\cv.html' -NoNewline\")",
       "Bash(python3 -c ' *)",
       "mcp__plugin_playwright_playwright__browser_navigate",
-      "Bash(python3 -m http.server 8765)"
+      "Bash(python3 -m http.server 8765)",
+      "Bash(git mv *)",
+      "Bash(sed -i \"s|from './GameObject.js'|from '../base/GameObject.js'|g\" entities/obstacles/Chest.js entities/obstacles/Fence.js entities/obstacles/House.js entities/obstacles/Tree.js)",
+      "Bash(sed -i \"s|from './GameObject.js'|from '../base/GameObject.js'|g\" entities/player/Player.js)",
+      "Bash(sed -i \"s|from './GameObject.js'|from '../base/GameObject.js'|g\" entities/enemies/Skeleton.js)",
+      "Bash(sed -i \"s|from './Npc.js'|from '../base/Npc.js'|g\" entities/npcs/Chicken.js entities/npcs/Cow.js entities/npcs/Pig.js entities/npcs/Sheep.js)"
     ]
   }
 }

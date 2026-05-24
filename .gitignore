@@ -1,3 +1,6 @@
+# Dependencies
+node_modules/
+
 # Playwright output
 .playwright-mcp/
 
@@ -8,4 +11,21 @@ Thumbs.db
 # Editor
 .vscode/
 *.swp
+.idea/
+
+# Debug / temp files
+debug_tiles.html
+scratch/
+temp_verify.txt
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Template artifacts
 swagger-template/

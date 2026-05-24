@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viktor Bozzay — Interactive 2.5D RPG CV</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
+    
+    <!-- Retro & Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="./styles/cv-game.css">
+</head>
+<body>
+    <!-- CRT Grid Overlay for Retro Arcade feel -->
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+
+    <!-- Main Canvas Wrapper — all UI overlays live inside here -->
+    <div id="canvas-container">
+        <div id="game-wrapper">
+            <canvas id="game-canvas"></canvas>
+
+            <!-- Game Title (top center) -->
+            <div class="game-title">Viktor's RPG Journey</div>
+
+            <!-- Controls Legend (bottom-left, hidden on mobile) -->
+            <div class="legend-panel">
+                <div class="legend-title">Controls</div>
+                <div class="legend-row"><span class="key">W</span> <span class="key">A</span> <span class="key">S</span> <span class="key">D</span> Move</div>
+                <div class="legend-row"><span class="key" style="min-width: 80px;">Space</span> Attack</div>
+                <div class="legend-row">Enter doors to read CV!</div>
+                <div class="legend-row" style="opacity: 0.6; font-size: 9px; margin-top: 4px; font-family: var(--font-pixel);">ESC to Pause / Music</div>
+            </div>
+
+            <!-- Mobile Controls (inside game-wrapper overlay) -->
+            <div id="mobile-controls">
+              <div id="joystick-zone"></div>
+              <button id="attack-btn" aria-label="Attack">
+                <span style="font-size:28px;">⚔️</span>
+              </button>
+            </div>
+
+            <!-- Info Button (mobile, top-right) -->
+            <button id="info-btn" aria-label="Info">ⓘ</button>
+
+            <!-- Desktop Tech Boxes (bottom-center) -->
+            <div class="tech-boxes desktop-only">
+              <a href="https://yoannmoi.net/nipplejs/" target="_blank" class="tech-box">
+                <span class="tech-label">NippleJS</span>
+                <span class="tech-desc">Virtual Joystick</span>
+              </a>
+              <a href="https://phaser.io" target="_blank" class="tech-box">
+                <span class="tech-label">Phaser</span>
+                <span class="tech-desc">Game Framework</span>
+              </a>
+              <div class="tech-box">
+                <span class="tech-label">Assets</span>
+                <span class="tech-desc">Kenmi-art Cute RPG</span>
+              </div>
+            </div>
+        </div><!-- end #game-wrapper -->
+    </div><!-- end #canvas-container -->
+
+    <!-- Credits Modal (mobile, fixed position) -->
+    <div id="credits-modal">
+      <div class="credits-modal-backdrop"></div>
+      <div class="credits-modal-box">
+        <div class="credits-modal-header">
+          <span>About this game</span>
+          <button id="credits-close">✕</button>
+        </div>
+        <div class="credits-modal-body">
+          <p>Assets by <a href="https://kenmi-art.itch.io/cute-fantasy-rpg" target="_blank">Kenmi-art</a> (Cute Fantasy RPG pack)</p>
+          <p>Virtual joystick: <a href="https://yoannmoi.net/nipplejs/" target="_blank">NippleJS</a></p>
+          <p>Game framework reference: <a href="https://phaser.io" target="_blank">Phaser</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Responsive Glassmorphic Dialogue Modal (Frozen State CV Stations) -->
+    <div id="dialogue-overlay" class="dialogue-hidden">
+        <div class="dialogue-backdrop"></div>
+        <div class="dialogue-box">
+            <!-- Retro console header -->
+            <div class="dialogue-header">
+                <span class="dialogue-dot"></span>
+                <span id="dialogue-title">Personal HQ</span>
+                <span class="dialogue-dot"></span>
+            </div>
+            
+            <div id="dialogue-tech">Svelte · TypeScript · Express</div>
+            
+            <!-- Dialogue scrolling content -->
+            <div id="dialogue-text">
+                <!-- Populated dynamically by House.js / main.js -->
+            </div>
+
+            <!-- Dialogue Scroll Buttons + Exit Button -->
+            <div class="dialogue-controls">
+                <button id="btn-scroll-up" class="dialogue-btn" title="Scroll Up">▲ Scroll Up</button>
+                <button id="btn-scroll-down" class="dialogue-btn" title="Scroll Down">▼ Scroll Down</button>
+                <button id="btn-scroll-exit" class="dialogue-btn btn-exit" title="Exit House">✖ Exit House</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Retro Pause Menu / Escape Modal -->
+    <div id="pause-menu" class="dialogue-hidden">
+        <div class="dialogue-backdrop" id="pause-backdrop"></div>
+        <div class="dialogue-box pause-box">
+            <!-- Retro console header -->
+            <div class="dialogue-header">
+                <span class="dialogue-dot"></span>
+                <span>GAME PAUSED</span>
+                <span class="dialogue-dot"></span>
+            </div>
+            
+            <div class="pause-content">
+                <div class="music-section">
+                    <div class="music-label">🎵 BACKGROUND MUSIC</div>
+                    
+                    <div class="custom-select" id="game-genre-select">
+                        <div class="custom-select-trigger"><span>👾 8bit</span> <span class="arrow">▼</span></div>
+                        <div class="custom-select-options">
+                            <div class="custom-option" data-value="assets/music/8bit.mp3">👾 8bit</div>
+                            <div class="custom-option" data-value="assets/music/blues.mp3">🎸 Blues</div>
+                            <div class="custom-option" data-value="assets/music/classic.mp3">🎻 Classic</div>
+                            <div class="custom-option" data-value="assets/music/country.mp3">🤠 Country</div>
+                            <div class="custom-option" data-value="assets/music/disco.mp3">🕺 Disco</div>
+                            <div class="custom-option" data-value="assets/music/funk.mp3">🚌 Funk</div>
+                            <div class="custom-option" data-value="assets/music/hungarian_nota.mp3">🎻 Nóta</div>
+                            <div class="custom-option" data-value="assets/music/jazz.mp3">🎷 Jazz</div>
+                            <div class="custom-option" data-value="assets/music/metal.mp3">🤘 Metal</div>
+                            <div class="custom-option" data-value="assets/music/pop.mp3">🎤 Pop</div>
+                            <div class="custom-option" data-value="assets/music/rap.mp3">🗣️ Rap</div>
+                            <div class="custom-option" data-value="assets/music/reggae.mp3">🌴 Reggae</div>
+                            <div class="custom-option" data-value="assets/music/rock.mp3">🎸 Rock</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Volume Slider Section (above play button) -->
+                    <div class="volume-control">
+                        <span class="volume-icon">🔊</span>
+                        <input type="range" id="game-music-volume" min="0" max="1" step="0.05" value="0.5" class="volume-slider">
+                    </div>
+
+                    <div class="music-controls">
+                        <div class="transport-buttons">
+                            <button id="game-music-prev" class="dialogue-btn transport-btn" title="Previous">⏮</button>
+                            <button id="game-music-playpause" class="dialogue-btn transport-btn" title="Play/Pause">▶</button>
+                            <button id="game-music-stop" class="dialogue-btn transport-btn" title="Stop">⏹</button>
+                            <button id="game-music-next" class="dialogue-btn transport-btn" title="Next">⏭</button>
+                        </div>
+                    </div>
+
+                    <div class="track-time" id="track-time">00:00 / 00:00</div>
+                </div>
+                
+                <audio id="game-music-audio" loop></audio>
+            </div>
+            
+            <div class="pause-actions">
+                <a href="index.html" class="dialogue-btn pause-hub-btn">🕹️ Back to Hub</a>
+                <button id="btn-resume-game" class="dialogue-btn btn-exit">Resume Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Screen Modal -->
+    <div id="start-screen" class="dialogue-visible">
+        <div class="dialogue-backdrop"></div>
+        <div class="dialogue-box start-box">
+            <div class="dialogue-header">
+                <span class="dialogue-dot"></span>
+                <span>VIKTOR'S RPG JOURNEY</span>
+                <span class="dialogue-dot"></span>
+            </div>
+            
+            <div class="start-content">
+                <div class="start-description">
+                    Now you can finally experience the challenging life of a career-changing mechanical engineer — from the workshop floor to the tech lead seat. Explore the world, fight skeletons, and uncover the milestones that shaped one developer's journey.
+                </div>
+                <div class="start-controls-note">
+                    <span class="key">W</span> <span class="key">A</span> <span class="key">S</span> <span class="key">D</span> Move &nbsp;·&nbsp; <span class="key" style="min-width: 80px;">Space</span> Attack &nbsp;·&nbsp; <span class="key">ESC</span> Pause
+                </div>
+            </div>
+            
+            <div class="start-actions">
+                <button id="btn-start-game" class="dialogue-btn start-game-btn">▶ Start Game</button>
+                <a href="index.html" class="dialogue-btn start-hub-btn">🕹️ Back to Hub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Screen Modal -->
+    <div id="game-over-screen" class="dialogue-hidden">
+        <div class="dialogue-backdrop"></div>
+        <div class="dialogue-box gameover-box">
+            <div class="dialogue-header gameover-header">
+                <span class="dialogue-dot" style="background:#ef4444;box-shadow:0 0 8px #ef4444;"></span>
+                <span style="color:#ef4444;">GAME OVER</span>
+                <span class="dialogue-dot" style="background:#ef4444;box-shadow:0 0 8px #ef4444;"></span>
+            </div>
+            
+            <div class="gameover-content">
+                <div class="gameover-message">
+                    Your journey has ended…<br>
+                    <span style="font-size:11px;color:#94a3b8;">But every death is a new beginning.</span>
+                </div>
+            </div>
+            
+            <div class="gameover-actions">
+                <button id="btn-restart-game" class="dialogue-btn restart-btn">🔄 Restart</button>
+                <a href="index.html" class="dialogue-btn gameover-hub-btn">🕹️ Back to Hub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- NippleJS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/nipplejs@1.0.3/dist/nipplejs.js"></script>
+
+    <!-- Core Module Script Loader -->
+    <script type="module" src="./scripts/game/main.js"></script>
+</body>
+</html>
