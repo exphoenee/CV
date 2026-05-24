@@ -37,6 +37,7 @@ class GameEngine {
     // Game states
     this.isFrozen = true; // Start frozen until user clicks Start Game
     this.gameOverActive = false;
+    this.debugMode = false;
     this.lastTime = 0;
 
     // World parameters (set after map image loads)
@@ -171,6 +172,9 @@ class GameEngine {
       tileSize: TILE_SIZE,
       sheetTileSize: TILE_SHEET_TILE_SIZE,
     });
+
+    // 0b. Pre-compute tile bitmask + frame cache for fast rendering
+    this.mapRenderer.buildTileCache(this.rows, this.cols);
 
     // 1. Spawn Player
     this.player = new Player(ENTITY_SPAWNS.player);
@@ -333,6 +337,11 @@ class GameEngine {
         }
 
         this.togglePauseMenu();
+      }
+
+      // F3 to toggle debug mode
+      if (e.key === "F3") {
+        this.debugMode = !this.debugMode;
       }
     });
 
@@ -893,6 +902,11 @@ class GameEngine {
 
     // 3. Draw Player HUD / Life Hearts
     this.drawHUD();
+
+    // 4. Debug overlay
+    if (this.debugMode) {
+      this.drawDebugOverlay();
+    }
   }
 
   /**
@@ -920,6 +934,39 @@ class GameEngine {
         this.ctx.drawImage(this.hearthImage, hx, hy, heartSize, heartSize);
         this.ctx.globalAlpha = 1.0;
       }
+    }
+  }
+
+  /**
+   * Draw collision boxes and info for all objects in debug mode.
+   */
+  drawDebugOverlay() {
+    const {ctx, camera} = this;
+
+    ctx.fillStyle = "rgba(0,0,0,0.5)";
+    ctx.fillRect(4, 4, 180, 56);
+    ctx.fillStyle = "#0f0";
+    ctx.font = "12px monospace";
+    ctx.fillText("DEBUG MODE [F3]", 10, 20);
+    ctx.fillStyle = "#aaa";
+    ctx.fillText(`Objects: ${this.gameObjects.length}`, 10, 36);
+    ctx.fillText(`Player: ${~~this.player.x},${~~this.player.y}`, 10, 52);
+
+    // Collision boxes
+    ctx.strokeStyle = "#ff0000";
+    ctx.lineWidth = 1;
+
+    for (const obj of this.gameObjects) {
+      const r = obj.getCollisionRect
+        ? obj.getCollisionRect()
+        : {x: obj.x, y: obj.y, width: obj.width, height: obj.height};
+
+      ctx.strokeRect(
+        r.x - camera.x,
+        r.y - camera.y,
+        r.width,
+        r.height
+      );
     }
   }
 }

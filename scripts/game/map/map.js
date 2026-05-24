@@ -8,6 +8,38 @@
  *   Víz (Water / W) = Kék    #0000FF  R:0,   G:0,   B:255
  *   Domb(Hill  / C) = Piros  #FF0000  R:255, G:0,   B:0
  */
+
+// ── PHASE 3: Terrain enum ────────────────────────────────────────────
+// Numeric terrain types for fast bitmask operations and cache-friendly lookup.
+export const Terrain = {
+  GRASS: 0,
+  WATER: 1,
+  PATH: 2,
+  CLIFF: 3,
+};
+
+/** Map tile-key characters to Terrain enum values */
+export function tileKeyToTerrain(key) {
+  switch (key) {
+    case "G": return Terrain.GRASS;
+    case "W": return Terrain.WATER;
+    case "P": return Terrain.PATH;
+    case "C": return Terrain.CLIFF;
+    default: return Terrain.GRASS;
+  }
+}
+
+/** Map Terrain enum back to tile key character */
+export function terrainToTileKey(t) {
+  switch (t) {
+    case Terrain.GRASS: return "G";
+    case Terrain.WATER: return "W";
+    case Terrain.PATH: return "P";
+    case Terrain.CLIFF: return "C";
+    default: return "G";
+  }
+}
+
 export const TILE_SHEET_TILE_SIZE = 16; // Source sprite tiles are 16x16
 export const TILE_SIZE = 32; // Draw tiles at 32x32 (double pixel scale)
 
