@@ -62,98 +62,90 @@ export class MapRenderer {
     return null;
   }
 
+  /**
+   * 8-direction auto-tile frame selection.
+   *
+   * Pixel analysis of Path_Tile.png / Water_Tile.png (48×96, 3 col × 6 row
+   * sheet of 16×16 tiles) confirms the standard RPG Maker 2000/2003 layout:
+   *
+   *   Row 0: [cornerBR] [straightHT / bottom-edge] [cornerBL]
+   *   Row 1: [straightVL / right-edge] [center] [straightVR / left-edge]
+   *   Row 2: [cornerTR] [straightHB / top-edge] [cornerTL]
+   *   Row 3: [innerBR] [innerBL] [—]
+   *   Row 4: [innerTR] [innerTL] [—]
+   *   Row 5: [deco]
+   *
+   * Checks all 8 neighbors. Diagonal neighbors are considered "effective"
+   * only when BOTH adjacent cardinals are also the same tile type.
+   */
+  _get8DirFrame(row, col, isTileFn) {
+    const n  = isTileFn(row - 1, col);
+    const s  = isTileFn(row + 1, col);
+    const e  = isTileFn(row, col + 1);
+    const w  = isTileFn(row, col - 1);
+    const ne = isTileFn(row - 1, col + 1);
+    const nw = isTileFn(row - 1, col - 1);
+    const se = isTileFn(row + 1, col + 1);
+    const sw = isTileFn(row + 1, col - 1);
+
+    // Effective diagonal: adjacent cardinals must also be the same type
+    const effNE = n && e && ne;
+    const effNW = n && w && nw;
+    const effSE = s && e && se;
+    const effSW = s && w && sw;
+
+    const cardCount = (n ? 1 : 0) + (s ? 1 : 0) + (e ? 1 : 0) + (w ? 1 : 0);
+
+    const F = SHEET_TILE_FRAMES;
+
+    // ── 0 cardinals (isolated tile) ────────────────────────────────
+    if (cardCount === 0) return F.center;
+
+    // ── 1 cardinal (dead end) ──────────────────────────────────────
+    if (cardCount === 1) {
+      if (n) return F.edgeN;
+      if (e) return F.edgeE;
+      if (s) return F.edgeS;
+      if (w) return F.edgeW;
+    }
+
+    // ── 2 opposite cardinals (straight run) ────────────────────────
+    // For N+S (vertical) use the appropriate side-edge frame.
+    if (n && s && !e && !w) return F.straightV;
+    // For E+W (horizontal) use the appropriate top/bottom-edge frame.
+    if (e && w && !n && !s) return F.straightH;
+
+    // ── 2 perpendicular cardinals (convex outer corners) ───────────
+    // Map: grass-opposite-corner → frame
+    //   N+E → grass at BL → cornerTR  (R2C0)
+    //   N+W → grass at BR → cornerTL  (R2C2)
+    //   S+E → grass at TL → cornerBR  (R0C0)
+    //   S+W → grass at TR → cornerBL  (R0C2)
+    if (n && e && !s && !w) return F.cornerTR;
+    if (n && w && !s && !e) return F.cornerTL;
+    if (s && e && !n && !w) return F.cornerBR;
+    if (s && w && !n && !e) return F.cornerBL;
+
+    // ── 3 cardinals (T-junction) ───────────────────────────────────
+    // Missing N → grass is to the north: show bottom edge (straightHT)
+    if (!n && e && s && w) return F.straightHT;
+    // Missing S → grass to the south: show top edge (straightHB)
+    if (!s && n && e && w) return F.straightHB;
+    // Missing E → grass to the east: show left edge (straightVR)
+    if (!e && n && s && w) return F.straightVR;
+    // Missing W → grass to the west: show right edge (straightVL)
+    if (!w && n && s && e) return F.straightVL;
+
+    // ── 4 cardinals (cross intersection) ──────────────────────────
+    return F.center;
+  }
+
   getPathTileFrame(row, col) {
-    const north = this.isPathTile(row - 1, col);
-    const south = this.isPathTile(row + 1, col);
-    const west = this.isPathTile(row, col - 1);
-    const east = this.isPathTile(row, col + 1);
-
-    const mask =
-      (north ? 8 : 0) | (east ? 4 : 0) | (south ? 2 : 0) | (west ? 1 : 0);
-
-    // Horizontal strip (both east and west neighbors present):
-    // render top edge, bottom edge, or interior based on north/south presence.
-    if (east && west) {
-      if (!north && south) return SHEET_TILE_FRAMES.straightHT; // top edge
-      if (north && !south) return SHEET_TILE_FRAMES.straightHB; // bottom edge
-      if (north && south) return SHEET_TILE_FRAMES.center;      // interior (3+ wide)
-      return SHEET_TILE_FRAMES.straightH;                       // single-row horizontal
-    }
-
-    // Vertical strip (both north and south neighbors present):
-    // render left edge, right edge, or interior based on west/east presence.
-    if (north && south) {
-      if (!west && east) return SHEET_TILE_FRAMES.straightVL;   // left edge
-      if (west && !east) return SHEET_TILE_FRAMES.straightVR;   // right edge
-      if (west && east) return SHEET_TILE_FRAMES.center;        // interior (3+ wide)
-      return SHEET_TILE_FRAMES.straightV;                       // single-column vertical
-    }
-
-    switch (mask) {
-      case 0: return SHEET_TILE_FRAMES.straightH;
-      case 1: return SHEET_TILE_FRAMES.edgeW;
-      case 2: return SHEET_TILE_FRAMES.edgeS;
-      case 3: return SHEET_TILE_FRAMES.cornerBL;
-      case 4: return SHEET_TILE_FRAMES.edgeE;
-      case 5: return SHEET_TILE_FRAMES.straightH;
-      case 6: return SHEET_TILE_FRAMES.cornerBR;
-      case 7: return SHEET_TILE_FRAMES.innerBR;
-      case 8: return SHEET_TILE_FRAMES.edgeN;
-      case 9: return SHEET_TILE_FRAMES.cornerTL;
-      case 10: return SHEET_TILE_FRAMES.straightV;
-      case 11: return SHEET_TILE_FRAMES.innerBL;
-      case 12: return SHEET_TILE_FRAMES.cornerTR;
-      case 13: return SHEET_TILE_FRAMES.innerTL;
-      case 14: return SHEET_TILE_FRAMES.innerTR;
-      case 15: return SHEET_TILE_FRAMES.deco1;
-      default: return SHEET_TILE_FRAMES.straightH;
-    }
+    return this._get8DirFrame(row, col, (r, c) => this.isPathTile(r, c));
   }
 
   getWaterTileFrame(row, col) {
-    const north = this.isWaterTile(row - 1, col);
-    const south = this.isWaterTile(row + 1, col);
-    const west = this.isWaterTile(row, col - 1);
-    const east = this.isWaterTile(row, col + 1);
-
-    const mask =
-      (north ? 8 : 0) | (east ? 4 : 0) | (south ? 2 : 0) | (west ? 1 : 0);
-
-    // Horizontal strip: render top edge, bottom edge, or interior.
-    if (east && west) {
-      if (!north && south) return SHEET_TILE_FRAMES.straightHT;
-      if (north && !south) return SHEET_TILE_FRAMES.straightHB;
-      if (north && south) return SHEET_TILE_FRAMES.center;
-      return SHEET_TILE_FRAMES.straightH;
-    }
-
-    // Vertical strip: render left edge, right edge, or interior.
-    if (north && south) {
-      if (!west && east) return SHEET_TILE_FRAMES.straightVL;
-      if (west && !east) return SHEET_TILE_FRAMES.straightVR;
-      if (west && east) return SHEET_TILE_FRAMES.center;
-      return SHEET_TILE_FRAMES.straightV;
-    }
-
-    switch (mask) {
-      case 0: return SHEET_TILE_FRAMES.straightH;
-      case 1: return SHEET_TILE_FRAMES.edgeW;
-      case 2: return SHEET_TILE_FRAMES.edgeS;
-      case 3: return SHEET_TILE_FRAMES.cornerBL;
-      case 4: return SHEET_TILE_FRAMES.edgeE;
-      case 5: return SHEET_TILE_FRAMES.straightH;
-      case 6: return SHEET_TILE_FRAMES.cornerBR;
-      case 7: return SHEET_TILE_FRAMES.innerBR;
-      case 8: return SHEET_TILE_FRAMES.edgeN;
-      case 9: return SHEET_TILE_FRAMES.cornerTL;
-      case 10: return SHEET_TILE_FRAMES.straightV;
-      case 11: return SHEET_TILE_FRAMES.innerBL;
-      case 12: return SHEET_TILE_FRAMES.cornerTR;
-      case 13: return SHEET_TILE_FRAMES.innerTL;
-      case 14: return SHEET_TILE_FRAMES.innerTR;
-      case 15: return SHEET_TILE_FRAMES.deco2;
-      default: return SHEET_TILE_FRAMES.straightH;
-    }
+    return this._get8DirFrame(row, col, (r, c) => this.isWaterTile(r, c));
   }
 
   getCliffTileFrame(row, col) {
