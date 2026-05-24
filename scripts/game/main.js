@@ -71,6 +71,10 @@ class GameEngine {
     this.totalAssets = 0;
     this.isAssetsReady = false;
 
+    // HUD heart image
+    this.hearthImage = new Image();
+    this.hearthImage.src = "./assets/sprites/Cute/Hearth/hearth.png";
+
     this.init();
   }
 
@@ -897,28 +901,24 @@ class GameEngine {
   drawHUD() {
     const x = 16;
     const y = 16;
+    const heartSize = 20;
 
     this.ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-    this.ctx.fillRect(x - 4, y - 4, 112, 28);
+    this.ctx.fillRect(x - 4, y - 4, this.player.maxHealth * (heartSize + 6) + 8, heartSize + 8);
 
-    // Draw Heart icons on screen
+    if (!this.hearthImage.complete) return;
+
     for (let i = 0; i < this.player.maxHealth; i++) {
       const isFull = i < this.player.health;
-      this.ctx.fillStyle = isFull ? "#ff2a2a" : "#555555";
-
-      // Draw a neat 8-bit style heart
-      const hx = x + i * 36;
+      const hx = x + i * (heartSize + 6);
       const hy = y;
 
       if (isFull) {
-        // Draw heart shape
-        this.ctx.fillRect(hx + 8, hy + 4, 8, 16);
-        this.ctx.fillRect(hx + 4, hy + 8, 16, 8);
-        this.ctx.fillRect(hx, hy + 6, 8, 6);
-        this.ctx.fillRect(hx + 16, hy + 6, 8, 6);
+        this.ctx.drawImage(this.hearthImage, hx, hy, heartSize, heartSize);
       } else {
-        // Empty heart box
-        this.ctx.fillRect(hx + 4, hy + 4, 16, 16);
+        this.ctx.globalAlpha = 0.3;
+        this.ctx.drawImage(this.hearthImage, hx, hy, heartSize, heartSize);
+        this.ctx.globalAlpha = 1.0;
       }
     }
   }

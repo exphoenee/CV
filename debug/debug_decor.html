@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Decor & Obstacle Sprite Debug</title>
+<style>
+body { background:#222; color:#fff; font-family:monospace; padding:20px; }
+h1 { color:#ffa; }
+.section { margin:24px 0; }
+.section h2 { color:#8cf; border-bottom:1px solid #444; padding-bottom:4px; }
+.sheet-grid { display:inline-block; background:#333; padding:4px; border-radius:4px; margin:8px 0; }
+.sheet-row { display:flex; }
+.cell { width:64px; height:64px; border:1px solid #555; position:relative; margin:1px; background:#222; }
+.cell canvas { display:block; width:64px; height:64px; image-rendering:pixelated; }
+.cell .coord { position:absolute; top:0; left:0; font-size:9px; background:rgba(0,0,0,0.7); padding:0 3px; color:#aaa; }
+.cell .label { position:absolute; bottom:0; left:0; font-size:9px; background:rgba(0,0,0,0.7); padding:0 3px; color:#afa; white-space:nowrap; }
+.entity-card { display:inline-flex; flex-direction:column; background:#2a2a2a; border:1px solid #444; border-radius:6px; padding:10px; margin:6px; text-align:center; vertical-align:top; width:130px; }
+.entity-card h3 { margin:0 0 2px; font-size:13px; color:#8cf; }
+.entity-card .meta { font-size:11px; color:#aaa; margin:2px 0; line-height:1.4; }
+.entity-card canvas { image-rendering:pixelated; border:1px solid #555; margin:4px auto; display:block; }
+.highlight { outline:2px solid #ff0; position:relative; }
+.color-dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:4px; vertical-align:middle; }
+.legend { display:flex; gap:16px; flex-wrap:wrap; margin:8px 0; font-size:12px; }
+.legend-item { display:flex; align-items:center; gap:4px; }
+.entity-grid { display:flex; flex-wrap:wrap; gap:4px; }
+.entity-group { margin:12px 0; }
+.entity-group h3 { color:#fca; font-size:14px; margin:8px 0 4px; }
+table { border-collapse:collapse; font-size:12px; margin:8px 0; }
+td, th { border:1px solid #444; padding:4px 8px; text-align:left; }
+th { background:#333; color:#8cf; }
+</style></head>
+<body>
+<h1>Decor & Obstacle Sprite Debug Viewer</h1>
+
+<div class="section">
+<h2>Spritesheet: Outdoor_Decor_Free.png (112x192, 7x12 tiles @16x16)</h2>
+<div id="decor-sheet"></div>
+</div>
+
+<div class="section" id="decor-entities">
+<h2>Decor Entities</h2>
+<div id="decor-list" class="entity-grid"></div>
+</div>
+
+<div class="section" id="obstacle-entities">
+<h2>Obstacle Entities</h2>
+<div id="obstacle-list" class="entity-grid"></div>
+</div>
+
+<script>
+const TILE = 16;
+const UPSCALE = 4; // 16 -> 64px display
+
+const DECOR_SHEET = '../assets/sprites/Cute/Outdoor decoration/Outdoor_Decor_Free.png';
+
+// Tile labels per (col, row)
+const tileLabels = {
+  '0,0':'Leaf 0','1,0':'Leaf 1','2,0':'Leaf 2','3,0':'Sign Carrot','4,0':'Basket Carrot','5,0':'Sign Potato','6,0':'Basket Potato',
+  '0,1':'Plant 0','1,1':'Plant 1','2,1':'Plant 2','3,1':'Plant 3','4,1':'Plant 4','5,1':'Plant 5','6,1':'Plant 6',
+  '0,2':'Stump','1,2':'DecorStone 0','2,2':'DecorStone 1','3,2':'Plant 7','4,2':'Plant 8','5,2':'Plant 9','6,2':'Plant 10',
+  '0,3':'Boulder 0','1,3':'Boulder 1','2,3':'Boulder 2','3,3':'Boulder 3','4,3':'Carrot','5,3':'','6,3':'Hay',
+  '0,4':'Ore','1,4':'Stone Ore','2,4':'Brick Ore','3,4':'','4,4':'','5,4':'','6,4':'',
+  '0,5':'GoldBoulder 0','1,5':'GoldBoulder 1','2,5':'GoldBoulder 2','3,5':'GoldBoulder 3','4,5':'','5,5':'','6,5':'',
+  '0,6':'GoldOre 0','1,6':'GoldOre 1','2,6':'GoldOre 2','3,6':'','4,6':'','5,6':'','6,6':'',
+  '0,7':'Log (16x32)','1,7':'','2,7':'Mushroom','3,7':'','4,7':'','5,7':'','6,7':'',
+};
+
+// Entity definitions: [name, col, row, w, h, solid, collisionBox, renderW, renderH]
+const decorEntities = [
+  { n:'Basket Carrot', c:4, r:0, sw:16, sh:16, s:1, cb:'(4,12,24,18)', rw:32, rh:32 },
+  { n:'Basket Potato', c:6, r:0, sw:16, sh:16, s:1, cb:'(4,12,24,18)', rw:32, rh:32 },
+  { n:'Boulder 0', c:0, r:3, sw:16, sh:16, s:1, cb:'(4,12,24,18)', rw:32, rh:32 },
+  { n:'Boulder 1', c:1, r:3, sw:16, sh:16, s:1, cb:'(4,12,24,18)', rw:32, rh:32 },
+  { n:'Boulder 2', c:2, r:3, sw:16, sh:16, s:1, cb:'(4,12,24,18)', rw:32, rh:32 },
+  { n:'Boulder 3', c:3, r:3, sw:16, sh:16, s:1, cb:'(4,12,24,18)', rw:32, rh:32 },
+  { n:'Carrot (pickable)', c:4, r:3, sw:16, sh:16, s:0, cb:'(8,8,16,16)', rw:32, rh:32 },
+  { n:'DecorStone 0', c:1, r:2, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
+  { n:'DecorStone 1', c:2, r:2, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
+  { n:'Flower (16 var.)', c:0, r:8, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
+  { n:'GoldBoulder 0', c:0, r:5, sw:16, sh:16, s:1, cb:'(4,12,24,18)', rw:32, rh:32 },
+  { n:'GoldBoulder 1', c:1, r:5, sw:16, sh:16, s:1, cb:'(4,12,24,18)', rw:32, rh:32 },
+  { n:'GoldBoulder 2', c:2, r:5, sw:16, sh:16, s:1, cb:'(4,12,24,18)', rw:32, rh:32 },
+  { n:'GoldBoulder 3', c:3, r:5, sw:16, sh:16, s:1, cb:'(4,12,24,18)', rw:32, rh:32 },
+  { n:'GoldOre 0', c:0, r:6, sw:16, sh:16, s:0, cb:'(8,8,16,16)', rw:32, rh:32 },
+  { n:'GoldOre 1', c:1, r:6, sw:16, sh:16, s:0, cb:'(8,8,16,16)', rw:32, rh:32 },
+  { n:'GoldOre 2', c:2, r:6, sw:16, sh:16, s:0, cb:'(8,8,16,16)', rw:32, rh:32 },
+  { n:'Hay (pickable)', c:6, r:3, sw:16, sh:16, s:0, cb:'(6,10,20,18)', rw:32, rh:32 },
+  { n:'Leaf 0', c:0, r:0, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
+  { n:'Leaf 1', c:1, r:0, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
+  { n:'Leaf 2', c:2, r:0, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
+  { n:'Log', c:0, r:7, sw:16, sh:32, s:1, cb:'(4,40,24,20)', rw:32, rh:64 },
+  { n:'Mushroom', c:2, r:7, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
+  { n:'Ore (pickable)', c:0, r:4, sw:16, sh:16, s:0, cb:'(8,8,16,16)', rw:32, rh:32 },
+  { n:'Stone Ore (pickable)', c:1, r:4, sw:16, sh:16, s:0, cb:'(8,8,16,16)', rw:32, rh:32 },
+  { n:'Brick Ore (pickable)', c:2, r:4, sw:16, sh:16, s:0, cb:'(8,8,16,16)', rw:32, rh:32 },
+  { n:'Plant 0-6', c:0, r:1, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
+  { n:'Plant 7-10', c:3, r:2, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
+  { n:'Sign Carrot', c:3, r:0, sw:16, sh:16, s:1, cb:'(6,14,20,16)', rw:32, rh:32 },
+  { n:'Sign Potato', c:5, r:0, sw:16, sh:16, s:1, cb:'(6,14,20,16)', rw:32, rh:32 },
+  { n:'Stump', c:0, r:2, sw:16, sh:16, s:1, cb:'(6,14,20,16)', rw:32, rh:32 },
+];
+
+const obstacles = [
+  { n:'Chest', src:'../assets/sprites/Cute/Outdoor decoration/Chest.png', imgW:16, imgH:16, s:1, cb:'(0,8,32,24)', rw:32, rh:32, note:'Disappears on heal' },
+  { n:'Tree', src:'../assets/sprites/Cute/Outdoor decoration/Oak_Tree.png', imgW:64, imgH:80, s:1, cb:'(20,62,24,16)', rw:64, rh:80, note:'' },
+  { n:'SmallTree (×3)', src:'../assets/sprites/Cute/Outdoor decoration/Oak_Tree_Small.png', imgW:96, imgH:48, s:1, cb:'(10,36,12,10)', rw:32, rh:48, note:'3 variants 32x48' },
+  { n:'House', src:'../assets/sprites/Cute/Outdoor decoration/House_1_Wood_Base_Blue.png', imgW:96, imgH:128, s:1, cb:'(6,80,84,48)', rw:96, rh:128, note:'Door: (36,110,24,20)' },
+];
+
+function drawTile(ctx, img, sx, sy, sw, sh, dx, dy, dw, dh) {
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+}
+
+function buildSheet(img) {
+  const out = document.getElementById('decor-sheet');
+  const grid = document.createElement('div');
+  grid.className = 'sheet-grid';
+
+  for (let r = 0; r < 12; r++) {
+    const row = document.createElement('div');
+    row.className = 'sheet-row';
+    for (let c = 0; c < 7; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      const ca = document.createElement('canvas');
+      ca.width = TILE;
+      ca.height = TILE;
+      const ctx = ca.getContext('2d');
+      drawTile(ctx, img, c * TILE, r * TILE, TILE, TILE, 0, 0, TILE, TILE);
+      cell.appendChild(ca);
+      const coord = document.createElement('div');
+      coord.className = 'coord';
+      coord.textContent = `${c},${r}`;
+      cell.appendChild(coord);
+      const label = document.createElement('div');
+      label.className = 'label';
+      label.textContent = tileLabels[`${c},${r}`] || '';
+      cell.appendChild(label);
+      row.appendChild(cell);
+    }
+    grid.appendChild(row);
+  }
+  out.appendChild(grid);
+
+  // Legend
+  const legend = document.createElement('div');
+  legend.className = 'legend';
+  legend.innerHTML = `
+    <div class="legend-item"><span class="color-dot" style="background:#afa"></span> Solid entity</div>
+    <div class="legend-item"><span class="color-dot" style="background:#88f"></span> Non-solid entity</div>
+    <div class="legend-item"><span class="color-dot" style="background:#ff0"></span> Pickable</div>
+  `;
+  out.appendChild(legend);
+
+  // Entity cards from decor sheet
+  const list = document.getElementById('decor-list');
+  for (const e of decorEntities) {
+    const card = document.createElement('div');
+    card.className = 'entity-card';
+    const ca = document.createElement('canvas');
+    ca.width = e.rw;
+    ca.height = e.rh;
+    const ctx = ca.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    drawTile(ctx, img, e.c * TILE, e.r * TILE, e.sw, e.sh, 0, 0, e.rw, e.rh);
+    card.appendChild(ca);
+    card.innerHTML += `<h3>${e.n}</h3><div class="meta">${e.rw}x${e.rh}${e.s ? ' <span style="color:#afa">■ Solid</span>' : ' <span style="color:#88f">□ Pass</span>'}</div><div class="meta">${e.sw}x${e.sh} → ${e.rw}x${e.rh}</div><div class="meta">col:${e.c} row:${e.r}</div>`;
+    if (e.cb) card.innerHTML += `<div class="meta">colBox: ${e.cb}</div>`;
+    list.appendChild(card);
+  }
+}
+
+function buildObstacles() {
+  const list = document.getElementById('obstacle-list');
+  let loaded = 0;
+  for (const e of obstacles) {
+    const img = new Image();
+    img.src = e.src + '?' + Date.now();
+    img.onload = () => {
+      const card = document.createElement('div');
+      card.className = 'entity-card';
+      card.style.width = '150px';
+      const ca = document.createElement('canvas');
+      ca.width = Math.min(e.imgW, 96);
+      ca.height = Math.min(e.imgH, 128);
+      const ctx = ca.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(img, 0, 0, ca.width, ca.height);
+      card.appendChild(ca);
+      card.innerHTML += `<h3>${e.n}</h3><div class="meta">${e.imgW}x${e.imgH} → ${e.rw}x${e.rh}${e.s ? ' <span style="color:#afa">■ Solid</span>' : ''}</div>`;
+      card.innerHTML += `<div class="meta">colBox: ${e.cb}</div>`;
+      if (e.note) card.innerHTML += `<div class="meta" style="color:#fc0">${e.note}</div>`;
+      list.appendChild(card);
+      loaded++;
+    };
+  }
+}
+
+async function load() {
+  const img = new Image();
+  img.src = DECOR_SHEET + '?' + Date.now();
+  await new Promise(r => { img.onload = r; });
+  buildSheet(img);
+  buildObstacles();
+}
+load();
+</script>
+</body></html>

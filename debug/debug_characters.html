@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Character Sprite Debug</title>
+<style>
+body { background:#222; color:#fff; font-family:monospace; padding:20px; }
+h1 { color:#ffa; }
+.entity { background:#2a2a2a; border:1px solid #444; border-radius:8px; padding:16px; margin:20px 0; }
+.entity h2 { margin:0 0 8px; color:#8cf; }
+.entity .meta { color:#aaa; font-size:13px; margin-bottom:12px; }
+.sheet-row { display:flex; align-items:center; margin:6px 0; gap:10px; }
+.sheet-row .row-label { min-width:130px; font-size:12px; color:#ccc; }
+.frame-row { display:flex; gap:4px; }
+.frame-cell { border:1px solid #555; background:#333; text-align:center; padding:2px; position:relative; }
+.frame-cell canvas { display:block; image-rendering:pixelated; }
+.frame-cell .frame-num { position:absolute; bottom:0; left:0; font-size:9px; background:rgba(0,0,0,0.7); padding:0 3px; color:#aaa; }
+.anime-player { display:flex; align-items:center; gap:12px; margin:10px 0; padding:8px; background:#1a1a1a; border-radius:4px; }
+.anime-player canvas { image-rendering:pixelated; border:1px solid #666; }
+.anime-player select, .anime-player button { background:#444; color:#fff; border:1px solid #666; padding:4px 8px; font-family:monospace; cursor:pointer; }
+.anime-player select:hover, .anime-player button:hover { background:#555; }
+.spritesheet-preview { margin:10px 0; }
+.spritesheet-preview canvas { image-rendering:pixelated; border:1px solid #555; }
+.npc-grid { display:flex; flex-wrap:wrap; gap:16px; }
+.npc-card { background:#2a2a2a; border:1px solid #444; border-radius:8px; padding:12px; text-align:center; }
+.npc-card h3 { margin:0 0 4px; color:#8cf; }
+.npc-card .meta { color:#aaa; font-size:12px; }
+</style></head>
+<body>
+<h1>Character Sprite Debug Viewer</h1>
+<div id="output"></div>
+<script>
+const TILE = 32;
+const UPSCALE = 2;
+
+function spriteSheet(id, img, name, rows, cols, frameCounts, rowLabels, renderW, renderH) {
+  const div = document.createElement('div');
+  div.className = 'entity';
+  div.innerHTML = `<h2>${name}</h2><div class="meta">${img.naturalWidth}x${img.naturalHeight} | ${cols}\xd7${rows} tiles (${TILE}x${TILE}px each) | Render: ${renderW}x${renderH}px</div>`;
+
+  // Full spritesheet preview
+  const sheetDiv = document.createElement('div');
+  sheetDiv.className = 'spritesheet-preview';
+  const sCanvas = document.createElement('canvas');
+  const scale = 2;
+  sCanvas.width = img.naturalWidth * scale;
+  sCanvas.height = img.naturalHeight * scale;
+  const sCtx = sCanvas.getContext('2d');
+  sCtx.imageSmoothingEnabled = false;
+  sCtx.drawImage(img, 0, 0, sCanvas.width, sCanvas.height);
+  sCtx.strokeStyle = 'rgba(255,255,0,0.3)';
+  sCtx.lineWidth = 1;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      sCtx.strokeRect(c * TILE * scale, r * TILE * scale, TILE * scale, TILE * scale);
+    }
+  }
+  // Row highlight
+  for (let r = 0; r < rows; r++) {
+    sCtx.strokeStyle = 'rgba(0,200,255,0.5)';
+    sCtx.strokeRect(0, r * TILE * scale, cols * TILE * scale - 1, TILE * scale);
+  }
+  sheetDiv.appendChild(sCanvas);
+  div.appendChild(sheetDiv);
+
+  // Row-by-row frame display
+  for (let r = 0; r < rows; r++) {
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'sheet-row';
+    
+    const label = document.createElement('div');
+    label.className = 'row-label';
+    const fc = frameCounts[r] || cols;
+    label.textContent = `Row ${r}: ${rowLabels[r] || '?'} (${fc} frames)`;
+    rowDiv.appendChild(label);
+
+    const frameRow = document.createElement('div');
+    frameRow.className = 'frame-row';
+    for (let c = 0; c < fc; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'frame-cell';
+      const ca = document.createElement('canvas');
+      ca.width = TILE;
+      ca.height = TILE;
+      const ctx = ca.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(img, c * TILE, r * TILE, TILE, TILE, 0, 0, TILE, TILE);
+      cell.appendChild(ca);
+      const num = document.createElement('div');
+      num.className = 'frame-num';
+      num.textContent = c;
+      cell.appendChild(num);
+      frameRow.appendChild(cell);
+    }
+    rowDiv.appendChild(frameRow);
+    div.appendChild(rowDiv);
+  }
+
+  // Animation player
+  const playerDiv = document.createElement('div');
+  playerDiv.className = 'anime-player';
+  
+  const aCanvas = document.createElement('canvas');
+  const displayW = renderW * UPSCALE;
+  const displayH = renderH * UPSCALE;
+  aCanvas.width = displayW;
+  aCanvas.height = displayH;
+  const aCtx = aCanvas.getContext('2d');
+  aCtx.imageSmoothingEnabled = false;
+  playerDiv.appendChild(aCanvas);
+
+  const sel = document.createElement('select');
+  for (let r = 0; r < rows; r++) {
+    const opt = document.createElement('option');
+    opt.value = r;
+    opt.textContent = `Row ${r}: ${rowLabels[r] || '?'}`;
+    sel.appendChild(opt);
+  }
+  playerDiv.appendChild(sel);
+
+  const fpsSlider = document.createElement('input');
+  fpsSlider.type = 'range';
+  fpsSlider.min = 1;
+  fpsSlider.max = 30;
+  fpsSlider.value = 8;
+  fpsSlider.style.width = '100px';
+  const fpsLabel = document.createElement('span');
+  fpsLabel.textContent = '8 fps';
+  fpsSlider.addEventListener('input', () => { fpsLabel.textContent = fpsSlider.value + ' fps'; });
+  playerDiv.appendChild(fpsSlider);
+  playerDiv.appendChild(fpsLabel);
+
+  const flipCheck = document.createElement('label');
+  flipCheck.innerHTML = '<input type="checkbox"> Flip X';
+  playerDiv.appendChild(flipCheck);
+
+  const pauseBtn = document.createElement('button');
+  pauseBtn.textContent = 'Stop';
+  playerDiv.appendChild(pauseBtn);
+
+  div.appendChild(playerDiv);
+  document.getElementById('output').appendChild(div);
+
+  // Animation loop for this entity
+  let frame = 0;
+  let running = true;
+  let lastTime = 0;
+  
+  function resetAnim() { lastTime = 0; frame = 0; }
+  sel.addEventListener('change', resetAnim);
+  fpsSlider.addEventListener('input', resetAnim);
+  
+  function animate(time) {
+    if (!running) return;
+    if (lastTime === 0) lastTime = time;
+    const elapsed = time - lastTime;
+    
+    const row = parseInt(sel.value);
+    const fc = frameCounts[row] || cols;
+    const fps = parseInt(fpsSlider.value);
+    const frameDuration = 1000 / fps;
+    
+    if (elapsed >= frameDuration) {
+      frame = (frame + 1) % fc;
+      lastTime = time;
+    }
+    
+    aCtx.clearRect(0, 0, displayW, displayH);
+    const sourceX = frame * TILE;
+    const sourceY = row * TILE;
+    
+    aCtx.save();
+    if (flipCheck.querySelector('input').checked) {
+      aCtx.translate(displayW, 0);
+      aCtx.scale(-1, 1);
+    }
+    aCtx.drawImage(img, sourceX, sourceY, TILE, TILE, 0, 0, displayW, displayH);
+    aCtx.restore();
+    
+    requestAnimationFrame(animate);
+  }
+
+  pauseBtn.addEventListener('click', () => {
+    running = !running;
+    pauseBtn.textContent = running ? 'Stop' : 'Play';
+    if (running) {
+      lastTime = 0;
+      requestAnimationFrame(animate);
+    }
+  });
+
+  // Start animation
+  requestAnimationFrame(animate);
+}
+
+function npcSprite(id, img, name, renderW, renderH, imgSrc) {
+  const card = document.createElement('div');
+  card.className = 'npc-card';
+  card.innerHTML = `
+    <h3>${name}</h3>
+    <div class="meta">${img.naturalWidth}x${img.naturalHeight} | 2\xd72 tiles (32x32) | Render: ${renderW}x${renderH}px</div>
+  `;
+
+  // Idle frames
+  const idleLabel = document.createElement('div');
+  idleLabel.style.cssText = 'font-size:12px;color:#aaa;margin-top:6px;';
+  idleLabel.textContent = 'Row 0: Idle (2 frames)';
+  card.appendChild(idleLabel);
+  const idleRow = document.createElement('div');
+  idleRow.style.cssText = 'display:flex;gap:4px;justify-content:center;margin:4px 0;';
+  for (let c = 0; c < 2; c++) {
+    const ca = document.createElement('canvas');
+    ca.width = TILE;
+    ca.height = TILE;
+    const ctx = ca.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(img, c * TILE, 0, TILE, TILE, 0, 0, TILE, TILE);
+    idleRow.appendChild(ca);
+  }
+  card.appendChild(idleRow);
+
+  // Walk frames
+  const walkLabel = document.createElement('div');
+  walkLabel.style.cssText = 'font-size:12px;color:#aaa;margin-top:6px;';
+  walkLabel.textContent = 'Row 1: Walk (2 frames)';
+  card.appendChild(walkLabel);
+  const walkRow = document.createElement('div');
+  walkRow.style.cssText = 'display:flex;gap:4px;justify-content:center;margin:4px 0;';
+  for (let c = 0; c < 2; c++) {
+    const ca = document.createElement('canvas');
+    ca.width = TILE;
+    ca.height = TILE;
+    const ctx = ca.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(img, c * TILE, TILE, TILE, TILE, 0, 0, TILE, TILE);
+    walkRow.appendChild(ca);
+  }
+  card.appendChild(walkRow);
+
+  // Animated preview
+  const aCanvas = document.createElement('canvas');
+  const upscale = 3;
+  aCanvas.width = TILE * upscale;
+  aCanvas.height = TILE * upscale;
+  const aCtx = aCanvas.getContext('2d');
+  aCtx.imageSmoothingEnabled = false;
+  aCanvas.style.cssText = 'margin-top:8px;border:1px solid #555;';
+  card.appendChild(aCanvas);
+
+  const flipBtn = document.createElement('button');
+  flipBtn.textContent = 'Flip X';
+  flipBtn.style.cssText = 'margin-top:6px;background:#444;color:#fff;border:1px solid #666;padding:2px 10px;font-family:monospace;cursor:pointer;';
+  card.appendChild(flipBtn);
+
+  let flipped = false;
+  flipBtn.addEventListener('click', () => { flipped = !flipped; flipBtn.style.background = flipped ? '#664' : '#444'; });
+
+  // Simple auto animation
+  let f = 0, row = 0;
+  setInterval(() => {
+    aCtx.clearRect(0, 0, aCanvas.width, aCanvas.height);
+    aCtx.save();
+    if (flipped) {
+      aCtx.translate(aCanvas.width, 0);
+      aCtx.scale(-1, 1);
+    }
+    aCtx.drawImage(img, f * TILE, row * TILE, TILE, TILE, 0, 0, aCanvas.width, aCanvas.height);
+    aCtx.restore();
+    f = (f + 1) % 2;
+    if (f === 0) row = (row + 1) % 2;
+  }, 400);
+
+  return card;
+}
+
+async function load() {
+  const out = document.getElementById('output');
+
+  // === PLAYER ===
+  const playerImg = new Image();
+  playerImg.src = '../assets/sprites/Cute/Player/Player.png?' + Date.now();
+  await new Promise(r => { playerImg.onload = r; });
+  spriteSheet('player', playerImg, 'Player', 10, 6,
+    [6,6,6,6,6,6,4,4,4,4],
+    ['Idle Down','Idle Side','Idle Up','Walk Down','Walk Side','Walk Up','Attack Down','Attack Side','Attack Up','Death'],
+    48, 48
+  );
+
+  // === SKELETON ===
+  const skelImg = new Image();
+  skelImg.src = '../assets/sprites/Cute/Enemies/Skeleton.png?' + Date.now();
+  await new Promise(r => { skelImg.onload = r; });
+  spriteSheet('skeleton', skelImg, 'Skeleton', 10, 6,
+    [6,6,6,6,6,6,4,4,4,4],
+    ['Idle Down','Idle Side','Idle Up','Walk Down','Walk Side','Walk Up','Death','Attack Down','Attack Side','Attack Up'],
+    48, 48
+  );
+
+  // === NPCS ===
+  const npcs = [
+    { name:'Chicken', file:'Animals/Chicken/Chicken.png', renderW:32, renderH:32 },
+    { name:'Cow', file:'Animals/Cow/Cow.png', renderW:48, renderH:48 },
+    { name:'Pig', file:'Animals/Pig/Pig.png', renderW:36, renderH:36 },
+    { name:'Sheep', file:'Animals/Sheep/Sheep.png', renderW:38, renderH:38 },
+  ];
+
+  const npcSection = document.createElement('div');
+  npcSection.innerHTML = '<h2 style="color:#ffa;margin-top:30px;">NPC Animals</h2><div class="npc-grid" id="npc-grid"></div>';
+  out.appendChild(npcSection);
+  const npcGrid = document.getElementById('npc-grid');
+
+  for (const npc of npcs) {
+    const img = new Image();
+    img.src = `../assets/sprites/Cute/${npc.file}?` + Date.now();
+    await new Promise(r => { img.onload = r; });
+    npcGrid.appendChild(npcSprite(npc.name, img, npc.name, npc.renderW, npc.renderH));
+  }
+}
+load();
+</script>
+</body></html>

@@ -51,27 +51,34 @@ export const SHEET_TILE_FRAMES = {
   // Backwards-compatible alias
   straightV: {x: 0, y: 16},
 
-  // Convex corners
-  cornerBR: {x: 0, y: 0},
-  cornerBL: {x: 16, y: 0},
-  cornerTR: {x: 0, y: 32},
-  cornerTL: {x: 32, y: 32},
+  // Convex outer corners
+  // The sheet arranges convex corners in a 3x3 block:
+  // Row 0: [cornerBR] [straightHT / bottom-edge] [cornerBL]
+  // Row 1: [straightVL / right-edge] [center] [straightVR / left-edge]
+  // Row 2: [cornerTR] [straightHB / top-edge] [cornerTL]
+  cornerBR: {x: 0, y: 0},      // R0C0 — path goes S+E (grass at TL)
+  cornerBL: {x: 32, y: 0},     // R0C2 — path goes S+W (grass at TR) [WAS WRONG: {16,0}=straightHT]
+  cornerTR: {x: 0, y: 32},     // R2C0 — path goes N+E (grass at BL)
+  cornerTL: {x: 32, y: 32},    // R2C2 — path goes N+W (grass at BR)
 
   // Centers (middle of 3x3 block)
-  // The sheet arranges tiles in 3x3 blocks: [corner, edge, corner] / [edge, center, edge] / [corner, edge, corner]
-  center: {x: 16, y: 16},
+  center: {x: 16, y: 16},     // R1C1 — all 4 neighbors are same type
 
-  // Concave / inner corners
-  innerBR: {x: 0, y: 48},
-  innerBL: {x: 16, y: 48},
-  innerTR: {x: 0, y: 64},
-  innerTL: {x: 16, y: 64},
+  // Concave / inner corners (rows 3-4 of the sheet)
+  innerBR: {x: 0, y: 48},     // R3C0 — grass at bottom-right (path everywhere else)
+  innerBL: {x: 16, y: 48},    // R3C1 — grass at bottom-left
+  innerTR: {x: 0, y: 64},     // R4C0 — grass at top-right
+  innerTL: {x: 16, y: 64},    // R4C1 — grass at top-left
 
-  // Edges (single-direction ends)
-  edgeN: {x: 0, y: 16},
-  edgeS: {x: 32, y: 16},
-  edgeE: {x: 32, y: 0},
-  edgeW: {x: 16, y: 32},
+  // Edges (single-direction dead-ends)
+  // edgeN  → path goes NORTH  → shows path at TOP, grass at BOTTOM  = R2C1 = straightHB
+  // edgeS  → path goes SOUTH  → shows path at BOTTOM, grass at TOP  = R0C1 = straightHT
+  // edgeE  → path goes EAST   → shows path at RIGHT, grass at LEFT  = R1C0 = straightVL
+  // edgeW  → path goes WEST   → shows path at LEFT,  grass at RIGHT = R1C2 = straightVR
+  edgeN: {x: 16, y: 32},      // R2C1 = straightHB [WAS WRONG: {0,16}=straightVL/right-edge]
+  edgeS: {x: 16, y: 0},       // R0C1 = straightHT [WAS WRONG: {32,16}=straightVR/left-edge]
+  edgeE: {x: 0, y: 16},       // R1C0 = straightVL [WAS WRONG: {32,0}=cornerBL]
+  edgeW: {x: 32, y: 16},      // R1C2 = straightVR [WAS WRONG: {16,32}=straightHB/top-edge]
 
   // Small decorative overlays (bottom row)
   deco1: {x: 0, y: 80},
