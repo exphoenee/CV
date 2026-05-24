@@ -38,6 +38,7 @@ class GameEngine {
     // Game states
     this.isFrozen = true; // Start frozen until user clicks Start Game
     this.gameOverActive = false;
+    this.gameStarted = false;
     this.debugMode = false;
     this.lastTime = 0;
 
@@ -452,6 +453,15 @@ class GameEngine {
     let currentValue = options[0].getAttribute("data-value");
     let currentLabel = options[0].textContent;
 
+    // Persist music state
+    const saveState = () => {
+      localStorage.setItem("cv-music-state", isPlaying ? "playing" : "paused");
+      if (!isPlaying) localStorage.setItem("cv-music-time", audio.currentTime);
+    };
+    const saveTime = () => {
+      localStorage.setItem("cv-music-time", audio.currentTime);
+    };
+
     // Restore saved volume preference
     const savedVolume = localStorage.getItem("cv-music-volume");
     if (savedVolume !== null) {
@@ -462,9 +472,13 @@ class GameEngine {
       if (volumeSlider) volumeSlider.value = 0.5;
     }
 
+    // Volume target — updated live when the slider changes
+    let targetVolume = parseFloat(localStorage.getItem("cv-music-volume")) || 0.5;
+
     if (volumeSlider) {
       volumeSlider.addEventListener("input", (e) => {
         const vol = parseFloat(e.target.value);
+        targetVolume = vol;
         audio.volume = vol;
         localStorage.setItem("cv-music-volume", vol);
       });
@@ -499,18 +513,62 @@ class GameEngine {
       localStorage.setItem("cv-music-genre", currentValue);
     };
 
-    const play = () => {
-      audio
-        .play()
-        .then(() => {
-          isPlaying = true;
-          updatePlayPause();
-        })
-        .catch(() => {});
-    };
-
     const updatePlayPause = () => {
       playPauseBtn.textContent = isPlaying ? "⏸" : "▶";
+    };
+
+    // Fade helpers
+    let fadeInterval = null;
+    const fadeDuration = 0.5; // seconds
+
+    const stopFade = () => { if (fadeInterval) { clearInterval(fadeInterval); fadeInterval = null; } };
+
+    const fadeTo = (target, onDone) => {
+      stopFade();
+      const startVol = audio.volume;
+      const startTime = performance.now();
+      fadeInterval = setInterval(() => {
+        const elapsed = (performance.now() - startTime) / 1000;
+        const t = Math.min(elapsed / fadeDuration, 1);
+        audio.volume = startVol + (target - startVol) * t;
+        if (t >= 1) {
+          stopFade();
+          if (onDone) onDone();
+        }
+      }, 16);
+    };
+
+    const fadeIn = () => {
+      audio.volume = 0;
+      audio.play().then(() => {
+        isPlaying = true;
+        updatePlayPause();
+        fadeTo(targetVolume);
+      }).catch(() => {});
+    };
+
+    const fadeOut = (onDone) => {
+      fadeTo(0, () => {
+        audio.pause();
+        isPlaying = false;
+        updatePlayPause();
+        audio.volume = targetVolume;
+        if (onDone) onDone();
+      });
+    };
+
+    const fadeOutThen = (callback) => {
+      if (isPlaying) {
+        fadeTo(0, () => {
+          audio.pause();
+          isPlaying = false;
+          updatePlayPause();
+          audio.volume = targetVolume;
+          if (callback) callback();
+        });
+      } else {
+        if (callback) callback();
+      }
     };
 
     trigger.addEventListener("click", (e) => {
@@ -529,13 +587,15 @@ class GameEngine {
         selectTrackByIndex(i);
         customSelect.classList.remove("open");
 
-        const wasPlaying = isPlaying;
-        audio.pause();
-        isPlaying = false;
-        loadTrack();
-
-        if (wasPlaying) {
-          play();
+        if (isPlaying) {
+          fadeOutThen(() => {
+            stopFade();
+            loadTrack();
+            fadeIn();
+          });
+        } else {
+          stopFade();
+          loadTrack();
         }
         updatePlayPause();
       });
@@ -544,22 +604,21 @@ class GameEngine {
     // Play/Pause toggle
     playPauseBtn.addEventListener("click", () => {
       if (isPlaying) {
-        audio.pause();
-        isPlaying = false;
+        fadeOut(() => saveState());
       } else {
         loadTrack();
-        play();
+        fadeIn();
       }
-      updatePlayPause();
     });
 
-    // Stop: pause and reset playback position to the beginning
+    // Stop: fade out, pause and reset playback position to the beginning
     if (stopBtn) {
       stopBtn.addEventListener("click", () => {
-        audio.pause();
-        audio.currentTime = 0;
-        isPlaying = false;
-        updatePlayPause();
+        fadeOut(() => {
+          audio.currentTime = 0;
+          localStorage.setItem("cv-music-state", "stopped");
+          localStorage.setItem("cv-music-time", 0);
+        });
       });
     }
 
@@ -569,14 +628,16 @@ class GameEngine {
       prevBtn.addEventListener("click", () => {
         if (audio.currentTime > 10) {
           audio.currentTime = 0;
+          saveTime();
           return;
         }
         const prevIndex = (currentIndex - 1 + options.length) % options.length;
         selectTrackByIndex(prevIndex);
-        audio.pause();
-        isPlaying = false;
-        loadTrack();
-        play();
+        fadeOutThen(() => {
+          stopFade();
+          loadTrack();
+          fadeIn();
+        });
         updatePlayPause();
       });
     }
@@ -586,15 +647,19 @@ class GameEngine {
       nextBtn.addEventListener("click", () => {
         const nextIndex = (currentIndex + 1) % options.length;
         selectTrackByIndex(nextIndex);
-        audio.pause();
-        isPlaying = false;
-        loadTrack();
-        play();
+        fadeOutThen(() => {
+          stopFade();
+          loadTrack();
+          fadeIn();
+        });
         updatePlayPause();
       });
     }
 
-    const trackTimeEl = document.getElementById("track-time");
+    // Track seek elements
+    const seekSlider = document.getElementById("track-seek");
+    const trackTimeCurrent = document.getElementById("track-time-current");
+    const trackTimeTotal = document.getElementById("track-time-total");
 
     const formatTime = (seconds) => {
       if (isNaN(seconds) || !isFinite(seconds)) return "00:00";
@@ -603,17 +668,45 @@ class GameEngine {
       return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
     };
 
+    let userScrubbing = false;
+
     const updateTrackTime = () => {
-      if (!trackTimeEl) return;
-      const current = formatTime(audio.currentTime);
-      const total = formatTime(audio.duration);
-      trackTimeEl.textContent = `${current} / ${total}`;
+      if (userScrubbing) return;
+      if (trackTimeCurrent && trackTimeTotal) {
+        trackTimeCurrent.textContent = formatTime(audio.currentTime);
+        trackTimeTotal.textContent = formatTime(audio.duration);
+      }
+      if (seekSlider && audio.duration) {
+        seekSlider.max = audio.duration;
+        seekSlider.value = audio.currentTime;
+      }
     };
 
-    audio.addEventListener("loadedmetadata", updateTrackTime);
+    if (seekSlider) {
+      seekSlider.addEventListener("input", () => {
+        userScrubbing = true;
+        audio.currentTime = parseFloat(seekSlider.value);
+        if (trackTimeCurrent) {
+          trackTimeCurrent.textContent = formatTime(audio.currentTime);
+        }
+      });
+      seekSlider.addEventListener("change", () => {
+        userScrubbing = false;
+        audio.currentTime = parseFloat(seekSlider.value);
+        saveTime();
+      });
+    }
+
+    audio.addEventListener("loadedmetadata", () => {
+      if (seekSlider && audio.duration) {
+        seekSlider.max = audio.duration;
+      }
+      updateTrackTime();
+    });
     audio.addEventListener("timeupdate", updateTrackTime);
     audio.addEventListener("ended", () => {
       isPlaying = false;
+      localStorage.setItem("cv-music-state", "stopped");
       updatePlayPause();
     });
 
@@ -622,26 +715,51 @@ class GameEngine {
       updateTrackTime();
     }
 
-    // Try autoplaying default/saved music, with fallback for browser interaction policy
+    // Restore saved time and state
+    const savedTime = parseFloat(localStorage.getItem("cv-music-time"));
+    const savedState = localStorage.getItem("cv-music-state");
+
+    // Load track, restore time and playing state
     loadTrack();
-    audio
-      .play()
-      .then(() => {
-        isPlaying = true;
-        updatePlayPause();
-      })
-      .catch(() => {
-        // Autoplay was blocked: wait for first user interaction (click/keydown) to play
-        const startOnInteraction = () => {
-          loadTrack();
-          play();
-          window.removeEventListener("click", startOnInteraction);
-          window.removeEventListener("keydown", startOnInteraction);
-        };
-        window.addEventListener("click", startOnInteraction);
-        window.addEventListener("keydown", startOnInteraction);
-        updatePlayPause();
-      });
+    if (savedTime > 0 && savedState !== "stopped") {
+      audio.currentTime = savedTime;
+    }
+    if (savedState === "playing") {
+      audio.volume = 0;
+      audio
+        .play()
+        .then(() => {
+          isPlaying = true;
+          updatePlayPause();
+          fadeTo(targetVolume);
+        })
+        .catch(() => {
+          // Autoplay was blocked: wait for first user interaction
+          const startOnInteraction = () => {
+            audio.currentTime = savedTime > 0 ? savedTime : 0;
+            audio.volume = 0;
+            audio.play().then(() => {
+              isPlaying = true;
+              updatePlayPause();
+              fadeTo(targetVolume);
+            }).catch(() => {});
+            window.removeEventListener("click", startOnInteraction);
+            window.removeEventListener("keydown", startOnInteraction);
+          };
+          window.addEventListener("click", startOnInteraction);
+          window.addEventListener("keydown", startOnInteraction);
+          updatePlayPause();
+        });
+    } else if (savedState === "paused") {
+      isPlaying = false;
+      updatePlayPause();
+    } else {
+      isPlaying = false;
+      updatePlayPause();
+    }
+
+    // Unload event: save state
+    window.addEventListener("beforeunload", saveState);
   }
 
   /**
@@ -662,6 +780,8 @@ class GameEngine {
     startScreen.classList.remove("dialogue-visible");
     startScreen.classList.add("dialogue-hidden");
     this.isFrozen = false;
+    this.gameStarted = true;
+    if (this._onGameStart) this._onGameStart();
   }
 
   /**

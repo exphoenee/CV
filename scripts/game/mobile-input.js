@@ -6,11 +6,36 @@ export function isTouchDevice() {
   );
 }
 
+function checkOrientation(game) {
+  const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+  const overlay = document.getElementById('rotate-overlay');
+
+  if (isPortrait && isTouchDevice() && game.gameStarted) {
+    overlay?.classList.add('mobile-visible');
+    game.isFrozen = true;
+  } else {
+    overlay?.classList.remove('mobile-visible');
+    if (game.gameStarted && !game.gameOverActive) {
+      game.isFrozen = false;
+    }
+  }
+}
+
 export function initMobileInput(game) {
   if (!isTouchDevice()) return;
 
   document.getElementById('mobile-controls')?.classList.add('mobile-visible');
+  document.getElementById('pause-btn')?.classList.add('mobile-visible');
   document.getElementById('info-btn')?.classList.add('mobile-visible');
+
+  // Orientation lock
+  const orientQuery = window.matchMedia('(orientation: portrait)');
+  orientQuery.addEventListener('change', () => checkOrientation(game));
+
+  // Expose a method the game can call when it starts
+  game._onGameStart = () => {
+    checkOrientation(game);
+  };
 
   const zone = document.getElementById('joystick-zone');
   if (!zone) return;
@@ -44,7 +69,7 @@ export function initMobileInput(game) {
   };
 
   joystick.on('move', (evt, data) => {
-    if (!data.angle) return;
+    if (!data || !data.angle) return;
     const dir = angleToDir(data.angle);
     Object.entries(dir).forEach(([key, val]) => { game.keys[key] = val; });
   });
@@ -71,4 +96,7 @@ export function initMobileInput(game) {
   infoBtn?.addEventListener('click', openModal);
   closeBtn?.addEventListener('click', closeModal);
   backdrop?.addEventListener('click', closeModal);
+
+  const pauseBtn = document.getElementById('pause-btn');
+  pauseBtn?.addEventListener('click', () => game.togglePauseMenu());
 }

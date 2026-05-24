@@ -7,7 +7,7 @@ A játék mobil eszközökön is játszhatóvá tétele on-screen touch kontroll
 ## Felhasznált technológiák
 
 - **NippleJS** (CDN) – virtuális joystick
-  `https://cdn.jsdelivr.net/npm/nipplejs@1.0.3`
+  `https://cdn.jsdelivr.net/npm/nipplejs@1.0.3/dist/index.js`
 - Saját eszközdetekció (touch support detection)
 - Meglévő billentyűzet-input rendszer (`this.keys`)
 
