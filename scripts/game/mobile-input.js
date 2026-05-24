@@ -25,6 +25,7 @@ export function initMobileInput(game) {
   if (!isTouchDevice()) return;
 
   document.getElementById('mobile-controls')?.classList.add('mobile-visible');
+  document.getElementById('pause-btn')?.classList.add('mobile-visible');
   document.getElementById('info-btn')?.classList.add('mobile-visible');
 
   // Orientation lock
@@ -95,4 +96,7 @@ export function initMobileInput(game) {
   infoBtn?.addEventListener('click', openModal);
   closeBtn?.addEventListener('click', closeModal);
   backdrop?.addEventListener('click', closeModal);
+
+  const pauseBtn = document.getElementById('pause-btn');
+  pauseBtn?.addEventListener('click', () => game.togglePauseMenu());
 }
