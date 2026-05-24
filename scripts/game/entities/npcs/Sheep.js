@@ -3,14 +3,15 @@ import Npc from '../base/Npc.js';
 export default class Sheep extends Npc {
     constructor({ x, y }) {
         super({
-            x,
-            y,
-            width: 38,
-            height: 38,
-            spriteWidth: 32,
-            spriteHeight: 32,
-            imageSrc: './assets/sprites/Cute/Animals/Sheep/Sheep.png',
-            speed: 18
+          x,
+          y,
+          width: 38,
+          height: 38,
+          spriteWidth: 32,
+          spriteHeight: 32,
+          imageSrc: "./assets/sprites/Cute/Animals/Sheep/Sheep.png",
+          speed: 18,
+          collisionBox: {offsetX: 7, offsetY: 15, width: 22, height: 15},
         });
     }
 

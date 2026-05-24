@@ -3,14 +3,15 @@ import Npc from '../base/Npc.js';
 export default class Cow extends Npc {
     constructor({ x, y }) {
         super({
-            x,
-            y,
-            width: 48, // Cow is a bit larger
-            height: 48,
-            spriteWidth: 32,
-            spriteHeight: 32,
-            imageSrc: './assets/sprites/Cute/Animals/Cow/Cow.png',
-            speed: 15 // Heavy, slow cow movements
+          x,
+          y,
+          width: 48,
+          height: 48,
+          spriteWidth: 32,
+          spriteHeight: 32,
+          imageSrc: "./assets/sprites/Cute/Animals/Cow/Cow.png",
+          speed: 15,
+          collisionBox: {offsetX: 8, offsetY: 20, width: 30, height: 20},
         });
     }
 

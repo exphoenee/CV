@@ -15,9 +15,24 @@ import Cow from "./entities/npcs/Cow.js";
 import Pig from "./entities/npcs/Pig.js";
 import Sheep from "./entities/npcs/Sheep.js";
 import Tree from "./entities/obstacles/Tree.js";
-
+import SmallTree from "./entities/obstacles/SmallTree.js";
 import Chest from "./entities/obstacles/Chest.js";
 import House from "./entities/obstacles/House.js";
+import Flower from "./entities/decor/Flower.js";
+import Mushroom from "./entities/decor/Mushroom.js";
+import Log from "./entities/decor/Log.js";
+import GoldOre from "./entities/decor/GoldOre.js";
+import PickableOre from "./entities/decor/PickableOre.js";
+import Hay from "./entities/decor/Hay.js";
+import Carrot from "./entities/decor/Carrot.js";
+import GoldBoulder from "./entities/decor/GoldBoulder.js";
+import Boulder from "./entities/decor/Boulder.js";
+import DecorStone from "./entities/decor/DecorStone.js";
+import Stump from "./entities/decor/Stump.js";
+import Basket from "./entities/decor/Basket.js";
+import Sign from "./entities/decor/Sign.js";
+import Plant from "./entities/decor/Plant.js";
+import Leaf from "./entities/decor/Leaf.js";
 import {initMobileInput} from "./mobile-input.js";
 
 class GameEngine {
@@ -56,6 +71,7 @@ class GameEngine {
     this.obstacles = []; // House, Tree, Fence, Chest
     this.enemies = []; // Skeletons
     this.npcs = []; // Animals
+    this.decorations = []; // Non-solid decor items
     this.player = null;
     this.gameObjects = []; // All objects for y-sorting
 
@@ -181,6 +197,7 @@ class GameEngine {
 
     // 1. Spawn Player
     this.player = new Player(ENTITY_SPAWNS.player);
+    this.player.debugMode = false;
 
     // 2. Spawn CV Stations (Houses)
     CV_STATIONS.forEach((station) => {
@@ -195,15 +212,19 @@ class GameEngine {
       this.obstacles.push(house);
     });
 
-    // 3. Spawn static obstacles (Trees, Fences, Chests)
+    // 3. Spawn static obstacles and decorations
+    const DECOR_CLASSES = {
+      Tree, SmallTree, Chest, Flower, Mushroom, Log, GoldOre,
+      PickableOre, Hay, Carrot, GoldBoulder, Boulder, DecorStone,
+      Stump, Basket, Sign, Plant, Leaf,
+    };
     ENTITY_SPAWNS.decorations.forEach((decor) => {
-      let obj = null;
-      if (decor.type === "Tree") obj = new Tree({x: decor.x, y: decor.y});
-
-      else if (decor.type === "Chest")
-        obj = new Chest({x: decor.x, y: decor.y});
-
-      if (obj) this.obstacles.push(obj);
+      const Klass = DECOR_CLASSES[decor.type];
+      if (Klass) {
+        const obj = new Klass(decor);
+        if (obj.solid) this.obstacles.push(obj);
+        else this.decorations.push(obj);
+      }
     });
 
     // 4. Spawn NPCs (Chicken, Cow, Pig, Sheep)
@@ -238,6 +259,7 @@ class GameEngine {
     this.gameObjects = [
       this.player,
       ...this.obstacles,
+      ...this.decorations,
       ...this.npcs,
       ...this.enemies,
     ];
@@ -345,6 +367,7 @@ class GameEngine {
       // F3 to toggle debug mode
       if (e.key === "F3") {
         this.debugMode = !this.debugMode;
+        this.player.debugMode = this.debugMode;
       }
     });
 

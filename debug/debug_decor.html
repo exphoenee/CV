@@ -59,7 +59,7 @@ const tileLabels = {
   '0,4':'Ore','1,4':'Stone Ore','2,4':'Brick Ore','3,4':'','4,4':'','5,4':'','6,4':'',
   '0,5':'GoldBoulder 0','1,5':'GoldBoulder 1','2,5':'GoldBoulder 2','3,5':'GoldBoulder 3','4,5':'','5,5':'','6,5':'',
   '0,6':'GoldOre 0','1,6':'GoldOre 1','2,6':'GoldOre 2','3,6':'','4,6':'','5,6':'','6,6':'',
-  '0,7':'Log (16x32)','1,7':'','2,7':'Mushroom','3,7':'','4,7':'','5,7':'','6,7':'',
+  '0,7':'Log','1,7':'Log','2,7':'Mushroom','3,7':'','4,7':'','5,7':'','6,7':'',
 };
 
 // Entity definitions: [name, col, row, w, h, solid, collisionBox, renderW, renderH]
@@ -85,7 +85,7 @@ const decorEntities = [
   { n:'Leaf 0', c:0, r:0, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
   { n:'Leaf 1', c:1, r:0, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
   { n:'Leaf 2', c:2, r:0, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
-  { n:'Log', c:0, r:7, sw:16, sh:32, s:1, cb:'(4,40,24,20)', rw:32, rh:64 },
+  { n:'Log', c:0, r:7, sw:32, sh:16, s:1, cb:'(4,8,56,18)', rw:64, rh:32 },
   { n:'Mushroom', c:2, r:7, sw:16, sh:16, s:0, cb:'(0,0,0,0)', rw:32, rh:32 },
   { n:'Ore (pickable)', c:0, r:4, sw:16, sh:16, s:0, cb:'(8,8,16,16)', rw:32, rh:32 },
   { n:'Stone Ore (pickable)', c:1, r:4, sw:16, sh:16, s:0, cb:'(8,8,16,16)', rw:32, rh:32 },

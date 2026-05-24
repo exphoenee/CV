@@ -3,39 +3,39 @@ import GameObject from '../base/GameObject.js';
 export default class Player extends GameObject {
     constructor({ x, y }) {
         super({
-            x,
-            y,
-            width: 48,
-            height: 48,
-            spriteWidth: 32,
-            spriteHeight: 32,
-            imageSrc: './assets/sprites/Cute/Player/Player.png',
-            solid: true,
-            ySortOffset: 0,
-            collisionBox: {
-                offsetX: 12,
-                offsetY: 28,
-                width: 24,
-                height: 20
-            }
+          x,
+          y,
+          width: 48,
+          height: 48,
+          spriteWidth: 32,
+          spriteHeight: 32,
+          imageSrc: "./assets/sprites/Cute/Player/Player.png",
+          solid: true,
+          ySortOffset: 0,
+          collisionBox: {
+            offsetX: 14,
+            offsetY: 18,
+            width: 18,
+            height: 20,
+          },
         });
 
         this.speed = 120; // Pixels per second
         this.dir = 'down'; // 'down', 'up', 'left', 'right'
         this.isMoving = false;
-        
+
         // Animation variables
         this.animFrame = 0;
         this.animTimer = 0;
         this.animSpeed = 0.15; // Seconds per frame
-        
+
         // Attack variables
         this.isAttacking = false;
         this.attackTimer = 0;
         this.attackDuration = 0.25; // 0.25 seconds attack swing
         this.attackCooldown = 0;
         this.attackRadius = 40; // Attack range
-        
+
         // Combat stats
         this.health = 3;
         this.maxHealth = 3;
@@ -78,10 +78,10 @@ export default class Player extends GameObject {
 
         if (this.isAttacking) {
             this.attackTimer -= dt;
-            
+
             // Map attack frames precisely to attack timer (4 frames)
             this.animFrame = Math.min(3, Math.floor(((this.attackDuration - this.attackTimer) / this.attackDuration) * 4));
-            
+
             if (this.attackTimer <= 0) {
                 this.isAttacking = false;
             }
@@ -91,7 +91,7 @@ export default class Player extends GameObject {
         // 1. Gather movement inputs
         let dx = 0;
         let dy = 0;
-        
+
         const keys = world.keys || {};
         if (keys['w'] || keys['W'] || keys['ArrowUp']) {
             dy = -1;
@@ -100,7 +100,7 @@ export default class Player extends GameObject {
             dy = 1;
             this.dir = 'down';
         }
-        
+
         if (keys['a'] || keys['A'] || keys['ArrowLeft']) {
             dx = -1;
             this.dir = 'left';
@@ -125,7 +125,7 @@ export default class Player extends GameObject {
             this.attackCooldown = 0.45; // Cooldown between swings
             this.animFrame = 0;
             this.isMoving = false;
-            
+
             // Perform attack collision check on enemies
             this.performAttack(world.enemies);
             return;
@@ -177,7 +177,7 @@ export default class Player extends GameObject {
                 return true;
             }
         }
-        
+
         // 2. Tile collision (water)
         if (mapContext) {
             const rect = this.getCollisionRect();
@@ -236,7 +236,7 @@ export default class Player extends GameObject {
      * Hit by enemy: reduces health and adds flashing feedback.
      */
     takeDamage() {
-        if (this.isDead || this.isHit) return; // Invulnerability frames / dead check
+        if (this.isDead || this.isHit || this.debugMode) return;
         this.health = Math.max(0, this.health - 1);
         this.isHit = true;
         this.hitTimer = 0.5; // Red tint / invulnerability duration
@@ -316,7 +316,7 @@ export default class Player extends GameObject {
         const sourceY = row * this.spriteHeight;
 
         ctx.save();
-        
+
         // Red hit tint flash
         if (this.isHit) {
             ctx.filter = 'drop-shadow(0px 0px 5px rgba(255,0,0,0.8)) hue-rotate(-50deg)';
