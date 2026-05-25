@@ -43,6 +43,7 @@ class GameEngine {
     // Setup internal virtual resolution (640x360 for perfect pixel-art scale)
     this.virtualWidth = 640;
     this.virtualHeight = 360;
+    this.zoom = 1;
     this.resizeCanvas();
     window.addEventListener("resize", () => this.resizeCanvas());
     const onFSChange = () => {
@@ -117,21 +118,25 @@ class GameEngine {
 
     const w = container.clientWidth;
     const h = container.clientHeight;
+    const maxGameUnits = 32 * 16; // 12 tiles × 16px per tile
 
-    // Find best aspect-ratio-fit scaling multiplier
-    const scaleX = w / this.virtualWidth;
-    const scaleY = h / this.virtualHeight;
-    const scale = Math.min(scaleX, scaleY);
+    // The longer screen dimension shows exactly 12 tiles; the other follows aspect ratio
+    if (w >= h) {
+      this.virtualWidth = maxGameUnits;
+      this.virtualHeight = Math.round((maxGameUnits * h) / w);
+    } else {
+      this.virtualHeight = maxGameUnits;
+      this.virtualWidth = Math.round((maxGameUnits * w) / h);
+    }
 
-    // Apply crisp scale
-    this.canvas.width = this.virtualWidth;
-    this.canvas.height = this.virtualHeight;
+    this.zoom = w / this.virtualWidth;
 
-    // Scale the wrapper wrapper to center and keep relative overlays perfect
-    wrapper.style.width = `${this.virtualWidth * scale}px`;
-    wrapper.style.height = `${this.virtualHeight * scale}px`;
+    this.canvas.width = w;
+    this.canvas.height = h;
 
-    // Enable crisp rendering
+    wrapper.style.width = `${w}px`;
+    wrapper.style.height = `${h}px`;
+
     this.ctx.imageSmoothingEnabled = false;
   }
 
@@ -1095,7 +1100,10 @@ class GameEngine {
    * Render the visual layers.
    */
   draw() {
-    this.ctx.clearRect(0, 0, this.virtualWidth, this.virtualHeight);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.ctx.save();
+    this.ctx.scale(this.zoom, this.zoom);
 
     // 1. Render Tilemap background layer
     this.mapRenderer.drawTiles(
@@ -1103,7 +1111,6 @@ class GameEngine {
     );
 
     // 2. Render all entities y-sorted for 2.5D depth ordering
-    // Sort objects based on the bottom line of their AABB collision box (depth height)
     this.gameObjects.sort((a, b) => {
       const aBottom = a.y + a.height + a.ySortOffset;
       const bBottom = b.y + b.height + b.ySortOffset;
@@ -1118,10 +1125,12 @@ class GameEngine {
       obj.draw(this.ctx, this.camera);
     });
 
-    // 3. Draw Player HUD / Life Hearts
+    this.ctx.restore();
+
+    // 4. Draw Player HUD / Life Hearts (screen-space, not scaled)
     this.drawHUD();
 
-    // 4. Debug overlay
+    // 5. Debug overlay (screen-space)
     if (this.debugMode) {
       this.drawDebugOverlay();
     }
