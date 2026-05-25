@@ -13,16 +13,18 @@
     <meta property="og:url" content="https://bozzayviktor.hu/cv/cv-game.html">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
-    
+
     <!-- Retro & Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <!-- Styles -->
     <link rel="stylesheet" href="./styles/cv-game.css">
 </head>
 <body>
+    <div id="game-container">
+
     <!-- CRT Grid Overlay for Retro Arcade feel -->
     <div class="crt-overlay"></div>
     <div class="scanlines"></div>
@@ -78,10 +80,11 @@
                 <span class="tech-desc">Kenmi-art Cute RPG</span>
               </div>
             </div>
+
         </div><!-- end #game-wrapper -->
     </div><!-- end #canvas-container -->
 
-    <!-- Credits Modal (mobile, fixed position) -->
+    <!-- Credits Modal -->
     <div id="credits-modal">
       <div class="credits-modal-backdrop"></div>
       <div class="credits-modal-box">
@@ -117,9 +120,9 @@
                 <span id="dialogue-title">Personal HQ</span>
                 <span class="dialogue-dot"></span>
             </div>
-            
+
             <div id="dialogue-tech">Svelte · TypeScript · Express</div>
-            
+
             <!-- Dialogue scrolling content -->
             <div id="dialogue-text">
                 <!-- Populated dynamically by House.js / main.js -->
@@ -144,11 +147,11 @@
                 <span>GAME PAUSED</span>
                 <span class="dialogue-dot"></span>
             </div>
-            
+
             <div class="pause-content">
                 <div class="music-section">
                     <div class="music-label">🎵 BACKGROUND MUSIC</div>
-                    
+
                     <div class="music-box">
                         <div class="custom-select" id="game-genre-select">
                             <div class="custom-select-trigger"><span>👾 8bit</span> <span class="arrow">▼</span></div>
@@ -167,7 +170,7 @@
                                 <div class="custom-option" data-value="assets/music/reggae.mp3">🌴 Reggae</div>
                             </div>
                         </div>
-                        
+
                         <!-- Track time with seek slider -->
                         <div class="track-time-row">
                             <span class="track-time-label" id="track-time-current">00:00</span>
@@ -192,13 +195,14 @@
                     </div>
 
                 </div>
-                
+
                 <audio id="game-music-audio" loop></audio>
             </div>
-            
+
             <div class="pause-actions">
-                <a href="index.html" class="dialogue-btn pause-hub-btn">🕹️ Back to Hub</a>
-                <button id="btn-resume-game" class="dialogue-btn btn-exit">Resume Game</button>
+                <a href="index.html" class="dialogue-btn pause-hub-btn">Back to Hub</a>
+                <button id="btn-fullscreen" class="dialogue-btn" title="Toggle Fullscreen">Fullscreen</button>
+                <button id="btn-resume-game" class="dialogue-btn btn-exit">Resume</button>
             </div>
         </div>
     </div>
@@ -212,7 +216,7 @@
                 <span>VIKTOR'S RPG JOURNEY</span>
                 <span class="dialogue-dot"></span>
             </div>
-            
+
             <div class="start-content">
                 <div class="start-description">
                     Now you can finally experience the challenging life of a career-changing mechanical engineer — from the workshop floor to the tech lead seat. Explore the world, fight skeletons, and uncover the milestones that shaped one developer's journey.
@@ -221,10 +225,13 @@
                     <span class="key">W</span> <span class="key">A</span> <span class="key">S</span> <span class="key">D</span> Move &nbsp;·&nbsp; <span class="key" style="min-width: 80px;">Space</span> Attack &nbsp;·&nbsp; <span class="key">ESC</span> Pause
                 </div>
             </div>
-            
+
+            <div class="start-fullscreen-hint">⛶ This game shines in fullscreen — give it a try!</div>
+
             <div class="start-actions">
-                <button id="btn-start-game" class="dialogue-btn start-game-btn">▶ Start Game</button>
-                <a href="index.html" class="dialogue-btn start-hub-btn">🕹️ Back to Hub</a>
+                <button id="btn-start-fullscreen" class="dialogue-btn">Fullscreen</button>
+                <button id="btn-start-game" class="dialogue-btn start-game-btn">Start</button>
+                <a href="index.html" class="dialogue-btn start-hub-btn">Back to Hub</a>
             </div>
         </div>
     </div>
@@ -238,17 +245,17 @@
                 <span style="color:#ef4444;">GAME OVER</span>
                 <span class="dialogue-dot" style="background:#ef4444;box-shadow:0 0 8px #ef4444;"></span>
             </div>
-            
+
             <div class="gameover-content">
                 <div class="gameover-message">
                     Your journey has ended…<br>
                     <span style="font-size:11px;color:#94a3b8;">But every death is a new beginning.</span>
                 </div>
             </div>
-            
+
             <div class="gameover-actions">
-                <button id="btn-restart-game" class="dialogue-btn restart-btn">🔄 Restart</button>
-                <a href="index.html" class="dialogue-btn gameover-hub-btn">🕹️ Back to Hub</a>
+                <button id="btn-restart-game" class="dialogue-btn restart-btn">Restart</button>
+                <a href="index.html" class="dialogue-btn gameover-hub-btn">Back to Hub</a>
             </div>
         </div>
     </div>
@@ -288,6 +295,8 @@
         </form>
       </div>
     </div>
+
+    </div><!-- end #game-container -->
 
     <!-- NippleJS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/nipplejs@1.0.3/dist/index.js"></script>
