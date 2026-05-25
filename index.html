@@ -20,7 +20,8 @@
       <p class="subtitle">Choose how to view my CV</p>
       <div class="btns">
         <a class="btn" href="cv-plain.html"
-          ><span class="label">I'm a Human</span><span class="desc">Clean, readable CV</span></a
+          ><span class="label">I'm reading CV</span
+          ><span class="desc">Clean, readable, printable CV</span></a
         ><a class="btn" href="cv-swagger.html"
           ><span class="label">I'm a Frontend Developer</span
           ><span class="desc">Swagger-style API docs</span></a
@@ -28,34 +29,42 @@
           ><span class="label">I'm a Backend Developer</span
           ><span class="desc">JSON / VS Code view</span></a
         ><a class="btn btn-game" href="cv-game.html"
-          ><span class="label">I'm a Gamer</span><span class="desc">Interactive 2.5D RPG world</span></a
+          ><span class="label">I'm a Gamer</span
+          ><span class="desc">Interactive 2.5D RPG world</span></a
         >
       </div>
       <div class="btns margin-top">
         <button class="btn btn-hire" id="hire-index-btn">
-          <span class="label">Hire Me</span><span class="desc">Send me a message</span>
+          <span class="label">Hire Me</span
+          ><span class="desc">Send me a message</span>
         </button>
       </div>
-      <div class="footer"><a href="mailto:bozzay.viktor@gmail.com">bozzay.viktor@gmail.com</a></div>
+      <div class="footer">
+        <a href="mailto:bozzay.viktor@gmail.com">bozzay.viktor@gmail.com</a>
+      </div>
     </div>
     <div id="hire-index-modal" class="cv-modal-hidden">
       <div class="hire-backdrop" id="hire-index-backdrop"></div>
       <div class="hire-dialog">
         <div class="hire-dialog-header">
           <h3>Contact Viktor</h3>
-          <button class="hire-close" id="hire-index-close" type="button">&#x2715;</button>
+          <button class="hire-close" id="hire-index-close" type="button">
+            &#x2715;
+          </button>
         </div>
         <div data-fs-success>
-          <p class="fs-success-title">
-            Thanks for reaching out!
-          </p>
+          <p class="fs-success-title">Thanks for reaching out!</p>
           <p class="fs-success-msg">
             Your message was sent successfully. I'll get back to you soon.
           </p>
         </div>
         <div data-fs-error></div>
         <form id="hire-index-form">
-          <input type="hidden" name="_subject" value="Hire inquiry from index" />
+          <input
+            type="hidden"
+            name="_subject"
+            value="Hire inquiry from index"
+          />
           <div class="hire-field">
             <label for="hire-index-name">Your name</label
             ><input
@@ -90,7 +99,9 @@
             ></textarea
             ><span data-fs-error="message" class="fs-error-msg"></span>
           </div>
-          <button type="submit" class="hire-submit" data-fs-submit-btn>Send</button>
+          <button type="submit" class="hire-submit" data-fs-submit-btn>
+            Send
+          </button>
         </form>
       </div>
     </div>
