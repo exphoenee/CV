@@ -118,11 +118,18 @@ class GameEngine {
 
     const w = container.clientWidth;
     const h = container.clientHeight;
+    const maxGameUnits = 32 * 16; // 12 tiles × 16px per tile
 
-    // Zoom: always show a consistent game-world area (~640x360 px at 16:9)
-    this.zoom = h / 360;
-    this.virtualWidth = Math.round(w / this.zoom);
-    this.virtualHeight = Math.round(h / this.zoom);
+    // The longer screen dimension shows exactly 12 tiles; the other follows aspect ratio
+    if (w >= h) {
+      this.virtualWidth = maxGameUnits;
+      this.virtualHeight = Math.round((maxGameUnits * h) / w);
+    } else {
+      this.virtualHeight = maxGameUnits;
+      this.virtualWidth = Math.round((maxGameUnits * w) / h);
+    }
+
+    this.zoom = w / this.virtualWidth;
 
     this.canvas.width = w;
     this.canvas.height = h;
