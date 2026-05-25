@@ -1125,6 +1125,11 @@ class GameEngine {
       obj.draw(this.ctx, this.camera);
     });
 
+    // 3. Draw collision boxes in scaled space (debug mode)
+    if (this.debugMode) {
+      this.drawDebugCollisionBoxes();
+    }
+
     this.ctx.restore();
 
     // 4. Draw Player HUD / Life Hearts (screen-space, not scaled)
@@ -1174,7 +1179,7 @@ class GameEngine {
    * Draw collision boxes and info for all objects in debug mode.
    */
   drawDebugOverlay() {
-    const {ctx, camera} = this;
+    const {ctx} = this;
 
     ctx.fillStyle = "rgba(0,0,0,0.5)";
     ctx.fillRect(4, 4, 180, 56);
@@ -1185,7 +1190,14 @@ class GameEngine {
     ctx.fillText(`Objects: ${this.gameObjects.length}`, 10, 36);
     ctx.fillText(`Player: ${~~this.player.x},${~~this.player.y}`, 10, 52);
 
-    // Collision boxes
+  }
+
+  /**
+   * Draw collision boxes in camera-relative scaled space.
+   */
+  drawDebugCollisionBoxes() {
+    const {ctx, camera} = this;
+
     ctx.strokeStyle = "#ff0000";
     ctx.lineWidth = 1;
 
