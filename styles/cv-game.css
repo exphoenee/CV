@@ -20,18 +20,26 @@
     padding: 0;
 }
 
-body {
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     background-color: var(--bg-dark);
+}
+
+body {
     color: #e2e8f0;
     font-family: var(--font-ui);
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+}
+
+#game-container {
     position: relative;
+    width: 100dvw;
+    height: 100dvh;
+    overflow: hidden;
+    background: #050608;
 }
 
 /* --- CRT Retro Screen Simulation --- */
@@ -158,11 +166,11 @@ canvas {
 
 /* --- Dialogue Box Overlay --- */
 #dialogue-overlay {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     z-index: 20;
     display: flex;
     align-items: center;
@@ -195,14 +203,15 @@ canvas {
     border-radius: 12px;
     width: 90%;
     max-width: 550px;
-    max-height: 80%;
-    max-height: 480px;
+    max-height: 95dvh;
     box-shadow: 0 0 35px var(--accent-glow);
     display: flex;
     flex-direction: column;
     padding: 20px;
     animation: zoomIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 21;
+    min-height: 0;
+    overflow: hidden;
 }
 
 @keyframes zoomIn {
@@ -212,6 +221,7 @@ canvas {
 
 .dialogue-header {
     display: flex;
+    flex-shrink: 0;
     justify-content: space-between;
     align-items: center;
     font-family: var(--font-pixel);
@@ -243,7 +253,9 @@ canvas {
 
 #dialogue-text {
     flex: 1;
+    min-height: 0;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding-right: 8px;
     font-size: 14px;
     line-height: 1.6;
@@ -284,6 +296,7 @@ canvas {
 
 /* --- Dialogue Controls Area (ScrollButtons & Exit) --- */
 .dialogue-controls {
+    flex-shrink: 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1.2fr;
     gap: 10px;
@@ -346,8 +359,8 @@ canvas {
     }
 
     .dialogue-box {
-        height: 85%;
-        max-height: none;
+        height: auto;
+        max-height: 90dvh;
     }
 
     .dialogue-controls {
@@ -357,11 +370,11 @@ canvas {
 
 /* --- Pause Menu & Music Player Modal --- */
 #pause-menu {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     z-index: 20;
     display: flex;
     align-items: center;
@@ -370,11 +383,11 @@ canvas {
 }
 
 #hire-modal {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     z-index: 30;
     display: flex;
     align-items: center;
@@ -392,6 +405,9 @@ canvas {
 
 .pause-content {
     flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -536,19 +552,35 @@ canvas {
 .pause-actions {
     display: flex;
     justify-content: space-between;
-    gap: 15px;
-    align-items: center;
+    gap: 10px;
+    align-items: stretch;
+}
+
+#btn-fullscreen {
+    flex: 0 0 auto;
+    font-size: 10px;
+    padding: 10px 10px;
+}
+
+#btn-fullscreen:hover {
+    background: rgba(255, 112, 36, 0.2) !important;
+    box-shadow: 0 0 10px rgba(255, 112, 36, 0.2);
 }
 
 .pause-hub-btn {
     flex: 1;
     text-align: center;
-    padding: 12px 10px;
+    padding: 10px 10px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
+}
+
+#btn-resume-game {
+    padding: 10px 10px;
+    flex: 1;
 }
 
 .pause-hub-btn:hover {
@@ -715,11 +747,11 @@ canvas {
 
 /* Start Screen Modal */
 #start-screen {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     z-index: 30;
     display: flex;
     align-items: center;
@@ -728,12 +760,16 @@ canvas {
 }
 
 .start-box {
-    max-width: 420px;
+    max-width: 450px;
     height: auto;
     gap: 16px;
 }
 
 .start-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -741,8 +777,8 @@ canvas {
 }
 
 .start-description {
-    font-size: 13px;
-    line-height: 1.7;
+    font-size: 14px;
+    line-height: 1.5;
     color: #cbd5e1;
     text-align: center;
     padding: 0 6px;
@@ -757,6 +793,15 @@ canvas {
     justify-content: center;
     gap: 4px;
     flex-wrap: wrap;
+}
+
+.start-fullscreen-hint {
+    text-align: center;
+    font-family: var(--font-pixel);
+    font-size: 10px;
+    color: #94a3b8;
+    margin: 8px 0 10px;
+    opacity: 0.8;
 }
 
 .start-actions {
@@ -796,11 +841,11 @@ canvas {
 
 /* Game Over Screen Modal */
 #game-over-screen {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     z-index: 30;
     display: flex;
     align-items: center;
@@ -817,6 +862,10 @@ canvas {
 }
 
 .gameover-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -902,7 +951,7 @@ canvas {
     position: absolute;
     left: calc(5% + 35px);
     bottom: calc(5% + 25px);
-    width: min(22vw, 22vh, 120px);
+    width: min(22dvw, 22dvh, 120px);
     aspect-ratio: 1;
 }
 #attack-btn {
@@ -977,7 +1026,7 @@ canvas {
 
 @media (hover: hover) and (pointer: fine) {
     #hire-btn {
-        position: fixed;
+        position: absolute;
         top: 10px;
         right: 10px;
     }
@@ -1022,11 +1071,22 @@ canvas {
     box-shadow: 0 0 8px rgba(255,112,36,0.3);
 }
 .hire-dialog-game textarea { resize: vertical; min-height: 60px; }
+#hire-game-form {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .hire-actions {
     display: flex;
     gap: 10px;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: auto;
+    padding-top: 10px;
 }
 .hire-dialog-game .cv-success-hidden,
 .hire-dialog-game .cv-error-hidden {
@@ -1045,7 +1105,7 @@ canvas {
 
 /* --- Credits modal (mobile) --- */
 #credits-modal {
-    position: fixed;
+    position: absolute;
     inset: 0;
     z-index: 40;
     display: flex;
@@ -1075,6 +1135,9 @@ canvas {
     padding: 24px;
     max-width: 320px;
     width: 85%;
+    max-height: 80dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     box-shadow: 0 0 30px var(--accent-glow);
     z-index: 41;
 }
@@ -1182,7 +1245,7 @@ canvas {
 
 /* --- Landscape orientation overlay (mobile/tablet portrait) --- */
 #rotate-overlay {
-    position: fixed;
+    position: absolute;
     inset: 0;
     z-index: 50;
     display: none;

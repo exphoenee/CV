@@ -45,6 +45,16 @@ class GameEngine {
     this.virtualHeight = 360;
     this.resizeCanvas();
     window.addEventListener("resize", () => this.resizeCanvas());
+    const onFSChange = () => {
+      this.resizeCanvas();
+      const btn = document.getElementById("btn-fullscreen");
+      if (btn) {
+        const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+        btn.textContent = fsEl ? "⛶ Exit Fullscreen" : "⛶ Fullscreen";
+      }
+    };
+    document.addEventListener("fullscreenchange", onFSChange);
+    document.addEventListener("webkitfullscreenchange", onFSChange);
 
     // Keyboard inputs
     this.keys = {};
@@ -123,6 +133,19 @@ class GameEngine {
 
     // Enable crisp rendering
     this.ctx.imageSmoothingEnabled = false;
+  }
+
+  toggleFullscreen() {
+    const container = document.getElementById("game-container");
+    if (!container) return;
+    const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+    if (!fsEl) {
+      const req = container.requestFullscreen?.() || container.webkitRequestFullscreen?.();
+      if (req) req.catch(() => {});
+    } else {
+      const exit = document.exitFullscreen?.() || document.webkitExitFullscreen?.();
+      if (exit) exit.catch(() => {});
+    }
   }
 
   /**
@@ -449,6 +472,11 @@ class GameEngine {
   setupPauseMenuListeners() {
     const resumeBtn = document.getElementById("btn-resume-game");
     const backdrop = document.getElementById("pause-backdrop");
+
+    const fullscreenBtn = document.getElementById("btn-fullscreen");
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener("click", () => this.toggleFullscreen());
+    }
 
     if (resumeBtn) {
       resumeBtn.addEventListener("click", () => this.resumeGame());
@@ -829,6 +857,10 @@ class GameEngine {
     const startBtn = document.getElementById("btn-start-game");
     if (startBtn) {
       startBtn.addEventListener("click", () => this.startGame());
+    }
+    const fsBtn = document.getElementById("btn-start-fullscreen");
+    if (fsBtn) {
+      fsBtn.addEventListener("click", () => this.toggleFullscreen());
     }
   }
 
