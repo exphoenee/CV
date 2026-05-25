@@ -371,8 +371,8 @@ class GameEngine {
         e.preventDefault();
       }
 
-      // ESC listener to toggle pause menu
-      if (e.key === "Escape") {
+      // P key to toggle pause menu
+      if (e.key === "p" || e.key === "P") {
         const startScreen = document.getElementById("start-screen");
         const gameOverScreen = document.getElementById("game-over-screen");
 
@@ -397,6 +397,30 @@ class GameEngine {
       if (e.key === "F3") {
         this.debugMode = !this.debugMode;
         this.player.debugMode = this.debugMode;
+      }
+
+      // M to toggle music play/pause
+      if (e.key === "m" || e.key === "M") {
+        const musicAudio = document.getElementById("game-music-audio");
+        const musicPlayBtn = document.getElementById("game-music-playpause");
+        if (musicPlayBtn) {
+          musicPlayBtn.click();
+        } else if (musicAudio) {
+          // Fallback: directly toggle
+          if (musicAudio.paused) {
+            if (!musicAudio.src) {
+              // Load first option if no track selected
+              const firstOption = document.querySelector("#game-genre-select .custom-option");
+              if (firstOption) {
+                musicAudio.src = firstOption.getAttribute("data-value");
+                musicAudio.load();
+              }
+            }
+            musicAudio.play().catch(function(){});
+          } else {
+            musicAudio.pause();
+          }
+        }
       }
     });
 
