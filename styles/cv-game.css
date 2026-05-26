@@ -403,8 +403,8 @@ canvas {
 .pause-content {
     flex: 1;
     min-height: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: hidden;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -600,7 +600,7 @@ canvas {
 
 @media (max-width: 600px) {
     .pause-box {
-        width: 90%;
+        width: 95%;
         max-width: 320px;
         padding: 15px;
     }
@@ -620,7 +620,7 @@ canvas {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 8px;
+    margin-top: 3px;
     background: rgba(255, 255, 255, 0.03);
     padding: 6px 12px;
     border-radius: 6px;
