@@ -413,6 +413,11 @@
       .hire-submit:disabled { opacity: .5; cursor: default; }
 
 
+/* hide the floating toggle — opened from the Music menubar button */
+#music-toggle {
+  display: none !important;
+}
+
 /* Extracted Inline Styles */
 .cv-json-inline-0 { margin:0 6px 0 8px;flex-shrink:0;align-self:center;opacity:0.9; }
 .cv-json-inline-1 { font-weight:700;color:#f48771; }

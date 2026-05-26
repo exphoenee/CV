@@ -1,10 +1,6 @@
 export function isTouchDevice() {
-  return (
-    "ontouchstart" in window ||
-    navigator.maxTouchPoints > 0 ||
-    window.matchMedia("(hover: none) and (pointer: coarse)").matches ||
-    window.innerWidth < 600
-  );
+  // Only the most reliable indicator: true touch-only devices (phones, tablets)
+  return window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 }
 
 function checkOrientation(game) {
