@@ -424,6 +424,53 @@
   border: 1px solid rgba(0, 0, 0, 0.08);
   padding: 8px 10px;
   animation: lyrics-slide-in 0.2s ease;
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 112, 36, 0.5) transparent;
+}
+
+#music-lyrics-panel::-webkit-scrollbar {
+  width: 5px;
+}
+
+#music-lyrics-panel::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+}
+
+#music-lyrics-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 112, 36, 0.5);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+#music-lyrics-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 112, 36, 0.8);
+}
+
+/* Custom scrollbar for the track selector dropdown too */
+#music-player-box .custom-select-options {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 112, 36, 0.5) transparent;
+}
+
+#music-player-box .custom-select-options::-webkit-scrollbar {
+  width: 5px;
+}
+
+#music-player-box .custom-select-options::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+}
+
+#music-player-box .custom-select-options::-webkit-scrollbar-thumb {
+  background: rgba(255, 112, 36, 0.5);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+#music-player-box .custom-select-options::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 112, 36, 0.8);
 }
 
 #music-lyrics-panel pre {
@@ -452,6 +499,32 @@
 [data-theme="superdark"] #music-lyrics-panel {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.1);
+  scrollbar-color: rgba(255, 112, 36, 0.5) transparent;
+}
+
+[data-theme="dark"] #music-lyrics-panel::-webkit-scrollbar-thumb,
+[data-theme="superdark"] #music-lyrics-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 112, 36, 0.5);
+}
+
+[data-theme="dark"] #music-lyrics-panel::-webkit-scrollbar-thumb:hover,
+[data-theme="superdark"] #music-lyrics-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 112, 36, 0.8);
+}
+
+[data-theme="dark"] #music-player-box .custom-select-options,
+[data-theme="superdark"] #music-player-box .custom-select-options {
+  scrollbar-color: rgba(255, 112, 36, 0.5) transparent;
+}
+
+[data-theme="dark"] #music-player-box .custom-select-options::-webkit-scrollbar-thumb,
+[data-theme="superdark"] #music-player-box .custom-select-options::-webkit-scrollbar-thumb {
+  background: rgba(255, 112, 36, 0.5);
+}
+
+[data-theme="dark"] #music-player-box .custom-select-options::-webkit-scrollbar-thumb:hover,
+[data-theme="superdark"] #music-player-box .custom-select-options::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 112, 36, 0.8);
 }
 
 [data-theme="dark"] #music-lyrics-panel pre,
@@ -462,6 +535,27 @@
 [data-theme="nightvision"] #music-lyrics-panel {
   background: rgba(0, 255, 0, 0.04);
   border-color: rgba(0, 255, 0, 0.2);
+  scrollbar-color: rgba(0, 255, 0, 0.5) transparent;
+}
+
+[data-theme="nightvision"] #music-lyrics-panel::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 0, 0.5);
+}
+
+[data-theme="nightvision"] #music-lyrics-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 0, 0.8);
+}
+
+[data-theme="nightvision"] #music-player-box .custom-select-options {
+  scrollbar-color: rgba(0, 255, 0, 0.5) transparent;
+}
+
+[data-theme="nightvision"] #music-player-box .custom-select-options::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 0, 0.5);
+}
+
+[data-theme="nightvision"] #music-player-box .custom-select-options::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 0, 0.8);
 }
 
 [data-theme="nightvision"] #music-lyrics-panel pre {
@@ -792,6 +886,30 @@
   background: #111;
   border-color: #ff3300;
   color: #ff3300;
+}
+
+[data-theme="predator"] #music-lyrics-panel {
+  scrollbar-color: rgba(255, 51, 0, 0.5) transparent;
+}
+
+[data-theme="predator"] #music-lyrics-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 51, 0, 0.5);
+}
+
+[data-theme="predator"] #music-lyrics-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 51, 0, 0.8);
+}
+
+[data-theme="predator"] #music-player-box .custom-select-options {
+  scrollbar-color: rgba(255, 51, 0, 0.5) transparent;
+}
+
+[data-theme="predator"] #music-player-box .custom-select-options::-webkit-scrollbar-thumb {
+  background: rgba(255, 51, 0, 0.5);
+}
+
+[data-theme="predator"] #music-player-box .custom-select-options::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 51, 0, 0.8);
 }
 
 [data-theme="predator"] #music-lyrics-panel pre {
