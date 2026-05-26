@@ -9,144 +9,83 @@
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23ff7024'/><text x='50' y='66' font-size='44' font-weight='800' font-family='system-ui' fill='white' text-anchor='middle'>VB</text></svg>">
   <link rel="stylesheet" href="./styles/cv-plain.css" />
+  <link rel="stylesheet" href="./styles/cv-music-player.css" />
 </head>
 
 <body>
   <button id="theme-toggle" aria-label="Toggle theme"><img src="assets/images/sun.webp" class="theme-icon-img"
       alt="theme icon"></button>
   <div id="music-player">
-    <button id="music-toggle" aria-label="Toggle music" title="Music">🎵</button>
-    <div id="music-panel" class="music-panel-hidden">
-      <div class="custom-select" id="custom-genre-select">
-        <div class="custom-select-trigger"><span>👾 8bit</span> <span class="arrow">▼</span></div>
-        <div class="custom-select-options">
-          <div
-            class="custom-option"
-            data-value="assets/music/8bit.mp3"
-          >
-            👾 8bit
+    <button id="music-toggle" aria-label="Toggle music player" title="Music Player">🎵</button>
+
+    <!-- Expanded Music Player Box (hidden by default) -->
+    <div id="music-player-box" class="music-box-hidden">
+      <button id="music-box-close" class="music-box-close-btn" aria-label="Close music player" title="Close">✕</button>
+      <div class="music-player-content">
+        <!-- Cover Image -->
+        <div class="music-cover">
+          <img src="assets/music/cover-xs.jpg" alt="Cover" />
+        </div>
+
+        <!-- Controls (right column in landscape) -->
+        <div class="controls-right">
+          <!-- Track Time + Seek Slider -->
+          <div class="track-time-row">
+            <span class="track-time-label" id="track-time-current">00:00</span>
+            <input type="range" id="track-seek" min="0" max="100" value="0" step="0.1" class="track-seek-slider" />
+            <span class="track-time-label" id="track-time-total">00:00</span>
           </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/blues.mp3"
-          >
-            🎸 Blues
+
+          <!-- Genre Select -->
+          <div class="custom-select" id="custom-genre-select">
+            <div class="custom-select-trigger"><span>👾 8bit</span> <span class="arrow">▼</span></div>
+            <div class="custom-select-options">
+              <div class="custom-option" data-value="assets/music/8bit.mp3">👾 8bit</div>
+              <div class="custom-option" data-value="assets/music/blues.mp3">🎸 Blues</div>
+              <div class="custom-option" data-value="assets/music/classic.mp3">🎻 Classic</div>
+              <div class="custom-option" data-value="assets/music/chanzon.mp3">🎵 Chanzon</div>
+              <div class="custom-option" data-value="assets/music/country.mp3">🤠 Country</div>
+              <div class="custom-option" data-value="assets/music/disco.mp3">🕺 Disco</div>
+              <div class="custom-option" data-value="assets/music/flamenco.mp3">💃 Flamenco</div>
+              <div class="custom-option" data-value="assets/music/funk.mp3">🚌 Funk</div>
+              <div class="custom-option" data-value="assets/music/heavy_metal.mp3">🤘 Heavy Metal</div>
+              <div class="custom-option" data-value="assets/music/jazz.mp3">🎷 Jazz</div>
+              <div class="custom-option" data-value="assets/music/metalcore.mp3">🤘 Metalcore</div>
+              <div class="custom-option" data-value="assets/music/hungarian_nota.mp3">🎻 Nóta</div>
+              <div class="custom-option" data-value="assets/music/polka-schramli.mp3">🪗 Polka-Schramli</div>
+              <div class="custom-option" data-value="assets/music/pop.mp3">🎤 Pop</div>
+              <div class="custom-option" data-value="assets/music/rap.mp3">🗣️ Rap</div>
+              <div class="custom-option" data-value="assets/music/reggae.mp3">🌴 Reggae</div>
+              <div class="custom-option" data-value="assets/music/hire_me_song.mp3">😭 Hire Me Song</div>
+              <div class="custom-option" data-value="assets/music/vegyel_fel.mp3">😭 Vegyél Fel!!!</div>
+            </div>
           </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/classic.mp3"
-          >
-            🎻 Classic
+
+          <!-- Transport Controls -->
+          <div class="transport-buttons">
+            <button id="music-repeat" class="transport-btn" title="Repeat mode">🔁</button>
+            <button id="music-prev" class="transport-btn" title="Previous">⏮</button>
+            <button id="music-playpause" class="transport-btn" title="Play/Pause">▶</button>
+            <button id="music-next" class="transport-btn" title="Next">⏭</button>
+            <button id="music-lyrics" class="transport-btn" aria-label="Show lyrics" title="Lyrics">📜</button>
           </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/chanzon.mp3"
-          >
-            🎵 Chanzon
+
+          <!-- Volume Slider (at bottom) -->
+          <div class="volume-bottom-row">
+            <span class="volume-label">🔊</span>
+            <input type="range" id="music-volume" min="0" max="1" step="0.05" value="0.5" class="volume-slider" />
           </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/country.mp3"
-          >
-            🤠 Country
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/disco.mp3"
-          >
-            🕺 Disco
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/flamenco.mp3"
-          >
-            💃 Flamenco
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/funk.mp3"
-          >
-            🚌 Funk
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/heavy_metal.mp3"
-          >
-            🤘 Heavy Metal
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/jazz.mp3"
-          >
-            🎷 Jazz
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/metalcore.mp3"
-          >
-            🤘 Metalcore
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/hungarian_nota.mp3"
-          >
-            🎻 Nóta
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/polka-schramli.mp3"
-          >
-            🪗 Polka-Schramli
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/pop.mp3"
-          >
-            🎤 Pop
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/rap.mp3"
-          >
-            🗣️ Rap
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/reggae.mp3"
-          >
-            🌴 Reggae
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/hire_me_song.mp3"
-          >
-            😭 Hire Me Song
-          </div>
-          <div
-            class="custom-option"
-            data-value="assets/music/vegyel_fel.mp3"
-          >
-            😭 Vegyél Fel!!!
+
+          <!-- Inline Lyrics Panel (hidden by default) -->
+          <div id="music-lyrics-panel" class="music-lyrics-hidden">
+            <pre id="lyrics-text"></pre>
           </div>
         </div>
-      </div>
-      <button id="music-playpause" aria-label="Play/Pause">▶</button>
-      <button id="music-lyrics" aria-label="Show lyrics" title="Lyrics">Lyrics</button>
-    </div>
-    <audio id="music-audio" loop></audio>
-  </div>
 
-  <div id="lyrics-modal" class="cv-modal-hidden">
-    <div class="hire-backdrop" id="lyrics-backdrop"></div>
-    <div class="hire-dialog">
-      <div class="hire-dialog-header">
-        <h3>Lyrics</h3>
-        <button class="hire-close" id="lyrics-close" type="button">✕</button>
-      </div>
-      <div class="lyrics-content">
-        <pre id="lyrics-text"></pre>
       </div>
     </div>
+
+    <audio id="music-audio" loop></audio>
   </div>
 
   <div class="cv-wrapper">
@@ -675,6 +614,7 @@
           </div>
 
   <script defer src="./scripts/shared.js"></script>
+  <script defer src="./scripts/cv-music-player.js"></script>
   <script defer src="./scripts/cv-plain.js"></script>
   <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
