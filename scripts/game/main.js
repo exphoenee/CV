@@ -51,7 +51,7 @@ class GameEngine {
       const btn = document.getElementById("btn-fullscreen");
       if (btn) {
         const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
-        btn.textContent = fsEl ? "⛶ Exit Fullscreen" : "⛶ Fullscreen";
+        btn.textContent = fsEl ? "Exit Fullscreen" : "Fullscreen";
       }
     };
     document.addEventListener("fullscreenchange", onFSChange);
