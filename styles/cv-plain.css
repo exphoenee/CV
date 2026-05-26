@@ -378,6 +378,76 @@ body {
   margin: 15mm 10mm;
 }
 
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.print-btn-plain {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  background: #ff7024;
+  cursor: pointer;
+  font-family: inherit;
+  vertical-align: middle;
+  line-height: 1.4;
+  transition: background .15s;
+  align-self: center;
+  white-space: nowrap;
+}
+
+.print-btn-plain:hover {
+  background: #e5621a;
+}
+
+@media print {
+  .print-btn-plain {
+    display: none !important;
+  }
+}
+
+[data-theme="dark"] .print-btn-plain,
+[data-theme="superdark"] .print-btn-plain {
+  background: #e5621a;
+  color: #fff;
+  border: none;
+}
+
+[data-theme="dark"] .print-btn-plain:hover,
+[data-theme="superdark"] .print-btn-plain:hover {
+  background: #cc5515;
+}
+
+[data-theme="nightvision"] .print-btn-plain {
+  background: #008800 !important;
+  color: #00ff00 !important;
+  border: 1px solid #00ff00 !important;
+}
+
+[data-theme="nightvision"] .print-btn-plain:hover {
+  background: #00aa00 !important;
+}
+
+[data-theme="predator"] .print-btn-plain {
+  background: transparent !important;
+  border: 1px solid #ff3300 !important;
+  color: #ff3300 !important;
+  text-shadow: 0 0 5px #ff3300;
+}
+
+[data-theme="predator"] .print-btn-plain:hover {
+  background: rgba(255, 51, 0, 0.1) !important;
+}
+
 .hover\:bg-p3-light:hover {
   background-color: var(--color-p3-light);
 }

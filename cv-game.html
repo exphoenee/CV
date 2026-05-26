@@ -1,309 +1,601 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Viktor Bozzay — Interactive 2.5D RPG CV</title>
-    <meta property="og:title" content="Viktor Bozzay — Interactive 2.5D RPG CV">
-    <meta property="og:description" content="Explore Viktor's CV as a retro 2.5D RPG — walk around, fight skeletons, open chests, and read about his work experience!">
-    <meta property="og:image" content="https://bozzayviktor.hu/cv/assets/og-preview.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://bozzayviktor.hu/cv/cv-game.html">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
+    <meta
+      property="og:title"
+      content="Viktor Bozzay — Interactive 2.5D RPG CV"
+    />
+    <meta
+      property="og:description"
+      content="Explore Viktor's CV as a retro 2.5D RPG — walk around, fight skeletons, open chests, and read about his work experience!"
+    />
+    <meta
+      property="og:image"
+      content="https://bozzayviktor.hu/cv/assets/og-preview.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bozzayviktor.hu/cv/cv-game.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>"
+    />
 
     <!-- Retro & Premium Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Styles -->
-    <link rel="stylesheet" href="./styles/cv-game.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./styles/cv-game.css" />
+  </head>
+  <body>
     <div id="game-container">
+      <!-- CRT Grid Overlay for Retro Arcade feel -->
+      <div class="crt-overlay"></div>
+      <div class="scanlines"></div>
 
-    <!-- CRT Grid Overlay for Retro Arcade feel -->
-    <div class="crt-overlay"></div>
-    <div class="scanlines"></div>
-
-    <!-- Main Canvas Wrapper — all UI overlays live inside here -->
-    <div id="canvas-container">
+      <!-- Main Canvas Wrapper — all UI overlays live inside here -->
+      <div id="canvas-container">
         <div id="game-wrapper">
-            <canvas id="game-canvas"></canvas>
+          <canvas id="game-canvas"></canvas>
 
-            <!-- Game Title (top center) -->
-            <div class="game-title">Viktor's RPG Journey</div>
+          <!-- Game Title (top center) -->
+          <div class="game-title">Viktor's RPG Journey</div>
 
-            <!-- Controls Legend (bottom-left, hidden on mobile) -->
-            <div class="legend-panel">
-                <div class="legend-title">Controls</div>
-                <div class="legend-row"><span class="key">W</span> <span class="key">A</span> <span class="key">S</span> <span class="key">D</span> Move</div>
-                <div class="legend-row"><span class="key" style="min-width: 80px;">Space</span> Attack</div>
-                <div class="legend-row">Enter doors to read CV!</div>
-                <div class="legend-row" style="opacity: 0.6; font-size: 9px; margin-top: 4px; font-family: var(--font-pixel);">P to Pause / Music</div>
+          <!-- Controls Legend (bottom-left, hidden on mobile) -->
+          <div class="legend-panel">
+            <div class="legend-title">Controls</div>
+            <div class="legend-row">
+              <span class="key">W</span> <span class="key">A</span>
+              <span class="key">S</span> <span class="key">D</span> Move
             </div>
-
-            <!-- Mobile Controls (inside game-wrapper overlay) -->
-            <div id="mobile-controls">
-              <div id="joystick-zone"></div>
-              <button id="attack-btn" aria-label="Attack">
-                <span style="font-size:28px;">⚔️</span>
-              </button>
+            <div class="legend-row">
+              <span class="key" style="min-width: 80px">Space</span> Attack
             </div>
+            <div class="legend-row">Enter doors to read CV!</div>
+            <div
+              class="legend-row"
+              style="
+                opacity: 0.6;
+                font-size: 9px;
+                margin-top: 4px;
+                font-family: var(--font-pixel);
+              "
+            >
+              P to Pause / Music
+            </div>
+          </div>
 
-            <!-- Mobile top-right buttons -->
-            <button id="pause-btn" aria-label="Pause">
-              <img src="assets/sprites/Cute/Buttons/pause.png" alt="Pause" draggable="false">
+          <!-- Mobile Controls (inside game-wrapper overlay) -->
+          <div id="mobile-controls">
+            <div id="joystick-zone"></div>
+            <button id="attack-btn" aria-label="Attack">
+              <span style="font-size: 28px">⚔️</span>
             </button>
-            <button id="info-btn" aria-label="Info">
-              <img src="assets/sprites/Cute/Buttons/info.png" alt="Info" draggable="false">
-            </button>
-            <button id="hire-btn" aria-label="Hire Me">
-              <span>💼 Hire</span>
-            </button>
+          </div>
 
-            <!-- Desktop Tech Boxes (bottom-center) -->
-            <div class="tech-boxes desktop-only">
-              <a href="https://yoannmoi.net/nipplejs/" target="_blank" class="tech-box">
-                <span class="tech-label">NippleJS</span>
-                <span class="tech-desc">Virtual Joystick</span>
-              </a>
-              <a href="https://phaser.io" target="_blank" class="tech-box">
-                <span class="tech-label">Phaser</span>
-                <span class="tech-desc">Game Framework</span>
-              </a>
-              <div class="tech-box">
-                <span class="tech-label">Assets</span>
-                <span class="tech-desc">Kenmi-art Cute RPG</span>
+          <!-- Mobile top-right buttons -->
+          <button id="pause-btn" aria-label="Pause">
+            <img
+              src="assets/sprites/Cute/Buttons/pause.png"
+              alt="Pause"
+              draggable="false"
+            />
+          </button>
+          <button id="info-btn" aria-label="Info">
+            <img
+              src="assets/sprites/Cute/Buttons/info.png"
+              alt="Info"
+              draggable="false"
+            />
+          </button>
+          <button id="hire-btn" aria-label="Hire Me">
+            <span>💼 Hire</span>
+          </button>
+
+          <!-- Desktop Tech Boxes (bottom-center) -->
+          <div class="tech-boxes desktop-only">
+            <a
+              href="https://yoannmoi.net/nipplejs/"
+              target="_blank"
+              class="tech-box"
+            >
+              <span class="tech-label">NippleJS</span>
+              <span class="tech-desc">Virtual Joystick</span>
+            </a>
+            <a href="https://phaser.io" target="_blank" class="tech-box">
+              <span class="tech-label">Phaser</span>
+              <span class="tech-desc">Game Framework</span>
+            </a>
+            <div class="tech-box">
+              <span class="tech-label">Assets</span>
+              <span class="tech-desc">Kenmi-art Cute RPG</span>
+            </div>
+          </div>
+        </div>
+        <!-- end #game-wrapper -->
+      </div>
+      <!-- end #canvas-container -->
+
+      <!-- Credits Modal -->
+      <div id="credits-modal">
+        <div class="credits-modal-backdrop"></div>
+        <div class="credits-modal-box">
+          <div class="credits-modal-header">
+            <span>About this game</span>
+            <button id="credits-close">✕</button>
+          </div>
+          <div class="credits-modal-body">
+            <p>
+              Assets by
+              <a
+                href="https://kenmi-art.itch.io/cute-fantasy-rpg"
+                target="_blank"
+                >Kenmi-art</a
+              >
+              (Cute Fantasy RPG pack)
+            </p>
+            <p>
+              Virtual joystick:
+              <a href="https://yoannmoi.net/nipplejs/" target="_blank"
+                >NippleJS</a
+              >
+            </p>
+            <p>
+              Game framework reference:
+              <a href="https://phaser.io" target="_blank">Phaser</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Landscape orientation overlay (mobile/tablet portrait) -->
+      <div id="rotate-overlay">
+        <div class="rotate-box">
+          <div class="rotate-icon">🔄</div>
+          <div class="rotate-title">Rotate your device</div>
+          <div class="rotate-desc">This game only works in landscape mode.</div>
+          <div class="rotate-hint">Please turn your device sideways.</div>
+        </div>
+      </div>
+
+      <!-- Responsive Glassmorphic Dialogue Modal (Frozen State CV Stations) -->
+      <div id="dialogue-overlay" class="dialogue-hidden">
+        <div class="dialogue-backdrop"></div>
+        <div class="dialogue-box">
+          <!-- Retro console header -->
+          <div class="dialogue-header">
+            <span class="dialogue-dot"></span>
+            <span id="dialogue-title">Personal HQ</span>
+            <span class="dialogue-dot"></span>
+          </div>
+
+          <div id="dialogue-tech">Svelte · TypeScript · Express</div>
+
+          <!-- Dialogue scrolling content -->
+          <div id="dialogue-text">
+            <!-- Populated dynamically by House.js / main.js -->
+          </div>
+
+          <!-- Dialogue Scroll Buttons + Exit Button -->
+          <div class="dialogue-controls">
+            <button id="btn-scroll-up" class="dialogue-btn" title="Scroll Up">
+              ▲ Scroll Up
+            </button>
+            <button
+              id="btn-scroll-down"
+              class="dialogue-btn"
+              title="Scroll Down"
+            >
+              ▼ Scroll Down
+            </button>
+            <button
+              id="btn-scroll-exit"
+              class="dialogue-btn btn-exit"
+              title="Exit House"
+            >
+              ✖ Exit House
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Retro Pause Menu / Escape Modal -->
+      <div id="pause-menu" class="dialogue-hidden">
+        <div class="dialogue-backdrop" id="pause-backdrop"></div>
+        <div class="dialogue-box pause-box">
+          <!-- Retro console header -->
+          <div class="dialogue-header">
+            <span class="dialogue-dot"></span>
+            <span>GAME PAUSED</span>
+            <span class="dialogue-dot"></span>
+          </div>
+
+          <div class="pause-content">
+            <div class="music-section">
+              <div class="music-label">🎵 BACKGROUND MUSIC</div>
+
+              <div class="music-box">
+                <div class="custom-select" id="game-genre-select">
+                  <div class="custom-select-trigger">
+                    <span>👾 8bit</span> <span class="arrow">▼</span>
+                  </div>
+                  <div class="custom-select-options">
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/8bit.mp3"
+                    >
+                      👾 8bit
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/blues.mp3"
+                    >
+                      🎸 Blues
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/classic.mp3"
+                    >
+                      🎻 Classic
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/chanzon.mp3"
+                    >
+                      🎵 Chanzon
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/country.mp3"
+                    >
+                      🤠 Country
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/disco.mp3"
+                    >
+                      🕺 Disco
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/flamenco.mp3"
+                    >
+                      💃 Flamenco
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/funk.mp3"
+                    >
+                      🚌 Funk
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/heavy_metal.mp3"
+                    >
+                      🤘 Heavy Metal
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/jazz.mp3"
+                    >
+                      🎷 Jazz
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/metalcore.mp3"
+                    >
+                      🤘 Metalcore
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/hungarian_nota.mp3"
+                    >
+                      🎻 Nóta
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/polka-schramli.mp3"
+                    >
+                      🪗 Polka-Schramli
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/pop.mp3"
+                    >
+                      🎤 Pop
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/rap.mp3"
+                    >
+                      🗣️ Rap
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/reggae.mp3"
+                    >
+                      🌴 Reggae
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/hire_me_song.mp3"
+                    >
+                      😭 Hire Me Song
+                    </div>
+                    <div
+                      class="custom-option"
+                      data-value="assets/music/vegyel_fel.mp3"
+                    >
+                      😭 Vegyél Fel!!!
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Track time with seek slider -->
+                <div class="track-time-row">
+                  <span class="track-time-label" id="track-time-current"
+                    >00:00</span
+                  >
+                  <input
+                    type="range"
+                    id="track-seek"
+                    min="0"
+                    max="100"
+                    value="0"
+                    step="0.1"
+                    class="track-seek-slider"
+                  />
+                  <span class="track-time-label" id="track-time-total"
+                    >00:00</span
+                  >
+                </div>
+
+                <div class="music-controls">
+                  <div class="transport-buttons">
+                    <button
+                      id="game-music-prev"
+                      class="dialogue-btn transport-btn"
+                      title="Previous"
+                    >
+                      ⏮
+                    </button>
+                    <button
+                      id="game-music-playpause"
+                      class="dialogue-btn transport-btn"
+                      title="Play/Pause"
+                    >
+                      ▶
+                    </button>
+                    <button
+                      id="game-music-stop"
+                      class="dialogue-btn transport-btn"
+                      title="Stop"
+                    >
+                      ⏹
+                    </button>
+                    <button
+                      id="game-music-next"
+                      class="dialogue-btn transport-btn"
+                      title="Next"
+                    >
+                      ⏭
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Volume Slider Section -->
+              <div class="volume-control">
+                <span class="volume-icon">🔊</span>
+                <input
+                  type="range"
+                  id="game-music-volume"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value="0.5"
+                  class="volume-slider"
+                />
               </div>
             </div>
 
-        </div><!-- end #game-wrapper -->
-    </div><!-- end #canvas-container -->
+            <audio id="game-music-audio" loop></audio>
+          </div>
 
-    <!-- Credits Modal -->
-    <div id="credits-modal">
-      <div class="credits-modal-backdrop"></div>
-      <div class="credits-modal-box">
-        <div class="credits-modal-header">
-          <span>About this game</span>
-          <button id="credits-close">✕</button>
-        </div>
-        <div class="credits-modal-body">
-          <p>Assets by <a href="https://kenmi-art.itch.io/cute-fantasy-rpg" target="_blank">Kenmi-art</a> (Cute Fantasy RPG pack)</p>
-          <p>Virtual joystick: <a href="https://yoannmoi.net/nipplejs/" target="_blank">NippleJS</a></p>
-          <p>Game framework reference: <a href="https://phaser.io" target="_blank">Phaser</a></p>
+          <div class="pause-actions">
+            <a href="index.html" class="dialogue-btn pause-hub-btn"
+              >Back to Hub</a
+            >
+            <button
+              id="btn-fullscreen"
+              class="dialogue-btn"
+              title="Toggle Fullscreen"
+            >
+              Fullscreen
+            </button>
+            <button id="btn-resume-game" class="dialogue-btn btn-exit">
+              Resume
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Landscape orientation overlay (mobile/tablet portrait) -->
-    <div id="rotate-overlay">
-      <div class="rotate-box">
-        <div class="rotate-icon">🔄</div>
-        <div class="rotate-title">Rotate your device</div>
-        <div class="rotate-desc">This game only works in landscape mode.</div>
-        <div class="rotate-hint">Please turn your device sideways.</div>
-      </div>
-    </div>
-
-    <!-- Responsive Glassmorphic Dialogue Modal (Frozen State CV Stations) -->
-    <div id="dialogue-overlay" class="dialogue-hidden">
-        <div class="dialogue-backdrop"></div>
-        <div class="dialogue-box">
-            <!-- Retro console header -->
-            <div class="dialogue-header">
-                <span class="dialogue-dot"></span>
-                <span id="dialogue-title">Personal HQ</span>
-                <span class="dialogue-dot"></span>
-            </div>
-
-            <div id="dialogue-tech">Svelte · TypeScript · Express</div>
-
-            <!-- Dialogue scrolling content -->
-            <div id="dialogue-text">
-                <!-- Populated dynamically by House.js / main.js -->
-            </div>
-
-            <!-- Dialogue Scroll Buttons + Exit Button -->
-            <div class="dialogue-controls">
-                <button id="btn-scroll-up" class="dialogue-btn" title="Scroll Up">▲ Scroll Up</button>
-                <button id="btn-scroll-down" class="dialogue-btn" title="Scroll Down">▼ Scroll Down</button>
-                <button id="btn-scroll-exit" class="dialogue-btn btn-exit" title="Exit House">✖ Exit House</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Retro Pause Menu / Escape Modal -->
-    <div id="pause-menu" class="dialogue-hidden">
-        <div class="dialogue-backdrop" id="pause-backdrop"></div>
-        <div class="dialogue-box pause-box">
-            <!-- Retro console header -->
-            <div class="dialogue-header">
-                <span class="dialogue-dot"></span>
-                <span>GAME PAUSED</span>
-                <span class="dialogue-dot"></span>
-            </div>
-
-            <div class="pause-content">
-                <div class="music-section">
-                    <div class="music-label">🎵 BACKGROUND MUSIC</div>
-
-                    <div class="music-box">
-                        <div class="custom-select" id="game-genre-select">
-                            <div class="custom-select-trigger"><span>👾 8bit</span> <span class="arrow">▼</span></div>
-                            <div class="custom-select-options">
-                                <div class="custom-option" data-value="assets/music/8bit.mp3">👾 8bit
-</div>
-                                <div class="custom-option" data-value="assets/music/blues.mp3">🎸 Blues</div>
-                                <div class="custom-option" data-value="assets/music/classic.mp3">🎻 Classic</div>
-                                <div class="custom-option" data-value="assets/music/country.mp3">🤠 Country</div>
-                                <div class="custom-option" data-value="assets/music/disco.mp3">🕺 Disco</div>
-                                <div class="custom-option" data-value="assets/music/funk.mp3">🚌 Funk</div>
-                                <div class="custom-option" data-value="assets/music/hungarian_nota.mp3">🎻 Nóta</div>
-                                <div class="custom-option" data-value="assets/music/jazz.mp3">🎷 Jazz</div>
-                                <div class="custom-option" data-value="assets/music/metalcore.mp3">🤘 Metalcore</div>
-                                <div class="custom-option" data-value="assets/music/pop.mp3">🎤 Pop</div>
-                                <div class="custom-option" data-value="assets/music/rap.mp3">🗣️ Rap</div>
-                                <div class="custom-option" data-value="assets/music/reggae.mp3">🌴 Reggae</div>
-                                <div class="custom-option" data-value="assets/music/chanzon.mp3">🎵 Chanzon</div>
-                                <div class="custom-option" data-value="assets/music/falmenco.mp3">💃 Falmenco</div>
-                                <div class="custom-option" data-value="assets/music/heavy_metal.mp3">🤘 Heavy Metal</div>
-                                <div class="custom-option" data-value="assets/music/polka-schramli.mp3">🪗 Polka-Schramli</div>
-                                <div class="custom-option" data-value="assets/music/hire_me_song.mp3">😭 Hire Me Song</div>
-                                <div class="custom-option" data-value="assets/music/vegyel_fel.mp3">😭 Vegyél Fel!!!</div>
-                            </div>
-                        </div>
-
-                        <!-- Track time with seek slider -->
-                        <div class="track-time-row">
-                            <span class="track-time-label" id="track-time-current">00:00</span>
-                            <input type="range" id="track-seek" min="0" max="100" value="0" step="0.1" class="track-seek-slider">
-                            <span class="track-time-label" id="track-time-total">00:00</span>
-                        </div>
-
-                        <div class="music-controls">
-                            <div class="transport-buttons">
-                                <button id="game-music-prev" class="dialogue-btn transport-btn" title="Previous">⏮</button>
-                                <button id="game-music-playpause" class="dialogue-btn transport-btn" title="Play/Pause">▶</button>
-                                <button id="game-music-stop" class="dialogue-btn transport-btn" title="Stop">⏹</button>
-                                <button id="game-music-next" class="dialogue-btn transport-btn" title="Next">⏭</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Volume Slider Section -->
-                    <div class="volume-control">
-                        <span class="volume-icon">🔊</span>
-                        <input type="range" id="game-music-volume" min="0" max="1" step="0.05" value="0.5" class="volume-slider">
-                    </div>
-
-                </div>
-
-                <audio id="game-music-audio" loop></audio>
-            </div>
-
-            <div class="pause-actions">
-                <a href="index.html" class="dialogue-btn pause-hub-btn">Back to Hub</a>
-                <button id="btn-fullscreen" class="dialogue-btn" title="Toggle Fullscreen">Fullscreen</button>
-                <button id="btn-resume-game" class="dialogue-btn btn-exit">Resume</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Start Screen Modal -->
-    <div id="start-screen" class="dialogue-visible">
+      <!-- Start Screen Modal -->
+      <div id="start-screen" class="dialogue-visible">
         <div class="dialogue-backdrop"></div>
         <div class="dialogue-box start-box">
-            <div class="dialogue-header">
-                <span class="dialogue-dot"></span>
-                <span>VIKTOR'S RPG JOURNEY</span>
-                <span class="dialogue-dot"></span>
-            </div>
+          <div class="dialogue-header">
+            <span class="dialogue-dot"></span>
+            <span>VIKTOR'S RPG JOURNEY</span>
+            <span class="dialogue-dot"></span>
+          </div>
 
-            <div class="start-content">
-                <div class="start-description">
-                    Now you can finally experience the challenging life of a career-changing mechanical engineer — from the workshop floor to the tech lead seat. Explore the world, fight skeletons, and uncover the milestones that shaped one developer's journey.
-                </div>
-                <div class="start-controls-note desktop-only">
-                    <span class="key">W</span> <span class="key">A</span> <span class="key">S</span> <span class="key">D</span> Move &nbsp;·&nbsp; <span class="key" style="min-width: 80px;">Space</span> Attack &nbsp;·&nbsp; <span class="key">P</span> Pause
-                </div>
+          <div class="start-content">
+            <div class="start-description">
+              Now you can finally experience the challenging life of a
+              career-changing mechanical engineer — from the workshop floor to
+              the tech lead seat. Explore the world, fight skeletons, and
+              uncover the milestones that shaped one developer's journey.
             </div>
-
-            <div class="start-fullscreen-hint">⛶ This game shines in fullscreen — give it a try!</div>
-
-            <div class="start-actions">
-                <button id="btn-start-fullscreen" class="dialogue-btn">Fullscreen</button>
-                <button id="btn-start-game" class="dialogue-btn start-game-btn">Start</button>
-                <a href="index.html" class="dialogue-btn start-hub-btn">Back to Hub</a>
+            <div class="start-controls-note desktop-only">
+              <span class="key">W</span> <span class="key">A</span>
+              <span class="key">S</span> <span class="key">D</span> Move
+              &nbsp;·&nbsp;
+              <span class="key" style="min-width: 80px">Space</span> Attack
+              &nbsp;·&nbsp; <span class="key">P</span> Pause
             </div>
+          </div>
+
+          <div class="start-fullscreen-hint">
+            ⛶ This game shines in fullscreen — give it a try!
+          </div>
+
+          <div class="start-actions">
+            <button id="btn-start-fullscreen" class="dialogue-btn">
+              Fullscreen
+            </button>
+            <button id="btn-start-game" class="dialogue-btn start-game-btn">
+              Start
+            </button>
+            <a href="index.html" class="dialogue-btn start-hub-btn"
+              >Back to Hub</a
+            >
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Game Over Screen Modal -->
-    <div id="game-over-screen" class="dialogue-hidden">
+      <!-- Game Over Screen Modal -->
+      <div id="game-over-screen" class="dialogue-hidden">
         <div class="dialogue-backdrop"></div>
         <div class="dialogue-box gameover-box">
-            <div class="dialogue-header gameover-header">
-                <span class="dialogue-dot" style="background:#ef4444;box-shadow:0 0 8px #ef4444;"></span>
-                <span style="color:#ef4444;">GAME OVER</span>
-                <span class="dialogue-dot" style="background:#ef4444;box-shadow:0 0 8px #ef4444;"></span>
-            </div>
+          <div class="dialogue-header gameover-header">
+            <span
+              class="dialogue-dot"
+              style="background: #ef4444; box-shadow: 0 0 8px #ef4444"
+            ></span>
+            <span style="color: #ef4444">GAME OVER</span>
+            <span
+              class="dialogue-dot"
+              style="background: #ef4444; box-shadow: 0 0 8px #ef4444"
+            ></span>
+          </div>
 
-            <div class="gameover-content">
-                <div class="gameover-message">
-                    Your journey has ended…<br>
-                    <span style="font-size:11px;color:#94a3b8;">But every death is a new beginning.</span>
-                </div>
+          <div class="gameover-content">
+            <div class="gameover-message">
+              Your journey has ended…<br />
+              <span style="font-size: 11px; color: #94a3b8"
+                >But every death is a new beginning.</span
+              >
             </div>
+          </div>
 
-            <div class="gameover-actions">
-                <button id="btn-restart-game" class="dialogue-btn restart-btn">Restart</button>
-                <a href="index.html" class="dialogue-btn gameover-hub-btn">Back to Hub</a>
+          <div class="gameover-actions">
+            <button id="btn-restart-game" class="dialogue-btn restart-btn">
+              Restart
+            </button>
+            <a href="index.html" class="dialogue-btn gameover-hub-btn"
+              >Back to Hub</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Hire Me Modal -->
+      <div id="hire-modal" class="dialogue-hidden">
+        <div class="dialogue-backdrop" id="hire-backdrop"></div>
+        <div class="dialogue-box hire-dialog-game">
+          <div class="dialogue-header">
+            <span class="dialogue-dot"></span>
+            <span>Contact Viktor</span>
+            <span class="dialogue-dot"></span>
+          </div>
+          <div data-fs-success class="cv-success-hidden">
+            <p
+              style="
+                font-size: 12px;
+                font-family: var(--font-pixel);
+                color: #86efac;
+              "
+            >
+              Thanks for reaching out!
+            </p>
+            <p
+              style="
+                font-size: 9px;
+                font-family: var(--font-pixel);
+                color: #94a3b8;
+              "
+            >
+              Your message was sent successfully. I'll get back to you soon.
+            </p>
+          </div>
+          <div data-fs-error class="cv-error-hidden"></div>
+          <form id="hire-game-form">
+            <input
+              type="hidden"
+              name="_subject"
+              value="Hire inquiry from CV - game"
+            />
+            <div class="hire-field">
+              <label for="hire-game-name">Your name</label>
+              <input
+                id="hire-game-name"
+                type="text"
+                name="name"
+                required
+                placeholder="Jane Smith"
+                data-fs-field
+              />
             </div>
+            <div class="hire-field">
+              <label for="hire-game-email">Your email</label>
+              <input
+                id="hire-game-email"
+                type="email"
+                name="email"
+                required
+                placeholder="your@email.com"
+                data-fs-field
+              />
+            </div>
+            <div class="hire-field">
+              <label for="hire-game-message">Message</label>
+              <textarea
+                id="hire-game-message"
+                name="message"
+                required
+                rows="4"
+                placeholder="Hi Viktor, we'd like to..."
+                data-fs-field
+              ></textarea>
+            </div>
+            <div class="hire-actions">
+              <button type="submit" class="dialogue-btn" data-fs-submit-btn>
+                Send
+              </button>
+              <button
+                type="button"
+                id="hire-close"
+                class="dialogue-btn btn-exit"
+              >
+                Close
+              </button>
+            </div>
+          </form>
         </div>
-    </div>
-
-    <!-- Hire Me Modal -->
-    <div id="hire-modal" class="dialogue-hidden">
-      <div class="dialogue-backdrop" id="hire-backdrop"></div>
-      <div class="dialogue-box hire-dialog-game">
-        <div class="dialogue-header">
-          <span class="dialogue-dot"></span>
-          <span>Contact Viktor</span>
-          <span class="dialogue-dot"></span>
-        </div>
-        <div data-fs-success class="cv-success-hidden">
-          <p style="font-size:12px;font-family:var(--font-pixel);color:#86efac;">Thanks for reaching out!</p>
-          <p style="font-size:9px;font-family:var(--font-pixel);color:#94a3b8;">Your message was sent successfully. I'll get back to you soon.</p>
-        </div>
-        <div data-fs-error class="cv-error-hidden"></div>
-        <form id="hire-game-form">
-          <input type="hidden" name="_subject" value="Hire inquiry from CV - game">
-          <div class="hire-field">
-            <label for="hire-game-name">Your name</label>
-            <input id="hire-game-name" type="text" name="name" required placeholder="Jane Smith" data-fs-field>
-          </div>
-          <div class="hire-field">
-            <label for="hire-game-email">Your email</label>
-            <input id="hire-game-email" type="email" name="email" required placeholder="your@email.com" data-fs-field>
-          </div>
-          <div class="hire-field">
-            <label for="hire-game-message">Message</label>
-            <textarea id="hire-game-message" name="message" required rows="4" placeholder="Hi Viktor, we'd like to..." data-fs-field></textarea>
-          </div>
-          <div class="hire-actions">
-            <button type="submit" class="dialogue-btn" data-fs-submit-btn>Send</button>
-            <button type="button" id="hire-close" class="dialogue-btn btn-exit">Close</button>
-          </div>
-        </form>
       </div>
     </div>
-
-    </div><!-- end #game-container -->
+    <!-- end #game-container -->
 
     <!-- NippleJS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/nipplejs@1.0.3/dist/index.js"></script>
@@ -311,5 +603,5 @@
 
     <!-- Core Module Script Loader -->
     <script type="module" src="./scripts/game/main.js"></script>
-</body>
+  </body>
 </html>

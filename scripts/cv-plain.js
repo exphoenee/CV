@@ -1,5 +1,9 @@
 CV.initHireModal("hire-plain");
 
+document.getElementById("print-plain-btn")?.addEventListener("click", function () {
+  window.print();
+});
+
 window.showToast = function(message) {
   var container = document.getElementById("cv-toaster-container");
   if (!container) return;
@@ -507,6 +511,67 @@ Please don't ignore my GitHub class
 
 [outro]
 If not... I'll still fix your CSS from the shadows`,
+    'assets/music/vegyel_fel.mp3': `[intro]
+Ó, nagyra becsült hiring manager, jövök tisztán, stabil nettel és kész flow-val
+
+[verse]
+A böngésző fénylik, már napok óta nem alszom  
+A saját életem hibáit is jobban debugolom, mint a backend labirintusodban azt a sok gondot  
+A codebase-ed követem, mint egy fordulatos krimit  
+És kiszúrom a hiányzó pontosvesszőt ott is, ahol más már rég elengedte volna itt
+
+A törött layoutot hajnali háromkor is helyre rakom  
+A konzol hibákkal beszélek, mintha régi spanok lennének, csak kicsit megvadulva  
+Eskü, a Reactet ismerem, nem csak felületesen  
+És akkor is állom a sarat, ha a production már full káoszban él éppen
+
+[pre-chorus]
+A data mélyen fut, én meg nem inogok meg  
+Le tudom shipelni a cuccot, mire te elfogyasztod a kávédat reggel  
+Dark mode-ból light mode-ba simán áthangolom az UI-t  
+Csak olvasd el az önéletrajzom, mielőtt elköszönsz tőlem, jó?
+
+[chorus]
+Vegyél fel, kérlek, kódon könyörgök  
+Még a saját lelkem bugjait is kipofoztam rég  
+Én vagyok a stabilan instabil álmok építésze  
+Kérlek, engedj be a fejlesztői csapatodba még ma
+
+Vegyél fel, kérlek, büszkeségből is hajtok  
+És Stack Overflow tabokat rejtegetek a háttérben  
+Igen, írtam teszteket, amik néha át is mennek  
+Kérlek, ne húzd le a GitHub profilom egy mozdulattal
+
+[verse]
+API-kat tanultam éjszakába nyúlóan  
+Instant tésztát ettem, közben rossz rímeket gyártottam folyamatosan  
+A workflow-m úgy zúg, mint egy szétesett ventilátor  
+De valahogy mégis leszállítom, amit elvállaltam
+
+A kódomat refaktorálom, mintha az életemet raknám össze  
+Változókat nevezek át, csak hogy fejben is rend legyen végre  
+Az UI-dat szent iratként olvasom végig  
+És remélem, hogy a CSS-em nem lesz a következő, amit elvisz a végzet
+
+[pre-chorus]
+A data mélyen fut, én meg fejben is benne vagyok  
+A localhost álmaimat is rendesen letesztelték már sokszor  
+Bugból feature-be próbálok túlélni nap mint nap  
+Csak engedd, hogy megkapjam ezt az állást, és fejlődjek tovább
+
+[chorus]
+Vegyél fel, kérlek, kódon könyörgök  
+Még a saját lelkem bugjait is kipofoztam rég  
+Én vagyok a stabilan instabil álmok építésze  
+Kérlek, engedj be a fejlesztői csapatodba még ma
+
+Vegyél fel, kérlek, büszkeségből is hajtok  
+És Stack Overflow tabokat rejtegetek a háttérben  
+Igen, írtam teszteket, amik néha át is mennek  
+Kérlek, ne húzd le a GitHub profilom egy mozdulattal
+
+[outro]
+Ha nem is… akkor is megjavítom a CSS-ed az árnyékból`,
 };
 
   var DEFAULT_LYRICS = `[intro]
