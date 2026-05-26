@@ -711,22 +711,31 @@ class GameEngine {
 
     // Repeat toggle
     const repeatBtn = document.getElementById("game-music-repeat");
-    let repeatMode = 0; // 0 = no repeat, 1 = repeat all, 2 = repeat one
+    let repeatMode = parseInt(localStorage.getItem("cv-music-repeat")) || 0; // 0 = no repeat, 1 = repeat all, 2 = repeat one
+
+    function updateRepeatBtnUI() {
+      if (!repeatBtn) return;
+      if (repeatMode === 0) {
+        repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
+        repeatBtn.classList.remove("active", "repeat-one");
+      } else if (repeatMode === 1) {
+        repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
+        repeatBtn.classList.add("active");
+        repeatBtn.classList.remove("repeat-one");
+      } else {
+        repeatBtn.innerHTML = '<i class="fas fa-repeat-1"></i>';
+        repeatBtn.classList.add("active", "repeat-one");
+      }
+    }
 
     if (repeatBtn) {
+      // Restore saved repeat mode UI
+      updateRepeatBtnUI();
+
       repeatBtn.addEventListener("click", () => {
         repeatMode = (repeatMode + 1) % 3;
-        if (repeatMode === 0) {
-          repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
-          repeatBtn.classList.remove("active", "repeat-one");
-        } else if (repeatMode === 1) {
-          repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
-          repeatBtn.classList.add("active");
-          repeatBtn.classList.remove("repeat-one");
-        } else {
-          repeatBtn.innerHTML = '<i class="fas fa-repeat-1"></i>';
-          repeatBtn.classList.add("active", "repeat-one");
-        }
+        localStorage.setItem("cv-music-repeat", repeatMode);
+        updateRepeatBtnUI();
       });
     }
 
@@ -813,6 +822,25 @@ class GameEngine {
         userScrubbing = false;
         audio.currentTime = parseFloat(seekSlider.value);
         saveTime();
+      });
+      // Explicit click handler for browsers where track-click doesn't work with appearance:none
+      seekSlider.addEventListener("click", (e) => {
+        userScrubbing = true;
+        const rect = seekSlider.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        const max = parseFloat(seekSlider.max) || 1;
+        const min = parseFloat(seekSlider.min) || 0;
+        const val = min + pct * (max - min);
+        seekSlider.value = val;
+        audio.currentTime = val;
+        if (audio.duration) {
+          seekSlider.style.setProperty('--seek-pct', (val / audio.duration * 100) + '%');
+        }
+        if (trackTimeCurrent) {
+          trackTimeCurrent.textContent = formatTime(val);
+        }
+        saveTime();
+        userScrubbing = false;
       });
     }
 

@@ -50,7 +50,7 @@
   var isBoxOpen = false;
   var isPlaying = false;
   var currentIndex = 0;
-  var repeatMode = 0; // 0 = no repeat, 1 = repeat all, 2 = repeat one
+  var repeatMode = parseInt(localStorage.getItem("cv-music-repeat")) || 0; // 0 = no repeat, 1 = repeat all, 2 = repeat one
   var savedGenre = localStorage.getItem("cv-music-genre");
   var currentValue = options[0].getAttribute("data-value");
   var currentLabel = options[0].textContent;
@@ -302,22 +302,31 @@
   }
 
   // --- Repeat toggle ---
+  function updateRepeatBtnUI() {
+    if (!repeatBtn) return;
+    if (repeatMode === 0) {
+      repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
+      repeatBtn.classList.remove("active", "repeat-one");
+    } else if (repeatMode === 1) {
+      repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
+      repeatBtn.classList.add("active");
+      repeatBtn.classList.remove("repeat-one");
+    } else {
+      repeatBtn.innerHTML = '<i class="fas fa-repeat-1"></i>';
+      repeatBtn.classList.add("active", "repeat-one");
+    }
+  }
+
   if (repeatBtn) {
+    // Restore saved repeat mode UI
+    updateRepeatBtnUI();
+
     repeatBtn.addEventListener("click", function () {
       repeatMode = (repeatMode + 1) % 3;
+      localStorage.setItem("cv-music-repeat", repeatMode);
       var modeLabels = ["No repeat", "Repeat all", "Repeat one"];
       if (window.showToast) window.showToast("🔁 " + modeLabels[repeatMode]);
-      if (repeatMode === 0) {
-        repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
-        repeatBtn.classList.remove("active", "repeat-one");
-      } else if (repeatMode === 1) {
-        repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
-        repeatBtn.classList.add("active");
-        repeatBtn.classList.remove("repeat-one");
-      } else {
-        repeatBtn.innerHTML = '<i class="fas fa-repeat-1"></i>';
-        repeatBtn.classList.add("active", "repeat-one");
-      }
+      updateRepeatBtnUI();
     });
   }
 
@@ -348,6 +357,25 @@
       userScrubbing = false;
       audio.currentTime = parseFloat(seekSlider.value);
       localStorage.setItem("cv-music-time", audio.currentTime);
+    });
+    // Explicit click handler for browsers where track-click doesn't work with appearance:none
+    seekSlider.addEventListener("click", function (e) {
+      userScrubbing = true;
+      var rect = seekSlider.getBoundingClientRect();
+      var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      var max = parseFloat(seekSlider.max) || 1;
+      var min = parseFloat(seekSlider.min) || 0;
+      var val = min + pct * (max - min);
+      seekSlider.value = val;
+      audio.currentTime = val;
+      if (audio.duration) {
+        seekSlider.style.setProperty('--seek-pct', (val / audio.duration * 100) + '%');
+      }
+      if (trackTimeCurrent) {
+        trackTimeCurrent.textContent = formatTime(val);
+      }
+      localStorage.setItem("cv-music-time", val);
+      userScrubbing = false;
     });
   }
 

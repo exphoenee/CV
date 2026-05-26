@@ -22,7 +22,7 @@
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -32,6 +32,7 @@
   -webkit-user-select: none;
   user-select: none;
   z-index: 2;
+  line-height: 1;
 }
 
 #music-toggle:hover {
