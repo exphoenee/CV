@@ -562,6 +562,7 @@ class GameEngine {
         targetVolume = vol;
         audio.volume = vol;
         localStorage.setItem("cv-music-volume", vol);
+        volumeSlider.style.setProperty('--volume-pct', (vol * 100) + '%');
       });
     }
 
@@ -595,7 +596,12 @@ class GameEngine {
     };
 
     const updatePlayPause = () => {
-      playPauseBtn.textContent = isPlaying ? "⏸" : "▶";
+      playPauseBtn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+      if (isPlaying) {
+        playPauseBtn.classList.add("playing");
+      } else {
+        playPauseBtn.classList.remove("playing");
+      }
     };
 
     // Fade helpers
@@ -703,6 +709,27 @@ class GameEngine {
       });
     }
 
+    // Repeat toggle
+    const repeatBtn = document.getElementById("game-music-repeat");
+    let repeatMode = 0; // 0 = no repeat, 1 = repeat all, 2 = repeat one
+
+    if (repeatBtn) {
+      repeatBtn.addEventListener("click", () => {
+        repeatMode = (repeatMode + 1) % 3;
+        if (repeatMode === 0) {
+          repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
+          repeatBtn.classList.remove("active", "repeat-one");
+        } else if (repeatMode === 1) {
+          repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
+          repeatBtn.classList.add("active");
+          repeatBtn.classList.remove("repeat-one");
+        } else {
+          repeatBtn.innerHTML = '<i class="fas fa-repeat-1"></i>';
+          repeatBtn.classList.add("active", "repeat-one");
+        }
+      });
+    }
+
     // Prev: if > 10s into the track, restart from beginning.
     // Otherwise, jump to the previous track (wraps to last if at first).
     if (prevBtn) {
@@ -710,6 +737,7 @@ class GameEngine {
         if (audio.currentTime > 10) {
           audio.currentTime = 0;
           saveTime();
+          updatePlayPause();
           return;
         }
         localStorage.setItem("cv-music-time", 0);
@@ -720,7 +748,6 @@ class GameEngine {
           loadTrack();
           fadeIn();
         });
-        updatePlayPause();
       });
     }
 
@@ -735,7 +762,6 @@ class GameEngine {
           loadTrack();
           fadeIn();
         });
-        updatePlayPause();
       });
     }
 
@@ -763,6 +789,7 @@ class GameEngine {
       if (seekSlider && audio.duration) {
         seekSlider.max = audio.duration;
         seekSlider.value = audio.currentTime;
+        seekSlider.style.setProperty('--seek-pct', (audio.currentTime / audio.duration * 100) + '%');
       }
       // Auto-save every 3 seconds
       if (audio.currentTime - lastSaveTime >= 3) {
@@ -777,6 +804,9 @@ class GameEngine {
         audio.currentTime = parseFloat(seekSlider.value);
         if (trackTimeCurrent) {
           trackTimeCurrent.textContent = formatTime(audio.currentTime);
+        }
+        if (audio.duration) {
+          seekSlider.style.setProperty('--seek-pct', (audio.currentTime / audio.duration * 100) + '%');
         }
       });
       seekSlider.addEventListener("change", () => {
@@ -794,6 +824,26 @@ class GameEngine {
     });
     audio.addEventListener("timeupdate", updateTrackTime);
     audio.addEventListener("ended", () => {
+      if (repeatMode === 2) {
+        // Repeat one: replay from beginning
+        audio.currentTime = 0;
+        audio.play().catch(function(){});
+        return;
+      }
+
+      if (repeatMode === 1) {
+        // Repeat all: go to next
+        const nextIndex = (currentIndex + 1) % options.length;
+        selectTrackByIndex(nextIndex);
+        loadTrack();
+        audio.play().then(() => {
+          isPlaying = true;
+          updatePlayPause();
+        }).catch(() => {});
+        return;
+      }
+
+      // No repeat: stop
       isPlaying = false;
       localStorage.setItem("cv-music-state", "stopped");
       updatePlayPause();

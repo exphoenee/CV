@@ -143,7 +143,7 @@
   };
 
   var updatePlayPause = function () {
-    playPauseBtn.textContent = isPlaying ? "⏸" : "▶";
+    playPauseBtn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
     if (isPlaying) {
       toggleBtn.classList.add("playing");
     } else {
@@ -172,6 +172,7 @@
     if (seekSlider && audio.duration) {
       seekSlider.max = audio.duration;
       seekSlider.value = audio.currentTime;
+      seekSlider.style.setProperty('--seek-pct', (audio.currentTime / audio.duration * 100) + '%');
     }
     if (audio.currentTime - lastSaveTime >= 3) {
       localStorage.setItem("cv-music-time", audio.currentTime);
@@ -268,6 +269,7 @@
       if (audio.currentTime > 10) {
         audio.currentTime = 0;
         localStorage.setItem("cv-music-time", 0);
+        updatePlayPause();
         return;
       }
       localStorage.setItem("cv-music-time", 0);
@@ -280,7 +282,6 @@
         loadTrack();
         fadeIn();
       });
-      updatePlayPause();
     });
   }
 
@@ -297,7 +298,6 @@
         loadTrack();
         fadeIn();
       });
-      updatePlayPause();
     });
   }
 
@@ -305,15 +305,17 @@
   if (repeatBtn) {
     repeatBtn.addEventListener("click", function () {
       repeatMode = (repeatMode + 1) % 3;
+      var modeLabels = ["No repeat", "Repeat all", "Repeat one"];
+      if (window.showToast) window.showToast("🔁 " + modeLabels[repeatMode]);
       if (repeatMode === 0) {
-        repeatBtn.textContent = "🔁";
+        repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
         repeatBtn.classList.remove("active", "repeat-one");
       } else if (repeatMode === 1) {
-        repeatBtn.textContent = "🔁";
+        repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
         repeatBtn.classList.add("active");
         repeatBtn.classList.remove("repeat-one");
       } else {
-        repeatBtn.textContent = "🔂";
+        repeatBtn.innerHTML = '<i class="fas fa-repeat-1"></i>';
         repeatBtn.classList.add("active", "repeat-one");
       }
     });
@@ -326,6 +328,7 @@
       targetVolume = vol;
       audio.volume = vol;
       localStorage.setItem("cv-music-volume", vol);
+      volumeSlider.style.setProperty('--volume-pct', (vol * 100) + '%');
     });
   }
 
@@ -336,6 +339,9 @@
       audio.currentTime = parseFloat(seekSlider.value);
       if (trackTimeCurrent) {
         trackTimeCurrent.textContent = formatTime(audio.currentTime);
+      }
+      if (audio.duration) {
+        seekSlider.style.setProperty('--seek-pct', (audio.currentTime / audio.duration * 100) + '%');
       }
     });
     seekSlider.addEventListener("change", function () {

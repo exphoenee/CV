@@ -36,6 +36,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="./styles/cv-game.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
     <div id="game-container">
@@ -363,32 +364,39 @@
                 <div class="music-controls">
                   <div class="transport-buttons">
                     <button
+                      id="game-music-repeat"
+                      class="dialogue-btn transport-btn"
+                      title="Repeat"
+                    >
+                      <i class="fas fa-repeat"></i>
+                    </button>
+                    <button
                       id="game-music-prev"
                       class="dialogue-btn transport-btn"
                       title="Previous"
                     >
-                      ⏮
+                      <i class="fas fa-backward-step"></i>
                     </button>
                     <button
                       id="game-music-playpause"
                       class="dialogue-btn transport-btn"
                       title="Play/Pause"
                     >
-                      ▶
+                      <i class="fas fa-play"></i>
                     </button>
                     <button
                       id="game-music-stop"
                       class="dialogue-btn transport-btn"
                       title="Stop"
                     >
-                      ⏹
+                      <i class="fas fa-stop"></i>
                     </button>
                     <button
                       id="game-music-next"
                       class="dialogue-btn transport-btn"
                       title="Next"
                     >
-                      ⏭
+                      <i class="fas fa-forward-step"></i>
                     </button>
                   </div>
                 </div>
@@ -396,7 +404,7 @@
 
               <!-- Volume Slider Section -->
               <div class="volume-control">
-                <span class="volume-icon">🔊</span>
+                <span class="volume-icon"><i class="fas fa-volume-high"></i></span>
                 <input
                   type="range"
                   id="game-music-volume"
@@ -409,7 +417,7 @@
               </div>
             </div>
 
-            <audio id="game-music-audio" loop></audio>
+            <audio id="game-music-audio"></audio>
           </div>
 
           <div class="pause-actions">
