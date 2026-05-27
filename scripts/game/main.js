@@ -1208,12 +1208,7 @@ class GameEngine {
     }
 
     // 8. Water ambient SFX
-    var feetCol = Math.floor((this.player.x + this.player.width / 2) / TILE_SIZE);
-    var feetRow = Math.floor((this.player.y + this.player.height - 4) / TILE_SIZE);
-    var onWater = false;
-    if (feetRow >= 0 && feetRow < this.rows && feetCol >= 0 && feetCol < this.cols) {
-      onWater = this.fullMapGrid[feetRow][feetCol] === 'W';
-    }
+    var onWater = this.player.getTerrainAt({ grid: this.fullMapGrid, tileSize: TILE_SIZE }) === 'water';
     if (onWater && !this._waterAmbientActive) {
       sfx.startLoop('water_ambient');
       this._waterAmbientActive = true;

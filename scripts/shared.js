@@ -1,3 +1,19 @@
+export function showToast(message) {
+  var container = document.getElementById('cv-toaster-container');
+  if (!container) return;
+  var toast = document.createElement('div');
+  toast.className = 'cv-toast';
+  toast.innerHTML = '<span>' + message + '</span><button class="cv-toast-close" aria-label="Close">\xD7</button>';
+  var closeBtn = toast.querySelector('.cv-toast-close');
+  function removeToast() {
+    toast.classList.add('hiding');
+    setTimeout(function () { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
+  }
+  closeBtn.addEventListener('click', removeToast);
+  setTimeout(removeToast, 3000);
+  container.appendChild(toast);
+}
+
 export function escHtml(str) {
   var div = document.createElement("div");
   div.appendChild(document.createTextNode(str));
@@ -54,7 +70,7 @@ export function initHireModal(prefix) {
 
   document.getElementById(prefix + "-form").addEventListener("submit", function() {
     closeModal();
-    if (window.showToast) window.showToast("Message sent successfully.");
+    showToast("Message sent successfully.");
   });
 
   return { openModal: openModal, closeModal: closeModal };

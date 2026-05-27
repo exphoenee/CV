@@ -5,7 +5,7 @@ export function jesc(str) {
 }
 
 export function pushStr(push, depth, key, value, comma, comment) {
-  var h = '<span class="k">"' + key + '"</span><span class="p">: </span><span class="s">"' + jesc(value) + '"</span>';
+  var h = '<span class="k">"' + key + '"</span><span class="p">: </span><span class="s">"' + escHtml(value) + '"</span>';
   if (comma !== false) h += '<span class="p">,</span>';
   if (comment) h += '  <span class="c">// ' + comment + '</span>';
   push(depth, h);
@@ -36,7 +36,7 @@ export function pushNull(push, depth, key, comma, comment) {
 export function pushStringArray(push, depth, items, lastComma) {
   push(depth, '<span class="p">[</span>');
   items.forEach(function (item, idx) {
-    var line = '<span class="s">"' + jesc(item) + '"</span>';
+    var line = '<span class="s">"' + escHtml(item) + '"</span>';
     if (idx < items.length - 1) line += '<span class="p">,</span>';
     push(depth + 1, line);
   });

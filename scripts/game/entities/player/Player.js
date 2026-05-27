@@ -229,7 +229,7 @@ export default class Player extends GameObject {
         const feetY = this.y + this.height - 4;
         const col = Math.floor(feetX / mapContext.tileSize);
         const row = Math.floor(feetY / mapContext.tileSize);
-        if (row < 0 || row >= mapContext.grid.length || col < 0 || col >= mapContext.grid[0].length) return 'grass';
+        if (!mapContext.grid.length || row < 0 || row >= mapContext.grid.length || col < 0 || col >= mapContext.grid[0].length) return 'grass';
         const key = mapContext.grid[row][col];
         if (key === 'P') return 'road';
         if (key === 'W') return 'water';
