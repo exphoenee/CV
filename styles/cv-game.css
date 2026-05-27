@@ -414,8 +414,7 @@ canvas {
 .pause-content {
     flex: 1;
     min-height: 0;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: hidden;
+    overflow-y: visible;
     display: flex;
     flex-direction: column;
     gap: 10px;
