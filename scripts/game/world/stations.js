@@ -45,7 +45,7 @@ export const CV_STATIONS = [
   <li>Delivered bespoke full-stack custom applications, matching high availability requirements.</li>
   <li>Designed and integrated clean database migrations and modular REST APIs.</li>
   <li>Delivered custom solutions for clients using Svelte, React, Node.js, and PHP.</li>
-  <li><strong>Reference projects:</strong> szelacoaching.hu, pecscoach.hu, smartedu.hu</li>
+  <li><strong>Reference projects:</strong> <a href="https://szelacoaching.hu" target="_blank">szelacoaching.hu</a>, <a href="https://pecscoach.hu" target="_blank">pecscoach.hu</a>, <a href="https://smartedu.hu" target="_blank">smartedu.hu</a></li>
  </ul>
         `
     },
@@ -87,7 +87,7 @@ export const CV_STATIONS = [
   <li>Contributed to establishing the team's strict frontend code conventions and standards.</li>
   <li>Responsive, cross-browser UI development with strict pixel-perfect quality standards.</li>
   <li>Redesigned client requirements gathering—resulted in clearer specs and fewer revision cycles.</li>
-  <li><strong>Key project:</strong> fundmypitch.com</li>
+  <li><strong>Key project:</strong> <a href="https://fundmypitch.com" target="_blank">fundmypitch.com</a></li>
 </ul>
         `
     },
@@ -108,7 +108,7 @@ export const CV_STATIONS = [
   <li>Built responsive, dynamic UIs where milliseconds matter and the UI has to keep up with flying darts.</li>
   <li>Created interactive canvas-based visualizations for real-time progress tracking.</li>
   <li>Integrated low-latency WebSocket live score feeds.</li>
-  <li><strong>Reference:</strong> scoliadarts.com</li>
+  <li><strong>Reference:</strong> <a href="https://scoliadarts.com" target="_blank">scoliadarts.com</a></li>
 </ul>
         `
     },
@@ -128,7 +128,7 @@ export const CV_STATIONS = [
   <li>Fast-paced, enterprise Agile environment with continuous frontend-AI backend integration.</li>
   <li>Built type-safe UI components integrated with AI-driven testing systems.</li>
   <li>Created intuitive dashboards for managing and viewing automated cloud test suites.</li>
-  <li><strong>Reference:</strong> mobiledevice.cloud/order/ai4test</li>
+  <li><strong>Reference:</strong> <a href="https://mobiledevice.cloud/order/ai4test" target="_blank">mobiledevice.cloud/order/ai4test</a></li>
 </ul>
         `
     },
@@ -154,7 +154,7 @@ export const CV_STATIONS = [
   <li>CI pipeline with automated quality checks introduced from scratch.</li>
   <li>Migrated codebases to a robust PNPM monorepo, extracting shared driver packages.</li>
   <li>Claude AI-assisted dev workflows cut release cycle from 30 days down to 14 days (targeting 7).</li>
-  <li><strong>References:</strong> facts.aegex.com, driver.aegex.com</li>
+  <li><strong>References:</strong> <a href="https://facts.aegex.com" target="_blank">facts.aegex.com</a>, <a href="https://driver.aegex.com" target="_blank">driver.aegex.com</a></li>
 </ul>
         `
     },
