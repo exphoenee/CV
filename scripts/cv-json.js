@@ -154,3 +154,19 @@ if (hireBtn && hireForm) {
 }
 
 initMusicPlayer();
+
+document.getElementById('wc-close-btn')?.addEventListener('click', function () {
+  window.location.href = 'index.html';
+});
+
+(function () {
+  var KEY = 'cv-json-theme';
+  var saved = localStorage.getItem(KEY);
+  document.documentElement.setAttribute('data-theme', saved || 'dark');
+
+  document.getElementById('view-menu-btn')?.addEventListener('click', function () {
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem(KEY, next);
+  });
+})();
