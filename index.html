@@ -43,68 +43,7 @@
         <a href="mailto:bozzay.viktor@gmail.com">bozzay.viktor@gmail.com</a>
       </div>
     </div>
-    <div id="hire-index-modal" class="cv-modal-hidden">
-      <div class="hire-backdrop" id="hire-index-backdrop"></div>
-      <div class="hire-dialog">
-        <div class="hire-dialog-header">
-          <h3>Contact Viktor</h3>
-          <button class="hire-close" id="hire-index-close" type="button">
-            &#x2715;
-          </button>
-        </div>
-        <div data-fs-success>
-          <p class="fs-success-title">Thanks for reaching out!</p>
-          <p class="fs-success-msg">
-            Your message was sent successfully. I'll get back to you soon.
-          </p>
-        </div>
-        <div data-fs-error></div>
-        <form id="hire-index-form">
-          <input
-            type="hidden"
-            name="_subject"
-            value="Hire inquiry from index"
-          />
-          <div class="hire-field">
-            <label for="hire-index-name">Your name</label
-            ><input
-              id="hire-index-name"
-              type="text"
-              name="name"
-              required
-              placeholder="Jane Smith"
-              data-fs-field
-            /><span data-fs-error="name" class="fs-error-msg"></span>
-          </div>
-          <div class="hire-field">
-            <label for="hire-index-email">Your email</label
-            ><input
-              id="hire-index-email"
-              type="email"
-              name="email"
-              required
-              placeholder="your@email.com"
-              data-fs-field
-            /><span data-fs-error="email" class="fs-error-msg"></span>
-          </div>
-          <div class="hire-field">
-            <label for="hire-index-message">Message</label
-            ><textarea
-              id="hire-index-message"
-              name="message"
-              required
-              rows="5"
-              placeholder="Hi Viktor, we'd like to..."
-              data-fs-field
-            ></textarea
-            ><span data-fs-error="message" class="fs-error-msg"></span>
-          </div>
-          <button type="submit" class="hire-submit" data-fs-submit-btn>
-            Send
-          </button>
-        </form>
-      </div>
-    </div>
+    <!-- Hire modal is injected by shared.js -->
     <script defer src="./scripts/shared.js"></script>
     <script defer src="./scripts/cv-index.js"></script>
     <script src="https://unpkg.com/@formspree/ajax@1" defer></script>

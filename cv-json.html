@@ -91,74 +91,11 @@
     </div>
 
     <script defer src="./scripts/shared.js"></script>
+    <script defer src="./scripts/cv-data.js"></script>
     <script defer src="./scripts/cv-json.js"></script>
     <script defer src="./scripts/cv-music-player.js"></script>
 
-<!-- MUSIC PLAYER -->
-<div id="music-player">
-    <button id="music-toggle" aria-label="Toggle music player" title="Music Player"><i class="fas fa-music"></i></button>
-
-    <div id="music-player-box" class="music-box-hidden">
-      <button id="music-box-close" class="music-box-close-btn" aria-label="Close music player" title="Close">✕</button>
-      <div class="music-player-content">
-        <div class="music-cover">
-          <img src="assets/music/cover-xs.jpg" alt="Cover" />
-        </div>
-
-        <div class="controls-right">
-          <div class="track-time-row">
-            <span class="track-time-label" id="track-time-current">00:00</span>
-            <input type="range" id="track-seek" min="0" max="100" value="0" step="0.1" class="track-seek-slider" />
-            <span class="track-time-label" id="track-time-total">00:00</span>
-          </div>
-
-          <div class="custom-select" id="custom-genre-select">
-            <div class="custom-select-trigger"><span>👾 8bit</span> <span class="arrow">▼</span></div>
-            <div class="custom-select-options">
-              <div class="custom-option" data-value="assets/music/8bit.mp3">👾 8bit</div>
-              <div class="custom-option" data-value="assets/music/blues.mp3">🎸 Blues</div>
-              <div class="custom-option" data-value="assets/music/classic.mp3">🎻 Classic</div>
-              <div class="custom-option" data-value="assets/music/chanzon.mp3">🎵 Chanzon</div>
-              <div class="custom-option" data-value="assets/music/country.mp3">🤠 Country</div>
-              <div class="custom-option" data-value="assets/music/disco.mp3">🕺 Disco</div>
-              <div class="custom-option" data-value="assets/music/flamenco.mp3">💃 Flamenco</div>
-              <div class="custom-option" data-value="assets/music/funk.mp3">🚌 Funk</div>
-              <div class="custom-option" data-value="assets/music/heavy_metal.mp3">🤘 Heavy Metal</div>
-              <div class="custom-option" data-value="assets/music/jazz.mp3">🎷 Jazz</div>
-              <div class="custom-option" data-value="assets/music/metalcore.mp3">🤘 Metalcore</div>
-              <div class="custom-option" data-value="assets/music/hungarian_nota.mp3">🎻 Nóta</div>
-              <div class="custom-option" data-value="assets/music/polka-schramli.mp3">🪗 Polka-Schramli</div>
-              <div class="custom-option" data-value="assets/music/pop.mp3">🎤 Pop</div>
-              <div class="custom-option" data-value="assets/music/rap.mp3">🗣️ Rap</div>
-              <div class="custom-option" data-value="assets/music/reggae.mp3">🌴 Reggae</div>
-              <div class="custom-option" data-value="assets/music/hire_me_song.mp3">😭 Hire Me Song</div>
-              <div class="custom-option" data-value="assets/music/vegyel_fel.mp3">😭 Vegyél Fel!!!</div>
-            </div>
-          </div>
-
-          <div class="transport-buttons">
-            <button id="music-repeat" class="transport-btn" title="Repeat mode"><i class="fas fa-repeat"></i></button>
-            <button id="music-prev" class="transport-btn" title="Previous"><i class="fas fa-backward-step"></i></button>
-            <button id="music-playpause" class="transport-btn" title="Play/Pause"><i class="fas fa-play"></i></button>
-            <button id="music-next" class="transport-btn" title="Next"><i class="fas fa-forward-step"></i></button>
-            <button id="music-lyrics" class="transport-btn" aria-label="Show lyrics" title="Lyrics"><i class="fas fa-file-lines"></i></button>
-          </div>
-
-          <div class="volume-bottom-row">
-            <span class="volume-label"><i class="fas fa-volume-high"></i></span>
-            <input type="range" id="music-volume" min="0" max="1" step="0.05" value="0.5" class="volume-slider" />
-          </div>
-
-          <div id="music-lyrics-panel" class="music-lyrics-hidden">
-            <pre id="lyrics-text"></pre>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <audio id="music-audio"></audio>
-  </div>
+  <!-- Music player and hire modal are injected by shared.js -->
 
   <script>
     document.getElementById("music-menu-btn")?.addEventListener("click", function() {
@@ -166,40 +103,7 @@
     });
   </script>
 
-<!-- HIRE MODAL -->
-<div id="hire-json-modal" class="cv-modal-hidden">
-  <div class="hire-backdrop" id="hire-json-backdrop"></div>
-  <div class="hire-dialog">
-    <div class="hire-dialog-header">
-      <h3>Contact Viktor</h3>
-      <button class="hire-close" id="hire-json-close" type="button">&#x2715;</button>
-    </div>
-    <div data-fs-success class="cv-success-hidden">
-      <p class="cv-json-inline-5">Thanks for reaching out!</p>
-      <p class="cv-json-inline-6">Your message was sent successfully. I'll get back to you soon.</p>
-    </div>
-    <div data-fs-error class="cv-error-hidden"></div>
-    <form id="hire-json-form">
-      <input type="hidden" name="_subject" value="Hire inquiry from CV - json">
-      <div class="hire-field">
-        <label for="hire-json-name">Your name</label>
-        <input id="hire-json-name" type="text" name="name" required placeholder="Jane Smith" data-fs-field>
-        <span data-fs-error="name" class="cv-json-inline-8"></span>
-      </div>
-      <div class="hire-field">
-        <label for="hire-json-email">Your email</label>
-        <input id="hire-json-email" type="email" name="email" required placeholder="your@email.com" data-fs-field>
-        <span data-fs-error="email" class="cv-json-inline-8"></span>
-      </div>
-      <div class="hire-field">
-        <label for="hire-json-message">Message</label>
-        <textarea id="hire-json-message" name="message" required rows="5" placeholder="Hi Viktor, we'd like to..." data-fs-field></textarea>
-        <span data-fs-error="message" class="cv-json-inline-8"></span>
-      </div>
-      <button type="submit" class="hire-submit" data-fs-submit-btn>Send</button>
-    </form>
-  </div>
-</div>
+
 
 
 <script src="https://unpkg.com/@formspree/ajax@1" defer></script>

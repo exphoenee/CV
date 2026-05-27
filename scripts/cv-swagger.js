@@ -1,35 +1,116 @@
-var STORAGE_KEY = "cv-collapse-state";
+/* cv-swagger.js — Initialize Swagger CV UI */
+(function () {
+  "use strict";
 
-document.querySelectorAll(".expand-operation").forEach(function (btn) {
-  btn.addEventListener("click", function () {
-    var section = btn.closest(".opblock-tag-section");
-    section.classList.toggle("is-open");
-    if (section.id) CV.saveState(STORAGE_KEY, section.id, section.classList.contains("is-open"));
-  });
-});
+  try {
+    // ── 1. Render swagger content into #swagger-ui ──
+    var swaggerEl = document.getElementById("swagger-ui");
+    if (!swaggerEl) {
+      console.warn("cv-swagger: #swagger-ui element not found");
+      return;
+    }
 
-document.querySelectorAll(".opblock-summary-control, .opblock-control-arrow").forEach(function (btn) {
-  btn.addEventListener("click", function () {
-    var opblock = btn.closest(".opblock");
-    opblock.classList.toggle("is-open");
-    if (opblock.id) CV.saveState(STORAGE_KEY, opblock.id, opblock.classList.contains("is-open"));
-  });
-});
+    if (typeof CV_DATA === "undefined") {
+      console.warn("cv-swagger: CV_DATA not defined");
+      return;
+    }
 
-CV.restoreCollapseStates(STORAGE_KEY);
+    if (typeof CV.renderSwaggerContent !== "function") {
+      console.warn("cv-swagger: CV.renderSwaggerContent not found");
+      return;
+    }
 
-// Swagger-specific: hire-trigger buttons on each endpoint
-var swaggerModal = CV.initHireModal("hire");
+    var html = CV.renderSwaggerContent(CV_DATA);
+    swaggerEl.innerHTML = html;
+    console.log("cv-swagger: rendered", document.querySelectorAll(".opblock-tag-section").length, "sections");
 
-document.querySelectorAll(".hire-trigger").forEach(function (btn) {
-  btn.addEventListener("click", function () {
-    var path = btn.closest(".opblock");
-    var pathEl = path && path.querySelector(".opblock-summary-path span");
-    var subject = pathEl ? "Hire inquiry - " + pathEl.textContent : "Hire inquiry from CV";
-    swaggerModal.openModal(subject);
-  });
-});
+    // ── 2. Collapse/expand for operation sections ──
+    document.querySelectorAll(".opblock-tag-section").forEach(function (section) {
+      var tagHeader = section.querySelector(".opblock-tag");
+      if (!tagHeader) return;
 
-CV.initThemeToggle();
+      tagHeader.addEventListener("click", function (e) {
+        e.stopPropagation();
+        section.classList.toggle("is-open");
+        var arrow = section.querySelector(".expand-operation");
+        if (arrow) {
+          arrow.innerHTML = section.classList.contains("is-open")
+            ? CV._svgArrowDown
+            : CV._svgArrowUp;
+        }
+      });
+    });
 
-CV.initFormspree("#hire-form");
+    // ── 3. Expand/collapse for individual endpoints ──
+    document.querySelectorAll(".opblock-summary-control").forEach(function (ctrl) {
+      ctrl.addEventListener("click", function () {
+        var opblock = ctrl.closest(".opblock");
+        if (opblock) {
+          opblock.classList.toggle("is-open");
+          var arrow = opblock.querySelector(".opblock-control-arrow");
+          if (arrow) {
+            arrow.innerHTML = opblock.classList.contains("is-open")
+              ? CV._svgArrowDown
+              : CV._svgArrowUp;
+          }
+        }
+      });
+    });
+
+    // ── 4. Theme toggle ──
+    if (typeof CV.initThemeToggle === "function") {
+      var themeBtn = document.getElementById("theme-toggle");
+      if (themeBtn) {
+        CV.initThemeToggle();
+        console.log("cv-swagger: theme toggle initialized");
+      }
+    }
+
+    // ── 5. Inject hire modal HTML if not present (dynamically rendered button) ──
+    if (!document.getElementById("hire-modal") && typeof CV.hireModalHTML === "function") {
+      document.body.insertAdjacentHTML('beforeend', CV.hireModalHTML("hire", {
+        dynamicSubject: true
+      }));
+    }
+
+    // ── 6. Hire modal — check all modal elements exist ──
+    var modalEl = document.getElementById("hire-modal");
+    var closeEl = document.getElementById("hire-close");
+    var backdropEl = document.getElementById("hire-backdrop");
+    var formEl = document.getElementById("hire-form");
+    var hireBtn = document.getElementById("hire-btn");
+
+    if (hireBtn && modalEl && closeEl && backdropEl && formEl) {
+      if (typeof CV.initHireModal === "function") {
+        CV.initHireModal("hire");
+        console.log("cv-swagger: hire modal initialized");
+      }
+      if (typeof CV.initFormspree === "function") {
+        CV.initFormspree("#hire-form");
+        console.log("cv-swagger: formspree initialized");
+      }
+    } else {
+      console.warn("cv-swagger: hire modal elements missing", { hireBtn: !!hireBtn, modalEl: !!modalEl, closeEl: !!closeEl, backdropEl: !!backdropEl, formEl: !!formEl, hasInitHireModal: typeof CV.initHireModal === "function", hasInitFormspree: typeof CV.initFormspree === "function" });
+    }
+
+    // ── 7. Toast notification helper ──
+    if (typeof window.showToast !== "function") {
+      window.showToast = function (msg) {
+        var container = document.getElementById("cv-toaster-container");
+        if (!container) return;
+        var toast = document.createElement("div");
+        toast.className = "cv-toast";
+        toast.textContent = msg;
+        container.appendChild(toast);
+        setTimeout(function () {
+          toast.classList.add("cv-toast-fade");
+          setTimeout(function () { toast.remove(); }, 400);
+        }, 3000);
+      };
+    }
+
+    console.log("cv-swagger: init complete");
+  } catch (e) {
+    console.error("cv-swagger: init error:", e.message, e.stack);
+  }
+})();

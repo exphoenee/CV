@@ -1,4 +1,26 @@
-CV.initHireModal("hire-plain");
+// ── Render CV from centralized data via shared.js template ──
+document.getElementById("cv-content").innerHTML = CV.renderPlainCV(CV_DATA);
+
+// Inject hire modal HTML if not already present (dynamically rendered button)
+try {
+  if (!document.getElementById("hire-plain-modal") && typeof CV.hireModalHTML === "function") {
+    document.body.insertAdjacentHTML('beforeend', CV.hireModalHTML("hire-plain", {
+      subject: "Hire inquiry from CV - plain",
+      p1Class: "cv-plain-inline-11",
+      p2Class: "cv-plain-inline-12",
+      errClass: "cv-plain-inline-14"
+    }));
+  }
+
+  if (typeof CV.initHireModal === "function") {
+    CV.initHireModal("hire-plain");
+    console.log("cv-plain: hire modal initialized");
+  } else {
+    console.warn("cv-plain: CV.initHireModal not available");
+  }
+} catch (e) {
+  console.error("cv-plain: hire modal init error:", e.message, e.stack);
+}
 
 document.getElementById("print-plain-btn")?.addEventListener("click", function () {
   window.print();
@@ -60,9 +82,7 @@ window.showToast = function(message) {
           const span = document.createElement('span');
           span.className = 'nv-word';
           span.textContent = word;
-          // Use CSS variable so it only affects Night Vision
           span.style.setProperty('--nv-fs', (0.96 + Math.random() * 0.09).toFixed(3) + 'em');
-          // Radical green color variation
           var g = Math.floor(160 + Math.random() * 95);
           var r = Math.floor(20 + Math.random() * 100);
           span.style.setProperty('--nv-c', 'rgb(' + r + ',' + g + ',' + r + ')');
@@ -156,5 +176,11 @@ window.showToast = function(message) {
   }
 })();
 
-CV.initFormspree("#hire-plain-form");
-
+try {
+  if (typeof CV.initFormspree === "function") {
+    CV.initFormspree("#hire-plain-form");
+    console.log("cv-plain: formspree initialized");
+  }
+} catch (e) {
+  console.error("cv-plain: formspree init error:", e.message, e.stack);
+}

@@ -1,6 +1,7 @@
 // ============================================================
 // MUSIC PLAYER — full featured
 // ============================================================
+try {
 (function () {
   var audio = document.getElementById("music-audio");
   var toggleBtn = document.getElementById("music-toggle");
@@ -193,6 +194,7 @@
   if (volumeSlider) volumeSlider.value = initialVolume;
 
   // --- Toggle music box open/close ---
+  if (!toggleBtn || !playerBox || !customSelect) return;
   toggleBtn.addEventListener("click", function () {
     if (isBoxOpen) {
       isBoxOpen = false;
@@ -252,6 +254,7 @@
   });
 
   // --- Play/Pause ---
+  if (!playPauseBtn) return;
   playPauseBtn.addEventListener("click", function () {
     if (isPlaying) {
       fadeOut(function () { saveState(); });
@@ -379,6 +382,7 @@
     });
   }
 
+  if (!audio) return;
   audio.addEventListener("loadedmetadata", function () {
     if (seekSlider && audio.duration) {
       seekSlider.max = audio.duration;
@@ -477,3 +481,7 @@
   // --- Initial update ---
   updatePlayPause();
 })();
+} catch (e) {
+  // Graceful fallback if elements not found
+  console.warn("Music player init error:", e);
+}
