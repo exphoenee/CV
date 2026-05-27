@@ -11,28 +11,59 @@
     />
     <link rel="stylesheet" href="./styles/cv-json.css" />
     <link rel="stylesheet" href="./styles/cv-music-player.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
     <div class="menubar">
       <div class="menubar-left">
-        <img src="assets/images/vscode.svg" width="16" height="16" class="cv-json-inline-0" alt="VSCode">
+        <img
+          src="assets/images/vscode.svg"
+          width="16"
+          height="16"
+          class="cv-json-inline-0"
+          alt="VSCode"
+        />
         <button class="menubar-item">File</button>
         <button class="menubar-item">Edit</button>
         <button class="menubar-item">Selection</button>
         <button class="menubar-item" id="view-menu-btn">View</button>
         <button class="menubar-item" id="music-menu-btn">Music</button>
-        <button class="cv-json-inline-1 menubar-item" id="hire-json-btn" >Hire</button>
+        <button class="cv-json-inline-1 menubar-item" id="hire-json-btn">
+          Hire
+        </button>
       </div>
       <div class="menubar-center">
         <button class="menubar-nav" disabled aria-label="Back">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="10,4 6,8 10,12"/>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="10,4 6,8 10,12" />
           </svg>
         </button>
         <button class="menubar-nav" aria-label="Forward">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6,4 10,8 6,12"/>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="6,4 10,8 6,12" />
           </svg>
         </button>
         <div class="menubar-crumb">
@@ -40,7 +71,7 @@
           <span class="menubar-crumb-folder">CV</span>
           <span class="menubar-crumb-sep">›</span>
           <span class="menubar-crumb-file">
-            <span class="cv-json-inline-2 tab-json" >{ }</span>
+            <span class="cv-json-inline-2 tab-json">{ }</span>
             viktor_bozzay.json
           </span>
         </div>
@@ -51,20 +82,48 @@
           <span>10</span>
         </div>
         <div class="menubar-layout-icon">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" opacity="0.8">
-            <rect x="1" y="1" width="6" height="14" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            opacity="0.8"
+          >
+            <rect x="1" y="1" width="6" height="14" rx="1" />
+            <rect x="9" y="1" width="6" height="6" rx="1" />
+            <rect x="9" y="9" width="6" height="6" rx="1" />
           </svg>
         </div>
         <span class="menubar-chevron">∨</span>
         <button class="wc-btn" title="Minimize">
-          <svg width="11" height="1" viewBox="0 0 11 1" fill="currentColor"><rect width="11" height="1"/></svg>
+          <svg width="11" height="1" viewBox="0 0 11 1" fill="currentColor">
+            <rect width="11" height="1" />
+          </svg>
         </button>
         <button class="wc-btn" title="Restore Down">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1"><rect x=".5" y=".5" width="9" height="9"/></svg>
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1"
+          >
+            <rect x=".5" y=".5" width="9" height="9" />
+          </svg>
         </button>
         <button class="wc-btn wc-close" id="wc-close-btn" title="Close">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
-            <line x1="0" y1="0" x2="10" y2="10"/><line x1="10" y1="0" x2="0" y2="10"/>
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1"
+            stroke-linecap="round"
+          >
+            <line x1="0" y1="0" x2="10" y2="10" />
+            <line x1="10" y1="0" x2="0" y2="10" />
           </svg>
         </button>
       </div>
@@ -86,22 +145,21 @@
       <span>JSON</span><span>UTF-8</span>
       <span>Ln <span id="ln">1</span></span>
       <span class="r"
-        >Frontend Tech Lead &nbsp;·&nbsp; Pécs, HU &nbsp;·&nbsp; bozzay.viktor@gmail.com</span
+        >Frontend Tech Lead &nbsp;·&nbsp; Pécs, HU &nbsp;·&nbsp;
+        bozzay.viktor@gmail.com</span
       >
     </div>
 
     <script type="module" src="./scripts/cv-json.js"></script>
 
-  <script>
-    document.getElementById("music-menu-btn")?.addEventListener("click", function() {
-      document.getElementById("music-toggle")?.click();
-    });
-  </script>
-
-
-
-
-<div id="cv-toaster-container"></div>
-<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+    <script>
+      document
+        .getElementById("music-menu-btn")
+        ?.addEventListener("click", function () {
+          document.getElementById("music-toggle")?.click();
+        });
+    </script>
+    <div id="cv-toaster-container"></div>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
   </body>
 </html>

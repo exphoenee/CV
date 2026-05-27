@@ -1,26 +1,28 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/svg+xml" href="assets/images/swagger.svg" />
-  <title>Viktor Bozzay - CV API</title>
-  <link rel="stylesheet" href="./styles/cv-swagger.css" />
-  <link rel="stylesheet" href="./styles/cv-music-player.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="assets/images/swagger.svg" />
+    <title>Viktor Bozzay - CV API</title>
+    <link rel="stylesheet" href="./styles/cv-swagger.css" />
+    <link rel="stylesheet" href="./styles/cv-music-player.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <!-- Swagger UI content (dynamically rendered) -->
+    <div id="swagger-ui"></div>
 
-  <!-- Swagger UI content (dynamically rendered) -->
-  <div id="swagger-ui"></div>
+    <!-- Music player and hire modal are injected by cv-swagger.js -->
 
-  <!-- Music player and hire modal are injected by cv-swagger.js -->
+    <div id="cv-toaster-container"></div>
 
-
-
-  <div id="cv-toaster-container"></div>
-
-  <script type="module" src="./scripts/cv-swagger.js"></script>
-  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
-</body>
+    <script type="module" src="./scripts/cv-swagger.js"></script>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+  </body>
 </html>

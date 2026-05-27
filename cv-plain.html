@@ -1,33 +1,42 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Curriculum Vitae</title>
+    <meta name="description" content="Viktor Bozzay CV" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23ff7024'/><text x='50' y='66' font-size='44' font-weight='800' font-family='system-ui' fill='white' text-anchor='middle'>VB</text></svg>"
+    />
+    <link rel="stylesheet" href="./styles/cv-plain.css" />
+    <link rel="stylesheet" href="./styles/cv-music-player.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Curriculum Vitae</title>
-  <meta name="description" content="Viktor Bozzay CV" />
-  <link rel="icon" type="image/svg+xml"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23ff7024'/><text x='50' y='66' font-size='44' font-weight='800' font-family='system-ui' fill='white' text-anchor='middle'>VB</text></svg>">
-  <link rel="stylesheet" href="./styles/cv-plain.css" />
-  <link rel="stylesheet" href="./styles/cv-music-player.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
+  <body>
+    <button id="theme-toggle" aria-label="Toggle theme">
+      <img
+        src="assets/images/sun.webp"
+        class="theme-icon-img"
+        alt="theme icon"
+      />
+    </button>
+    <!-- Music player and hire modal are injected by cv-plain.js -->
 
-<body>
-  <button id="theme-toggle" aria-label="Toggle theme"><img src="assets/images/sun.webp" class="theme-icon-img"
-      alt="theme icon"></button>
-  <!-- Music player and hire modal are injected by cv-plain.js -->
+    <div class="cv-wrapper">
+      <div id="cv-content"></div>
+    </div>
 
-  <div class="cv-wrapper">
-    <div id="cv-content"></div>
-  </div>
+    <div id="cv-toaster-container"></div>
 
-  <div id="cv-toaster-container"></div>
-
-
-
-  <script type="module" src="./scripts/cv-plain.js"></script>
-  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
-</body>
-
+    <script type="module" src="./scripts/cv-plain.js"></script>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+  </body>
 </html>
