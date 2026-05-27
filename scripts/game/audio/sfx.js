@@ -17,7 +17,8 @@ class SfxManager {
   constructor() {
     this.pool = {};
     this.looping = {};
-    this.volume = parseFloat(localStorage.getItem(SFX_KEY)) ?? 0.5;
+    const v = parseFloat(localStorage.getItem(SFX_KEY));
+    this.volume = Number.isFinite(v) ? v : 0.5;
   }
 
   preload() {
