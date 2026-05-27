@@ -17,7 +17,8 @@
       "Bash(git commit *)",
       "Bash(git worktree *)",
       "Bash(Get-ChildItem -Path \"C:\\\\Projects\\\\own\\\\CV\\\\scripts\\\\game\\\\\" -Recurse -File | Select-Object -ExpandProperty FullName)",
-      "PowerShell(Rename-Item \"c:\\\\Projects\\\\own\\\\CV\\\\assets\\\\images\\\\project managment.svg\" \"project management.svg\")"
+      "PowerShell(Rename-Item \"c:\\\\Projects\\\\own\\\\CV\\\\assets\\\\images\\\\project managment.svg\" \"project management.svg\")",
+      "PowerShell(Rename-Item \"c:\\\\Projects\\\\own\\\\CV\\\\scripts\\\\components\\\\swagger\\\\ui\\\\_icons.js\" \"icons.js\")"
     ]
   }
 }

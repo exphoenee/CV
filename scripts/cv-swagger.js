@@ -2,7 +2,7 @@ import { CV_DATA } from './cv-data.js';
 import { renderSwaggerContent } from './components/swagger/index.js';
 import { initHireModal, initThemeToggle, initFormspree, musicPlayerHTML, hireModalHTML } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
-import { svgArrowUp, svgArrowDown } from './components/swagger/ui/_icons.js';
+import { svgArrowUp, svgArrowDown } from './components/swagger/ui/icons.js';
 import { THEME_DARK, THEME_LIGHT } from './config.js';
 
 document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());

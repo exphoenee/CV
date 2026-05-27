@@ -1,5 +1,5 @@
 import { escHtml } from '../../../shared.js';
-import { svgClipboard, svgLockUnlocked, svgArrowUp } from './_icons.js';
+import { svgClipboard, svgLockUnlocked, svgArrowUp } from './icons.js';
 
 export function swgSummary(method, path, desc, extraBadge) {
   var cls = method.toLowerCase();

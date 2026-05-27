@@ -1,5 +1,5 @@
 import { escHtml } from '../../../shared.js';
-import { svgClipboard, svgLockUnlocked, svgArrowUp } from '../ui/_icons.js';
+import { svgClipboard, svgLockUnlocked, svgArrowUp } from '../ui/icons.js';
 import { swgGet, swgDesc } from '../ui/endpoint-block.js';
 import { swgParams } from '../ui/params-table.js';
 import { swgResponses } from '../ui/responses.js';
