@@ -147,6 +147,10 @@
   pointer-events: none;
 }
 
+.cover-light { display: none; }
+[data-theme="light"] .cover-dark { display: none; }
+[data-theme="light"] .cover-light { display: block; }
+
 /* Controls wrapper (portrait: normal flow, landscape: flex row) */
 .controls-right {
   display: flex;

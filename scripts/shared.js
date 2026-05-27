@@ -105,7 +105,8 @@ CV.musicPlayerHTML = function () {
     '    <button id="music-box-close" class="music-box-close-btn" aria-label="Close music player" title="Close">\u2715</button>' +
     '    <div class="music-player-content">' +
     '      <div class="music-cover">' +
-    '        <img src="assets/music/cover-xs.jpg" alt="Cover" />' +
+    '        <img src="assets/music/cover-xs.jpg" alt="" class="cover-dark" />' +
+    '        <img src="assets/music/cover-dl-xs.jpg" alt="" class="cover-light" />' +
     '      </div>' +
     '      <div class="controls-right">' +
     '        <div class="track-time-row">' +
