@@ -84,6 +84,8 @@ export class FenceRenderer {
         if (!this.isLoaded) return;
 
         const { tileSize } = this;
+        const floorCamX = Math.floor(camera.x);
+        const floorCamY = Math.floor(camera.y);
         const startCol = Math.floor(camera.x / tileSize);
         const endCol   = Math.ceil((camera.x + virtualWidth)  / tileSize);
         const startRow = Math.floor(camera.y / tileSize);
@@ -100,9 +102,9 @@ export class FenceRenderer {
                 ctx.drawImage(
                     this.image,
                     frame.sx, frame.sy, SRC_TILE, SRC_TILE,
-                    c * tileSize - camera.x,
-                    r * tileSize - camera.y,
-                    tileSize, tileSize
+                    c * tileSize - floorCamX - 1,
+                    r * tileSize - floorCamY - 1,
+                    tileSize + 2, tileSize + 2
                 );
             }
         }
