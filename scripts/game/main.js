@@ -187,6 +187,17 @@ class GameEngine {
    * Start loading and build game assets.
    */
   async init() {
+    const loadingBar   = document.getElementById('loading-bar');
+    const loadingLabel = document.getElementById('loading-label');
+
+    function setLabel(text) {
+      if (loadingLabel) loadingLabel.textContent = text;
+    }
+    function setProgress(ratio) {
+      if (loadingBar) loadingBar.style.width = (ratio * 100) + '%';
+    }
+
+    setLabel('Loading map…');
     try {
       const mapData = await loadMapGridFromImage(MAP_IMAGE_SRC);
       this.fullMapGrid = mapData.fullMapGrid;
@@ -198,11 +209,45 @@ class GameEngine {
       console.error("[Map] BMP load failed:", err);
       return;
     }
+    setProgress(0.2);
 
+    setLabel('Loading tiles…');
     await new Promise((resolve) => this.preloadAssets(resolve));
+    setProgress(0.4);
     sfx.preload();
 
+    setLabel('Building world…');
     this.buildWorld();
+    setProgress(0.5);
+
+    setLabel('Loading sprites…');
+    const images = this.gameObjects
+      .filter(obj => obj && obj.image)
+      .map(obj => obj.image);
+
+    if (images.length > 0) {
+      let done = 0;
+      await Promise.all(images.map(img => new Promise(resolve => {
+        const tick = () => {
+          done++;
+          setProgress(0.5 + (done / images.length) * 0.5);
+          resolve();
+        };
+        if (img.complete && img.naturalWidth > 0) { tick(); return; }
+        img.addEventListener('load',  tick, { once: true });
+        img.addEventListener('error', tick, { once: true });
+      })));
+    } else {
+      setProgress(1);
+    }
+
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+      loadingScreen.classList.add('loading-done');
+      await new Promise(r => setTimeout(r, 420));
+      loadingScreen.remove();
+    }
+
     this.setupDialogueListeners();
     this.setupPauseMenuListeners();
     this.initHireModal();
