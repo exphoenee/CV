@@ -125,6 +125,8 @@ export class MapRenderer {
 
   drawTiles(ctx, camera, rows, cols, virtualWidth, virtualHeight) {
     const {tileSize, sheetTileSize} = this;
+    const floorCamX = Math.floor(camera.x);
+    const floorCamY = Math.floor(camera.y);
     const startCol = Math.floor(camera.x / tileSize);
     const endCol = Math.ceil((camera.x + virtualWidth) / tileSize);
     const startRow = Math.floor(camera.y / tileSize);
@@ -137,6 +139,10 @@ export class MapRenderer {
         if (!img) continue;
 
         const frame = this.getTileFrame(tileKey, r, c);
+        const ox = c * tileSize - floorCamX;
+        const oy = r * tileSize - floorCamY;
+        // Expand dest by 1px to hide 1px gaps from fractional zoom (nearest-neighbor
+        // duplicates edge pixels, seamless for tiling tiles)
         if (frame) {
           ctx.drawImage(
             img,
@@ -144,18 +150,18 @@ export class MapRenderer {
             frame.y,
             sheetTileSize,
             sheetTileSize,
-            c * tileSize - camera.x,
-            r * tileSize - camera.y,
-            tileSize,
-            tileSize,
+            ox - 1,
+            oy - 1,
+            tileSize + 2,
+            tileSize + 2,
           );
         } else {
           ctx.drawImage(
             img,
-            c * tileSize - camera.x,
-            r * tileSize - camera.y,
-            tileSize,
-            tileSize,
+            ox - 1,
+            oy - 1,
+            tileSize + 2,
+            tileSize + 2,
           );
         }
       }
