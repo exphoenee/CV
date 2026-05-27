@@ -3,6 +3,7 @@ import { renderSwaggerContent } from './components/swagger/index.js';
 import { initHireModal, initThemeToggle, initFormspree, musicPlayerHTML, hireModalHTML } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { svgArrowUp, svgArrowDown } from './components/swagger/ui/_icons.js';
+import { THEME_DARK, THEME_LIGHT } from './config.js';
 
 document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
 
@@ -44,7 +45,7 @@ document.querySelectorAll('.opblock-summary-control, .opblock-control-arrow').fo
 
 var themeBtn = document.getElementById('theme-toggle');
 if (themeBtn) {
-  initThemeToggle();
+  initThemeToggle({ validThemes: [THEME_DARK, THEME_LIGHT] });
 }
 
 if (!document.getElementById('hire-modal')) {

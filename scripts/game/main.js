@@ -25,6 +25,7 @@ import Log from "./entities/decor/Log.js";
 import GoldOre from "./entities/decor/GoldOre.js";
 import PickableOre from "./entities/decor/PickableOre.js";
 import {MUSIC_GENRES, initFormspree} from "../shared.js";
+import { MUSIC_STATE_KEY, MUSIC_TIME_KEY, MUSIC_VOLUME_KEY, MUSIC_GENRE_KEY, MUSIC_REPEAT_KEY, SFX_VOLUME_KEY } from '../config.js';
 import Hay from "./entities/decor/Hay.js";
 import Carrot from "./entities/decor/Carrot.js";
 import GoldBoulder from "./entities/decor/GoldBoulder.js";
@@ -547,15 +548,15 @@ class GameEngine {
 
     // Persist music state
     const saveState = () => {
-      localStorage.setItem("cv-music-state", isPlaying ? "playing" : "paused");
-      if (!isPlaying) localStorage.setItem("cv-music-time", audio.currentTime);
+      localStorage.setItem(MUSIC_STATE_KEY, isPlaying ? "playing" : "paused");
+      if (!isPlaying) localStorage.setItem(MUSIC_TIME_KEY, audio.currentTime);
     };
     const saveTime = () => {
-      localStorage.setItem("cv-music-time", audio.currentTime);
+      localStorage.setItem(MUSIC_TIME_KEY, audio.currentTime);
     };
 
     // Restore saved volume preference
-    const savedVolume = localStorage.getItem("cv-music-volume");
+    const savedVolume = localStorage.getItem(MUSIC_VOLUME_KEY);
     if (savedVolume !== null) {
       audio.volume = parseFloat(savedVolume);
       if (volumeSlider) volumeSlider.value = savedVolume;
@@ -565,21 +566,21 @@ class GameEngine {
     }
 
     // Volume target — updated live when the slider changes
-    let targetVolume = parseFloat(localStorage.getItem("cv-music-volume")) || 0.5;
+    let targetVolume = parseFloat(localStorage.getItem(MUSIC_VOLUME_KEY)) || 0.5;
 
     if (volumeSlider) {
       volumeSlider.addEventListener("input", (e) => {
         const vol = parseFloat(e.target.value);
         targetVolume = vol;
         audio.volume = vol;
-        localStorage.setItem("cv-music-volume", vol);
+        localStorage.setItem(MUSIC_VOLUME_KEY, vol);
         volumeSlider.style.setProperty('--volume-pct', (vol * 100) + '%');
       });
     }
 
     // SFX volume slider
     const sfxSlider = document.getElementById("game-sfx-volume");
-    var savedSfxVol = localStorage.getItem("cv-sfx-volume");
+    var savedSfxVol = localStorage.getItem(SFX_VOLUME_KEY);
     if (savedSfxVol !== null) {
       sfx.setVolume(parseFloat(savedSfxVol));
       if (sfxSlider) sfxSlider.value = savedSfxVol;
@@ -594,7 +595,7 @@ class GameEngine {
     }
 
     // Restore saved genre preference
-    const savedGenre = localStorage.getItem("cv-music-genre");
+    const savedGenre = localStorage.getItem(MUSIC_GENRE_KEY);
     if (savedGenre) {
       for (let i = 0; i < options.length; i++) {
         if (options[i].getAttribute("data-value") === savedGenre) {
@@ -619,7 +620,7 @@ class GameEngine {
       currentValue = options[currentIndex].getAttribute("data-value");
       currentLabel = options[currentIndex].textContent;
       triggerText.textContent = currentLabel;
-      localStorage.setItem("cv-music-genre", currentValue);
+      localStorage.setItem(MUSIC_GENRE_KEY, currentValue);
     };
 
     const updatePlayPause = () => {
@@ -730,15 +731,15 @@ class GameEngine {
       stopBtn.addEventListener("click", () => {
         fadeOut(() => {
           audio.currentTime = 0;
-          localStorage.setItem("cv-music-state", "stopped");
-          localStorage.setItem("cv-music-time", 0);
+          localStorage.setItem(MUSIC_STATE_KEY, "stopped");
+          localStorage.setItem(MUSIC_TIME_KEY, 0);
         });
       });
     }
 
     // Repeat toggle
     const repeatBtn = document.getElementById("game-music-repeat");
-    let repeatMode = parseInt(localStorage.getItem("cv-music-repeat")) || 0; // 0 = no repeat, 1 = repeat all, 2 = repeat one
+    let repeatMode = parseInt(localStorage.getItem(MUSIC_REPEAT_KEY)) || 0; // 0 = no repeat, 1 = repeat all, 2 = repeat one
 
     function updateRepeatBtnUI() {
       if (!repeatBtn) return;
@@ -761,7 +762,7 @@ class GameEngine {
 
       repeatBtn.addEventListener("click", () => {
         repeatMode = (repeatMode + 1) % 3;
-        localStorage.setItem("cv-music-repeat", repeatMode);
+        localStorage.setItem(MUSIC_REPEAT_KEY, repeatMode);
         updateRepeatBtnUI();
       });
     }
@@ -776,7 +777,7 @@ class GameEngine {
           updatePlayPause();
           return;
         }
-        localStorage.setItem("cv-music-time", 0);
+        localStorage.setItem(MUSIC_TIME_KEY, 0);
         const prevIndex = (currentIndex - 1 + options.length) % options.length;
         selectTrackByIndex(prevIndex);
         fadeOutThen(() => {
@@ -790,7 +791,7 @@ class GameEngine {
     // Next: jump to the next track (wraps to first if at last).
     if (nextBtn) {
       nextBtn.addEventListener("click", () => {
-        localStorage.setItem("cv-music-time", 0);
+        localStorage.setItem(MUSIC_TIME_KEY, 0);
         const nextIndex = (currentIndex + 1) % options.length;
         selectTrackByIndex(nextIndex);
         fadeOutThen(() => {
@@ -900,7 +901,7 @@ class GameEngine {
 
       // No repeat: stop
       isPlaying = false;
-      localStorage.setItem("cv-music-state", "stopped");
+      localStorage.setItem(MUSIC_STATE_KEY, "stopped");
       updatePlayPause();
     });
 
@@ -910,8 +911,8 @@ class GameEngine {
     }
 
     // Restore saved time and state
-    const savedTime = parseFloat(localStorage.getItem("cv-music-time"));
-    const savedState = localStorage.getItem("cv-music-state");
+    const savedTime = parseFloat(localStorage.getItem(MUSIC_TIME_KEY));
+    const savedState = localStorage.getItem(MUSIC_STATE_KEY);
 
     // Load track, restore time and playing state
     loadTrack();

@@ -2,6 +2,7 @@ import { CV_DATA } from './cv-data.js';
 import { renderPlainCV } from './components/plain/index.js';
 import { initHireModal, initFormspree, getSystemTheme, musicPlayerHTML, hireModalHTML } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
+import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES, CURSOR_KEY } from './config.js';
 
 document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
 document.getElementById('cv-content').innerHTML = renderPlainCV(CV_DATA);
@@ -43,15 +44,13 @@ window.showToast = function(message) {
   var btn = document.getElementById('theme-toggle');
   var overlay = null;
   var isTouch = window.matchMedia('(pointer: coarse)').matches;
-  var states = isTouch ? ['light', 'dark'] : ['light', 'dark', 'superdark', 'nightvision', 'predator'];
+  var states = isTouch ? [THEME_LIGHT, THEME_DARK] : [THEME_LIGHT, THEME_DARK].concat(PLAIN_ONLY_THEMES);
   var icons = isTouch
     ? ['assets/images/sun.webp', 'assets/images/moon.webp']
     : ['assets/images/sun.webp', 'assets/images/moon.webp', 'assets/images/flashlight.webp', 'assets/images/nightvision.webp', 'assets/images/predator.webp'];
-  var savedTheme = localStorage.getItem('cv-swagger-theme');
+  var savedTheme = localStorage.getItem(THEME_KEY);
   var current = (savedTheme && states.indexOf(savedTheme) !== -1) ? savedTheme : getSystemTheme();
-  if (states.indexOf(current) === -1) current = 'light';
-
-  var CURSOR_KEY = 'cv-superdark-cursor';
+  if (states.indexOf(current) === -1) current = THEME_LIGHT;
   var wordsWrapped = false;
 
   function updateOverlay(x, y) {
@@ -97,7 +96,7 @@ window.showToast = function(message) {
 
   function apply(state) {
     document.documentElement.setAttribute('data-theme', state);
-    localStorage.setItem('cv-swagger-theme', state);
+    localStorage.setItem(THEME_KEY, state);
     current = state;
 
     var icon = icons[states.indexOf(state)];

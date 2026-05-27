@@ -1,4 +1,4 @@
-const SFX_KEY = 'cv-sfx-volume';
+import { SFX_VOLUME_KEY as SFX_KEY } from '../../config.js';
 
 const SOUND_DEFS = {
   footsteps_grass: { files: ['footsteps_grass_1.wav', 'footsteps_grass_2.wav', 'footsteps_grass_3.wav', 'footsteps_grass_4.wav'] },

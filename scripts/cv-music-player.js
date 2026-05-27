@@ -1,3 +1,5 @@
+import { MUSIC_STATE_KEY, MUSIC_TIME_KEY, MUSIC_VOLUME_KEY, MUSIC_GENRE_KEY, MUSIC_REPEAT_KEY } from './config.js';
+
 var LYRICS_MAP = {
   "assets/music/polka-schramli.mp3": `[intro]\r\n\r\n[strophe]\r\nDer Bildschirm im Browser leuchtet still im Raum\r\nIch folge den Codes durch digitalen Schattenraum\r\nMit ruhiger Hand entwerfe ich das Design\r\nEin Geist, der Lösungen findet, wo Logik sich vereint\r\n\r\nIch richte die Pfeiler, wo alte Balken schwanken\r\nUnd leite verlorene Energie auf ihren Bahnen\r\nNicht nur ein Gesicht für den flüchtigen Blick\r\nSondern Geschichten von Funktionen klingen zu mir zurück\r\n\r\n[pre-chorus]\r\nDie Daten strömen tief aus fernen Servern her\r\nIch verwebe jeden Faden mit meisterhaftem Gespür\r\nAus der Dunkelheit ins Licht, wo Nutzer sich vereinen\r\nIch halte das Steuer ihres Schicksals im Design\r\n\r\n[refrain]\r\nGib mir die Schlüssel zu dem Reich, das du erschufst\r\nSieh, wie jedes Versprechen zu Gold wird, wenn du es rufst\r\nIch bin der Architekt, der den Stromlauf formt\r\nDie Brücke zu den Küsten deiner kühnsten Träume dort\r\n\r\nEntfache das Feuer, das wagt, sich neu zu definieren\r\nDie Zukunft steht geschrieben in jeder Zeile hier\r\nJa, die Zukunft steht geschrieben in jeder Zeile hier\r\n\r\n[strophe]\r\nIch lehrte Maschinen zu denken und zu erneuern\r\nDas Chaos zu ordnen auf virtuellen Gemäuern\r\nDer Workflow summt wie Wind in den Blättern sacht\r\nUnd löst jedes Rätsel in dem Moment, da es erwacht\r\n\r\nDas Refactoring glänzt wie Morgendämmerung nach dem Regen\r\nErsetzt das Zerbrechliche durch eisernes Vermögen\r\nIch lese das Interface und säe den Samen ein\r\nWo Logik Wurzeln schlägt im Boden der Notwendigkeit hinein\r\n\r\n[pre-chorus]\r\nDie Daten strömen tief aus fernen Servern her\r\nIch verwebe jeden Faden mit meisterhaftem Gespür\r\nAus der Dunkelheit ins Licht, wo Nutzer sich vereinen\r\nIch halte das Steuer ihres Schicksals im Design\r\n\r\n[refrain]\r\nGib mir die Schlüssel zu dem Reich, das du erschufst\r\nSieh, wie jedes Versprechen zu Gold wird, wenn du es rufst\r\nIch bin der Architekt, der den Stromlauf formt\r\nDie Brücke zu den Küsten deiner kühnsten Träume dort\r\n\r\nEntfache das Feuer, das wagt, sich neu zu definieren\r\nDie Zukunft steht geschrieben in jeder Zeile hier\r\nJa, die Zukunft steht geschrieben in jeder Zeile hier`,
   "assets/music/chanzon.mp3": `[intro]\r\n\r\n[couplet]\r\nL'écran du navigateur brille dans la pièce silencieuse\r\nJe suis les codes à travers la pénombre numérique\r\nD'une main sûre, je façonne le design\r\nUn esprit qui résout là où la logique s'aligne\r\n\r\nJe répare les piliers où vacillent les vieilles poutres\r\nEt guide l'énergie perdue sur son chemin\r\nPas seulement un visage offert aux regards\r\nMais des récits de fonction me murmurant à l'oreille\r\n\r\n[pré-refrain]\r\nLes données circulent profondément depuis des serveurs lointains\r\nJe tisse chaque fil avec un art maîtrisé\r\nDe l'ombre vers la lumière où les utilisateurs convergent\r\nJe tiens le gouvernail de leur destin dans le design\r\n\r\n[refrain]\r\nDonne-moi les clés du royaume que tu as créé\r\nRegarde chaque promesse se changer en or sous les yeux\r\nJe suis l'architecte qui façonne le courant\r\nLe pont vers les rivages de tes rêves les plus fous\r\n\r\nEngage le feu qui ose définir\r\nLe futur s'écrit dans chaque ligne\r\nOui, le futur s'écrit dans chaque ligne\r\n\r\n[couplet]\r\nJ'ai appris aux machines à penser et restaurer\r\nOrdonnant le chaos sur des sols virtuels\r\nLe flux de travail bourdonne comme le vent dans les feuilles\r\nRésolvant chaque énigme à l'instant où elle respire\r\n\r\nLe refactoring brille comme l'aube après la pluie\r\nRemplaçant le fragile par le royaume du fer\r\nJe lis l'interface et plante la graine\r\nLà où la logique prend racine dans la terre du besoin\r\n\r\n[pré-refrain]\r\nLes données circulent profondément depuis des serveurs lointains\r\nJe tisse chaque fil avec un art maîtrisé\r\nDe l'ombre vers la lumière où les utilisateurs convergent\r\nJe tiens le gouvernail de leur destin dans le design\r\n\r\n[refrain]\r\nDonne-moi les clés du royaume que tu as créé\r\nRegarde chaque promesse se changer en or sous les yeux\r\nJe suis l'architecte qui façonne le courant\r\nLe pont vers les rivages de tes rêves les plus fous\r\n\r\nEngage le feu qui ose définir\r\nLe futur s'écrit dans chaque ligne\r\nOui, le futur s'écrit dans chaque ligne`,
@@ -46,8 +48,8 @@ export function initMusicPlayer() {
     var isBoxOpen = false;
     var isPlaying = false;
     var currentIndex = 0;
-    var repeatMode = parseInt(localStorage.getItem("cv-music-repeat")) || 0;
-    var savedGenre = localStorage.getItem("cv-music-genre");
+    var repeatMode = parseInt(localStorage.getItem(MUSIC_REPEAT_KEY)) || 0;
+    var savedGenre = localStorage.getItem(MUSIC_GENRE_KEY);
     var currentValue = options[0].getAttribute("data-value");
     var currentLabel = options[0].textContent;
 
@@ -65,7 +67,7 @@ export function initMusicPlayer() {
 
     var fadeInterval = null;
     var fadeDuration = 0.5;
-    var targetVolume = parseFloat(localStorage.getItem("cv-music-volume")) || 0.5;
+    var targetVolume = parseFloat(localStorage.getItem(MUSIC_VOLUME_KEY)) || 0.5;
 
     var stopFade = function () {
       if (fadeInterval) { clearInterval(fadeInterval); fadeInterval = null; }
@@ -131,7 +133,7 @@ export function initMusicPlayer() {
       currentValue = options[currentIndex].getAttribute("data-value");
       currentLabel = options[currentIndex].textContent;
       triggerText.textContent = currentLabel;
-      localStorage.setItem("cv-music-genre", currentValue);
+      localStorage.setItem(MUSIC_GENRE_KEY, currentValue);
       updateLyricsContent();
     };
 
@@ -166,17 +168,17 @@ export function initMusicPlayer() {
         seekSlider.style.setProperty('--seek-pct', (audio.currentTime / audio.duration * 100) + '%');
       }
       if (audio.currentTime - lastSaveTime >= 3) {
-        localStorage.setItem("cv-music-time", audio.currentTime);
+        localStorage.setItem(MUSIC_TIME_KEY, audio.currentTime);
         lastSaveTime = audio.currentTime;
       }
     };
 
     var saveState = function () {
-      localStorage.setItem("cv-music-state", isPlaying ? "playing" : "paused");
-      if (!isPlaying) localStorage.setItem("cv-music-time", audio.currentTime);
+      localStorage.setItem(MUSIC_STATE_KEY, isPlaying ? "playing" : "paused");
+      if (!isPlaying) localStorage.setItem(MUSIC_TIME_KEY, audio.currentTime);
     };
 
-    var initialVolume = parseFloat(localStorage.getItem("cv-music-volume")) || 0.5;
+    var initialVolume = parseFloat(localStorage.getItem(MUSIC_VOLUME_KEY)) || 0.5;
     targetVolume = initialVolume;
     audio.volume = initialVolume;
     if (volumeSlider) volumeSlider.value = initialVolume;
@@ -254,11 +256,11 @@ export function initMusicPlayer() {
       prevBtn.addEventListener("click", function () {
         if (audio.currentTime > 10) {
           audio.currentTime = 0;
-          localStorage.setItem("cv-music-time", 0);
+          localStorage.setItem(MUSIC_TIME_KEY, 0);
           updatePlayPause();
           return;
         }
-        localStorage.setItem("cv-music-time", 0);
+        localStorage.setItem(MUSIC_TIME_KEY, 0);
         var prevIndex = (currentIndex - 1 + options.length) % options.length;
         selectTrackByIndex(prevIndex);
         var cleanLabel = currentLabel.replace(/^[^\w\s]*\s*/, '').trim();
@@ -273,7 +275,7 @@ export function initMusicPlayer() {
 
     if (nextBtn) {
       nextBtn.addEventListener("click", function () {
-        localStorage.setItem("cv-music-time", 0);
+        localStorage.setItem(MUSIC_TIME_KEY, 0);
         var nextIndex = (currentIndex + 1) % options.length;
         selectTrackByIndex(nextIndex);
         var cleanLabel = currentLabel.replace(/^[^\w\s]*\s*/, '').trim();
@@ -306,7 +308,7 @@ export function initMusicPlayer() {
 
       repeatBtn.addEventListener("click", function () {
         repeatMode = (repeatMode + 1) % 3;
-        localStorage.setItem("cv-music-repeat", repeatMode);
+        localStorage.setItem(MUSIC_REPEAT_KEY, repeatMode);
         var modeLabels = ["No repeat", "Repeat all", "Repeat one"];
         if (window.showToast) window.showToast("\uD83D\uDD01 " + modeLabels[repeatMode]);
         updateRepeatBtnUI();
@@ -318,7 +320,7 @@ export function initMusicPlayer() {
         var vol = parseFloat(e.target.value);
         targetVolume = vol;
         audio.volume = vol;
-        localStorage.setItem("cv-music-volume", vol);
+        localStorage.setItem(MUSIC_VOLUME_KEY, vol);
         volumeSlider.style.setProperty('--volume-pct', (vol * 100) + '%');
       });
     }
@@ -337,7 +339,7 @@ export function initMusicPlayer() {
       seekSlider.addEventListener("change", function () {
         userScrubbing = false;
         audio.currentTime = parseFloat(seekSlider.value);
-        localStorage.setItem("cv-music-time", audio.currentTime);
+        localStorage.setItem(MUSIC_TIME_KEY, audio.currentTime);
       });
       seekSlider.addEventListener("click", function (e) {
         userScrubbing = true;
@@ -354,7 +356,7 @@ export function initMusicPlayer() {
         if (trackTimeCurrent) {
           trackTimeCurrent.textContent = formatTime(val);
         }
-        localStorage.setItem("cv-music-time", val);
+        localStorage.setItem(MUSIC_TIME_KEY, val);
         userScrubbing = false;
       });
     }
@@ -388,7 +390,7 @@ export function initMusicPlayer() {
       }
 
       isPlaying = false;
-      localStorage.setItem("cv-music-state", "stopped");
+      localStorage.setItem(MUSIC_STATE_KEY, "stopped");
       updatePlayPause();
     });
 
@@ -407,8 +409,8 @@ export function initMusicPlayer() {
 
     if (lyricsBtn) lyricsBtn.addEventListener("click", toggleLyrics);
 
-    var savedTime = parseFloat(localStorage.getItem("cv-music-time"));
-    var savedState = localStorage.getItem("cv-music-state");
+    var savedTime = parseFloat(localStorage.getItem(MUSIC_TIME_KEY));
+    var savedState = localStorage.getItem(MUSIC_STATE_KEY);
 
     loadTrack();
     if (savedTime > 0 && savedState !== "stopped") {

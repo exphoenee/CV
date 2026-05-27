@@ -1,3 +1,5 @@
+import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES } from './config.js';
+
 export function showToast(message) {
   var container = document.getElementById('cv-toaster-container');
   if (!container) return;
@@ -102,7 +104,8 @@ export function getSystemTheme() {
 
 export function initThemeToggle(config) {
   config = config || {};
-  var KEY = config.key || "cv-swagger-theme";
+  var KEY = config.key || THEME_KEY;
+  var validThemes = config.validThemes || null;
   var btn = document.getElementById(config.buttonId || "theme-toggle");
 
   function setTheme(theme) {
@@ -112,11 +115,12 @@ export function initThemeToggle(config) {
   }
 
   btn.addEventListener("click", function () {
-    var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    var next = document.documentElement.getAttribute("data-theme") === THEME_DARK ? THEME_LIGHT : THEME_DARK;
     setTheme(next);
   });
 
   var saved = localStorage.getItem(KEY);
+  if (saved && validThemes && validThemes.indexOf(saved) === -1) saved = null;
   if (saved) setTheme(saved);
   else setTheme(getSystemTheme());
 }

@@ -2,6 +2,7 @@ import { CV_DATA } from './cv-data.js';
 import { renderJsonCV } from './components/json/index.js';
 import { initHireModal, initFormspree, musicPlayerHTML, hireModalHTML } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
+import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES } from './config.js';
 
 document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
 
@@ -160,13 +161,13 @@ document.getElementById('wc-close-btn')?.addEventListener('click', function () {
 });
 
 (function () {
-  var KEY = 'cv-json-theme';
-  var saved = localStorage.getItem(KEY);
-  document.documentElement.setAttribute('data-theme', saved || 'dark');
+  var saved = localStorage.getItem(THEME_KEY);
+  if (PLAIN_ONLY_THEMES.indexOf(saved) !== -1) saved = THEME_DARK;
+  document.documentElement.setAttribute('data-theme', saved || THEME_DARK);
 
   document.getElementById('view-menu-btn')?.addEventListener('click', function () {
-    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    var next = document.documentElement.getAttribute('data-theme') === THEME_DARK ? THEME_LIGHT : THEME_DARK;
     document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem(KEY, next);
+    localStorage.setItem(THEME_KEY, next);
   });
 })();
