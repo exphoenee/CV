@@ -1070,6 +1070,7 @@ class GameEngine {
   showGameOver() {
     this.gameOverActive = true;
     this.isFrozen = true;
+    sfx.play('defeat');
     const gameOverScreen = document.getElementById("game-over-screen");
     gameOverScreen.classList.remove("dialogue-hidden");
     gameOverScreen.classList.add("dialogue-visible");

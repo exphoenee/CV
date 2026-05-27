@@ -6,6 +6,7 @@ const SOUND_DEFS = {
   punch:           { files: ['punch_1.wav', 'punch_2.wav', 'punch_3.wav'] },
   sword_swipe:     { files: ['sword_swipe.wav'] },
   skeleton_death:  { files: ['skeleton_death.wav'] },
+  defeat:          { files: ['defeat.wav'] },
   chest_collect:   { files: ['chest_collect.wav'] },
   door_open:       { files: ['door_long.wav', 'door_short.wav'] },
   door_close:      { files: ['door_close.wav'] },
