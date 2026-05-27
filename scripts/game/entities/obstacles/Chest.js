@@ -1,4 +1,5 @@
 import GameObject from '../base/GameObject.js';
+import { sfx } from '../../audio/sfx.js';
 
 export default class Chest extends GameObject {
     constructor({ x, y }) {
@@ -36,6 +37,7 @@ export default class Chest extends GameObject {
         if (healed) {
             this.isUsed = true;
             this.solid = false;
+            sfx.play('chest_collect');
             return true;
         }
         return false;

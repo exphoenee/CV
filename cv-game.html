@@ -113,17 +113,17 @@
               <span class="tech-label">NippleJS</span>
               <span class="tech-desc">Virtual Joystick</span>
             </a>
-            <a href="https://phaser.io" target="_blank" class="tech-box">
-              <span class="tech-label">Phaser</span>
-              <span class="tech-desc">Game Framework</span>
-            </a>
             <a href="https://kenmi-art.itch.io/cute-fantasy-rpg" target="_blank" class="tech-box">
               <span class="tech-label">Assets</span>
               <span class="tech-desc">Kenmi-art Cute RPG</span>
             </a>
+            <a href="https://ci.itch.io/400-sounds-pack" target="_blank" class="tech-box">
+              <span class="tech-label">SFX</span>
+              <span class="tech-desc">400 Sounds Pack</span>
+            </a>
             <a href="https://suno.com/" target="_blank" class="tech-box">
-              <span class="tech-label">Music made with Suno</span>
-              <span class="tech-desc">AI-generated soundtrack</span>
+              <span class="tech-label">Music by Suno</span>
+              <span class="tech-desc">AI soundtracks</span>
             </a>
           </div>
         </div>
@@ -156,8 +156,17 @@
               >
             </p>
             <p>
-              Game framework reference:
-              <a href="https://phaser.io" target="_blank">Phaser</a>
+              SFX by
+              <a
+                href="https://ci.itch.io/400-sounds-pack"
+                target="_blank"
+                >ci</a
+              >
+              (400 Sounds Pack)
+            </p>
+            <p>
+              Music by
+              <a href="https://suno.com" target="_blank">Suno</a>
             </p>
           </div>
         </div>
@@ -298,8 +307,8 @@
               </div>
 
               <!-- Volume Slider Section -->
-              <div class="volume-control">
-                <span class="volume-icon"><i class="fas fa-volume-high"></i></span>
+              <div class="volume-row">
+                <span class="volume-label">Music</span>
                 <input
                   type="range"
                   id="game-music-volume"
@@ -309,6 +318,16 @@
                   value="0.5"
                   class="volume-slider"
                 />
+                <input
+                  type="range"
+                  id="game-sfx-volume"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value="0.5"
+                  class="volume-slider"
+                />
+                <span class="volume-label">SFX</span>
               </div>
             </div>
 
@@ -498,7 +517,6 @@
         </div>
       </div>
     </div>
-    <!-- end #game-container -->
 
     <!-- NippleJS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/nipplejs@1.0.3/dist/index.js"></script>

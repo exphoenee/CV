@@ -67,7 +67,6 @@ A `#game-wrapper`-on belül, a `</canvas>` után:
     <div class="credits-modal-body">
       <p>Assets by <a href="https://kenmi-art.itch.io/cute-fantasy-rpg" target="_blank">Kenmi-art</a> (Cute Fantasy RPG pack)</p>
       <p>Virtual joystick: <a href="https://yoannmoi.net/nipplejs/" target="_blank">NippleJS</a></p>
-      <p>Game framework reference: <a href="https://phaser.io" target="_blank">Phaser</a></p>
     </div>
   </div>
 </div>
@@ -82,10 +81,6 @@ A `#game-wrapper`-on belül, a legend-panel mellett/mellett:
   <a href="https://yoannmoi.net/nipplejs/" target="_blank" class="tech-box">
     <span class="tech-label">NippleJS</span>
     <span class="tech-desc">Virtual Joystick</span>
-  </a>
-  <a href="https://phaser.io" target="_blank" class="tech-box">
-    <span class="tech-label">Phaser</span>
-    <span class="tech-desc">Game Framework</span>
   </a>
   <div class="tech-box">
     <span class="tech-label">Assets</span>

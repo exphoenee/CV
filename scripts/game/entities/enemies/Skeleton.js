@@ -1,4 +1,5 @@
 import GameObject from '../base/GameObject.js';
+import { sfx } from '../../audio/sfx.js';
 
 export default class Skeleton extends GameObject {
     constructor({ x, y }) {
@@ -269,6 +270,7 @@ export default class Skeleton extends GameObject {
             this.solid = false;
             this.isMoving = false;
             this.isAttacking = false;
+            sfx.play('skeleton_death');
         }
     }
 

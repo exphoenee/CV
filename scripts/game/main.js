@@ -18,6 +18,7 @@ import Tree from "./entities/obstacles/Tree.js";
 import SmallTree from "./entities/obstacles/SmallTree.js";
 import Chest from "./entities/obstacles/Chest.js";
 import House from "./entities/obstacles/House.js";
+import { sfx } from "./audio/sfx.js";
 import Flower from "./entities/decor/Flower.js";
 import Mushroom from "./entities/decor/Mushroom.js";
 import Log from "./entities/decor/Log.js";
@@ -198,6 +199,7 @@ class GameEngine {
     }
 
     await new Promise((resolve) => this.preloadAssets(resolve));
+    sfx.preload();
 
     this.buildWorld();
     this.setupDialogueListeners();
@@ -572,6 +574,22 @@ class GameEngine {
         audio.volume = vol;
         localStorage.setItem("cv-music-volume", vol);
         volumeSlider.style.setProperty('--volume-pct', (vol * 100) + '%');
+      });
+    }
+
+    // SFX volume slider
+    const sfxSlider = document.getElementById("game-sfx-volume");
+    var savedSfxVol = localStorage.getItem("cv-sfx-volume");
+    if (savedSfxVol !== null) {
+      sfx.setVolume(parseFloat(savedSfxVol));
+      if (sfxSlider) sfxSlider.value = savedSfxVol;
+    }
+    if (sfxSlider) {
+      sfxSlider.style.setProperty('--volume-pct', (parseFloat(sfxSlider.value) * 100) + '%');
+      sfxSlider.addEventListener("input", function () {
+        var vol = parseFloat(this.value);
+        sfx.setVolume(vol);
+        this.style.setProperty('--volume-pct', (vol * 100) + '%');
       });
     }
 
@@ -1065,6 +1083,8 @@ class GameEngine {
     textBox.innerHTML = house.cvContent;
     textBox.scrollTop = 0; // Reset scroll position
 
+    sfx.play('door_open');
+
     // Show Overlay
     const overlay = document.getElementById("dialogue-overlay");
     overlay.classList.remove("dialogue-hidden");
@@ -1075,6 +1095,8 @@ class GameEngine {
    * Unfreeze game and displace player downwards away from the doorway.
    */
   closeDialogue() {
+    sfx.play('door_close');
+
     const overlay = document.getElementById("dialogue-overlay");
     overlay.classList.remove("dialogue-visible");
     overlay.classList.add("dialogue-hidden");
@@ -1185,7 +1207,22 @@ class GameEngine {
       }
     }
 
-    // 8. Smooth Camera Tracking on Player
+    // 8. Water ambient SFX
+    var feetCol = Math.floor((this.player.x + this.player.width / 2) / TILE_SIZE);
+    var feetRow = Math.floor((this.player.y + this.player.height - 4) / TILE_SIZE);
+    var onWater = false;
+    if (feetRow >= 0 && feetRow < this.rows && feetCol >= 0 && feetCol < this.cols) {
+      onWater = this.fullMapGrid[feetRow][feetCol] === 'W';
+    }
+    if (onWater && !this._waterAmbientActive) {
+      sfx.startLoop('water_ambient');
+      this._waterAmbientActive = true;
+    } else if (!onWater && this._waterAmbientActive) {
+      sfx.stopLoop('water_ambient');
+      this._waterAmbientActive = false;
+    }
+
+    // 9. Smooth Camera Tracking on Player
     const targetCamX =
       this.player.x + this.player.width / 2 - this.virtualWidth / 2;
     const targetCamY =

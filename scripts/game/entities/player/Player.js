@@ -1,4 +1,5 @@
 import GameObject from '../base/GameObject.js';
+import { sfx } from '../../audio/sfx.js';
 
 export default class Player extends GameObject {
     constructor({ x, y }) {
@@ -48,6 +49,10 @@ export default class Player extends GameObject {
         this.deathAnimDone = false;
         this.respawnX = x;
         this.respawnY = y;
+
+        // Footstep SFX
+        this.stepTimer = 0;
+        this.stepInterval = 0.35; // Seconds between footsteps
     }
 
     /**
@@ -126,8 +131,12 @@ export default class Player extends GameObject {
             this.animFrame = 0;
             this.isMoving = false;
 
+            // Sword swipe SFX
+            sfx.play('sword_swipe');
+
             // Perform attack collision check on enemies
-            this.performAttack(world.enemies);
+            const hitAny = this.performAttack(world.enemies);
+            if (hitAny) sfx.play('punch');
             return;
         }
 
@@ -138,6 +147,15 @@ export default class Player extends GameObject {
             if (this.animTimer >= this.animSpeed) {
                 this.animTimer = 0;
                 this.animFrame = (this.animFrame + 1) % 6;
+            }
+
+            // Footstep SFX with timer
+            this.stepTimer += dt;
+            if (this.stepTimer >= this.stepInterval) {
+                this.stepTimer = 0;
+                const terrain = this.getTerrainAt(world.map);
+                if (terrain === 'road') sfx.play('footsteps_road');
+                else sfx.play('footsteps_grass');
             }
 
             // Move X
@@ -158,6 +176,7 @@ export default class Player extends GameObject {
             this.x = Math.max(48, Math.min(this.x, world.width - 48 - this.width));
             this.y = Math.max(48, Math.min(this.y, world.height - 48 - this.height));
         } else {
+            this.stepTimer = 0;
             // Idle animation (6 frames)
             this.animTimer += dt;
             if (this.animTimer >= this.animSpeed) {
@@ -202,7 +221,24 @@ export default class Player extends GameObject {
     }
 
     /**
+     * Returns the terrain type under the player's feet: 'grass', 'road', or 'water'.
+     */
+    getTerrainAt(mapContext) {
+        if (!mapContext || !mapContext.grid) return 'grass';
+        const feetX = this.x + this.width / 2;
+        const feetY = this.y + this.height - 4;
+        const col = Math.floor(feetX / mapContext.tileSize);
+        const row = Math.floor(feetY / mapContext.tileSize);
+        if (row < 0 || row >= mapContext.grid.length || col < 0 || col >= mapContext.grid[0].length) return 'grass';
+        const key = mapContext.grid[row][col];
+        if (key === 'P') return 'road';
+        if (key === 'W') return 'water';
+        return 'grass';
+    }
+
+    /**
      * Attacking action: hits enemies within the directional hitbox.
+     * Returns true if at least one enemy was hit.
      */
     performAttack(enemies) {
         // Calculate attack reach box
@@ -218,6 +254,7 @@ export default class Player extends GameObject {
         if (this.dir === 'up') reachY -= this.attackRadius;
         if (this.dir === 'down') reachY += this.attackRadius;
 
+        let hitAny = false;
         for (const enemy of enemies) {
             if (enemy.health > 0) {
                 const eBounds = enemy.getCollisionRect();
@@ -227,9 +264,11 @@ export default class Player extends GameObject {
                 const dist = Math.sqrt((reachX - ex) * (reachX - ex) + (reachY - ey) * (reachY - ey));
                 if (dist <= this.attackRadius + 15) {
                     enemy.takeDamage();
+                    hitAny = true;
                 }
             }
         }
+        return hitAny;
     }
 
     /**
