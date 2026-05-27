@@ -691,9 +691,9 @@ body {
 .name {
   position: relative;
   margin-bottom: 1rem;
-  display: flex;
+  display: block;
   width: 100%;
-  flex-direction: column-reverse;
+  white-space: nowrap;
   font-size: var(--font-size-1875rem);
   line-height: 2.25rem;
   font-weight: 700;
@@ -1119,6 +1119,7 @@ body {
 .name {
   font-size: var(--name-font-size) !important;
   color: var(--cv-accent-color) !important;
+  white-space: nowrap;
 }
 
 .role {

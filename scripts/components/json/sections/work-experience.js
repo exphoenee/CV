@@ -1,9 +1,7 @@
-import { escHtml } from '../../../shared.js';
-import { jesc, pushStr, pushNum, pushBool, pushStringArray } from '../helpers.js';
+import { html, raw } from '../../../shared.js';
+import { pushStr, pushNum, pushBool, pushStringArray } from '../helpers.js';
 
 export function renderWorkExperience(data, push) {
-  var E = escHtml;
-
   push(1, '<span class="k">"workExperience"</span><span class="p">: [</span>');
   push(0, '');
 
@@ -11,21 +9,17 @@ export function renderWorkExperience(data, push) {
     var companyNames = ['Aegex Technologies', 'Deutsche Telekom IT Solutions HU', 'Scolia Technologies Ltd.', 'Cubicfox', 'CobotX Technologies', 'WebforSol (Freelance)'];
     var alias = companyNames[ei] || exp.company;
     var dashLen = Math.max(55 - alias.length, 5);
-    var dashes = '';
-    for (var d = 0; d < dashLen; d++) dashes += '\u2500';
-    push(2, '<span class="c">// [' + ei + '] ' + E(alias) + ' ' + dashes + '</span>');
+    var dashes = '─'.repeat(dashLen);
+    push(2, html`<span class="c">// [${ei}] ${alias} ${raw(dashes)}</span>`);
 
     push(2, '<span class="p">{</span>');
     pushStr(push, 3, 'company', exp.company);
     pushStr(push, 3, 'title', exp.title);
 
-    var periodLine = '<span class="k">"period"</span><span class="p">: { </span><span class="k">"from"</span><span class="p">: </span><span class="s">"' + exp.period.from + '"</span><span class="p">, </span><span class="k">"to"</span><span class="p">: </span>';
-    if (exp.period.to) {
-      periodLine += '<span class="s">"' + exp.period.to + '"</span>';
-    } else {
-      periodLine += '<span class="nl">null</span>';
-    }
-    periodLine += '<span class="p"> }</span><span class="p">,</span>';
+    var toSpan = exp.period.to
+      ? html`<span class="s">"${exp.period.to}"</span>`
+      : '<span class="nl">null</span>';
+    var periodLine = html`<span class="k">"period"</span><span class="p">: { </span><span class="k">"from"</span><span class="p">: </span><span class="s">"${exp.period.from}"</span><span class="p">, </span><span class="k">"to"</span><span class="p">: </span>${raw(toSpan)}<span class="p"> }</span><span class="p">,</span>`;
     if (exp.isCurrent) periodLine += '  <span class="c">// null = still here</span>';
     else if (exp.id === 'telekom') periodLine += '  <span class="c">// 4 months - short but intense</span>';
     push(3, periodLine);
@@ -49,7 +43,7 @@ export function renderWorkExperience(data, push) {
       push(3, '<span class="k">"projects"</span><span class="p">: {</span>');
       exp.projects.forEach(function (proj, pi) {
         var comma = pi < exp.projects.length - 1;
-        push(4, '<span class="k">"' + E(proj.name) + '"</span><span class="p">: {</span>');
+        push(4, html`<span class="k">"${proj.name}"</span><span class="p">: {</span>`);
         pushStr(push, 5, 'type', proj.subtitle);
         if (proj.name === 'FACTS') {
           pushNum(push, 5, 'releaseCycle_before_days', 30);
@@ -66,9 +60,9 @@ export function renderWorkExperience(data, push) {
         if (proj.name === 'FACTS' && exp.refs) {
           push(5, '<span class="k">"ref"</span><span class="p">: [</span>');
           exp.refs.forEach(function (r, ri) {
-            var comma2 = ri < exp.refs.length - 1;
-            var line = '<span class="s">"<a href="' + E(r.url) + '" target="_blank">' + jesc(r.label) + '</a>"</span>';
-            if (comma2) line += '<span class="p">,</span>';
+            var link = html`<a href="${r.url}" target="_blank">${r.label}</a>`;
+            var line = html`<span class="s">"${raw(link)}"</span>`;
+            if (ri < exp.refs.length - 1) line += '<span class="p">,</span>';
             push(6, line);
           });
           push(5, '<span class="p">],</span>');
@@ -82,18 +76,15 @@ export function renderWorkExperience(data, push) {
       var allBullets = [];
       Object.keys(exp.bullets).forEach(function (key) {
         var arr = exp.bullets[key];
-        if (Array.isArray(arr)) {
-          arr.forEach(function (b) { allBullets.push(b); });
-        }
+        if (Array.isArray(arr)) arr.forEach(function (b) { allBullets.push(b); });
       });
       if (exp.id === 'cubicfox') {
         allBullets.push('Established team code conventions - arrived, fixed things, left. classic.');
       }
       push(3, '<span class="k">"highlights"</span><span class="p">: [</span>');
       allBullets.forEach(function (b, bi) {
-        var comma = bi < allBullets.length - 1;
-        var line = '<span class="s">"' + jesc(b) + '"</span>';
-        if (comma) line += '<span class="p">,</span>';
+        var line = html`<span class="s">"${b}"</span>`;
+        if (bi < allBullets.length - 1) line += '<span class="p">,</span>';
         push(4, line);
       });
       push(3, '<span class="p">],</span>');
@@ -101,13 +92,14 @@ export function renderWorkExperience(data, push) {
 
     if (!exp.projects && exp.refs && exp.refs.length > 0) {
       if (exp.refs.length === 1) {
-        push(3, '<span class="k">"ref"</span><span class="p">: </span><span class="s">"<a href="' + E(exp.refs[0].url) + '" target="_blank">' + jesc(exp.refs[0].label) + '</a>"</span><span class="p">,</span>');
+        var link1 = html`<a href="${exp.refs[0].url}" target="_blank">${exp.refs[0].label}</a>`;
+        push(3, html`<span class="k">"ref"</span><span class="p">: </span><span class="s">"${raw(link1)}"</span><span class="p">,</span>`);
       } else {
         push(3, '<span class="k">"refs"</span><span class="p">: [</span>');
         exp.refs.forEach(function (r, ri) {
-          var comma = ri < exp.refs.length - 1;
-          var line = '<span class="s">"<a href="' + E(r.url) + '" target="_blank">' + jesc(r.label) + '</a>"</span>';
-          if (comma) line += '<span class="p">,</span>';
+          var link = html`<a href="${r.url}" target="_blank">${r.label}</a>`;
+          var line = html`<span class="s">"${raw(link)}"</span>`;
+          if (ri < exp.refs.length - 1) line += '<span class="p">,</span>';
           push(4, line);
         });
         push(3, '<span class="p">],</span>');

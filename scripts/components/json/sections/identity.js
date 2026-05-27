@@ -1,9 +1,7 @@
-import { escHtml } from '../../../shared.js';
-import { jesc, pushStr, pushBool } from '../helpers.js';
+import { html, raw } from '../../../shared.js';
+import { pushStr, pushBool } from '../helpers.js';
 
 export function renderIdentity(data, push) {
-  var E = escHtml;
-
   push(1, '<span class="k">"identity"</span><span class="p">: {</span>');
   pushStr(push, 2, 'name', data.identity.name);
   pushStr(push, 2, 'role', data.identity.role, true, '"Developer" is an understatement');
@@ -26,10 +24,11 @@ export function renderIdentity(data, push) {
     if (c && c.url) {
       var href = k === 'email' ? 'mailto:' + c.label : (k === 'phone' ? 'tel:' + c.label : c.url);
       var comma = ki < contactKeys.length - 1;
-      var comment = k === 'github' ? 'phoenix, with extra e\'s' : null;
-      var h = '<span class="k">"' + k + '"</span><span class="p">: </span><span class="s">"<a href="' + E(href) + '">' + jesc(c.label) + '</a>"</span>';
+      var comment = k === 'github' ? "phoenix, with extra e's" : null;
+      var link = html`<a href="${href}">${c.label}</a>`;
+      var h = html`<span class="k">"${k}"</span><span class="p">: </span><span class="s">"${raw(link)}"</span>`;
       if (comma) h += '<span class="p">,</span>';
-      if (comment) h += '  <span class="c">// ' + comment + '</span>';
+      if (comment) h += html`  <span class="c">// ${comment}</span>`;
       push(3, h);
     }
   });
@@ -39,14 +38,14 @@ export function renderIdentity(data, push) {
   var langComments = {
     Hungarian: 'no runtime errors',
     German: 'can order Schnitzel and read stack traces',
-    English: 'you\'re reading this - proof it works'
+    English: "you're reading this - proof it works"
   };
   data.identity.languages.forEach(function (lang, li) {
     var comma = li < data.identity.languages.length - 1;
-    var h = '<span class="k">"' + E(lang.name) + '"</span><span class="p">: </span><span class="s">"' + E(lang.level.toLowerCase()) + '"</span>';
+    var h = html`<span class="k">"${lang.name}"</span><span class="p">: </span><span class="s">"${lang.level.toLowerCase()}"</span>`;
     if (comma) h += '<span class="p">,</span>';
     var comment = langComments[lang.name];
-    if (comment) h += '  <span class="c">// ' + comment + '</span>';
+    if (comment) h += html`  <span class="c">// ${comment}</span>`;
     push(3, h);
   });
   push(2, '<span class="p">}</span>');

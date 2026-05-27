@@ -260,6 +260,15 @@ export const CV_DATA = {
       { title: "Bachelor of Engineering (BEng), Mechanical Engineering", years: "2000 - 2004" }
     ]
   },
+  skillGroups: {
+    primary:  { list: ["TypeScript", "JavaScript", "Svelte", "React", "Node.js", "SCSS", "HTML", "CSS"], comment: null },
+    backend:  { list: ["Express.js", "NestJS", "Python", "PHP", "MySQL", "MongoDB"], comment: null },
+    testing:  { list: ["Jest", "Vitest", "Playwright"], comment: "yes, all three" },
+    tooling:  { list: ["Vite", "Webpack", "PNPM", "Next.js"], comment: null },
+    ai:       { list: ["Claude", "Codex"], comment: "meta: this CV was probably reviewed by one of these" },
+    robotics: { list: ["Universal Robot", "OnRobot", "Machine Vision", "PLC"], comment: "surprise!" },
+  },
+  skillNote: { key: "willRefactorYourEntireCodebaseIf", value: "evidence justifies it", comment: "(often)" },
   programmingLanguages: [
     { name: "TypeScript", icon: "typescript(1).svg" },
     { name: "JavaScript", icon: "javascript(1).svg" },

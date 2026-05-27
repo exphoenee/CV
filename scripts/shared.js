@@ -14,6 +14,26 @@ export function showToast(message) {
   container.appendChild(toast);
 }
 
+class RawHtml {
+  constructor(s) { this.s = s; }
+}
+
+export function raw(s) {
+  return new RawHtml(String(s ?? ''));
+}
+
+export function html(strings, ...values) {
+  let out = '';
+  for (let i = 0; i < strings.length; i++) {
+    out += strings[i];
+    if (i < values.length) {
+      const v = values[i];
+      out += v instanceof RawHtml ? v.s : escHtml(String(v ?? ''));
+    }
+  }
+  return out;
+}
+
 export function escHtml(str) {
   var div = document.createElement("div");
   div.appendChild(document.createTextNode(str));
