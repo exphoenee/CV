@@ -16,7 +16,8 @@
       "Bash(git add *)",
       "Bash(git commit *)",
       "Bash(git worktree *)",
-      "Bash(Get-ChildItem -Path \"C:\\\\Projects\\\\own\\\\CV\\\\scripts\\\\game\\\\\" -Recurse -File | Select-Object -ExpandProperty FullName)"
+      "Bash(Get-ChildItem -Path \"C:\\\\Projects\\\\own\\\\CV\\\\scripts\\\\game\\\\\" -Recurse -File | Select-Object -ExpandProperty FullName)",
+      "PowerShell(Rename-Item \"c:\\\\Projects\\\\own\\\\CV\\\\assets\\\\images\\\\project managment.svg\" \"project management.svg\")"
     ]
   }
 }

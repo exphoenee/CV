@@ -43,7 +43,7 @@ export function escHtml(str) {
 }
 
 export function skillChip(name, iconFile) {
-  return '<div class="skill"><span class="skillImage"><img src="./assets/images/' + iconFile + '" alt="' + escHtml(name) + '" title="' + escHtml(name) + '" /></span><span>' + escHtml(name) + '</span></div>';
+  return '<div class="skill"><span class="skillImage"><img src="./assets/images/' + iconFile + '" alt="' + escHtml(name) + '" title="' + escHtml(name) + '" onerror="this.style.visibility=\'hidden\'" /></span><span>' + escHtml(name) + '</span></div>';
 }
 
 export function refLinks(refs) {
