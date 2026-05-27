@@ -2141,7 +2141,8 @@ body {
   }
 
   #theme-toggle,
-  #music-player {
+  #music-player,
+  #cv-toaster-container {
     display: none !important;
   }
 }

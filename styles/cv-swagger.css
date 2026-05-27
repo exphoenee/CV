@@ -310,7 +310,8 @@ body {
   display: block;
 }
 @media print {
-#theme-toggle {
+#theme-toggle,
+#cv-toaster-container {
  display: none !important; }
 
 }

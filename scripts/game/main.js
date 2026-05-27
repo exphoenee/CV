@@ -23,6 +23,7 @@ import Mushroom from "./entities/decor/Mushroom.js";
 import Log from "./entities/decor/Log.js";
 import GoldOre from "./entities/decor/GoldOre.js";
 import PickableOre from "./entities/decor/PickableOre.js";
+import {MUSIC_GENRES, initFormspree} from "../shared.js";
 import Hay from "./entities/decor/Hay.js";
 import Carrot from "./entities/decor/Carrot.js";
 import GoldBoulder from "./entities/decor/GoldBoulder.js";
@@ -525,6 +526,14 @@ class GameEngine {
 
     if (!customSelect || !audio || !playPauseBtn) return;
 
+    // Populate genre options from shared MUSIC_GENRES
+    var optionsContainer = document.getElementById("game-genre-options");
+    if (optionsContainer) {
+      optionsContainer.innerHTML = MUSIC_GENRES.map(function (g) {
+        return '<div class="custom-option" data-value="' + g.value + '">' + g.label + '</div>';
+      }).join('');
+    }
+
     const trigger = customSelect.querySelector(".custom-select-trigger");
     const triggerText = trigger.querySelector("span");
     const options = customSelect.querySelectorAll(".custom-option");
@@ -952,9 +961,7 @@ class GameEngine {
     hireClose?.addEventListener('click', closeHire);
     hireBackdrop?.addEventListener('click', closeHire);
 
-    if (window.formspree) {
-      formspree('initForm', { formElement: '#hire-game-form', formId: 'mrejlned' });
-    }
+    initFormspree('#hire-game-form');
   }
 
   /**

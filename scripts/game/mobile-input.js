@@ -100,30 +100,4 @@ export function initMobileInput(game) {
 
   const pauseBtn = document.getElementById('pause-btn');
   pauseBtn?.addEventListener('click', () => game.togglePauseMenu());
-
-  // Hire Me modal
-  const hireBtn = document.getElementById('hire-btn');
-  const hireModal = document.getElementById('hire-modal');
-  const hireClose = document.getElementById('hire-close');
-  const hireBackdrop = document.getElementById('hire-backdrop');
-
-  const openHire = () => {
-    hireModal?.classList.remove('dialogue-hidden');
-    hireModal?.classList.add('dialogue-visible');
-    game.isFrozen = true;
-  };
-  const closeHire = () => {
-    hireModal?.classList.remove('dialogue-visible');
-    hireModal?.classList.add('dialogue-hidden');
-    if (!game.gameOverActive) game.isFrozen = false;
-  };
-
-  hireBtn?.addEventListener('click', openHire);
-  hireClose?.addEventListener('click', closeHire);
-  hireBackdrop?.addEventListener('click', closeHire);
-
-  // Formspree
-  if (window.formspree) {
-    formspree('initForm', { formElement: '#hire-game-form', formId: 'mrejlned' });
-  }
 }

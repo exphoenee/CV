@@ -3,7 +3,7 @@
  * Central CV data object — single source of truth for all CV views.
  * Load before any view-specific script.
  */
-var CV_DATA = {
+export const CV_DATA = {
   meta: {
     name: "Viktor Bozzay",
     role: "Frontend Tech Lead",

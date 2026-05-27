@@ -216,7 +216,6 @@ function buildStations(data) {
   return stations;
 }
 
-// Try to get CV_DATA from global scope (loaded via cv-data.js script)
-var cvGlobal = typeof CV_DATA !== 'undefined' ? CV_DATA : null;
+import { CV_DATA } from '../../cv-data.js';
 
-export const CV_STATIONS = buildStations(cvGlobal);
+export const CV_STATIONS = buildStations(CV_DATA);

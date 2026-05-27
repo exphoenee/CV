@@ -10,7 +10,12 @@
       "Bash(sed -i \"s|from './GameObject.js'|from '../base/GameObject.js'|g\" entities/player/Player.js)",
       "Bash(sed -i \"s|from './GameObject.js'|from '../base/GameObject.js'|g\" entities/enemies/Skeleton.js)",
       "Bash(sed -i \"s|from './Npc.js'|from '../base/Npc.js'|g\" entities/npcs/Chicken.js entities/npcs/Cow.js entities/npcs/Pig.js entities/npcs/Sheep.js)",
-      "Bash(git -C \"c:\\\\Projects\\\\own\\\\CV\" log --oneline -10)"
+      "Bash(git -C \"c:\\\\Projects\\\\own\\\\CV\" log --oneline -10)",
+      "Bash(ls -d .worktrees)",
+      "Bash(ls -d worktrees)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git worktree *)"
     ]
   }
 }
