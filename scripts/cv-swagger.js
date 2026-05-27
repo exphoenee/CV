@@ -27,18 +27,18 @@ document.querySelectorAll('.opblock-tag-section').forEach(function (section) {
   });
 });
 
-document.querySelectorAll('.opblock-summary-control').forEach(function (ctrl) {
+function toggleOpblock(opblock) {
+  opblock.classList.toggle('is-open');
+  var arrow = opblock.querySelector('.opblock-control-arrow');
+  if (arrow) {
+    arrow.innerHTML = opblock.classList.contains('is-open') ? svgArrowDown : svgArrowUp;
+  }
+}
+
+document.querySelectorAll('.opblock-summary-control, .opblock-control-arrow').forEach(function (ctrl) {
   ctrl.addEventListener('click', function () {
     var opblock = ctrl.closest('.opblock');
-    if (opblock) {
-      opblock.classList.toggle('is-open');
-      var arrow = opblock.querySelector('.opblock-control-arrow');
-      if (arrow) {
-        arrow.innerHTML = opblock.classList.contains('is-open')
-          ? svgArrowDown
-          : svgArrowUp;
-      }
-    }
+    if (opblock) toggleOpblock(opblock);
   });
 });
 
@@ -56,8 +56,16 @@ if (!document.getElementById('hire-modal')) {
 var modalEl = document.getElementById('hire-modal');
 var hireBtn = document.getElementById('hire-btn');
 if (hireBtn && modalEl) {
-  initHireModal('hire');
+  var hireModal = initHireModal('hire');
   initFormspree('#hire-form');
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('.hire-trigger')) {
+      var opblock = e.target.closest('.opblock');
+      var subject = opblock ? opblock.id.replace('operations-', '').replace(/-/g, ' ') : '';
+      hireModal.openModal(subject ? 'Hire inquiry — ' + subject : undefined);
+    }
+  });
 }
 
 window.showToast = function (msg) {

@@ -14,6 +14,30 @@
         --accent: #ff7024;
         --hover: #2a2d2e;
         --guide: #404040;
+        --menubar-bg: #1f1f1f;
+        --titlebar-bg: #323233;
+        --statusbar-bg: #007acc;
+        --gutter-border: #2d2d2d;
+      }
+      [data-theme="light"] {
+        --bg: #fffffe;
+        --bg2: #f3f3f3;
+        --border: #e4e4e4;
+        --key: #0451a5;
+        --str: #a31515;
+        --num: #098658;
+        --bool: #0451a5;
+        --null: #0451a5;
+        --cmt: #008000;
+        --br: #000000;
+        --lnum: #237893;
+        --text: #000000;
+        --hover: #e8e8e8;
+        --guide: #d3d3d3;
+        --menubar-bg: #dddddd;
+        --titlebar-bg: #f3f3f3;
+        --statusbar-bg: #007acc;
+        --gutter-border: #e4e4e4;
       }
       * {
         margin: 0;
@@ -29,7 +53,10 @@
         font-family: "JetBrains Mono", Consolas, "Courier New", monospace;
         font-size: 13px;
         line-height: 19px;
-        min-height: 100vh;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
       }
       ::-webkit-scrollbar {
         width: 10px;
@@ -227,6 +254,9 @@
       /* editor layout */
       .editor {
         display: flex;
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
       }
 
       /* gutter */
@@ -293,7 +323,6 @@
       .code {
         flex: 1;
         max-width: 100ch;
-        overflow-x: hidden;
         padding: 8px 40px 80px 0;
       }
 
@@ -411,6 +440,34 @@
       }
       .hire-submit:hover { filter: brightness(1.1); }
       .hire-submit:disabled { opacity: .5; cursor: default; }
+
+      /* statusbar */
+      .statusbar {
+        flex-shrink: 0;
+        height: 22px;
+        background: #007acc;
+        color: #fff;
+        font-family: "Segoe UI", system-ui, sans-serif;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        user-select: none;
+        z-index: 101;
+      }
+      .statusbar span {
+        padding: 0 8px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+      }
+      .statusbar span:hover {
+        background: rgba(255,255,255,0.12);
+      }
+      .statusbar .r {
+        margin-left: auto;
+      }
 
 
 /* hide the floating toggle — opened from the Music menubar button */
