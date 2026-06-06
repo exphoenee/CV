@@ -1,11 +1,17 @@
-import { CV_DATA } from './cv-data.js';
 import { renderPlainCV } from './components/plain/index.js';
 import { initHireModal, initFormspree, getSystemTheme, musicPlayerHTML, hireModalHTML } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES, CURSOR_KEY } from './config.js';
+import { locale } from './locale.js';
 
 document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
-document.getElementById('cv-content').innerHTML = renderPlainCV(CV_DATA);
+
+function render() {
+  document.getElementById('cv-content').innerHTML = renderPlainCV(locale.getData());
+  initDecors();
+}
+
+render();
 
 document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire-plain', {
   subject: 'Hire inquiry from CV - plain',
@@ -16,8 +22,14 @@ document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire-plain', {
 
 initHireModal('hire-plain');
 
-document.getElementById('print-plain-btn')?.addEventListener('click', function () {
-  window.print();
+document.body.addEventListener('click', function (e) {
+  if (e.target.matches('#print-plain-btn')) {
+    window.print();
+  }
+  if (e.target.matches('.lang-btn')) {
+    locale.setLang(e.target.dataset.lang);
+    render();
+  }
 });
 
 window.showToast = function(message) {
@@ -142,7 +154,7 @@ window.showToast = function(message) {
   apply(current);
 })();
 
-(function () {
+function initDecors() {
   var decors = ['decor1.svg', 'decor2.svg', 'decor3.svg', 'decor4.svg', 'decor5.svg', 'decor6.svg'];
   var items = document.querySelectorAll('.workExperienceItem');
   if (items.length > 0) items[items.length - 1].classList.add('no-decor');
@@ -166,7 +178,7 @@ window.showToast = function(message) {
     img.style.cssText = 'display:block;width:400px;max-width:80%;height:30px;object-fit:contain;margin:3mm auto 3mm';
     items[k].parentNode.insertBefore(img, items[k].nextSibling);
   }
-})();
+}
 
 initFormspree('#hire-plain-form');
 initMusicPlayer();

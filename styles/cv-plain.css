@@ -385,6 +385,44 @@ body {
   flex-shrink: 0;
 }
 
+.lang-switcher {
+  display: flex;
+  gap: 2px;
+  margin-right: 4px;
+}
+
+.lang-btn {
+  padding: 3px 7px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.15s;
+  line-height: 1;
+}
+
+.lang-btn:hover {
+  opacity: 0.75;
+}
+
+.lang-btn--active {
+  opacity: 1;
+  background: var(--cv-accent-color, #ff7024);
+  border-color: var(--cv-accent-color, #ff7024);
+  color: #fff;
+}
+
+@media print {
+  .lang-switcher {
+    display: none !important;
+  }
+}
+
 .print-btn-plain {
   display: inline-flex;
   align-items: center;
@@ -1213,7 +1251,7 @@ body {
   display: inline-block;
   margin-left: 12px;
   padding: 2px 10px;
-  width: 5rem;
+  white-space: nowrap;
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;

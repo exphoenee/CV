@@ -1,4 +1,5 @@
 import { escHtml } from '../../shared.js';
+import { locale } from '../../locale.js';
 
 export function renderEducation(data) {
   const degrees = data.education.degrees.map(deg => `
@@ -7,7 +8,7 @@ export function renderEducation(data) {
   `).join('');
 
   return `
-    <div class="blockTitle noBreakBeforeAfter cv-block-title"><span>Education</span></div>
+    <div class="blockTitle noBreakBeforeAfter cv-block-title"><span>${locale.t('education')}</span></div>
     <div class="item noBreakInside educationItem cv-item">
       <div class="itemContent" style="display: flex; flex-direction: column; gap: 8px;">
         <div class="itemTitle" style="width: 100%; margin-bottom: 0.1rem;">

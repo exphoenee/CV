@@ -1,7 +1,8 @@
 import { escHtml, skillChip } from '../../shared.js';
+import { locale } from '../../locale.js';
 
 function renderBullets(bullets) {
-  if (!bullets?.length) return '';
+  if (!Array.isArray(bullets) || !bullets.length) return '';
   return bullets.map(b => `<div><i class="bullet-icon"></i>${b}</div>`).join('');
 }
 
@@ -10,7 +11,7 @@ function renderRefs(exp) {
   const refClass = exp.refs.length > 1 ? 'cv-plain-inline-5' : 'cv-plain-inline-6';
   return `
     <div class="cv-plain-inline-3">
-      <div class="cv-plain-inline-4"><strong>Reference(s):</strong></div>
+      <div class="cv-plain-inline-4"><strong>${locale.t('references')}</strong></div>
       <div class="${refClass}">
         ${exp.refs.map(r => `<a href="${escHtml(r.url)}" target="_blank">${escHtml(r.label)}</a>`).join('\n')}
       </div>
@@ -69,7 +70,7 @@ export function renderWorkItem(exp) {
           ${renderDescription(exp)}
         </div>
         ${renderRefs(exp)}
-        ${exp.skills?.length ? `<div class="itemSkills">${exp.skills.map(s => skillChip(s, s.toLowerCase().replace(/\./g, '') + '.svg')).join('')}</div>` : ''}
+        ${exp.skills?.length ? `<div class="itemSkills">${exp.skills.map(s => skillChip(s, s.toLowerCase().replace(/\./g, '').replace(/\s+/g, '_') + '.svg')).join('')}</div>` : ''}
       </div>
     </div>
   `;

@@ -238,9 +238,9 @@ export const CV_DATA = {
 
       skills: [
         "Industrial Automation",
-        "Robotics",
+        "Robot Applications",
         "PLC Systems",
-        "Universal Robots",
+        "Universal Robot",
         "OnRobot",
         "Machine Vision",
         "Project Management",

@@ -1,4 +1,6 @@
 import { html, raw } from '../../shared.js';
+import { locale } from '../../locale.js';
+import { renderLangSwitcher } from './lang-switcher.js';
 
 export function renderHeader(data) {
   const contacts = data.identity.contacts.map(c =>
@@ -12,8 +14,9 @@ export function renderHeader(data) {
       <div class="name-container">
         <span class="name">${data.identity.name}</span>
         <div class="header-buttons">
-          <button class="hire-btn-plain" id="hire-plain-btn">Hire Me</button>
-          <button class="print-btn-plain" id="print-plain-btn" title="Print CV">🖸 Print</button>
+          ${raw(renderLangSwitcher())}
+          <button class="hire-btn-plain" id="hire-plain-btn">${locale.t('hireMe')}</button>
+          <button class="print-btn-plain" id="print-plain-btn" title="${locale.t('print')}">${locale.t('print')}</button>
         </div>
       </div>
       <div class="deatils-container">

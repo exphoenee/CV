@@ -14,29 +14,29 @@
   <body>
     <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
     <div class="card">
-      <h2>Curriculum Vitae of</h2>
-      <h1>Viktor Bozzay <small>Frontend Tech Lead &middot; Pécs, HU</small></h1>
+      <h2 data-i18n="cvOf">Curriculum Vitae of</h2>
+      <h1>Viktor Bozzay <small data-i18n="roleLocation">Frontend Tech Lead &middot; Pécs, HU</small></h1>
       <div class="divider"></div>
-      <p class="subtitle">Choose how to view my CV</p>
+      <p class="subtitle" data-i18n="chooseView">Choose how to view my CV</p>
       <div class="btns">
         <a class="btn" href="cv-plain.html"
-          ><span class="label">I'm reading CV</span
-          ><span class="desc">Clean, readable, printable CV</span></a
+          ><span class="label" data-i18n="btnReadingLabel">I'm reading CV</span
+          ><span class="desc" data-i18n="btnReadingDesc">Clean, readable, printable CV</span></a
         ><a class="btn" href="cv-swagger.html"
-          ><span class="label">I'm a Frontend Developer</span
-          ><span class="desc">Swagger-style API docs</span></a
+          ><span class="label" data-i18n="btnFrontendLabel">I'm a Frontend Developer</span
+          ><span class="desc" data-i18n="btnFrontendDesc">Swagger-style API docs</span></a
         ><a class="btn" href="cv-json.html"
-          ><span class="label">I'm a Backend Developer</span
-          ><span class="desc">JSON / VS Code view</span></a
+          ><span class="label" data-i18n="btnBackendLabel">I'm a Backend Developer</span
+          ><span class="desc" data-i18n="btnBackendDesc">JSON / VS Code view</span></a
         ><a class="btn btn-game" href="cv-game.html"
-          ><span class="label">I'm a Gamer</span
-          ><span class="desc">Interactive 2.5D RPG world</span></a
+          ><span class="label" data-i18n="btnGamerLabel">I'm a Gamer</span
+          ><span class="desc" data-i18n="btnGamerDesc">Interactive 2.5D RPG world</span></a
         >
       </div>
       <div class="btns margin-top">
         <button class="btn btn-hire" id="hire-index-btn">
-          <span class="label">Hire Me</span
-          ><span class="desc">Send me a message</span>
+          <span class="label" data-i18n="btnHireLabel">Hire Me</span
+          ><span class="desc" data-i18n="btnHireDesc">Send me a message</span>
         </button>
       </div>
       <div class="footer">
@@ -44,6 +44,7 @@
       </div>
     </div>
     <div id="cv-toaster-container"></div>
+    <script type="module" src="./scripts/main.js"></script>
     <script type="module" src="./scripts/cv-index.js"></script>
     <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
   </body>

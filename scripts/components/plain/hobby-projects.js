@@ -1,4 +1,5 @@
 import { escHtml } from '../../shared.js';
+import { locale } from '../../locale.js';
 
 export function renderHobbyProjects(data) {
   const links = data.hobbyProjects.map((proj, idx) => {
@@ -7,7 +8,7 @@ export function renderHobbyProjects(data) {
   }).join('\n');
 
   return `
-    <div class="blockTitle noBreakBeforeAfter cv-block-title"><span>Hobby Projects</span></div>
+    <div class="blockTitle noBreakBeforeAfter cv-block-title"><span>${locale.t('hobbyProjects')}</span></div>
     <div class="item noBreakInside cv-item">
       <div class="itemDescription">
         <div class="hobby-links">
