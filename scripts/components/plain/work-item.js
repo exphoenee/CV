@@ -70,7 +70,7 @@ export function renderWorkItem(exp) {
           ${renderDescription(exp)}
         </div>
         ${renderRefs(exp)}
-        ${exp.skills?.length ? `<div class="itemSkills">${exp.skills.map(s => skillChip(s, s.toLowerCase().replace(/\./g, '').replace(/\s+/g, '_') + '.svg')).join('')}</div>` : ''}
+        ${exp.skills?.length ? `<div class="itemSkills">${exp.skills.map(s => skillChip(s.name, s.icon)).join('')}</div>` : ''}
       </div>
     </div>
   `;
