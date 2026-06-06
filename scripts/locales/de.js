@@ -34,6 +34,14 @@ export const DE = {
     send: "Senden",
     messageSent: "Nachricht erfolgreich gesendet.",
     close: "Schließen",
+    themeChanged: "Thema gewechselt:",
+    musicChangedTo: "Musik gewechselt:",
+    musicPaused: "pausiert",
+    musicPlaying: "spielt",
+    nowPlaying: "Jetzt läuft:",
+    repeatNone: "Keine Wiederholung",
+    repeatAll: "Alle wiederholen",
+    repeatOne: "Eine wiederholen",
   },
   content: {
     summary:

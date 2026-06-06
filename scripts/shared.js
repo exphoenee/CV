@@ -1,4 +1,5 @@
 import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES } from './config.js';
+import { locale } from './locale.js';
 
 export function showToast(message) {
   var container = document.getElementById('cv-toaster-container');
@@ -92,7 +93,7 @@ export function initHireModal(prefix) {
 
   document.getElementById(prefix + "-form").addEventListener("submit", function() {
     closeModal();
-    showToast("Message sent successfully.");
+    showToast(locale.t('messageSent'));
   });
 
   return { openModal: openModal, closeModal: closeModal };

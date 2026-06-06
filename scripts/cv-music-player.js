@@ -1,4 +1,5 @@
 import { MUSIC_STATE_KEY, MUSIC_TIME_KEY, MUSIC_VOLUME_KEY, MUSIC_GENRE_KEY, MUSIC_REPEAT_KEY } from './config.js';
+import { locale } from './locale.js';
 
 var LYRICS_MAP = {
   "assets/music/polka-schramli.mp3": `[intro]\r\n\r\n[strophe]\r\nDer Bildschirm im Browser leuchtet still im Raum\r\nIch folge den Codes durch digitalen Schattenraum\r\nMit ruhiger Hand entwerfe ich das Design\r\nEin Geist, der Lösungen findet, wo Logik sich vereint\r\n\r\nIch richte die Pfeiler, wo alte Balken schwanken\r\nUnd leite verlorene Energie auf ihren Bahnen\r\nNicht nur ein Gesicht für den flüchtigen Blick\r\nSondern Geschichten von Funktionen klingen zu mir zurück\r\n\r\n[pre-chorus]\r\nDie Daten strömen tief aus fernen Servern her\r\nIch verwebe jeden Faden mit meisterhaftem Gespür\r\nAus der Dunkelheit ins Licht, wo Nutzer sich vereinen\r\nIch halte das Steuer ihres Schicksals im Design\r\n\r\n[refrain]\r\nGib mir die Schlüssel zu dem Reich, das du erschufst\r\nSieh, wie jedes Versprechen zu Gold wird, wenn du es rufst\r\nIch bin der Architekt, der den Stromlauf formt\r\nDie Brücke zu den Küsten deiner kühnsten Träume dort\r\n\r\nEntfache das Feuer, das wagt, sich neu zu definieren\r\nDie Zukunft steht geschrieben in jeder Zeile hier\r\nJa, die Zukunft steht geschrieben in jeder Zeile hier\r\n\r\n[strophe]\r\nIch lehrte Maschinen zu denken und zu erneuern\r\nDas Chaos zu ordnen auf virtuellen Gemäuern\r\nDer Workflow summt wie Wind in den Blättern sacht\r\nUnd löst jedes Rätsel in dem Moment, da es erwacht\r\n\r\nDas Refactoring glänzt wie Morgendämmerung nach dem Regen\r\nErsetzt das Zerbrechliche durch eisernes Vermögen\r\nIch lese das Interface und säe den Samen ein\r\nWo Logik Wurzeln schlägt im Boden der Notwendigkeit hinein\r\n\r\n[pre-chorus]\r\nDie Daten strömen tief aus fernen Servern her\r\nIch verwebe jeden Faden mit meisterhaftem Gespür\r\nAus der Dunkelheit ins Licht, wo Nutzer sich vereinen\r\nIch halte das Steuer ihres Schicksals im Design\r\n\r\n[refrain]\r\nGib mir die Schlüssel zu dem Reich, das du erschufst\r\nSieh, wie jedes Versprechen zu Gold wird, wenn du es rufst\r\nIch bin der Architekt, der den Stromlauf formt\r\nDie Brücke zu den Küsten deiner kühnsten Träume dort\r\n\r\nEntfache das Feuer, das wagt, sich neu zu definieren\r\nDie Zukunft steht geschrieben in jeder Zeile hier\r\nJa, die Zukunft steht geschrieben in jeder Zeile hier`,
@@ -236,7 +237,7 @@ export function initMusicPlayer() {
         updatePlayPause();
 
         var cleanLabel = currentLabel.replace(/^[^\w\s]*\s*/, '').trim();
-        if (window.showToast) window.showToast("Music changed to " + cleanLabel);
+        if (window.showToast) window.showToast(locale.t('musicChangedTo') + ' ' + cleanLabel);
       });
     });
 
@@ -249,7 +250,7 @@ export function initMusicPlayer() {
         fadeIn();
       }
       var cleanLabel = currentLabel.replace(/^[^\w\s]*\s*/, '').trim();
-      if (window.showToast) window.showToast(isPlaying ? (cleanLabel + " music paused") : (cleanLabel + " music playing"));
+      if (window.showToast) window.showToast(cleanLabel + ' ' + locale.t(isPlaying ? 'musicPaused' : 'musicPlaying'));
     });
 
     if (prevBtn) {
@@ -264,7 +265,7 @@ export function initMusicPlayer() {
         var prevIndex = (currentIndex - 1 + options.length) % options.length;
         selectTrackByIndex(prevIndex);
         var cleanLabel = currentLabel.replace(/^[^\w\s]*\s*/, '').trim();
-        if (window.showToast) window.showToast("Now playing " + cleanLabel);
+        if (window.showToast) window.showToast(locale.t('nowPlaying') + ' ' + cleanLabel);
         fadeOutThen(function () {
           stopFade();
           loadTrack();
@@ -279,7 +280,7 @@ export function initMusicPlayer() {
         var nextIndex = (currentIndex + 1) % options.length;
         selectTrackByIndex(nextIndex);
         var cleanLabel = currentLabel.replace(/^[^\w\s]*\s*/, '').trim();
-        if (window.showToast) window.showToast("Now playing " + cleanLabel);
+        if (window.showToast) window.showToast(locale.t('nowPlaying') + ' ' + cleanLabel);
         fadeOutThen(function () {
           stopFade();
           loadTrack();
@@ -309,8 +310,8 @@ export function initMusicPlayer() {
       repeatBtn.addEventListener("click", function () {
         repeatMode = (repeatMode + 1) % 3;
         localStorage.setItem(MUSIC_REPEAT_KEY, repeatMode);
-        var modeLabels = ["No repeat", "Repeat all", "Repeat one"];
-        if (window.showToast) window.showToast("\uD83D\uDD01 " + modeLabels[repeatMode]);
+        var modeLabels = [locale.t('repeatNone'), locale.t('repeatAll'), locale.t('repeatOne')];
+        if (window.showToast) window.showToast('\uD83D\uDD01 ' + modeLabels[repeatMode]);
         updateRepeatBtnUI();
       });
     }

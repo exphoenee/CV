@@ -34,6 +34,14 @@ export const HU = {
     send: "Küldés",
     messageSent: "Üzenet sikeresen elküldve.",
     close: "Bezárás",
+    themeChanged: "Téma:",
+    musicChangedTo: "Zene:",
+    musicPaused: "szüneteltetve",
+    musicPlaying: "lejátszás",
+    nowPlaying: "Most játszik:",
+    repeatNone: "Nincs ismétlés",
+    repeatAll: "Összes ismétlése",
+    repeatOne: "Egy ismétlése",
   },
   content: {
     summary:

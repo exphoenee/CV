@@ -2,7 +2,7 @@ import { renderPlainCV } from './components/plain/index.js';
 import { initHireModal, initFormspree, getSystemTheme, musicPlayerHTML, hireModalHTML } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES, CURSOR_KEY } from './config.js';
-import { locale } from './locale.js';
+import { locale, AVAILABLE_LANGS } from './locale.js';
 
 document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
 
@@ -22,15 +22,130 @@ document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire-plain', {
 
 initHireModal('hire-plain');
 
+// --- Mobile settings gear ---
+const LANG_LABELS = { en: 'EN', hu: 'HU', de: 'DE' };
+const LANG_NAMES  = { en: 'English', hu: 'Magyar', de: 'Deutsch' };
+
+const gearBtn = document.createElement('button');
+gearBtn.id = 'settings-gear-btn';
+gearBtn.setAttribute('aria-label', 'Settings');
+gearBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+</svg>`;
+document.body.appendChild(gearBtn);
+
+const settingsBackdrop = document.createElement('div');
+settingsBackdrop.id = 'settings-modal-backdrop';
+settingsBackdrop.className = 'settings-modal-backdrop';
+document.body.appendChild(settingsBackdrop);
+
+const CHEVRON = `<svg class="clang-chevron" viewBox="0 0 12 7" width="12" height="7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6L6 1L11 6"/></svg>`;
+
+function buildSettingsModal() {
+  settingsBackdrop.innerHTML = `
+    <div class="settings-modal-box">
+      <div class="settings-modal-header">
+        <button id="settings-close-btn" class="settings-close-btn" aria-label="Close">✕</button>
+      </div>
+      <div class="settings-modal-body">
+        <div class="clang-select" id="clang-select">
+          <button class="clang-trigger" id="clang-trigger" type="button" aria-haspopup="listbox">
+            <span class="clang-current">
+              <span class="clang-name">${LANG_NAMES[locale.lang]}</span>
+              <span class="clang-code">${LANG_LABELS[locale.lang]}</span>
+            </span>
+            ${CHEVRON}
+          </button>
+          <ul class="clang-options" id="clang-options" role="listbox">
+            ${AVAILABLE_LANGS.map(lang => `
+              <li class="clang-option${locale.lang === lang ? ' clang-option--active' : ''}"
+                  data-lang-option="${lang}" role="option" aria-selected="${locale.lang === lang}">
+                <span class="clang-name">${LANG_NAMES[lang]}</span>
+                <span class="clang-code">${LANG_LABELS[lang]}</span>
+              </li>`).join('')}
+          </ul>
+        </div>
+        <button class="settings-hire-btn" id="settings-hire-btn">${locale.t('hireMe')}</button>
+        <button class="settings-print-btn" id="settings-print-btn">${locale.t('print')}</button>
+        <button class="settings-close-drawer-btn" id="settings-close-btn">${locale.t('close')}</button>
+      </div>
+    </div>
+  `;
+}
+
+buildSettingsModal();
+
+function openSettings() {
+  settingsBackdrop.classList.add('is-visible');
+  requestAnimationFrame(() => settingsBackdrop.classList.add('is-open'));
+}
+function closeSettings() {
+  settingsBackdrop.classList.remove('is-open');
+  settingsBackdrop.addEventListener('transitionend', () => {
+    settingsBackdrop.classList.remove('is-visible');
+  }, { once: true });
+}
+function closeLangDropdown() {
+  document.getElementById('clang-trigger')?.classList.remove('open');
+  document.getElementById('clang-options')?.classList.remove('open');
+}
+
+gearBtn.addEventListener('click', openSettings);
+
 document.body.addEventListener('click', function (e) {
-  if (e.target.matches('#print-plain-btn')) {
+  if (e.target.matches('#print-plain-btn') || e.target.closest('#settings-print-btn')) {
+    closeSettings();
     window.print();
+    return;
   }
-  if (e.target.matches('.lang-btn')) {
-    locale.setLang(e.target.dataset.lang);
+  if (e.target.closest('#settings-close-btn') || e.target === settingsBackdrop) {
+    closeSettings();
+    return;
+  }
+  if (e.target.closest('#settings-hire-btn')) {
+    closeSettings();
+    document.getElementById('hire-plain-btn')?.click();
+    return;
+  }
+  const trigger = e.target.closest('#clang-trigger');
+  if (trigger) {
+    const isOpen = trigger.classList.contains('open');
+    document.getElementById('clang-trigger')?.classList.toggle('open', !isOpen);
+    document.getElementById('clang-options')?.classList.toggle('open', !isOpen);
+    return;
+  }
+  const opt = e.target.closest('[data-lang-option]');
+  if (opt) {
+    locale.setLang(opt.dataset.langOption);
     render();
+    buildSettingsModal();
+    return;
   }
+  if (!e.target.closest('#clang-select')) closeLangDropdown();
+
+  // Header custom lang dropdown
+  const htrigger = e.target.closest('#hlang-trigger');
+  if (htrigger) {
+    const isOpen = htrigger.classList.contains('open');
+    htrigger.classList.toggle('open', !isOpen);
+    document.getElementById('hlang-options')?.classList.toggle('open', !isOpen);
+    return;
+  }
+  const hopt = e.target.closest('[data-hlang-option]');
+  if (hopt) {
+    locale.setLang(hopt.dataset.hlangOption);
+    render();
+    buildSettingsModal();
+    return;
+  }
+  if (!e.target.closest('#hlang-select')) closeHlangDropdown();
 });
+
+function closeHlangDropdown() {
+  document.getElementById('hlang-trigger')?.classList.remove('open');
+  document.getElementById('hlang-options')?.classList.remove('open');
+}
 
 window.showToast = function(message) {
   var container = document.getElementById('cv-toaster-container');
@@ -148,7 +263,7 @@ window.showToast = function(message) {
     var idx = states.indexOf(current);
     var nextState = states[(idx + 1) % states.length];
     apply(nextState);
-    if (window.showToast) window.showToast('Theme changed to ' + nextState);
+    if (window.showToast) window.showToast(locale.t('themeChanged') + ' ' + nextState);
   });
 
   apply(current);
