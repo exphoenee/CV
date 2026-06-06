@@ -33,7 +33,7 @@ function renderDescription(exp) {
     `;
   }
   if (Array.isArray(exp.bullets)) {
-    return `<div>${exp.description}</div><div class="cv-plain-inline-2">${renderBullets(exp.bullets)}</div>`;
+    return `<div>${exp.description}</div><div class="cv-plain-bullets">${renderBullets(exp.bullets)}</div>`;
   }
   if (exp.bullets && typeof exp.bullets === 'object') {
     return `

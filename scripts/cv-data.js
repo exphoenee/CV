@@ -33,7 +33,7 @@ export const CV_DATA = {
     ],
   },
   summary:
-    "Frontend developer who operates at the architecture level, not just building features, but evaluating whether the foundation they sit on is worth keeping. I have led full rewrites of legacy systems, migrated codebases to modern stacks, and designed AI-assisted development workflows that measurably accelerate delivery. I refactor and rewrite deliberately: only when the evidence justifies it, and always with a clear plan. My engineering background means I think in systems, not just components.",
+    "Frontend Engineer specializing in frontend architecture, system design, and large-scale legacy modernization. Led full rewrites and migrations of enterprise systems to modern stacks, improving maintainability and scalability of core platforms. Introduced AI-assisted development workflows that significantly increased delivery speed, engineering consistency, and release reliability. Strong focus on evidence-driven refactoring, CI-quality standards, and building sustainable, system-level frontend foundations.",
   workExperience: [
     {
       id: "aegex",
@@ -44,64 +44,65 @@ export const CV_DATA = {
       periodLabel: "Nov 2023 - Present",
       isCurrent: true,
       teamSize: 2,
+
       description:
-        "Assessed two legacy systems and drove the architectural decisions for modernizing each. Took full ownership of both SafeSy and FACTS from design through delivery, currently leading one mid-level colleague. Introduced AI-assisted workflows and a CI pipeline with automated quality checks; refactoring is ongoing and evidence-driven.",
+        "Led architectural modernization of two enterprise legacy systems. Own end-to-end delivery of SafeSy and FACTS, including system design, frontend architecture, and backend integration. Introduced AI-assisted development workflows and CI-driven quality pipelines, enabling an evidence-based engineering process and significantly improving delivery speed and release reliability.",
+
+      bullets: [
+        "Owned architecture and delivery of two enterprise systems (SafeSy, FACTS) from design to production",
+        "Led modernization of legacy systems through full rewrites and migration to modern frontend stacks",
+        "Introduced AI-assisted development workflows improving engineering throughput and consistency",
+        "Implemented CI pipeline with automated quality gates and testing strategy from scratch",
+        "Established evidence-driven refactoring process with measurable quality improvements",
+        "Currently mentoring and leading 1 mid-level engineer",
+      ],
+
       projects: [
         {
           name: "SafeSy",
-          subtitle: "Internal manufacturing management system",
+          subtitle: "Internal Manufacturing Management System",
           bullets: [
-            "Cross-role platform (production, office, executives, partners) managing workflows, inventory, and real-time data tracking",
-            "Designed and built the internal Aegex Svelte component library used across the platform",
-            "Built a subscribable daily email report system; contributed to the Express backend including SQL query development",
+            "Built cross-role enterprise platform for production, office, executives, and partners with real-time workflow and inventory tracking",
+            "Designed and implemented reusable internal Svelte component library used across the platform",
+            "Developed subscribable daily email reporting system and contributed to Express backend (including SQL query design and optimization)",
           ],
         },
         {
           name: "FACTS",
           subtitle: "Feedstock and Compliance Tracking System",
           bullets: [
-            "Release cycle cut from monthly to 2 weeks (targeting 1 week) using a Claude AI-assisted workflow and custom framework tooling",
-            "CI pipeline with automated quality checks introduced; test coverage built from zero, quality issues near eliminated",
-            "Migrated to a monorepo, extracted shared FACTS/Driver code into a private package, and built a CLI tool for monorepo workflow management",
+            "Reduced release cycle from monthly to biweekly (target: weekly) using AI-assisted development workflows (Claude-based tooling)",
+            "Introduced CI pipeline with automated quality gates; established test coverage from zero and significantly reduced production issues",
+            "Migrated architecture to PNPM monorepo and extracted shared FACTS/Driver package for reuse",
+            "Built internal CLI tooling for monorepo workflow automation and developer productivity",
           ],
         },
       ],
+
       skills: [
         "Svelte",
         "React",
-        "ExpressJS",
         "TypeScript",
         "Node.js",
+        "ExpressJS",
+        "MySQL",
         "Python",
         "SCSS",
         "Vite",
         "PNPM",
-        "MySQL",
         "Jest",
         "Vitest",
         "Playwright",
         "Claude",
         "Codex",
       ],
+
       refs: [
         {url: "https://facts.aegex.com", label: "facts.aegex.com"},
         {url: "https://driver.aegex.com", label: "driver.aegex.com"},
       ],
+
       hasDecor: true,
-      game: {
-        x: 420,
-        y: 340,
-        tech: "Svelte · React · TypeScript · Node.js · Express · MySQL · Vitest · Claude AI",
-        description: "Aegex Technologies (Current)",
-        highlights: [
-          "SafeSy: Designed and built the internal Aegex Svelte component library used across all applications.",
-          "SafeSy: Manages real-time workflows, inventory, and tracking across all user roles.",
-          "SafeSy: Built a subscribable daily email report system; contributed to Express backend including SQL query optimization.",
-          "FACTS: CI pipeline with automated quality checks introduced from scratch.",
-          "FACTS: Migrated codebases to a robust PNPM monorepo, extracting shared driver packages.",
-          "FACTS: Claude AI-assisted dev workflows cut release cycle from 30 days down to 14 days (targeting 7).",
-        ],
-      },
     },
     {
       id: "telekom",
@@ -111,39 +112,36 @@ export const CV_DATA = {
       period: {from: "2023-07", to: "2023-11"},
       periodLabel: "Jul 2023 - Nov 2023",
       isCurrent: false,
+
       description:
-        "Worked in an Agile environment with continuous API integration between frontend and AI backend",
+        "Worked in an enterprise Agile environment on an AI-integrated frontend system, focusing on real-time data visualization and frontend-backend integration. Built type-safe UI components and contributed to AI-driven testing workflows and analysis interfaces.",
+
       bullets: [
-        "Built type-safe UI components and integrated the AI-driven backend with real-time analysis display",
-        "Created intuitive interfaces for managing and viewing test results",
+        "Developed type-safe React-based UI components for enterprise AI-integrated systems",
+        "Integrated frontend interfaces with AI-driven backend services via API workflows",
+        "Built real-time data visualization interfaces for test results and system analysis",
+        "Worked in Agile delivery environment with continuous integration of frontend and backend systems",
       ],
+
       skills: [
         "React",
+        "TypeScript",
         "Node.js",
-        "NPM",
-        "Jest",
-        "Styled Components",
         "React Redux",
+        "Styled Components",
         "Webpack",
+        "Jest",
+        "NPM",
       ],
+
       refs: [
         {
           url: "https://mobiledevice.cloud/order/ai4test",
-          label: "mobiledevice.cloud/order/ai4test",
+          label: "AI4Test Platform",
         },
       ],
+
       hasDecor: false,
-      game: {
-        x: 180,
-        y: 340,
-        tech: "React · TypeScript · Redux · Webpack · Agile",
-        description: "Deutsche Telekom IT Solutions",
-        highlights: [
-          "Fast-paced, enterprise Agile environment with continuous frontend-AI backend integration.",
-          "Built type-safe UI components integrated with AI-driven testing systems.",
-          "Created intuitive dashboards for managing and viewing automated cloud test suites.",
-        ],
-      },
     },
     {
       id: "scolia",
@@ -153,36 +151,33 @@ export const CV_DATA = {
       period: {from: "2023-01", to: "2023-07"},
       periodLabel: "Jan 2023 - Jul 2023",
       isCurrent: false,
+
       description:
-        "As a frontend developer for Scolia, a real-time automatic scorekeeping solution for steel-tip darts:",
+        "Developed real-time frontend interfaces for an automated sports scoring and analytics platform. Focused on low-latency UI updates, live data visualization, and responsive user experience in a high-frequency data environment.",
+
       bullets: [
-        "Built responsive, dynamic UIs in collaboration with the design team.",
-        "Created interactive visualizations for real-time progress tracking and performance insights.",
+        "Built real-time React-based UI for live sports scoring and match tracking system",
+        "Implemented low-latency data visualization components for live performance analytics",
+        "Integrated WebSocket-based real-time data streams into frontend architecture",
+        "Collaborated with design and backend teams to deliver responsive, high-performance UI systems",
       ],
+
       skills: [
         "React",
         "Redux Saga",
-        "Jest",
-        "MongoDB",
+        "WebSocket",
+        "JavaScript",
         "SCSS",
         "CSS",
         "HTML",
+        "MongoDB",
+        "Jest",
         "Webpack",
-        "WebSocket",
       ],
+
       refs: [{url: "https://scoliadarts.com", label: "scoliadarts.com"}],
+
       hasDecor: true,
-      game: {
-        x: 1140,
-        y: 100,
-        tech: "React · Redux Saga · WebSocket · MongoDB · Webpack",
-        description: "Scolia Technologies",
-        highlights: [
-          "Built responsive, dynamic UIs where milliseconds matter and the UI has to keep up with flying darts.",
-          "Created interactive canvas-based visualizations for real-time progress tracking.",
-          "Integrated low-latency WebSocket live score feeds.",
-        ],
-      },
     },
     {
       id: "cubicfox",
@@ -192,44 +187,34 @@ export const CV_DATA = {
       period: {from: "2022-09", to: "2023-01"},
       periodLabel: "Sep 2022 - Jan 2023",
       isCurrent: false,
+
       description:
-        "Contributed to establishing the team's code conventions and standards, improving consistency across the codebase. Redesigned the process for gathering and analysing client requirements, leading to clearer specs and fewer revision cycles.",
-      bullets: {
-        hardSkills: [
-          "Responsive, cross-browser UI development",
-          "Git workflows and Agile methodologies",
-        ],
-        softSkills: [
-          "Strong communication, collaboration, and attention to detail",
-          "Effective at gathering client requirements and adapting to change",
-        ],
-      },
+        "Delivered production-grade frontend applications for international clients in an Agile environment. Focused on scalable UI architecture, frontend standards, and improving requirement clarity between stakeholders and development teams.",
+
+      bullets: [
+        "Built production-ready React and Next.js frontend applications for international clients",
+        "Improved frontend architecture consistency by defining and enforcing code standards across the team",
+        "Redesigned client requirement gathering process, reducing ambiguity and iteration cycles",
+        "Collaborated with design and backend teams to deliver scalable, cross-browser UI systems",
+      ],
+
       skills: [
         "React",
-        "JavaScript",
+        "Next.js",
         "TypeScript",
+        "JavaScript",
+        "SCSS",
+        "Styled Components",
         "HTML",
         "CSS",
-        "SCSS",
-        "NPM",
         "Jest",
         "Webpack",
-        "Next.js",
-        "Styled Components",
+        "NPM",
       ],
+
       refs: [{url: "https://www.fundmypitch.com", label: "fundmypitch.com"}],
+
       hasDecor: true,
-      game: {
-        x: 900,
-        y: 100,
-        tech: "React · Next.js · TypeScript · SCSS · Jest · Webpack",
-        description: "Cubicfox Technologies",
-        highlights: [
-          "Contributed to establishing the team's strict frontend code conventions and standards.",
-          "Responsive, cross-browser UI development with strict pixel-perfect quality standards.",
-          "Redesigned client requirements gathering—resulted in clearer specs and fewer revision cycles.",
-        ],
-      },
     },
     {
       id: "cobotx",
@@ -239,95 +224,77 @@ export const CV_DATA = {
       period: {from: "2021-08", to: "2022-08"},
       periodLabel: "Aug 2021 - Aug 2022",
       isCurrent: false,
+
       description:
-        "During my tenure at CobotX, I had the privilege of serving as an Engineering Manager, where I successfully built and led a team of 4 engineers.",
-      bullets: {
-        responsibilities: [
-          "Developed hardware/software specifications for PLC and robotics systems",
-          "Created capacity and financial plans aligned with the Sales Forecast",
-        ],
-        leadership: [
-          "Built and led a team of 4 engineers, managing performance and project progress",
-          "Set KPIs, improved documentation standards, and reported quarterly to management",
-        ],
-      },
+        "Led engineering projects in industrial robotics and automation, bridging mechanical engineering, PLC systems, and software-driven automation. Responsible for system specification, team leadership, and delivery planning in production-critical environments.",
+
+      bullets: [
+        "Developed hardware and software specifications for PLC-based robotics and automation systems",
+        "Defined technical requirements and feasibility studies for industrial robotic solutions",
+        "Built and led a team of 4 engineers, overseeing delivery, performance, and project execution",
+        "Established KPIs, documentation standards, and reporting processes for engineering operations",
+        "Created capacity and financial planning aligned with sales and production forecasts",
+      ],
+
       skills: [
-        "Robot Applications",
         "Industrial Automation",
-        "Project Management",
-        "Universal Robot",
+        "Robotics",
+        "PLC Systems",
+        "Universal Robots",
         "OnRobot",
-        "OnShape",
-        "Python",
-        "PyCharm",
         "Machine Vision",
+        "Project Management",
+        "Python",
+        "OnShape",
         "Mechanical Engineering",
       ],
+
       refs: [],
+
       hasDecor: false,
-      game: {
-        x: 660,
-        y: 100,
-        tech: "Universal Robots · PLC · Machine Vision · Python",
-        description: "CobotX Technologies",
-        highlights: [
-          "Engineering Manager at a high-tech robotics integrator, bridging mechanical engineering with modern software delivery.",
-          "Literal robots. Universal Robots. Not metaphorical ones!",
-          "Developed hardware/software specifications for PLC and robotics automation.",
-          "Created capacity and financial plans aligned with sales forecasts.",
-          "Set team KPIs, optimized documentation standards, and reported directly to board.",
-        ],
-      },
     },
     {
       id: "webforsol",
       company: "WebforSol",
       logo: "websol.png",
-      title: "Freelancer Full stack developer",
+      title: "Freelancer Full Stack Developer",
       period: {from: "2020-06", to: "2022-11"},
       periodLabel: "Jun 2020 - Nov 2022",
       isCurrent: false,
+
       description:
-        "Operated as a freelance full-stack developer, delivering custom web solutions for clients across various industries. Focused on clean architecture, cost efficiency, and building systems that are easy to extend and maintain.",
-      bullets: {
-        hardSkills: [
-          "Full-stack experience with React, Next.js, Node.js, MongoDB, MySQL, and PHP/Laravel",
-        ],
-        softSkills: [
-          "Agile methodology practitioner with strong collaboration and adaptability",
-          "Effective communication for understanding and meeting evolving client needs",
-        ],
-      },
+        "Delivered full-stack web applications as an independent developer for clients across multiple industries. Focused on system design, maintainable architecture, and end-to-end delivery of scalable web solutions.",
+
+      bullets: [
+        "Built full-stack applications using React, Next.js, Node.js, PHP, and relational/non-relational databases",
+        "Designed and implemented REST APIs and modular backend architectures for client systems",
+        "Delivered end-to-end product development from requirement analysis to deployment and maintenance",
+        "Worked directly with clients to translate business needs into scalable technical solutions",
+        "Optimized application structure for maintainability, extensibility, and long-term scalability",
+      ],
+
       skills: [
         "React",
-        "JavaScript",
-        "jQuery",
+        "Next.js",
         "Node.js",
         "PHP",
+        "Laravel",
         "MySQL",
+        "MongoDB",
+        "JavaScript",
+        "TypeScript",
         "CSS",
-        "Styled Components",
-        "Next.js",
+        "jQuery",
         "NestJS",
-        "Project Management",
       ],
+
       refs: [
         {url: "https://szelacoaching.hu", label: "szelacoaching.hu"},
         {url: "https://www.pecscoach.hu", label: "pecscoach.hu"},
         {url: "https://smartedu.hu", label: "smartedu.hu"},
       ],
+
       hasDecor: true,
-      game: {
-        x: 420,
-        y: 100,
-        tech: "React · Next.js · NestJS · PHP · Laravel · MySQL · MongoDB",
-        description: "WebforSol (Freelance)",
-        highlights: [
-          "Delivered bespoke full-stack custom applications, matching high availability requirements.",
-          "Designed and integrated clean database migrations and modular REST APIs.",
-          "Delivered custom solutions for clients using Svelte, React, Node.js, and PHP.",
-        ],
-      },
     },
   ],
   education: {
