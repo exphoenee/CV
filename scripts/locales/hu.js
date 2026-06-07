@@ -2,7 +2,7 @@ export const HU = {
   labels: {
     cvOf: "Önéletrajz",
     roleLocation: "Frontend Tech Lead · Pécs, HU",
-    chooseView: "Válaszd meg, hogyan tekinted meg az önéletrajzom",
+    chooseView: "Válaszd ki, hogyan tekinted meg az önéletrajzom",
     btnReadingLabel: "Olvasni szeretném",
     btnReadingDesc: "Tiszta, olvasható, nyomtatható önéletrajz",
     btnFrontendLabel: "Frontend fejlesztő vagyok",
