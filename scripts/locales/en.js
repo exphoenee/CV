@@ -21,7 +21,7 @@ export const EN = {
     community: "Community & Mentorship",
     references: "Reference(s):",
     hireMe: "Hire Me",
-    print: "🖸 Print",
+    print: "Print",
     poweredBy: "Powered by",
     current: "current",
     contactTitle: "Contact Viktor",

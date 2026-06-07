@@ -21,7 +21,7 @@ export const FR = {
     community: "Communauté & Mentorat",
     references: "Référence(s) :",
     hireMe: "Recrutez-moi",
-    print: "🖸 Imprimer",
+    print: "Imprimer",
     poweredBy: "Propulsé par",
     current: "actuel",
     contactTitle: "Contacter Viktor",
@@ -72,7 +72,8 @@ export const FR = {
           },
           {
             name: "FACTS",
-            subtitle: "Système de suivi des matières premières et de conformité",
+            subtitle:
+              "Système de suivi des matières premières et de conformité",
             bullets: [
               "Release réduit de mensuel à bimensuel (objectif : hebdomadaire) via workflows IA (outillage Claude)",
               "Pipeline CI avec quality gates ; couverture de tests établie de zéro, incidents en production réduits significativement",
@@ -144,9 +145,13 @@ export const FR = {
 
     identity: {
       languages: [
-        { name: "Hongrois", level: "Langue maternelle", comment: null },
-        { name: "Allemand", level: "Intermédiaire supérieur (B2)", comment: null },
-        { name: "Anglais", level: "Intermédiaire supérieur (B2)", comment: null },
+        {name: "Hongrois", level: "Langue maternelle", comment: null},
+        {
+          name: "Allemand",
+          level: "Intermédiaire supérieur (B2)",
+          comment: null,
+        },
+        {name: "Anglais", level: "Intermédiaire supérieur (B2)", comment: null},
       ],
     },
   },

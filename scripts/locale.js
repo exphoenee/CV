@@ -9,8 +9,9 @@ import { DOT } from './locales/dot.js';
 import { KL } from './locales/kl.js';
 import { QU } from './locales/qu.js';
 import { GOA } from './locales/goa.js';
+import { ASG } from './locales/asg.js';
 
-const LANGS = { en: EN, hu: HU, de: DE, fr: FR, es: ES, it: IT, dot: DOT, kl: KL, qu: QU, goa: GOA };
+const LANGS = { en: EN, hu: HU, de: DE, fr: FR, es: ES, it: IT, dot: DOT, kl: KL, qu: QU, goa: GOA, asg: ASG };
 const STORAGE_KEY = 'cv_lang';
 
 function _detectBrowserLang() {
@@ -87,4 +88,4 @@ function _mergeContent(base, overrides) {
 }
 
 export const locale = new LocaleManager();
-export const AVAILABLE_LANGS = ['en', 'hu', 'de', 'fr', 'es', 'it', 'dot', 'kl', 'qu', 'goa'];
+export const AVAILABLE_LANGS = ['en', 'de', 'es', 'fr', 'it', 'hu', 'asg', 'dot', 'qu', 'goa', 'kl'];

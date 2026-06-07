@@ -1,7 +1,7 @@
 export const GOA = {
   labels: {
     cvOf: "Joma i:",
-    roleLocation: "Kree Hok'tar Tau'ri · Pécs, HU",
+    roleLocation: "Kree Hok'tar Tau'ri · Sol · Pécs, HU",
     chooseView: "Kree! Tal mak. Nok:",
     btnReadingLabel: "Jaffa, joma nok",
     btnReadingDesc: "Chel nok — joma secu",
@@ -21,7 +21,7 @@ export const GOA = {
     community: "Jaffa ar lo'taur noc",
     references: "Joma secu:",
     hireMe: "Lo'taur! Kree!",
-    print: "🖸 Joma rel",
+    print: "Joma rel",
     poweredBy: "Kel'shah ló:",
     current: "sí kree",
     contactTitle: "Kree Viktor",
@@ -144,9 +144,9 @@ export const GOA = {
 
     identity: {
       languages: [
-        { name: "Magyar", level: "Tau'ri lam er", comment: null },
-        { name: "Deutsch", level: "B2 — hok'noc", comment: null },
-        { name: "English", level: "B2 — chel nok", comment: null },
+        {name: "Magyar", level: "Tau'ri lam er", comment: null},
+        {name: "Deutsch", level: "B2 — hok'noc", comment: null},
+        {name: "English", level: "B2 — chel nok", comment: null},
       ],
     },
   },

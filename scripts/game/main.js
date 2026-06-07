@@ -420,8 +420,8 @@ class GameEngine {
         e.preventDefault();
       }
 
-      // P key to toggle pause menu
-      if (e.key === "p" || e.key === "P") {
+      // P key to toggle pause menu (ignore key repeat to prevent flicker)
+      if ((e.key === "p" || e.key === "P") && !e.repeat) {
         const startScreen = document.getElementById("start-screen");
         const gameOverScreen = document.getElementById("game-over-screen");
 

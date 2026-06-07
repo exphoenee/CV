@@ -21,7 +21,7 @@ export const DE = {
     community: "Gemeinschaft & Mentoring",
     references: "Referenz(en):",
     hireMe: "Stell mich ein!",
-    print: "🖸 Drucken",
+    print: "Drucken",
     poweredBy: "Erstellt mit",
     current: "aktuell",
     contactTitle: "Kontakt",
@@ -144,9 +144,9 @@ export const DE = {
 
     identity: {
       languages: [
-        { name: "Ungarisch", level: "Muttersprache", comment: null },
-        { name: "Deutsch", level: "Obere Mittelstufe (B2)", comment: null },
-        { name: "Englisch", level: "Obere Mittelstufe (B2)", comment: null },
+        {name: "Ungarisch", level: "Muttersprache", comment: null},
+        {name: "Deutsch", level: "Obere Mittelstufe (B2)", comment: null},
+        {name: "Englisch", level: "Obere Mittelstufe (B2)", comment: null},
       ],
     },
   },

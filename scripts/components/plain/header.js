@@ -16,7 +16,7 @@ export function renderHeader(data) {
         <div class="header-buttons">
           ${raw(renderLangSwitcher())}
           <button class="hire-btn-plain" id="hire-plain-btn">${locale.t('hireMe')}</button>
-          <button class="print-btn-plain" id="print-plain-btn" title="${locale.t('print')}">${locale.t('print')}</button>
+          <button class="print-btn-plain" id="print-plain-btn" title="${locale.t('print')}"><i class="fa-solid fa-print"></i></button>
         </div>
       </div>
       <div class="deatils-container">

@@ -21,7 +21,7 @@ export const IT = {
     community: "Comunità e Mentorship",
     references: "Riferimento/i:",
     hireMe: "Assumimi",
-    print: "🖸 Stampa",
+    print: "Stampa",
     poweredBy: "Realizzato con",
     current: "attuale",
     contactTitle: "Contatta Viktor",
@@ -144,9 +144,9 @@ export const IT = {
 
     identity: {
       languages: [
-        { name: "Ungherese", level: "Madrelingua", comment: null },
-        { name: "Tedesco", level: "Intermedio superiore (B2)", comment: null },
-        { name: "Inglese", level: "Intermedio superiore (B2)", comment: null },
+        {name: "Ungherese", level: "Madrelingua", comment: null},
+        {name: "Tedesco", level: "Intermedio superiore (B2)", comment: null},
+        {name: "Inglese", level: "Intermedio superiore (B2)", comment: null},
       ],
     },
   },

@@ -102,6 +102,13 @@ export const CV_DATA = {
         {url: "https://driver.aegex.com", label: "driver.aegex.com"},
       ],
 
+      game: {
+        x: 420,
+        y: 340,
+        tech: "Svelte · React · TypeScript · Node.js · Express · MySQL · Vitest · Claude AI",
+        description: "Aegex Technologies (Current)",
+      },
+
       hasDecor: true,
     },
     {
@@ -141,6 +148,13 @@ export const CV_DATA = {
         },
       ],
 
+      game: {
+        x: 180,
+        y: 340,
+        tech: "React · TypeScript · Redux · Webpack · Agile",
+        description: "Deutsche Telekom IT Solutions",
+      },
+
       hasDecor: false,
     },
     {
@@ -176,6 +190,13 @@ export const CV_DATA = {
       ],
 
       refs: [{url: "https://scoliadarts.com", label: "scoliadarts.com"}],
+
+      game: {
+        x: 1140,
+        y: 100,
+        tech: "React · Redux Saga · WebSocket · MongoDB · Webpack",
+        description: "Scolia Technologies",
+      },
 
       hasDecor: true,
     },
@@ -214,6 +235,13 @@ export const CV_DATA = {
 
       refs: [{url: "https://www.fundmypitch.com", label: "fundmypitch.com"}],
 
+      game: {
+        x: 900,
+        y: 100,
+        tech: "React · Next.js · TypeScript · SCSS · Jest · Webpack",
+        description: "Cubicfox Technologies",
+      },
+
       hasDecor: true,
     },
     {
@@ -250,6 +278,13 @@ export const CV_DATA = {
       ],
 
       refs: [],
+
+      game: {
+        x: 660,
+        y: 100,
+        tech: "Universal Robots · PLC · Machine Vision · Python",
+        description: "CobotX Technologies",
+      },
 
       hasDecor: false,
     },
@@ -293,6 +328,13 @@ export const CV_DATA = {
         {url: "https://www.pecscoach.hu", label: "pecscoach.hu"},
         {url: "https://smartedu.hu", label: "smartedu.hu"},
       ],
+
+      game: {
+        x: 420,
+        y: 100,
+        tech: "React · Next.js · NestJS · PHP · Laravel · MySQL · MongoDB",
+        description: "WebforSol (Freelance)",
+      },
 
       hasDecor: true,
     },

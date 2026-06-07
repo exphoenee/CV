@@ -390,7 +390,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 2px 8px;
+  padding: 4px 8px;
   font-size: 10px;
   font-weight: 700;
   color: #fff;
@@ -2332,14 +2332,6 @@ body {
   margin-bottom: 20px;
 }
 
-.settings-modal-header::before {
-  content: '';
-  display: block;
-  width: 40px;
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(128, 128, 128, 0.35);
-}
 
 .settings-close-btn {
   display: none;

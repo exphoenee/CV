@@ -21,7 +21,7 @@ export const QU = {
     community: "Nossë ar Istamórë",
     references: "Cendë:",
     hireMe: "Hirë ní, hinya!",
-    print: "🖸 Tengwanta",
+    print: "Tengwanta",
     poweredBy: "Cárëa ló:",
     current: "sí",
     contactTitle: "Centa Viktor",
@@ -144,9 +144,9 @@ export const QU = {
 
     identity: {
       languages: [
-        { name: "Magyar", level: "Lambë coirëo", comment: null },
-        { name: "Deutsch", level: "B2 — mára istanyë", comment: null },
-        { name: "English", level: "B2 — Namárië", comment: null },
+        {name: "Magyar", level: "Lambë coirëo", comment: null},
+        {name: "Deutsch", level: "B2 — mára istanyë", comment: null},
+        {name: "English", level: "B2 — Namárië", comment: null},
       ],
     },
   },

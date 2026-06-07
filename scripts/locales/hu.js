@@ -1,6 +1,6 @@
 export const HU = {
   labels: {
-    cvOf: "Önéletrajza",
+    cvOf: "Önéletrajz",
     roleLocation: "Frontend Tech Lead · Pécs, HU",
     chooseView: "Válaszd meg, hogyan tekinted meg az önéletrajzom",
     btnReadingLabel: "Olvasni szeretném",
@@ -21,7 +21,7 @@ export const HU = {
     community: "Közösség & Mentorálás",
     references: "Hivatkozás(ok):",
     hireMe: "Vegyél fel!",
-    print: "🖸 Nyomtatás",
+    print: "Nyomtatás",
     poweredBy: "Készítette",
     current: "jelenlegi",
     contactTitle: "Kapcsolatfelvétel",

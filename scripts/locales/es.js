@@ -21,7 +21,7 @@ export const ES = {
     community: "Comunidad y Mentoría",
     references: "Referencia(s):",
     hireMe: "Contrátame",
-    print: "🖸 Imprimir",
+    print: "Imprimir",
     poweredBy: "Desarrollado con",
     current: "actual",
     contactTitle: "Contactar a Viktor",
@@ -72,7 +72,8 @@ export const ES = {
           },
           {
             name: "FACTS",
-            subtitle: "Sistema de seguimiento de materias primas y cumplimiento",
+            subtitle:
+              "Sistema de seguimiento de materias primas y cumplimiento",
             bullets: [
               "Release reducido de mensual a quincenal (objetivo: semanal) vía workflows IA (tooling Claude)",
               "Pipeline CI con quality gates; tests desde cero, incidencias en producción reducidas significativamente",
@@ -144,9 +145,9 @@ export const ES = {
 
     identity: {
       languages: [
-        { name: "Húngaro", level: "Lengua materna", comment: null },
-        { name: "Alemán", level: "Intermedio alto (B2)", comment: null },
-        { name: "Inglés", level: "Intermedio alto (B2)", comment: null },
+        {name: "Húngaro", level: "Lengua materna", comment: null},
+        {name: "Alemán", level: "Intermedio alto (B2)", comment: null},
+        {name: "Inglés", level: "Intermedio alto (B2)", comment: null},
       ],
     },
   },

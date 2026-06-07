@@ -21,7 +21,7 @@ export const DOT = {
     community: "Khal ma asavvakkar",
     references: "Tih chiori:",
     hireMe: "Aqqisi anni!",
-    print: "🖸 Tih alegra",
+    print: "Tih alegra",
     poweredBy: "Hrazef:",
     current: "hoyalat",
     contactTitle: "Chiori yeraan Viktor",
@@ -144,9 +144,9 @@ export const DOT = {
 
     identity: {
       languages: [
-        { name: "Magyar", level: "Jalan atthirari anni", comment: null },
-        { name: "Deutsch", level: "B2 — hash yer ray tih?", comment: null },
-        { name: "English", level: "B2 — me nem nesa", comment: null },
+        {name: "Magyar", level: "Jalan atthirari anni", comment: null},
+        {name: "Deutsch", level: "B2 — hash yer ray tih?", comment: null},
+        {name: "English", level: "B2 — me nem nesa", comment: null},
       ],
     },
   },

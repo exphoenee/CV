@@ -170,6 +170,7 @@ export const MUSIC_GENRES = [
   { label: '\uD83C\uDFB7 Jazz',           value: 'assets/music/jazz.mp3' },
   { label: '\uD83E\uDD18 Metalcore',     value: 'assets/music/metalcore.mp3' },
   { label: '\uD83C\uDFBB N\u00F3ta',    value: 'assets/music/hungarian_nota.mp3' },
+  { label: '\uD83C\uDFAD Opera',         value: 'assets/music/opera.mp3' },
   { label: '\uD83E\uDE97 Polka-Schramli', value: 'assets/music/polka-schramli.mp3' },
   { label: '\uD83C\uDFA4 Pop',           value: 'assets/music/pop.mp3' },
   { label: '\uD83D\uDDE3\uFE0F Rap',    value: 'assets/music/rap.mp3' },

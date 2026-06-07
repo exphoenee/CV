@@ -1,7 +1,7 @@
 export const KL = {
   labels: {
     cvOf: "ghItlh vIta'wI':",
-    roleLocation: "HoS naQHom SuvwI' · Pécs, HU",
+    roleLocation: "HoS naQHom SuvwI' · tera' ra'DIvwI' · Pécs, HU",
     chooseView: "nuqneH? yIwIv:",
     btnReadingLabel: "jIlaD ghItlh vIH",
     btnReadingDesc: "Qapla' batlh'e'",
@@ -21,7 +21,7 @@ export const KL = {
     community: "ghom boQ",
     references: "De' leghlu':",
     hireMe: "HIvqa' veqlargh!",
-    print: "🖸 ghItlh vIngeH",
+    print: "ghItlh vIngeH",
     poweredBy: "qoq:",
     current: "DaH",
     contactTitle: "jabbI'ID Viktor",
@@ -144,9 +144,9 @@ export const KL = {
 
     identity: {
       languages: [
-        { name: "Magyar", level: "Hol wa'DIch jIH", comment: null },
-        { name: "Deutsch", level: "B2 — Dajmo'?", comment: null },
-        { name: "English", level: "B2 — Qapla'", comment: null },
+        {name: "Magyar", level: "Hol wa'DIch jIH", comment: null},
+        {name: "Deutsch", level: "B2 — Dajmo'?", comment: null},
+        {name: "English", level: "B2 — Qapla'", comment: null},
       ],
     },
   },

@@ -92,6 +92,21 @@
   border-radius: 10px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
   z-index: 9000;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(128, 128, 128, 0.4) transparent;
+}
+.ld-options::-webkit-scrollbar {
+  width: 6px;
+}
+.ld-options::-webkit-scrollbar-track {
+  background: transparent;
+}
+.ld-options::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.4);
+  border-radius: 3px;
+}
+.ld-options::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 0.65);
 }
 .ld-options--up {
   top: auto;
