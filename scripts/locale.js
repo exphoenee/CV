@@ -10,8 +10,9 @@ import { KL } from './locales/kl.js';
 import { QU } from './locales/qu.js';
 import { GOA } from './locales/goa.js';
 import { ASG } from './locales/asg.js';
+import { YA } from './locales/ya.js';
 
-const LANGS = { en: EN, hu: HU, de: DE, fr: FR, es: ES, it: IT, dot: DOT, kl: KL, qu: QU, goa: GOA, asg: ASG };
+const LANGS = { en: EN, hu: HU, de: DE, fr: FR, es: ES, it: IT, dot: DOT, kl: KL, qu: QU, goa: GOA, asg: ASG, ya: YA };
 const STORAGE_KEY = 'cv_lang';
 
 function _detectBrowserLang() {
@@ -29,6 +30,7 @@ class LocaleManager {
   constructor() {
     const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null;
     this._lang = (saved && LANGS[saved]) ? saved : _detectBrowserLang();
+    if (typeof document !== 'undefined') document.documentElement.dataset.lang = this._lang;
   }
 
   get lang() { return this._lang; }
@@ -37,6 +39,7 @@ class LocaleManager {
     if (!LANGS[lang]) return;
     this._lang = lang;
     if (typeof localStorage !== 'undefined') localStorage.setItem(STORAGE_KEY, lang);
+    if (typeof document !== 'undefined') document.documentElement.dataset.lang = lang;
   }
 
   t(key) {
@@ -88,4 +91,4 @@ function _mergeContent(base, overrides) {
 }
 
 export const locale = new LocaleManager();
-export const AVAILABLE_LANGS = ['en', 'de', 'es', 'fr', 'it', 'hu', 'asg', 'dot', 'qu', 'goa', 'kl'];
+export const AVAILABLE_LANGS = ['en', 'de', 'es', 'fr', 'it', 'hu', 'asg', 'dot', 'qu', 'goa', 'kl', 'ya'];
