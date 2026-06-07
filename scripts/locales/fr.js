@@ -74,10 +74,10 @@ export const FR = {
             name: "FACTS",
             subtitle: "Système de suivi des matières premières et de conformité",
             bullets: [
-              "J'ai réduit le cycle de release de mensuel à bimensuel (objectif : hebdomadaire) via des workflows assistés par IA (outillage basé sur Claude)",
-              "J'ai introduit un pipeline CI avec quality gates automatisés ; j'ai établi une couverture de tests de zéro et réduit significativement les problèmes en production",
-              "J'ai migré l'architecture vers un monorepo PNPM et extrait un package FACTS/Driver partagé pour la réutilisation",
-              "J'ai construit un outillage CLI interne pour l'automatisation des workflows monorepo et la productivité des développeurs",
+              "Release réduit de mensuel à bimensuel (objectif : hebdomadaire) via workflows IA (outillage Claude)",
+              "Pipeline CI avec quality gates ; couverture de tests établie de zéro, incidents en production réduits significativement",
+              "Migration vers monorepo PNPM, package partagé FACTS/Driver extrait",
+              "CLI interne pour automatisation des workflows monorepo et productivité des développeurs",
             ],
           },
         ],
@@ -85,12 +85,12 @@ export const FR = {
       {
         id: "telekom",
         description:
-          "J'ai travaillé dans un environnement Agile d'entreprise sur un système frontend intégré à l'IA, axé sur la visualisation de données en temps réel et l'intégration frontend-backend. J'ai construit des composants UI type-safe et contribué aux workflows de test pilotés par IA et aux interfaces d'analyse.",
+          "Système frontend intégré à l'IA en environnement Agile, axé sur la visualisation de données en temps réel et l'intégration frontend-backend.",
         bullets: [
-          "J'ai développé des composants UI React type-safe pour des systèmes d'entreprise intégrés à l'IA",
-          "J'ai intégré des interfaces frontend avec des services backend pilotés par IA via des workflows API",
-          "J'ai construit des interfaces de visualisation de données en temps réel pour les résultats de tests et l'analyse système",
-          "J'ai travaillé dans un environnement de livraison Agile avec intégration continue des systèmes frontend et backend",
+          "Composants UI React type-safe pour systèmes d'entreprise intégrés à l'IA",
+          "Interfaces frontend intégrées avec services backend IA via workflows API",
+          "Visualisations en temps réel pour résultats de tests et analyse système",
+          "Livraison Agile avec intégration continue frontend-backend",
         ],
       },
       {
@@ -119,7 +119,7 @@ export const FR = {
           "J'ai dirigé des projets d'ingénierie en robotique industrielle et automatisation, faisant le lien entre le génie mécanique, les systèmes PLC et l'automatisation pilotée par logiciel. J'étais responsable de la spécification des systèmes, de la direction d'équipe et de la planification de livraison dans des environnements critiques pour la production.",
         bullets: [
           "J'ai développé des spécifications matérielles et logicielles pour des systèmes de robotique et d'automatisation basés sur PLC",
-          "J'ai défini des exigences techniques et des études de faisabilité pour des solutions de robotique industrielle",
+          "J'ai défini des exigences techniques et réalisé des études de faisabilité pour des solutions de robotique industrielle",
           "J'ai constitué et dirigé une équipe de 4 ingénieurs, supervisant la livraison, la performance et l'exécution des projets",
           "J'ai établi des KPIs, des standards de documentation et des processus de reporting pour les opérations d'ingénierie",
           "J'ai créé des plans de capacité et financiers alignés sur les prévisions commerciales et de production",
@@ -140,7 +140,7 @@ export const FR = {
     ],
 
     community:
-      "J'ai lancé et dirige un club parascolaire d'informatique et de programmation bénévole à l'école primaire de la rue Mátyás Király à Pécs (février 2026, en cours). J'ai conçu l'intégralité du programme. Sous mon mentorat, l'équipe a remporté la 1ère place au concours « Hack and Code » 2026 (Radnóti SZKI) et s'est classée 1er et 3e au 22e Concours de Programmation Neumann János.",
+      "J'ai lancé et dirige actuellement un club parascolaire d'informatique et de programmation bénévole à l'école primaire de la rue Mátyás Király à Pécs (février 2026, en cours). J'ai conçu l'intégralité du programme. Sous mon mentorat, l'équipe a remporté la 1ère place au concours « Hack and Code » 2026 (Radnóti SZKI) et s'est classée 1er et 3e au 22e Concours de Programmation Neumann János.",
 
     identity: {
       languages: [

@@ -51,7 +51,7 @@ export const IT = {
       {
         id: "aegex",
         description:
-          "Ho guidato la modernizzazione architetturale di due sistemi legacy aziendali. Ho la responsabilità completa end-to-end per SafeSy e FACTS, inclusi progettazione del sistema, architettura frontend e integrazione backend. Ho introdotto flussi di lavoro di sviluppo assistiti dall'IA e pipeline di qualità guidati da CI, abilitando un processo di ingegneria basato su evidenze e migliorando significativamente la velocità di consegna e l'affidabilità dei release.",
+          "Ho guidato la modernizzazione architetturale di SafeSy e FACTS con piena responsabilità end-to-end: progettazione del sistema, architettura frontend e integrazione backend. Workflow assistiti dall'IA e pipeline CI hanno migliorato significativamente velocità di consegna e affidabilità dei release.",
         bullets: [
           "Ho preso in carico architettura e consegna di due sistemi aziendali (SafeSy, FACTS) dal design alla produzione",
           "Ho guidato la modernizzazione di sistemi legacy tramite riscritture complete e migrazione verso stack frontend moderni",
@@ -65,19 +65,19 @@ export const IT = {
             name: "SafeSy",
             subtitle: "Sistema interno di gestione della produzione",
             bullets: [
-              "Ho costruito una piattaforma aziendale multi-ruolo per produzione, ufficio, dirigenti e partner con tracciamento in tempo reale dei workflow e dell'inventario",
-              "Ho progettato e implementato una libreria di componenti Svelte interna riutilizzabile su tutta la piattaforma",
-              "Ho sviluppato un sistema di reportistica giornaliera via email sottoscrivibile e contribuito al backend Express (progettazione e ottimizzazione query SQL)",
+              "Piattaforma aziendale multi-ruolo (produzione, ufficio, dirigenti, partner) con tracciamento in tempo reale di workflow e inventario",
+              "Libreria di componenti Svelte interna riutilizzabile progettata e implementata per tutta la piattaforma",
+              "Sistema di reportistica giornaliera via email sviluppato; contribuito al backend Express (progettazione e ottimizzazione query SQL)",
             ],
           },
           {
             name: "FACTS",
             subtitle: "Sistema di tracciamento materie prime e conformità",
             bullets: [
-              "Ho ridotto il ciclo di release da mensile a bisettimanale (obiettivo: settimanale) usando flussi di lavoro assistiti dall'IA (tooling basato su Claude)",
-              "Ho introdotto un pipeline CI con quality gate automatizzati; ho stabilito la copertura dei test da zero e ridotto significativamente i problemi in produzione",
-              "Ho migrato l'architettura verso un monorepo PNPM ed estratto un pacchetto FACTS/Driver condiviso per il riutilizzo",
-              "Ho costruito tooling CLI interno per l'automazione dei workflow del monorepo e la produttività degli sviluppatori",
+              "Ciclo di release ridotto da mensile a bisettimanale (obiettivo: settimanale) con workflow assistiti dall'IA (tooling Claude)",
+              "Pipeline CI con quality gate automatizzati introdotta; copertura dei test stabilita da zero, problemi in produzione ridotti significativamente",
+              "Architettura migrata verso monorepo PNPM, pacchetto condiviso FACTS/Driver estratto",
+              "Tooling CLI interno sviluppato per automazione workflow monorepo e produttività degli sviluppatori",
             ],
           },
         ],
@@ -119,7 +119,7 @@ export const IT = {
           "Ho guidato progetti di ingegneria in robotica industriale e automazione, collegando ingegneria meccanica, sistemi PLC e automazione guidata da software. Ero responsabile della specifica dei sistemi, della guida del team e della pianificazione delle consegne in ambienti critici per la produzione.",
         bullets: [
           "Ho sviluppato specifiche hardware e software per sistemi di robotica e automazione basati su PLC",
-          "Ho definito requisiti tecnici e studi di fattibilità per soluzioni di robotica industriale",
+          "Ho definito requisiti tecnici e condotto studi di fattibilità per soluzioni di robotica industriale",
           "Ho costituito e guidato un team di 4 ingegneri, supervisionando consegna, performance ed esecuzione dei progetti",
           "Ho stabilito KPI, standard di documentazione e processi di reportistica per le operazioni di ingegneria",
           "Ho creato piani di capacità e finanziari allineati alle previsioni di vendita e produzione",
@@ -140,7 +140,7 @@ export const IT = {
     ],
 
     community:
-      "Ho avviato e guido un club scolastico gratuito di informatica e programmazione come volontario presso la Scuola Primaria di Via Mátyás Király a Pécs (febbraio 2026, in corso). Ho progettato l'intero programma didattico. Sotto la mia mentorship, il team ha vinto il 1° posto al concorso «Hack and Code» 2026 (Radnóti SZKI) e si è classificato 1° e 3° al 22° Concorso di Programmazione Neumann János.",
+      "Ho avviato e attualmente guido un club scolastico gratuito di informatica e programmazione come volontario presso la Scuola Primaria di Via Mátyás Király a Pécs (febbraio 2026, in corso). Ho progettato l'intero programma didattico. Sotto la mia mentorship, il team ha vinto il 1° posto al concorso «Hack and Code» 2026 (Radnóti SZKI) e si è classificato 1° e 3° al 22° Concorso di Programmazione Neumann János.",
 
     identity: {
       languages: [

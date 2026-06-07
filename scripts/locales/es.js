@@ -45,18 +45,18 @@ export const ES = {
   },
   content: {
     summary:
-      "Ingeniero Frontend especializado en arquitectura frontend, diseño de sistemas y modernización a gran escala de sistemas legacy. He liderado reescrituras completas y migraciones de sistemas empresariales a stacks modernos, mejorando la mantenibilidad y escalabilidad de las plataformas principales. He introducido flujos de trabajo de desarrollo asistidos por IA que aumentaron significativamente la velocidad de entrega, la consistencia técnica y la fiabilidad de los releases. Me enfoco fuertemente en el refactoring basado en evidencias, los estándares de calidad CI y la construcción de bases frontend sostenibles a nivel de sistema.",
+      "Ingeniero Frontend especializado en arquitectura frontend, diseño de sistemas y modernización a gran escala de sistemas legacy. He liderado reescrituras completas y migraciones de sistemas empresariales a stacks modernos, mejorando la mantenibilidad y escalabilidad de las plataformas principales. He introducido flujos de trabajo de desarrollo asistidos por IA que han aumentado significativamente la velocidad de entrega, la consistencia técnica y la fiabilidad de los releases. Me enfoco fuertemente en el refactoring basado en evidencias, los estándares de calidad CI y la construcción de bases frontend sostenibles a nivel de sistema.",
 
     workExperience: [
       {
         id: "aegex",
         description:
-          "Lideré la modernización arquitectónica de dos sistemas empresariales legacy. Tengo responsabilidad completa de extremo a extremo para SafeSy y FACTS, incluyendo diseño de sistemas, arquitectura frontend e integración backend. Introduje flujos de trabajo de desarrollo asistidos por IA y pipelines de calidad impulsados por CI, habilitando un proceso de ingeniería basado en evidencias y mejorando significativamente la velocidad de entrega y la fiabilidad de los releases.",
+          "Lideré la modernización arquitectónica de SafeSy y FACTS con responsabilidad completa end-to-end: diseño de sistemas, arquitectura frontend e integración backend. Workflows asistidos por IA y pipelines CI mejoraron significativamente la velocidad de entrega y la fiabilidad de los releases.",
         bullets: [
-          "Tomé posesión de la arquitectura y entrega de dos sistemas empresariales (SafeSy, FACTS) desde el diseño hasta producción",
+          "Tomé posesión de la arquitectura y entrega de dos sistemas empresariales (SafeSy, FACTS) desde el diseño hasta la producción",
           "Lideré la modernización de sistemas legacy mediante reescrituras completas y migración a stacks frontend modernos",
           "Introduje flujos de trabajo de desarrollo asistidos por IA mejorando el rendimiento y la consistencia del equipo",
-          "Implementé un pipeline CI con quality gates automatizados y estrategia de pruebas desde cero",
+          "Implementé un pipeline CI con quality gates automatizados y una estrategia de pruebas desde cero",
           "Establecí un proceso de refactoring basado en evidencias con mejoras de calidad medibles",
           "Actualmente mentorizo y lidero a 1 ingeniero de nivel medio",
         ],
@@ -65,19 +65,19 @@ export const ES = {
             name: "SafeSy",
             subtitle: "Sistema interno de gestión de producción",
             bullets: [
-              "Construí una plataforma empresarial multi-rol para producción, oficina, ejecutivos y socios con seguimiento en tiempo real de flujos de trabajo e inventario",
-              "Diseñé e implementé una biblioteca de componentes Svelte interna reutilizable en toda la plataforma",
-              "Desarrollé un sistema de reportes diarios por correo suscribible y contribuí al backend Express (diseño y optimización de consultas SQL)",
+              "Plataforma empresarial multi-rol (producción, oficina, ejecutivos, socios) con seguimiento en tiempo real de workflows e inventario",
+              "Biblioteca de componentes Svelte interna reutilizable diseñada e implementada en toda la plataforma",
+              "Sistema de reportes diarios por correo suscribible desarrollado; contribuí al backend Express (diseño y optimización de consultas SQL)",
             ],
           },
           {
             name: "FACTS",
             subtitle: "Sistema de seguimiento de materias primas y cumplimiento",
             bullets: [
-              "Reduje el ciclo de release de mensual a quincenal (objetivo: semanal) usando flujos de trabajo asistidos por IA (herramientas basadas en Claude)",
-              "Introduje un pipeline CI con quality gates automatizados; establecí cobertura de pruebas desde cero y reduje significativamente los problemas en producción",
-              "Migré la arquitectura a un monorepo PNPM y extraje un paquete FACTS/Driver compartido para su reutilización",
-              "Construí herramientas CLI internas para la automatización de workflows del monorepo y la productividad del desarrollador",
+              "Release reducido de mensual a quincenal (objetivo: semanal) vía workflows IA (tooling Claude)",
+              "Pipeline CI con quality gates; tests desde cero, incidencias en producción reducidas significativamente",
+              "Migración a monorepo PNPM, paquete FACTS/Driver compartido extraído",
+              "CLI interno para automatización de workflows del monorepo y productividad del equipo",
             ],
           },
         ],
@@ -119,7 +119,7 @@ export const ES = {
           "Lideré proyectos de ingeniería en robótica industrial y automatización, conectando ingeniería mecánica, sistemas PLC y automatización impulsada por software. Fui responsable de la especificación de sistemas, liderazgo de equipo y planificación de entrega en entornos críticos para la producción.",
         bullets: [
           "Desarrollé especificaciones de hardware y software para sistemas de robótica y automatización basados en PLC",
-          "Definí requisitos técnicos y estudios de viabilidad para soluciones de robótica industrial",
+          "Definí requisitos técnicos y realicé estudios de viabilidad para soluciones de robótica industrial",
           "Construí y lideré un equipo de 4 ingenieros, supervisando la entrega, el rendimiento y la ejecución de proyectos",
           "Establecí KPIs, estándares de documentación y procesos de reporte para las operaciones de ingeniería",
           "Creé planes de capacidad y financieros alineados con las previsiones de ventas y producción",
@@ -140,7 +140,7 @@ export const ES = {
     ],
 
     community:
-      'Puse en marcha y dirijo un club extraescolar de informática y programación gratuito y voluntario en la Escuela Primaria de la Calle Mátyás Király en Pécs (febrero 2026, en curso). Diseñé el currículum completo. Bajo mi mentoría, el equipo ganó el 1er lugar en el concurso "Hack and Code" 2026 (Radnóti SZKI) y quedó 1° y 3° en el 22° Concurso de Programación Neumann János.',
+      'Puse en marcha y actualmente dirijo un club extraescolar de informática y programación gratuito y voluntario en la Escuela Primaria de la Calle Mátyás Király en Pécs (febrero 2026, en curso). Diseñé el currículum completo. Bajo mi mentoría, el equipo ganó el 1er lugar en el concurso "Hack and Code" 2026 (Radnóti SZKI) y quedó 1° y 3° en el 22° Concurso de Programación Neumann János.',
 
     identity: {
       languages: [

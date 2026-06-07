@@ -51,12 +51,12 @@ export const DE = {
       {
         id: "aegex",
         description:
-          "Ich leitete die architektonische Modernisierung zweier Legacy-Unternehmenssysteme. Ich übernahm die vollständige End-to-End-Verantwortung für SafeSy und FACTS, einschließlich Systemdesign, Frontend-Architektur und Backend-Integration. Ich führte KI-gestützte Entwicklungs-Workflows und CI-getriebene Qualitätspipelines ein, um einen evidenzbasierten Engineering-Prozess zu etablieren und Liefergeschwindigkeit sowie Release-Zuverlässigkeit erheblich zu steigern.",
+          "Ich leitete die architektonische Modernisierung von SafeSy und FACTS mit vollständiger End-to-End-Verantwortung: Systemdesign, Frontend-Architektur und Backend-Integration. KI-gestützte Workflows und CI-Qualitätspipelines steigerten Liefergeschwindigkeit und Release-Zuverlässigkeit erheblich.",
         bullets: [
           "Ich übernahm Architektur und Lieferung zweier Unternehmenssysteme (SafeSy, FACTS) vom Design bis zur Produktion",
           "Ich leitete die Modernisierung von Legacy-Systemen durch vollständige Rewrites und Migration auf moderne Frontend-Stacks",
           "Ich führte KI-gestützte Entwicklungs-Workflows ein und steigerte Entwicklerdurchsatz und Konsistenz",
-          "Ich implementierte eine CI-Pipeline mit automatisierten Quality Gates und Teststrategie von Grund auf",
+          "Ich implementierte eine CI-Pipeline mit automatisierten Quality Gates und einer Teststrategie von Grund auf",
           "Ich etablierte einen evidenzbasierten Refactoring-Prozess mit messbaren Qualitätsverbesserungen",
           "Ich mentoriere und leite aktuell 1 Mid-Level-Ingenieur",
         ],
@@ -65,19 +65,19 @@ export const DE = {
             name: "SafeSy",
             subtitle: "Internes Produktionsmanagementsystem",
             bullets: [
-              "Ich entwickelte eine rollenübergreifende Unternehmensplattform für Produktion, Büro, Führungskräfte und Partner mit Echtzeit-Workflow- und Bestandsverfolgung",
-              "Ich entwarf und implementierte eine wiederverwendbare interne Svelte-Komponentenbibliothek für die gesamte Plattform",
-              "Ich entwickelte ein abonnierbares tägliches E-Mail-Reporting-System und trug zum Express-Backend bei (einschließlich SQL-Abfragedesign und -optimierung)",
+              "Rollenübergreifende Plattform (Produktion, Büro, Führung, Partner) mit Echtzeit-Workflow- und Bestandsverfolgung",
+              "Wiederverwendbare interne Svelte-Komponentenbibliothek für die gesamte Plattform entworfen und implementiert",
+              "Abonnierbares tägliches E-Mail-Reporting-System entwickelt; Express-Backend inkl. SQL-Abfragedesign beigetragen",
             ],
           },
           {
             name: "FACTS",
             subtitle: "Rohstoff- und Compliance-Tracking-System",
             bullets: [
-              "Ich reduzierte den Release-Zyklus von monatlich auf zweiwöchentlich (Ziel: wöchentlich) durch KI-gestützte Entwicklungs-Workflows (Claude-basiertes Tooling)",
-              "Ich führte eine CI-Pipeline mit automatisierten Quality Gates ein; etablierte Testabdeckung von null und reduzierte Produktionsprobleme deutlich",
-              "Ich migrierte die Architektur auf PNPM-Monorepo und extrahierte das gemeinsame FACTS/Driver-Paket zur Wiederverwendung",
-              "Ich entwickelte internes CLI-Tooling für Monorepo-Workflow-Automatisierung und Entwicklerproduktivität",
+              "Release-Zyklus von monatlich auf zweiwöchentlich reduziert (Ziel: wöchentlich) via KI-gestützte Workflows (Claude-Tooling)",
+              "CI-Pipeline mit automatisierten Quality Gates eingeführt; Testabdeckung von null aufgebaut, Produktionsprobleme deutlich reduziert",
+              "Architektur auf PNPM-Monorepo migriert, gemeinsames FACTS/Driver-Paket extrahiert",
+              "Internes CLI-Tooling für Monorepo-Automatisierung und Entwicklerproduktivität entwickelt",
             ],
           },
         ],
@@ -119,7 +119,7 @@ export const DE = {
           "Ich leitete Engineering-Projekte in industrieller Robotik und Automation und überbrückte Maschinenbau, PLC-Systeme und softwaregetriebene Automatisierung. Ich war verantwortlich für Systemspezifikation, Teamführung und Lieferplanung in produktionskritischen Umgebungen.",
         bullets: [
           "Ich entwickelte Hardware- und Software-Spezifikationen für PLC-basierte Robotik- und Automationssysteme",
-          "Ich definierte technische Anforderungen und Machbarkeitsstudien für industrielle Robotiklösungen",
+          "Ich definierte technische Anforderungen und erstellte Machbarkeitsstudien für industrielle Robotiklösungen",
           "Ich baute und leitete ein 4-köpfiges Ingenieurteam und überwachte Lieferung, Leistung und Projektausführung",
           "Ich etablierte KPIs, Dokumentationsstandards und Reporting-Prozesse für den Engineering-Betrieb",
           "Ich erstellte Kapazitäts- und Finanzplanung abgestimmt auf Vertriebs- und Produktionsprognosen",
@@ -140,7 +140,7 @@ export const DE = {
     ],
 
     community:
-      'Ich startete und leite einen Pro-bono-Nachmittagskurs für IT und Programmierung an der Mátyás Király Straße Grundschule in Pécs (Februar 2026, laufend). Ich entwarf den vollständigen Lehrplan. Unter meiner Betreuung gewann das Team den 1. Platz beim 2026er „Hack and Code"-Wettbewerb (Radnóti SZKI) und belegte Platz 1 und 3 beim 22. Neumann János Programmierwettbewerb.',
+      'Ich startete und leite aktuell einen Pro-bono-Nachmittagskurs für IT und Programmierung an der Mátyás Király Straße Grundschule in Pécs (Februar 2026, laufend). Ich entwarf den vollständigen Lehrplan. Unter meiner Betreuung gewann das Team den 1. Platz beim 2026er „Hack and Code"-Wettbewerb (Radnóti SZKI) und belegte Platz 1 und 3 beim 22. Neumann János Programmierwettbewerb.',
 
     identity: {
       languages: [

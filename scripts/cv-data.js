@@ -72,7 +72,7 @@ export const CV_DATA = {
           subtitle: "Feedstock and Compliance Tracking System",
           bullets: [
             "I reduced the release cycle from monthly to biweekly (target: weekly) using AI-assisted development workflows (Claude-based tooling)",
-            "I introduced a CI pipeline with automated quality gates; established test coverage from zero and significantly reduced production issues",
+            "I introduced a CI pipeline with automated quality gates; I established test coverage from zero and significantly reduced production issues",
             "I migrated the architecture to a PNPM monorepo and extracted the shared FACTS/Driver package for reuse",
             "I built internal CLI tooling for monorepo workflow automation and developer productivity",
           ],
@@ -230,10 +230,10 @@ export const CV_DATA = {
 
       bullets: [
         "I developed hardware and software specifications for PLC-based robotics and automation systems",
-        "I defined technical requirements and feasibility studies for industrial robotic solutions",
+        "I defined technical requirements and conducted feasibility studies for industrial robotic solutions",
         "I built and led a team of 4 engineers, overseeing delivery, performance, and project execution",
         "I established KPIs, documentation standards, and reporting processes for engineering operations",
-        "I created capacity and financial planning aligned with sales and production forecasts",
+        "I created capacity and financial plans aligned with sales and production forecasts",
       ],
 
       skills: [
@@ -359,7 +359,7 @@ export const CV_DATA = {
     {name: "PHP", icon: "php.svg"},
   ],
   community:
-    'I launched and lead a pro bono after-school IT and programming club at Mátyás Király Street Primary School, Pécs (Feb 2026, ongoing). I designed the full curriculum. Under my mentorship, the team won 1st place at the 2026 "Hack and Code" competition (Radnóti SZKI) and placed 1st and 3rd at the 22nd Neumann János Programming Competition.',
+    'I launched and currently lead a pro bono after-school IT and programming club at Mátyás Király Street Primary School, Pécs (Feb 2026, ongoing). I designed the full curriculum. Under my mentorship, the team won 1st place at the 2026 "Hack and Code" competition (Radnóti SZKI) and placed 1st and 3rd at the 22nd Neumann János Programming Competition.',
   hobbyProjects: [
     {
       name: "Real-time Space Travel",
