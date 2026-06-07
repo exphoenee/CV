@@ -34,7 +34,7 @@ export function renderWorkExperienceSection(data) {
     paramRows.push({name: 'stack', type: 'array', loc: '(metadata)', descHtml: '<div class="cv-stack">' + stackHtml.replace('<div class="cv-stack">', '').replace('</div>', '') || stackHtml});
 
     if (exp.id === 'cobotx') {
-      paramRows.push({name: 'robots', type: 'integer', loc: '(metadata)', descHtml: '<p>' + exp.game.highlights[1].replace('!', '') + ' <em>// Collaborative robots, not the other kind</em></p>'});
+      paramRows.push({name: 'robots', type: 'integer', loc: '(metadata)', descHtml: '<p>4 <em>// Collaborative robots, not the other kind</em></p>'});
     }
 
     var respBody = '';

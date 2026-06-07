@@ -168,7 +168,7 @@ canvas {
     left: 0;
     width: 100dvw;
     height: 100dvh;
-    z-index: 99999;
+    z-index: 2147483647;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -383,7 +383,7 @@ canvas {
     left: 0;
     width: 100dvw;
     height: 100dvh;
-    z-index: 99999;
+    z-index: 2147483647;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -396,7 +396,7 @@ canvas {
     left: 0;
     width: 100dvw;
     height: 100dvh;
-    z-index: 99999;
+    z-index: 2147483647;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -823,7 +823,7 @@ canvas {
     left: 0;
     width: 100dvw;
     height: 100dvh;
-    z-index: 99999;
+    z-index: 2147483647;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -917,7 +917,7 @@ canvas {
     left: 0;
     width: 100dvw;
     height: 100dvh;
-    z-index: 99999;
+    z-index: 2147483647;
     display: flex;
     align-items: center;
     justify-content: center;

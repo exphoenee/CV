@@ -119,9 +119,9 @@
 .ld-options.open { display: block; }
 
 [data-theme="dark"] .ld-options,
-[data-theme="superdark"] .ld-options { background: #1e1e1e; border-color: rgba(255,255,255,0.1); }
-[data-theme="nightvision"] .ld-options { background: #001200; }
-[data-theme="predator"] .ld-options   { background: #0a0500; border-color: rgba(255,51,0,0.3); }
+[data-theme="superdark"] .ld-options { background: #1e1e1e; border-color: rgba(255,255,255,0.1); color: #e0e0e0; }
+[data-theme="nightvision"] .ld-options { background: #001200; color: #00ff41; }
+[data-theme="predator"] .ld-options   { background: #0a0500; border-color: rgba(255,51,0,0.3); color: #ff6633; }
 
 .ld-option {
   display: flex;
