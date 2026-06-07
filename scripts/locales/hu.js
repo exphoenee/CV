@@ -3,7 +3,7 @@ export const HU = {
     cvOf: "Önéletrajza",
     roleLocation: "Frontend Tech Lead · Pécs, HU",
     chooseView: "Válaszd meg, hogyan tekinted meg az önéletrajzom",
-    btnReadingLabel: "Olvasni szeretnék",
+    btnReadingLabel: "Olvasni szeretném",
     btnReadingDesc: "Tiszta, olvasható, nyomtatható önéletrajz",
     btnFrontendLabel: "Frontend fejlesztő vagyok",
     btnFrontendDesc: "Swagger-stílusú API dokumentáció",

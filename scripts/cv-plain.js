@@ -2,13 +2,16 @@ import { renderPlainCV } from './components/plain/index.js';
 import { initHireModal, initFormspree, getSystemTheme, musicPlayerHTML, hireModalHTML } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES, CURSOR_KEY } from './config.js';
-import { locale, AVAILABLE_LANGS } from './locale.js';
+import { locale } from './locale.js';
+import { createLangDropdown, initLangDropdown } from './components/lang-dropdown.js';
 
 document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
 
 function render() {
   document.getElementById('cv-content').innerHTML = renderPlainCV(locale.getData());
   initDecors();
+  const headerLd = document.querySelector('#cv-content .ld-select');
+  if (headerLd) initLangDropdown(headerLd, { onChange(lang) { locale.setLang(lang); render(); buildSettingsModal(); } });
 }
 
 render();
@@ -23,8 +26,6 @@ document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire-plain', {
 initHireModal('hire-plain');
 
 // --- Mobile settings gear ---
-const LANG_LABELS = { en: 'EN', hu: 'HU', de: 'DE', fr: 'FR', es: 'ES', it: 'IT', dot: 'DOT', kl: 'KL', qu: 'QU', goa: 'GOA' };
-const LANG_NAMES  = { en: 'English', hu: 'Magyar', de: 'Deutsch', fr: 'Français', es: 'Español', it: 'Italiano', dot: 'Dothraki', kl: 'tlhIngan Hol', qu: 'Elvish', goa: "Goa'uld" };
 
 const gearBtn = document.createElement('button');
 gearBtn.id = 'settings-gear-btn';
@@ -40,8 +41,6 @@ settingsBackdrop.id = 'settings-modal-backdrop';
 settingsBackdrop.className = 'settings-modal-backdrop';
 document.body.appendChild(settingsBackdrop);
 
-const CHEVRON = `<svg class="clang-chevron" viewBox="0 0 12 7" width="12" height="7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6L6 1L11 6"/></svg>`;
-
 function buildSettingsModal() {
   settingsBackdrop.innerHTML = `
     <div class="settings-modal-box">
@@ -49,29 +48,17 @@ function buildSettingsModal() {
         <button id="settings-close-btn" class="settings-close-btn" aria-label="Close">✕</button>
       </div>
       <div class="settings-modal-body">
-        <div class="clang-select" id="clang-select">
-          <button class="clang-trigger" id="clang-trigger" type="button" aria-haspopup="listbox">
-            <span class="clang-current">
-              <span class="clang-name">${LANG_NAMES[locale.lang]}</span>
-              <span class="clang-code">${LANG_LABELS[locale.lang]}</span>
-            </span>
-            ${CHEVRON}
-          </button>
-          <ul class="clang-options" id="clang-options" role="listbox">
-            ${AVAILABLE_LANGS.map(lang => `
-              <li class="clang-option${locale.lang === lang ? ' clang-option--active' : ''}"
-                  data-lang-option="${lang}" role="option" aria-selected="${locale.lang === lang}">
-                <span class="clang-name">${LANG_NAMES[lang]}</span>
-                <span class="clang-code">${LANG_LABELS[lang]}</span>
-              </li>`).join('')}
-          </ul>
-        </div>
+        <div id="modal-lang-slot"></div>
         <button class="settings-hire-btn" id="settings-hire-btn">${locale.t('hireMe')}</button>
         <button class="settings-print-btn" id="settings-print-btn">${locale.t('print')}</button>
         <button class="settings-close-drawer-btn" id="settings-close-btn">${locale.t('close')}</button>
       </div>
     </div>
   `;
+  createLangDropdown(settingsBackdrop.querySelector('#modal-lang-slot'), {
+    fullWidth: true,
+    onChange(lang) { locale.setLang(lang); render(); buildSettingsModal(); }
+  });
 }
 
 buildSettingsModal();
@@ -86,11 +73,6 @@ function closeSettings() {
     settingsBackdrop.classList.remove('is-visible');
   }, { once: true });
 }
-function closeLangDropdown() {
-  document.getElementById('clang-trigger')?.classList.remove('open');
-  document.getElementById('clang-options')?.classList.remove('open');
-}
-
 gearBtn.addEventListener('click', openSettings);
 
 document.body.addEventListener('click', function (e) {
@@ -108,44 +90,7 @@ document.body.addEventListener('click', function (e) {
     document.getElementById('hire-plain-btn')?.click();
     return;
   }
-  const trigger = e.target.closest('#clang-trigger');
-  if (trigger) {
-    const isOpen = trigger.classList.contains('open');
-    document.getElementById('clang-trigger')?.classList.toggle('open', !isOpen);
-    document.getElementById('clang-options')?.classList.toggle('open', !isOpen);
-    return;
-  }
-  const opt = e.target.closest('[data-lang-option]');
-  if (opt) {
-    locale.setLang(opt.dataset.langOption);
-    render();
-    buildSettingsModal();
-    return;
-  }
-  if (!e.target.closest('#clang-select')) closeLangDropdown();
-
-  // Header custom lang dropdown
-  const htrigger = e.target.closest('#hlang-trigger');
-  if (htrigger) {
-    const isOpen = htrigger.classList.contains('open');
-    htrigger.classList.toggle('open', !isOpen);
-    document.getElementById('hlang-options')?.classList.toggle('open', !isOpen);
-    return;
-  }
-  const hopt = e.target.closest('[data-hlang-option]');
-  if (hopt) {
-    locale.setLang(hopt.dataset.hlangOption);
-    render();
-    buildSettingsModal();
-    return;
-  }
-  if (!e.target.closest('#hlang-select')) closeHlangDropdown();
 });
-
-function closeHlangDropdown() {
-  document.getElementById('hlang-trigger')?.classList.remove('open');
-  document.getElementById('hlang-options')?.classList.remove('open');
-}
 
 window.showToast = function(message) {
   var container = document.getElementById('cv-toaster-container');
