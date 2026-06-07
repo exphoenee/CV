@@ -420,21 +420,18 @@ class GameEngine {
         e.preventDefault();
       }
 
-      // P key to toggle pause menu (ignore key repeat to prevent flicker)
-      if ((e.key === "p" || e.key === "P") && !e.repeat) {
+      // P or Escape to toggle pause menu (ignore key repeat to prevent flicker)
+      if ((e.key === "p" || e.key === "P" || e.key === "Escape") && !e.repeat) {
         const startScreen = document.getElementById("start-screen");
         const gameOverScreen = document.getElementById("game-over-screen");
-
-        // Don't toggle pause if start screen or game over is showing
-        if (
-          (startScreen && startScreen.classList.contains("dialogue-visible")) ||
-          (gameOverScreen && gameOverScreen.classList.contains("dialogue-visible"))
-        ) {
-          return;
-        }
-
         const diagOverlay = document.getElementById("dialogue-overlay");
-        if (diagOverlay && diagOverlay.classList.contains("dialogue-visible")) {
+
+        if (
+          startScreen?.classList.contains("dialogue-visible") ||
+          gameOverScreen?.classList.contains("dialogue-visible")
+        ) return;
+
+        if (diagOverlay?.classList.contains("dialogue-visible")) {
           this.closeDialogue();
           return;
         }

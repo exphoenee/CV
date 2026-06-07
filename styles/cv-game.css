@@ -163,12 +163,12 @@ canvas {
 
 /* --- Dialogue Box Overlay --- */
 #dialogue-overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100dvw;
     height: 100dvh;
-    z-index: 20;
+    z-index: 99999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -378,12 +378,12 @@ canvas {
 
 /* --- Pause Menu & Music Player Modal --- */
 #pause-menu {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100dvw;
     height: 100dvh;
-    z-index: 20;
+    z-index: 99999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -391,12 +391,12 @@ canvas {
 }
 
 #hire-modal {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100dvw;
     height: 100dvh;
-    z-index: 30;
+    z-index: 99999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -818,12 +818,12 @@ canvas {
 
 /* Start Screen Modal */
 #start-screen {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100dvw;
     height: 100dvh;
-    z-index: 30;
+    z-index: 99999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -912,12 +912,12 @@ canvas {
 
 /* Game Over Screen Modal */
 #game-over-screen {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100dvw;
     height: 100dvh;
-    z-index: 30;
+    z-index: 99999;
     display: flex;
     align-items: center;
     justify-content: center;
