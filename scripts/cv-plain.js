@@ -23,8 +23,8 @@ document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire-plain', {
 initHireModal('hire-plain');
 
 // --- Mobile settings gear ---
-const LANG_LABELS = { en: 'EN', hu: 'HU', de: 'DE' };
-const LANG_NAMES  = { en: 'English', hu: 'Magyar', de: 'Deutsch' };
+const LANG_LABELS = { en: 'EN', hu: 'HU', de: 'DE', fr: 'FR', es: 'ES', it: 'IT', dot: 'DOT', kl: 'KL', qu: 'QU', goa: 'GOA' };
+const LANG_NAMES  = { en: 'English', hu: 'Magyar', de: 'Deutsch', fr: 'Français', es: 'Español', it: 'Italiano', dot: 'Dothraki', kl: 'tlhIngan Hol', qu: 'Elvish', goa: "Goa'uld" };
 
 const gearBtn = document.createElement('button');
 gearBtn.id = 'settings-gear-btn';

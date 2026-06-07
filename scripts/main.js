@@ -1,6 +1,10 @@
 import { locale, AVAILABLE_LANGS } from './locale.js';
 
-const LANG_LABELS = { en: 'EN', hu: 'HU', de: 'DE' };
+const LANG_NAMES = {
+  en: 'English', hu: 'Magyar', de: 'Deutsch', fr: 'Français',
+  es: 'Español', it: 'Italiano', dot: 'Dothraki', kl: 'tlhIngan Hol',
+  qu: 'Elvish', goa: "Goa'uld",
+};
 
 function buildSelect() {
   const select = document.createElement('select');
@@ -11,7 +15,7 @@ function buildSelect() {
   AVAILABLE_LANGS.forEach(lang => {
     const opt = document.createElement('option');
     opt.value = lang;
-    opt.textContent = LANG_LABELS[lang];
+    opt.textContent = LANG_NAMES[lang] ?? lang.toUpperCase();
     if (lang === locale.lang) opt.selected = true;
     select.appendChild(opt);
   });

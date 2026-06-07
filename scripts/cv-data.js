@@ -33,7 +33,7 @@ export const CV_DATA = {
     ],
   },
   summary:
-    "Frontend Engineer specializing in frontend architecture, system design, and large-scale legacy modernization. Led full rewrites and migrations of enterprise systems to modern stacks, improving maintainability and scalability of core platforms. Introduced AI-assisted development workflows that significantly increased delivery speed, engineering consistency, and release reliability. Strong focus on evidence-driven refactoring, CI-quality standards, and building sustainable, system-level frontend foundations.",
+    "Frontend Engineer specializing in frontend architecture, system design, and large-scale legacy modernization. I've led full rewrites and migrations of enterprise systems to modern stacks, improving maintainability and scalability of core platforms. I've introduced AI-assisted development workflows that significantly increased delivery speed, engineering consistency, and release reliability. I focus strongly on evidence-driven refactoring, CI-quality standards, and building sustainable, system-level frontend foundations.",
   workExperience: [
     {
       id: "aegex",
@@ -46,15 +46,15 @@ export const CV_DATA = {
       teamSize: 2,
 
       description:
-        "Led architectural modernization of two enterprise legacy systems. Own end-to-end delivery of SafeSy and FACTS, including system design, frontend architecture, and backend integration. Introduced AI-assisted development workflows and CI-driven quality pipelines, enabling an evidence-based engineering process and significantly improving delivery speed and release reliability.",
+        "I led the architectural modernization of two enterprise legacy systems. I own end-to-end delivery of SafeSy and FACTS, including system design, frontend architecture, and backend integration. I introduced AI-assisted development workflows and CI-driven quality pipelines, enabling an evidence-based engineering process and significantly improving delivery speed and release reliability.",
 
       bullets: [
-        "Owned architecture and delivery of two enterprise systems (SafeSy, FACTS) from design to production",
-        "Led modernization of legacy systems through full rewrites and migration to modern frontend stacks",
-        "Introduced AI-assisted development workflows improving engineering throughput and consistency",
-        "Implemented CI pipeline with automated quality gates and testing strategy from scratch",
-        "Established evidence-driven refactoring process with measurable quality improvements",
-        "Currently mentoring and leading 1 mid-level engineer",
+        "I owned architecture and delivery of two enterprise systems (SafeSy, FACTS) from design to production",
+        "I led the modernization of legacy systems through full rewrites and migration to modern frontend stacks",
+        "I introduced AI-assisted development workflows improving engineering throughput and consistency",
+        "I implemented a CI pipeline with automated quality gates and testing strategy from scratch",
+        "I established an evidence-driven refactoring process with measurable quality improvements",
+        "I'm currently mentoring and leading 1 mid-level engineer",
       ],
 
       projects: [
@@ -62,19 +62,19 @@ export const CV_DATA = {
           name: "SafeSy",
           subtitle: "Internal Manufacturing Management System",
           bullets: [
-            "Built cross-role enterprise platform for production, office, executives, and partners with real-time workflow and inventory tracking",
-            "Designed and implemented reusable internal Svelte component library used across the platform",
-            "Developed subscribable daily email reporting system and contributed to Express backend (including SQL query design and optimization)",
+            "I built a cross-role enterprise platform for production, office, executives, and partners with real-time workflow and inventory tracking",
+            "I designed and implemented a reusable internal Svelte component library used across the platform",
+            "I developed a subscribable daily email reporting system and contributed to the Express backend (including SQL query design and optimization)",
           ],
         },
         {
           name: "FACTS",
           subtitle: "Feedstock and Compliance Tracking System",
           bullets: [
-            "Reduced release cycle from monthly to biweekly (target: weekly) using AI-assisted development workflows (Claude-based tooling)",
-            "Introduced CI pipeline with automated quality gates; established test coverage from zero and significantly reduced production issues",
-            "Migrated architecture to PNPM monorepo and extracted shared FACTS/Driver package for reuse",
-            "Built internal CLI tooling for monorepo workflow automation and developer productivity",
+            "I reduced the release cycle from monthly to biweekly (target: weekly) using AI-assisted development workflows (Claude-based tooling)",
+            "I introduced a CI pipeline with automated quality gates; established test coverage from zero and significantly reduced production issues",
+            "I migrated the architecture to a PNPM monorepo and extracted the shared FACTS/Driver package for reuse",
+            "I built internal CLI tooling for monorepo workflow automation and developer productivity",
           ],
         },
       ],
@@ -114,13 +114,13 @@ export const CV_DATA = {
       isCurrent: false,
 
       description:
-        "Worked in an enterprise Agile environment on an AI-integrated frontend system, focusing on real-time data visualization and frontend-backend integration. Built type-safe UI components and contributed to AI-driven testing workflows and analysis interfaces.",
+        "I worked in an enterprise Agile environment on an AI-integrated frontend system, focusing on real-time data visualization and frontend-backend integration. I built type-safe UI components and contributed to AI-driven testing workflows and analysis interfaces.",
 
       bullets: [
-        "Developed type-safe React-based UI components for enterprise AI-integrated systems",
-        "Integrated frontend interfaces with AI-driven backend services via API workflows",
-        "Built real-time data visualization interfaces for test results and system analysis",
-        "Worked in Agile delivery environment with continuous integration of frontend and backend systems",
+        "I developed type-safe React-based UI components for enterprise AI-integrated systems",
+        "I integrated frontend interfaces with AI-driven backend services via API workflows",
+        "I built real-time data visualization interfaces for test results and system analysis",
+        "I worked in an Agile delivery environment with continuous integration of frontend and backend systems",
       ],
 
       skills: [
@@ -153,13 +153,13 @@ export const CV_DATA = {
       isCurrent: false,
 
       description:
-        "Developed real-time frontend interfaces for an automated sports scoring and analytics platform. Focused on low-latency UI updates, live data visualization, and responsive user experience in a high-frequency data environment.",
+        "I developed real-time frontend interfaces for an automated sports scoring and analytics platform. I focused on low-latency UI updates, live data visualization, and responsive user experience in a high-frequency data environment.",
 
       bullets: [
-        "Built real-time React-based UI for live sports scoring and match tracking system",
-        "Implemented low-latency data visualization components for live performance analytics",
-        "Integrated WebSocket-based real-time data streams into frontend architecture",
-        "Collaborated with design and backend teams to deliver responsive, high-performance UI systems",
+        "I built a real-time React-based UI for live sports scoring and match tracking",
+        "I implemented low-latency data visualization components for live performance analytics",
+        "I integrated WebSocket-based real-time data streams into the frontend architecture",
+        "I collaborated with design and backend teams to deliver responsive, high-performance UI systems",
       ],
 
       skills: [
@@ -189,13 +189,13 @@ export const CV_DATA = {
       isCurrent: false,
 
       description:
-        "Delivered production-grade frontend applications for international clients in an Agile environment. Focused on scalable UI architecture, frontend standards, and improving requirement clarity between stakeholders and development teams.",
+        "I delivered production-grade frontend applications for international clients in an Agile environment. I focused on scalable UI architecture, frontend standards, and improving requirement clarity between stakeholders and development teams.",
 
       bullets: [
-        "Built production-ready React and Next.js frontend applications for international clients",
-        "Improved frontend architecture consistency by defining and enforcing code standards across the team",
-        "Redesigned client requirement gathering process, reducing ambiguity and iteration cycles",
-        "Collaborated with design and backend teams to deliver scalable, cross-browser UI systems",
+        "I built production-ready React and Next.js frontend applications for international clients",
+        "I improved frontend architecture consistency by defining and enforcing code standards across the team",
+        "I redesigned the client requirement gathering process, reducing ambiguity and iteration cycles",
+        "I collaborated with design and backend teams to deliver scalable, cross-browser UI systems",
       ],
 
       skills: [
@@ -220,20 +220,20 @@ export const CV_DATA = {
       id: "cobotx",
       company: "CobotX Technologies",
       logo: "cobotx.png",
-      title: "Technical Project Manager",
+      title: "Engineering Manager",
       period: {from: "2021-08", to: "2022-08"},
       periodLabel: "Aug 2021 - Aug 2022",
       isCurrent: false,
 
       description:
-        "Led engineering projects in industrial robotics and automation, bridging mechanical engineering, PLC systems, and software-driven automation. Responsible for system specification, team leadership, and delivery planning in production-critical environments.",
+        "I led engineering projects in industrial robotics and automation, bridging mechanical engineering, PLC systems, and software-driven automation. I was responsible for system specification, team leadership, and delivery planning in production-critical environments.",
 
       bullets: [
-        "Developed hardware and software specifications for PLC-based robotics and automation systems",
-        "Defined technical requirements and feasibility studies for industrial robotic solutions",
-        "Built and led a team of 4 engineers, overseeing delivery, performance, and project execution",
-        "Established KPIs, documentation standards, and reporting processes for engineering operations",
-        "Created capacity and financial planning aligned with sales and production forecasts",
+        "I developed hardware and software specifications for PLC-based robotics and automation systems",
+        "I defined technical requirements and feasibility studies for industrial robotic solutions",
+        "I built and led a team of 4 engineers, overseeing delivery, performance, and project execution",
+        "I established KPIs, documentation standards, and reporting processes for engineering operations",
+        "I created capacity and financial planning aligned with sales and production forecasts",
       ],
 
       skills: [
@@ -263,14 +263,14 @@ export const CV_DATA = {
       isCurrent: false,
 
       description:
-        "Delivered full-stack web applications as an independent developer for clients across multiple industries. Focused on system design, maintainable architecture, and end-to-end delivery of scalable web solutions.",
+        "I delivered full-stack web applications as an independent developer for clients across multiple industries. I focused on system design, maintainable architecture, and end-to-end delivery of scalable web solutions.",
 
       bullets: [
-        "Built full-stack applications using React, Next.js, Node.js, PHP, and relational/non-relational databases",
-        "Designed and implemented REST APIs and modular backend architectures for client systems",
-        "Delivered end-to-end product development from requirement analysis to deployment and maintenance",
-        "Worked directly with clients to translate business needs into scalable technical solutions",
-        "Optimized application structure for maintainability, extensibility, and long-term scalability",
+        "I built full-stack applications using React, Next.js, Node.js, PHP, and relational/non-relational databases",
+        "I designed and implemented REST APIs and modular backend architectures for client systems",
+        "I delivered end-to-end product development from requirement analysis to deployment and maintenance",
+        "I worked directly with clients to translate business needs into scalable technical solutions",
+        "I optimized application structure for maintainability, extensibility, and long-term scalability",
       ],
 
       skills: [
@@ -359,7 +359,7 @@ export const CV_DATA = {
     {name: "PHP", icon: "php.svg"},
   ],
   community:
-    'Launched and lead a pro bono after-school IT and programming club at Mátyás Király Street Primary School, Pécs (Feb 2026, ongoing). Designed the full curriculum. Under my mentorship, the team won 1st place at the 2026 "Hack and Code" competition (Radnóti SZKI) and placed 1st and 3rd at the 22nd Neumann János Programming Competition.',
+    'I launched and lead a pro bono after-school IT and programming club at Mátyás Király Street Primary School, Pécs (Feb 2026, ongoing). I designed the full curriculum. Under my mentorship, the team won 1st place at the 2026 "Hack and Code" competition (Radnóti SZKI) and placed 1st and 3rd at the 22nd Neumann János Programming Competition.',
   hobbyProjects: [
     {
       name: "Real-time Space Travel",

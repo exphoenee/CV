@@ -1,0 +1,153 @@
+export const FR = {
+  labels: {
+    cvOf: "Curriculum Vitae de",
+    roleLocation: "Frontend Tech Lead · Pécs, HU",
+    chooseView: "Choisissez comment consulter mon CV",
+    btnReadingLabel: "Je lis le CV",
+    btnReadingDesc: "CV propre, lisible et imprimable",
+    btnFrontendLabel: "Je suis développeur Frontend",
+    btnFrontendDesc: "Documentation API style Swagger",
+    btnBackendLabel: "Je suis développeur Backend",
+    btnBackendDesc: "Vue JSON / VS Code",
+    btnGamerLabel: "Je suis Gamer",
+    btnGamerDesc: "Monde RPG 2.5D interactif",
+    btnHireLabel: "Recrutez-moi",
+    btnHireDesc: "Envoyez-moi un message",
+    workExperience: "Expérience professionnelle",
+    education: "Formation",
+    languages: "Langues",
+    programmingLanguages: "Langages de programmation",
+    hobbyProjects: "Projets personnels",
+    community: "Communauté & Mentorat",
+    references: "Référence(s) :",
+    hireMe: "Recrutez-moi",
+    print: "🖸 Imprimer",
+    poweredBy: "Propulsé par",
+    current: "actuel",
+    contactTitle: "Contacter Viktor",
+    yourName: "Votre nom",
+    namePlaceholder: "Jean Dupont",
+    yourEmail: "Votre e-mail",
+    emailPlaceholder: "votre@email.fr",
+    message: "Message",
+    messagePlaceholder: "Bonjour Viktor, nous aimerions...",
+    send: "Envoyer",
+    messageSent: "Message envoyé avec succès.",
+    close: "Fermer",
+    themeChanged: "Thème :",
+    musicChangedTo: "Musique :",
+    musicPaused: "en pause",
+    musicPlaying: "en lecture",
+    nowPlaying: "En cours :",
+    repeatNone: "Pas de répétition",
+    repeatAll: "Répéter tout",
+    repeatOne: "Répéter un",
+  },
+  content: {
+    summary:
+      "Ingénieur Frontend spécialisé dans l'architecture frontend, la conception de systèmes et la modernisation à grande échelle de systèmes legacy. J'ai dirigé des réécritures complètes et des migrations de systèmes d'entreprise vers des stacks modernes, améliorant la maintenabilité et la scalabilité des plateformes principales. J'ai introduit des workflows de développement assistés par IA qui ont considérablement augmenté la vitesse de livraison, la cohérence technique et la fiabilité des releases. Je mets un fort accent sur le refactoring basé sur les preuves, les standards qualité CI et la construction de fondations frontend durables à l'échelle du système.",
+
+    workExperience: [
+      {
+        id: "aegex",
+        description:
+          "J'ai dirigé la modernisation architecturale de deux systèmes legacy d'entreprise. J'assume la responsabilité totale de bout en bout pour SafeSy et FACTS, incluant la conception système, l'architecture frontend et l'intégration backend. J'ai introduit des workflows de développement assistés par IA et des pipelines qualité pilotés par CI, permettant un processus d'ingénierie basé sur les preuves et améliorant significativement la vitesse de livraison et la fiabilité des releases.",
+        bullets: [
+          "J'ai pris en charge l'architecture et la livraison de deux systèmes d'entreprise (SafeSy, FACTS) du design à la production",
+          "J'ai dirigé la modernisation de systèmes legacy via des réécritures complètes et la migration vers des stacks frontend modernes",
+          "J'ai introduit des workflows de développement assistés par IA améliorant le débit et la cohérence des équipes",
+          "J'ai mis en place un pipeline CI avec des quality gates automatisés et une stratégie de test de zéro",
+          "J'ai établi un processus de refactoring basé sur les preuves avec des améliorations qualité mesurables",
+          "Je mentore et encadre actuellement un ingénieur de niveau intermédiaire",
+        ],
+        projects: [
+          {
+            name: "SafeSy",
+            subtitle: "Système interne de gestion de production",
+            bullets: [
+              "J'ai construit une plateforme d'entreprise multi-rôles pour la production, le bureau, les dirigeants et les partenaires avec suivi en temps réel des workflows et des stocks",
+              "J'ai conçu et implémenté une bibliothèque de composants Svelte interne réutilisable sur toute la plateforme",
+              "J'ai développé un système de reporting quotidien par e-mail abonnable et contribué au backend Express (conception et optimisation des requêtes SQL)",
+            ],
+          },
+          {
+            name: "FACTS",
+            subtitle: "Système de suivi des matières premières et de conformité",
+            bullets: [
+              "J'ai réduit le cycle de release de mensuel à bimensuel (objectif : hebdomadaire) via des workflows assistés par IA (outillage basé sur Claude)",
+              "J'ai introduit un pipeline CI avec quality gates automatisés ; j'ai établi une couverture de tests de zéro et réduit significativement les problèmes en production",
+              "J'ai migré l'architecture vers un monorepo PNPM et extrait un package FACTS/Driver partagé pour la réutilisation",
+              "J'ai construit un outillage CLI interne pour l'automatisation des workflows monorepo et la productivité des développeurs",
+            ],
+          },
+        ],
+      },
+      {
+        id: "telekom",
+        description:
+          "J'ai travaillé dans un environnement Agile d'entreprise sur un système frontend intégré à l'IA, axé sur la visualisation de données en temps réel et l'intégration frontend-backend. J'ai construit des composants UI type-safe et contribué aux workflows de test pilotés par IA et aux interfaces d'analyse.",
+        bullets: [
+          "J'ai développé des composants UI React type-safe pour des systèmes d'entreprise intégrés à l'IA",
+          "J'ai intégré des interfaces frontend avec des services backend pilotés par IA via des workflows API",
+          "J'ai construit des interfaces de visualisation de données en temps réel pour les résultats de tests et l'analyse système",
+          "J'ai travaillé dans un environnement de livraison Agile avec intégration continue des systèmes frontend et backend",
+        ],
+      },
+      {
+        id: "scolia",
+        description:
+          "En tant que développeur Frontend chez Scolia, j'ai travaillé sur une solution de score automatique en temps réel pour les fléchettes à pointe acier :",
+        bullets: [
+          "J'ai construit des interfaces utilisateur responsives et dynamiques en collaboration avec l'équipe design.",
+          "J'ai créé des visualisations interactives pour le suivi de progression en temps réel et l'analyse des performances.",
+        ],
+      },
+      {
+        id: "cubicfox",
+        description:
+          "J'ai livré des applications frontend de qualité production pour des clients internationaux dans un environnement Agile. Je me suis concentré sur l'architecture UI scalable, les standards frontend et l'amélioration de la clarté des exigences entre parties prenantes et équipes de développement.",
+        bullets: [
+          "J'ai construit des applications frontend React et Next.js prêtes pour la production pour des clients internationaux",
+          "J'ai amélioré la cohérence de l'architecture frontend en définissant et appliquant des standards de code au sein de l'équipe",
+          "J'ai repensé le processus de recueil des exigences clients, réduisant l'ambiguïté et les cycles d'itération",
+          "J'ai collaboré avec les équipes design et backend pour livrer des systèmes UI scalables et compatibles multi-navigateurs",
+        ],
+      },
+      {
+        id: "cobotx",
+        description:
+          "J'ai dirigé des projets d'ingénierie en robotique industrielle et automatisation, faisant le lien entre le génie mécanique, les systèmes PLC et l'automatisation pilotée par logiciel. J'étais responsable de la spécification des systèmes, de la direction d'équipe et de la planification de livraison dans des environnements critiques pour la production.",
+        bullets: [
+          "J'ai développé des spécifications matérielles et logicielles pour des systèmes de robotique et d'automatisation basés sur PLC",
+          "J'ai défini des exigences techniques et des études de faisabilité pour des solutions de robotique industrielle",
+          "J'ai constitué et dirigé une équipe de 4 ingénieurs, supervisant la livraison, la performance et l'exécution des projets",
+          "J'ai établi des KPIs, des standards de documentation et des processus de reporting pour les opérations d'ingénierie",
+          "J'ai créé des plans de capacité et financiers alignés sur les prévisions commerciales et de production",
+        ],
+      },
+      {
+        id: "webforsol",
+        description:
+          "J'ai livré des applications web full-stack en tant que développeur indépendant pour des clients de plusieurs secteurs. Je me suis concentré sur la conception système, l'architecture maintenable et la livraison de bout en bout de solutions web scalables.",
+        bullets: [
+          "J'ai construit des applications full-stack avec React, Next.js, Node.js, PHP et des bases de données relationnelles/non-relationnelles",
+          "J'ai conçu et implémenté des APIs REST et des architectures backend modulaires pour les systèmes clients",
+          "J'ai livré un développement produit de bout en bout, de l'analyse des exigences au déploiement et à la maintenance",
+          "J'ai travaillé directement avec les clients pour traduire les besoins métier en solutions techniques scalables",
+          "J'ai optimisé la structure des applications pour la maintenabilité, l'extensibilité et la scalabilité à long terme",
+        ],
+      },
+    ],
+
+    community:
+      "J'ai lancé et dirige un club parascolaire d'informatique et de programmation bénévole à l'école primaire de la rue Mátyás Király à Pécs (février 2026, en cours). J'ai conçu l'intégralité du programme. Sous mon mentorat, l'équipe a remporté la 1ère place au concours « Hack and Code » 2026 (Radnóti SZKI) et s'est classée 1er et 3e au 22e Concours de Programmation Neumann János.",
+
+    identity: {
+      languages: [
+        { name: "Hongrois", level: "Langue maternelle", comment: null },
+        { name: "Allemand", level: "Intermédiaire supérieur (B2)", comment: null },
+        { name: "Anglais", level: "Intermédiaire supérieur (B2)", comment: null },
+      ],
+    },
+  },
+};

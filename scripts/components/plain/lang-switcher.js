@@ -1,7 +1,7 @@
 import { locale, AVAILABLE_LANGS } from '../../locale.js';
 
-const LANG_LABELS = { en: 'EN', hu: 'HU', de: 'DE' };
-const LANG_NAMES  = { en: 'English', hu: 'Magyar', de: 'Deutsch' };
+const LANG_LABELS = { en: 'EN', hu: 'HU', de: 'DE', fr: 'FR', es: 'ES', it: 'IT', dot: 'DOT', kl: 'KL', qu: 'QU', goa: 'GOA' };
+const LANG_NAMES  = { en: 'English', hu: 'Magyar', de: 'Deutsch', fr: 'Français', es: 'Español', it: 'Italiano', dot: 'Dothraki', kl: 'tlhIngan Hol', qu: 'Elvish', goa: "Goa'uld" };
 const CHEVRON = `<svg class="hlang-chevron" viewBox="0 0 12 7" width="10" height="6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1L6 6L11 1"/></svg>`;
 
 export function renderLangSwitcher() {
