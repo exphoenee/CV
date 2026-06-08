@@ -45,8 +45,7 @@ export const HU = {
   },
   content: {
     summary:
-      "Frontend mérnök, aki frontend architektúrára, rendszertervezésre és nagyszabású legacy rendszerek modernizációjára specializálódott. Vállalati rendszerek teljes újraírását és migrációját vezette modern technológiai stack-ekre, javítva az alapplatformok karbantarthatóságát és skálázhatóságát. AI-asszisztált fejlesztési munkafolyamatokat vezetett be, amelyek jelentősen növelték a szállítási sebességet, a mérnöki konzisztenciát és a kiadási megbízhatóságot. Erős fókusz az evidencián alapuló refaktorálásra, CI-minőségi szabványokra és fenntartható, rendszerszintű frontend alapok kiépítésére.",
-
+      "Frontend mérnökként frontend architektúrára, rendszertervezésre és nagyszabású legacy rendszerek modernizációjára specializálódtam. Vállalati rendszerek teljes újraírását és migrációját vezettem modern technológiai stackekre, javítva az alapplatformok karbantarthatóságát és skálázhatóságát. AI-asszisztált fejlesztési munkafolyamatokat vezettem be, amelyek jelentősen növelték a szállítási sebességet, a mérnöki konzisztenciát és a kiadási megbízhatóságot. Munkám során kiemelt hangsúlyt fektettem az evidencián alapuló refaktorálásra, a CI-minőségi szabványok kialakítására és a fenntartható, rendszerszintű frontend alapok megteremtésére.",
     workExperience: [
       {
         id: "aegex",
