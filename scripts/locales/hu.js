@@ -66,7 +66,7 @@ export const HU = {
             bullets: [
               "Többszerepkörös vállalati platformot építettem valós idejű munkafolyamat- és készletkövetéssel (gyártás, iroda, vezető, partner)",
               "Belső Svelte komponenskönyvtárat terveztem és valósítottam meg platformszinten",
-              "Napi e-mail riportrendszert fejlesztettem; hozzájárultam az Express backendhez (SQL tervezés és optimalizálás)",
+              "Automatizált riporting megoldások tervezése és fejlesztése; hozzájárulás az Express alapú backend rendszer adatmodelljének, SQL lekérdezéseinek és teljesítményének optimalizálásához.",
             ],
           },
           {
@@ -74,7 +74,7 @@ export const HU = {
             subtitle: "Nyersanyag- és megfelelőségkövetési rendszer",
             bullets: [
               "Kiadási ciklust haviról kéthetire csökkentettem (cél: heti) Claude-alapú AI-asszisztált toolinggal",
-              "CI pipeline-t építettem automatizált quality gate-ekkel; tesztlefedettséget nulláról hoztam létre, csökkentve a produkciós hibákat",
+              "CI/CD pipeline fejlesztése automatizált quality gate-ekkel; átfogó tesztelési infrastruktúra és tesztlefedettség kiépítése nulláról.",
               "Architektúrát PNPM monorepora migráltam, FACTS/Driver/Shared csomaggal ",
               "Belső CLI toolingot építettem monorepo workflow-automatizáláshoz és fejlesztői produktivitáshoz",
             ],
