@@ -1,4 +1,12 @@
+https://www.dafont.com/tengwar-annatar.font
 https://www.fontspace.com/greifswalder-tengwar-font-f8994
 https://www.fontsaddict.com/font/yautja-regular.html
 https://www.fontspace.com/angerthas-font-f2245
 https://www.fontspace.com/kahless-font-f101222
+https://www.thescifiworld.net/fonts.htm
+https://www.fontspace.com/goauld-font-f8081
+https://www.fontspace.com/dothraki-font-f30536
+https://luc.devroye.org/fonts-85166.html
+https://font.download/font/dovahkiin
+https://dothraki.com/2011/09/the-header-script/
+http://kenakoliku.conlang.org/

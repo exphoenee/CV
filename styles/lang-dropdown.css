@@ -30,15 +30,35 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Goauld';
+  src: url('../assets/fonts/goauld.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Dothraki';
+  src: url('../assets/fonts/dothraki.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 [data-lang="ya"] body, [data-lang="ya"] body * { font-family: 'Yautja', monospace !important; }
 [data-lang="qu"] body, [data-lang="qu"] body * { font-family: 'Elvish', serif !important; }
 [data-lang="asg"] body, [data-lang="asg"] body * { font-family: 'Asgard', serif !important; }
 [data-lang="kl"] body, [data-lang="kl"] body * { font-family: 'Klingon', monospace !important; }
+[data-lang="goa"] body, [data-lang="goa"] body * { font-family: 'Goauld', serif !important; }
+[data-lang="dot"] body, [data-lang="dot"] body * { font-family: 'Dothraki', serif !important; }
 
 [data-lang="ya"] .ld-select, [data-lang="ya"] .ld-select * { font-family: system-ui, sans-serif !important; }
 [data-lang="qu"] .ld-select, [data-lang="qu"] .ld-select * { font-family: system-ui, sans-serif !important; }
 [data-lang="asg"] .ld-select, [data-lang="asg"] .ld-select * { font-family: system-ui, sans-serif !important; }
 [data-lang="kl"] .ld-select, [data-lang="kl"] .ld-select * { font-family: system-ui, sans-serif !important; }
+[data-lang="goa"] .ld-select, [data-lang="goa"] .ld-select * { font-family: system-ui, sans-serif !important; }
+[data-lang="dot"] .ld-select, [data-lang="dot"] .ld-select * { font-family: system-ui, sans-serif !important; }
 
 .ld-select {
   position: relative;
