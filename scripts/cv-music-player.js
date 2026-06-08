@@ -48,6 +48,7 @@ export function initMusicPlayer() {
 
     var isBoxOpen = false;
     var isPlaying = false;
+    var isLoading = false;
     var currentIndex = 0;
     var repeatMode = parseInt(localStorage.getItem(MUSIC_REPEAT_KEY)) || 0;
     var savedGenre = localStorage.getItem(MUSIC_GENRE_KEY);
@@ -91,11 +92,17 @@ export function initMusicPlayer() {
 
     var fadeIn = function () {
       audio.volume = 0;
+      isLoading = audio.readyState < 3;
+      updatePlayPause();
       audio.play().then(function () {
         isPlaying = true;
+        isLoading = false;
         updatePlayPause();
         fadeTo(targetVolume);
-      }).catch(function () {});
+      }).catch(function () {
+        isLoading = false;
+        updatePlayPause();
+      });
     };
 
     var fadeOut = function (onDone) {
@@ -139,7 +146,11 @@ export function initMusicPlayer() {
     };
 
     var updatePlayPause = function () {
-      playPauseBtn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+      if (isLoading) {
+        playPauseBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      } else {
+        playPauseBtn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+      }
       if (isPlaying) {
         toggleBtn.classList.add("playing");
       } else {
@@ -371,6 +382,39 @@ export function initMusicPlayer() {
     });
 
     audio.addEventListener("timeupdate", updateTrackTime);
+
+    audio.addEventListener("waiting", function () {
+      isLoading = true;
+      updatePlayPause();
+    });
+
+    audio.addEventListener("canplay", function () {
+      isLoading = false;
+      updatePlayPause();
+    });
+
+    audio.addEventListener("playing", function () {
+      isLoading = false;
+      updatePlayPause();
+    });
+
+    var backgroundPreloadStarted = false;
+    audio.addEventListener("canplaythrough", function () {
+      if (backgroundPreloadStarted) return;
+      backgroundPreloadStarted = true;
+      var queue = [];
+      for (var bi = 0; bi < options.length; bi++) {
+        var bval = options[bi].getAttribute("data-value");
+        if (bval !== currentValue) queue.push(bval);
+      }
+      var bidx = 0;
+      var fetchNext = function () {
+        if (bidx >= queue.length) return;
+        var src = queue[bidx++];
+        fetch(src).then(fetchNext, fetchNext);
+      };
+      setTimeout(fetchNext, 3000);
+    });
 
     audio.addEventListener("ended", function () {
       if (repeatMode === 2) {

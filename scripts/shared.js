@@ -224,7 +224,7 @@ export function musicPlayerHTML() {
     '      </div>' +
     '    </div>' +
     '  </div>' +
-    '  <audio id="music-audio"></audio>' +
+    '  <audio id="music-audio" preload="auto"></audio>' +
     '</div>';
 }
 
