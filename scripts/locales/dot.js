@@ -67,6 +67,9 @@ export const DOT = {
     bookRetry: "Nakhoe sí",
     bookEmpty: "Lá hrazef tih 21 zigazin.",
     bookFailed: "Hrazef ú-nakhoe. Nakhoe sí.",
+    errFieldRequired: "Hrazef anni. Nakhoe me.",
+    errEmailInvalid: "Sekke hrazef ú-nakhoe. Nakhoe me.",
+    errMessageTooShort: "Zhilat anni kash. Cha'ioq mae hrazef ma loS zhokwa.",
   },
   content: {
     summary:

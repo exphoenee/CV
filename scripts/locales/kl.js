@@ -67,6 +67,9 @@ export const KL = {
     bookRetry: "yItaH",
     bookEmpty: "qaSlaH repDu' pagh 21 jajmey.",
     bookFailed: "ghom Qapla' pagh. yItaH.",
+    errFieldRequired: "De' 'oH poQlu'. yIchel.",
+    errEmailInvalid: "De' lI' 'oHbe'. yInob.",
+    errMessageTooShort: "ghItlh tIn poQlu'. cha'maH De' loS mu' yIghItlh.",
   },
   content: {
     summary:

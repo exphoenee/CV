@@ -67,6 +67,9 @@ export const IT = {
     bookRetry: "Riprova",
     bookEmpty: "Nessuno slot disponibile nei prossimi 21 giorni.",
     bookFailed: "Prenotazione fallita. Riprova.",
+    errFieldRequired: "Questo campo è obbligatorio.",
+    errEmailInvalid: "Inserisci un indirizzo e-mail valido.",
+    errMessageTooShort: "Il messaggio deve contenere almeno 20 caratteri e 4 parole.",
   },
   content: {
     summary:

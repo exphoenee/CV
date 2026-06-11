@@ -67,6 +67,9 @@ export const ES = {
     bookRetry: "Reintentar",
     bookEmpty: "No hay horarios disponibles en los próximos 21 días.",
     bookFailed: "Error en la reserva. Por favor, inténtalo de nuevo.",
+    errFieldRequired: "Este campo es obligatorio.",
+    errEmailInvalid: "Por favor, introduce un correo electrónico válido.",
+    errMessageTooShort: "El mensaje debe tener al menos 20 caracteres y 4 palabras.",
   },
   content: {
     summary:

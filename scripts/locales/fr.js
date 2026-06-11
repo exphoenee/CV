@@ -67,6 +67,9 @@ export const FR = {
     bookRetry: "Réessayer",
     bookEmpty: "Aucun créneau disponible dans les 21 prochains jours.",
     bookFailed: "La réservation a échoué. Veuillez réessayer.",
+    errFieldRequired: "Ce champ est obligatoire.",
+    errEmailInvalid: "Veuillez saisir une adresse e-mail valide.",
+    errMessageTooShort: "Le message doit contenir au moins 20 caractères et 4 mots.",
   },
   content: {
     summary:

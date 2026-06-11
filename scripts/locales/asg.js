@@ -67,6 +67,9 @@ export const ASG = {
     bookRetry: "Reyna aftur",
     bookEmpty: "Engir lausir tímar í næstu 21 dögum.",
     bookFailed: "Bókun mistókst. Reyndu aftur.",
+    errFieldRequired: "Þetta svæði er skylt.",
+    errEmailInvalid: "Sláðu inn gilt netfang.",
+    errMessageTooShort: "Skilaboð verða að vera að minnsta kosti 20 stafir og 4 orð.",
   },
   content: {
     summary:

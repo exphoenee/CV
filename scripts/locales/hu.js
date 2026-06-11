@@ -67,6 +67,9 @@ export const HU = {
     bookRetry: "Újrapróbálás",
     bookEmpty: "Nincs szabad időpont a következő 21 napban.",
     bookFailed: "Hiba a foglalás során. Kérlek próbáld újra.",
+    errFieldRequired: "Ez a mező kötelező.",
+    errEmailInvalid: "Kérlek adj meg egy érvényes e-mail címet.",
+    errMessageTooShort: "Az üzenet legalább 20 karakter és 4 szó legyen.",
   },
   content: {
     summary:

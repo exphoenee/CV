@@ -67,6 +67,9 @@ export const GOA = {
     bookRetry: "Kree sí",
     bookEmpty: "Lá joma noc secu 21 kel'shah.",
     bookFailed: "Joma noc ú-chel. Kree sí.",
+    errFieldRequired: "Kree! Joma noc poQlu'.",
+    errEmailInvalid: "Kree! Joma shal-tel ú-chel.",
+    errMessageTooShort: "Kree! Joma hok'tar kash. Erin tal cha'ioq mae.",
   },
   content: {
     summary:

@@ -66,10 +66,18 @@ export function initHireModal(prefix) {
   var modal = document.getElementById(prefix + "-modal");
   var subjectEl = document.getElementById(prefix + "-subject");
 
+  function clearFieldErrors() {
+    ['name-err', 'email-err', 'msg-err'].forEach(function(id) {
+      var el = document.getElementById(prefix + '-' + id);
+      if (el) el.textContent = '';
+    });
+  }
+
   function openModal(subject) {
     if (subjectEl && subject) subjectEl.value = subject;
     var form = document.getElementById(prefix + "-form");
     form.reset();
+    clearFieldErrors();
     var fsSuccess = document.querySelector("#" + prefix + "-modal [data-fs-success]");
     if (fsSuccess) fsSuccess.classList.add("cv-success-hidden");
     var fsError = document.querySelector("#" + prefix + "-modal [data-fs-error]");
@@ -91,7 +99,21 @@ export function initHireModal(prefix) {
     if (e.key === "Escape") closeModal();
   });
 
-  document.getElementById(prefix + "-form").addEventListener("submit", function() {
+  document.getElementById(prefix + "-form").addEventListener("submit", function(e) {
+    var nameVal = document.getElementById(prefix + '-name').value.trim();
+    var emailVal = document.getElementById(prefix + '-email').value.trim();
+    var msgVal = document.getElementById(prefix + '-message').value.trim();
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+    var wordCount = msgVal.split(/\s+/).filter(Boolean).length;
+
+    document.getElementById(prefix + '-name-err').textContent = nameVal ? '' : locale.t('errFieldRequired');
+    document.getElementById(prefix + '-email-err').textContent = emailOk ? '' : locale.t('errEmailInvalid');
+    document.getElementById(prefix + '-msg-err').textContent = (msgVal.length >= 20 && wordCount >= 4) ? '' : locale.t('errMessageTooShort');
+
+    if (!nameVal || !emailOk || msgVal.length < 20 || wordCount < 4) {
+      e.preventDefault();
+      return;
+    }
     closeModal();
     showToast(locale.t('messageSent'));
   });
@@ -291,10 +313,12 @@ export function bookingModalHTML(prefix) {
     '          <div class="bk-field">',
     '            <label><span data-bk-i18n="bookYourEmail">' + t('bookYourEmail') + '</span> <span class="bk-required">*</span></label>',
     '            <input type="email" id="' + p + '-bk-email" required placeholder="your@email.com">',
+    '            <span class="bk-field-error" id="' + p + '-bk-email-err"></span>',
     '          </div>',
     '          <div class="bk-field">',
-    '            <label data-bk-i18n="bookTopic">' + t('bookTopic') + '</label>',
-    '            <input type="text" id="' + p + '-bk-topic" data-bk-i18n-placeholder="bookTopicPlaceholder" placeholder="' + t('bookTopicPlaceholder') + '">',
+    '            <label><span data-bk-i18n="bookTopic">' + t('bookTopic') + '</span> <span class="bk-required">*</span></label>',
+    '            <textarea id="' + p + '-bk-topic" rows="4" required data-bk-i18n-placeholder="bookTopicPlaceholder" placeholder="' + t('bookTopicPlaceholder') + '"></textarea>',
+    '            <span class="bk-field-error" id="' + p + '-bk-topic-err"></span>',
     '          </div>',
     '          <button type="submit" id="' + p + '-bk-submit" class="bk-btn-primary" data-bk-i18n="bookSubmit">' + t('bookSubmit') + '</button>',
     '        </form>',
@@ -439,6 +463,8 @@ export function initBookingModal(prefix) {
   document.getElementById(p + '-bk-new').addEventListener('click', function() {
     selectedSlot = null;
     document.getElementById(p + '-bk-form').reset();
+    document.getElementById(p + '-bk-email-err').textContent = '';
+    document.getElementById(p + '-bk-topic-err').textContent = '';
     loadSlots();
   });
 
@@ -447,7 +473,12 @@ export function initBookingModal(prefix) {
     var nameVal = document.getElementById(p + '-bk-name').value.trim();
     var emailVal = document.getElementById(p + '-bk-email').value.trim();
     var topicVal = document.getElementById(p + '-bk-topic').value.trim();
-    if (!nameVal || !emailVal) return;
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+    var topicWordCount = topicVal.split(/\s+/).filter(Boolean).length;
+    var topicOk = topicVal.length >= 20 && topicWordCount >= 4;
+    document.getElementById(p + '-bk-email-err').textContent = emailOk ? '' : locale.t('errEmailInvalid');
+    document.getElementById(p + '-bk-topic-err').textContent = topicOk ? '' : locale.t('errMessageTooShort');
+    if (!nameVal || !emailOk || !topicOk) return;
 
     var submitBtn = document.getElementById(p + '-bk-submit');
     submitBtn.disabled = true;
@@ -526,22 +557,25 @@ export function hireModalHTML(prefix, opts) {
     '      <p' + p2Class + ' data-hire-i18n="hireSentNote">' + t('hireSentNote') + '</p>',
     '    </div>',
     '    <div data-fs-error class="' + errorHidden + '"></div>',
-    '    <form id="' + prefix + '-form">',
+    '    <form id="' + prefix + '-form" novalidate>',
     subjectField,
     '      <div class="hire-field">',
     '        <label for="' + prefix + '-name" data-hire-i18n="yourName">' + t('yourName') + '</label>',
     '        <input id="' + prefix + '-name" type="text" name="name" required placeholder="' + t('namePlaceholder') + '" data-hire-i18n-placeholder="namePlaceholder" data-fs-field />',
     '        <span data-fs-error="name"' + errClass + '></span>',
+    '        <span class="hire-field-error" id="' + prefix + '-name-err"></span>',
     '      </div>',
     '      <div class="hire-field">',
     '        <label for="' + prefix + '-email" data-hire-i18n="yourEmail">' + t('yourEmail') + '</label>',
     '        <input id="' + prefix + '-email" type="email" name="email" required placeholder="' + t('emailPlaceholder') + '" data-hire-i18n-placeholder="emailPlaceholder" data-fs-field />',
     '        <span data-fs-error="email"' + errClass + '></span>',
+    '        <span class="hire-field-error" id="' + prefix + '-email-err"></span>',
     '      </div>',
     '      <div class="hire-field">',
     '        <label for="' + prefix + '-message" data-hire-i18n="message">' + t('message') + '</label>',
     '        <textarea id="' + prefix + '-message" name="message" required rows="5" placeholder="' + t('messagePlaceholder') + '" data-hire-i18n-placeholder="messagePlaceholder" data-fs-field></textarea>',
     '        <span data-fs-error="message"' + errClass + '></span>',
+    '        <span class="hire-field-error" id="' + prefix + '-msg-err"></span>',
     '      </div>',
     '      <button type="submit" class="hire-submit" data-fs-submit-btn data-hire-i18n="send">' + t('send') + '</button>',
     '    </form>',

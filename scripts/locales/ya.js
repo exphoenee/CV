@@ -67,5 +67,8 @@ export const YA = {
     bookRetry: "Sain nain",
     bookEmpty: "Lá del nain gkei 21 yin.",
     bookFailed: "Yin ú-gkei. Sain nain.",
+    errFieldRequired: "Yin dei. Sain nain.",
+    errEmailInvalid: "Yin sain ú-gkei. Yautja-nain.",
+    errMessageTooShort: "Yin ú-gkei hk'nde. Cha'nain mae hk'dei.",
   },
 };

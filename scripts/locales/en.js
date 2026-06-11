@@ -67,6 +67,9 @@ export const EN = {
     bookRetry: "Retry",
     bookEmpty: "No available slots in the next 21 days.",
     bookFailed: "Booking failed. Please try again.",
+    errFieldRequired: "This field is required.",
+    errEmailInvalid: "Please enter a valid email address.",
+    errMessageTooShort: "Message must be at least 20 characters and 4 words.",
   },
   content: null,
 };

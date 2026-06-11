@@ -67,6 +67,9 @@ export const DE = {
     bookRetry: "Wiederholen",
     bookEmpty: "Keine freien Termine in den nächsten 21 Tagen.",
     bookFailed: "Buchung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    errFieldRequired: "Dieses Feld ist erforderlich.",
+    errEmailInvalid: "Bitte gib eine gültige E-Mail-Adresse ein.",
+    errMessageTooShort: "Die Nachricht muss mindestens 20 Zeichen und 4 Wörter enthalten.",
   },
   content: {
     summary:

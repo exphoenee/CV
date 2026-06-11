@@ -499,7 +499,8 @@ h1 small {
   letter-spacing: 0.04em;
 }
 .bk-required { color: #e05252; }
-.bk-field input {
+.bk-field input,
+.bk-field textarea {
   width: 100%;
   box-sizing: border-box;
   background: var(--hire-field-bg);
@@ -512,8 +513,20 @@ h1 small {
   outline: none;
   transition: border-color 0.15s;
 }
-.bk-field input:focus { border-color: var(--accent); }
-.bk-field input::placeholder { color: var(--muted2); }
+.bk-field textarea { resize: vertical; }
+.bk-field input:focus,
+.bk-field textarea:focus { border-color: var(--accent); }
+.bk-field input::placeholder,
+.bk-field textarea::placeholder { color: var(--muted2); }
+
+.hire-field-error,
+.bk-field-error {
+  display: block;
+  color: #e05252;
+  font-size: 0.78rem;
+  margin-top: 4px;
+  min-height: 1.1em;
+}
 
 .bk-btn-primary {
   background: var(--accent);

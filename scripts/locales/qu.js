@@ -67,6 +67,9 @@ export const QU = {
     bookRetry: "Áva sí",
     bookEmpty: "Lá lúmëar vanwë 21 ré.",
     bookFailed: "Lúmë ú-sírë. Áva sí.",
+    errFieldRequired: "Sí maquet. Áva yesta.",
+    errEmailInvalid: "Ú-máre esse-quenta. Áva sí.",
+    errMessageTooShort: "Quenta pitya. Erin ná lé quëtë cainen.",
   },
   content: {
     summary:
