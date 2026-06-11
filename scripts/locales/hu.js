@@ -11,6 +11,8 @@ export const HU = {
     btnBackendDesc: "JSON / VS Code nézet",
     btnGamerLabel: "Gamer vagyok",
     btnGamerDesc: "Interaktív 2.5D RPG világ",
+    btnPmLabel: "Project Manager vagyok",
+    btnPmDesc: "Gantt diagram idővonal",
     btnHireLabel: "Vegyél fel!",
     btnHireDesc: "Küldj nekem üzenetet",
     workExperience: "Munkatapasztalat",

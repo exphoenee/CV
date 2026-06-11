@@ -11,6 +11,8 @@ export const KL = {
     btnBackendDesc: "JSON / VS Code SuvwI'",
     btnGamerLabel: "jIvum Qu'mey yIHmey",
     btnGamerDesc: "2.5D RPG ghomqu' Qu'",
+    btnPmLabel: "jIH PM vISoplaH",
+    btnPmDesc: "Gantt mI' — poHmey",
     btnHireLabel: "HIvqa' veqlargh!",
     btnHireDesc: "jabbI'ID vIngeH",
     workExperience: "Qu'mey vIta'",

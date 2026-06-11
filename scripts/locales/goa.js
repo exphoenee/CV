@@ -11,6 +11,8 @@ export const GOA = {
     btnBackendDesc: "JSON / VS Code joma",
     btnGamerLabel: "Hok'tar yalli",
     btnGamerDesc: "2.5D RPG — joma ha'tak secu",
+    btnPmLabel: "Shol'va PM — kree",
+    btnPmDesc: "Gantt — lo'taur kek",
     btnHireLabel: "Lo'taur! Kree!",
     btnHireDesc: "Joma enni — chel nok",
     workExperience: "Joma i kel'shah",

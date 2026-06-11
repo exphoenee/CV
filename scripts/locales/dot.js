@@ -11,6 +11,8 @@ export const DOT = {
     btnBackendDesc: "JSON / VS Code mahrazh",
     btnGamerLabel: "Anha dothrak yalli",
     btnGamerDesc: "Vaes 2.5D RPG athlanar",
+    btnPmLabel: "Me hash PM yer",
+    btnPmDesc: "Gantt chart — timuvak arakh",
     btnHireLabel: "Aqqisi anni!",
     btnHireDesc: "Chiori anni fini alegra",
     workExperience: "Dothralat ma nakhoe",

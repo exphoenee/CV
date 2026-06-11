@@ -11,6 +11,8 @@ export const YA = {
     btnBackendDesc: "JSON / VS Code",
     btnGamerLabel: "Hk'nde yautja",
     btnGamerDesc: "2.5D RPG kainde amedha",
+    btnPmLabel: "H'dlak PM — di'tkae",
+    btnPmDesc: "Gantt — nau'gkon",
     btnHireLabel: "Aya Kwei na",
     btnHireDesc: "Sain pauk — kehrite",
     workExperience: "Chiva yin",

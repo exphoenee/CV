@@ -11,6 +11,8 @@ export const ASG = {
     btnBackendDesc: "JSON / VS Code sýn",
     btnGamerLabel: "Ek em leikmaðr",
     btnGamerDesc: "Gagnvirkt 2.5D RPG heim",
+    btnPmLabel: "Ég em PM hér",
+    btnPmDesc: "Gantt — tímaskrá",
     btnHireLabel: "Rað mik!",
     btnHireDesc: "Senda mer boð",
     workExperience: "Starfsferill",

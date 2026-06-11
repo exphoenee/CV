@@ -11,6 +11,8 @@ export const QU = {
     btnBackendDesc: "JSON / VS Code tengwar",
     btnGamerLabel: "Ní ohtar yallumë",
     btnGamerDesc: "2.5D RPG — quenta Ardassëo",
+    btnPmLabel: "Olen PM — sá quetis",
+    btnPmDesc: "Gantt — antalë lúmeva",
     btnHireLabel: "Hirë ní, hinya!",
     btnHireDesc: "Centa enni — ní laitë",
     workExperience: "Quentar i cárëo",

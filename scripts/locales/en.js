@@ -11,6 +11,8 @@ export const EN = {
     btnBackendDesc: "JSON / VS Code view",
     btnGamerLabel: "I'm a Gamer",
     btnGamerDesc: "Interactive 2.5D RPG world",
+    btnPmLabel: "I'm a Project Manager",
+    btnPmDesc: "Gantt chart timeline",
     btnHireLabel: "Hire Me",
     btnHireDesc: "Send me a message",
     workExperience: "Work Experience",

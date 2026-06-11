@@ -11,6 +11,8 @@ export const IT = {
     btnBackendDesc: "Vista JSON / VS Code",
     btnGamerLabel: "Sono un Gamer",
     btnGamerDesc: "Mondo RPG 2.5D interattivo",
+    btnPmLabel: "Sono un Project Manager",
+    btnPmDesc: "Timeline con diagramma di Gantt",
     btnHireLabel: "Assumimi",
     btnHireDesc: "Inviami un messaggio",
     workExperience: "Esperienza lavorativa",
