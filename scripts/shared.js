@@ -1,4 +1,4 @@
-import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES } from './config.js';
+import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES, BOOKING_SCRIPT_URL } from './config.js';
 import { locale } from './locale.js';
 
 export function showToast(message) {
@@ -226,6 +226,258 @@ export function musicPlayerHTML() {
     '  </div>' +
     '  <audio id="music-audio" preload="auto"></audio>' +
     '</div>';
+}
+
+export function bookingModalHTML(prefix) {
+  var t = locale.t.bind(locale);
+  var p = prefix;
+  return [
+    '<div id="' + p + '-booking-modal" class="cv-modal-hidden">',
+    '  <div class="hire-backdrop" id="' + p + '-booking-backdrop"></div>',
+    '  <div class="hire-dialog bk-dialog">',
+    '    <div class="hire-dialog-header">',
+    '      <h3 data-bk-i18n="bookTitle">' + t('bookTitle') + '</h3>',
+    '      <button class="hire-close" id="' + p + '-bk-close" type="button">&#x2715;</button>',
+    '    </div>',
+    '    <div class="bk-body">',
+
+    '      <div id="' + p + '-bk-loading" class="bk-state">',
+    '        <div class="bk-spinner"></div>',
+    '        <p data-bk-i18n="bookLoading">' + t('bookLoading') + '</p>',
+    '      </div>',
+
+    '      <div id="' + p + '-bk-error" class="bk-state bk-hidden">',
+    '        <div class="bk-state-icon">!</div>',
+    '        <p data-bk-i18n="bookError">' + t('bookError') + '</p>',
+    '        <button class="bk-btn-secondary" id="' + p + '-bk-retry" data-bk-i18n="bookRetry">' + t('bookRetry') + '</button>',
+    '      </div>',
+
+    '      <div id="' + p + '-bk-empty" class="bk-state bk-hidden">',
+    '        <div class="bk-state-icon"><i class="fa-regular fa-calendar-xmark"></i></div>',
+    '        <p data-bk-i18n="bookEmpty">' + t('bookEmpty') + '</p>',
+    '      </div>',
+
+    '      <div id="' + p + '-bk-step-date" class="bk-step bk-hidden">',
+    '        <p class="bk-step-label" data-bk-i18n="bookStep1">' + t('bookStep1') + '</p>',
+    '        <div id="' + p + '-bk-dates" class="bk-dates-grid"></div>',
+    '      </div>',
+
+    '      <div id="' + p + '-bk-step-time" class="bk-step bk-hidden">',
+    '        <button class="bk-back-btn" id="' + p + '-bk-back-date"><i class="fa-solid fa-arrow-left"></i> <span data-bk-i18n="bookBack">' + t('bookBack') + '</span></button>',
+    '        <p class="bk-step-label" data-bk-i18n="bookStep2">' + t('bookStep2') + '</p>',
+    '        <div id="' + p + '-bk-date-badge" class="bk-badge"></div>',
+    '        <div id="' + p + '-bk-slots" class="bk-slots-grid"></div>',
+    '      </div>',
+
+    '      <div id="' + p + '-bk-step-form" class="bk-step bk-hidden">',
+    '        <button class="bk-back-btn" id="' + p + '-bk-back-time"><i class="fa-solid fa-arrow-left"></i> <span data-bk-i18n="bookBack">' + t('bookBack') + '</span></button>',
+    '        <p class="bk-step-label" data-bk-i18n="bookStep3">' + t('bookStep3') + '</p>',
+    '        <div id="' + p + '-bk-slot-badge" class="bk-badge"></div>',
+    '        <form id="' + p + '-bk-form" novalidate>',
+    '          <div class="bk-field">',
+    '            <label><span data-bk-i18n="bookYourName">' + t('bookYourName') + '</span> <span class="bk-required">*</span></label>',
+    '            <input type="text" id="' + p + '-bk-name" required placeholder="Jane Smith">',
+    '          </div>',
+    '          <div class="bk-field">',
+    '            <label><span data-bk-i18n="bookYourEmail">' + t('bookYourEmail') + '</span> <span class="bk-required">*</span></label>',
+    '            <input type="email" id="' + p + '-bk-email" required placeholder="your@email.com">',
+    '          </div>',
+    '          <div class="bk-field">',
+    '            <label data-bk-i18n="bookTopic">' + t('bookTopic') + '</label>',
+    '            <input type="text" id="' + p + '-bk-topic" data-bk-i18n-placeholder="bookTopicPlaceholder" placeholder="' + t('bookTopicPlaceholder') + '">',
+    '          </div>',
+    '          <button type="submit" id="' + p + '-bk-submit" class="bk-btn-primary" data-bk-i18n="bookSubmit">' + t('bookSubmit') + '</button>',
+    '        </form>',
+    '      </div>',
+
+    '      <div id="' + p + '-bk-step-confirm" class="bk-step bk-step-confirm bk-hidden">',
+    '        <div class="bk-confirm-check"><i class="fa-solid fa-check"></i></div>',
+    '        <p class="bk-confirm-title" data-bk-i18n="bookConfirmTitle">' + t('bookConfirmTitle') + '</p>',
+    '        <p id="' + p + '-bk-confirm-detail" class="bk-confirm-detail"></p>',
+    '        <p class="bk-confirm-note" data-bk-i18n="bookConfirmNote">' + t('bookConfirmNote') + '</p>',
+    '        <button class="bk-btn-secondary" id="' + p + '-bk-new" data-bk-i18n="bookNewBooking">' + t('bookNewBooking') + '</button>',
+    '      </div>',
+
+    '    </div>',
+    '  </div>',
+    '</div>'
+  ].join('\n');
+}
+
+export function initBookingModal(prefix) {
+  var p = prefix;
+  var modal = document.getElementById(p + '-booking-modal');
+  var allSlots = [];
+  var selectedSlot = null;
+
+  var EN_DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var EN_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  var SCREENS = [
+    p + '-bk-loading', p + '-bk-error', p + '-bk-empty',
+    p + '-bk-step-date', p + '-bk-step-time', p + '-bk-step-form', p + '-bk-step-confirm'
+  ];
+
+  function show(id) {
+    SCREENS.forEach(function(sid) {
+      var el = document.getElementById(sid);
+      if (el) el.classList.toggle('bk-hidden', sid !== id);
+    });
+  }
+
+  function openModal() {
+    modal.classList.remove('cv-modal-hidden');
+    loadSlots();
+  }
+
+  function closeModal() {
+    modal.classList.add('cv-modal-hidden');
+  }
+
+  function formatDay(date) { return EN_DAYS[date.getDay()]; }
+  function formatDate(date) { return EN_MONTHS[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear(); }
+  function formatTime(date) {
+    return String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0');
+  }
+  function formatSlot(start, end) {
+    return formatDay(start) + ', ' + formatDate(start) + '  |  ' + formatTime(start) + ' – ' + formatTime(end);
+  }
+
+  function groupByDate(slots) {
+    var map = {};
+    slots.forEach(function(slot) {
+      var key = slot.start.slice(0, 10);
+      if (!map[key]) map[key] = [];
+      map[key].push(slot);
+    });
+    return map;
+  }
+
+  function loadSlots() {
+    show(p + '-bk-loading');
+    fetch(BOOKING_SCRIPT_URL)
+      .then(function(res) { if (!res.ok) throw new Error(); return res.json(); })
+      .then(function(data) {
+        allSlots = data.slots || [];
+        if (allSlots.length === 0) { show(p + '-bk-empty'); return; }
+        renderDates();
+        show(p + '-bk-step-date');
+      })
+      .catch(function() { show(p + '-bk-error'); });
+  }
+
+  function renderDates() {
+    var grouped = groupByDate(allSlots);
+    var grid = document.getElementById(p + '-bk-dates');
+    grid.innerHTML = '';
+    Object.keys(grouped).forEach(function(dateKey) {
+      var slots = grouped[dateKey];
+      var date = new Date(slots[0].start);
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'bk-date-btn';
+      var n = slots.length;
+      btn.innerHTML =
+        '<span class="bk-date-day">' + formatDay(date) + '</span>' +
+        '<span class="bk-date-date">' + formatDate(date) + '</span>' +
+        '<span class="bk-date-count">' + n + ' ' + locale.t(n === 1 ? 'bookSlot' : 'bookSlots') + '</span>';
+      btn.addEventListener('click', function() {
+        document.getElementById(p + '-bk-date-badge').textContent = formatDay(date) + ', ' + formatDate(date);
+        renderSlots(slots);
+        show(p + '-bk-step-time');
+      });
+      grid.appendChild(btn);
+    });
+  }
+
+  function renderSlots(slots) {
+    var grid = document.getElementById(p + '-bk-slots');
+    grid.innerHTML = '';
+    slots.forEach(function(slot) {
+      var start = new Date(slot.start);
+      var end = new Date(slot.end);
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'bk-slot-btn';
+      btn.textContent = formatTime(start) + ' – ' + formatTime(end);
+      btn.addEventListener('click', function() {
+        selectedSlot = slot;
+        document.getElementById(p + '-bk-slot-badge').textContent = formatSlot(start, end);
+        show(p + '-bk-step-form');
+      });
+      grid.appendChild(btn);
+    });
+  }
+
+  // Event delegation for the trigger button (survives re-renders)
+  document.body.addEventListener('click', function(e) {
+    if (e.target.closest('#' + p + '-booking-btn')) openModal();
+  });
+
+  document.getElementById(p + '-bk-close').addEventListener('click', closeModal);
+  document.getElementById(p + '-booking-backdrop').addEventListener('click', closeModal);
+  document.getElementById(p + '-bk-retry').addEventListener('click', loadSlots);
+  document.getElementById(p + '-bk-back-date').addEventListener('click', function() { show(p + '-bk-step-date'); });
+  document.getElementById(p + '-bk-back-time').addEventListener('click', function() { show(p + '-bk-step-time'); });
+  document.getElementById(p + '-bk-new').addEventListener('click', function() {
+    selectedSlot = null;
+    document.getElementById(p + '-bk-form').reset();
+    loadSlots();
+  });
+
+  document.getElementById(p + '-bk-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var nameVal = document.getElementById(p + '-bk-name').value.trim();
+    var emailVal = document.getElementById(p + '-bk-email').value.trim();
+    var topicVal = document.getElementById(p + '-bk-topic').value.trim();
+    if (!nameVal || !emailVal) return;
+
+    var submitBtn = document.getElementById(p + '-bk-submit');
+    submitBtn.disabled = true;
+    submitBtn.textContent = locale.t('bookSending');
+
+    var params = new URLSearchParams({
+      action: 'book', name: nameVal, email: emailVal,
+      topic: topicVal, start: selectedSlot.start, end: selectedSlot.end
+    });
+
+    fetch(BOOKING_SCRIPT_URL + '?' + params.toString())
+      .then(function(res) { if (!res.ok) throw new Error(); return res.json(); })
+      .then(function(data) {
+        if (data.success) {
+          var start = new Date(selectedSlot.start);
+          var end = new Date(selectedSlot.end);
+          document.getElementById(p + '-bk-confirm-detail').textContent = formatSlot(start, end);
+          show(p + '-bk-step-confirm');
+        } else {
+          alert(locale.t('bookFailed'));
+          submitBtn.disabled = false;
+          submitBtn.textContent = locale.t('bookSubmit');
+        }
+      })
+      .catch(function() {
+        alert(locale.t('bookFailed'));
+        submitBtn.disabled = false;
+        submitBtn.textContent = locale.t('bookSubmit');
+      });
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  function updateText() {
+    modal.querySelectorAll('[data-bk-i18n]').forEach(function(el) {
+      if (!el.disabled) el.textContent = locale.t(el.dataset.bkI18n);
+    });
+    modal.querySelectorAll('[data-bk-i18n-placeholder]').forEach(function(el) {
+      el.placeholder = locale.t(el.dataset.bkI18nPlaceholder);
+    });
+  }
+
+  window.addEventListener('localechange', updateText);
+
+  return { openModal: openModal, closeModal: closeModal, updateText: updateText };
 }
 
 export function hireModalHTML(prefix, opts) {

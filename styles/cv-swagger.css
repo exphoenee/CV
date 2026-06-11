@@ -2212,6 +2212,99 @@ html.dark-mode .swagger-ui section.models .models-control svg {
 .cv-error-hidden { display: none; padding: 8px 20px 0; color: #d9534f; font-size: 13px; }
 .cv-inline-11 { color: #d9534f; font-size: 12px; }
 
+/* Meet button */
+.meet-swagger-btn {
+  background-color: transparent;
+  border: 2px solid #49cc90;
+  border-radius: 4px;
+  color: #49cc90;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 6px 23px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 20px;
+  transition: background 0.15s;
+}
+.meet-swagger-btn:hover { background-color: rgba(73,204,144,.1); }
+[data-theme="dark"] .meet-swagger-btn { border-color: #49cc90; color: #49cc90; }
+[data-theme="dark"] .meet-swagger-btn:hover { background-color: rgba(73,204,144,.15); }
+
+/* booking modal */
+.bk-backdrop { position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9000;display:flex;align-items:center;justify-content:center; }
+.bk-dialog { background:#fff;border-radius:8px;width:600px;max-width:96vw;max-height:90vh;display:flex;flex-direction:column;font-family:"Titillium Web",sans-serif;border:1px solid #d8dde7;overflow:hidden; }
+.bk-header { display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #d8dde7;flex-shrink:0; }
+.bk-header h3 { margin:0;font-size:15px;color:#3b4151;font-weight:700; }
+.bk-close { background:none;border:none;cursor:pointer;font-size:18px;color:#aaa;line-height:1;padding:0 4px; }
+.bk-close:hover { color:#3b4151; }
+.bk-body { padding:20px;overflow-y:auto;flex:1; }
+.bk-hidden { display:none !important; }
+.bk-steps { display:flex;gap:0;margin-bottom:20px;border-radius:4px;overflow:hidden;border:1px solid #d8dde7; }
+.bk-step-dot { flex:1;padding:8px 4px;text-align:center;font-size:11px;color:#aaa;background:#f5f5f5; }
+.bk-step-dot.active { color:#fff;background:#ff7024; }
+.bk-step-dot.done { color:#ff7024;background:#f5f5f5; }
+.bk-state { text-align:center;padding:30px 0;color:#aaa; }
+.bk-state-icon { font-size:40px;margin-bottom:12px; }
+.bk-state-icon i { color:#aaa; }
+.bk-state p { margin:0 0 16px;font-size:14px; }
+.bk-btn-secondary { background:none;border:2px solid #ff7024;color:#ff7024;border-radius:4px;padding:8px 20px;font-size:14px;cursor:pointer;font-weight:700; }
+.bk-btn-secondary:hover { background:rgba(255,112,36,.08); }
+.bk-step-label { font-size:14px;color:#3b4151;margin:0 0 14px;font-weight:700; }
+.bk-badge { display:inline-block;background:#fff3ed;border:1px solid #ff7024;border-radius:4px;padding:3px 10px;font-size:12px;color:#ff7024;margin-bottom:14px; }
+.bk-dates-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:8px; }
+.bk-date-btn { background:#fff;border:2px solid #d8dde7;border-radius:6px;padding:10px 8px;font-size:12px;color:#3b4151;cursor:pointer;text-align:left;transition:border-color .15s;display:flex;flex-direction:column;gap:3px;font-family:inherit; }
+.bk-date-btn:hover { border-color:#ff7024; }
+.bk-date-day  { font-weight:700;font-size:12px;color:#3b4151; }
+.bk-date-date { font-size:11px;color:#777; }
+.bk-date-count { font-size:11px;color:#ff7024;font-weight:500; }
+.bk-back-btn { background:none;border:none;color:#aaa;font-size:12px;cursor:pointer;padding:0 0 12px;display:flex;align-items:center;gap:6px; }
+.bk-back-btn:hover { color:#3b4151; }
+.bk-slots-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:8px; }
+.bk-slot-btn { background:#fff;border:2px solid #d8dde7;border-radius:6px;padding:10px 6px;font-size:13px;color:#3b4151;cursor:pointer;text-align:center;transition:border-color .15s; }
+.bk-slot-btn:hover { border-color:#ff7024;color:#ff7024; }
+.bk-field { margin-bottom:14px; }
+.bk-field label { display:block;font-size:12px;font-weight:700;color:#3b4151;margin-bottom:4px; }
+.bk-field input { width:100%;box-sizing:border-box;background:#fff;border:1px solid #d8dde7;border-radius:4px;padding:8px 10px;font-size:14px;color:#3b4151;font-family:inherit;outline:none; }
+.bk-field input:focus { border-color:#ff7024; }
+.bk-required { color:#ff7024; }
+.bk-btn-primary { background:#ff7024;color:#fff;border:none;border-radius:4px;padding:8px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit; }
+.bk-btn-primary:hover { filter:brightness(1.08); }
+.bk-btn-primary:disabled { opacity:.5;cursor:default; }
+.bk-step-confirm { text-align:center;padding:20px 0; }
+.bk-confirm-check { font-size:40px;color:#49cc90;margin-bottom:12px; }
+.bk-confirm-title { font-size:16px;color:#3b4151;font-weight:700;margin:0 0 8px; }
+.bk-confirm-detail { font-size:13px;color:#777;margin:0 0 16px; }
+.bk-confirm-note { font-size:12px;color:#aaa;margin:0 0 20px; }
+
+/* booking modal dark theme */
+[data-theme="dark"] .bk-dialog { background:#1a1a2e;border-color:#3f3f46; }
+[data-theme="dark"] .bk-header { border-color:#3f3f46; }
+[data-theme="dark"] .bk-header h3 { color:#e4e4e7; }
+[data-theme="dark"] .bk-close { color:#777; }
+[data-theme="dark"] .bk-close:hover { color:#e4e4e7; }
+[data-theme="dark"] .bk-steps { border-color:#3f3f46; }
+[data-theme="dark"] .bk-step-dot { background:#27272a;color:#777; }
+[data-theme="dark"] .bk-step-dot.done { background:#27272a; }
+[data-theme="dark"] .bk-state { color:#777; }
+[data-theme="dark"] .bk-state-icon i { color:#666; }
+[data-theme="dark"] .bk-step-label { color:#e4e4e7; }
+[data-theme="dark"] .bk-badge { background:rgba(255,112,36,.1);border-color:#ff7024; }
+[data-theme="dark"] .bk-date-btn { background:#27272a;border-color:#3f3f46;color:#e4e4e7; }
+[data-theme="dark"] .bk-date-day { color:#e4e4e7; }
+[data-theme="dark"] .bk-date-date { color:#999; }
+[data-theme="dark"] .bk-back-btn { color:#777; }
+[data-theme="dark"] .bk-back-btn:hover { color:#e4e4e7; }
+[data-theme="dark"] .bk-slot-btn { background:#27272a;border-color:#3f3f46;color:#e4e4e7; }
+[data-theme="dark"] .bk-slot-btn:hover { border-color:#ff7024;color:#ff7024; }
+[data-theme="dark"] .bk-field label { color:#ccc; }
+[data-theme="dark"] .bk-field input { background:#27272a;border-color:#3f3f46;color:#e4e4e7; }
+[data-theme="dark"] .bk-confirm-title { color:#e4e4e7; }
+[data-theme="dark"] .bk-confirm-detail { color:#999; }
+[data-theme="dark"] .bk-confirm-note { color:#777; }
+
 /* Hire Button Lock Animation */
 #hire-btn .lock-icon {
   margin-left: 8px;

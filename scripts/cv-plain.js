@@ -1,5 +1,5 @@
 import { renderPlainCV } from './components/plain/index.js';
-import { initHireModal, initFormspree, getSystemTheme, musicPlayerHTML, hireModalHTML } from './shared.js';
+import { initHireModal, initFormspree, getSystemTheme, musicPlayerHTML, hireModalHTML, bookingModalHTML, initBookingModal } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES, CURSOR_KEY } from './config.js';
 import { locale } from './locale.js';
@@ -11,7 +11,7 @@ function render() {
   document.getElementById('cv-content').innerHTML = renderPlainCV(locale.getData());
   initDecors();
   const headerLd = document.querySelector('#cv-content .ld-select');
-  if (headerLd) initLangDropdown(headerLd, { onChange(lang) { locale.setLang(lang); render(); buildSettingsModal(); } });
+  if (headerLd) initLangDropdown(headerLd, { onChange(lang) { locale.setLang(lang); render(); buildSettingsModal(); window.dispatchEvent(new CustomEvent('localechange')); } });
 }
 
 render();
@@ -24,6 +24,9 @@ document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire-plain', {
 }));
 
 initHireModal('hire-plain');
+
+document.body.insertAdjacentHTML('beforeend', bookingModalHTML('plain'));
+var bookingModal = initBookingModal('plain');
 
 // --- Mobile settings gear ---
 
@@ -51,6 +54,7 @@ function buildSettingsModal() {
       <div class="settings-modal-body">
         <div id="modal-lang-slot"></div>
         <button class="settings-hire-btn" id="settings-hire-btn">${locale.t('hireMe')}</button>
+        <button class="settings-book-btn" id="settings-book-btn"><i class="fa-regular fa-calendar-check"></i> Book a Meeting</button>
         <button class="settings-print-btn" id="settings-print-btn"><i class="fa-solid fa-print"></i> ${locale.t('print')}</button>
         <button class="settings-close-drawer-btn" id="settings-close-btn">${locale.t('close')}</button>
       </div>
@@ -58,7 +62,7 @@ function buildSettingsModal() {
   `;
   createLangDropdown(settingsBackdrop.querySelector('#modal-lang-slot'), {
     fullWidth: true,
-    onChange(lang) { locale.setLang(lang); render(); buildSettingsModal(); }
+    onChange(lang) { locale.setLang(lang); render(); buildSettingsModal(); window.dispatchEvent(new CustomEvent('localechange')); }
   });
 }
 
@@ -89,6 +93,11 @@ document.body.addEventListener('click', function (e) {
   if (e.target.closest('#settings-hire-btn')) {
     closeSettings();
     document.getElementById('hire-plain-btn')?.click();
+    return;
+  }
+  if (e.target.closest('#settings-book-btn')) {
+    closeSettings();
+    bookingModal.openModal();
     return;
   }
 });

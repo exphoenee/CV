@@ -1071,17 +1071,14 @@ canvas {
 #pause-btn { right: 10px; }
 #info-btn  { right: 52px; }
 
-/* Hire Me button — desktop + mobile */
-#hire-btn {
+/* Meet + Hire buttons — desktop + mobile */
+#meet-game-btn, #hire-btn {
     position: absolute;
     top: 13px;
-    right: 94px;
     z-index: 7;
     font-family: var(--font-pixel);
     font-size: 10px;
-    color: var(--accent);
     background: var(--glass-bg);
-    border: 1px solid var(--accent);
     border-radius: 6px;
     padding: 6px 10px;
     cursor: pointer;
@@ -1092,16 +1089,21 @@ canvas {
     gap: 4px;
     transition: border-color 0.15s, transform 0.1s;
 }
+#hire-btn {
+    right: 94px;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
 #hire-btn:hover { border-color: #ff944d; }
 #hire-btn:active { transform: scale(0.93); }
 
-@media (hover: hover) and (pointer: fine) {
-    #hire-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-    }
+#meet-game-btn {
+    right: 190px;
+    color: #49cc90;
+    border: 1px solid #49cc90;
 }
+#meet-game-btn:hover { border-color: #6fe0a8; }
+#meet-game-btn:active { transform: scale(0.93); }
 
 /* Hire modal inside game */
 .hire-dialog-game {
@@ -1308,6 +1310,12 @@ canvas {
         top: 10px;
         right: 10px;
     }
+    #meet-game-btn {
+        display: flex !important;
+        position: absolute;
+        top: 10px;
+        right: 110px;
+    }
 }
 @media (hover: none) and (pointer: coarse) {
     .desktop-only { display: none !important; }
@@ -1443,3 +1451,57 @@ canvas {
     color: #94a3b8;
     letter-spacing: 0.08em;
 }
+
+/* --- Booking modal (game theme) --- */
+.cv-modal-hidden { display: none !important; }
+.hire-backdrop { position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:9000; }
+.hire-dialog { position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9001; }
+.hire-dialog-header { display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:2px dashed rgba(73,204,144,0.3);flex-shrink:0; }
+.hire-dialog-header h3 { margin:0;font-family:var(--font-pixel);font-size:11px;color:#49cc90; }
+.hire-close { background:none;border:none;cursor:pointer;font-size:18px;color:#666;line-height:1;padding:0 4px;flex-shrink:0; }
+.hire-close:hover { color:#ccc; }
+.bk-backdrop { position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:9000;display:flex;align-items:center;justify-content:center; }
+.bk-dialog { background:rgba(13,17,23,0.97);border:3px solid #49cc90;border-radius:12px;width:600px;max-width:96vw;max-height:90vh;display:flex;flex-direction:column;font-family:var(--font-ui);box-shadow:0 0 35px rgba(73,204,144,0.25);overflow:hidden; }
+.bk-header { display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:2px dashed rgba(73,204,144,0.3);flex-shrink:0; }
+.bk-header h3 { margin:0;font-family:var(--font-pixel);font-size:11px;color:#49cc90; }
+.bk-close { background:none;border:none;cursor:pointer;font-size:18px;color:#666;line-height:1;padding:0 4px; }
+.bk-close:hover { color:#ccc; }
+.bk-body { padding:20px;overflow-y:auto;flex:1; }
+.bk-hidden { display:none !important; }
+.bk-steps { display:flex;gap:0;margin-bottom:20px;border-radius:4px;overflow:hidden;border:1px solid rgba(73,204,144,0.3); }
+.bk-step-dot { flex:1;padding:8px 4px;text-align:center;font-family:var(--font-pixel);font-size:8px;color:#555;background:rgba(255,255,255,0.03); }
+.bk-step-dot.active { color:#0a0c10;background:#49cc90; }
+.bk-step-dot.done { color:#49cc90;background:rgba(255,255,255,0.03); }
+.bk-state { text-align:center;padding:30px 0;color:#555; }
+.bk-state-icon { font-size:40px;margin-bottom:12px; }
+.bk-state-icon i { color:#555; }
+.bk-state p { margin:0 0 16px;font-size:13px;color:#94a3b8; }
+.bk-btn-secondary { background:none;border:1px dashed #49cc90;color:#49cc90;border-radius:6px;padding:8px 20px;font-size:13px;cursor:pointer;font-family:var(--font-pixel);font-size:9px; }
+.bk-btn-secondary:hover { background:rgba(73,204,144,.1); }
+.bk-step-label { font-family:var(--font-pixel);font-size:9px;color:#49cc90;margin:0 0 16px; }
+.bk-badge { display:inline-block;background:rgba(73,204,144,.1);border:1px solid #49cc90;border-radius:4px;padding:3px 10px;font-size:11px;color:#49cc90;margin-bottom:14px; }
+.bk-dates-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:8px; }
+.bk-date-btn { background:rgba(255,255,255,0.03);border:1px solid rgba(73,204,144,0.3);border-radius:6px;padding:10px 8px;font-size:12px;color:#cbd5e1;cursor:pointer;text-align:left;transition:border-color .15s;display:flex;flex-direction:column;gap:3px;font-family:var(--font-ui); }
+.bk-date-btn:hover { border-color:#49cc90; }
+.bk-date-day  { font-family:var(--font-pixel);font-size:8px;color:#e2e8f0; }
+.bk-date-date { font-size:11px;color:#94a3b8; }
+.bk-date-count { font-size:10px;color:#49cc90;font-weight:500; }
+.bk-back-btn { background:none;border:none;color:#555;font-size:12px;cursor:pointer;padding:0 0 12px;display:flex;align-items:center;gap:6px; }
+.bk-back-btn:hover { color:#ccc; }
+.bk-slots-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:8px; }
+.bk-slot-btn { background:rgba(255,255,255,0.03);border:1px solid rgba(73,204,144,0.3);border-radius:6px;padding:10px 6px;font-size:13px;color:#cbd5e1;cursor:pointer;text-align:center;transition:border-color .15s; }
+.bk-slot-btn:hover { border-color:#49cc90;color:#49cc90; }
+.bk-field { margin-bottom:14px; }
+.bk-field label { display:block;font-family:var(--font-pixel);font-size:8px;color:#94a3b8;margin-bottom:6px; }
+.bk-field input { width:100%;box-sizing:border-box;background:rgba(255,255,255,0.05);border:1px solid rgba(73,204,144,0.3);border-radius:6px;padding:10px 12px;font-size:13px;color:#e2e8f0;font-family:var(--font-ui);outline:none; }
+.bk-field input:focus { border-color:#49cc90; }
+.bk-required { color:#49cc90; }
+.bk-btn-primary { background:#49cc90;color:#0a0c10;border:none;border-radius:6px;padding:10px 20px;font-family:var(--font-pixel);font-size:9px;cursor:pointer;font-weight:700; }
+.bk-btn-primary:hover { filter:brightness(1.1); }
+.bk-btn-primary:disabled { opacity:.5;cursor:default; }
+.bk-step-confirm { text-align:center;padding:20px 0; }
+.bk-confirm-check { font-size:40px;color:#49cc90;margin-bottom:12px; }
+.bk-confirm-title { font-family:var(--font-pixel);font-size:11px;color:#49cc90;margin:0 0 12px; }
+.bk-confirm-detail { font-size:13px;color:#94a3b8;margin:0 0 16px; }
+.bk-confirm-note { font-size:12px;color:#555;margin:0 0 20px; }
+

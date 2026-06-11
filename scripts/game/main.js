@@ -24,7 +24,7 @@ import Mushroom from "./entities/decor/Mushroom.js";
 import Log from "./entities/decor/Log.js";
 import GoldOre from "./entities/decor/GoldOre.js";
 import PickableOre from "./entities/decor/PickableOre.js";
-import {MUSIC_GENRES, initFormspree} from "../shared.js";
+import {MUSIC_GENRES, initFormspree, bookingModalHTML, initBookingModal} from "../shared.js";
 import { MUSIC_STATE_KEY, MUSIC_TIME_KEY, MUSIC_VOLUME_KEY, MUSIC_GENRE_KEY, MUSIC_REPEAT_KEY, SFX_VOLUME_KEY } from '../config.js';
 import Hay from "./entities/decor/Hay.js";
 import Carrot from "./entities/decor/Carrot.js";
@@ -251,6 +251,7 @@ class GameEngine {
     this.setupDialogueListeners();
     this.setupPauseMenuListeners();
     this.initHireModal();
+    this.initMeetModal();
     this.setupStartScreenListeners();
     this.setupGameOverListeners();
     initMobileInput(this);
@@ -1023,6 +1024,25 @@ class GameEngine {
     hireBackdrop?.addEventListener('click', closeHire);
 
     initFormspree('#hire-game-form');
+  }
+
+  initMeetModal() {
+    document.body.insertAdjacentHTML('beforeend', bookingModalHTML('game'));
+    const bkModal = initBookingModal('game');
+    const modalEl = document.getElementById('game-booking-modal');
+
+    document.getElementById('meet-game-btn')?.addEventListener('click', () => {
+      bkModal.openModal();
+      this.isFrozen = true;
+    });
+
+    if (modalEl) {
+      new MutationObserver(() => {
+        if (modalEl.classList.contains('cv-modal-hidden') && !this.gameOverActive) {
+          this.isFrozen = false;
+        }
+      }).observe(modalEl, { attributes: true, attributeFilter: ['class'] });
+    }
   }
 
   /**

@@ -1,6 +1,6 @@
 import { CV_DATA } from './cv-data.js';
 import { renderJsonCV } from './components/json/index.js';
-import { initHireModal, initFormspree, musicPlayerHTML, hireModalHTML } from './shared.js';
+import { initHireModal, initFormspree, musicPlayerHTML, hireModalHTML, bookingModalHTML, initBookingModal } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES } from './config.js';
 
@@ -136,6 +136,13 @@ C.addEventListener('click', (e) => {
 C.addEventListener('mousemove', (e) => {
   const row = e.target.closest('.l');
   if (row) lnEl.textContent = row.dataset.n;
+});
+
+document.body.insertAdjacentHTML('beforeend', bookingModalHTML('json'));
+var bookingModal = initBookingModal('json');
+
+document.getElementById('meet-menu-btn')?.addEventListener('click', function () {
+  bookingModal.openModal();
 });
 
 if (!document.getElementById('hire-json-modal')) {

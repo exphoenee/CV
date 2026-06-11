@@ -1,4 +1,4 @@
-import { initHireModal, initThemeToggle, initFormspree, hireModalHTML, musicPlayerHTML } from './shared.js';
+import { initHireModal, initThemeToggle, initFormspree, hireModalHTML, musicPlayerHTML, bookingModalHTML, initBookingModal } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 
 document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
@@ -28,6 +28,9 @@ document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire-index', {
 }));
 
 initHireModal('hire-index');
+
+document.body.insertAdjacentHTML('beforeend', bookingModalHTML('index'));
+initBookingModal('index');
 
 initThemeToggle({
   onSet: function (theme, btn) {

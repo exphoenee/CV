@@ -12,7 +12,7 @@ const controls = document.createElement('div');
 controls.className = 'top-right-controls';
 
 createLangDropdown(controls, {
-  onChange(lang) { locale.setLang(lang); applyTranslations(); }
+  onChange(lang) { locale.setLang(lang); applyTranslations(); window.dispatchEvent(new CustomEvent('localechange')); }
 });
 
 const themeToggle = document.getElementById('theme-toggle');

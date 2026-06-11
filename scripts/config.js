@@ -1,3 +1,5 @@
+export var BOOKING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxS_WgJtVPPPp14l4xXVL6U5C4yYDYhxuVVMhRjkX67QzDi9gRw1_1PPld5ujsi61Oq/exec';
+
 export var THEME_KEY = 'cv-theme';
 
 export var THEME_DARK  = 'dark';
