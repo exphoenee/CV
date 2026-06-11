@@ -33,6 +33,8 @@ export const KL = {
     messagePlaceholder: "Viktor, jIH...",
     send: "yIngeH",
     messageSent: "jabbI'ID ngeHlu'. Qapla'!",
+    hireThanks: "Qapla'!",
+    hireSentNote: "jabbI'ID ngeHlu'. bIghIQjaj!",
     close: "yImev.",
     themeChanged: "qo' rItlh:",
     musicChangedTo: "bom:",

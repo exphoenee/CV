@@ -33,6 +33,8 @@ export const DOT = {
     messagePlaceholder: "Hash yer dothrae chek Viktor, anha...",
     send: "Nakhoe",
     messageSent: "Chiori nakhoe. me nem nesa.",
+    hireThanks: "Nakhoe!",
+    hireSentNote: "Chiori nakhoe. Anha vo astoe yomme.",
     close: "Vo.",
     themeChanged: "mahrazh:",
     musicChangedTo: "Asavva:",

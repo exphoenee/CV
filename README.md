@@ -9,6 +9,8 @@ Többnézetes, interaktív önéletrajz böngészőben. Egy központi adatforrá
 - [Technológiai stack](#technol%C3%B3giai-stack)
 - [Könyvtárstruktúra](#k%C3%B6nyvt%C3%A1rstrukt%C3%BAra)
 - [Játékmotor](#j%C3%A1t%C3%A9kmotor)
+- [Kapcsolatfelvétel](#kapcsolatfelv%C3%A9tel)
+- [Naptári foglalás](#napt%C3%A1ri-foglal%C3%A1s)
 - [Telepítés és futtatás](#telep%C3%ADt%C3%A9s-%C3%A9s-futtat%C3%A1s)
 
 ## Nézetek
@@ -62,7 +64,8 @@ Minden nézet saját komponenskészlettel rendereli az adatokat:
 `scripts/shared.js` tartalmazza az összes nézet által használt segédfüggvényeket:
 
 - `escHtml` / `skillChip` / `refLinks` / `renderBullets`
-- `initHireModal` / `hireModalHTML` — felvételi űrlap modal
+- `initHireModal` / `hireModalHTML` — kapcsolatfelvételi űrlap modal (lokalizált)
+- `initBookingModal` / `bookingModalHTML` — naptári időpontfoglalás modal (lokalizált)
 - `musicPlayerHTML` — zenelejátszó HTML generálása
 - `MUSIC_GENRES` — közös zenei lista (18 műfaj)
 - `initFormspree` — Formspree űrlap bekötés
@@ -173,7 +176,21 @@ A plain nézet több témát támogat CSS-változókon keresztül:
 
 ## Kapcsolatfelvétel
 
-Minden nézet tartalmaz egy "Hire me" gombot, amely egy modális űrlapot nyit. Az űrlap a Formspree szolgáltatáson keresztül küldi el az üzenetet. A játékban a modál megnyitásakor a játékmotor lefagy (isFrozen).
+Minden nézet tartalmaz egy **Hire me** gombot, amely egy modális kapcsolatfelvételi űrlapot nyit meg.
+
+- Az üzenet küldése a [Formspree](https://formspree.io) szolgáltatáson keresztül történik
+- A modál szövegei (cím, mezőfeliratok, placeholder-ek, sikeres küldés visszajelzése) teljesen lokalizáltak — 12 nyelven elérhető
+- Nyelváltáskor a nyitva lévő modál szövegei azonnal frissülnek (`localechange` eseményre reagál)
+- Játék nézetben a modál megnyitásakor a játékmotor lefagy (`isFrozen = true`), bezáráskor folytatódik
+
+## Naptári foglalás
+
+Minden nézet tartalmaz egy **Meet** gombot is, amely időpontfoglalásra szolgál.
+
+- Az elérhető időpontok listából választható nap- és időpont-kártyákon jelennek meg
+- A dátumok és napnevek lokalizáltak: a `Intl.DateTimeFormat` API-t használja a kiválasztott felhasználói nyelvvel; fiktív nyelveknél (pl. Klingon, Quenya) angol fallback érvényesül
+- Nyelváltáskor a dátumkártyák azonnal újrarenderelődnek
+- Játék nézetben szintén lefagyasztja a motort nyitáskor, MutationObserver figyeli a bezárást
 
 ## Futtatás
 

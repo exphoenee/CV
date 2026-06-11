@@ -33,6 +33,8 @@ export const QU = {
     messagePlaceholder: "Aiya Viktor, ní...",
     send: "Centa!",
     messageSent: "Centa lendë. Namárië!",
+    hireThanks: "Hantanyel!",
+    hireSentNote: "Centa lendë. Auta i lómë, tul i arë.",
     close: "Avá.",
     themeChanged: "Cala:",
     musicChangedTo: "Lairë:",

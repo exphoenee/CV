@@ -33,6 +33,8 @@ export const ASG = {
     messagePlaceholder: "Heilir Viktor, ver viljum...",
     send: "Senda",
     messageSent: "Boð sent. Vel gert.",
+    hireThanks: "Vel gert!",
+    hireSentNote: "Boð sent. Ég kem þegar ég get.",
     close: "Loka",
     themeChanged: "Litfar:",
     musicChangedTo: "Tonlist:",

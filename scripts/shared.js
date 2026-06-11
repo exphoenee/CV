@@ -81,8 +81,8 @@ export function initHireModal(prefix) {
     modal.classList.add("cv-modal-hidden");
   }
 
-  document.getElementById(prefix + "-btn").addEventListener("click", function () {
-    openModal();
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("#" + prefix + "-btn")) openModal();
   });
 
   document.getElementById(prefix + "-close").addEventListener("click", closeModal);
@@ -95,6 +95,16 @@ export function initHireModal(prefix) {
     closeModal();
     showToast(locale.t('messageSent'));
   });
+
+  function updateText() {
+    modal.querySelectorAll('[data-hire-i18n]').forEach(function(el) {
+      el.textContent = locale.t(el.dataset.hireI18n);
+    });
+    modal.querySelectorAll('[data-hire-i18n-placeholder]').forEach(function(el) {
+      el.placeholder = locale.t(el.dataset.hireI18nPlaceholder);
+    });
+  }
+  window.addEventListener('localechange', updateText);
 
   return { openModal: openModal, closeModal: closeModal };
 }
@@ -310,8 +320,11 @@ export function initBookingModal(prefix) {
   var allSlots = [];
   var selectedSlot = null;
 
-  var EN_DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  var EN_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function intlLang() {
+    try {
+      return Intl.DateTimeFormat.supportedLocalesOf([locale.lang]).length > 0 ? locale.lang : 'en';
+    } catch(e) { return 'en'; }
+  }
 
   var SCREENS = [
     p + '-bk-loading', p + '-bk-error', p + '-bk-empty',
@@ -334,8 +347,12 @@ export function initBookingModal(prefix) {
     modal.classList.add('cv-modal-hidden');
   }
 
-  function formatDay(date) { return EN_DAYS[date.getDay()]; }
-  function formatDate(date) { return EN_MONTHS[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear(); }
+  function formatDay(date) {
+    return new Intl.DateTimeFormat(intlLang(), { weekday: 'long' }).format(date);
+  }
+  function formatDate(date) {
+    return new Intl.DateTimeFormat(intlLang(), { month: 'short', day: 'numeric', year: 'numeric' }).format(date);
+  }
   function formatTime(date) {
     return String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0');
   }
@@ -473,6 +490,7 @@ export function initBookingModal(prefix) {
     modal.querySelectorAll('[data-bk-i18n-placeholder]').forEach(function(el) {
       el.placeholder = locale.t(el.dataset.bkI18nPlaceholder);
     });
+    if (allSlots.length > 0) renderDates();
   }
 
   window.addEventListener('localechange', updateText);
@@ -493,38 +511,39 @@ export function hireModalHTML(prefix, opts) {
   var p1Class = opts.p1Class ? ' class="' + opts.p1Class + '"' : '';
   var p2Class = opts.p2Class ? ' class="' + opts.p2Class + '"' : '';
   var errClass = opts.errClass ? ' class="' + opts.errClass + '"' : '';
+  var t = locale.t.bind(locale);
   return [
     '<!-- HIRE MODAL (prefix: "' + prefix + '") -->',
     '<div id="' + prefix + '-modal" class="cv-modal-hidden">',
     '  <div class="hire-backdrop" id="' + prefix + '-backdrop"></div>',
     '  <div class="hire-dialog">',
     '    <div class="hire-dialog-header">',
-    '      <h3>Contact Viktor</h3>',
+    '      <h3 data-hire-i18n="contactTitle">' + t('contactTitle') + '</h3>',
     '      <button class="hire-close" id="' + prefix + '-close" type="button">&#x2715;</button>',
     '    </div>',
     '    <div data-fs-success class="' + successHidden + '">',
-    '      <p' + p1Class + '>Thanks for reaching out!</p>',
-    '      <p' + p2Class + '>Your message was sent successfully. I\'ll get back to you soon.</p>',
+    '      <p' + p1Class + ' data-hire-i18n="hireThanks">' + t('hireThanks') + '</p>',
+    '      <p' + p2Class + ' data-hire-i18n="hireSentNote">' + t('hireSentNote') + '</p>',
     '    </div>',
     '    <div data-fs-error class="' + errorHidden + '"></div>',
     '    <form id="' + prefix + '-form">',
     subjectField,
     '      <div class="hire-field">',
-    '        <label for="' + prefix + '-name">Your name</label>',
-    '        <input id="' + prefix + '-name" type="text" name="name" required placeholder="Jane Smith" data-fs-field />',
+    '        <label for="' + prefix + '-name" data-hire-i18n="yourName">' + t('yourName') + '</label>',
+    '        <input id="' + prefix + '-name" type="text" name="name" required placeholder="' + t('namePlaceholder') + '" data-hire-i18n-placeholder="namePlaceholder" data-fs-field />',
     '        <span data-fs-error="name"' + errClass + '></span>',
     '      </div>',
     '      <div class="hire-field">',
-    '        <label for="' + prefix + '-email">Your email</label>',
-    '        <input id="' + prefix + '-email" type="email" name="email" required placeholder="your@email.com" data-fs-field />',
+    '        <label for="' + prefix + '-email" data-hire-i18n="yourEmail">' + t('yourEmail') + '</label>',
+    '        <input id="' + prefix + '-email" type="email" name="email" required placeholder="' + t('emailPlaceholder') + '" data-hire-i18n-placeholder="emailPlaceholder" data-fs-field />',
     '        <span data-fs-error="email"' + errClass + '></span>',
     '      </div>',
     '      <div class="hire-field">',
-    '        <label for="' + prefix + '-message">Message</label>',
-    '        <textarea id="' + prefix + '-message" name="message" required rows="5" placeholder="Hi Viktor, we\'d like to..." data-fs-field></textarea>',
+    '        <label for="' + prefix + '-message" data-hire-i18n="message">' + t('message') + '</label>',
+    '        <textarea id="' + prefix + '-message" name="message" required rows="5" placeholder="' + t('messagePlaceholder') + '" data-hire-i18n-placeholder="messagePlaceholder" data-fs-field></textarea>',
     '        <span data-fs-error="message"' + errClass + '></span>',
     '      </div>',
-    '      <button type="submit" class="hire-submit" data-fs-submit-btn>Send</button>',
+    '      <button type="submit" class="hire-submit" data-fs-submit-btn data-hire-i18n="send">' + t('send') + '</button>',
     '    </form>',
     '  </div>',
     '</div>'

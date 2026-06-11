@@ -33,6 +33,8 @@ export const FR = {
     messagePlaceholder: "Bonjour Viktor, nous aimerions...",
     send: "Envoyer",
     messageSent: "Message envoyé avec succès.",
+    hireThanks: "Merci pour votre message !",
+    hireSentNote: "Votre message a bien été envoyé. Je vous répondrai très bientôt.",
     close: "Fermer",
     themeChanged: "Thème :",
     musicChangedTo: "Musique :",

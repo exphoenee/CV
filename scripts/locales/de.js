@@ -33,6 +33,8 @@ export const DE = {
     messagePlaceholder: "Hallo Viktor, wir würden gerne...",
     send: "Senden",
     messageSent: "Nachricht erfolgreich gesendet.",
+    hireThanks: "Danke für deine Nachricht!",
+    hireSentNote: "Deine Nachricht wurde erfolgreich gesendet. Ich melde mich bald bei dir.",
     close: "Schließen",
     themeChanged: "Thema gewechselt:",
     musicChangedTo: "Musik gewechselt:",

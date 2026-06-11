@@ -33,6 +33,8 @@ export const IT = {
     messagePlaceholder: "Ciao Viktor, vorremmo...",
     send: "Invia",
     messageSent: "Messaggio inviato con successo.",
+    hireThanks: "Grazie per il tuo messaggio!",
+    hireSentNote: "Il tuo messaggio è stato inviato con successo. Ti risponderò presto.",
     close: "Chiudi",
     themeChanged: "Tema:",
     musicChangedTo: "Musica:",

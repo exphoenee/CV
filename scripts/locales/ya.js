@@ -33,6 +33,8 @@ export const YA = {
     messagePlaceholder: "Sain nain Viktor, hk'nde...",
     send: "Kehrite!",
     messageSent: "Yin gkei. Sain nain!",
+    hireThanks: "Sain nain!",
+    hireSentNote: "Yin gkei. Kehrite nain thari.",
     close: "Gkei'moun.",
     themeChanged: "Sain:",
     musicChangedTo: "Kainde yin:",

@@ -33,6 +33,8 @@ export const GOA = {
     messagePlaceholder: "Tek'ma'te Viktor, jaffa...",
     send: "Kree!",
     messageSent: "Joma rel. Chel nok!",
+    hireThanks: "Chel nok!",
+    hireSentNote: "Joma rel. Shal kree thari.",
     close: "Tal mak.",
     themeChanged: "Naquadah:",
     musicChangedTo: "Joma laire:",

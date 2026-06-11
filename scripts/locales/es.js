@@ -33,6 +33,8 @@ export const ES = {
     messagePlaceholder: "Hola Viktor, nos gustaría...",
     send: "Enviar",
     messageSent: "Mensaje enviado correctamente.",
+    hireThanks: "¡Gracias por contactarme!",
+    hireSentNote: "Tu mensaje fue enviado correctamente. Te responderé pronto.",
     close: "Cerrar",
     themeChanged: "Tema:",
     musicChangedTo: "Música:",

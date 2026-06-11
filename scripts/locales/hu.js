@@ -33,6 +33,8 @@ export const HU = {
     messagePlaceholder: "Szia Viktor, szeretnénk...",
     send: "Küldés",
     messageSent: "Üzenet sikeresen elküldve.",
+    hireThanks: "Köszönöm a megkeresést!",
+    hireSentNote: "Az üzeneted sikeresen megérkezett. Hamarosan visszajelzek.",
     close: "Bezárás",
     themeChanged: "Téma:",
     musicChangedTo: "Zene:",
