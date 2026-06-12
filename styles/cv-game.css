@@ -1080,7 +1080,8 @@ canvas {
     font-size: 10px;
     background: var(--glass-bg);
     border-radius: 6px;
-    padding: 6px 10px;
+    padding: 0 10px;
+    height: 30px;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     white-space: nowrap;
@@ -1088,6 +1089,7 @@ canvas {
     align-items: center;
     gap: 4px;
     transition: border-color 0.15s, transform 0.1s;
+    line-height: 1;
 }
 #hire-btn {
     right: 94px;
@@ -1493,8 +1495,13 @@ canvas {
 .bk-slot-btn:hover { border-color:#49cc90;color:#49cc90; }
 .bk-field { margin-bottom:14px; }
 .bk-field label { display:block;font-family:var(--font-pixel);font-size:8px;color:#94a3b8;margin-bottom:6px; }
-.bk-field input { width:100%;box-sizing:border-box;background:rgba(255,255,255,0.05);border:1px solid rgba(73,204,144,0.3);border-radius:6px;padding:10px 12px;font-size:13px;color:#e2e8f0;font-family:var(--font-ui);outline:none; }
-.bk-field input:focus { border-color:#49cc90; }
+.bk-field input,
+.bk-field textarea { width:100%;box-sizing:border-box;background:rgba(255,255,255,0.05);border:1px solid rgba(73,204,144,0.3);border-radius:6px;padding:10px 12px;font-size:13px;color:#e2e8f0;font-family:var(--font-ui);outline:none;transition:border-color .15s,box-shadow .15s; }
+.bk-field textarea { resize:vertical;min-height:60px; }
+.bk-field input:focus,
+.bk-field textarea:focus { border-color:#49cc90;box-shadow:0 0 8px rgba(73,204,144,0.25); }
+.bk-field input::placeholder,
+.bk-field textarea::placeholder { color:#475569; }
 .bk-required { color:#49cc90; }
 .bk-btn-primary { background:#49cc90;color:#0a0c10;border:none;border-radius:6px;padding:10px 20px;font-family:var(--font-pixel);font-size:9px;cursor:pointer;font-weight:700; }
 .bk-btn-primary:hover { filter:brightness(1.1); }
