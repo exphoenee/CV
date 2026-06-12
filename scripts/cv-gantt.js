@@ -3,6 +3,7 @@ import { locale } from './locale.js';
 import { initHireModal, initFormspree, hireModalHTML, bookingModalHTML, initBookingModal, getSystemTheme, musicPlayerHTML } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT } from './config.js';
+import { createLangDropdown } from './components/lang-dropdown.js';
 
 // ── Chart config ──────────────────────────────────────────────────────────────
 const START_YEAR  = 2020;
@@ -10,7 +11,7 @@ const START_MONTH = 0;      // Jan
 const END_YEAR    = 2027;
 const END_MONTH   = 0;      // Jan
 const MONTH_W     = 20;     // px per month
-const SIDEBAR_W   = 200;    // px
+const SIDEBAR_W   = 230;    // px
 const ROW_H       = 54;     // px
 const BAR_H       = 32;     // px
 const GRP_H       = 28;     // group header height
@@ -290,8 +291,8 @@ function initSkillsDragDrop() {
 }
 
 // ── Render: legend ────────────────────────────────────────────────────────────
-function renderLegend() {
-  const all = [...CV_DATA.workExperience, COMMUNITY_ROW];
+function renderLegend(communityRow = COMMUNITY_ROW) {
+  const all = [...CV_DATA.workExperience, communityRow];
   return all.map(j => `
     <div class="gt-legend-item">
       <span class="gt-legend-dot" style="background:${BAR_COLORS[j.id] || '#8b949e'}"></span>
@@ -336,8 +337,9 @@ function renderPage() {
   document.documentElement.style.setProperty('--grp-h', GRP_H + 'px');
   document.documentElement.style.setProperty('--sidebar-w', SIDEBAR_W + 'px');
 
-  const jobs = CV_DATA.workExperience;
-  const allRows = [...jobs, COMMUNITY_ROW];
+  const data = locale.getData();
+  const jobs  = data.workExperience;
+  const communityRow = { ...COMMUNITY_ROW, description: data.community };
   const todayX  = todayPx();
 
   const contacts = CV_DATA.identity.contacts
@@ -351,12 +353,11 @@ function renderPage() {
     .map(c => `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`)
     .join('');
 
-  const careerGroup = renderGroupDivider('Career Timeline');
-  const commGroup   = renderGroupDivider('Community &amp; Mentorship');
+  const careerGroup = renderGroupDivider(locale.t('ganttCareerTimeline'));
+  const commGroup   = renderGroupDivider(locale.t('ganttCommunity'));
 
-  // Split rows: career (all workExp) + community
   const careerRows = [...jobs].reverse();
-  const commRows   = [COMMUNITY_ROW];
+  const commRows   = [communityRow];
 
   const sidebarLabels = `
     ${careerGroup.label}
@@ -379,30 +380,31 @@ function renderPage() {
       </a>
       <div class="gt-header-id">
         <div class="gt-header-name">${CV_DATA.identity.name}</div>
-        <div class="gt-header-role">${CV_DATA.meta.role} &nbsp;·&nbsp; <span style="color:var(--gantt-muted)">Project Manager View</span></div>
+        <div class="gt-header-role">${CV_DATA.meta.role}<span class="gt-pm-view"> &nbsp;·&nbsp; <span style="color:var(--gantt-muted)">${locale.t('ganttPmView')}</span></span></div>
       </div>
       <div class="gt-header-links">${contacts}</div>
       <div class="gt-header-actions">
-        <div class="gt-contacts-wrap">
-          <button class="gt-icon-btn" id="gt-contacts-btn" title="Contacts">
-            <i class="fa-solid fa-address-card"></i>
-          </button>
-          <div class="gt-contacts-popup" id="gt-contacts-popup">
-            <div class="gt-contacts-popup-heading">Contacts:</div>
-            ${allContactLinks}
-          </div>
-        </div>
+        <div id="gt-lang-dropdown-wrap"></div>
+        <button class="gt-icon-btn" id="theme-toggle" title="Toggle theme">
+          <span class="theme-sq-icon"></span>
+        </button>
         <button class="gt-icon-btn" id="gt-music-btn" title="Music player">
           <i class="fa-solid fa-music"></i>
         </button>
-        <button class="gt-icon-btn" id="theme-toggle" title="Toggle theme">
-          <i class="fa-solid fa-circle-half-stroke"></i>
-        </button>
+        <div class="gt-contacts-wrap">
+          <button class="gt-icon-btn" id="gt-contacts-btn" title="${locale.t('ganttContacts')}">
+            <i class="fa-solid fa-address-card"></i>
+          </button>
+          <div class="gt-contacts-popup" id="gt-contacts-popup">
+            <div class="gt-contacts-popup-heading">${locale.t('ganttContactsHeading')}</div>
+            ${allContactLinks}
+          </div>
+        </div>
         <button class="gt-btn gt-btn-hire" id="hire-gantt-btn">
-          <i class="fa-solid fa-paper-plane"></i> Hire Me
+          <i class="fa-solid fa-paper-plane"></i><span class="gt-btn-label"> ${locale.t('hireMe')}</span>
         </button>
         <button class="gt-btn gt-btn-book" id="gantt-booking-btn">
-          <i class="fa-regular fa-calendar-check"></i> Book
+          <i class="fa-regular fa-calendar-check"></i><span class="gt-btn-label"> ${locale.t('ganttBook')}</span>
         </button>
       </div>
     </header>
@@ -410,7 +412,7 @@ function renderPage() {
     <div class="gt-main" id="gt-main">
 
       <div class="gt-sidebar" id="gt-sidebar">
-        <div class="gt-sidebar-header" style="height:${HDR_H}px">Task / Role</div>
+        <div class="gt-sidebar-header" style="height:${HDR_H}px">${locale.t('ganttTaskRole')}</div>
         ${sidebarLabels}
       </div>
 
@@ -427,33 +429,33 @@ function renderPage() {
     <div class="gt-detail" id="gt-detail"></div>
 
     <div class="gt-legend">
-      <span class="gt-legend-heading">Legend</span>
-      ${renderLegend()}
+      <span class="gt-legend-heading">${locale.t('ganttLegend')}</span>
+      ${renderLegend(communityRow)}
       <div class="gt-legend-item">
         <span style="width:14px;height:2px;background:var(--today-color);display:inline-block;border-radius:1px"></span>
-        Today
+        ${locale.t('ganttToday')}
       </div>
       <div class="gt-legend-item">
         <span style="width:10px;height:10px;background:#fff;border:2px solid rgba(0,0,0,0.3);border-radius:50%;display:inline-block"></span>
-        Milestone
+        ${locale.t('ganttMilestone')}
       </div>
     </div>
 
     <div class="gt-skills-section">
-      <div class="gt-section-title">Skills &amp; Competencies</div>
+      <div class="gt-section-title">${locale.t('ganttSkills')}</div>
       <div class="gt-skill-groups">${renderSkills()}</div>
     </div>
 
     <footer class="gt-footer">
       <div class="gt-footer-col">
-        <div class="gt-footer-title">Education — ${CV_DATA.education.institution}</div>
+        <div class="gt-footer-title">${locale.t('ganttEducation')} — ${CV_DATA.education.institution}</div>
         <ul class="gt-edu-list">
           ${CV_DATA.education.degrees.map(d => `<li>${d.title} <em>${d.years}</em></li>`).join('')}
         </ul>
       </div>
       <div class="gt-footer-col">
-        <div class="gt-footer-title">Community &amp; Mentorship</div>
-        <p class="gt-footer-text">${CV_DATA.community}</p>
+        <div class="gt-footer-title">${locale.t('ganttCommunity')}</div>
+        <p class="gt-footer-text">${data.community}</p>
       </div>
     </footer>
 
@@ -524,6 +526,15 @@ function initContactsPopup() {
 
   btn.addEventListener('click', e => {
     e.stopPropagation();
+    const rect = btn.getBoundingClientRect();
+    const btnCenter = rect.left + rect.width / 2;
+    if (btnCenter > window.innerWidth / 2) {
+      popup.style.right = '0';
+      popup.style.left  = 'auto';
+    } else {
+      popup.style.left  = '0';
+      popup.style.right = 'auto';
+    }
     popup.classList.toggle('open');
   });
 
@@ -547,19 +558,40 @@ function initTheme() {
   setTheme(localStorage.getItem(THEME_KEY) || getSystemTheme());
 }
 
+// ── Lang dropdown ─────────────────────────────────────────────────────────────
+function initLangDropdown_() {
+  const wrap = document.getElementById('gt-lang-dropdown-wrap');
+  if (!wrap) return;
+  createLangDropdown(wrap, {
+    onChange(lang) {
+      const scrollLeft = document.getElementById('gt-main')?.scrollLeft || 0;
+      locale.setLang(lang);
+      renderPage();
+      initPage();
+      document.getElementById('gt-main').scrollLeft = scrollLeft;
+    }
+  });
+}
+
+// ── Page init (re-runs after each re-render) ──────────────────────────────────
+function initPage() {
+  initTheme();
+  initContactsPopup();
+  initInteractivity();
+  initRowsDragDrop();
+  initSkillsDragDrop();
+  initLangDropdown_();
+  document.getElementById('gt-music-btn')?.addEventListener('click', () => {
+    document.getElementById('music-toggle')?.click();
+  });
+}
+
 // ── Bootstrap ─────────────────────────────────────────────────────────────────
 renderPage();
-initTheme();
-initContactsPopup();
-initInteractivity();
-initRowsDragDrop();
-initSkillsDragDrop();
+initPage();
 
 document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
 initMusicPlayer();
-document.getElementById('gt-music-btn').addEventListener('click', () => {
-  document.getElementById('music-toggle').click();
-});
 
 document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire-gantt', { subject: 'Hire inquiry from CV - Gantt' }));
 initHireModal('hire-gantt');

@@ -168,6 +168,36 @@ body {
 
 .gt-icon-btn:hover { border-color: var(--accent); color: var(--accent); }
 
+.theme-sq-icon {
+  display: block;
+  width: 13px;
+  height: 13px;
+  border-radius: 2px;
+  border: 1.5px solid currentColor;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-sq-icon::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: currentColor;
+}
+
+.gt-header-actions #theme-toggle {
+  font-size: 0.82rem;
+  border: 1px solid var(--border);
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  padding: 0;
+  line-height: 1;
+}
+
 .gt-btn {
   height: 30px;
   padding: 0 12px;
@@ -830,7 +860,6 @@ body {
   gap: 10px;
   position: absolute;
   top: calc(100% + 8px);
-  right: 0;
   background: var(--surface);
   border: 1px solid var(--border2);
   border-radius: 6px;
@@ -860,9 +889,23 @@ body {
 
 .gt-contacts-popup a:hover { color: var(--accent); }
 
-@media (max-width: 680px) {
+@media (max-width: 1200px) {
   .gt-header-links  { display: none; }
   .gt-contacts-wrap { display: block; }
+}
+
+@media (max-width: 720px) {
+  .gt-pm-view { display: none; }
+}
+
+@media (max-width: 500px) {
+  .gt-header-role { display: none; }
+  .gt-header-name { white-space: normal; }
+  .gt-btn-label   { display: none; }
+}
+
+@media (max-width: 400px) {
+  .gt-header-name { display: none; }
 }
 
 /* ── Override cv-index.css card/btn/body leftovers ──────────────────────────── */
