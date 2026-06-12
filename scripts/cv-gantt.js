@@ -10,7 +10,7 @@ const START_MONTH = 0;      // Jan
 const END_YEAR    = 2027;
 const END_MONTH   = 0;      // Jan
 const MONTH_W     = 20;     // px per month
-const SIDEBAR_W   = 272;    // px
+const SIDEBAR_W   = 200;    // px
 const ROW_H       = 54;     // px
 const BAR_H       = 32;     // px
 const GRP_H       = 28;     // group header height
@@ -346,6 +346,11 @@ function renderPage() {
     .map(c => `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`)
     .join('');
 
+  const allContactLinks = CV_DATA.identity.contacts
+    .filter(c => c.url)
+    .map(c => `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`)
+    .join('');
+
   const careerGroup = renderGroupDivider('Career Timeline');
   const commGroup   = renderGroupDivider('Community &amp; Mentorship');
 
@@ -378,6 +383,15 @@ function renderPage() {
       </div>
       <div class="gt-header-links">${contacts}</div>
       <div class="gt-header-actions">
+        <div class="gt-contacts-wrap">
+          <button class="gt-icon-btn" id="gt-contacts-btn" title="Contacts">
+            <i class="fa-solid fa-address-card"></i>
+          </button>
+          <div class="gt-contacts-popup" id="gt-contacts-popup">
+            <div class="gt-contacts-popup-heading">Contacts:</div>
+            ${allContactLinks}
+          </div>
+        </div>
         <button class="gt-icon-btn" id="gt-music-btn" title="Music player">
           <i class="fa-solid fa-music"></i>
         </button>
@@ -502,6 +516,24 @@ function initInteractivity() {
   main.scrollLeft = Math.max(0, todayX - 18 * MONTH_W);
 }
 
+// ── Contacts popup (mobile) ───────────────────────────────────────────────────
+function initContactsPopup() {
+  const btn   = document.getElementById('gt-contacts-btn');
+  const popup = document.getElementById('gt-contacts-popup');
+  if (!btn || !popup) return;
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    popup.classList.toggle('open');
+  });
+
+  document.addEventListener('click', e => {
+    if (!popup.contains(e.target) && e.target !== btn) {
+      popup.classList.remove('open');
+    }
+  });
+}
+
 // ── Theme ─────────────────────────────────────────────────────────────────────
 function initTheme() {
   const btn = document.getElementById('theme-toggle');
@@ -518,6 +550,7 @@ function initTheme() {
 // ── Bootstrap ─────────────────────────────────────────────────────────────────
 renderPage();
 initTheme();
+initContactsPopup();
 initInteractivity();
 initRowsDragDrop();
 initSkillsDragDrop();

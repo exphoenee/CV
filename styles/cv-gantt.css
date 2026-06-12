@@ -11,7 +11,7 @@
   --bar-h:     32px;
   --hdr-h:     44px;
   --grp-h:     28px;
-  --sidebar-w: 272px;
+  --sidebar-w: 230px;
 }
 
 [data-theme="dark"] {
@@ -720,6 +720,14 @@ body {
   gap: 12px;
 }
 
+@media (max-width: 960px) {
+  .gt-skill-groups { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .gt-skill-groups { grid-template-columns: repeat(2, 1fr); }
+}
+
 .gt-skill-group {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -807,6 +815,54 @@ body {
   font-style: normal;
   font-size: 0.73rem;
   margin-left: 6px;
+}
+
+/* ── Contacts popup (mobile) ─────────────────────────────────────────────────── */
+
+.gt-contacts-wrap {
+  position: relative;
+  display: none;
+}
+
+.gt-contacts-popup {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  z-index: 200;
+  min-width: 220px;
+}
+
+.gt-contacts-popup.open { display: flex; }
+
+.gt-contacts-popup-heading {
+  font-size: 0.67rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+
+.gt-contacts-popup a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.84rem;
+  transition: color 0.15s;
+}
+
+.gt-contacts-popup a:hover { color: var(--accent); }
+
+@media (max-width: 680px) {
+  .gt-header-links  { display: none; }
+  .gt-contacts-wrap { display: block; }
 }
 
 /* ── Override cv-index.css card/btn/body leftovers ──────────────────────────── */
