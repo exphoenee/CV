@@ -1,6 +1,6 @@
 import { CV_DATA } from './cv-data.js';
 import { renderSwaggerContent } from './components/swagger/index.js';
-import { initHireModal, initThemeToggle, initFormspree, musicPlayerHTML, hireModalHTML, bookingModalHTML, initBookingModal } from './shared.js';
+import { initHireModal, initThemeToggle, initFormspree, musicPlayerHTML, hireModalHTML, bookingModalHTML, initBookingModal, hideLoadingOverlay } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { svgArrowUp, svgArrowDown } from './components/swagger/ui/icons.js';
 import { THEME_DARK, THEME_LIGHT } from './config.js';
@@ -90,3 +90,4 @@ window.showToast = function (msg) {
 };
 
 initMusicPlayer();
+hideLoadingOverlay();

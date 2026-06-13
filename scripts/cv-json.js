@@ -1,6 +1,6 @@
 import { CV_DATA } from './cv-data.js';
 import { renderJsonCV } from './components/json/index.js';
-import { initHireModal, initFormspree, musicPlayerHTML, hireModalHTML, bookingModalHTML, initBookingModal } from './shared.js';
+import { initHireModal, initFormspree, musicPlayerHTML, hireModalHTML, bookingModalHTML, initBookingModal, hideLoadingOverlay } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES } from './config.js';
 
@@ -173,6 +173,7 @@ if (hireBtn && hireForm) {
 }
 
 initMusicPlayer();
+hideLoadingOverlay();
 
 document.getElementById('wc-close-btn')?.addEventListener('click', function () {
   window.location.href = 'index.html';

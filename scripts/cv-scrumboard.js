@@ -3,7 +3,7 @@ import { locale } from './locale.js';
 import {
   initHireModal, initFormspree, hireModalHTML,
   bookingModalHTML, initBookingModal,
-  getSystemTheme, musicPlayerHTML, showToast,
+  getSystemTheme, musicPlayerHTML, showToast, hideLoadingOverlay,
 } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT } from './config.js';
@@ -587,3 +587,4 @@ initFormspree('#hire-scrumboard-form');
 
 document.body.insertAdjacentHTML('beforeend', bookingModalHTML('scrumboard'));
 initBookingModal('scrumboard');
+hideLoadingOverlay();

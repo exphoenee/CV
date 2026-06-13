@@ -206,6 +206,13 @@ export function initHireModal(prefix) {
   return { openModal: openModal, closeModal: closeModal };
 }
 
+export function hideLoadingOverlay() {
+  var overlay = document.getElementById('loading-overlay');
+  if (!overlay) return;
+  overlay.classList.add('loaded');
+  setTimeout(function () { if (overlay.parentNode) overlay.parentNode.removeChild(overlay); }, 400);
+}
+
 export function getSystemTheme() {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }

@@ -1,5 +1,5 @@
 import { renderPlainCV } from './components/plain/index.js';
-import { initHireModal, initFormspree, getSystemTheme, musicPlayerHTML, hireModalHTML, bookingModalHTML, initBookingModal } from './shared.js';
+import { initHireModal, initFormspree, getSystemTheme, musicPlayerHTML, hireModalHTML, bookingModalHTML, initBookingModal, hideLoadingOverlay } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES, CURSOR_KEY } from './config.js';
 import { locale } from './locale.js';
@@ -255,3 +255,4 @@ function initDecors() {
 
 initFormspree('#hire-plain-form');
 initMusicPlayer();
+hideLoadingOverlay();

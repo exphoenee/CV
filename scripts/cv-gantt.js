@@ -1,6 +1,6 @@
 import { CV_DATA } from './cv-data.js';
 import { locale } from './locale.js';
-import { initHireModal, initFormspree, hireModalHTML, bookingModalHTML, initBookingModal, getSystemTheme, musicPlayerHTML } from './shared.js';
+import { initHireModal, initFormspree, hireModalHTML, bookingModalHTML, initBookingModal, getSystemTheme, musicPlayerHTML, hideLoadingOverlay } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT } from './config.js';
 import { createLangDropdown } from './components/lang-dropdown.js';
@@ -602,3 +602,4 @@ initFormspree('#hire-gantt-form');
 
 document.body.insertAdjacentHTML('beforeend', bookingModalHTML('gantt'));
 initBookingModal('gantt');
+hideLoadingOverlay();

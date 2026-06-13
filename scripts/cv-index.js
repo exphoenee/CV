@@ -1,7 +1,9 @@
-import { initHireModal, initThemeToggle, initFormspree, hireModalHTML, musicPlayerHTML, bookingModalHTML, initBookingModal } from './shared.js';
+import { initHireModal, initThemeToggle, initFormspree, hireModalHTML, musicPlayerHTML, bookingModalHTML, initBookingModal, hideLoadingOverlay } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 
-document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
+if (!document.getElementById('music-player')) {
+  document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
+}
 
 window.showToast = function (message) {
   var container = document.getElementById('cv-toaster-container');
@@ -119,3 +121,5 @@ initMusicPlayer();
 
   goTo(0);
 }());
+
+hideLoadingOverlay();

@@ -8,15 +8,11 @@ function applyTranslations() {
   document.documentElement.lang = locale.lang;
 }
 
-const controls = document.createElement('div');
-controls.className = 'top-right-controls';
-
-createLangDropdown(controls, {
-  onChange(lang) { locale.setLang(lang); applyTranslations(); window.dispatchEvent(new CustomEvent('localechange')); }
-});
-
-const themeToggle = document.getElementById('theme-toggle');
-if (themeToggle) controls.appendChild(themeToggle);
-document.body.appendChild(controls);
+const controls = document.querySelector('.top-right-controls');
+if (controls) {
+  createLangDropdown(controls, {
+    onChange(lang) { locale.setLang(lang); applyTranslations(); window.dispatchEvent(new CustomEvent('localechange')); }
+  });
+}
 
 applyTranslations();

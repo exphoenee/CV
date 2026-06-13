@@ -20,7 +20,9 @@
     />
   </head>
   <body>
-    <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
+    <div class="top-right-controls">
+      <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
+    </div>
     <main>
       <div class="card">
         <h2 data-i18n="cvOf">Curriculum Vitae of</h2>
@@ -90,6 +92,11 @@
       </div>
     </main>
     <div id="cv-toaster-container"></div>
+
+    <div id="loading-overlay" role="status" aria-label="Loading">
+      <div class="loading-spinner"></div>
+    </div>
+
     <script type="module" src="./scripts/main.js"></script>
     <script type="module" src="./scripts/cv-index.js"></script>
   </body>
