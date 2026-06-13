@@ -46,6 +46,29 @@ export function initMusicPlayer() {
       }
     }
 
+    function updateMusicPlayerAriaLabels() {
+      var t = locale.t.bind(locale);
+      var map = {
+        'music-toggle':        'ariaOpenMusicPlayer',
+        'music-box-close':     'ariaCloseMusicPlayer',
+        'track-seek':          'ariaTrackPosition',
+        'music-repeat':        'ariaToggleRepeat',
+        'music-prev':          'ariaPrevTrack',
+        'music-playpause':     'ariaPlayMusic',
+        'music-next':          'ariaNextTrack',
+        'music-lyrics':        'ariaShowLyrics',
+        'music-volume':        'ariaMusicVolume',
+      };
+      Object.keys(map).forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.setAttribute('aria-label', t(map[id]));
+      });
+      var genreSelect = document.getElementById('custom-genre-select');
+      if (genreSelect) genreSelect.setAttribute('aria-label', t('ariaGenreSelect'));
+      var trigger = document.querySelector('#custom-genre-select .custom-select-trigger');
+      if (trigger) trigger.setAttribute('aria-label', t('ariaGenreSelect'));
+    }
+
     var isBoxOpen = false;
     var isPlaying = false;
     var isLoading = false;
@@ -493,6 +516,7 @@ export function initMusicPlayer() {
     }
 
     window.addEventListener("beforeunload", saveState);
+    window.addEventListener('localechange', updateMusicPlayerAriaLabels);
     updatePlayPause();
   } catch (e) {
     console.warn("Music player init error:", e);
