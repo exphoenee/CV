@@ -2,10 +2,10 @@
  * CV Data — Job Application Version
  * ============================================================
  * Optimized for: Manual Backup @ —
- * Seniority:     —
- * Domain:        —
- * Date:          2026-06-13 2111
- * ATS match:     — (— required · — preferred)
+ * Seniority:     
+ * Domain:        
+ * Date:          2026-06-13 21:50
+ * ATS match:     —% (—% required · —% preferred)
  * HR Review:     —
  * Changes:       Manual snapshot
  * Locale:        locale-content.json — paste content fields into scripts/locales/<lang>.js to restore
@@ -13,7 +13,6 @@
  * Point-in-time snapshot for the above position.
  * Do not import directly — use scripts/cv-data.js.
  */
-
 /**
  * cv-data.js
  * Central CV data object — single source of truth for all CV views.

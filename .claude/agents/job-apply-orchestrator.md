@@ -260,7 +260,7 @@ If `n` → skip to Step 9. Set `COVER_LETTER_EN = null`, `COVER_LETTER_HU = null
 
 If `y`:
 
-Detect JD primary language from JD text (`JD_PRIMARY_LANGUAGE = "en"` or `"hu"`).
+Detect JD primary language from JD text (`JD_PRIMARY_LANGUAGE` — e.g. `"en"`, `"hu"`, `"de"`, `"fr"`, `"es"`, `"it"`).
 
 ```
 Agent: cover-letter-agent
@@ -274,7 +274,10 @@ Pass:
 - `OUTPUT_FOLDER = VERSION_FOLDER` (same folder as cv-data.js and locale-content.json)
 - `DATE`, `TIME`
 
-Wait for agent to return `COVER_LETTER_EN`, `COVER_LETTER_HU`, `STATUS`.
+Wait for agent to return `COVER_LETTER_EN`, `COVER_LETTER_HU`, `COVER_LETTER_JD`, `STATUS`.
+
+The agent writes cover-letter-en.md and cover-letter-hu.md in all cases. If JD_PRIMARY_LANGUAGE
+is not "en" or "hu", it also writes a third cover letter (e.g. cover-letter-de.md).
 
 ---
 

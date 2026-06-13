@@ -60,7 +60,7 @@ class LocaleManager {
   }
 
   t(key) {
-    return PAGE_LABELS[this._lang]?.[key] ?? PAGE_LABELS.en[key] ?? key;
+    return PAGE_LABELS[this._lang]?.[key] ?? PAGE_LABELS.en?.[key] ?? key;
   }
 
   getData() {

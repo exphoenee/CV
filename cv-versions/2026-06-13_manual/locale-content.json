@@ -1,8 +1,8 @@
 {
   "_meta": {
     "optimized_for": "Manual Backup @ —",
-    "date": "2026-06-13 2111",
-    "ats_match": "—",
+    "date": "2026-06-13 21:50",
+    "ats_match": "—%",
     "source": "scripts/locales/",
     "restore": "Paste each language block back into scripts/locales/<lang>.js → content field."
   },
@@ -199,7 +199,7 @@
     }
   },
   "fr": {
-    "summary": "Ingénieur Frontend spécialisé dans l'architecture frontend, la conception de systèmes et la modernisation à grande échelle de systèmes legacy. J'ai dirigé des réécritures complètes et des migrations de systèmes d'entreprise vers des stacks modernes, améliorant la maintenabilité et la scalabilité des plateformes principales. J'ai introduit des workflows de développement assistés par IA qui ont considérablement augmenté la vitesse de livraison, la cohérence technique et la fiabilité des releases. Je mets un fort accent sur le refactoring basé sur les preuves, les standards qualité CI et la construction de fondations frontend durables à l'échelle du système.",
+    "summary": "Ingénieur Frontend spécialisé dans l'architecture frontend, la conception de systèmes et la modernisation à grande échelle de systèmes legacy. J'ai dirigé des réécritures complètes et des migrations de systèmes d'entreprise vers des stacks modernes, améliorant la maintenabilité et la scalabilité des plateformes principales. J'ai introduit des workflows de développement assistés par IA qui ont considérablement augmenté la vitesse de livraison, la cohérence technique et la fiabilité des releases. Je mets un fort accent sur le refactoring basé sur les preuves, les standards qualité CI et la construction de foundations frontend durables à l'échelle du système.",
     "workExperience": [
       {
         "id": "aegex",

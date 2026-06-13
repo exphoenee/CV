@@ -1,12 +1,14 @@
 ---
 name: cover-letter
 description: >
-  Writes personalized English and Hungarian cover letters for a job application.
-  Grounded in cv-data.js and profile/*.md — never invents experience.
-  Without argument: opens tmp/jd-draft.md template. With argument (file or inline JD):
-  parses the JD and dispatches cover-letter-agent.
-  Saves cover-letter-en.md and cover-letter-hu.md to letters/.
-version: 1.0.0
+  Writes personalized English, Hungarian, and (optionally) JD-language cover letters
+  for a job application. Grounded in cv-data.js and profile/*.md — never invents
+  experience. Without argument: opens tmp/jd-draft.md template. With argument (file
+  or inline JD): parses the JD and dispatches cover-letter-agent.
+  Always saves cover-letter-en.md and cover-letter-hu.md to letters/; saves a third
+  file in the JD's language if different from EN and HU.
+  After the letters are written, dispatches language-reviewer for quality check.
+version: 1.1.0
 author: Viktor Bozzay
 disable-model-invocation: true
 argument-hint: "[job-description-file | \"inline job description text\"]"
@@ -35,7 +37,10 @@ From `JD`:
 - `JD_DOMAIN` — industry / domain
 - `JD_REQUIRED` — required skills/keywords
 - `JD_RESPONSIBILITIES` — main responsibilities (5–10 bullets)
-- `JD_PRIMARY_LANGUAGE` — detect: `"en"` or `"hu"` based on JD text language
+- `JD_PRIMARY_LANGUAGE` — detect the primary language of the JD text.
+  Supported values: `"en"`, `"hu"`, `"de"`, `"fr"`, `"es"`, `"it"`.
+  (Fictional languages like `"kl"`, `"asg"` etc. are not expected for JDs.)
+  Default: `"en"` if detection is unclear.
 - `COMPANY_SLUG` — JD_COMPANY → lowercase, spaces→hyphens, special chars removed
 - `TITLE_SLUG` — JD_TITLE → same
 - `DATE` — today YYYY-MM-DD, `TIME` — current HHMM
@@ -83,6 +88,14 @@ Pozíció: JD_TITLE @ JD_COMPANY
 Mappa:   OUTPUT_FOLDER/
   📄 cover-letter-en.md   ← angol verzió
   📄 cover-letter-hu.md   ← magyar verzió
+  [If JD language version was created:]
+  📄 cover-letter-[lang].md   ← [nyelv] verzió (JD nyelvén)
 
-Küldés előtt ellenőrizd és szerkeszd a leveleket.
+Küldés előtt ajánlott:
+  • Olvasd át és szerkeszd a leveleket
+  • /language-reviewer hu — magyar szöveg ellenőrzése
+  • /language-reviewer en — angol szöveg ellenőrzése
+  [If JD language version was created:]
+  • /language-reviewer [lang] — [nyelv] ellenőrzése
+  • Anyanyelvi segítség kérése a fordítás minőségének ellenőrzéséhez
 ```

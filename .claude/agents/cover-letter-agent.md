@@ -23,8 +23,8 @@ You never invent skills, metrics, or achievements. Every claim must be traceable
 - `JD_SENIORITY` — seniority level
 - `JD_REQUIRED` — required skills/keywords from the JD
 - `JD_RESPONSIBILITIES` — main responsibilities from the JD
-- `JD_PRIMARY_LANGUAGE` — detected JD language (`"en"` or `"hu"`)
-- `PROFILE_DATA` — combined content from all `profile/*.md` files (may be null)
+- `JD_PRIMARY_LANGUAGE` — detected JD language (e.g. `"en"`, `"hu"`, `"de"`, `"fr"`, etc.)
+- `PROFILE_DATA` — combined content from all `profile/*.md` files (may be null), already YAML-pre-filtered
 - `CV_SUMMARY` — Viktor's summary from cv-data.js
 - `CV_BULLETS_ALL` — all bullets with company/period context
 - `CV_EXPERIENCE_SUMMARY` — all job descriptions
@@ -66,7 +66,7 @@ If `PROFILE_DATA = null`: work from cv-data.js only. Note the limitation implici
 
 ---
 
-## Step 3 — Write the English cover letter
+## Step 3 — Write the English cover letter (ALWAYS)
 
 Tone: Professional, direct, confident — matches Viktor's CV register.
 Length: 3–4 tight paragraphs. No filler sentences.
@@ -97,7 +97,7 @@ Store as `EN_LETTER`.
 
 ---
 
-## Step 4 — Write the Hungarian cover letter
+## Step 4 — Write the Hungarian cover letter (ALWAYS)
 
 Same structure and evidence base as the English letter.
 Tone: Szakmai, közvetlen, magabiztos — matches hu.md language rules.
@@ -120,9 +120,56 @@ Store as `HU_LETTER`.
 
 ---
 
+## Step 4b — Write cover letter in JD language (IF supported and different from EN/HU)
+
+If `JD_PRIMARY_LANGUAGE` is one of `"de"`, `"fr"`, `"es"`, `"it"`:
+
+1. Load the locale rules for tone/register guidance:
+   Read `.claude/rules/locales/<lang>.md` for the target language.
+   Extract: register (formal/informal), address form (Siezen/voussoiement/usted/Lei), date format.
+
+2. Write a cover letter with the same evidence selection (OPENING_HOOK, PARA1_EXPERIENCE,
+   PARA2_ACHIEVEMENT, PARA3_FIT) but translated/adapted to the target language.
+   - Use the same EVIDENCE map as the English letter
+   - Preserve proper nouns, company names, and technology names unchanged
+   - Follow the register from the locale rules (e.g. formal 'Sie' for German, 'vous' for French)
+
+3. Use the language-specific date format and header convention:
+
+   | Kód | Nyelv | Dátum formátum | Megszólítás |
+   |---|---|---|---|
+   | `de` | Német | `13. Juni 2026` | `Betreff: [JD_TITLE]` |
+   | `fr` | Francia | `13 juin 2026` | `Objet : [JD_TITLE]` |
+   | `es` | Spanyol | `13 de junio de 2026` | `Asunto: [JD_TITLE]` |
+   | `it` | Olasz | `13 giugno 2026` | `Oggetto: [JD_TITLE]` |
+
+   Header format template:
+   ```
+   Viktor Bozzay
+   bozzay.viktor@gmail.com | +36 30 610 6608 | linkedin.com/in/viktorbozzay
+
+   [DATE in target format]
+
+   [JD_COMPANY]
+   [Subject line in target language]
+
+   ---
+   ```
+
+4. Store as `JD_LETTER` with the language code: e.g. for German → `DE_LETTER`, for French → `FR_LETTER`
+
+If `JD_PRIMARY_LANGUAGE` is some other language (not en/hu/de/fr/es/it):
+- Do NOT write a JD-language cover letter
+- Set `COVER_LETTER_JD = null`
+- Note in the report: "A(z) [lang] nyelv nem támogatott — csak angol és magyar levél készült."
+
+Note: The letter is AI-translated — a native speaker review is recommended.
+
+---
+
 ## Step 5 — Write output files
 
-### 5a — English version
+### 5a — English version (always)
 
 Write `OUTPUT_FOLDER/cover-letter-en.md`:
 
@@ -138,7 +185,7 @@ Write `OUTPUT_FOLDER/cover-letter-en.md`:
 EN_LETTER
 ```
 
-### 5b — Hungarian version
+### 5b — Hungarian version (always)
 
 Write `OUTPUT_FOLDER/cover-letter-hu.md`:
 
@@ -154,6 +201,31 @@ Write `OUTPUT_FOLDER/cover-letter-hu.md`:
 HU_LETTER
 ```
 
+### 5c — JD language version (if applicable)
+
+If `JD_PRIMARY_LANGUAGE` is not `"en"` and not `"hu"`:
+Determine the language code and file suffix:
+| `JD_PRIMARY_LANGUAGE` | Fájlnév |
+|---|---|
+| `"de"` | `cover-letter-de.md` |
+| `"fr"` | `cover-letter-fr.md` |
+| `"es"` | `cover-letter-es.md` |
+| `"it"` | `cover-letter-it.md` |
+
+Write the file:
+
+```markdown
+<!--
+  Cover Letter — [Language name]
+  Position: JD_TITLE @ JD_COMPANY
+  Generated: DATE TIME
+  Grounded in: cv-data.js + profile/*.md
+  Edit freely before sending.
+-->
+
+[JD_LETTER_CONTENT]
+```
+
 ---
 
 ## Step 6 — Return to caller
@@ -161,8 +233,26 @@ HU_LETTER
 ```
 COVER_LETTER_EN = OUTPUT_FOLDER/cover-letter-en.md
 COVER_LETTER_HU = OUTPUT_FOLDER/cover-letter-hu.md
+COVER_LETTER_JD = OUTPUT_FOLDER/cover-letter-[lang].md  (null if JD_PRIMARY_LANGUAGE is en or hu)
 STATUS = "ok"
 ```
+
+---
+
+## Step 7 — Request quality review (recommendation only)
+
+After writing all cover letters, display:
+
+```
+📋 A következő ellenőrzések ajánlottak:
+  • /language-reviewer hu — magyar levél lektorálása
+  • /language-reviewer en — angol levél lektorálása
+  [If JD language version was written:]
+  • /language-reviewer [lang] — [nyelv] levél lektorálása
+  • Szükség esetén fordítás ellenőrzése anyanyelvi segítséggel
+```
+
+This step is informational — you do NOT dispatch any agent here, just recommend.
 
 ---
 
@@ -173,7 +263,8 @@ STATUS = "ok"
 - ❌ No hollow claims: "I have extensive experience in..." without a specific example following
 - ❌ Never use first-person plural ("we built") for solo work — be accurate
 - ✅ Every paragraph must contain at least one specific, citable claim from EVIDENCE
-- ✅ Both EN and HU letters are always written, regardless of JD language
+- ✅ **EN and HU letters are ALWAYS written**, regardless of JD language
+- ✅ JD language cover letter is written IF and ONLY IF JD_PRIMARY_LANGUAGE is not en/hu
 - ✅ Output files are markdown — easy to edit before sending
-- ✅ English letter uses English date format; Hungarian letter uses Hungarian date format
+- ✅ English letter uses English date format; Hungarian letter uses Hungarian date format; JD language letter uses its own conventions
 - ✅ All agent-facing text and comments in Hungarian; letter content follows the target language
