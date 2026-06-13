@@ -21,73 +21,76 @@
   </head>
   <body>
     <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
-    <div class="card">
-      <h2 data-i18n="cvOf">Curriculum Vitae of</h2>
-      <h1>Viktor Bozzay <small data-i18n="roleLocation">Frontend Tech Lead &middot; Pécs, HU</small></h1>
-      <div class="divider"></div>
-      <p class="subtitle" data-i18n="chooseView">Choose how to view my CV</p>
-      <div class="cv-carousel-wrap">
-        <div class="cv-carousel-stage" id="cv-carousel-stage">
-          <div class="cv-slide cv-slide--reading" data-idx="0">
-            <div class="cv-slide-icon"><i class="fas fa-book-open"></i></div>
-            <span class="cv-slide-title" data-i18n="btnReadingLabel">I'm reading CV</span>
-            <span class="cv-slide-desc" data-i18n="btnReadingDesc">Clean, readable, printable CV</span>
-            <a class="cv-slide-cta" href="cv-plain.html"><span data-i18n="btnCardOpen">Open this view →</span></a>
+    <main>
+      <div class="card">
+        <h2 data-i18n="cvOf">Curriculum Vitae of</h2>
+        <h1>Viktor Bozzay <small data-i18n="roleLocation">Frontend Tech Lead &middot; Pécs, HU</small></h1>
+        <div class="divider" role="separator"></div>
+        <p class="subtitle" data-i18n="chooseView">Choose how to view my CV</p>
+        <section aria-label="CV view selector">
+          <div class="cv-carousel-wrap">
+            <div class="cv-carousel-stage" id="cv-carousel-stage" role="list" aria-label="CV views">
+              <div class="cv-slide cv-slide--reading" data-idx="0" role="listitem">
+                <div class="cv-slide-icon" aria-hidden="true"><i class="fas fa-book-open"></i></div>
+                <span class="cv-slide-title" data-i18n="btnReadingLabel">I'm reading CV</span>
+                <span class="cv-slide-desc" data-i18n="btnReadingDesc">Clean, readable, printable CV</span>
+                <a class="cv-slide-cta" href="cv-plain.html" aria-label="Open reading view — Clean, readable, printable CV"><span data-i18n="btnCardOpen">Open this view →</span></a>
+              </div>
+              <div class="cv-slide cv-slide--pm" data-idx="1" role="listitem">
+                <div class="cv-slide-icon" aria-hidden="true"><i class="fas fa-chart-bar"></i></div>
+                <span class="cv-slide-title" data-i18n="btnPmLabel">I'm a Project Manager</span>
+                <span class="cv-slide-desc" data-i18n="btnPmDesc">Gantt chart timeline</span>
+                <a class="cv-slide-cta" href="cv-gantt.html" aria-label="Open Project Manager view — Gantt chart timeline"><span data-i18n="btnCardOpen">Open this view →</span></a>
+              </div>
+              <div class="cv-slide cv-slide--scrum" data-idx="2" role="listitem">
+                <div class="cv-slide-icon" aria-hidden="true"><i class="fas fa-table-columns"></i></div>
+                <span class="cv-slide-title" data-i18n="btnScrumLabel">I'm a Scrum Master</span>
+                <span class="cv-slide-desc" data-i18n="btnScrumDesc">Kanban / Scrum board view</span>
+                <a class="cv-slide-cta" href="cv-scrumboard.html" aria-label="Open Scrum Master view — Kanban / Scrum board"><span data-i18n="btnCardOpen">Open this view →</span></a>
+              </div>
+              <div class="cv-slide cv-slide--fe" data-idx="3" role="listitem">
+                <div class="cv-slide-icon" aria-hidden="true"><i class="fas fa-code"></i></div>
+                <span class="cv-slide-title" data-i18n="btnFrontendLabel">I'm a Frontend Developer</span>
+                <span class="cv-slide-desc" data-i18n="btnFrontendDesc">Swagger-style API docs</span>
+                <a class="cv-slide-cta" href="cv-swagger.html" aria-label="Open Frontend Developer view — Swagger-style API docs"><span data-i18n="btnCardOpen">Open this view →</span></a>
+              </div>
+              <div class="cv-slide cv-slide--be" data-idx="4" role="listitem">
+                <div class="cv-slide-icon" aria-hidden="true"><i class="fas fa-database"></i></div>
+                <span class="cv-slide-title" data-i18n="btnBackendLabel">I'm a Backend Developer</span>
+                <span class="cv-slide-desc" data-i18n="btnBackendDesc">JSON / VS Code view</span>
+                <a class="cv-slide-cta" href="cv-json.html" aria-label="Open Backend Developer view — JSON / VS Code view"><span data-i18n="btnCardOpen">Open this view →</span></a>
+              </div>
+              <div class="cv-slide cv-slide--game" data-idx="5" role="listitem">
+                <div class="cv-slide-icon" aria-hidden="true"><i class="fas fa-gamepad"></i></div>
+                <span class="cv-slide-title" data-i18n="btnGamerLabel">I'm a Gamer</span>
+                <span class="cv-slide-desc" data-i18n="btnGamerDesc">Interactive 2.5D RPG world</span>
+                <a class="cv-slide-cta" href="cv-game.html" aria-label="Open Gamer view — Interactive 2.5D RPG world"><span data-i18n="btnCardOpen">Open this view →</span></a>
+              </div>
+            </div>
+            <div class="cv-carousel-nav" role="group" aria-label="Carousel navigation">
+              <button class="cv-carousel-arrow" id="cv-carousel-prev" aria-label="Previous view"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+              <div class="cv-carousel-dots" id="cv-carousel-dots" role="tablist" aria-label="CV view indicators"></div>
+              <button class="cv-carousel-arrow" id="cv-carousel-next" aria-label="Next view"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+            </div>
           </div>
-          <div class="cv-slide cv-slide--pm" data-idx="1">
-            <div class="cv-slide-icon"><i class="fas fa-chart-bar"></i></div>
-            <span class="cv-slide-title" data-i18n="btnPmLabel">I'm a Project Manager</span>
-            <span class="cv-slide-desc" data-i18n="btnPmDesc">Gantt chart timeline</span>
-            <a class="cv-slide-cta" href="cv-gantt.html"><span data-i18n="btnCardOpen">Open this view →</span></a>
-          </div>
-          <div class="cv-slide cv-slide--scrum" data-idx="2">
-            <div class="cv-slide-icon"><i class="fas fa-table-columns"></i></div>
-            <span class="cv-slide-title" data-i18n="btnScrumLabel">I'm a Scrum Master</span>
-            <span class="cv-slide-desc" data-i18n="btnScrumDesc">Kanban / Scrum board view</span>
-            <a class="cv-slide-cta" href="cv-scrumboard.html"><span data-i18n="btnCardOpen">Open this view →</span></a>
-          </div>
-          <div class="cv-slide cv-slide--fe" data-idx="3">
-            <div class="cv-slide-icon"><i class="fas fa-code"></i></div>
-            <span class="cv-slide-title" data-i18n="btnFrontendLabel">I'm a Frontend Developer</span>
-            <span class="cv-slide-desc" data-i18n="btnFrontendDesc">Swagger-style API docs</span>
-            <a class="cv-slide-cta" href="cv-swagger.html"><span data-i18n="btnCardOpen">Open this view →</span></a>
-          </div>
-          <div class="cv-slide cv-slide--be" data-idx="4">
-            <div class="cv-slide-icon"><i class="fas fa-database"></i></div>
-            <span class="cv-slide-title" data-i18n="btnBackendLabel">I'm a Backend Developer</span>
-            <span class="cv-slide-desc" data-i18n="btnBackendDesc">JSON / VS Code view</span>
-            <a class="cv-slide-cta" href="cv-json.html"><span data-i18n="btnCardOpen">Open this view →</span></a>
-          </div>
-          <div class="cv-slide cv-slide--game" data-idx="5">
-            <div class="cv-slide-icon"><i class="fas fa-gamepad"></i></div>
-            <span class="cv-slide-title" data-i18n="btnGamerLabel">I'm a Gamer</span>
-            <span class="cv-slide-desc" data-i18n="btnGamerDesc">Interactive 2.5D RPG world</span>
-            <a class="cv-slide-cta" href="cv-game.html"><span data-i18n="btnCardOpen">Open this view →</span></a>
-          </div>
+        </section>
+        <div class="btns margin-top">
+          <button class="btn btn-hire" id="hire-index-btn" aria-label="Hire Me — Send me a message">
+            <span class="label" data-i18n="btnHireLabel">Hire Me</span
+            ><span class="desc" data-i18n="btnHireDesc">Send me a message</span>
+          </button>
+          <button class="btn btn-book" id="index-booking-btn" aria-label="Book a Meeting — Schedule a call with me">
+            <span class="label"><span data-i18n="bookMeeting">Book a Meeting</span></span
+            ><span class="desc" data-i18n="bookMeetingDesc">Schedule a call with me</span>
+          </button>
         </div>
-        <div class="cv-carousel-nav">
-          <button class="cv-carousel-arrow" id="cv-carousel-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
-          <div class="cv-carousel-dots" id="cv-carousel-dots"></div>
-          <button class="cv-carousel-arrow" id="cv-carousel-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
-        </div>
+        <footer class="footer">
+          <a href="mailto:bozzay.viktor@gmail.com" aria-label="Send email to bozzay.viktor@gmail.com">bozzay.viktor@gmail.com</a>
+        </footer>
       </div>
-      <div class="btns margin-top">
-        <button class="btn btn-hire" id="hire-index-btn">
-          <span class="label" data-i18n="btnHireLabel">Hire Me</span
-          ><span class="desc" data-i18n="btnHireDesc">Send me a message</span>
-        </button>
-        <button class="btn btn-book" id="index-booking-btn">
-          <span class="label"><span data-i18n="bookMeeting">Book a Meeting</span></span
-          ><span class="desc" data-i18n="bookMeetingDesc">Schedule a call with me</span>
-        </button>
-      </div>
-      <div class="footer">
-        <a href="mailto:bozzay.viktor@gmail.com">bozzay.viktor@gmail.com</a>
-      </div>
-    </div>
+    </main>
     <div id="cv-toaster-container"></div>
     <script type="module" src="./scripts/main.js"></script>
     <script type="module" src="./scripts/cv-index.js"></script>
-    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
   </body>
 </html>

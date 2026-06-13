@@ -221,9 +221,23 @@ body {
 
 .sb-contacts-popup a:hover { color: var(--accent); }
 
-@media (max-width: 680px) {
+@media (max-width: 1200px) {
   .sb-header-links  { display: none; }
   .sb-contacts-wrap { display: block; }
+}
+
+@media (max-width: 720px) {
+  .sb-scrum-view { display: none; }
+}
+
+@media (max-width: 500px) {
+  .sb-header-role { display: none; }
+  .sb-header-name { white-space: normal; }
+  .sb-btn-label   { display: none; }
+}
+
+@media (max-width: 400px) {
+  .sb-header-name { display: none; }
 }
 
 /* ── Board ────────────────────────────────────────────────────────────────── */

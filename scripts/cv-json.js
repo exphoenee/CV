@@ -71,9 +71,9 @@ L.forEach(([depth, content], idx) => {
 
   const isFoldable = FOLDS[idx] !== undefined;
   const foldBtn = isFoldable
-    ? '<span class="fold-icon foldable" data-open="' + idx + '">▾</span>'
-    : '<span class="fold-icon"></span>';
-  const foldHint = isFoldable ? '<span class="fold-hint" data-open="' + idx + '">…</span>' : '';
+    ? '<span class="fold-icon foldable" data-open="' + idx + '" role="button" tabindex="0" aria-label="Collapse section" aria-expanded="true">▾</span>'
+    : '<span class="fold-icon" aria-hidden="true"></span>';
+  const foldHint = isFoldable ? '<span class="fold-hint" data-open="' + idx + '" aria-label="Collapsed section">…</span>' : '';
 
   gHTML += '<div data-n="' + num + '" data-gi="' + idx + '">' + foldBtn + num + '</div>';
   cHTML += '<div class="l" data-n="' + num + '" data-li="' + idx + '">' + indents + '<span class="t">' + content + foldHint + '</span></div>';
@@ -110,6 +110,8 @@ function toggleFold(openIdx) {
     if (icon) {
       icon.textContent = '▸';
       icon.classList.add('collapsed');
+      icon.setAttribute('aria-expanded', 'false');
+      icon.setAttribute('aria-label', 'Expand section');
     }
     if (hint) hint.style.display = '';
   } else {
@@ -117,6 +119,8 @@ function toggleFold(openIdx) {
     if (icon) {
       icon.textContent = '▾';
       icon.classList.remove('collapsed');
+      icon.setAttribute('aria-expanded', 'true');
+      icon.setAttribute('aria-label', 'Collapse section');
     }
     if (hint) hint.style.display = 'none';
   }
@@ -126,6 +130,13 @@ function toggleFold(openIdx) {
 G.addEventListener('click', (e) => {
   const btn = e.target.closest('.fold-icon.foldable');
   if (btn) toggleFold(parseInt(btn.dataset.open));
+});
+
+G.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    const btn = e.target.closest('.fold-icon.foldable');
+    if (btn) { e.preventDefault(); toggleFold(parseInt(btn.dataset.open)); }
+  }
 });
 
 C.addEventListener('click', (e) => {

@@ -52,6 +52,10 @@
 html {
   height: 100%;
 }
+main {
+  display: flex;
+  width: 100%;
+}
 body {
   min-height: 100%;
   background: var(--bg);
@@ -866,8 +870,9 @@ h1 small {
   display: none !important;
 }
 
-[data-fs-success] {
-  display: none;
+.cv-success-hidden { display: none; }
+.cv-error-hidden   { display: none; }
+[data-fs-success], [data-hire-cooldown] {
   padding: 40px 20px;
   text-align: center;
 }

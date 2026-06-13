@@ -46,17 +46,20 @@ settingsBackdrop.className = 'settings-modal-backdrop';
 document.body.appendChild(settingsBackdrop);
 
 function buildSettingsModal() {
+  settingsBackdrop.setAttribute('role', 'dialog');
+  settingsBackdrop.setAttribute('aria-modal', 'true');
+  settingsBackdrop.setAttribute('aria-label', 'CV settings');
   settingsBackdrop.innerHTML = `
     <div class="settings-modal-box">
       <div class="settings-modal-header">
-        <button id="settings-close-btn" class="settings-close-btn" aria-label="Close">✕</button>
+        <button id="settings-close-btn" class="settings-close-btn" aria-label="Close settings">✕</button>
       </div>
       <div class="settings-modal-body">
         <div id="modal-lang-slot"></div>
-        <button class="settings-hire-btn" id="settings-hire-btn">${locale.t('hireMe')}</button>
-        <button class="settings-book-btn" id="settings-book-btn"><i class="fa-regular fa-calendar-check"></i> Book a Meeting</button>
-        <button class="settings-print-btn" id="settings-print-btn"><i class="fa-solid fa-print"></i> ${locale.t('print')}</button>
-        <button class="settings-close-drawer-btn" id="settings-close-btn">${locale.t('close')}</button>
+        <button class="settings-hire-btn" id="settings-hire-btn" aria-label="${locale.t('hireMe')} — open contact form">${locale.t('hireMe')}</button>
+        <button class="settings-book-btn" id="settings-book-btn" aria-label="Book a meeting with Viktor"><i class="fa-regular fa-calendar-check" aria-hidden="true"></i> Book a Meeting</button>
+        <button class="settings-print-btn" id="settings-print-btn" aria-label="${locale.t('print')} CV"><i class="fa-solid fa-print" aria-hidden="true"></i> ${locale.t('print')}</button>
+        <button class="settings-close-drawer-btn" id="settings-close-btn" aria-label="Close settings">${locale.t('close')}</button>
       </div>
     </div>
   `;

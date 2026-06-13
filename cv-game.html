@@ -42,10 +42,10 @@
     <div id="game-container">
 
       <!-- Loading Screen -->
-      <div id="loading-screen">
+      <div id="loading-screen" role="status" aria-live="polite" aria-label="Loading game">
         <div class="loading-content">
           <div class="loading-title">Viktor's RPG Journey</div>
-          <div class="loading-bar-track">
+          <div class="loading-bar-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Loading progress">
             <div id="loading-bar"></div>
           </div>
           <div id="loading-label" class="loading-label">Initializing…</div>
@@ -62,10 +62,10 @@
           <canvas id="game-canvas"></canvas>
 
           <!-- Game Title (top center) -->
-          <div class="game-title">Viktor's RPG Journey</div>
+          <div class="game-title" role="heading" aria-level="1">Viktor's RPG Journey</div>
 
           <!-- Controls Legend (bottom-left, hidden on mobile) -->
-          <div class="legend-panel">
+          <div class="legend-panel" role="note" aria-label="Game controls legend">
             <div class="legend-title">Controls</div>
             <div class="legend-row">
               <span class="key">W</span> <span class="key">A</span>
@@ -147,12 +147,12 @@
       <!-- end #canvas-container -->
 
       <!-- Credits Modal -->
-      <div id="credits-modal">
+      <div id="credits-modal" role="dialog" aria-modal="true" aria-labelledby="credits-modal-title">
         <div class="credits-modal-backdrop"></div>
         <div class="credits-modal-box">
           <div class="credits-modal-header">
-            <span>About this game</span>
-            <button id="credits-close">✕</button>
+            <span id="credits-modal-title">About this game</span>
+            <button id="credits-close" aria-label="Close credits">✕</button>
           </div>
           <div class="credits-modal-body">
             <p>
@@ -198,32 +198,33 @@
       </div>
 
       <!-- Responsive Glassmorphic Dialogue Modal (Frozen State CV Stations) -->
-      <div id="dialogue-overlay" class="dialogue-hidden">
+      <div id="dialogue-overlay" class="dialogue-hidden" role="dialog" aria-modal="true" aria-labelledby="dialogue-title">
         <div class="dialogue-backdrop"></div>
         <div class="dialogue-box">
           <!-- Retro console header -->
           <div class="dialogue-header">
-            <span class="dialogue-dot"></span>
+            <span class="dialogue-dot" aria-hidden="true"></span>
             <span id="dialogue-title">Personal HQ</span>
-            <span class="dialogue-dot"></span>
+            <span class="dialogue-dot" aria-hidden="true"></span>
           </div>
 
-          <div id="dialogue-tech">Svelte · TypeScript · Express</div>
+          <div id="dialogue-tech" aria-label="Technology stack">Svelte · TypeScript · Express</div>
 
           <!-- Dialogue scrolling content -->
-          <div id="dialogue-text">
+          <div id="dialogue-text" role="region" aria-label="CV station content" aria-live="polite">
             <!-- Populated dynamically by House.js / main.js -->
           </div>
 
           <!-- Dialogue Scroll Buttons + Exit Button -->
-          <div class="dialogue-controls">
-            <button id="btn-scroll-up" class="dialogue-btn" title="Scroll Up">
+          <div class="dialogue-controls" role="group" aria-label="Dialogue controls">
+            <button id="btn-scroll-up" class="dialogue-btn" title="Scroll Up" aria-label="Scroll content up">
               ▲ Scroll Up
             </button>
             <button
               id="btn-scroll-down"
               class="dialogue-btn"
               title="Scroll Down"
+              aria-label="Scroll content down"
             >
               ▼ Scroll Down
             </button>
@@ -231,6 +232,7 @@
               id="btn-scroll-exit"
               class="dialogue-btn btn-exit"
               title="Exit House"
+              aria-label="Exit CV station"
             >
               ✖ Exit House
             </button>
@@ -239,29 +241,29 @@
       </div>
 
       <!-- Retro Pause Menu / Escape Modal -->
-      <div id="pause-menu" class="dialogue-hidden">
+      <div id="pause-menu" class="dialogue-hidden" role="dialog" aria-modal="true" aria-label="Game paused">
         <div class="dialogue-backdrop" id="pause-backdrop"></div>
         <div class="dialogue-box pause-box">
           <!-- Retro console header -->
           <div class="dialogue-header">
-            <span class="dialogue-dot"></span>
+            <span class="dialogue-dot" aria-hidden="true"></span>
             <span>GAME PAUSED</span>
-            <span class="dialogue-dot"></span>
+            <span class="dialogue-dot" aria-hidden="true"></span>
           </div>
 
           <div class="pause-content">
             <div class="music-section">
               <div class="music-box">
-                <div class="custom-select" id="game-genre-select">
+                <div class="custom-select" id="game-genre-select" role="combobox" aria-label="Music genre" aria-haspopup="listbox" aria-expanded="false">
                   <div class="custom-select-trigger">
-                    <span>👾 8bit</span> <span class="arrow">▼</span>
+                    <span>👾 8bit</span> <span class="arrow" aria-hidden="true">▼</span>
                   </div>
-                  <div class="custom-select-options" id="game-genre-options"></div>
+                  <div class="custom-select-options" id="game-genre-options" role="listbox" aria-label="Genre options"></div>
                 </div>
 
                 <!-- Track time with seek slider -->
                 <div class="track-time-row">
-                  <span class="track-time-label" id="track-time-current"
+                  <span class="track-time-label" id="track-time-current" aria-label="Current time"
                     >00:00</span
                   >
                   <input
@@ -272,6 +274,7 @@
                     value="0"
                     step="0.1"
                     class="track-seek-slider"
+                    aria-label="Track position"
                   />
                   <span class="track-time-label" id="track-time-total"
                     >00:00</span
@@ -279,41 +282,47 @@
                 </div>
 
                 <div class="music-controls">
-                  <div class="transport-buttons">
+                  <div class="transport-buttons" role="group" aria-label="Playback controls">
                     <button
                       id="game-music-repeat"
                       class="dialogue-btn transport-btn"
                       title="Repeat"
+                      aria-label="Toggle repeat"
+                      aria-pressed="false"
                     >
-                      <i class="fas fa-repeat"></i>
+                      <i class="fas fa-repeat" aria-hidden="true"></i>
                     </button>
                     <button
                       id="game-music-prev"
                       class="dialogue-btn transport-btn"
                       title="Previous"
+                      aria-label="Previous track"
                     >
-                      <i class="fas fa-backward-step"></i>
+                      <i class="fas fa-backward-step" aria-hidden="true"></i>
                     </button>
                     <button
                       id="game-music-playpause"
                       class="dialogue-btn transport-btn"
                       title="Play/Pause"
+                      aria-label="Play or pause music"
                     >
-                      <i class="fas fa-play"></i>
+                      <i class="fas fa-play" aria-hidden="true"></i>
                     </button>
                     <button
                       id="game-music-stop"
                       class="dialogue-btn transport-btn"
                       title="Stop"
+                      aria-label="Stop music"
                     >
-                      <i class="fas fa-stop"></i>
+                      <i class="fas fa-stop" aria-hidden="true"></i>
                     </button>
                     <button
                       id="game-music-next"
                       class="dialogue-btn transport-btn"
                       title="Next"
+                      aria-label="Next track"
                     >
-                      <i class="fas fa-forward-step"></i>
+                      <i class="fas fa-forward-step" aria-hidden="true"></i>
                     </button>
                   </div>
                 </div>
@@ -321,7 +330,7 @@
 
               <!-- Volume Slider Section -->
               <div class="volume-row">
-                <span class="volume-label">Music</span>
+                <span class="volume-label" id="music-vol-label">Music</span>
                 <input
                   type="range"
                   id="game-music-volume"
@@ -330,6 +339,8 @@
                   step="0.05"
                   value="0.5"
                   class="volume-slider"
+                  aria-label="Music volume"
+                  aria-labelledby="music-vol-label"
                 />
                 <input
                   type="range"
@@ -339,8 +350,10 @@
                   step="0.05"
                   value="0.5"
                   class="volume-slider"
+                  aria-label="SFX volume"
+                  aria-labelledby="sfx-vol-label"
                 />
-                <span class="volume-label">SFX</span>
+                <span class="volume-label" id="sfx-vol-label">SFX</span>
               </div>
             </div>
 
@@ -348,17 +361,18 @@
           </div>
 
           <div class="pause-actions">
-            <a href="index.html" class="dialogue-btn pause-hub-btn"
+            <a href="index.html" class="dialogue-btn pause-hub-btn" aria-label="Back to CV hub page"
               >Back to Hub</a
             >
             <button
               id="btn-fullscreen"
               class="dialogue-btn"
               title="Toggle Fullscreen"
+              aria-label="Toggle fullscreen mode"
             >
               Fullscreen
             </button>
-            <button id="btn-resume-game" class="dialogue-btn btn-exit">
+            <button id="btn-resume-game" class="dialogue-btn btn-exit" aria-label="Resume game">
               Resume
             </button>
           </div>
@@ -366,13 +380,13 @@
       </div>
 
       <!-- Start Screen Modal -->
-      <div id="start-screen" class="dialogue-visible">
+      <div id="start-screen" class="dialogue-visible" role="dialog" aria-modal="true" aria-labelledby="start-screen-title">
         <div class="dialogue-backdrop"></div>
         <div class="dialogue-box start-box">
           <div class="dialogue-header">
-            <span class="dialogue-dot"></span>
-            <span>VIKTOR'S RPG JOURNEY</span>
-            <span class="dialogue-dot"></span>
+            <span class="dialogue-dot" aria-hidden="true"></span>
+            <span id="start-screen-title">VIKTOR'S RPG JOURNEY</span>
+            <span class="dialogue-dot" aria-hidden="true"></span>
           </div>
 
           <div class="start-content">
@@ -382,12 +396,12 @@
               the tech lead seat. Explore the world, fight skeletons, and
               uncover the milestones that shaped one developer's journey.
             </div>
-            <div class="start-controls-note desktop-only">
-              <span class="key">W</span> <span class="key">A</span>
-              <span class="key">S</span> <span class="key">D</span> Move
+            <div class="start-controls-note desktop-only" role="note" aria-label="Keyboard controls">
+              <span class="key" aria-label="W key">W</span> <span class="key" aria-label="A key">A</span>
+              <span class="key" aria-label="S key">S</span> <span class="key" aria-label="D key">D</span> Move
               &nbsp;·&nbsp;
-              <span class="key" style="min-width: 80px">Space</span> Attack
-              &nbsp;·&nbsp; <span class="key">P</span> Pause
+              <span class="key" style="min-width: 80px" aria-label="Space key">Space</span> Attack
+              &nbsp;·&nbsp; <span class="key" aria-label="P key">P</span> Pause
             </div>
           </div>
 
@@ -396,13 +410,13 @@
           </div>
 
           <div class="start-actions">
-            <button id="btn-start-fullscreen" class="dialogue-btn">
+            <button id="btn-start-fullscreen" class="dialogue-btn" aria-label="Start in fullscreen mode">
               Fullscreen
             </button>
-            <button id="btn-start-game" class="dialogue-btn start-game-btn">
+            <button id="btn-start-game" class="dialogue-btn start-game-btn" aria-label="Start game">
               Start
             </button>
-            <a href="index.html" class="dialogue-btn start-hub-btn"
+            <a href="index.html" class="dialogue-btn start-hub-btn" aria-label="Back to CV hub page"
               >Back to Hub</a
             >
           </div>
@@ -410,18 +424,20 @@
       </div>
 
       <!-- Game Over Screen Modal -->
-      <div id="game-over-screen" class="dialogue-hidden">
+      <div id="game-over-screen" class="dialogue-hidden" role="alertdialog" aria-modal="true" aria-label="Game Over">
         <div class="dialogue-backdrop"></div>
         <div class="dialogue-box gameover-box">
           <div class="dialogue-header gameover-header">
             <span
               class="dialogue-dot"
               style="background: #ef4444; box-shadow: 0 0 8px #ef4444"
+              aria-hidden="true"
             ></span>
             <span style="color: #ef4444">GAME OVER</span>
             <span
               class="dialogue-dot"
               style="background: #ef4444; box-shadow: 0 0 8px #ef4444"
+              aria-hidden="true"
             ></span>
           </div>
 
@@ -435,10 +451,10 @@
           </div>
 
           <div class="gameover-actions">
-            <button id="btn-restart-game" class="dialogue-btn restart-btn">
+            <button id="btn-restart-game" class="dialogue-btn restart-btn" aria-label="Restart game">
               Restart
             </button>
-            <a href="index.html" class="dialogue-btn gameover-hub-btn"
+            <a href="index.html" class="dialogue-btn gameover-hub-btn" aria-label="Back to CV hub page"
               >Back to Hub</a
             >
           </div>
@@ -446,33 +462,21 @@
       </div>
 
       <!-- Hire Me Modal -->
-      <div id="hire-modal" class="dialogue-hidden">
+      <div id="hire-modal" class="dialogue-hidden" role="dialog" aria-modal="true" aria-labelledby="hire-modal-title">
         <div class="dialogue-backdrop" id="hire-backdrop"></div>
         <div class="dialogue-box hire-dialog-game">
           <div class="dialogue-header">
-            <span class="dialogue-dot"></span>
-            <span>Contact Viktor</span>
-            <span class="dialogue-dot"></span>
+            <span class="dialogue-dot" aria-hidden="true"></span>
+            <span id="hire-modal-title">Contact Viktor</span>
+            <span class="dialogue-dot" aria-hidden="true"></span>
           </div>
           <div data-fs-success class="cv-success-hidden">
-            <p
-              style="
-                font-size: 12px;
-                font-family: var(--font-pixel);
-                color: #86efac;
-              "
-            >
-              Thanks for reaching out!
-            </p>
-            <p
-              style="
-                font-size: 9px;
-                font-family: var(--font-pixel);
-                color: #94a3b8;
-              "
-            >
-              Your message was sent successfully. I'll get back to you soon.
-            </p>
+            <p style="font-size:12px;font-family:var(--font-pixel);color:#86efac;">Thanks for reaching out!</p>
+            <p style="font-size:9px;font-family:var(--font-pixel);color:#94a3b8;">Your message was sent successfully. I'll get back to you soon.</p>
+          </div>
+          <div data-hire-cooldown class="cv-success-hidden">
+            <p style="font-size:12px;font-family:var(--font-pixel);color:#fbbf24;">Message already sent!</p>
+            <p style="font-size:9px;font-family:var(--font-pixel);color:#94a3b8;">You've already sent a message today. Come back tomorrow.</p>
           </div>
           <div data-fs-error class="cv-error-hidden"></div>
           <form id="hire-game-form">
@@ -515,13 +519,14 @@
               ></textarea>
             </div>
             <div class="hire-actions">
-              <button type="submit" class="dialogue-btn" data-fs-submit-btn>
+              <button type="submit" class="dialogue-btn" data-fs-submit-btn aria-label="Send message to Viktor">
                 Send
               </button>
               <button
                 type="button"
                 id="hire-close"
                 class="dialogue-btn btn-exit"
+                aria-label="Close contact form"
               >
                 Close
               </button>
@@ -533,7 +538,6 @@
 
     <!-- NippleJS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/nipplejs@1.0.3/dist/index.js"></script>
-    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 
     <!-- Core Module Script Loader -->
     <script type="module" src="./scripts/game/main.js"></script>

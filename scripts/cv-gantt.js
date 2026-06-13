@@ -125,7 +125,10 @@ function renderBar(job) {
   const { left, width } = barGeometry(job.period.from, job.period.to);
   return `<div class="gt-bar${job.isCurrent ? ' is-current' : ''}"
     style="left:${left}px;width:${width}px;background:${color}"
-    data-job="${job.id}">
+    data-job="${job.id}"
+    role="button"
+    tabindex="0"
+    aria-label="${job.title} at ${job.company}, ${job.periodLabel}${job.isCurrent ? ' (current)' : ''}">
     <span class="gt-bar-label">${job.title} · ${job.company}</span>
     ${renderMilestones(job.id, left)}
   </div>`;
@@ -133,7 +136,7 @@ function renderBar(job) {
 
 // ── Render: sidebar row label ─────────────────────────────────────────────────
 function renderLabel(job, draggable = false) {
-  return `<div class="gt-row-label${draggable ? ' gt-row-draggable' : ''}" draggable="${draggable}" data-job="${job.id}" style="height:${ROW_H}px">
+  return `<div class="gt-row-label${draggable ? ' gt-row-draggable' : ''}" draggable="${draggable}" data-job="${job.id}" style="height:${ROW_H}px" role="listitem" tabindex="0" aria-label="${job.title} at ${job.company}, ${job.periodLabel}">
     <div class="gt-job-title">${job.title}</div>
     <div class="gt-job-company">${job.company}</div>
     <div class="gt-job-period">${job.periodLabel}</div>
@@ -303,11 +306,11 @@ function renderLegend(communityRow = COMMUNITY_ROW) {
 // ── Render: detail panel ──────────────────────────────────────────────────────
 function renderDetail(job) {
   const color  = BAR_COLORS[job.id] || '#8b949e';
-  const logo   = job.logo ? `<img class="gt-detail-logo" src="assets/images/${job.logo}" alt="" onerror="this.style.display='none'">` : '';
+  const logo   = job.logo ? `<img class="gt-detail-logo" src="assets/images/${job.logo}" alt="${job.company} logo" onerror="this.style.display='none'">` : '';
   const chips  = (job.skills || []).map(s => `<span class="gt-chip">${s.name}</span>`).join('');
   const lis    = (job.bullets || []).map(b => `<li>${b}</li>`).join('');
   const refs   = (job.refs || []).map(r => `<a href="${r.url}" target="_blank" rel="noopener noreferrer">${r.label}</a>`).join('');
-  return `<div class="gt-detail-inner">
+  return `<div class="gt-detail-inner" role="article" aria-label="${job.title} at ${job.company}">
     <div class="gt-detail-head">
       ${logo}
       <div class="gt-detail-meta">
@@ -315,10 +318,10 @@ function renderDetail(job) {
         <div class="gt-detail-company">${job.company}</div>
         <div class="gt-detail-badges">
           <span class="gt-period-badge">${job.periodLabel}</span>
-          ${job.isCurrent ? '<span class="gt-live-badge">● Live</span>' : ''}
+          ${job.isCurrent ? '<span class="gt-live-badge" aria-label="Currently active">● Live</span>' : ''}
         </div>
       </div>
-      <button class="gt-close-btn" id="gt-close">✕</button>
+      <button class="gt-close-btn" id="gt-close" aria-label="${locale.t('ariaCloseDialog')}">✕</button>
     </div>
     ${job.description ? `<p class="gt-detail-desc">${job.description}</p>` : ''}
     ${lis ? `<ul class="gt-detail-bullets">${lis}</ul>` : ''}
@@ -374,59 +377,59 @@ function renderPage() {
   document.getElementById('gantt-root').innerHTML = `
   <div class="gantt-page">
 
-    <header class="gt-header">
-      <a href="index.html" class="gt-back" title="Back">
-        <i class="fa-solid fa-arrow-left"></i>
+    <header class="gt-header" role="banner">
+      <a href="index.html" class="gt-back" title="Back" aria-label="${locale.t('ariaBackToHub')}">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
       </a>
       <div class="gt-header-id">
         <div class="gt-header-name">${CV_DATA.identity.name}</div>
         <div class="gt-header-role">${CV_DATA.meta.role}<span class="gt-pm-view"> &nbsp;·&nbsp; <span style="color:var(--gantt-muted)">${locale.t('ganttPmView')}</span></span></div>
       </div>
-      <div class="gt-header-links">${contacts}</div>
-      <div class="gt-header-actions">
+      <nav class="gt-header-links" aria-label="Contact links">${contacts}</nav>
+      <div class="gt-header-actions" role="group" aria-label="Page actions">
         <div id="gt-lang-dropdown-wrap"></div>
-        <button class="gt-icon-btn" id="theme-toggle" title="Toggle theme">
-          <span class="theme-sq-icon"></span>
+        <button class="gt-icon-btn" id="theme-toggle" title="Toggle theme" aria-label="${locale.t('ariaToggleTheme')}">
+          <span class="theme-sq-icon" aria-hidden="true"></span>
         </button>
-        <button class="gt-icon-btn" id="gt-music-btn" title="Music player">
-          <i class="fa-solid fa-music"></i>
+        <button class="gt-icon-btn" id="gt-music-btn" title="Music player" aria-label="${locale.t('ariaOpenMusicPlayer')}">
+          <i class="fa-solid fa-music" aria-hidden="true"></i>
         </button>
         <div class="gt-contacts-wrap">
-          <button class="gt-icon-btn" id="gt-contacts-btn" title="${locale.t('ganttContacts')}">
-            <i class="fa-solid fa-address-card"></i>
+          <button class="gt-icon-btn" id="gt-contacts-btn" title="${locale.t('ganttContacts')}" aria-label="${locale.t('ganttContacts')}" aria-haspopup="true" aria-expanded="false">
+            <i class="fa-solid fa-address-card" aria-hidden="true"></i>
           </button>
-          <div class="gt-contacts-popup" id="gt-contacts-popup">
+          <div class="gt-contacts-popup" id="gt-contacts-popup" role="menu" aria-label="${locale.t('ganttContactsHeading')}">
             <div class="gt-contacts-popup-heading">${locale.t('ganttContactsHeading')}</div>
             ${allContactLinks}
           </div>
         </div>
-        <button class="gt-btn gt-btn-hire" id="hire-gantt-btn">
-          <i class="fa-solid fa-paper-plane"></i><span class="gt-btn-label"> ${locale.t('hireMe')}</span>
+        <button class="gt-btn gt-btn-hire" id="hire-gantt-btn" aria-label="${locale.t('hireMe')} — ${locale.t('ariaHireForm')}">
+          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span class="gt-btn-label"> ${locale.t('hireMe')}</span>
         </button>
-        <button class="gt-btn gt-btn-book" id="gantt-booking-btn">
-          <i class="fa-regular fa-calendar-check"></i><span class="gt-btn-label"> ${locale.t('ganttBook')}</span>
+        <button class="gt-btn gt-btn-book" id="gantt-booking-btn" aria-label="${locale.t('ganttBook')} — ${locale.t('bookMeeting')}">
+          <i class="fa-regular fa-calendar-check" aria-hidden="true"></i><span class="gt-btn-label"> ${locale.t('ganttBook')}</span>
         </button>
       </div>
     </header>
 
-    <div class="gt-main" id="gt-main">
+    <main class="gt-main" id="gt-main" aria-label="Career Gantt chart">
 
-      <div class="gt-sidebar" id="gt-sidebar">
-        <div class="gt-sidebar-header" style="height:${HDR_H}px">${locale.t('ganttTaskRole')}</div>
+      <div class="gt-sidebar" id="gt-sidebar" role="list" aria-label="Job entries">
+        <div class="gt-sidebar-header" style="height:${HDR_H}px" role="columnheader">${locale.t('ganttTaskRole')}</div>
         ${sidebarLabels}
       </div>
 
-      <div class="gt-tracks" id="gt-tracks">
-        <div class="gt-time-axis" style="height:${HDR_H}px">
+      <div class="gt-tracks" id="gt-tracks" role="region" aria-label="Timeline tracks">
+        <div class="gt-time-axis" style="height:${HDR_H}px" role="rowgroup" aria-label="Time axis">
           ${renderTimeAxis()}
         </div>
         ${trackRows}
-        <div class="gt-today-line" id="gt-today-line" style="left:${todayX}px"></div>
+        <div class="gt-today-line" id="gt-today-line" style="left:${todayX}px" aria-label="Today" role="mark"></div>
       </div>
 
-    </div>
+    </main>
 
-    <div class="gt-detail" id="gt-detail"></div>
+    <div class="gt-detail" id="gt-detail" role="region" aria-label="Job detail panel" aria-live="polite"></div>
 
     <div class="gt-legend">
       <span class="gt-legend-heading">${locale.t('ganttLegend')}</span>

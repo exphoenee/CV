@@ -43,13 +43,13 @@ const COMMUNITY_ROW = {
 function renderCard(job) {
   const color = CARD_COLORS[job.id] || '#8b949e';
   const logo  = job.logo
-    ? `<img class="sb-card-logo" src="assets/images/${job.logo}" alt="" onerror="this.style.display='none'">`
-    : `<span class="sb-card-initials" style="background:${color}18;color:${color};border-color:${color}30">${job.company.charAt(0)}</span>`;
+    ? `<img class="sb-card-logo" src="assets/images/${job.logo}" alt="${job.company} logo" onerror="this.style.display='none'">`
+    : `<span class="sb-card-initials" style="background:${color}18;color:${color};border-color:${color}30" aria-hidden="true">${job.company.charAt(0)}</span>`;
   const chips = (job.skills || []).slice(0, 4)
     .map(s => `<span class="sb-chip">${s.name}</span>`).join('');
 
-  return `<div class="sb-card" draggable="true" data-job="${job.id}">
-    <div class="sb-card-accent" style="background:${color}"></div>
+  return `<div class="sb-card" draggable="true" data-job="${job.id}" role="listitem" tabindex="0" aria-label="${job.title} at ${job.company}, ${job.periodLabel}${job.isCurrent ? ' (current)' : ''}">
+    <div class="sb-card-accent" style="background:${color}" aria-hidden="true"></div>
     <div class="sb-card-body">
       <div class="sb-card-head">
         ${logo}
@@ -60,9 +60,9 @@ function renderCard(job) {
       </div>
       <div class="sb-card-meta">
         <span class="sb-period">${job.periodLabel}</span>
-        ${job.isCurrent ? '<span class="sb-live-badge">● Live</span>' : ''}
+        ${job.isCurrent ? '<span class="sb-live-badge" aria-label="Currently active">● Live</span>' : ''}
       </div>
-      ${chips ? `<div class="sb-card-chips">${chips}</div>` : ''}
+      ${chips ? `<div class="sb-card-chips" aria-label="Skills">${chips}</div>` : ''}
     </div>
   </div>`;
 }
@@ -96,13 +96,13 @@ function renderSkeleton() {
 }
 
 function renderColumn(colId, label, color, cardsHtml) {
-  return `<div class="sb-column" id="sb-col-${colId}">
-    <div class="sb-col-header">
-      <span class="sb-col-dot" style="background:${color}"></span>
+  return `<div class="sb-column" id="sb-col-${colId}" role="region" aria-label="${label} column">
+    <div class="sb-col-header" role="heading" aria-level="2">
+      <span class="sb-col-dot" style="background:${color}" aria-hidden="true"></span>
       <span class="sb-col-title">${label}</span>
-      <span class="sb-col-count">${cardsHtml.length}</span>
+      <span class="sb-col-count" aria-label="${cardsHtml.length} items">${cardsHtml.length}</span>
     </div>
-    <div class="sb-col-body" data-col="${colId}">
+    <div class="sb-col-body" data-col="${colId}" role="list" aria-label="${label} items" aria-dropeffect="move">
       ${cardsHtml.join('\n')}
     </div>
   </div>`;
@@ -135,46 +135,46 @@ function renderPage() {
 
   document.getElementById('board-root').innerHTML = `
   <div class="sb-page">
-    <header class="sb-header">
-      <a href="index.html" class="sb-back" title="Back">
-        <i class="fa-solid fa-arrow-left"></i>
+    <header class="sb-header" role="banner">
+      <a href="index.html" class="sb-back" title="Back" aria-label="${t('ariaBackToHub')}">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
       </a>
       <div class="sb-header-id">
         <div class="sb-header-name">${CV_DATA.identity.name}</div>
-        <div class="sb-header-role">${CV_DATA.meta.role}&nbsp;·&nbsp;<span>${t('sbBoardView')}</span></div>
+        <div class="sb-header-role">${CV_DATA.meta.role}<span class="sb-scrum-view">&nbsp;·&nbsp;<span>${t('sbBoardView')}</span></span></div>
       </div>
-      <div class="sb-header-links">${contacts}</div>
-      <div class="sb-header-actions">
+      <nav class="sb-header-links" aria-label="Contact links">${contacts}</nav>
+      <div class="sb-header-actions" role="group" aria-label="Page actions">
         ${langDropdownHTML()}
-        <button class="sb-icon-btn" id="theme-toggle" title="Toggle theme">
-          <span class="theme-sq-icon"></span>
+        <button class="sb-icon-btn" id="theme-toggle" title="Toggle theme" aria-label="${t('ariaToggleTheme')}">
+          <span class="theme-sq-icon" aria-hidden="true"></span>
         </button>
-        <button class="sb-icon-btn" id="sb-music-btn" title="Music player">
-          <i class="fa-solid fa-music"></i>
+        <button class="sb-icon-btn" id="sb-music-btn" title="Music player" aria-label="${t('ariaOpenMusicPlayer')}">
+          <i class="fa-solid fa-music" aria-hidden="true"></i>
         </button>
         <div class="sb-contacts-wrap">
-          <button class="sb-icon-btn" id="sb-contacts-btn" title="${t('ganttContacts')}">
-            <i class="fa-solid fa-address-card"></i>
+          <button class="sb-icon-btn" id="sb-contacts-btn" title="${t('ganttContacts')}" aria-label="${t('ganttContacts')}" aria-haspopup="true" aria-expanded="false">
+            <i class="fa-solid fa-address-card" aria-hidden="true"></i>
           </button>
-          <div class="sb-contacts-popup" id="sb-contacts-popup">
+          <div class="sb-contacts-popup" id="sb-contacts-popup" role="menu" aria-label="${t('ganttContactsHeading')}">
             <div class="sb-contacts-popup-heading">${t('ganttContactsHeading')}</div>
             ${allContactLinks}
           </div>
         </div>
-        <button class="sb-btn sb-btn-hire" id="hire-scrumboard-btn">
-          <i class="fa-solid fa-paper-plane"></i> ${t('hireMe')}
+        <button class="sb-btn sb-btn-hire" id="hire-scrumboard-btn" aria-label="${t('hireMe')} — ${t('ariaHireForm')}">
+          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span class="sb-btn-label"> ${t('hireMe')}</span>
         </button>
-        <button class="sb-btn sb-btn-book" id="scrumboard-booking-btn">
-          <i class="fa-regular fa-calendar-check"></i> ${t('book')}
+        <button class="sb-btn sb-btn-book" id="scrumboard-booking-btn" aria-label="${t('book')} — ${t('bookMeeting')}">
+          <i class="fa-regular fa-calendar-check" aria-hidden="true"></i><span class="sb-btn-label"> ${t('book')}</span>
         </button>
       </div>
     </header>
 
-    <div class="sb-board">
+    <main class="sb-board" aria-label="Career Scrum board">
       ${backlogCol}
       ${inProgressCol}
       ${doneCol}
-    </div>
+    </main>
   </div>`;
 }
 

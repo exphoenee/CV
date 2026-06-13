@@ -73,15 +73,36 @@ export function initHireModal(prefix) {
     });
   }
 
+  var COOLDOWN_KEY = 'hire_sent_ts';
+  var COOLDOWN_MS  = 24 * 60 * 60 * 1000;
+
+  function isOnCooldown() {
+    var ts = parseInt(localStorage.getItem(COOLDOWN_KEY) || '0', 10);
+    return ts > 0 && (Date.now() - ts < COOLDOWN_MS);
+  }
+
   function openModal(subject) {
-    if (subjectEl && subject) subjectEl.value = subject;
     var form = document.getElementById(prefix + "-form");
-    form.reset();
-    clearFieldErrors();
-    var fsSuccess = document.querySelector("#" + prefix + "-modal [data-fs-success]");
-    if (fsSuccess) fsSuccess.classList.add("cv-success-hidden");
-    var fsError = document.querySelector("#" + prefix + "-modal [data-fs-error]");
-    if (fsError) fsError.classList.add("cv-error-hidden");
+    var fsSuccess  = document.querySelector("#" + prefix + "-modal [data-fs-success]");
+    var hireCooldown = document.querySelector("#" + prefix + "-modal [data-hire-cooldown]");
+    var fsError    = document.querySelector("#" + prefix + "-modal [data-fs-error]");
+
+    if (fsSuccess)    fsSuccess.classList.add("cv-success-hidden");
+    if (fsError)      { fsError.classList.add("cv-error-hidden"); fsError.textContent = ''; }
+
+    if (isOnCooldown()) {
+      form.style.display = 'none';
+      if (hireCooldown) hireCooldown.classList.remove("cv-success-hidden");
+    } else {
+      if (hireCooldown) hireCooldown.classList.add("cv-success-hidden");
+      form.style.display = '';
+      if (subjectEl && subject) subjectEl.value = subject;
+      form.reset();
+      clearFieldErrors();
+      var submitBtn = form.querySelector('[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = locale.t('send'); }
+    }
+
     modal.classList.remove("cv-modal-hidden");
   }
 
@@ -100,6 +121,9 @@ export function initHireModal(prefix) {
   });
 
   document.getElementById(prefix + "-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
     var nameVal = document.getElementById(prefix + '-name').value.trim();
     var emailVal = document.getElementById(prefix + '-email').value.trim();
     var msgVal = document.getElementById(prefix + '-message').value.trim();
@@ -110,12 +134,35 @@ export function initHireModal(prefix) {
     document.getElementById(prefix + '-email-err').textContent = emailOk ? '' : locale.t('errEmailInvalid');
     document.getElementById(prefix + '-msg-err').textContent = (msgVal.length >= 20 && wordCount >= 4) ? '' : locale.t('errMessageTooShort');
 
-    if (!nameVal || !emailOk || msgVal.length < 20 || wordCount < 4) {
-      e.preventDefault();
-      return;
-    }
-    closeModal();
-    showToast(locale.t('messageSent'));
+    if (!nameVal || !emailOk || msgVal.length < 20 || wordCount < 4) return;
+
+    var form = this;
+    var submitBtn = form.querySelector('[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    var formData = new FormData(form);
+    fetch('https://formspree.io/f/mrejlned', {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    }).then(function(res) {
+      if (res.ok) {
+        localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
+        form.style.display = 'none';
+        var hireCooldown = document.querySelector('#' + prefix + '-modal [data-hire-cooldown]');
+        if (hireCooldown) hireCooldown.classList.add('cv-success-hidden');
+        var fsSuccess = document.querySelector('#' + prefix + '-modal [data-fs-success]');
+        if (fsSuccess) fsSuccess.classList.remove('cv-success-hidden');
+      } else {
+        if (submitBtn) submitBtn.disabled = false;
+        var fsError = document.querySelector('#' + prefix + '-modal [data-fs-error]');
+        if (fsError) { fsError.classList.remove('cv-error-hidden'); fsError.textContent = locale.t('errSendFailed') || 'Failed to send. Please try again.'; }
+      }
+    }).catch(function() {
+      if (submitBtn) submitBtn.disabled = false;
+      var fsError = document.querySelector('#' + prefix + '-modal [data-fs-error]');
+      if (fsError) { fsError.classList.remove('cv-error-hidden'); fsError.textContent = locale.t('errSendFailed') || 'Failed to send. Please try again.'; }
+    });
   });
 
   function updateText() {
@@ -184,9 +231,8 @@ export function restoreCollapseStates(key) {
   });
 }
 
-export function initFormspree(selector) {
-  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
-  formspree("initForm", { formElement: selector, formId: "mrejlned" });
+export function initFormspree(_selector) {
+  // Submission is handled directly in initHireModal via fetch — no external SDK needed.
 }
 
 export const MUSIC_GENRES = [
@@ -218,39 +264,40 @@ function musicGenreOptionsHTML() {
 }
 
 export function musicPlayerHTML() {
+  var t = locale.t.bind(locale);
   return '' +
-    '<div id="music-player">' +
-    '  <button id="music-toggle" aria-label="Toggle music player" title="Music Player"><i class="fas fa-music"></i></button>' +
-    '  <div id="music-player-box" class="music-box-hidden">' +
-    '    <button id="music-box-close" class="music-box-close-btn" aria-label="Close music player" title="Close">\u2715</button>' +
+    '<div id="music-player" role="region" aria-label="Music player">' +
+    '  <button id="music-toggle" aria-label="' + t('ariaOpenMusicPlayer') + '" title="Music Player"><i class="fas fa-music" aria-hidden="true"></i></button>' +
+    '  <div id="music-player-box" class="music-box-hidden" role="dialog" aria-modal="false" aria-label="Music player controls">' +
+    '    <button id="music-box-close" class="music-box-close-btn" aria-label="' + t('ariaCloseMusicPlayer') + '" title="Close">\u2715</button>' +
     '    <div class="music-player-content">' +
-    '      <div class="music-cover">' +
+    '      <div class="music-cover" aria-hidden="true">' +
     '        <img src="assets/music/cover-xs.jpg" alt="" class="cover-dark" />' +
     '        <img src="assets/music/cover-dl-xs.jpg" alt="" class="cover-light" />' +
     '      </div>' +
     '      <div class="controls-right">' +
     '        <div class="track-time-row">' +
-    '          <span class="track-time-label" id="track-time-current">00:00</span>' +
-    '          <input type="range" id="track-seek" min="0" max="100" value="0" step="0.1" class="track-seek-slider" />' +
-    '          <span class="track-time-label" id="track-time-total">00:00</span>' +
+    '          <span class="track-time-label" id="track-time-current" aria-label="Current time">00:00</span>' +
+    '          <input type="range" id="track-seek" min="0" max="100" value="0" step="0.1" class="track-seek-slider" aria-label="' + t('ariaTrackPosition') + '" />' +
+    '          <span class="track-time-label" id="track-time-total" aria-label="Total duration">00:00</span>' +
     '        </div>' +
-    '        <div class="custom-select" id="custom-genre-select">' +
-    '          <div class="custom-select-trigger"><span>' + MUSIC_GENRES[0].label + '</span> <span class="arrow">\u25BC</span></div>' +
-    '          <div class="custom-select-options">\n' + musicGenreOptionsHTML() + '\n' +
+    '        <div class="custom-select" id="custom-genre-select" role="combobox" aria-label="' + t('ariaGenreSelect') + '" aria-haspopup="listbox" aria-expanded="false">' +
+    '          <div class="custom-select-trigger" role="button" tabindex="0" aria-label="' + t('ariaGenreSelect') + '"><span>' + MUSIC_GENRES[0].label + '</span> <span class="arrow" aria-hidden="true">\u25BC</span></div>' +
+    '          <div class="custom-select-options" role="listbox" aria-label="Genre options">\n' + musicGenreOptionsHTML() + '\n' +
     '          </div>' +
     '        </div>' +
-    '        <div class="transport-buttons">' +
-    '          <button id="music-repeat" class="transport-btn" title="Repeat mode"><i class="fas fa-repeat"></i></button>' +
-    '          <button id="music-prev" class="transport-btn" title="Previous"><i class="fas fa-backward-step"></i></button>' +
-    '          <button id="music-playpause" class="transport-btn" title="Play/Pause"><i class="fas fa-play"></i></button>' +
-    '          <button id="music-next" class="transport-btn" title="Next"><i class="fas fa-forward-step"></i></button>' +
-    '          <button id="music-lyrics" class="transport-btn" aria-label="Show lyrics" title="Lyrics"><i class="fas fa-file-lines"></i></button>' +
+    '        <div class="transport-buttons" role="group" aria-label="Playback controls">' +
+    '          <button id="music-repeat" class="transport-btn" title="Repeat mode" aria-label="' + t('ariaToggleRepeat') + '" aria-pressed="false"><i class="fas fa-repeat" aria-hidden="true"></i></button>' +
+    '          <button id="music-prev" class="transport-btn" title="Previous" aria-label="' + t('ariaPrevTrack') + '"><i class="fas fa-backward-step" aria-hidden="true"></i></button>' +
+    '          <button id="music-playpause" class="transport-btn" title="Play/Pause" aria-label="' + t('ariaPlayMusic') + '"><i class="fas fa-play" aria-hidden="true"></i></button>' +
+    '          <button id="music-next" class="transport-btn" title="Next" aria-label="' + t('ariaNextTrack') + '"><i class="fas fa-forward-step" aria-hidden="true"></i></button>' +
+    '          <button id="music-lyrics" class="transport-btn" aria-label="' + t('ariaShowLyrics') + '" title="Lyrics"><i class="fas fa-file-lines" aria-hidden="true"></i></button>' +
     '        </div>' +
     '        <div class="volume-bottom-row">' +
-    '          <span class="volume-label"><i class="fas fa-volume-high"></i></span>' +
-    '          <input type="range" id="music-volume" min="0" max="1" step="0.05" value="0.5" class="volume-slider" />' +
+    '          <span class="volume-label" aria-hidden="true"><i class="fas fa-volume-high"></i></span>' +
+    '          <input type="range" id="music-volume" min="0" max="1" step="0.05" value="0.5" class="volume-slider" aria-label="' + t('ariaMusicVolume') + '" />' +
     '        </div>' +
-    '        <div id="music-lyrics-panel" class="music-lyrics-hidden">' +
+    '        <div id="music-lyrics-panel" class="music-lyrics-hidden" role="region" aria-label="Lyrics" aria-live="polite">' +
     '          <pre id="lyrics-text"></pre>' +
     '        </div>' +
     '      </div>' +
@@ -264,72 +311,78 @@ export function bookingModalHTML(prefix) {
   var t = locale.t.bind(locale);
   var p = prefix;
   return [
-    '<div id="' + p + '-booking-modal" class="cv-modal-hidden">',
+    '<div id="' + p + '-booking-modal" class="cv-modal-hidden" role="dialog" aria-modal="true" aria-labelledby="' + p + '-bk-title">',
     '  <div class="hire-backdrop" id="' + p + '-booking-backdrop"></div>',
     '  <div class="hire-dialog bk-dialog">',
     '    <div class="hire-dialog-header">',
-    '      <h3 data-bk-i18n="bookTitle">' + t('bookTitle') + '</h3>',
-    '      <button class="hire-close" id="' + p + '-bk-close" type="button">&#x2715;</button>',
+    '      <h3 id="' + p + '-bk-title" data-bk-i18n="bookTitle">' + t('bookTitle') + '</h3>',
+    '      <button class="hire-close" id="' + p + '-bk-close" type="button" aria-label="' + t('ariaCloseBooking') + '">&#x2715;</button>',
     '    </div>',
     '    <div class="bk-body">',
 
-    '      <div id="' + p + '-bk-loading" class="bk-state">',
-    '        <div class="bk-spinner"></div>',
+    '      <div id="' + p + '-bk-loading" class="bk-state" role="status" aria-live="polite">',
+    '        <div class="bk-spinner" aria-hidden="true"></div>',
     '        <p data-bk-i18n="bookLoading">' + t('bookLoading') + '</p>',
     '      </div>',
 
-    '      <div id="' + p + '-bk-error" class="bk-state bk-hidden">',
-    '        <div class="bk-state-icon">!</div>',
+    '      <div id="' + p + '-bk-error" class="bk-state bk-hidden" role="alert" aria-live="assertive">',
+    '        <div class="bk-state-icon" aria-hidden="true">!</div>',
     '        <p data-bk-i18n="bookError">' + t('bookError') + '</p>',
     '        <button class="bk-btn-secondary" id="' + p + '-bk-retry" data-bk-i18n="bookRetry">' + t('bookRetry') + '</button>',
     '      </div>',
 
-    '      <div id="' + p + '-bk-empty" class="bk-state bk-hidden">',
-    '        <div class="bk-state-icon"><i class="fa-regular fa-calendar-xmark"></i></div>',
+    '      <div id="' + p + '-bk-empty" class="bk-state bk-hidden" role="status">',
+    '        <div class="bk-state-icon"><i class="fa-regular fa-calendar-xmark" aria-hidden="true"></i></div>',
     '        <p data-bk-i18n="bookEmpty">' + t('bookEmpty') + '</p>',
     '      </div>',
 
-    '      <div id="' + p + '-bk-step-date" class="bk-step bk-hidden">',
+    '      <div id="' + p + '-bk-step-date" class="bk-step bk-hidden" role="region" aria-label="Step 1: Choose a date">',
     '        <p class="bk-step-label" data-bk-i18n="bookStep1">' + t('bookStep1') + '</p>',
-    '        <div id="' + p + '-bk-dates" class="bk-dates-grid"></div>',
+    '        <div id="' + p + '-bk-dates" class="bk-dates-grid" role="list" aria-label="Available dates"></div>',
     '      </div>',
 
-    '      <div id="' + p + '-bk-step-time" class="bk-step bk-hidden">',
-    '        <button class="bk-back-btn" id="' + p + '-bk-back-date"><i class="fa-solid fa-arrow-left"></i> <span data-bk-i18n="bookBack">' + t('bookBack') + '</span></button>',
+    '      <div id="' + p + '-bk-step-time" class="bk-step bk-hidden" role="region" aria-label="Step 2: Choose a time slot">',
+    '        <button class="bk-back-btn" id="' + p + '-bk-back-date" aria-label="Back to date selection"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> <span data-bk-i18n="bookBack">' + t('bookBack') + '</span></button>',
     '        <p class="bk-step-label" data-bk-i18n="bookStep2">' + t('bookStep2') + '</p>',
-    '        <div id="' + p + '-bk-date-badge" class="bk-badge"></div>',
-    '        <div id="' + p + '-bk-slots" class="bk-slots-grid"></div>',
+    '        <div id="' + p + '-bk-date-badge" class="bk-badge" aria-live="polite"></div>',
+    '        <div id="' + p + '-bk-slots" class="bk-slots-grid" role="list" aria-label="Available time slots"></div>',
     '      </div>',
 
-    '      <div id="' + p + '-bk-step-form" class="bk-step bk-hidden">',
-    '        <button class="bk-back-btn" id="' + p + '-bk-back-time"><i class="fa-solid fa-arrow-left"></i> <span data-bk-i18n="bookBack">' + t('bookBack') + '</span></button>',
+    '      <div id="' + p + '-bk-step-form" class="bk-step bk-hidden" role="region" aria-label="Step 3: Your details">',
+    '        <button class="bk-back-btn" id="' + p + '-bk-back-time" aria-label="Back to time slot selection"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> <span data-bk-i18n="bookBack">' + t('bookBack') + '</span></button>',
     '        <p class="bk-step-label" data-bk-i18n="bookStep3">' + t('bookStep3') + '</p>',
-    '        <div id="' + p + '-bk-slot-badge" class="bk-badge"></div>',
-    '        <form id="' + p + '-bk-form" novalidate>',
+    '        <div id="' + p + '-bk-slot-badge" class="bk-badge" aria-live="polite"></div>',
+    '        <form id="' + p + '-bk-form" novalidate aria-label="Meeting booking form">',
     '          <div class="bk-field">',
-    '            <label><span data-bk-i18n="bookYourName">' + t('bookYourName') + '</span> <span class="bk-required">*</span></label>',
-    '            <input type="text" id="' + p + '-bk-name" required placeholder="Jane Smith">',
+    '            <label for="' + p + '-bk-name"><span data-bk-i18n="bookYourName">' + t('bookYourName') + '</span> <span class="bk-required" aria-label="required">*</span></label>',
+    '            <input type="text" id="' + p + '-bk-name" name="bk-name" required placeholder="Jane Smith" aria-required="true" autocomplete="name">',
     '          </div>',
     '          <div class="bk-field">',
-    '            <label><span data-bk-i18n="bookYourEmail">' + t('bookYourEmail') + '</span> <span class="bk-required">*</span></label>',
-    '            <input type="email" id="' + p + '-bk-email" required placeholder="your@email.com">',
-    '            <span class="bk-field-error" id="' + p + '-bk-email-err"></span>',
+    '            <label for="' + p + '-bk-email"><span data-bk-i18n="bookYourEmail">' + t('bookYourEmail') + '</span> <span class="bk-required" aria-label="required">*</span></label>',
+    '            <input type="email" id="' + p + '-bk-email" name="bk-email" required placeholder="your@email.com" aria-required="true" aria-describedby="' + p + '-bk-email-err" autocomplete="email">',
+    '            <span class="bk-field-error" id="' + p + '-bk-email-err" role="alert" aria-live="polite"></span>',
     '          </div>',
     '          <div class="bk-field">',
-    '            <label><span data-bk-i18n="bookTopic">' + t('bookTopic') + '</span> <span class="bk-required">*</span></label>',
-    '            <textarea id="' + p + '-bk-topic" rows="4" required data-bk-i18n-placeholder="bookTopicPlaceholder" placeholder="' + t('bookTopicPlaceholder') + '"></textarea>',
-    '            <span class="bk-field-error" id="' + p + '-bk-topic-err"></span>',
+    '            <label for="' + p + '-bk-topic"><span data-bk-i18n="bookTopic">' + t('bookTopic') + '</span> <span class="bk-required" aria-label="required">*</span></label>',
+    '            <textarea id="' + p + '-bk-topic" name="bk-topic" rows="4" required data-bk-i18n-placeholder="bookTopicPlaceholder" placeholder="' + t('bookTopicPlaceholder') + '" aria-required="true" aria-describedby="' + p + '-bk-topic-err"></textarea>',
+    '            <span class="bk-field-error" id="' + p + '-bk-topic-err" role="alert" aria-live="polite"></span>',
     '          </div>',
     '          <button type="submit" id="' + p + '-bk-submit" class="bk-btn-primary" data-bk-i18n="bookSubmit">' + t('bookSubmit') + '</button>',
     '        </form>',
     '      </div>',
 
-    '      <div id="' + p + '-bk-step-confirm" class="bk-step bk-step-confirm bk-hidden">',
-    '        <div class="bk-confirm-check"><i class="fa-solid fa-check"></i></div>',
+    '      <div id="' + p + '-bk-step-confirm" class="bk-step bk-step-confirm bk-hidden" role="status" aria-live="polite">',
+    '        <div class="bk-confirm-check" aria-hidden="true"><i class="fa-solid fa-check"></i></div>',
     '        <p class="bk-confirm-title" data-bk-i18n="bookConfirmTitle">' + t('bookConfirmTitle') + '</p>',
     '        <p id="' + p + '-bk-confirm-detail" class="bk-confirm-detail"></p>',
     '        <p class="bk-confirm-note" data-bk-i18n="bookConfirmNote">' + t('bookConfirmNote') + '</p>',
     '        <button class="bk-btn-secondary" id="' + p + '-bk-new" data-bk-i18n="bookNewBooking">' + t('bookNewBooking') + '</button>',
+    '      </div>',
+
+    '      <div id="' + p + '-bk-cooldown" class="bk-state bk-hidden" role="status" aria-live="polite">',
+    '        <div class="bk-state-icon" aria-hidden="true"><i class="fa-regular fa-calendar-check"></i></div>',
+    '        <p class="bk-confirm-title" data-bk-i18n="bookCooldownTitle">' + t('bookCooldownTitle') + '</p>',
+    '        <p class="bk-confirm-note" data-bk-i18n="bookCooldownNote">' + t('bookCooldownNote') + '</p>',
     '      </div>',
 
     '    </div>',
@@ -350,9 +403,18 @@ export function initBookingModal(prefix) {
     } catch(e) { return 'en'; }
   }
 
+  var BK_COOLDOWN_KEY = 'booking_sent_ts';
+  var BK_COOLDOWN_MS  = 48 * 60 * 60 * 1000;
+
+  function bkIsOnCooldown() {
+    var ts = parseInt(localStorage.getItem(BK_COOLDOWN_KEY) || '0', 10);
+    return ts > 0 && (Date.now() - ts < BK_COOLDOWN_MS);
+  }
+
   var SCREENS = [
     p + '-bk-loading', p + '-bk-error', p + '-bk-empty',
-    p + '-bk-step-date', p + '-bk-step-time', p + '-bk-step-form', p + '-bk-step-confirm'
+    p + '-bk-step-date', p + '-bk-step-time', p + '-bk-step-form',
+    p + '-bk-step-confirm', p + '-bk-cooldown'
   ];
 
   function show(id) {
@@ -364,7 +426,11 @@ export function initBookingModal(prefix) {
 
   function openModal() {
     modal.classList.remove('cv-modal-hidden');
-    loadSlots();
+    if (bkIsOnCooldown()) {
+      show(p + '-bk-cooldown');
+    } else {
+      loadSlots();
+    }
   }
 
   function closeModal() {
@@ -417,11 +483,14 @@ export function initBookingModal(prefix) {
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'bk-date-btn';
+      btn.setAttribute('role', 'listitem');
       var n = slots.length;
+      var slotWord = locale.t(n === 1 ? 'bookSlot' : 'bookSlots');
+      btn.setAttribute('aria-label', formatDay(date) + ', ' + formatDate(date) + ' — ' + n + ' ' + slotWord);
       btn.innerHTML =
         '<span class="bk-date-day">' + formatDay(date) + '</span>' +
         '<span class="bk-date-date">' + formatDate(date) + '</span>' +
-        '<span class="bk-date-count">' + n + ' ' + locale.t(n === 1 ? 'bookSlot' : 'bookSlots') + '</span>';
+        '<span class="bk-date-count" aria-hidden="true">' + n + ' ' + slotWord + '</span>';
       btn.addEventListener('click', function() {
         document.getElementById(p + '-bk-date-badge').textContent = formatDay(date) + ', ' + formatDate(date);
         renderSlots(slots);
@@ -440,7 +509,10 @@ export function initBookingModal(prefix) {
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'bk-slot-btn';
-      btn.textContent = formatTime(start) + ' – ' + formatTime(end);
+      btn.setAttribute('role', 'listitem');
+      var timeLabel = formatTime(start) + ' – ' + formatTime(end);
+      btn.textContent = timeLabel;
+      btn.setAttribute('aria-label', locale.t('ariaBookSlot') + ': ' + timeLabel);
       btn.addEventListener('click', function() {
         selectedSlot = slot;
         document.getElementById(p + '-bk-slot-badge').textContent = formatSlot(start, end);
@@ -465,7 +537,11 @@ export function initBookingModal(prefix) {
     document.getElementById(p + '-bk-form').reset();
     document.getElementById(p + '-bk-email-err').textContent = '';
     document.getElementById(p + '-bk-topic-err').textContent = '';
-    loadSlots();
+    if (bkIsOnCooldown()) {
+      show(p + '-bk-cooldown');
+    } else {
+      loadSlots();
+    }
   });
 
   document.getElementById(p + '-bk-form').addEventListener('submit', function(e) {
@@ -493,6 +569,7 @@ export function initBookingModal(prefix) {
       .then(function(res) { if (!res.ok) throw new Error(); return res.json(); })
       .then(function(data) {
         if (data.success) {
+          localStorage.setItem(BK_COOLDOWN_KEY, Date.now().toString());
           var start = new Date(selectedSlot.start);
           var end = new Date(selectedSlot.end);
           document.getElementById(p + '-bk-confirm-detail').textContent = formatSlot(start, end);
@@ -545,39 +622,43 @@ export function hireModalHTML(prefix, opts) {
   var t = locale.t.bind(locale);
   return [
     '<!-- HIRE MODAL (prefix: "' + prefix + '") -->',
-    '<div id="' + prefix + '-modal" class="cv-modal-hidden">',
+    '<div id="' + prefix + '-modal" class="cv-modal-hidden" role="dialog" aria-modal="true" aria-labelledby="' + prefix + '-dialog-title">',
     '  <div class="hire-backdrop" id="' + prefix + '-backdrop"></div>',
     '  <div class="hire-dialog">',
     '    <div class="hire-dialog-header">',
-    '      <h3 data-hire-i18n="contactTitle">' + t('contactTitle') + '</h3>',
-    '      <button class="hire-close" id="' + prefix + '-close" type="button">&#x2715;</button>',
+    '      <h3 id="' + prefix + '-dialog-title" data-hire-i18n="contactTitle">' + t('contactTitle') + '</h3>',
+    '      <button class="hire-close" id="' + prefix + '-close" type="button" aria-label="' + t('ariaCloseContactForm') + '">&#x2715;</button>',
     '    </div>',
-    '    <div data-fs-success class="' + successHidden + '">',
+    '    <div data-fs-success class="' + successHidden + '" role="status" aria-live="polite">',
     '      <p' + p1Class + ' data-hire-i18n="hireThanks">' + t('hireThanks') + '</p>',
     '      <p' + p2Class + ' data-hire-i18n="hireSentNote">' + t('hireSentNote') + '</p>',
     '    </div>',
-    '    <div data-fs-error class="' + errorHidden + '"></div>',
-    '    <form id="' + prefix + '-form" novalidate>',
+    '    <div data-hire-cooldown class="' + successHidden + '" role="status" aria-live="polite">',
+    '      <p' + p1Class + ' data-hire-i18n="hireCooldownTitle">' + t('hireCooldownTitle') + '</p>',
+    '      <p' + p2Class + ' data-hire-i18n="hireCooldownNote">' + t('hireCooldownNote') + '</p>',
+    '    </div>',
+    '    <div data-fs-error class="' + errorHidden + '" role="alert" aria-live="assertive"></div>',
+    '    <form id="' + prefix + '-form" novalidate aria-label="Contact form">',
     subjectField,
     '      <div class="hire-field">',
     '        <label for="' + prefix + '-name" data-hire-i18n="yourName">' + t('yourName') + '</label>',
-    '        <input id="' + prefix + '-name" type="text" name="name" required placeholder="' + t('namePlaceholder') + '" data-hire-i18n-placeholder="namePlaceholder" data-fs-field />',
+    '        <input id="' + prefix + '-name" type="text" name="name" required placeholder="' + t('namePlaceholder') + '" data-hire-i18n-placeholder="namePlaceholder" data-fs-field aria-required="true" aria-describedby="' + prefix + '-name-err" autocomplete="name" />',
     '        <span data-fs-error="name"' + errClass + '></span>',
-    '        <span class="hire-field-error" id="' + prefix + '-name-err"></span>',
+    '        <span class="hire-field-error" id="' + prefix + '-name-err" role="alert" aria-live="polite"></span>',
     '      </div>',
     '      <div class="hire-field">',
     '        <label for="' + prefix + '-email" data-hire-i18n="yourEmail">' + t('yourEmail') + '</label>',
-    '        <input id="' + prefix + '-email" type="email" name="email" required placeholder="' + t('emailPlaceholder') + '" data-hire-i18n-placeholder="emailPlaceholder" data-fs-field />',
+    '        <input id="' + prefix + '-email" type="email" name="email" required placeholder="' + t('emailPlaceholder') + '" data-hire-i18n-placeholder="emailPlaceholder" data-fs-field aria-required="true" aria-describedby="' + prefix + '-email-err" autocomplete="email" />',
     '        <span data-fs-error="email"' + errClass + '></span>',
-    '        <span class="hire-field-error" id="' + prefix + '-email-err"></span>',
+    '        <span class="hire-field-error" id="' + prefix + '-email-err" role="alert" aria-live="polite"></span>',
     '      </div>',
     '      <div class="hire-field">',
     '        <label for="' + prefix + '-message" data-hire-i18n="message">' + t('message') + '</label>',
-    '        <textarea id="' + prefix + '-message" name="message" required rows="5" placeholder="' + t('messagePlaceholder') + '" data-hire-i18n-placeholder="messagePlaceholder" data-fs-field></textarea>',
+    '        <textarea id="' + prefix + '-message" name="message" required rows="5" placeholder="' + t('messagePlaceholder') + '" data-hire-i18n-placeholder="messagePlaceholder" data-fs-field aria-required="true" aria-describedby="' + prefix + '-msg-err"></textarea>',
     '        <span data-fs-error="message"' + errClass + '></span>',
-    '        <span class="hire-field-error" id="' + prefix + '-msg-err"></span>',
+    '        <span class="hire-field-error" id="' + prefix + '-msg-err" role="alert" aria-live="polite"></span>',
     '      </div>',
-    '      <button type="submit" class="hire-submit" data-fs-submit-btn data-hire-i18n="send">' + t('send') + '</button>',
+    '      <button type="submit" class="hire-submit" data-fs-submit-btn data-hire-i18n="send" aria-label="' + t('ariaSendMessage') + '">' + t('send') + '</button>',
     '    </form>',
     '  </div>',
     '</div>'

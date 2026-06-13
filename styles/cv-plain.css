@@ -582,7 +582,8 @@ body {
   letter-spacing: 0.04em;
 }
 .bk-required { color: #e05252; }
-.bk-field input {
+.bk-field input,
+.bk-field textarea {
   width: 100%;
   box-sizing: border-box;
   background: #fafafa;
@@ -595,8 +596,9 @@ body {
   outline: none;
   transition: border-color 0.15s;
 }
-.bk-field input:focus { border-color: #ff7024; }
-.bk-field input::placeholder { color: #bbb; }
+.bk-field textarea { resize: vertical; min-height: 80px; }
+.bk-field input:focus, .bk-field textarea:focus { border-color: #ff7024; }
+.bk-field input::placeholder, .bk-field textarea::placeholder { color: #bbb; }
 
 .bk-btn-primary {
   background: #ff7024;
@@ -700,9 +702,13 @@ body {
 [data-theme="dark"] .bk-field label,
 [data-theme="superdark"] .bk-field label { color: #aaa; }
 [data-theme="dark"] .bk-field input,
-[data-theme="superdark"] .bk-field input { background: #252537; border-color: #555; color: #e0e0e0; }
+[data-theme="dark"] .bk-field textarea,
+[data-theme="superdark"] .bk-field input,
+[data-theme="superdark"] .bk-field textarea { background: #252537; border-color: #555; color: #e0e0e0; }
 [data-theme="dark"] .bk-field input::placeholder,
-[data-theme="superdark"] .bk-field input::placeholder { color: #666; }
+[data-theme="dark"] .bk-field textarea::placeholder,
+[data-theme="superdark"] .bk-field input::placeholder,
+[data-theme="superdark"] .bk-field textarea::placeholder { color: #666; }
 [data-theme="dark"] .bk-btn-secondary,
 [data-theme="superdark"] .bk-btn-secondary { background: #2a2a3e; }
 [data-theme="dark"] .bk-confirm-detail,
@@ -731,8 +737,10 @@ body {
 [data-theme="nightvision"] .bk-slot-btn { background: #0a200a !important; border-color: #1a401a !important; color: #80ff80 !important; }
 [data-theme="nightvision"] .bk-slot-btn:hover { border-color: #00ff00 !important; background: #008800 !important; color: #00ff00 !important; }
 [data-theme="nightvision"] .bk-field label { color: #40c040 !important; }
-[data-theme="nightvision"] .bk-field input { background: #051005 !important; border-color: #1a401a !important; color: #80ff80 !important; }
-[data-theme="nightvision"] .bk-field input:focus { border-color: #00ff00 !important; }
+[data-theme="nightvision"] .bk-field input,
+[data-theme="nightvision"] .bk-field textarea { background: #051005 !important; border-color: #1a401a !important; color: #80ff80 !important; }
+[data-theme="nightvision"] .bk-field input:focus,
+[data-theme="nightvision"] .bk-field textarea:focus { border-color: #00ff00 !important; }
 [data-theme="nightvision"] .bk-btn-primary { background: #008800 !important; border: 1px solid #00ff00 !important; color: #00ff00 !important; }
 [data-theme="nightvision"] .bk-btn-primary:hover:not(:disabled) { background: #00aa00 !important; }
 [data-theme="nightvision"] .bk-btn-secondary { background: transparent !important; border-color: #00ff00 !important; color: #00ff00 !important; }
@@ -759,8 +767,10 @@ body {
 [data-theme="predator"] .bk-slot-btn { background: #111 !important; border-color: #333 !important; color: #ff5500 !important; }
 [data-theme="predator"] .bk-slot-btn:hover { border-color: #ff3300 !important; background: rgba(255,51,0,0.15) !important; color: #ff3300 !important; }
 [data-theme="predator"] .bk-field label { color: #cc2200 !important; }
-[data-theme="predator"] .bk-field input { background: #0d0d0d !important; border-color: #333 !important; color: #ff5500 !important; }
-[data-theme="predator"] .bk-field input:focus { border-color: #ff3300 !important; }
+[data-theme="predator"] .bk-field input,
+[data-theme="predator"] .bk-field textarea { background: #0d0d0d !important; border-color: #333 !important; color: #ff5500 !important; }
+[data-theme="predator"] .bk-field input:focus,
+[data-theme="predator"] .bk-field textarea:focus { border-color: #ff3300 !important; }
 [data-theme="predator"] .bk-btn-primary { background: transparent !important; border: 1px solid #ff3300 !important; color: #ff3300 !important; text-shadow: 0 0 5px #ff3300; }
 [data-theme="predator"] .bk-btn-primary:hover:not(:disabled) { background: rgba(255,51,0,0.1) !important; }
 [data-theme="predator"] .bk-btn-secondary { background: transparent !important; border-color: #ff3300 !important; color: #ff3300 !important; text-shadow: 0 0 5px #ff3300; }
@@ -1949,11 +1959,8 @@ body {
   display: none;
 }
 
-.cv-success-hidden {
-  display: none;
-  padding: 40px 20px;
-  text-align: center;
-}
+.cv-success-hidden { display: none; }
+[data-fs-success], [data-hire-cooldown] { padding: 40px 20px; text-align: center; }
 
 .cv-error-hidden {
   display: none;

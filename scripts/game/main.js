@@ -1001,18 +1001,45 @@ class GameEngine {
   }
 
   initHireModal() {
-    const hireBtn = document.getElementById('hire-btn');
-    const hireModal = document.getElementById('hire-modal');
-    const hireClose = document.getElementById('hire-close');
+    const hireBtn     = document.getElementById('hire-btn');
+    const hireModal   = document.getElementById('hire-modal');
+    const hireClose   = document.getElementById('hire-close');
     const hireBackdrop = document.getElementById('hire-backdrop');
+    const form        = document.getElementById('hire-game-form');
 
-    if (!hireModal) return;
+    if (!hireModal || !form) return;
+
+    const COOLDOWN_KEY = 'hire_sent_ts';
+    const COOLDOWN_MS  = 24 * 60 * 60 * 1000;
+    const isOnCooldown = () => {
+      const ts = parseInt(localStorage.getItem(COOLDOWN_KEY) || '0', 10);
+      return ts > 0 && (Date.now() - ts < COOLDOWN_MS);
+    };
+
+    const fsSuccess   = hireModal.querySelector('[data-fs-success]');
+    const cooldownEl  = hireModal.querySelector('[data-hire-cooldown]');
+    const fsError     = hireModal.querySelector('[data-fs-error]');
+    const submitBtn   = form.querySelector('[type="submit"]');
 
     const openHire = () => {
+      fsSuccess?.classList.add('cv-success-hidden');
+      if (fsError) { fsError.classList.add('cv-error-hidden'); fsError.textContent = ''; }
+
+      if (isOnCooldown()) {
+        form.style.display = 'none';
+        cooldownEl?.classList.remove('cv-success-hidden');
+      } else {
+        cooldownEl?.classList.add('cv-success-hidden');
+        form.style.display = '';
+        form.reset();
+        if (submitBtn) submitBtn.disabled = false;
+      }
+
       hireModal.classList.remove('dialogue-hidden');
       hireModal.classList.add('dialogue-visible');
       this.isFrozen = true;
     };
+
     const closeHire = () => {
       hireModal.classList.remove('dialogue-visible');
       hireModal.classList.add('dialogue-hidden');
@@ -1023,7 +1050,28 @@ class GameEngine {
     hireClose?.addEventListener('click', closeHire);
     hireBackdrop?.addEventListener('click', closeHire);
 
-    initFormspree('#hire-game-form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if (submitBtn) submitBtn.disabled = true;
+      const formData = new FormData(form);
+      fetch('https://formspree.io/f/mrejlned', {
+        method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
+      }).then(res => {
+        if (res.ok) {
+          localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
+          form.style.display = 'none';
+          cooldownEl?.classList.add('cv-success-hidden');
+          fsSuccess?.classList.remove('cv-success-hidden');
+        } else {
+          if (submitBtn) submitBtn.disabled = false;
+          if (fsError) { fsError.classList.remove('cv-error-hidden'); fsError.textContent = 'Failed to send. Please try again.'; }
+        }
+      }).catch(() => {
+        if (submitBtn) submitBtn.disabled = false;
+        if (fsError) { fsError.classList.remove('cv-error-hidden'); fsError.textContent = 'Failed to send. Please try again.'; }
+      });
+    });
   }
 
   initMeetModal() {
