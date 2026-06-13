@@ -78,6 +78,8 @@ export const YA = {
     bookCooldownNote: "Del gkei mae 48 yin. Kehrite nain thari-de.",
     errFieldRequired: "Yin dei. Sain nain.",
     errEmailInvalid: "Yin sain ú-gkei. Yautja-nain.",
+    errEmailVerifying: "Del kainde tih…",
+    errEmailNoMailServer: "Del kainde ú-gkei.",
     errMessageTooShort: "Yin ú-gkei hk'nde. Cha'nain mae hk'dei.",
     errSendFailed: "Yin gkei ú-kehrite. Kehrite nain thari.",
     sbBoardView: "Kwei-nde Tabl",

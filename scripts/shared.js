@@ -1,4 +1,4 @@
-import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES, BOOKING_SCRIPT_URL } from './config.js';
+import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES, BOOKING_SCRIPT_URL, CHECK_EMAIL_DOMAIN } from './config.js';
 import { locale } from './locale.js';
 
 export function showToast(message) {
@@ -73,6 +73,21 @@ export function initHireModal(prefix) {
     });
   }
 
+  if (CHECK_EMAIL_DOMAIN) {
+    document.getElementById(prefix + '-email').addEventListener('blur', async function() {
+      var emailVal = this.value.trim();
+      var emailErr = document.getElementById(prefix + '-email-err');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) return;
+      var domain = emailVal.split('@')[1].toLowerCase();
+      if (sessionStorage.getItem('mx_' + domain) !== null) return;
+      emailErr.textContent = locale.t('errEmailVerifying');
+      var ok = await checkEmailDomain(emailVal);
+      if (document.getElementById(prefix + '-email').value.trim() === emailVal) {
+        emailErr.textContent = ok ? '' : locale.t('errEmailNoMailServer');
+      }
+    });
+  }
+
   var COOLDOWN_KEY = 'hire_sent_ts';
   var COOLDOWN_MS  = 24 * 60 * 60 * 1000;
 
@@ -120,7 +135,7 @@ export function initHireModal(prefix) {
     if (e.key === "Escape") closeModal();
   });
 
-  document.getElementById(prefix + "-form").addEventListener("submit", function(e) {
+  document.getElementById(prefix + "-form").addEventListener("submit", async function(e) {
     e.preventDefault();
     e.stopImmediatePropagation();
 
@@ -138,7 +153,20 @@ export function initHireModal(prefix) {
 
     var form = this;
     var submitBtn = form.querySelector('[type="submit"]');
+    var emailErr = document.getElementById(prefix + '-email-err');
+
     if (submitBtn) submitBtn.disabled = true;
+
+    if (CHECK_EMAIL_DOMAIN) {
+      emailErr.textContent = locale.t('errEmailVerifying');
+      var domainOk = await checkEmailDomain(emailVal);
+      if (!domainOk) {
+        emailErr.textContent = locale.t('errEmailNoMailServer');
+        if (submitBtn) submitBtn.disabled = false;
+        return;
+      }
+      emailErr.textContent = '';
+    }
 
     var formData = new FormData(form);
     fetch('https://formspree.io/f/mrejlned', {
@@ -233,6 +261,25 @@ export function restoreCollapseStates(key) {
 
 export function initFormspree(_selector) {
   // Submission is handled directly in initHireModal via fetch — no external SDK needed.
+}
+
+export async function checkEmailDomain(email) {
+  var domain = email.split('@')[1].toLowerCase();
+  var cacheKey = 'mx_' + domain;
+  var cached = sessionStorage.getItem(cacheKey);
+  if (cached === '1') return true;
+  if (cached === '0') return false;
+  try {
+    var url = 'https://1.1.1.1/dns-query?name=' + encodeURIComponent(domain) + '&type=MX';
+    var res = await fetch(url, { headers: { 'Accept': 'application/dns-json' } });
+    if (!res.ok) return true;
+    var data = await res.json();
+    var valid = data.Status === 0 && Array.isArray(data.Answer) && data.Answer.length > 0;
+    sessionStorage.setItem(cacheKey, valid ? '1' : '0');
+    return valid;
+  } catch (_) {
+    return true;
+  }
 }
 
 export const MUSIC_GENRES = [
@@ -353,6 +400,7 @@ export function bookingModalHTML(prefix) {
     '        <p class="bk-step-label" data-bk-i18n="bookStep3">' + t('bookStep3') + '</p>',
     '        <div id="' + p + '-bk-slot-badge" class="bk-badge" aria-live="polite"></div>',
     '        <form id="' + p + '-bk-form" novalidate aria-label="Meeting booking form">',
+    '          <input type="text" id="' + p + '-bk-hp" name="bk-hp" style="display:none" tabindex="-1" autocomplete="off">',
     '          <div class="bk-field">',
     '            <label for="' + p + '-bk-name"><span data-bk-i18n="bookYourName">' + t('bookYourName') + '</span> <span class="bk-required" aria-label="required">*</span></label>',
     '            <input type="text" id="' + p + '-bk-name" name="bk-name" required placeholder="Jane Smith" aria-required="true" autocomplete="name">',
@@ -405,6 +453,21 @@ export function initBookingModal(prefix) {
 
   var BK_COOLDOWN_KEY = 'booking_sent_ts';
   var BK_COOLDOWN_MS  = 48 * 60 * 60 * 1000;
+
+  if (CHECK_EMAIL_DOMAIN) {
+    document.getElementById(p + '-bk-email').addEventListener('blur', async function() {
+      var emailVal = this.value.trim();
+      var emailErr = document.getElementById(p + '-bk-email-err');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) return;
+      var domain = emailVal.split('@')[1].toLowerCase();
+      if (sessionStorage.getItem('mx_' + domain) !== null) return;
+      emailErr.textContent = locale.t('errEmailVerifying');
+      var ok = await checkEmailDomain(emailVal);
+      if (document.getElementById(p + '-bk-email').value.trim() === emailVal) {
+        emailErr.textContent = ok ? '' : locale.t('errEmailNoMailServer');
+      }
+    });
+  }
 
   function bkIsOnCooldown() {
     var ts = parseInt(localStorage.getItem(BK_COOLDOWN_KEY) || '0', 10);
@@ -544,8 +607,11 @@ export function initBookingModal(prefix) {
     }
   });
 
-  document.getElementById(p + '-bk-form').addEventListener('submit', function(e) {
+  document.getElementById(p + '-bk-form').addEventListener('submit', async function(e) {
     e.preventDefault();
+
+    if (document.getElementById(p + '-bk-hp').value) return;
+
     var nameVal = document.getElementById(p + '-bk-name').value.trim();
     var emailVal = document.getElementById(p + '-bk-email').value.trim();
     var topicVal = document.getElementById(p + '-bk-topic').value.trim();
@@ -557,7 +623,20 @@ export function initBookingModal(prefix) {
     if (!nameVal || !emailOk || !topicOk) return;
 
     var submitBtn = document.getElementById(p + '-bk-submit');
+    var emailErr = document.getElementById(p + '-bk-email-err');
     submitBtn.disabled = true;
+
+    if (CHECK_EMAIL_DOMAIN) {
+      emailErr.textContent = locale.t('errEmailVerifying');
+      var domainOk = await checkEmailDomain(emailVal);
+      if (!domainOk) {
+        emailErr.textContent = locale.t('errEmailNoMailServer');
+        submitBtn.disabled = false;
+        return;
+      }
+      emailErr.textContent = '';
+    }
+
     submitBtn.textContent = locale.t('bookSending');
 
     var params = new URLSearchParams({
@@ -640,6 +719,7 @@ export function hireModalHTML(prefix, opts) {
     '    <div data-fs-error class="' + errorHidden + '" role="alert" aria-live="assertive"></div>',
     '    <form id="' + prefix + '-form" novalidate aria-label="Contact form">',
     subjectField,
+    '      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">',
     '      <div class="hire-field">',
     '        <label for="' + prefix + '-name" data-hire-i18n="yourName">' + t('yourName') + '</label>',
     '        <input id="' + prefix + '-name" type="text" name="name" required placeholder="' + t('namePlaceholder') + '" data-hire-i18n-placeholder="namePlaceholder" data-fs-field aria-required="true" aria-describedby="' + prefix + '-name-err" autocomplete="name" />',

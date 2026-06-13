@@ -78,6 +78,8 @@ export const EN = {
     bookCooldownNote: "You've already booked a meeting in the last 48 hours. Come back later to book again.",
     errFieldRequired: "This field is required.",
     errEmailInvalid: "Please enter a valid email address.",
+    errEmailVerifying: "Checking mail server…",
+    errEmailNoMailServer: "This domain does not accept email.",
     errMessageTooShort: "Message must be at least 20 characters and 4 words.",
     errSendFailed: "Failed to send. Please try again.",
     sbBoardView: "Scrum Board View",

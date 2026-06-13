@@ -78,6 +78,8 @@ export const GOA = {
     bookCooldownNote: "Joma noc chel 48 kel'shah. Shal kree thari.",
     errFieldRequired: "Kree! Joma noc poQlu'.",
     errEmailInvalid: "Kree! Joma shal-tel ú-chel.",
+    errEmailVerifying: "Joma rel kree…",
+    errEmailNoMailServer: "Joma rel ú-chel.",
     errMessageTooShort: "Kree! Joma hok'tar kash. Erin tal cha'ioq mae.",
     errSendFailed: "Kree! Joma ú-rel. Kree nain.",
     sbBoardView: "Joma Lo'taur Kree",

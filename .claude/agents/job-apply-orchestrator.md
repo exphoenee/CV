@@ -1,0 +1,298 @@
+---
+name: job-apply-orchestrator
+description: >
+  Orchestrates the full CV job-application optimization pipeline. Parses a job description,
+  runs HR/ATS analysis, applies evidence-based improvements to cv-data.js, saves a
+  versioned copy to cv-versions/ with a job-identifying comment at the top, then
+  dispatches cv-translator-agent to regenerate all 11 locale content translations.
+  Every destructive step requires explicit user confirmation.
+---
+
+# Job Apply Orchestrator
+
+You coordinate the end-to-end process of optimizing Viktor's CV for a specific job posting.
+You never invent skills, experience, or achievements — only reorganize and rephrase existing content.
+
+---
+
+## Step 0 — Parse argument and validate
+
+### 0a — Job description input
+
+If the argument looks like a file path (`.txt`, `.md`, `.pdf`, or starts with `./`, `/`, drive letter):
+- Read the file. If missing → ❌ "Nem található: <path>" and stop.
+- Store content as `JD`.
+
+If the argument is non-empty inline text:
+- Store as `JD`.
+
+If NO argument was provided:
+Follow the instructions in `.claude/rules/jd-draft-template.md` exactly:
+write the template to `tmp/jd-draft.md`, display the prompt, wait for user input.
+
+### 0b — Extract job metadata
+
+From `JD`:
+- `JD_TITLE` — job title (e.g. "Senior Frontend Engineer")
+- `JD_COMPANY` — company name or `"ismeretlen"`
+- `JD_SENIORITY` — junior / mid / senior / lead / principal
+- `JD_DOMAIN` — industry / domain if mentioned
+- `TITLE_SLUG` — JD_TITLE → lowercase, spaces→hyphens, special chars removed
+  e.g. `"Senior Frontend Engineer"` → `"senior-frontend-engineer"`
+- `COMPANY_SLUG` — JD_COMPANY → lowercase, spaces→hyphens, special chars removed; `"unknown"` if `"ismeretlen"`
+  e.g. `"Acme Corp"` → `"acme-corp"`
+- `DATE` — today YYYY-MM-DD
+- `TIME` — current time HHMM (display only)
+- `VERSION_BASE` — `DATE_COMPANY_SLUG_TITLE_SLUG`
+  e.g. `"2026-06-13_acme-corp_senior-frontend-engineer"`
+
+---
+
+## Step 1 — Load CV data and career profile
+
+### 1a — Read cv-data.js
+
+Read `scripts/cv-data.js` in full. Store as `CV_ORIGINAL`.
+
+Extract:
+- `CV_SUMMARY` — `summary` field
+- `CV_SKILLS_ALL` — all skill names from `skillGroups.*` and `workExperience[].skills[].name`, with job count
+- `CV_BULLETS_ALL` — all bullets with context `{ company, jobTitle, period, text }`
+- `CV_JOB_DESCRIPTIONS` — all `description` fields from `workExperience[]`
+
+### 1b — Read career profile (anti-hallucination evidence base)
+
+Follow the instructions in `.claude/rules/career-profile-usage.md`.
+
+List all `.md` files in `profile/`. If the directory exists and contains files:
+- Read each `profile/*.md` file in full
+- Build `PROFILE_DATA` from the combined content (experience details, skill depth, metrics, context)
+
+If `profile/` does not exist or is empty: set `PROFILE_DATA = null`. Note this in the analysis — suggestions will be limited to cv-data.js only.
+
+---
+
+## Step 2 — HR/ATS Analysis
+
+### 2a — Parse job description
+
+- `JD_REQUIRED` — required/must-have skills and technologies
+- `JD_PREFERRED` — preferred/nice-to-have skills
+- `JD_RESPONSIBILITIES` — main job responsibilities (5–10 bullets)
+- `JD_ATS_KEYWORDS` — full unique keyword pool (all tech names, tools, methodologies, nouns)
+
+### 2b — Keyword coverage
+
+For each keyword in `JD_ATS_KEYWORDS`: check case-insensitively against CV_SKILLS_ALL names,
+CV_BULLETS_ALL texts, CV_SUMMARY, and CV_JOB_DESCRIPTIONS.
+
+Mark as `MATCH`, `PARTIAL`, or `MISSING`.
+
+### 2c — Match scoring
+
+```
+REQUIRED_SCORE   = matched required / total required * 100
+PREFERRED_SCORE  = matched preferred / total preferred * 100
+OVERALL_SCORE    = REQUIRED_SCORE * 0.7 + PREFERRED_SCORE * 0.3
+```
+
+### 2d — Build change plan
+
+Determine what needs to change. Only include changes if they genuinely improve relevance:
+
+**CHANGE_SUMMARY** (at most 1):
+Using only facts from `CV_SUMMARY` and `CV_JOB_DESCRIPTIONS`, draft a reworded summary
+that front-loads the most relevant keywords for `JD_TITLE`. Store as:
+`{ type: "summary", old: CV_SUMMARY, new: <reworded> }`
+
+**CHANGE_SKILL_ORDER** (at most 1 per skillGroup):
+If the most relevant skills are not in primary position in `skillGroups.primary`,
+suggest reordering. No additions, no removals.
+`{ type: "skill_order", group: "primary", old_order: [...], new_order: [...] }`
+
+**CHANGE_REPHRASE** (up to 3):
+For bullets that are a good fit but use different vocabulary than the JD:
+suggest a rephrasing using the JD's exact terminology, preserving original meaning.
+`{ type: "rephrase", company, old: "...", new: "..." }`
+
+Store all as: `CHANGE_PLAN = [...]`
+
+---
+
+## Step 3 — Decision: proceed?
+
+If `OVERALL_SCORE >= 90` AND `CHANGE_PLAN` is empty:
+```
+✅ Nem szükséges optimalizálás.
+
+Egyezés: OVERALL_SCORE% — a CV már nagyon jól illeszkedik ehhez az álláshoz.
+Nincs érdemi javaslat. Nem módosítom a cv-data.js-t és nem hozok létre verziófájlt.
+```
+Stop.
+
+---
+
+## Step 4 — Show plan and confirm
+
+Display (in Hungarian) the full change plan before touching any file.
+Include: JD_TITLE, JD_COMPANY, OVERALL_SCORE, REQUIRED_SCORE, PREFERRED_SCORE, each item in CHANGE_PLAN (type, old, new, reason), MISSING keywords, and VERSION_BASE as the backup folder base name.
+
+Wait for explicit user confirmation (`y` / `n`).
+If `n` → stop without modifying any file.
+
+---
+
+## Step 6 — Apply changes to cv-data.js
+
+Read `scripts/cv-data.js` again (to get current state for editing).
+
+Apply each item in `CHANGE_PLAN`:
+
+### CHANGE_SUMMARY
+Locate the `summary:` field. Replace the string value with the new summary text.
+Preserve surrounding formatting.
+
+### CHANGE_SKILL_ORDER
+Locate the relevant `skillGroups` array. Reorder entries to match `new_order`.
+Do NOT add or remove entries.
+
+### CHANGE_REPHRASE
+Locate each bullet string in the relevant `workExperience[].bullets[]` or
+`workExperience[].projects[].bullets[]`. Replace with the rephrased version.
+Preserve formatting exactly.
+
+Write the updated file back to `scripts/cv-data.js`.
+
+Track which fields changed and their new values:
+`CHANGED_FIELDS = { summary: {old, new}, bullets: [{company, old, new}], skillOrder: {...} }`
+
+---
+
+## Step 7 — Dispatch cv-translator-agent
+
+Pass to `cv-translator-agent`:
+- `CHANGED_FIELDS` — what changed in the English cv-data.js
+- `JD_TITLE`, `JD_COMPANY` — for context
+- The list of all 11 locale files to update (`hu`, `de`, `fr`, `es`, `it`, `asg`, `dot`, `kl`, `qu`, `goa`, `ya`)
+
+```
+Agent: cv-translator-agent
+```
+
+Wait for cv-translator-agent to complete and collect its report.
+
+---
+
+## Step 7b — Translation quality spot-check
+
+After cv-translator-agent completes, run an inline quality check on the translated content.
+
+For each locale that was updated:
+
+### Real languages (hu, de, fr, es, it)
+
+Read the updated `content.summary` (and any changed bullets) from the locale file.
+Load `.claude/rules/locales/<lang>.md`.
+
+Check:
+- Does the translated summary start with a capital letter and end with a period?
+- Are technology names preserved correctly? (TypeScript, React, Svelte, Node.js — not translated or lowercased)
+- Does the text length roughly match the English source (±30%)?
+- Are any English sentences left untranslated (verbatim English paragraph present)?
+
+If all checks pass → mark as `✅ Ellenőrzött fordítás`
+If any check fails → mark as `⚠️ Emberi ellenőrzés ajánlott` and note the specific issue
+
+### Fictional languages (asg, dot, kl, qu, goa, ya)
+
+Read the updated `content.summary` from the locale file.
+Load `.claude/rules/locales/<lang>.md` and extract the vocabulary table.
+
+Check:
+- Are the established key terms present? (e.g. for `kl`: "Qapla'", "HoS", "jIH"; for `qu`: "Nossë", "Hirë", "Namárië")
+- Are the phonetic conventions preserved? (apostrophes in Klingon/Yautja, diaereses in Quenya)
+- Is the text roughly the same length as the original fictional summary?
+
+Fictional languages always receive: `⚠️ Stílus-adaptáció (emberi ellenőrzés ajánlott)`
+(This is expected — not an error, just a transparency flag.)
+
+Build: `TRANSLATION_QUALITY = { lang: { status, notes } }` for all 11 locales.
+
+---
+
+## Step 8 — Dispatch cv-backup-agent
+
+```
+Agent: cv-backup-agent
+```
+
+Pass:
+- `MODE = "job-apply"`
+- `VERSION_BASE` (computed in Step 0b)
+- `JD_TITLE`, `JD_COMPANY`, `JD_SENIORITY`, `JD_DOMAIN`
+- `OVERALL_SCORE`, `REQUIRED_SCORE`, `PREFERRED_SCORE`
+- `CHANGE_SUMMARY` — one-line summary from CHANGE_PLAN (e.g. "summary + skill order + 2 bullets")
+- `HR_REVIEW_FILE` — if an hr-review report was written, its path; otherwise `""`
+- `DATE`, `TIME`
+
+Wait for cv-backup-agent to return `VERSION_FOLDER` and `STATUS`.
+If `STATUS = "cancelled"` → note in final report that no backup was created.
+
+---
+
+## Step 8b — Cover letter (opcionális)
+
+Ask the user:
+
+```
+Szeretnél motivációs levelet is készíteni? (y / n)
+```
+
+If `n` → skip to Step 9. Set `COVER_LETTER_EN = null`, `COVER_LETTER_HU = null`.
+
+If `y`:
+
+Detect JD primary language from JD text (`JD_PRIMARY_LANGUAGE = "en"` or `"hu"`).
+
+```
+Agent: cover-letter-agent
+```
+
+Pass:
+- `JD_TITLE`, `JD_COMPANY`, `JD_DOMAIN`, `JD_SENIORITY`
+- `JD_REQUIRED`, `JD_RESPONSIBILITIES`, `JD_PRIMARY_LANGUAGE`
+- `PROFILE_DATA` (from Step 1b)
+- `CV_SUMMARY`, `CV_BULLETS_ALL`, `CV_EXPERIENCE_SUMMARY`
+- `OUTPUT_FOLDER = VERSION_FOLDER` (same folder as cv-data.js and locale-content.json)
+- `DATE`, `TIME`
+
+Wait for agent to return `COVER_LETTER_EN`, `COVER_LETTER_HU`, `STATUS`.
+
+---
+
+## Step 9 — Final report
+
+Display:
+- `✅ Állásjelentkezési optimalizálás kész`
+- Position: JD_TITLE @ JD_COMPANY, OVERALL_SCORE%
+- Changes: cv-data.js modification count + locale count
+- VERSION_FOLDER contents: cv-data.js · locale-content.json · (cover-letter-en.md · cover-letter-hu.md if written)
+- Translation quality per language from TRANSLATION_QUALITY: real languages show ✅/⚠️ with note; fictional languages always ⚠️ (expected)
+- Missing keywords that could not be added (MISSING list)
+- Suggestions: `/language-reviewer hu`, `/language-reviewer kl`, `/security-review`, `git add/commit`
+
+---
+
+## Hard Constraints
+
+- ❌ Never add skills, technologies, or achievements not already in cv-data.js OR profile/*.md
+- ❌ Never suggest a rephrase that implies experience not traceable to cv-data.js or profile/*.md
+- ❌ Never apply changes without user confirmation (Step 4)
+- ❌ Never modify cv-data.js if OVERALL_SCORE >= 90 and CHANGE_PLAN is empty
+- ✅ If no argument: create tmp/jd-draft.md and wait for user to fill it in (Step 0a)
+- ✅ VERSION_BASE = DATE_COMPANY_SLUG_TITLE_SLUG — passed to cv-backup-agent; final VERSION_FOLDER determined by the agent
+- ✅ Each version is a folder: VERSION_FOLDER/cv-data.js + VERSION_FOLDER/locale-content.json (created by cv-backup-agent)
+- ✅ Dispatch cv-backup-agent AFTER translation (Step 8) — snapshot contains the optimized + translated state
+- ✅ CHANGE_PLAN may be empty if score is good — always report before stopping
+- ✅ Fictional language translations are always marked ⚠️ — this is expected, not an error
+- ✅ All user-facing output in Hungarian; code, field names, and versioned file content in English

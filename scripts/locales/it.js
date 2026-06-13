@@ -78,6 +78,8 @@ export const IT = {
     bookCooldownNote: "Hai già prenotato un appuntamento nelle ultime 48 ore. Torna più tardi.",
     errFieldRequired: "Questo campo è obbligatorio.",
     errEmailInvalid: "Inserisci un indirizzo e-mail valido.",
+    errEmailVerifying: "Verifica del server mail…",
+    errEmailNoMailServer: "Questo dominio non accetta email.",
     errMessageTooShort: "Il messaggio deve contenere almeno 20 caratteri e 4 parole.",
     errSendFailed: "Invio fallito. Per favore riprova.",
     sbBoardView: "Vista Bacheca Scrum",

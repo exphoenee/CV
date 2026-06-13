@@ -14,3 +14,5 @@ export var MUSIC_REPEAT_KEY = 'cv-music-repeat';
 
 export var SFX_VOLUME_KEY = 'cv-sfx-volume';
 export var CURSOR_KEY     = 'cv-superdark-cursor';
+
+export var CHECK_EMAIL_DOMAIN = true;

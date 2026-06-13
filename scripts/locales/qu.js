@@ -78,6 +78,8 @@ export const QU = {
     bookCooldownNote: "Lúmë sírë 48 lúmëar. Á tul epë.",
     errFieldRequired: "Sí maquet. Áva yesta.",
     errEmailInvalid: "Ú-máre esse-quenta. Áva sí.",
+    errEmailVerifying: "Centan esse-quenta…",
+    errEmailNoMailServer: "Ú-centapoldo sírë.",
     errMessageTooShort: "Quenta pitya. Erin ná lé quëtë cainen.",
     errSendFailed: "Centa úlendë. Áva yesta.",
     sbBoardView: "Parmë Ardassëo",

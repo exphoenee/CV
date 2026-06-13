@@ -78,6 +78,8 @@ export const KL = {
     bookCooldownNote: "cha'maH loS rep HiQ ghom Dangebbe'. wa'leS yIchegh.",
     errFieldRequired: "De' 'oH poQlu'. yIchel.",
     errEmailInvalid: "De' lI' 'oHbe'. yInob.",
+    errEmailVerifying: "jabbI'ID legh…",
+    errEmailNoMailServer: "jabbI'ID Qapla' pagh.",
     errMessageTooShort: "ghItlh tIn poQlu'. cha'maH De' loS mu' yIghItlh.",
     errSendFailed: "ngeHlu'be'. yIngeH je.",
     sbBoardView: "Suvwı' mI' naDev",

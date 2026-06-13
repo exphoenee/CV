@@ -78,6 +78,8 @@ export const HU = {
     bookCooldownNote: "Az elmúlt 48 órában már foglaltál időpontot. Gyere vissza később egy új foglaláshoz.",
     errFieldRequired: "Ez a mező kötelező.",
     errEmailInvalid: "Kérlek adj meg egy érvényes e-mail címet.",
+    errEmailVerifying: "Levelezőszerver ellenőrzése…",
+    errEmailNoMailServer: "Ez a domain nem fogad e-mailt.",
     errMessageTooShort: "Az üzenet legalább 20 karakter és 4 szó legyen.",
     errSendFailed: "Küldés sikertelen. Kérjük, próbálja újra.",
     sbBoardView: "Scrum Tábla Nézet",

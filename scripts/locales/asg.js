@@ -78,6 +78,8 @@ export const ASG = {
     bookCooldownNote: "Þú hefur þegar bókað tíma á síðustu 48 klukkustundum. Komdu aftur síðar.",
     errFieldRequired: "Þetta svæði er skylt.",
     errEmailInvalid: "Sláðu inn gilt netfang.",
+    errEmailVerifying: "Athuga póstþjón…",
+    errEmailNoMailServer: "Þetta lén tekur ekki við tölvupósti.",
     errMessageTooShort: "Skilaboð verða að vera að minnsta kosti 20 stafir og 4 orð.",
     errSendFailed: "Sending tókst ekki. Reyndu aftur.",
     sbBoardView: "Scrum Tafl-Sýn",

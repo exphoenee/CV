@@ -78,6 +78,8 @@ export const ES = {
     bookCooldownNote: "Ya has reservado una cita en las últimas 48 horas. Vuelve más tarde.",
     errFieldRequired: "Este campo es obligatorio.",
     errEmailInvalid: "Por favor, introduce un correo electrónico válido.",
+    errEmailVerifying: "Verificando servidor de correo…",
+    errEmailNoMailServer: "Este dominio no acepta correos.",
     errMessageTooShort: "El mensaje debe tener al menos 20 caracteres y 4 palabras.",
     errSendFailed: "Error al enviar. Por favor, inténtalo de nuevo.",
     sbBoardView: "Vista Tablero Scrum",

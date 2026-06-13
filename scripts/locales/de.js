@@ -78,6 +78,8 @@ export const DE = {
     bookCooldownNote: "Du hast in den letzten 48 Stunden bereits einen Termin gebucht. Komm später wieder.",
     errFieldRequired: "Dieses Feld ist erforderlich.",
     errEmailInvalid: "Bitte gib eine gültige E-Mail-Adresse ein.",
+    errEmailVerifying: "Mailserver wird geprüft…",
+    errEmailNoMailServer: "Diese Domain empfängt keine E-Mails.",
     errMessageTooShort: "Die Nachricht muss mindestens 20 Zeichen und 4 Wörter enthalten.",
     errSendFailed: "Senden fehlgeschlagen. Bitte versuche es erneut.",
     sbBoardView: "Scrum-Board-Ansicht",

@@ -78,6 +78,8 @@ export const DOT = {
     bookCooldownNote: "Hash yer nakhoe hrazef 48 sinnothi. Nakhoe vosecchi yomme.",
     errFieldRequired: "Hrazef anni. Nakhoe me.",
     errEmailInvalid: "Sekke hrazef ú-nakhoe. Nakhoe me.",
+    errEmailVerifying: "Hrazef chek vaes…",
+    errEmailNoMailServer: "Chiori vo nakhoe hrazef.",
     errMessageTooShort: "Zhilat anni kash. Cha'ioq mae hrazef ma loS zhokwa.",
     errSendFailed: "Chiori vos nakhoe. Nakhoe vosecchi.",
     sbBoardView: "Sash Drogo Mahrazh",
