@@ -1,3 +1,16 @@
+---
+title: "LinkedIn Volunteering"
+seniority: "N/A"
+period:
+  from: "2026-02"
+  to: null
+profession: "software"
+type: "reference"
+domain: null
+leader: false
+skills: []
+---
+
 # Volunteering
 
 ## IT & Programming Club Mentor

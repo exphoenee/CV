@@ -1,3 +1,16 @@
+---
+title: "LinkedIn Awards"
+seniority: "N/A"
+period:
+  from: null
+  to: null
+profession: "both"
+type: "reference"
+domain: null
+leader: false
+skills: []
+---
+
 # Awards
 
 | Award | Issuer | Date |

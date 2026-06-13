@@ -2,37 +2,105 @@
 
 ## What Is the Profile Directory?
 
-`profile/` contains one or more Markdown files authored by Viktor Bozzay with detailed,
-truthful career information. These files are the **extended evidence base** for AI agents.
+`profile/` contains Markdown files with detailed, truthful career information.
+These files are the **extended evidence base** for AI agents — NOT part of the CV views.
 
-They are NOT part of the CV views — they are read-only AI context material.
-
-Viktor may organize the content across as many files as he likes (e.g., one per employer,
-or a single combined file). The agents must read all of them.
+Every file starts with a **YAML frontmatter header** that describes its content.
+Agents MUST use the YAML header to **pre-filter** files before reading the full body.
 
 ---
 
-## When to Read the Profile
+## YAML Frontmatter Schema
 
-**Always read all `profile/*.md` files** when performing any of these tasks:
-- Optimizing the CV for a job application (`/job-apply`, `job-apply-orchestrator`)
-- Reviewing the CV's quality or fit for a role (`/hr-review`)
-- Suggesting rephrases, emphasis changes, or skill reordering
+Every `profile/*.md` file has the following header:
 
-Read the profile files **before** running any analysis — they form the factual foundation.
+```yaml
+---
+title: "Frontend Tech Lead"           # munkakör / fájl címe
+seniority: "Senior"                   # Junior | Mid | Senior | N/A
+period:
+  from: "2023-11"                     # YYYY-MM kezdés (null ha nem alkalmazható)
+  to: null                            # YYYY-MM vég (null = jelenleg is)
+profession: "software"                # software | mechanical | both
+type: "work"                          # work | education | community | reference
+domain: "enterprise SaaS, compliance" # iparág / domén — JD illesztéshez
+---
+```
+
+### Field descriptions
+
+| Mező | Lehetséges értékek | Használata |
+|---|---|---|
+| `title` | szabad szöveg | Munkakör megnevezése, vagy fájl típusa (pl. "LinkedIn Profile") |
+| `seniority` | `Junior`, `Mid`, `Senior`, `N/A` | Senioritás a pozícióban |
+| `period.from` | `YYYY-MM` vagy `null` | Kezdő dátum |
+| `period.to` | `YYYY-MM` vagy `null` | Vég dátum (`null` = jelenleg is tart) |
+| `profession` | `software`, `mechanical`, `both` | Melyik szakmához tartozik |
+| `type` | `work`, `education`, `community`, `reference` | Fájl típusa — elsődleges szűrő |
+| `domain` | szabad szöveg | Iparág/domén — JD-hez illesztéshez |
+| `leader` | `true`, `false` | Volt-e vezetői/irányítási szerepe ebben a pozícióban |
+| `skills` | `[string]` | Kulcs skill-ek listája — gyors relevancia ellenőrzéshez a fájl teljes beolvasása nélkül |
 
 ---
 
-## How to Read the Profile
+## How to Read the Profile — With YAML Pre-filtering
 
-1. List all `.md` files in `profile/`
-2. Read each one in full
-3. Build `PROFILE_DATA` — a combined knowledge base covering:
-   - `PROFILE_EXPERIENCE`: per-employer context, project details, actual metrics
-   - `PROFILE_SKILLS`: skill depth, evidence, years of usage
-   - `PROFILE_EDUCATION`: education background details
-   - `PROFILE_COMMUNITY`: community activities details
-   - `PROFILE_EXTRA`: anything else Viktor included
+### Step 1 — List files
+
+List all `.md` files in `profile/`.
+
+### Step 2 — Parse YAML headers (pre-filter)
+
+For each file, read ONLY the YAML frontmatter (the block between the first two `---` lines).
+Do NOT read the full file body yet.
+
+### Step 3 — Filter by relevance (relaxed)
+
+Based on the YAML header, decide if this file is worth reading in full.
+
+**IMPORTANT: Do NOT over-filter by `profession` or `title`.**
+- A mechanical engineering role (e.g. CobotX, Hauni) may contain **leadership, project management, mentoring, or cross-functional skills** relevant to a software role
+- A founder role (PCB2GTR) may contain **product ownership, business acumen, and end-to-end delivery skills**
+- The `leader` field explicitly marks where Viktor led teams — this is relevant regardless of profession
+
+**Skip entirely only if ALL of these apply:**
+- `type: "reference"` — these are raw LinkedIn exports. They contain duplicate, potentially outdated data. Skip unless you need to cross-reference a specific LinkedIn claim.
+- AND the task has no need for external reference data
+
+**Otherwise, read the file if ANY of these are true:**
+- `type: "work"` — always read, regardless of profession (leadership, soft skills, and cross-domain experience may be relevant)
+- `type: "community"` AND the task involves mentoring, teaching, or soft skills
+- `type: "education"` AND the task involves education, training, or certifications
+- `leader: true` — Viktor had a leadership role here, always relevant
+- Any overlap between `skills[]` and the task's required skills or keywords
+
+**Exception:** If the task is strictly scoped (e.g. "find only React experience"), you may use `skills[]` to prioritize which files to read first — but still scan all `type: "work"` files for hidden relevance.
+
+### Step 4 — Read filtered files in full
+
+Read only the files that passed the filter. Build `PROFILE_DATA` from the combined content.
+
+### Step 5 — Build structured knowledge base
+
+```
+PROFILE_DATA = {
+  experience: {          // from type: "work" files
+    [companyId]: {       // e.g. "aegex"
+      title, seniority, period, profession, domain,
+      body: "<full file content>"
+    }
+  },
+  education: { ... },    // from type: "education" files
+  community: { ... },    // from type: "community" files
+  references: { ... }    // from type: "reference" files (if explicitly needed)
+}
+```
+
+### Step 6 — No match fallback
+
+If after filtering, NO files remain relevant (e.g., all are `type: "reference"` and the task needs factual work data):
+- ❌ Fall back to `cv-data.js` only
+- ✅ Note: "A profile fájlok között nincs releváns munkahelyi adat — csak cv-data.js alapján dolgozom."
 
 ---
 
@@ -61,9 +129,9 @@ If the profile files do not exist or are empty → fall back to `cv-data.js` onl
 
 ---
 
-## Profile File Format
+## Profile File Markdown Body Format
 
-Viktor can use any format he finds comfortable. There is no enforced schema.
+After the YAML header, the file body uses free-form Markdown.
 Agents should extract information semantically — not parse rigid structure.
 
 Common patterns to recognize:
@@ -71,3 +139,4 @@ Common patterns to recognize:
 - Bullet lists of details, metrics, decisions
 - Tables for skill depth or technology context
 - Free prose describing context or rationale
+- HTML comments (`<!-- ... -->`) contain prompts and reminders — read them for context, but do NOT treat them as CV content

@@ -1,3 +1,16 @@
+---
+title: "LinkedIn Education"
+seniority: "N/A"
+period:
+  from: null
+  to: null
+profession: "both"
+type: "reference"
+domain: null
+leader: false
+skills: []
+---
+
 # Education
 
 ## Faculty of Engineering and Information Technology — University of Pécs

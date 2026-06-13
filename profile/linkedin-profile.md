@@ -1,3 +1,16 @@
+---
+title: "LinkedIn Profile"
+seniority: "N/A"
+period:
+  from: null
+  to: null
+profession: "both"
+type: "reference"
+domain: null
+leader: false
+skills: []
+---
+
 # Viktor Bozzay — LinkedIn Profile
 
 **Headline:** Frontend Tech Lead | Engineering Manager | React, TypeScript & Svelte | AI-Augmented Engineering | Ex-Industrial Robotics

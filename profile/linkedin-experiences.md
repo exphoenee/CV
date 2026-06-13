@@ -1,3 +1,16 @@
+---
+title: "LinkedIn Work Experiences"
+seniority: "N/A"
+period:
+  from: null
+  to: null
+profession: "both"
+type: "reference"
+domain: null
+leader: false
+skills: []
+---
+
 # Work Experience
 
 ## Frontend Tech Lead

@@ -1,3 +1,16 @@
+---
+title: "LinkedIn Skills"
+seniority: "N/A"
+period:
+  from: null
+  to: null
+profession: "both"
+type: "reference"
+domain: null
+leader: false
+skills: []
+---
+
 # Skills
 
 ## Frontend

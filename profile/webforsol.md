@@ -1,8 +1,22 @@
-# WebforSol — Freelancer Full Stack Developer (Jún 2020 – Nov 2022)
+---
+title: "Freelancer Full Stack Developer"
+seniority: "Mid"
+period:
+  from: "2020-06"
+  to: "2022-11"
+profession: "software"
+type: "work"
+domain: "freelance web development"
+leader: false
+skills: [React, Next.js, Node.js, PHP, Laravel, MySQL, MongoDB, NestJS, Full Stack]
+---
+
+# WebforSol — Freelancer Full Stack Developer (Jun 2020 – Nov 2022)
 
 ## Áttekintés
 
-<!-- Egyéni vállalkozásként vagy alvállalkozóként? -->
+Önálló vállalkozásként, egyéni fejlesztőként.
+
 <!-- Hány aktív ügyfél volt párhuzamosan? -->
 <!-- Milyen iparágak, ügyfél típusok? -->
 
@@ -11,24 +25,36 @@
 ## Projektek
 
 ### szelacoaching.hu
-<!-- Mi ez az oldal? Coaching weboldal? -->
-<!-- Mit építettem? Frontend, backend, CMS? -->
-<!-- Technológia stack? -->
+
+**Link:** https://szelacoaching.hu
+
+Coaching website + blog, PHP backend, no CMS/framework.
+
+<!-- Mit építettem pontosan? Frontend, backend részletek. -->
 
 ### pecscoach.hu
+
+**Link:** https://www.pecscoach.hu
+
 <!-- Mi ez az oldal? -->
 <!-- Mit építettem? -->
 
 ### smartedu.hu
+
+**Link:** https://smartedu.hu
+
 <!-- Mi ez az oldal? Oktatási platform? -->
-<!-- Mit építettem? Volt-e komplexebb backend logika? -->
+<!-- Volt-e komplexebb backend logika? -->
 
 ### Egyéb projektek
+
 <!-- Bármilyen más jelentős projekt ebből az időszakból? -->
 
 ---
 
 ## Technológia kontextus
+
+**Tech stack:** React · Next.js · Node.js · PHP · Laravel · MySQL · MongoDB · JavaScript · TypeScript · CSS · jQuery · NestJS
 
 ### React / Next.js
 <!-- Milyen szintű SSR/SSG munka? -->
@@ -39,8 +65,7 @@
 <!-- Milyen adatbázis connectorok, ORM? -->
 
 ### PHP / Laravel
-<!-- Milyen típusú Laravel projektek? -->
-<!-- WordPress is volt? -->
+<!-- Milyen típusú Laravel projektek? WordPress is volt? -->
 
 ### MySQL / MongoDB
 <!-- Adatbázis design tapasztalat: sémák, indexelés, relációk? -->
@@ -51,6 +76,8 @@
 ---
 
 ## Freelance tapasztalat
+
+I worked directly with clients to translate business needs into scalable technical solutions.
 
 <!-- Ügyfélkezelés: hogyan zajlott a kommunikáció, requirement gathering? -->
 <!-- Árképzés, szerződések, határidők kezelése? -->

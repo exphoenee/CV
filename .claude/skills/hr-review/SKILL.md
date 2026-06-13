@@ -74,16 +74,24 @@ The `community` field.
 #### CV_LANGUAGES
 The `identity.languages` array.
 
-### 2b — Read career profile (anti-hallucination evidence base)
+### 2b — Read career profile (anti-hallucination evidence base) with YAML pre-filter
 
-Follow the instructions in `.claude/rules/career-profile-usage.md`.
+Follow the instructions in `.claude/rules/career-profile-usage.md` — this file contains the complete YAML filtering logic.
 
-List all `.md` files in `profile/`. If the directory exists and contains files:
-- Read each `profile/*.md` file in full
-- Build `PROFILE_DATA` from the combined content (experience details, skill depth, metrics, context)
-- Use `PROFILE_DATA` to find connections between Viktor's experience and JD requirements that may not be visible from the short CV bullets alone
+**Summary:**
+1. List all `.md` files in `profile/`
+2. Parse each file's **YAML frontmatter** (the `---` block at the top) — read ONLY the header, not the body
+3. Filter by relevance using `type`, `profession`, `domain`, and other YAML fields
+   - Skip `type: "reference"` files unless cross-referencing a specific claim
+   - Skip files whose `profession` doesn't match the JD's focus
+   - Skip files whose `type` is irrelevant to the task
+4. Read only the files that passed the filter in full
+5. Build `PROFILE_DATA` from the filtered content
+6. Use `PROFILE_DATA` to find connections between Viktor's experience and JD requirements that may not be visible from the short CV bullets alone
 
 If `profile/` does not exist or is empty: set `PROFILE_DATA = null`. Suggestions will be limited to cv-data.js only.
+
+If after YAML filtering no files remain relevant: fall back to cv-data.js only and note: "A profile fájlok között nincs releváns munkahelyi adat — csak cv-data.js alapján dolgozom."
 
 ---
 

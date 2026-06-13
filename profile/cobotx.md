@@ -1,13 +1,28 @@
+---
+title: "Engineering Manager"
+seniority: "Senior"
+period:
+  from: "2021-08"
+  to: "2022-08"
+profession: "mechanical"
+type: "work"
+domain: "industrial robotics"
+leader: true
+skills: [PLC, Robotics, Machine Vision, Engineering Management, Project Management, Python, Team Leadership]
+---
+
 # CobotX Technologies — Engineering Manager (Aug 2021 – Aug 2022)
 
 ## Cégháttér
 
-<!-- Mi a CobotX? Ipari robotika, automatizálás. Méret, piac, ügyfelek típusa -->
-<!-- Universal Robot és OnRobot disztribútor/integrátor? -->
+Ipari robotika és automatizálás (Universal Robot és OnRobot integrátor).
+
+<!-- Méret, piac, ügyfelek típusa -->
 
 ## Csapat és szerepem
 
-<!-- 4 fős mérnökcsapat: milyen szakmák, feladatkörök? -->
+4 fős mérnökcsapat felépítése és vezetése.
+
 <!-- Kinek kellett jelentenem? Mi volt a döntési jogköröm? -->
 
 ---
@@ -15,23 +30,32 @@
 ## Engineering Manager tapasztalat
 
 ### Csapatvezetés
+
+- Built and led a team of 4 engineers, overseeing delivery, performance, and project execution
+- Established KPIs, documentation standards, and reporting processes for engineering operations
+
 <!-- Hogyan szerveztem a csapat munkáját? (sprint, feladatbontás) -->
-<!-- KPI-ok: milyen mérőszámokat vezettünk be? -->
 <!-- Teljesítményértékelés: hogyan, milyen rendszerességgel? -->
 
 ### Projekt menedzsment
+
+- Created capacity and financial plans aligned with sales and production forecasts
+
 <!-- Milyen típusú projektek? (robotcella tervezés, PLC programozás, rendszerintegráció) -->
 <!-- Jellemző projekt méret, átfutási idő -->
-<!-- Kapacitás- és pénzügyi tervezés: konkrétan hogyan csináltam? -->
 
 ### Műszaki munka
-<!-- Specifikáció írás: milyen dokumentumok, milyen szinten? -->
-<!-- Megvalósíthatósági tanulmányok: milyen módszertan? -->
+
+- Developed hardware and software specifications for PLC-based robotics and automation systems
+- Defined technical requirements and conducted feasibility studies for industrial robotic solutions
+
 <!-- Python: mire használtam konkrétan? -->
 
 ---
 
 ## Technológia kontextus
+
+**Tech stack:** Universal Robot · OnRobot · PLC Systems · Machine Vision · Python · OnShape · Mechanical Engineering · Project Management
 
 ### Universal Robot
 <!-- UR Script? URCaps? Collaborative robot programming szintje -->

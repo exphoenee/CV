@@ -45,8 +45,10 @@ From `JD`:
 Read `scripts/cv-data.js`. Extract:
 - `CV_SUMMARY`, `CV_BULLETS_ALL` (all bullets with company/period context), `CV_EXPERIENCE_SUMMARY`
 
-Read all `profile/*.md` files. Build `PROFILE_DATA`.
+Follow the instructions in `.claude/rules/career-profile-usage.md` — parse YAML headers first, filter by relevance, then read only relevant files in full. Build `PROFILE_DATA`.
+
 If `profile/` empty or missing → `PROFILE_DATA = null`, note limitation.
+If after YAML filtering no files remain relevant → fall back to cv-data.js only.
 
 ## Step 4 — Determine output folder
 

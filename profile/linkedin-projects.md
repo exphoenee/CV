@@ -1,3 +1,16 @@
+---
+title: "LinkedIn Projects"
+seniority: "N/A"
+period:
+  from: null
+  to: null
+profession: "both"
+type: "reference"
+domain: null
+leader: false
+skills: []
+---
+
 # Projects
 
 ## FACTS – Feedstock and Compliance Tracking System
