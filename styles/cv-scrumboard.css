@@ -230,10 +230,13 @@ body {
   .sb-scrum-view { display: none; }
 }
 
+@media (max-width: 600px) {
+  .sb-btn-label { display: none; }
+}
+
 @media (max-width: 500px) {
   .sb-header-role { display: none; }
   .sb-header-name { white-space: normal; }
-  .sb-btn-label   { display: none; }
 }
 
 @media (max-width: 400px) {

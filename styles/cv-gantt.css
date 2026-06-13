@@ -898,10 +898,13 @@ body {
   .gt-pm-view { display: none; }
 }
 
+@media (max-width: 600px) {
+  .gt-btn-label { display: none; }
+}
+
 @media (max-width: 500px) {
   .gt-header-role { display: none; }
   .gt-header-name { white-space: normal; }
-  .gt-btn-label   { display: none; }
 }
 
 @media (max-width: 400px) {
