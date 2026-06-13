@@ -1,4 +1,6 @@
 import { CV_DATA } from './cv-data.js';
+
+// CV content per language (backup-relevant)
 import { EN } from './locales/en.js';
 import { HU } from './locales/hu.js';
 import { DE } from './locales/de.js';
@@ -12,7 +14,22 @@ import { GOA } from './locales/goa.js';
 import { ASG } from './locales/asg.js';
 import { YA } from './locales/ya.js';
 
-const LANGS = { en: EN, hu: HU, de: DE, fr: FR, es: ES, it: IT, dot: DOT, kl: KL, qu: QU, goa: GOA, asg: ASG, ya: YA };
+// Page UI labels per language (NOT backup-relevant — page-only translations)
+import { EN_PAGE } from './locales/en-page.js';
+import { HU_PAGE } from './locales/hu-page.js';
+import { DE_PAGE } from './locales/de-page.js';
+import { FR_PAGE } from './locales/fr-page.js';
+import { ES_PAGE } from './locales/es-page.js';
+import { IT_PAGE } from './locales/it-page.js';
+import { DOT_PAGE } from './locales/dot-page.js';
+import { KL_PAGE } from './locales/kl-page.js';
+import { QU_PAGE } from './locales/qu-page.js';
+import { GOA_PAGE } from './locales/goa-page.js';
+import { ASG_PAGE } from './locales/asg-page.js';
+import { YA_PAGE } from './locales/ya-page.js';
+
+const CV_CONTENT = { en: EN, hu: HU, de: DE, fr: FR, es: ES, it: IT, dot: DOT, kl: KL, qu: QU, goa: GOA, asg: ASG, ya: YA };
+const PAGE_LABELS = { en: EN_PAGE.labels, hu: HU_PAGE.labels, de: DE_PAGE.labels, fr: FR_PAGE.labels, es: ES_PAGE.labels, it: IT_PAGE.labels, dot: DOT_PAGE.labels, kl: KL_PAGE.labels, qu: QU_PAGE.labels, goa: GOA_PAGE.labels, asg: ASG_PAGE.labels, ya: YA_PAGE.labels };
 const STORAGE_KEY = 'cv_lang';
 
 function _detectBrowserLang() {
@@ -21,7 +38,7 @@ function _detectBrowserLang() {
     : [];
   for (const l of list) {
     const code = l.split('-')[0].toLowerCase();
-    if (LANGS[code]) return code;
+    if (CV_CONTENT[code]) return code;
   }
   return 'en';
 }
@@ -29,25 +46,25 @@ function _detectBrowserLang() {
 class LocaleManager {
   constructor() {
     const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null;
-    this._lang = (saved && LANGS[saved]) ? saved : _detectBrowserLang();
+    this._lang = (saved && CV_CONTENT[saved]) ? saved : _detectBrowserLang();
     if (typeof document !== 'undefined') document.documentElement.dataset.lang = this._lang;
   }
 
   get lang() { return this._lang; }
 
   setLang(lang) {
-    if (!LANGS[lang]) return;
+    if (!CV_CONTENT[lang]) return;
     this._lang = lang;
     if (typeof localStorage !== 'undefined') localStorage.setItem(STORAGE_KEY, lang);
     if (typeof document !== 'undefined') document.documentElement.dataset.lang = lang;
   }
 
   t(key) {
-    return LANGS[this._lang]?.labels?.[key] ?? LANGS.en.labels[key] ?? key;
+    return PAGE_LABELS[this._lang]?.[key] ?? PAGE_LABELS.en[key] ?? key;
   }
 
   getData() {
-    const overrides = LANGS[this._lang]?.content;
+    const overrides = CV_CONTENT[this._lang]?.content;
     if (!overrides) return CV_DATA;
     return _mergeContent(CV_DATA, overrides);
   }

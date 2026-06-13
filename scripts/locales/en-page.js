@@ -1,6 +1,5 @@
 export const EN_PAGE = {
   labels: {
-
     cvOf: "Curriculum Vitae of",
     roleLocation: "Frontend Tech Lead · Pécs, HU",
     chooseView: "Choose how to view my CV",

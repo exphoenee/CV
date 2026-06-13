@@ -16,9 +16,9 @@ Reports any missing `labels` keys per file. With `--fix`, spawns `locale-agent` 
 
 ---
 
-## Step 1 — Extract reference keys from en.js
+## Step 1 — Extract reference keys from en-page.js
 
-Read `scripts/locales/en.js` in full.
+Read `scripts/locales/en-page.js` in full.
 
 Parse all keys inside the `labels: { ... }` object. Build a reference list:
 `EN_KEYS = [key1, key2, ...]` in the order they appear in the file.
@@ -27,10 +27,10 @@ If the file cannot be read: ❌ ERROR in Hungarian and stop.
 
 ---
 
-## Step 2 — Check each locale file
+## Step 2 — Check each page locale file
 
-For each of the 11 remaining locale files in `scripts/locales/`:
-`hu.js`, `de.js`, `fr.js`, `es.js`, `it.js`, `asg.js`, `dot.js`, `kl.js`, `qu.js`, `goa.js`, `ya.js`
+For each of the 11 remaining page locale files in `scripts/locales/`:
+`hu-page.js`, `de-page.js`, `fr-page.js`, `es-page.js`, `it-page.js`, `asg-page.js`, `dot-page.js`, `kl-page.js`, `qu-page.js`, `goa-page.js`, `ya-page.js`
 
 Read each file and extract all keys from its `labels: { ... }` object.
 
@@ -85,7 +85,8 @@ kl.js — 1 hiányzó:
 For each file that has missing keys:
 
 Spawn `locale-agent` and pass:
-- The file path (e.g. `scripts/locales/hu.js`)
+- The page file path (e.g. `scripts/locales/hu-page.js`)
+- Reference: the `labels` object in en-page.js has the canonical key order
 - The list of missing key names
 - The corresponding values from `en.js` as reference
 
@@ -101,8 +102,8 @@ After all fixes:
 ✅ Javítás kész.
 
 Módosított fájlok:
-  • scripts/locales/hu.js — 2 kulcs hozzáadva
-  • scripts/locales/kl.js — 1 kulcs hozzáadva
+  • scripts/locales/hu-page.js — 2 kulcs hozzáadva
+  • scripts/locales/kl-page.js — 1 kulcs hozzáadva
 
 Javaslat: futtasd újra /locale-check az eredmény ellenőrzéséhez.
 ```

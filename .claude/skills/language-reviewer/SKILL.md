@@ -50,9 +50,9 @@ Store rules per language: `RULES[lang] = <parsed rules content>`.
 
 For each language in `TARGET_LANGS`:
 
-### 3a — Locale labels file
+### 3a — Locale page labels file (UI labels)
 
-Read `scripts/locales/<lang>.js`.
+Read `scripts/locales/<lang>-page.js`.
 Extract all `labels: { ... }` key-value pairs: `LABELS[lang] = { key: value, ... }`.
 
 ### 3b — CV content (English source)
@@ -66,7 +66,7 @@ Extract:
 
 For `en`: this IS the content to review.
 For `hu`: also read `scripts/locales/hu.js` `content` field (if present) — that overrides CV content for Hungarian.
-For other locales: they typically only override `labels`, not `content` — note this in the report.
+For other locales: they typically only override `content`, not `labels` (labels are in `-page.js` files) — note this in the report.
 
 ---
 
@@ -113,7 +113,7 @@ what is actually in the locale file. Flag any drift:
 - e.g. `ya.js` uses `"Hk'nde"` — check apostrophe and capitalization
 - e.g. `qu.js` uses `"Nossë"` with diaeresis — check diaeresis is not omitted
 
-### Check F — Completeness against en.js
+### Check F — Completeness against en-page.js
 
 Compare `LABELS[lang]` keys against `LABELS['en']` keys.
 If `TARGET_LANGS` includes `en`, skip this for `en` itself.

@@ -27,16 +27,16 @@ If `NEW_KEYS` is empty: report error and stop.
 
 ---
 
-## Step 1 — Read en.js for reference
+## Step 1 — Read en-page.js for reference (labels source)
 
-Read `scripts/locales/en.js` in full.
+Read `scripts/locales/en-page.js` in full.
 
 Locate the position of each key in `NEW_KEYS` within the `labels` object.
 Note the keys that appear immediately before and after each new key — this determines
-where to insert in the other files.
+where to insert in the other page files.
 
-If any key in `NEW_KEYS` is NOT in `en.js`:
-- ❌ ERROR: "A(z) 'keyName' kulcs nem található en.js-ben — add hozzá előbb az en.js-hez."
+If any key in `NEW_KEYS` is NOT in `en-page.js`:
+- ❌ ERROR: "A(z) 'keyName' kulcs nem található en-page.js-ben — add hozzá előbb az en-page.js-hez."
 - Stop.
 
 ---
@@ -72,13 +72,15 @@ Then create a stylistically consistent value:
 
 ---
 
-## Step 3 — Insert into each locale file
+## Step 3 — Insert into each page locale file
 
-For each file in `TARGET_FILES`:
+**IMPORTANT:** `labels` are now in `*-page.js` files, NOT in `<lang>.js`. Add keys to the page files only.
+
+For each file in `TARGET_FILES` (these are `<lang>-page.js` paths):
 
 1. Read the file in full.
 2. Locate the correct insertion point: after the preceding key (the key that appears
-   immediately before the new key in `en.js`).
+   immediately before the new key in `en-page.js`).
 3. For each key in `NEW_KEYS`: insert a new line in the correct format:
    ```js
      keyName: "translated value",
@@ -87,6 +89,8 @@ For each file in `TARGET_FILES`:
 4. Write the modified file.
 
 If the key already exists in a file: skip it for that file (do not overwrite, do not warn).
+
+Do NOT modify `*-page.js` files for English (`en-page.js` is the read-only reference).
 
 ---
 
@@ -98,27 +102,28 @@ If the key already exists in a file: skip it for that file (do not overwrite, do
   Kulcs(ok): keyName1, keyName2
 
   Módosított fájlok:
-    • scripts/locales/hu.js ✅
-    • scripts/locales/de.js ✅
-    • scripts/locales/fr.js ✅
-    • scripts/locales/es.js ✅
-    • scripts/locales/it.js ✅
-    • scripts/locales/asg.js ✅
-    • scripts/locales/dot.js ✅
-    • scripts/locales/kl.js ✅
-    • scripts/locales/qu.js ✅
-    • scripts/locales/goa.js ✅
-    • scripts/locales/ya.js ✅
+    • scripts/locales/hu-page.js ✅
+    • scripts/locales/de-page.js ✅
+    • scripts/locales/fr-page.js ✅
+    • scripts/locales/es-page.js ✅
+    • scripts/locales/it-page.js ✅
+    • scripts/locales/asg-page.js ✅
+    • scripts/locales/dot-page.js ✅
+    • scripts/locales/kl-page.js ✅
+    • scripts/locales/qu-page.js ✅
+    • scripts/locales/goa-page.js ✅
+    • scripts/locales/ya-page.js ✅
 
   Kihagyva (kulcs már létezett):
-    • hu.js: keyName1 (már megvolt)
+    • hu-page.js: keyName1 (már megvolt)
 ```
 
 ---
 
 ## Hard Constraints
 
-- ❌ Never modify `en.js` — source of truth, read-only for this agent
+- ❌ Never modify `en-page.js` — source of truth, read-only for this agent
+- ❌ Never modify `<lang>.js` files (these are CV content only — `labels` are in `*-page.js`)
 - ❌ Never remove or reorder existing keys in any file
 - ❌ Never add keys outside the `labels: { ... }` object
 - ✅ Always read the full file before writing — never overwrite blindly
