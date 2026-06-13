@@ -60,6 +60,31 @@
 [data-lang="goa"] .ld-select, [data-lang="goa"] .ld-select * { font-family: system-ui, sans-serif !important; }
 [data-lang="dot"] .ld-select, [data-lang="dot"] .ld-select * { font-family: system-ui, sans-serif !important; }
 
+/* Font Awesome icon override — restores icon font for FA elements */
+[data-lang="ya"] .fa, [data-lang="ya"] .fas, [data-lang="ya"] .far, [data-lang="ya"] .fab, [data-lang="ya"] .fal, [data-lang="ya"] .fad,
+[data-lang="ya"] [class*=" fa-"] { font-family: "Font Awesome 6 Free" !important; }
+[data-lang="ya"] .fab { font-family: "Font Awesome 6 Brands" !important; }
+
+[data-lang="qu"] .fa, [data-lang="qu"] .fas, [data-lang="qu"] .far, [data-lang="qu"] .fab, [data-lang="qu"] .fal, [data-lang="qu"] .fad,
+[data-lang="qu"] [class*=" fa-"] { font-family: "Font Awesome 6 Free" !important; }
+[data-lang="qu"] .fab { font-family: "Font Awesome 6 Brands" !important; }
+
+[data-lang="asg"] .fa, [data-lang="asg"] .fas, [data-lang="asg"] .far, [data-lang="asg"] .fab, [data-lang="asg"] .fal, [data-lang="asg"] .fad,
+[data-lang="asg"] [class*=" fa-"] { font-family: "Font Awesome 6 Free" !important; }
+[data-lang="asg"] .fab { font-family: "Font Awesome 6 Brands" !important; }
+
+[data-lang="kl"] .fa, [data-lang="kl"] .fas, [data-lang="kl"] .far, [data-lang="kl"] .fab, [data-lang="kl"] .fal, [data-lang="kl"] .fad,
+[data-lang="kl"] [class*=" fa-"] { font-family: "Font Awesome 6 Free" !important; }
+[data-lang="kl"] .fab { font-family: "Font Awesome 6 Brands" !important; }
+
+[data-lang="goa"] .fa, [data-lang="goa"] .fas, [data-lang="goa"] .far, [data-lang="goa"] .fab, [data-lang="goa"] .fal, [data-lang="goa"] .fad,
+[data-lang="goa"] [class*=" fa-"] { font-family: "Font Awesome 6 Free" !important; }
+[data-lang="goa"] .fab { font-family: "Font Awesome 6 Brands" !important; }
+
+[data-lang="dot"] .fa, [data-lang="dot"] .fas, [data-lang="dot"] .far, [data-lang="dot"] .fab, [data-lang="dot"] .fal, [data-lang="dot"] .fad,
+[data-lang="dot"] [class*=" fa-"] { font-family: "Font Awesome 6 Free" !important; }
+[data-lang="dot"] .fab { font-family: "Font Awesome 6 Brands" !important; }
+
 .ld-select {
   position: relative;
   flex-shrink: 0;
