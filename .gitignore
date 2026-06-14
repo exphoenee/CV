@@ -33,6 +33,9 @@ npm-debug.log*
 # Template artifacts
 swagger-template/
 
+# Tests
+test-results/
+
 # Python
 __pycache__/
 *.pyc
