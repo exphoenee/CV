@@ -34,11 +34,14 @@ export default class Skeleton extends GameObject {
 
         // AI States & attack animation variables
         this.detectionRadius = 140; // Proximity aggro range
-        this.attackReach = 28;      // Distance at which skeleton attacks player/NPC
-        this.attackCooldown = 0;
+        this.attackReach = 26;      // Center-to-center reach. <1 tile (32px), so a real
+                                    // 1-tile gap is safe; a fleeing player (2x faster)
+                                    // still steps out during the 0.3s windup (see _resolveAttack).
+        this.attackCooldown = 1.0;  // Initial cooldown so new skeletons can't attack instantly
         this.isAttacking = false;
         this.attackTimer = 0;
         this.attackDuration = 0.3; // 0.3 seconds skeleton attack animation
+        this._attackTarget = null; // Damage is resolved on connect, not on windup start
 
         // Animation
         this.animFrame = 0;
@@ -132,6 +135,92 @@ export default class Skeleton extends GameObject {
     }
 
     /**
+     * Check if there's a clear line of sight to the target (no solid obstacles in between).
+     * Uses a precise segment-vs-AABB (slab method) intersection so even small obstacle
+     * collision boxes block the attack — point sampling could step over tiny boxes.
+     */
+    _hasLineOfSight(target, obstacles) {
+        const sRect = this.getCollisionRect();
+        const sx = sRect.x + sRect.width / 2;
+        const sy = sRect.y + sRect.height / 2;
+        const tRect = target.getCollisionRect();
+        const tx = tRect.x + tRect.width / 2;
+        const ty = tRect.y + tRect.height / 2;
+
+        const dx = tx - sx;
+        const dy = ty - sy;
+        if (dx * dx + dy * dy < 1) return true;
+
+        for (const obs of obstacles) {
+            if (obs === this) continue;
+            if (!obs.solid) continue;
+            const oRect = obs.getCollisionRect();
+            if (this._segmentIntersectsRect(sx, sy, dx, dy, oRect)) {
+                return false; // Blocked by obstacle
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Segment (origin + direction*[0,1]) vs axis-aligned rectangle intersection.
+     * Slab method — returns true if the segment crosses the rect.
+     */
+    _segmentIntersectsRect(ox, oy, dx, dy, rect) {
+        let tMin = 0;
+        let tMax = 1;
+
+        // X slab
+        if (dx === 0) {
+            if (ox < rect.x || ox > rect.x + rect.width) return false;
+        } else {
+            let t1 = (rect.x - ox) / dx;
+            let t2 = (rect.x + rect.width - ox) / dx;
+            if (t1 > t2) { const tmp = t1; t1 = t2; t2 = tmp; }
+            tMin = Math.max(tMin, t1);
+            tMax = Math.min(tMax, t2);
+            if (tMin > tMax) return false;
+        }
+
+        // Y slab
+        if (dy === 0) {
+            if (oy < rect.y || oy > rect.y + rect.height) return false;
+        } else {
+            let t1 = (rect.y - oy) / dy;
+            let t2 = (rect.y + rect.height - oy) / dy;
+            if (t1 > t2) { const tmp = t1; t1 = t2; t2 = tmp; }
+            tMin = Math.max(tMin, t1);
+            tMax = Math.min(tMax, t2);
+            if (tMin > tMax) return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Resolve a swing at the end of the windup. Damage only lands if the target
+     * is still within attackReach and in line of sight — otherwise the swing whiffs
+     * (lets a fleeing player actually escape).
+     */
+    _resolveAttack(world) {
+        const tgt = this._attackTarget;
+        this._attackTarget = null;
+        if (!tgt || !tgt.takeDamage || tgt.health <= 0) return;
+
+        const sR = this.getCollisionRect();
+        const sx = sR.x + sR.width / 2;
+        const sy = sR.y + sR.height / 2;
+        const tR = tgt.getCollisionRect();
+        const tx = tR.x + tR.width / 2;
+        const ty = tR.y + tR.height / 2;
+        const dist = Math.sqrt((tx - sx) ** 2 + (ty - sy) ** 2);
+
+        if (dist <= this.attackReach && this._hasLineOfSight(tgt, world.obstacles)) {
+            tgt.takeDamage();
+        }
+    }
+
+    /**
      * Skeleton AI Update Loop.
      */
     update(dt, world) {
@@ -162,6 +251,10 @@ export default class Skeleton extends GameObject {
             this.animFrame = Math.min(3, Math.floor(((this.attackDuration - this.attackTimer) / this.attackDuration) * 4));
             if (this.attackTimer <= 0) {
                 this.isAttacking = false;
+                // Resolve damage on connect (end of windup): only if the target is
+                // STILL in reach and visible. A fleeing target (player is faster)
+                // can step out of range during the 0.3s swing and dodge the hit.
+                this._resolveAttack(world);
             }
             return; // Pause movement during attack swing
         }
@@ -170,13 +263,16 @@ export default class Skeleton extends GameObject {
         const found = this._findNearestTarget(world);
 
         if (found && found.dist <= this.attackReach) {
-            // Attack target
+            // Begin attack windup; damage lands on connect (see _resolveAttack).
             this.isMoving = false;
             if (this.attackCooldown <= 0) {
-                if (found.target.takeDamage) found.target.takeDamage();
-                this.isAttacking = true;
-                this.attackTimer = this.attackDuration;
-                this.attackCooldown = 1.2;
+                // Check line of sight: can't attack through walls, fences, trees, etc.
+                if (this._hasLineOfSight(found.target, world.obstacles)) {
+                    this.isAttacking = true;
+                    this.attackTimer = this.attackDuration;
+                    this.attackCooldown = 1.2;
+                    this._attackTarget = found.target;
+                }
             }
         } else if (found) {
             // Chase target
@@ -270,6 +366,7 @@ export default class Skeleton extends GameObject {
             this.solid = false;
             this.isMoving = false;
             this.isAttacking = false;
+            this._attackTarget = null; // Cancel any in-progress swing
             sfx.play('skeleton_death');
         }
     }

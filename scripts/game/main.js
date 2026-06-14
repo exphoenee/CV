@@ -95,6 +95,10 @@ class GameEngine {
     // Camera
     this.camera = { x: 0, y: 0 };
 
+    // Door cooldown: blocks re-entry immediately after exiting a house dialogue
+    this._doorCooldown = 0;
+    this._dialogueOpen = false;
+
     // Lists
     this.obstacles = []; // House, Tree, Fence, Chest
     this.enemies = []; // Skeletons
@@ -396,15 +400,26 @@ class GameEngine {
    */
   _findRandomSpawnPos() {
     const maxAttempts = 50;
+    const minPlayerDist = 200; // Don't spawn on top of / next to the player
+    let fallbackWalkable = null; // A valid walkable tile, even if close to player
+
     for (let i = 0; i < maxAttempts; i++) {
       const col = 1 + Math.floor(Math.random() * (this.cols - 2));
       const row = 1 + Math.floor(Math.random() * (this.rows - 2));
       const tileKey = this.mapRenderer.getMapTileKey(row, col);
       if (TILE_TYPES[tileKey] && !TILE_TYPES[tileKey].solid) {
-        return { x: col * TILE_SIZE, y: row * TILE_SIZE };
+        const pos = { x: col * TILE_SIZE, y: row * TILE_SIZE };
+        fallbackWalkable = pos;
+        if (this.player) {
+          const ddx = pos.x - this.player.x;
+          const ddy = pos.y - this.player.y;
+          if (Math.sqrt(ddx * ddx + ddy * ddy) < minPlayerDist) continue;
+        }
+        return pos;
       }
     }
-    return { x: 200, y: 200 }; // Fallback
+    // No far-enough tile found — return any walkable tile we saw, else hard fallback
+    return fallbackWalkable || { x: 200, y: 200 };
   }
 
   /**
@@ -465,6 +480,13 @@ class GameEngine {
         }
       }
 
+      // During game over, prevent Space from activating focused buttons (unintended restart)
+      if (e.key === ' ' && this.gameOverActive) {
+        this.keys[' '] = false; // Clear key state so attack doesn't fire after restart
+        e.preventDefault();
+        return;
+      }
+
       // P or Escape to toggle pause menu (ignore key repeat to prevent flicker)
       if ((e.key === "p" || e.key === "P" || e.key === "Escape") && !e.repeat) {
         const startScreen = document.getElementById("start-screen");
@@ -477,7 +499,7 @@ class GameEngine {
         )
           return;
 
-        if (diagOverlay?.classList.contains("dialogue-visible")) {
+        if (this._dialogueOpen) {
           this.closeDialogue();
           return;
         }
@@ -1215,6 +1237,10 @@ class GameEngine {
     const startScreen = document.getElementById("start-screen");
     startScreen.classList.remove("dialogue-visible");
     startScreen.classList.add("dialogue-hidden");
+    // Drop focus off the Start button and clear key state so Space goes to the
+    // game (attack) and doesn't re-activate the focused button.
+    document.getElementById("btn-start-game")?.blur();
+    this.keys = {};
     this.isFrozen = false;
     this.gameStarted = true;
     if (this._onGameStart) this._onGameStart();
@@ -1226,6 +1252,8 @@ class GameEngine {
   setupGameOverListeners() {
     const restartBtn = document.getElementById("btn-restart-game");
     if (restartBtn) {
+      // Restart is click-only. restartGame() blurs this button and clears key
+      // state, so a focused-button Space activation can't happen.
       restartBtn.addEventListener("click", () => this.restartGame());
     }
   }
@@ -1236,6 +1264,7 @@ class GameEngine {
   showGameOver() {
     this.gameOverActive = true;
     this.isFrozen = true;
+    this.keys[' '] = false; // Prevent lingering Space state from triggering restart
     sfx.play("defeat");
     const gameOverScreen = document.getElementById("game-over-screen");
     gameOverScreen.classList.remove("dialogue-hidden");
@@ -1258,6 +1287,10 @@ class GameEngine {
   restartGame() {
     this.player.respawn();
     this.hideGameOver();
+    // Drop focus off the Restart button and clear key state so Space attacks in
+    // the fresh game instead of re-triggering the still-focused button.
+    document.getElementById("btn-restart-game")?.blur();
+    this.keys = {};
     this.isFrozen = false;
 
     // Re-populate enemies/NPCs to original state
@@ -1287,6 +1320,7 @@ class GameEngine {
    */
   enterHouse(house) {
     this.isFrozen = true;
+    this._dialogueOpen = true;
 
     // Populate dialogue elements
     document.getElementById("dialogue-title").innerText = house.cvTitle;
@@ -1294,11 +1328,10 @@ class GameEngine {
 
     const textBox = document.getElementById("dialogue-text");
     textBox.innerHTML = house.cvContent;
-    textBox.scrollTop = 0; // Reset scroll position
+    textBox.scrollTop = 0;
 
     sfx.play("door_open");
 
-    // Show Overlay
     const overlay = document.getElementById("dialogue-overlay");
     overlay.classList.remove("dialogue-hidden");
     overlay.classList.add("dialogue-visible");
@@ -1308,15 +1341,20 @@ class GameEngine {
    * Unfreeze game and displace player downwards away from the doorway.
    */
   closeDialogue() {
+    if (!this._dialogueOpen) return;
+    this._dialogueOpen = false;
+
     sfx.play("door_close");
 
     const overlay = document.getElementById("dialogue-overlay");
     overlay.classList.remove("dialogue-visible");
     overlay.classList.add("dialogue-hidden");
 
-    this.isFrozen = false;
+    if (!this.gameOverActive) this.isFrozen = false;
 
-    // Displace player slightly down to prevent immediately re-triggering doorway overlap
+    // Block door re-entry for a short time so the player can walk away from the doorway
+    this._doorCooldown = 0.5;
+
     this.player.y += 18;
   }
 
@@ -1364,8 +1402,8 @@ class GameEngine {
     this.npcs.forEach((npc) => npc.update(dt, worldContext));
     this.enemies.forEach((enemy) => enemy.update(dt, worldContext));
 
-    // 2. Check player death → game over
-    if (this.player.deathAnimDone && !this.gameOverActive) {
+    // 2. Check player death → game over (immediate, no 2s death animation delay)
+    if (this.player.isDead && !this.gameOverActive) {
       this.showGameOver();
       return;
     }
@@ -1395,11 +1433,15 @@ class GameEngine {
       this.npcSpawnInterval = this._randomInterval(30, 50);
     }
 
-    // 6. Check door triggers for entering CV Stations
-    for (const obs of this.obstacles) {
-      if (obs instanceof House && obs.checkDoorTrigger(this.player)) {
-        this.enterHouse(obs);
-        break;
+    // 6. Check door triggers for entering CV Stations (skip during post-exit cooldown)
+    if (this._doorCooldown > 0) {
+      this._doorCooldown -= dt;
+    } else {
+      for (const obs of this.obstacles) {
+        if (obs instanceof House && obs.checkDoorTrigger(this.player)) {
+          this.enterHouse(obs);
+          break;
+        }
       }
     }
 
@@ -1440,8 +1482,14 @@ class GameEngine {
     const targetCamY =
       this.player.y + this.player.height / 2 - this.virtualHeight / 2;
 
-    this.camera.x += (targetCamX - this.camera.x) * 0.1;
-    this.camera.y += (targetCamY - this.camera.y) * 0.1;
+    const lerpX = 1 - Math.pow(0.01, dt);
+    const lerpY = 1 - Math.pow(0.01, dt);
+    this.camera.x += (targetCamX - this.camera.x) * lerpX;
+    this.camera.y += (targetCamY - this.camera.y) * lerpY;
+
+    // Snap to target when close enough to stop micro-drift jitter
+    if (Math.abs(targetCamX - this.camera.x) < 0.5) this.camera.x = targetCamX;
+    if (Math.abs(targetCamY - this.camera.y) < 0.5) this.camera.y = targetCamY;
 
     // Bind camera to world edges
     this.camera.x = Math.max(
@@ -1463,10 +1511,20 @@ class GameEngine {
     this.ctx.save();
     this.ctx.scale(this.zoom, this.zoom);
 
+    // Pixel-snap camera for rendering so tilemap and sprites share the same integer grid.
+    // renderMap.js already floors internally; without this, sprites render at fractional
+    // offsets and visually "float" away from the tiles beneath them.
+    const renderCam = {
+      x: Math.floor(this.camera.x),
+      y: Math.floor(this.camera.y),
+      playerX: this.player.x,
+      playerY: this.player.y,
+    };
+
     // 1. Render Tilemap background layer
     this.mapRenderer.drawTiles(
       this.ctx,
-      this.camera,
+      renderCam,
       this.rows,
       this.cols,
       this.virtualWidth,
@@ -1480,17 +1538,13 @@ class GameEngine {
       return aBottom - bBottom;
     });
 
-    // Expose player position for proximity checks in draw
-    this.camera.playerX = this.player.x;
-    this.camera.playerY = this.player.y;
-
     this.gameObjects.forEach((obj) => {
-      obj.draw(this.ctx, this.camera);
+      obj.draw(this.ctx, renderCam);
     });
 
     // 3. Draw collision boxes in scaled space (debug mode)
     if (this.debugMode) {
-      this.drawDebugCollisionBoxes();
+      this.drawDebugCollisionBoxes(renderCam);
     }
 
     this.ctx.restore();
@@ -1542,9 +1596,15 @@ class GameEngine {
       if (isFull) {
         this.ctx.drawImage(this.hearthImage, hx, hy, heartSize, heartSize);
       } else {
-        this.ctx.globalAlpha = 0.3;
+        // Depleted heart: clearly distinct from a full one — dark & desaturated,
+        // not just faded (a faint red heart reads as "still alive").
+        this.ctx.save();
+        this.ctx.globalAlpha = 0.4;
+        if ("filter" in this.ctx) {
+          this.ctx.filter = "grayscale(100%) brightness(0.45)";
+        }
         this.ctx.drawImage(this.hearthImage, hx, hy, heartSize, heartSize);
-        this.ctx.globalAlpha = 1.0;
+        this.ctx.restore();
       }
     }
   }
@@ -1568,8 +1628,9 @@ class GameEngine {
   /**
    * Draw collision boxes in camera-relative scaled space.
    */
-  drawDebugCollisionBoxes() {
-    const { ctx, camera } = this;
+  drawDebugCollisionBoxes(renderCam) {
+    const { ctx } = this;
+    const camera = renderCam || this.camera;
 
     ctx.strokeStyle = "#ff0000";
     ctx.lineWidth = 1;
@@ -1584,7 +1645,15 @@ class GameEngine {
   }
 }
 
-// Instantiate game engine when window loads
+// Instantiate game engine when window loads.
+// Guard against a second instance: two engines = two players/loops/HUDs sharing
+// one canvas + the sfx singleton, which manifests as "died at full HP" (one
+// engine's player dies while the other's HUD shows full) and the Game Over sound
+// playing twice.
 window.addEventListener("DOMContentLoaded", () => {
+  if (window.Game) {
+    console.warn("[Game] A GameEngine already exists — skipping duplicate init.");
+    return;
+  }
   window.Game = new GameEngine();
 });
