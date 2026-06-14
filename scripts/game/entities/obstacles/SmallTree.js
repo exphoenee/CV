@@ -32,10 +32,10 @@ export default class SmallTree extends GameObject {
       solid: true,
       ySortOffset: 0,
       collisionBox: {
-        offsetX: Math.round(10 * scale),
-        offsetY: Math.round(36 * scale),
-        width: Math.round(12 * scale),
-        height: Math.round(10 * scale), // Only the trunk base blocks movement
+        offsetX: Math.round(13 * scale),
+        offsetY: Math.round(26 * scale),
+        width: Math.round(6 * scale),
+        height: Math.round(5 * scale),
       },
     });
 
