@@ -414,11 +414,15 @@ class GameEngine {
     window.addEventListener("keydown", (e) => {
       this.keys[e.key] = true;
 
-      // Prevent scroll on Space/Arrows
+      // Prevent scroll on Space/Arrows — but not when typing in form fields
       if (
         [" ", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)
       ) {
-        e.preventDefault();
+        const tag = document.activeElement?.tagName || '';
+        const isInput = tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement?.isContentEditable;
+        if (!isInput) {
+          e.preventDefault();
+        }
       }
 
       // P or Escape to toggle pause menu (ignore key repeat to prevent flicker)
