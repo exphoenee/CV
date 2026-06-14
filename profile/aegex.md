@@ -25,6 +25,14 @@ Csapatméret: 2 fő (én + 1 mid-level engineer, akit mentorálok) + 1 .NET back
 
 Felelősségi körök: end-to-end delivery of SafeSy and FACTS — system design, frontend architecture, backend integration.
 
+### Ownership & soft skill (szerep-szintű, CV-ben felhasználható)
+
+- Senior technical owner role — product strategy and platform architecture, beyond pure task execution
+- Extreme ownership mindset — output- and deadline-driven, async working style focused on strategic objectives rather than hours
+- Strategic adaptability: fully rewrote the system three times to keep it aligned with the company's evolving business strategy
+- Reduced business risk: introduced code-quality standards and documentation where none existed, kept management with full visibility and control, and minimized the bus factor through transparency
+- Cross-platform continuity through deep product/architecture/process knowledge, reducing onboarding and knowledge-transfer overhead
+
 ---
 
 ## SafeSy projekt — Belső gyártásirányítási rendszer
@@ -71,8 +79,9 @@ Upload Sources: Upload Source (point of origin) data to FACTS.
 
 - Release ciklus csökkentése: havontáról kéthetente (cél: heti) — AI-assisted development workflows (Claude-based tooling)
 - CI pipeline bevezetése automated quality gate-ekkel; test coverage 0-ról felépítve, production issue-k jelentős csökkentése
-- Architektúra migráció: PNPM monorepo; shared FACTS/Driver package kiemelése újrahasznosítható packageként
+- Architektúra migráció: PNPM monorepo; shared FACTS/Driver package kiemelése újrahasznosítható packageként — a shared library skálázhatóságra tervezve (egy tervezett harmadik termék már validálja)
 - Belső CLI tooling: monorepo workflow automatizálás, fejlesztői produktivitás
+- Engineering platform folyamatos fejlesztése: dev workflow-k, testing infrastructure, documentation practices — delivery speed, quality, long-term maintainability
 
 ### AI-alapú fejlesztési workflow
 
