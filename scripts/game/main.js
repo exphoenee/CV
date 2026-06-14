@@ -5,9 +5,9 @@ import {
   MAP_IMAGE_SRC,
   loadMapGridFromImage,
 } from "./map/map.js";
-import {MapRenderer} from "./map/renderMap.js";
-import {CV_STATIONS} from "./world/stations.js";
-import {ENTITY_SPAWNS} from "./world/spawns.js";
+import { MapRenderer } from "./map/renderMap.js";
+import { CV_STATIONS } from "./world/stations.js";
+import { ENTITY_SPAWNS } from "./world/spawns.js";
 import Player from "./entities/player/Player.js";
 import Skeleton from "./entities/enemies/Skeleton.js";
 import Chicken from "./entities/npcs/Chicken.js";
@@ -24,8 +24,20 @@ import Mushroom from "./entities/decor/Mushroom.js";
 import Log from "./entities/decor/Log.js";
 import GoldOre from "./entities/decor/GoldOre.js";
 import PickableOre from "./entities/decor/PickableOre.js";
-import {MUSIC_GENRES, initFormspree, bookingModalHTML, initBookingModal} from "../shared.js";
-import { MUSIC_STATE_KEY, MUSIC_TIME_KEY, MUSIC_VOLUME_KEY, MUSIC_GENRE_KEY, MUSIC_REPEAT_KEY, SFX_VOLUME_KEY } from '../config.js';
+import {
+  MUSIC_GENRES,
+  initFormspree,
+  bookingModalHTML,
+  initBookingModal,
+} from "../shared.js";
+import {
+  MUSIC_STATE_KEY,
+  MUSIC_TIME_KEY,
+  MUSIC_VOLUME_KEY,
+  MUSIC_GENRE_KEY,
+  MUSIC_REPEAT_KEY,
+  SFX_VOLUME_KEY,
+} from "../config.js";
 import Hay from "./entities/decor/Hay.js";
 import Carrot from "./entities/decor/Carrot.js";
 import GoldBoulder from "./entities/decor/GoldBoulder.js";
@@ -36,7 +48,7 @@ import Basket from "./entities/decor/Basket.js";
 import Sign from "./entities/decor/Sign.js";
 import Plant from "./entities/decor/Plant.js";
 import Leaf from "./entities/decor/Leaf.js";
-import {initMobileInput} from "./mobile-input.js";
+import { initMobileInput } from "./mobile-input.js";
 
 class GameEngine {
   constructor() {
@@ -53,7 +65,8 @@ class GameEngine {
       this.resizeCanvas();
       const btn = document.getElementById("btn-fullscreen");
       if (btn) {
-        const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+        const fsEl =
+          document.fullscreenElement || document.webkitFullscreenElement;
         btn.textContent = fsEl ? "Exit Fullscreen" : "Fullscreen";
       }
     };
@@ -68,7 +81,8 @@ class GameEngine {
     this.isFrozen = true; // Start frozen until user clicks Start Game
     this.gameOverActive = false;
     this.gameStarted = false;
-    this.debugMode = false;
+    // TODO: revert false after decor is done
+    this.debugMode = false; // Toggle with F3
     this.lastTime = 0;
 
     // World parameters (set after map image loads)
@@ -79,7 +93,7 @@ class GameEngine {
     this.fullMapGrid = null;
 
     // Camera
-    this.camera = {x: 0, y: 0};
+    this.camera = { x: 0, y: 0 };
 
     // Lists
     this.obstacles = []; // House, Tree, Fence, Chest
@@ -148,10 +162,13 @@ class GameEngine {
     if (!container) return;
     const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
     if (!fsEl) {
-      const req = container.requestFullscreen?.() || container.webkitRequestFullscreen?.();
+      const req =
+        container.requestFullscreen?.() ||
+        container.webkitRequestFullscreen?.();
       if (req) req.catch(() => {});
     } else {
-      const exit = document.exitFullscreen?.() || document.webkitExitFullscreen?.();
+      const exit =
+        document.exitFullscreen?.() || document.webkitExitFullscreen?.();
       if (exit) exit.catch(() => {});
     }
   }
@@ -187,17 +204,17 @@ class GameEngine {
    * Start loading and build game assets.
    */
   async init() {
-    const loadingBar   = document.getElementById('loading-bar');
-    const loadingLabel = document.getElementById('loading-label');
+    const loadingBar = document.getElementById("loading-bar");
+    const loadingLabel = document.getElementById("loading-label");
 
     function setLabel(text) {
       if (loadingLabel) loadingLabel.textContent = text;
     }
     function setProgress(ratio) {
-      if (loadingBar) loadingBar.style.width = (ratio * 100) + '%';
+      if (loadingBar) loadingBar.style.width = ratio * 100 + "%";
     }
 
-    setLabel('Loading map…');
+    setLabel("Loading map…");
     try {
       const mapData = await loadMapGridFromImage(MAP_IMAGE_SRC);
       this.fullMapGrid = mapData.fullMapGrid;
@@ -211,40 +228,48 @@ class GameEngine {
     }
     setProgress(0.2);
 
-    setLabel('Loading tiles…');
+    setLabel("Loading tiles…");
     await new Promise((resolve) => this.preloadAssets(resolve));
     setProgress(0.4);
     sfx.preload();
 
-    setLabel('Building world…');
+    setLabel("Building world…");
     this.buildWorld();
     setProgress(0.5);
 
-    setLabel('Loading sprites…');
+    setLabel("Loading sprites…");
     const images = this.gameObjects
-      .filter(obj => obj && obj.image)
-      .map(obj => obj.image);
+      .filter((obj) => obj && obj.image)
+      .map((obj) => obj.image);
 
     if (images.length > 0) {
       let done = 0;
-      await Promise.all(images.map(img => new Promise(resolve => {
-        const tick = () => {
-          done++;
-          setProgress(0.5 + (done / images.length) * 0.5);
-          resolve();
-        };
-        if (img.complete && img.naturalWidth > 0) { tick(); return; }
-        img.addEventListener('load',  tick, { once: true });
-        img.addEventListener('error', tick, { once: true });
-      })));
+      await Promise.all(
+        images.map(
+          (img) =>
+            new Promise((resolve) => {
+              const tick = () => {
+                done++;
+                setProgress(0.5 + (done / images.length) * 0.5);
+                resolve();
+              };
+              if (img.complete && img.naturalWidth > 0) {
+                tick();
+                return;
+              }
+              img.addEventListener("load", tick, { once: true });
+              img.addEventListener("error", tick, { once: true });
+            }),
+        ),
+      );
     } else {
       setProgress(1);
     }
 
-    const loadingScreen = document.getElementById('loading-screen');
+    const loadingScreen = document.getElementById("loading-screen");
     if (loadingScreen) {
-      loadingScreen.classList.add('loading-done');
-      await new Promise(r => setTimeout(r, 420));
+      loadingScreen.classList.add("loading-done");
+      await new Promise((r) => setTimeout(r, 420));
       loadingScreen.remove();
     }
 
@@ -293,9 +318,24 @@ class GameEngine {
 
     // 3. Spawn static obstacles and decorations
     const DECOR_CLASSES = {
-      Tree, SmallTree, Chest, Flower, Mushroom, Log, GoldOre,
-      PickableOre, Hay, Carrot, GoldBoulder, Boulder, DecorStone,
-      Stump, Basket, Sign, Plant, Leaf,
+      Tree,
+      SmallTree,
+      Chest,
+      Flower,
+      Mushroom,
+      Log,
+      GoldOre,
+      PickableOre,
+      Hay,
+      Carrot,
+      GoldBoulder,
+      Boulder,
+      DecorStone,
+      Stump,
+      Basket,
+      Sign,
+      Plant,
+      Leaf,
     };
     ENTITY_SPAWNS.decorations.forEach((decor) => {
       const Klass = DECOR_CLASSES[decor.type];
@@ -310,20 +350,20 @@ class GameEngine {
     ENTITY_SPAWNS.npcs.forEach((npcSpawn) => {
       let animal = null;
       if (npcSpawn.type === "Chicken")
-        animal = new Chicken({x: npcSpawn.x, y: npcSpawn.y});
+        animal = new Chicken({ x: npcSpawn.x, y: npcSpawn.y });
       else if (npcSpawn.type === "Cow")
-        animal = new Cow({x: npcSpawn.x, y: npcSpawn.y});
+        animal = new Cow({ x: npcSpawn.x, y: npcSpawn.y });
       else if (npcSpawn.type === "Pig")
-        animal = new Pig({x: npcSpawn.x, y: npcSpawn.y});
+        animal = new Pig({ x: npcSpawn.x, y: npcSpawn.y });
       else if (npcSpawn.type === "Sheep")
-        animal = new Sheep({x: npcSpawn.x, y: npcSpawn.y});
+        animal = new Sheep({ x: npcSpawn.x, y: npcSpawn.y });
 
       if (animal) this.npcs.push(animal);
     });
 
     // 5. Spawn Enemies (Skeletons)
     ENTITY_SPAWNS.enemies.forEach((enemySpawn) => {
-      const skeleton = new Skeleton({x: enemySpawn.x, y: enemySpawn.y});
+      const skeleton = new Skeleton({ x: enemySpawn.x, y: enemySpawn.y });
       this.enemies.push(skeleton);
     });
 
@@ -361,10 +401,10 @@ class GameEngine {
       const row = 1 + Math.floor(Math.random() * (this.rows - 2));
       const tileKey = this.mapRenderer.getMapTileKey(row, col);
       if (TILE_TYPES[tileKey] && !TILE_TYPES[tileKey].solid) {
-        return {x: col * TILE_SIZE, y: row * TILE_SIZE};
+        return { x: col * TILE_SIZE, y: row * TILE_SIZE };
       }
     }
-    return {x: 200, y: 200}; // Fallback
+    return { x: 200, y: 200 }; // Fallback
   }
 
   /**
@@ -372,7 +412,7 @@ class GameEngine {
    */
   spawnSkeleton() {
     const pos = this._findRandomSpawnPos();
-    const skeleton = new Skeleton({x: pos.x, y: pos.y});
+    const skeleton = new Skeleton({ x: pos.x, y: pos.y });
     this.enemies.push(skeleton);
     this.rebuildGameObjectList();
   }
@@ -384,7 +424,7 @@ class GameEngine {
     const pos = this._findRandomSpawnPos();
     const types = [Chicken, Cow, Pig, Sheep];
     const AnimalClass = types[Math.floor(Math.random() * types.length)];
-    const animal = new AnimalClass({x: pos.x, y: pos.y});
+    const animal = new AnimalClass({ x: pos.x, y: pos.y });
     this.npcs.push(animal);
     this.rebuildGameObjectList();
   }
@@ -434,7 +474,8 @@ class GameEngine {
         if (
           startScreen?.classList.contains("dialogue-visible") ||
           gameOverScreen?.classList.contains("dialogue-visible")
-        ) return;
+        )
+          return;
 
         if (diagOverlay?.classList.contains("dialogue-visible")) {
           this.closeDialogue();
@@ -461,13 +502,15 @@ class GameEngine {
           if (musicAudio.paused) {
             if (!musicAudio.src) {
               // Load first option if no track selected
-              const firstOption = document.querySelector("#game-genre-select .custom-option");
+              const firstOption = document.querySelector(
+                "#game-genre-select .custom-option",
+              );
               if (firstOption) {
                 musicAudio.src = firstOption.getAttribute("data-value");
                 musicAudio.load();
               }
             }
-            musicAudio.play().catch(function(){});
+            musicAudio.play().catch(function () {});
           } else {
             musicAudio.pause();
           }
@@ -491,13 +534,13 @@ class GameEngine {
 
     if (upBtn && textBox) {
       upBtn.addEventListener("click", () => {
-        textBox.scrollBy({top: -60, behavior: "smooth"});
+        textBox.scrollBy({ top: -60, behavior: "smooth" });
       });
     }
 
     if (downBtn && textBox) {
       downBtn.addEventListener("click", () => {
-        textBox.scrollBy({top: 60, behavior: "smooth"});
+        textBox.scrollBy({ top: 60, behavior: "smooth" });
       });
     }
 
@@ -580,8 +623,14 @@ class GameEngine {
     var optionsContainer = document.getElementById("game-genre-options");
     if (optionsContainer) {
       optionsContainer.innerHTML = MUSIC_GENRES.map(function (g) {
-        return '<div class="custom-option" data-value="' + g.value + '">' + g.label + '</div>';
-      }).join('');
+        return (
+          '<div class="custom-option" data-value="' +
+          g.value +
+          '">' +
+          g.label +
+          "</div>"
+        );
+      }).join("");
     }
 
     const trigger = customSelect.querySelector(".custom-select-trigger");
@@ -613,7 +662,8 @@ class GameEngine {
     }
 
     // Volume target — updated live when the slider changes
-    let targetVolume = parseFloat(localStorage.getItem(MUSIC_VOLUME_KEY)) || 0.5;
+    let targetVolume =
+      parseFloat(localStorage.getItem(MUSIC_VOLUME_KEY)) || 0.5;
 
     if (volumeSlider) {
       volumeSlider.addEventListener("input", (e) => {
@@ -621,7 +671,7 @@ class GameEngine {
         targetVolume = vol;
         audio.volume = vol;
         localStorage.setItem(MUSIC_VOLUME_KEY, vol);
-        volumeSlider.style.setProperty('--volume-pct', (vol * 100) + '%');
+        volumeSlider.style.setProperty("--volume-pct", vol * 100 + "%");
       });
     }
 
@@ -633,11 +683,14 @@ class GameEngine {
       if (sfxSlider) sfxSlider.value = savedSfxVol;
     }
     if (sfxSlider) {
-      sfxSlider.style.setProperty('--volume-pct', (parseFloat(sfxSlider.value) * 100) + '%');
+      sfxSlider.style.setProperty(
+        "--volume-pct",
+        parseFloat(sfxSlider.value) * 100 + "%",
+      );
       sfxSlider.addEventListener("input", function () {
         var vol = parseFloat(this.value);
         sfx.setVolume(vol);
-        this.style.setProperty('--volume-pct', (vol * 100) + '%');
+        this.style.setProperty("--volume-pct", vol * 100 + "%");
       });
     }
 
@@ -671,7 +724,9 @@ class GameEngine {
     };
 
     const updatePlayPause = () => {
-      playPauseBtn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+      playPauseBtn.innerHTML = isPlaying
+        ? '<i class="fas fa-pause"></i>'
+        : '<i class="fas fa-play"></i>';
       if (isPlaying) {
         playPauseBtn.classList.add("playing");
       } else {
@@ -683,7 +738,12 @@ class GameEngine {
     let fadeInterval = null;
     const fadeDuration = 0.5; // seconds
 
-    const stopFade = () => { if (fadeInterval) { clearInterval(fadeInterval); fadeInterval = null; } };
+    const stopFade = () => {
+      if (fadeInterval) {
+        clearInterval(fadeInterval);
+        fadeInterval = null;
+      }
+    };
 
     const fadeTo = (target, onDone) => {
       stopFade();
@@ -702,11 +762,14 @@ class GameEngine {
 
     const fadeIn = () => {
       audio.volume = 0;
-      audio.play().then(() => {
-        isPlaying = true;
-        updatePlayPause();
-        fadeTo(targetVolume);
-      }).catch(() => {});
+      audio
+        .play()
+        .then(() => {
+          isPlaying = true;
+          updatePlayPause();
+          fadeTo(targetVolume);
+        })
+        .catch(() => {});
     };
 
     const fadeOut = (onDone) => {
@@ -873,7 +936,10 @@ class GameEngine {
       if (seekSlider && audio.duration) {
         seekSlider.max = audio.duration;
         seekSlider.value = audio.currentTime;
-        seekSlider.style.setProperty('--seek-pct', (audio.currentTime / audio.duration * 100) + '%');
+        seekSlider.style.setProperty(
+          "--seek-pct",
+          (audio.currentTime / audio.duration) * 100 + "%",
+        );
       }
       // Auto-save every 3 seconds
       if (audio.currentTime - lastSaveTime >= 3) {
@@ -890,7 +956,10 @@ class GameEngine {
           trackTimeCurrent.textContent = formatTime(audio.currentTime);
         }
         if (audio.duration) {
-          seekSlider.style.setProperty('--seek-pct', (audio.currentTime / audio.duration * 100) + '%');
+          seekSlider.style.setProperty(
+            "--seek-pct",
+            (audio.currentTime / audio.duration) * 100 + "%",
+          );
         }
       });
       seekSlider.addEventListener("change", () => {
@@ -902,14 +971,20 @@ class GameEngine {
       seekSlider.addEventListener("click", (e) => {
         userScrubbing = true;
         const rect = seekSlider.getBoundingClientRect();
-        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        const pct = Math.max(
+          0,
+          Math.min(1, (e.clientX - rect.left) / rect.width),
+        );
         const max = parseFloat(seekSlider.max) || 1;
         const min = parseFloat(seekSlider.min) || 0;
         const val = min + pct * (max - min);
         seekSlider.value = val;
         audio.currentTime = val;
         if (audio.duration) {
-          seekSlider.style.setProperty('--seek-pct', (val / audio.duration * 100) + '%');
+          seekSlider.style.setProperty(
+            "--seek-pct",
+            (val / audio.duration) * 100 + "%",
+          );
         }
         if (trackTimeCurrent) {
           trackTimeCurrent.textContent = formatTime(val);
@@ -930,7 +1005,7 @@ class GameEngine {
       if (repeatMode === 2) {
         // Repeat one: replay from beginning
         audio.currentTime = 0;
-        audio.play().catch(function(){});
+        audio.play().catch(function () {});
         return;
       }
 
@@ -939,10 +1014,13 @@ class GameEngine {
         const nextIndex = (currentIndex + 1) % options.length;
         selectTrackByIndex(nextIndex);
         loadTrack();
-        audio.play().then(() => {
-          isPlaying = true;
-          updatePlayPause();
-        }).catch(() => {});
+        audio
+          .play()
+          .then(() => {
+            isPlaying = true;
+            updatePlayPause();
+          })
+          .catch(() => {});
         return;
       }
 
@@ -980,11 +1058,14 @@ class GameEngine {
           const startOnInteraction = () => {
             audio.currentTime = savedTime > 0 ? savedTime : 0;
             audio.volume = 0;
-            audio.play().then(() => {
-              isPlaying = true;
-              updatePlayPause();
-              fadeTo(targetVolume);
-            }).catch(() => {});
+            audio
+              .play()
+              .then(() => {
+                isPlaying = true;
+                updatePlayPause();
+                fadeTo(targetVolume);
+              })
+              .catch(() => {});
             window.removeEventListener("click", startOnInteraction);
             window.removeEventListener("keydown", startOnInteraction);
           };
@@ -1005,95 +1086,111 @@ class GameEngine {
   }
 
   initHireModal() {
-    const hireBtn     = document.getElementById('hire-btn');
-    const hireModal   = document.getElementById('hire-modal');
-    const hireClose   = document.getElementById('hire-close');
-    const hireBackdrop = document.getElementById('hire-backdrop');
-    const form        = document.getElementById('hire-game-form');
+    const hireBtn = document.getElementById("hire-btn");
+    const hireModal = document.getElementById("hire-modal");
+    const hireClose = document.getElementById("hire-close");
+    const hireBackdrop = document.getElementById("hire-backdrop");
+    const form = document.getElementById("hire-game-form");
 
     if (!hireModal || !form) return;
 
-    const COOLDOWN_KEY = 'hire_sent_ts';
-    const COOLDOWN_MS  = 24 * 60 * 60 * 1000;
+    const COOLDOWN_KEY = "hire_sent_ts";
+    const COOLDOWN_MS = 24 * 60 * 60 * 1000;
     const isOnCooldown = () => {
-      const ts = parseInt(localStorage.getItem(COOLDOWN_KEY) || '0', 10);
-      return ts > 0 && (Date.now() - ts < COOLDOWN_MS);
+      const ts = parseInt(localStorage.getItem(COOLDOWN_KEY) || "0", 10);
+      return ts > 0 && Date.now() - ts < COOLDOWN_MS;
     };
 
-    const fsSuccess   = hireModal.querySelector('[data-fs-success]');
-    const cooldownEl  = hireModal.querySelector('[data-hire-cooldown]');
-    const fsError     = hireModal.querySelector('[data-fs-error]');
-    const submitBtn   = form.querySelector('[type="submit"]');
+    const fsSuccess = hireModal.querySelector("[data-fs-success]");
+    const cooldownEl = hireModal.querySelector("[data-hire-cooldown]");
+    const fsError = hireModal.querySelector("[data-fs-error]");
+    const submitBtn = form.querySelector('[type="submit"]');
 
     const openHire = () => {
-      fsSuccess?.classList.add('cv-success-hidden');
-      if (fsError) { fsError.classList.add('cv-error-hidden'); fsError.textContent = ''; }
+      fsSuccess?.classList.add("cv-success-hidden");
+      if (fsError) {
+        fsError.classList.add("cv-error-hidden");
+        fsError.textContent = "";
+      }
 
       if (isOnCooldown()) {
-        form.style.display = 'none';
-        cooldownEl?.classList.remove('cv-success-hidden');
+        form.style.display = "none";
+        cooldownEl?.classList.remove("cv-success-hidden");
       } else {
-        cooldownEl?.classList.add('cv-success-hidden');
-        form.style.display = '';
+        cooldownEl?.classList.add("cv-success-hidden");
+        form.style.display = "";
         form.reset();
         if (submitBtn) submitBtn.disabled = false;
       }
 
-      hireModal.classList.remove('dialogue-hidden');
-      hireModal.classList.add('dialogue-visible');
+      hireModal.classList.remove("dialogue-hidden");
+      hireModal.classList.add("dialogue-visible");
       this.isFrozen = true;
     };
 
     const closeHire = () => {
-      hireModal.classList.remove('dialogue-visible');
-      hireModal.classList.add('dialogue-hidden');
+      hireModal.classList.remove("dialogue-visible");
+      hireModal.classList.add("dialogue-hidden");
       if (!this.gameOverActive) this.isFrozen = false;
     };
 
-    hireBtn?.addEventListener('click', openHire);
-    hireClose?.addEventListener('click', closeHire);
-    hireBackdrop?.addEventListener('click', closeHire);
+    hireBtn?.addEventListener("click", openHire);
+    hireClose?.addEventListener("click", closeHire);
+    hireBackdrop?.addEventListener("click", closeHire);
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
       e.stopImmediatePropagation();
       if (submitBtn) submitBtn.disabled = true;
       const formData = new FormData(form);
-      fetch('https://formspree.io/f/mrejlned', {
-        method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
-      }).then(res => {
-        if (res.ok) {
-          localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
-          form.style.display = 'none';
-          cooldownEl?.classList.add('cv-success-hidden');
-          fsSuccess?.classList.remove('cv-success-hidden');
-        } else {
+      fetch("https://formspree.io/f/mrejlned", {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      })
+        .then((res) => {
+          if (res.ok) {
+            localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
+            form.style.display = "none";
+            cooldownEl?.classList.add("cv-success-hidden");
+            fsSuccess?.classList.remove("cv-success-hidden");
+          } else {
+            if (submitBtn) submitBtn.disabled = false;
+            if (fsError) {
+              fsError.classList.remove("cv-error-hidden");
+              fsError.textContent = "Failed to send. Please try again.";
+            }
+          }
+        })
+        .catch(() => {
           if (submitBtn) submitBtn.disabled = false;
-          if (fsError) { fsError.classList.remove('cv-error-hidden'); fsError.textContent = 'Failed to send. Please try again.'; }
-        }
-      }).catch(() => {
-        if (submitBtn) submitBtn.disabled = false;
-        if (fsError) { fsError.classList.remove('cv-error-hidden'); fsError.textContent = 'Failed to send. Please try again.'; }
-      });
+          if (fsError) {
+            fsError.classList.remove("cv-error-hidden");
+            fsError.textContent = "Failed to send. Please try again.";
+          }
+        });
     });
   }
 
   initMeetModal() {
-    document.body.insertAdjacentHTML('beforeend', bookingModalHTML('game'));
-    const bkModal = initBookingModal('game');
-    const modalEl = document.getElementById('game-booking-modal');
+    document.body.insertAdjacentHTML("beforeend", bookingModalHTML("game"));
+    const bkModal = initBookingModal("game");
+    const modalEl = document.getElementById("game-booking-modal");
 
-    document.getElementById('meet-game-btn')?.addEventListener('click', () => {
+    document.getElementById("meet-game-btn")?.addEventListener("click", () => {
       bkModal.openModal();
       this.isFrozen = true;
     });
 
     if (modalEl) {
       new MutationObserver(() => {
-        if (modalEl.classList.contains('cv-modal-hidden') && !this.gameOverActive) {
+        if (
+          modalEl.classList.contains("cv-modal-hidden") &&
+          !this.gameOverActive
+        ) {
           this.isFrozen = false;
         }
-      }).observe(modalEl, { attributes: true, attributeFilter: ['class'] });
+      }).observe(modalEl, { attributes: true, attributeFilter: ["class"] });
     }
   }
 
@@ -1139,7 +1236,7 @@ class GameEngine {
   showGameOver() {
     this.gameOverActive = true;
     this.isFrozen = true;
-    sfx.play('defeat');
+    sfx.play("defeat");
     const gameOverScreen = document.getElementById("game-over-screen");
     gameOverScreen.classList.remove("dialogue-hidden");
     gameOverScreen.classList.add("dialogue-visible");
@@ -1167,19 +1264,19 @@ class GameEngine {
     this.enemies = [];
     this.npcs = [];
     ENTITY_SPAWNS.enemies.forEach((enemySpawn) => {
-      const skeleton = new Skeleton({x: enemySpawn.x, y: enemySpawn.y});
+      const skeleton = new Skeleton({ x: enemySpawn.x, y: enemySpawn.y });
       this.enemies.push(skeleton);
     });
     ENTITY_SPAWNS.npcs.forEach((npcSpawn) => {
       let animal = null;
       if (npcSpawn.type === "Chicken")
-        animal = new Chicken({x: npcSpawn.x, y: npcSpawn.y});
+        animal = new Chicken({ x: npcSpawn.x, y: npcSpawn.y });
       else if (npcSpawn.type === "Cow")
-        animal = new Cow({x: npcSpawn.x, y: npcSpawn.y});
+        animal = new Cow({ x: npcSpawn.x, y: npcSpawn.y });
       else if (npcSpawn.type === "Pig")
-        animal = new Pig({x: npcSpawn.x, y: npcSpawn.y});
+        animal = new Pig({ x: npcSpawn.x, y: npcSpawn.y });
       else if (npcSpawn.type === "Sheep")
-        animal = new Sheep({x: npcSpawn.x, y: npcSpawn.y});
+        animal = new Sheep({ x: npcSpawn.x, y: npcSpawn.y });
       if (animal) this.npcs.push(animal);
     });
     this.rebuildGameObjectList();
@@ -1199,7 +1296,7 @@ class GameEngine {
     textBox.innerHTML = house.cvContent;
     textBox.scrollTop = 0; // Reset scroll position
 
-    sfx.play('door_open');
+    sfx.play("door_open");
 
     // Show Overlay
     const overlay = document.getElementById("dialogue-overlay");
@@ -1211,7 +1308,7 @@ class GameEngine {
    * Unfreeze game and displace player downwards away from the doorway.
    */
   closeDialogue() {
-    sfx.play('door_close');
+    sfx.play("door_close");
 
     const overlay = document.getElementById("dialogue-overlay");
     overlay.classList.remove("dialogue-visible");
@@ -1324,12 +1421,16 @@ class GameEngine {
     }
 
     // 8. Water ambient SFX
-    var onWater = this.player.getTerrainAt({ grid: this.fullMapGrid, tileSize: TILE_SIZE }) === 'water';
+    var onWater =
+      this.player.getTerrainAt({
+        grid: this.fullMapGrid,
+        tileSize: TILE_SIZE,
+      }) === "water";
     if (onWater && !this._waterAmbientActive) {
-      sfx.startLoop('water_ambient');
+      sfx.startLoop("water_ambient");
       this._waterAmbientActive = true;
     } else if (!onWater && this._waterAmbientActive) {
-      sfx.stopLoop('water_ambient');
+      sfx.stopLoop("water_ambient");
       this._waterAmbientActive = false;
     }
 
@@ -1364,7 +1465,12 @@ class GameEngine {
 
     // 1. Render Tilemap background layer
     this.mapRenderer.drawTiles(
-      this.ctx, this.camera, this.rows, this.cols, this.virtualWidth, this.virtualHeight
+      this.ctx,
+      this.camera,
+      this.rows,
+      this.cols,
+      this.virtualWidth,
+      this.virtualHeight,
     );
 
     // 2. Render all entities y-sorted for 2.5D depth ordering
@@ -1409,9 +1515,20 @@ class GameEngine {
     this.ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
     this.ctx.beginPath();
     if (this.ctx.roundRect) {
-      this.ctx.roundRect(x - 4, y - 4, this.player.maxHealth * (heartSize + 6) + 8, heartSize + 8, 6);
+      this.ctx.roundRect(
+        x - 4,
+        y - 4,
+        this.player.maxHealth * (heartSize + 6) + 8,
+        heartSize + 8,
+        6,
+      );
     } else {
-      this.ctx.rect(x - 4, y - 4, this.player.maxHealth * (heartSize + 6) + 8, heartSize + 8);
+      this.ctx.rect(
+        x - 4,
+        y - 4,
+        this.player.maxHealth * (heartSize + 6) + 8,
+        heartSize + 8,
+      );
     }
     this.ctx.fill();
 
@@ -1436,7 +1553,7 @@ class GameEngine {
    * Draw collision boxes and info for all objects in debug mode.
    */
   drawDebugOverlay() {
-    const {ctx} = this;
+    const { ctx } = this;
 
     ctx.fillStyle = "rgba(0,0,0,0.5)";
     ctx.fillRect(4, 4, 180, 56);
@@ -1446,14 +1563,13 @@ class GameEngine {
     ctx.fillStyle = "#aaa";
     ctx.fillText(`Objects: ${this.gameObjects.length}`, 10, 36);
     ctx.fillText(`Player: ${~~this.player.x},${~~this.player.y}`, 10, 52);
-
   }
 
   /**
    * Draw collision boxes in camera-relative scaled space.
    */
   drawDebugCollisionBoxes() {
-    const {ctx, camera} = this;
+    const { ctx, camera } = this;
 
     ctx.strokeStyle = "#ff0000";
     ctx.lineWidth = 1;
@@ -1461,14 +1577,9 @@ class GameEngine {
     for (const obj of this.gameObjects) {
       const r = obj.getCollisionRect
         ? obj.getCollisionRect()
-        : {x: obj.x, y: obj.y, width: obj.width, height: obj.height};
+        : { x: obj.x, y: obj.y, width: obj.width, height: obj.height };
 
-      ctx.strokeRect(
-        r.x - camera.x,
-        r.y - camera.y,
-        r.width,
-        r.height
-      );
+      ctx.strokeRect(r.x - camera.x, r.y - camera.y, r.width, r.height);
     }
   }
 }
