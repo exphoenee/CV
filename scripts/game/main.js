@@ -414,13 +414,13 @@ class GameEngine {
     window.addEventListener("keydown", (e) => {
       this.keys[e.key] = true;
 
-      // Prevent scroll on Space/Arrows — but not when typing in form fields
+      // Prevent scroll/navigation on Space/Enter/Arrows — but not when typing in form fields or activating buttons
       if (
-        [" ", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)
+        [" ", "Enter", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)
       ) {
         const tag = document.activeElement?.tagName || '';
-        const isInput = tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement?.isContentEditable;
-        if (!isInput) {
+        const isInteractive = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'BUTTON' || tag === 'SELECT' || document.activeElement?.isContentEditable;
+        if (!isInteractive) {
           e.preventDefault();
         }
       }
