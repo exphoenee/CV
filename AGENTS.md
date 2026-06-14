@@ -73,6 +73,17 @@ Details: [`.claude/rules/aria-labels.md`](.claude/rules/aria-labels.md)
 Filename format: `YYYY-MM-DD_HHMM_<type>[-focus].md`
 File header contains: review type, date/time, and the most important metadata for that review.
 
+### CLI Utility Scripts (skill scripts)
+
+Some skills have standalone Python utility scripts in their `scripts/` subdirectory.
+These can be run directly from the project root:
+
+| Script | Skill | Usage |
+|--------|-------|-------|
+| `.claude/skills/cv-backup/scripts/cv-backup.py` | `/cv-backup` | `python .claude/skills/cv-backup/scripts/cv-backup.py [--label ... \| --company ... --title ...]` |
+| `.claude/skills/cv-restore/scripts/cv-restore.py` | `/cv-restore` | `python .claude/skills/cv-restore/scripts/cv-restore.py <folder-name> [--list \| --yes]` |
+| `.claude/skills/locale-check/scripts/locale-check.py` | `/locale-check` | `python .claude/skills/locale-check/scripts/locale-check.py [--json]` |
+
 ### Agents (invoked via Agent tool)
 
 | Agent | Description | Called by |
@@ -87,6 +98,10 @@ File header contains: review type, date/time, and the most important metadata fo
 
 Skill files: `.claude/skills/`
 Agent files: `.claude/agents/`
+Skill scripts: `.claude/skills/{skillName}/scripts/` — standalone utility scripts (Python)
+  - `cv-backup` → `.claude/skills/cv-backup/scripts/cv-backup.py`
+  - `cv-restore` → `.claude/skills/cv-restore/scripts/cv-restore.py`
+  - `locale-check` → `.claude/skills/locale-check/scripts/locale-check.py`
 Review reports: `./review/` (unified directory, date-timestamped filenames)
 Cover letters: `letters/DATE_company_title/cover-letter-en.md` + `cover-letter-hu.md` (standalone `/cover-letter` output)
 Version folder: `cv-versions/DATE_company_title/` — contains `cv-data.js`, `locale-content.json`, and optionally `cover-letter-en.md` + `cover-letter-hu.md`

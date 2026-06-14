@@ -183,6 +183,21 @@ CV/
 │   ├── sprites/     # Pixel-art sprite pack
 │   └── images/      # Logók, skill ikonok, téma ikonok
 │
+├── .claude/
+│   ├── rules/            # Projekt konvenciók, AI szabályok
+│   ├── agents/           # AI agent definíciók
+│   └── skills/
+│       ├── cv-backup/
+│       │   └── scripts/
+│       │       └── cv-backup.py     # CV snapshot backup
+│       ├── cv-restore/
+│       │   └── scripts/
+│       │       └── cv-restore.py    # CV visszaállítás
+│       ├── locale-check/
+│       │   └── scripts/
+│       │       └── locale-check.py  # Locale kulcs ellenőrzés
+│       └── ... (további skill definíciók)
+│
 └── devdocs/         # Tervezési dokumentumok
 ```
 

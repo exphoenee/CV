@@ -1,8 +1,13 @@
 {
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
+  },
   "dependencies": {
     "pngjs": "^7.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "playwright": "^1.60.0"
   }
 }

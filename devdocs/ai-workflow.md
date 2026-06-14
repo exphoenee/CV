@@ -251,6 +251,18 @@ Mikor érdemes használni:
 - Kísérletezés, refaktor előtt
 - Amikor nem állásra pályázol, de el akarod menteni a jelenlegi állapotot
 
+A `/cv-backup` skill mögött egy Python CLI script is található
+`.claude/skills/cv-backup/scripts/cv-backup.py`, amely közvetlenül is futtatható:
+
+```bash
+python .claude/skills/cv-backup/scripts/cv-backup.py                           # kézi snapshot
+python .claude/skills/cv-backup/scripts/cv-backup.py --label pre-refactor      # megnevezett snapshot
+python .claude/skills/cv-backup/scripts/cv-backup.py \
+    --company "Acme Corp" --title "Senior FE" --score 87 \
+    --required-score 95 --preferred-score 72 \
+    --changes "summary + skill order" --seniority Senior --domain SaaS
+```
+
 ### `/cv-restore <folder>` — Visszaállítás
 
 ```
@@ -261,6 +273,14 @@ Mikor érdemes használni:
 A skill visszaállítja:
 - `scripts/cv-data.js` — a snapshot tartalmát (fejléc komment nélkül)
 - `scripts/locales/hu.js` ... `ya.js` — mind a 11 locale `content` mezőjét
+
+A visszaállítás CLI scripttel is végezhető:
+
+```bash
+python .claude/skills/cv-restore/scripts/cv-restore.py <folder-name>           # visszaállítás
+python .claude/skills/cv-restore/scripts/cv-restore.py --list                  # backupok listázása
+python .claude/skills/cv-restore/scripts/cv-restore.py <folder> --yes          # jóváhagyás kihagyása
+```
 
 **Biztonsági lépések:**
 1. Megmutatja a snapshot metaadatait (pozíció, dátum, ATS%, módosítások)
@@ -400,6 +420,30 @@ Egyéb szabályfájlok:
 | `.claude/rules/jd-draft-template.md` | A `tmp/jd-draft.md` pontos sablonja és kezelési logikája |
 | `.claude/rules/version-snapshot-format.md` | Verzió mappa névformátum, cv-data.js fejléc blokk, locale-content.json struktúra |
 | `.claude/rules/arch-review-report-format.md` | Az arch-review riport teljes markdown sablona |
+
+---
+
+## Skill scriptek (CLI eszközök)
+
+Néhány skillhez tartozik önálló Python CLI script, amely a skill `.claude/skills/{skillName}/scripts/`
+mappájában található. Ezek közvetlenül futtathatók a projekt gyökeréből:
+
+| Script | Skill | Funkció |
+|--------|-------|---------|
+| `.claude/skills/cv-backup/scripts/cv-backup.py` | `/cv-backup` | CV snapshot készítése |
+| `.claude/skills/cv-restore/scripts/cv-restore.py` | `/cv-restore` | CV visszaállítása backupból |
+| `.claude/skills/locale-check/scripts/locale-check.py` | `/locale-check` | Locale kulcsok ellenőrzése (JSON kimenettel is) |
+
+### locale-check.py — parancssori használat
+
+```bash
+python .claude/skills/locale-check/scripts/locale-check.py                     # ellenőrzés
+python .claude/skills/locale-check/scripts/locale-check.py --json              # JSON kimenet (tool-oknak)
+python .claude/skills/locale-check/scripts/locale-check.py --fix               # AI agent által (nem CLI-ből)
+```
+
+> **Megjegyzés:** A CLI scriptek önállóan is használhatók, de a `/skill` parancsok többletszolgáltatást nyújtanak
+> (AI agentekkel való interakció, verzióütközés-kezelés, stb.).
 
 ---
 
