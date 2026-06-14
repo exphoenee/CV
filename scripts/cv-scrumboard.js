@@ -360,7 +360,14 @@ function initJobModal() {
   });
   document.addEventListener('keydown', e => {
     if (document.getElementById('sb-job-overlay')?.style.display === 'none') return;
-    if (e.key === 'Enter')  submitJobForm();
+    if (e.key === 'Enter') {
+      // Don't submit form when typing in the textarea (Enter = new line)
+      const tag = document.activeElement?.tagName || '';
+      if (tag !== 'TEXTAREA') {
+        e.preventDefault();
+        submitJobForm();
+      }
+    }
     if (e.key === 'Escape') cancelJobForm();
   });
   window.addEventListener('localechange', updateJobModalText);
