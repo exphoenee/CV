@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "optimized_for": "Manual Backup @ —",
+    "optimized_for": "Senior Frontend Developer - German speaking @ Deutsche Telekom IT Solutions Hungary",
     "date": "2026-06-15 (current)",
-    "ats_match": "—",
+    "ats_match": "69%",
     "source": "scripts/locales/",
     "restore": "Paste each language block back into scripts/locales/<lang>.js -> content field."
   },
   "hu": {
-    "summary": "Frontend Tech Leadként 5+ év frontend és full-stack tapasztalattal frontend architektúrára, rendszertervezésre és nagyszabású legacy rendszerek modernizációjára specializálódtam TypeScript, Svelte, React és Node.js technológiákkal. Vállalati rendszerek teljes újraírását és migrációját vezettem modern stackekre, javítva az alapplatformok karbantarthatóságát és skálázhatóságát. AI-asszisztált munkafolyamatokat vezettem be, és automatizált minőségi kapukkal ellátott CI pipeline-okat építettem. Mérnököket vezetek és mentorálok, az evidencián alapuló refaktorálásra és a fenntartható, rendszerszintű frontend alapokra fókuszálva.",
+    "summary": "Senior Frontend Developer 6+ év tapasztalattal vállalati webalkalmazások fejlesztésében React, TypeScript, JavaScript, HTML5 és CSS3 technológiákkal. Gyakorlati tapasztalattal rendelkezem nagyszabású Agile környezetben a Deutsche Telekom IT Solutionsnál, ahol AI-integrált frontend rendszereket építettem és terméktervezői, design és backend csapatokkal dolgoztam együtt. CI/CD szakértelemmel, ügyfélközpontú megközelítéssel és strukturált mérnöki gyakorlattal rendelkezem. Német (B2) és angol (B2) nyelven folyékonyan kommunikálok, és aktívan mentorálok más mérnököket a kódminőség és csapatteljesítmény javítása érdekében.",
     "workExperience": [
       {
         "id": "aegex",
@@ -46,10 +46,10 @@
         "id": "telekom",
         "description": "Vállalati agilis környezetben dolgoztam egy AI-integrált frontend rendszeren, fókuszálva a valós idejű adatvizualizációra és frontend-backend integrációra. Típusbiztos UI komponenseket építettem és hozzájárultam az AI-vezérelt tesztelési munkafolyamatokhoz és elemzési interfészekhez.",
         "bullets": [
-          "Type-safe React-alapú UI komponenseket fejlesztettem vállalati AI-integrált rendszerekhez",
-          "Frontend interfészeket integráltam AI-vezérelt backend szolgáltatásokkal API munkafolyamatokon keresztül",
+          "Type-safe React-alapú UI komponenseket fejlesztettem vállalati AI-integrált rendszerekhez a Deutsche Telekom IT Solutionsnál",
+          "Frontend interfészeket integráltam AI-vezérelt backend szolgáltatásokkal REST API munkafolyamatokon keresztül nagyszabású Agile környezetben",
           "Valós idejű adatvizualizációs interfészeket építettem teszteredményekhez és rendszerelemzéshez",
-          "Agilis fejlesztési környezetben dolgoztam a frontend és backend rendszerek folyamatos integrációjával"
+          "Agilis/Scrum környezetben dolgoztam folyamatos frontend-backend integrációval, együttműködve product, design és QA csapatokkal"
         ]
       },
       {
@@ -115,7 +115,7 @@
     }
   },
   "de": {
-    "summary": "Frontend Tech Lead mit über 5 Jahren Erfahrung in Frontend und Full-Stack, spezialisiert auf Frontend-Architektur, Systemdesign und die Modernisierung großer Legacy-Systeme mit TypeScript, Svelte, React und Node.js. Ich habe vollständige Rewrites und Migrationen auf moderne Stacks geleitet und so Wartbarkeit und Skalierbarkeit der Kernplattformen verbessert. Ich habe KI-gestützte Workflows eingeführt und CI-Pipelines mit automatisierten Quality Gates aufgebaut, was Liefergeschwindigkeit und Release-Zuverlässigkeit deutlich steigerte. Ich leite und mentoriere Ingenieure mit Fokus auf evidenzbasiertes Refactoring und nachhaltige, systemweite Frontend-Grundlagen.",
+    "summary": "Senior Frontend Developer mit über 6 Jahren Erfahrung in der Entwicklung von Unternehmens-Webanwendungen mit React, TypeScript, JavaScript, HTML5 und CSS3. Ich verfüge über praktische Erfahrung in großen Agile-Umgebungen bei der Deutschen Telekom IT Solutions, wo ich AI-integrierte Frontend-Systeme entwickelte und funktionsübergreifend mit Produkt-, Design- und Backend-Teams zusammenarbeitete. Ich bringe fundierte CI/CD-Kenntnisse, kundenorientierte Lieferpraktiken und strukturierte Engineering-Standards mit. Ich kommuniziere fließend auf Deutsch (B2) und Englisch (B2) und mentoriere aktiv Ingenieure zur Verbesserung von Codequalität und Teamleistung.",
     "workExperience": [
       {
         "id": "aegex",
@@ -154,10 +154,10 @@
         "id": "telekom",
         "description": "Ich arbeitete in einem agilen Unternehmensumfeld an einem KI-integrierten Frontend-System mit Fokus auf Echtzeit-Datenvisualisierung und Frontend-Backend-Integration. Ich entwickelte typsichere UI-Komponenten und trug zu KI-gesteuerten Test-Workflows und Analyse-Interfaces bei.",
         "bullets": [
-          "Ich entwickelte typsichere React-basierte UI-Komponenten für KI-integrierte Unternehmenssysteme",
-          "Ich integrierte Frontend-Interfaces mit KI-gesteuerten Backend-Services über API-Workflows",
+          "Ich entwickelte typsichere React-basierte UI-Komponenten für KI-integrierte Unternehmenssysteme bei der Deutschen Telekom IT Solutions",
+          "Ich integrierte Frontend-Interfaces mit KI-gesteuerten Backend-Services über REST-API-Workflows in einer großen Agile-Umgebung",
           "Ich entwickelte Echtzeit-Datenvisualisierungs-Interfaces für Testergebnisse und Systemanalyse",
-          "Ich arbeitete in einem agilen Lieferumfeld mit kontinuierlicher Integration von Frontend- und Backend-Systemen"
+          "Ich arbeitete in einem Agile/Scrum-Umfeld mit kontinuierlicher Integration von Frontend- und Backend-Systemen, in Zusammenarbeit mit Produkt-, Design- und QA-Teams"
         ]
       },
       {
@@ -223,7 +223,7 @@
     }
   },
   "fr": {
-    "summary": "Frontend Tech Lead avec plus de 5 ans d'expérience en frontend et full-stack, spécialisé dans l'architecture frontend, la conception de systèmes et la modernisation à grande échelle de systèmes legacy avec TypeScript, Svelte, React et Node.js. J'ai dirigé des réécritures complètes et des migrations vers des stacks modernes, améliorant la maintenabilité et la scalabilité des plateformes. J'ai introduit des workflows assistés par IA et construit des pipelines CI avec des quality gates automatisés. Je dirige et encadre des ingénieurs, axé sur le refactoring basé sur les preuves et des fondations frontend durables à l'échelle du système.",
+    "summary": "Senior Frontend Developer avec plus de 6 ans d'expérience dans le développement d'applications web d'entreprise avec React, TypeScript, JavaScript, HTML5 et CSS3. J'ai une expérience pratique dans de grands environnements Agile chez Deutsche Telekom IT Solutions, où j'ai développé des systèmes frontend intégrés à l'IA et collaboré avec les équipes produit, design et backend. Je possède une solide expertise CI/CD, une approche orientée client et des normes d'ingénierie structurées. Je communique couramment en allemand (B2) et en anglais (B2), et je mentorise activement des ingénieurs pour améliorer la qualité du code et la performance des équipes.",
     "workExperience": [
       {
         "id": "aegex",
@@ -262,10 +262,10 @@
         "id": "telekom",
         "description": "Système frontend intégré à l'IA en environnement Agile, axé sur la visualisation de données en temps réel et l'intégration frontend-backend.",
         "bullets": [
-          "Composants UI React type-safe pour systèmes d'entreprise intégrés à l'IA",
-          "Interfaces frontend intégrées avec services backend IA via workflows API",
-          "Visualisations en temps réel pour résultats de tests et analyse système",
-          "Livraison Agile avec intégration continue frontend-backend"
+          "J'ai développé des composants UI React type-safe pour des systèmes d'entreprise intégrés à l'IA chez Deutsche Telekom IT Solutions",
+          "J'ai intégré des interfaces frontend avec des services backend pilotés par IA via des workflows REST API dans un environnement Agile à grande échelle",
+          "J'ai construit des visualisations en temps réel pour les résultats de tests et l'analyse système",
+          "J'ai travaillé dans un environnement Agile/Scrum avec intégration continue des systèmes frontend et backend, en collaboration avec les équipes produit, design et QA"
         ]
       },
       {
@@ -331,7 +331,7 @@
     }
   },
   "es": {
-    "summary": "Frontend Tech Lead con más de 5 años de experiencia en frontend y full-stack, especializado en arquitectura frontend, diseño de sistemas y modernización a gran escala de sistemas legacy con TypeScript, Svelte, React y Node.js. He liderado reescrituras completas y migraciones de sistemas empresariales a stacks modernos, mejorando la mantenibilidad y escalabilidad de las plataformas. He introducido flujos de trabajo asistidos por IA y construido pipelines CI con quality gates automatizados. Lidero y mentorizo a ingenieros, enfocándome en el refactoring basado en evidencias y en bases frontend sostenibles a nivel de sistema.",
+    "summary": "Senior Frontend Developer con más de 6 años de experiencia en el desarrollo de aplicaciones web empresariales con React, TypeScript, JavaScript, HTML5 y CSS3. Tengo experiencia práctica en grandes entornos Agile en Deutsche Telekom IT Solutions, donde desarrollé sistemas frontend integrados con IA y colaboré con equipos de producto, diseño y backend. Aporto una sólida experiencia en CI/CD, un enfoque orientado al cliente y estándares de ingeniería estructurados. Me comunico con fluidez en alemán (B2) e inglés (B2), y mentoriizo activamente a ingenieros para mejorar la calidad del código y el rendimiento del equipo.",
     "workExperience": [
       {
         "id": "aegex",
@@ -370,10 +370,10 @@
         "id": "telekom",
         "description": "Trabajé en un entorno Agile empresarial en un sistema frontend integrado con IA, enfocado en visualización de datos en tiempo real e integración frontend-backend. Construí componentes UI type-safe y contribuí a flujos de trabajo de pruebas impulsados por IA e interfaces de análisis.",
         "bullets": [
-          "Desarrollé componentes UI basados en React type-safe para sistemas empresariales integrados con IA",
-          "Integré interfaces frontend con servicios backend impulsados por IA mediante flujos de trabajo API",
+          "Desarrollé componentes UI basados en React type-safe para sistemas empresariales integrados con IA en Deutsche Telekom IT Solutions",
+          "Integré interfaces frontend con servicios backend impulsados por IA mediante flujos de trabajo REST API en un entorno Agile a gran escala",
           "Construí interfaces de visualización de datos en tiempo real para resultados de pruebas y análisis de sistemas",
-          "Trabajé en un entorno de entrega Agile con integración continua de sistemas frontend y backend"
+          "Trabajé en un entorno Agile/Scrum con integración continua de sistemas frontend y backend, colaborando con equipos de producto, diseño y QA"
         ]
       },
       {
@@ -439,7 +439,7 @@
     }
   },
   "it": {
-    "summary": "Frontend Tech Lead con oltre 5 anni di esperienza frontend e full-stack, specializzato in architettura frontend, progettazione di sistemi e modernizzazione su larga scala di sistemi legacy con TypeScript, Svelte, React e Node.js. Ho guidato riscritture complete e migrazioni di sistemi aziendali verso stack moderni, migliorando la manutenibilità e la scalabilità delle piattaforme. Ho introdotto flussi di lavoro assistiti dall'IA e costruito pipeline CI con quality gate automatizzati. Guido e mentoro ingegneri, concentrandomi sul refactoring basato su evidenze e su fondamenta frontend sostenibili a livello di sistema.",
+    "summary": "Senior Frontend Developer con oltre 6 anni di esperienza nello sviluppo di applicazioni web aziendali con React, TypeScript, JavaScript, HTML5 e CSS3. Ho esperienza pratica in grandi ambienti Agile presso Deutsche Telekom IT Solutions, dove ho sviluppato sistemi frontend integrati con l'IA e collaborato con team di prodotto, design e backend. Porto solide competenze CI/CD, un approccio orientato al cliente e standard ingegneristici strutturati. Comunico fluentemente in tedesco (B2) e inglese (B2), e mentoro attivamente ingegneri per migliorare la qualità del codice e le prestazioni del team.",
     "workExperience": [
       {
         "id": "aegex",
@@ -478,10 +478,10 @@
         "id": "telekom",
         "description": "Ho lavorato in un ambiente Agile aziendale su un sistema frontend integrato con l'IA, focalizzato sulla visualizzazione di dati in tempo reale e l'integrazione frontend-backend. Ho costruito componenti UI type-safe e contribuito ai workflow di test guidati dall'IA e alle interfacce di analisi.",
         "bullets": [
-          "Ho sviluppato componenti UI React type-safe per sistemi aziendali integrati con l'IA",
-          "Ho integrato interfacce frontend con servizi backend guidati dall'IA tramite workflow API",
+          "Ho sviluppato componenti UI React type-safe per sistemi aziendali integrati con l'IA presso Deutsche Telekom IT Solutions",
+          "Ho integrato interfacce frontend con servizi backend guidati dall'IA tramite workflow REST API in un ambiente Agile su larga scala",
           "Ho costruito interfacce di visualizzazione dati in tempo reale per risultati di test e analisi di sistema",
-          "Ho lavorato in un ambiente di consegna Agile con integrazione continua di sistemi frontend e backend"
+          "Ho lavorato in un ambiente Agile/Scrum con integrazione continua di sistemi frontend e backend, collaborando con team di prodotto, design e QA"
         ]
       },
       {
@@ -547,7 +547,7 @@
     }
   },
   "asg": {
-    "summary": "Ek em framhlið taknileiðtogi með 5+ ara framhlið ok full-stack starfsferil, kunnattr i kerfissmið ok storum endursmiðum gamalla kerfa með TypeScript, Svelte, React ok Node.js. Ek hef leiðt fulla endursmið storra stofnanakerfa til nýrra staflana ok batt viðhaldshafni þeirra. Ek hef innleitt AI-meðliðsverklag ok smiðað CI-pipar með sjalfvirkum gaðahliðum er mjök aukið hefr afköst, samkvamni ok areiðanleika utgafna. Ek leiði ok þjalfa verkfraðinga, ok legg aherslu a sannanlegataktar endurbatur, CI-gaðastaðla ok sjalfbaran framhliðargrunn.",
+    "summary": "Senior framhliðsmiðr með 6+ ara feril i storra stofnanavefsmið með React, TypeScript, JavaScript, HTML5 ok CSS3. Ek hef raunverulega reynslu af stor Agile umhverfi hja Deutsche Telekom IT Solutions, þar sem ek smiðaði AI-samþatt framhliðarkerfi ok vann með vöru, hönnunar- ok bakhliðarsveitum. CI/CD kunnatta, viðskiptavinmiðuð afhending ok skipulögð verkfraði eru styrkleikar minir. Ek tala flytandi þyska (B2) ok ensku (B2), ok þjalfa virkir verkfraðinga til að bata koðagaði ok sveitaframmistöðu.",
     "workExperience": [
       {
         "id": "aegex",
@@ -586,10 +586,10 @@
         "id": "telekom",
         "description": "Ek vann i storu Agile-fyrirtaki a AI-samþatt framhliðarkerfi, með aherslu a rauntimagagnasýningu ok framhlið-bakhlið samþattingu. Ek smiðaði týpuöruggar notendaviðmotsihlutir ok lagði til AI-drifnar profunarverkflaðis ok greiningaviðmotsins.",
         "bullets": [
-          "Ek þroaði týpuöruggar React-notendaviðmotsihlutir fyrir stofnana AI-samþatt kerfi",
-          "Ek samþatti framhliðarviðmot við AI-drifnar bakhliðarþjonustur með API verkflaðum",
+          "Ek þroaði týpuöruggar React-notendaviðmotsihlutir fyrir stofnana AI-samþatt kerfi hja Deutsche Telekom IT Solutions",
+          "Ek samþatti framhliðarviðmot við AI-drifnar bakhliðarþjonustur með REST API verkflaðum i storu Agile umhverfi",
           "Ek smiðaði rauntimagagnasýningaviðmot fyrir profunarniðurstöður ok kerfisgreiningu",
-          "Ek vann i Agile afhendingumhverfi með stöðugri samþattingu framhliðar- ok bakhliðarkerfa"
+          "Ek vann i Agile/Scrum umhverfi með stöðugri samþattingu framhliðar- ok bakhliðarkerfa, i samstarfi við vöru-, hönnunar- ok QA-sveitir"
         ]
       },
       {
@@ -657,7 +657,7 @@
     }
   },
   "dot": {
-    "summary": "Khal Frantend anha — 5+ vaesi Frantend ma full-stack dothralat. Anha ray athkidhar ma rhaesh alegra ma hadaen vaesi nakhoe ha typeScript, Svelte, React, node.js. Anha ray chek athlanar khalasar haji. AI-hrazef anha ray azh ma CI arakh anha ray chen — tih chek arakh — dothralat ray fin, nakhoe ray chek. Anha ray khal ma asavvakkar mahrazh alegra. tih-alegra athkidhar anha ray chek. San athchomari yeroon.",
+    "summary": "Khal Frantend anha — 6+ vaesi hath alegra dothralat ha React, TypeScript, JavaScript, HTML5, CSS3. Anha dothrak hath Deutsche Telekom IT Solutions — Agile khalasar, AI-hrazef Frantend hath. Anha dothrak hath vekhat, product, backend khalasar. CI/CD arakh, chiori athdothrakh, hath alegra dothralat — anha ray tih. Deutsch (B2) ma English (B2) anha ray tih. Asavvakkar alegra anha ray oq — khali chek dothralat.",
     "workExperience": [
       {
         "id": "aegex",
@@ -696,10 +696,10 @@
         "id": "telekom",
         "description": "Agile vaes zhokwa anha ray dothrak — AI-hrazef Frantend, tih alegra hoyalat, Frantend-Bakhend athkidhar. Chek-arakh khali anha ray chen. AI-tih dothralat anha ray azh. me nem nesa.",
         "bullets": [
-          "Chek-arakh react khali anha ray chen ha AI vaes zhokwa",
-          "Frantend vaes anha ray azh ha AI Bakhend chiori",
+          "Chek-arakh React khali anha ray chen ha AI vaes zhokwa Deutsche Telekom IT Solutions",
+          "Frantend vaes anha ray azh ha AI Bakhend chiori REST API arakh — Agile khalasar hath",
           "tih alegra hoyalat anha ray chen ha nakhoe ma vaes tih",
-          "Agile nakhoe anha ray dothrak — Frantend ma Bakhend haji"
+          "Agile/Scrum dothralat anha ray dothrak — Frantend ma Bakhend haji, product, design, QA khalasar dothrak hath"
         ]
       },
       {
@@ -765,7 +765,7 @@
     }
   },
   "kl": {
-    "summary": "HoS naQHom Sa' jIH — 5+ DIS HoS naQHom ma Hoch-naQHom Qu'mey vIta'. lurDech patmey vIchel TypeScript, Svelte, React, Node.js. jIvumpu' DaH. AI qoq vIazh ma CI HeH vIchenmoH — HeH cendmey nargh — Qu' ray' Qap, ngeHlu' batlh. SuvwI'pu' vISa' ma vIHaDmoH. De' legh patmey vIvum. HoS naQHomlIj boQmeH jIvum. Qapla'!",
+    "summary": "Senior HoS naQHom SuvwI' jIH — 6+ DIS Qap HoS naQHom patmey vIchenmoH React, TypeScript, JavaScript, HTML5, CSS3. jIvumpu' Deutsche Telekom IT Solutions — Agile qo'Daq, AI HoS naQHom vIchenmoHpu', product ma backend ghompu' vISuv. CI/CD vIghojmoH, chovnatlh vIchenmoH, pat Qap vIta'. Deutsch (B2) ma English (B2) vIjatlh. SuvwI'pu' vIHaDmoH — pat batlh vIta' Qu' boQmeH. Qapla'!",
     "workExperience": [
       {
         "id": "aegex",
@@ -804,10 +804,10 @@
         "id": "telekom",
         "description": "Agile qo' Qu'mey vIvum — AI qoq HoS naQHom, De' leghmoH DaH, HoS naQHom-qo' naQHom pat. HeH chu' wavmey vIchenmoH. AI De' mIwmey vIazh. Qapla'.",
         "bullets": [
-          "HeH chu' React wavmey vIchenmoH AI qo' Qu' boQmeH",
-          "HoS naQHom lojmItmey vIchenmoH AI qo' naQHom jabbI'ID mIwmey",
+          "HeH chu' React wavmey vIchenmoH AI qo' Qu' boQmeH Deutsche Telekom IT SolutionsDaq",
+          "HoS naQHom lojmItmey vIchenmoH AI qo' naQHom jabbI'ID mIwmey — REST API HeH, Hoch Agile qo'Daq",
           "De' leghmoH DaH vIchenmoH Qu' ma qo' legh",
-          "Agile Qu' vIvum — HoS naQHom ma qo' naQHom Hoch"
+          "Agile/Scrum Qu' vIvum — HoS naQHom ma qo' naQHom Hoch, product, design, QA ghompu' vISuv"
         ]
       },
       {
@@ -873,7 +873,7 @@
     }
   },
   "qu": {
-    "summary": "Noldo Yesta-Nárëo — lúmi 5+ Yesta-Nárë ar Yesta-Tárë-Nórë cárëo istanyë — turinyë cantëa nórëo ar yára tengwaron nórissë TypeScript, Svelte, React, Node.js. Turinye quentar ilyë nossëo — laurëa cárëa, mára lendëa. AI-parmë antanye ar CI-sirë cárienye — cendë-andon vinya — cárëa sí taita, lendëa sí alcarinquë. Ohtari tirinyë ar istamórë antanye. Tengwar-cantëa istanyë mára. Yesta-Nárë lya tirinyë, ní cárë. Aiya ar Namárië!",
+    "summary": "Senior Yesta-Nárë ohtar — lúmi 6+ Yesta-Nárë cárëo nórissë React, TypeScript, JavaScript, HTML5, CSS3. Turinye Deutsche Telekom IT Solutions nóressë — Agile nórë, AI Yesta-Nárë cárienye, product, design, backend nossë ve cárë. CI/CD alcarinquë, nórë-cendë, cantëa lendëa. Deutsch (B2) ar English (B2) quetinyë. Ohtari istamórë antanye — tengwar-cantëa alcarinquë. Namárië!",
     "workExperience": [
       {
         "id": "aegex",
@@ -912,10 +912,10 @@
         "id": "telekom",
         "description": "Agile nórë-quenta cárienye — AI-parmë Yesta-Nárë, tengwar-cendë sí, Yesta-Tárë-Nórë cantëa. Alcarinquë-cantëa wavmey cárienye. AI-cendë cárëa antanye. Namárië.",
         "bullets": [
-          "Alcarinquë React-cantëa cárienye AI nórë-quentassë",
-          "Yesta-Nárë nórë antanye AI tárë-nórë centa-sirëo",
+          "Alcarinquë React-cantëa cárienye AI nórë-quentassë Deutsche Telekom IT Solutions nóressë",
+          "Yesta-Nárë nórë antanye AI tárë-nórë centa-sirëo — REST API sirë, Agile nórë tárë",
           "Tengwar-cendë sí cárienye quentassë ar nórë-cendë",
-          "Agile lendëa cárienye — Yesta-Nárë ar Tárë-Nórë ilyë"
+          "Agile/Scrum lendëa cárienye — Yesta-Nárë ar Tárë-Nórë ilyë, product, design, QA nossë ve cárë"
         ]
       },
       {
@@ -981,7 +981,7 @@
     }
   },
   "goa": {
-    "summary": "Tek'ma'te! Kree Hok'tar Yesta-Tau'ri — 5+ noc Yesta-Tau'ri ar Hoch-Tau'ri kel'shah. Joc'kree ha'tak rel'tac noc ar tau'kree hok'noc TypeScript, Svelte, React, Node.js — chel nok, kree! AI lo'taur kree ar CI zat'tel kel'shani — zat'tel noc nargh — kree taita, naquadah hok. Hok'tar lo'taur noc kree, hok'tar rel kree. Yesta-Tau'ri lya kree, joma secu. Tal mak — chel nok!",
+    "summary": "Kree! Senior Yesta-Tau'ri Hok'tar — 6+ noc Yesta-Tau'ri kel'shah ha React, TypeScript, JavaScript, HTML5, CSS3. Joc'kree Deutsche Telekom IT Solutions — Agile ha'tak, AI Yesta-Tau'ri kel'shani, product, design, backend jaffa lo'taur. CI/CD chel nok, naquadah kel'shah, ha'tak hok'noc. Deutsch (B2) ar English (B2) kree. Hok'tar jaffa lo'taur noc — ha'tak chel nok. Tal mak!",
     "workExperience": [
       {
         "id": "aegex",
@@ -1020,10 +1020,10 @@
         "id": "telekom",
         "description": "Agile ha'tak joma kel'shani — AI lo'taur Yesta-Tau'ri, joma noc sí, Yesta-Nak ha'tak. Hok'noc ha'tak kel'shani. AI noc kel'shah kree. Tal mak.",
         "bullets": [
-          "Hok'noc React ha'tak kel'shani AI ha'tak joma",
-          "Yesta-Tau'ri ha'tak kree AI nak-tau'ri joma zat'tel",
+          "Hok'noc React ha'tak kel'shani AI ha'tak joma Deutsche Telekom IT Solutions naquadah",
+          "Yesta-Tau'ri ha'tak kree AI nak-tau'ri joma zat'tel — REST API, Agile ha'tak hok'noc",
           "Joma noc sí kel'shani joma ar ha'tak noc",
-          "Agile rel kel'shani — Yesta-Tau'ri ar Nak-Tau'ri ilye"
+          "Agile/Scrum rel kel'shani — Yesta-Tau'ri ar Nak-Tau'ri ilye, product, design, QA jaffa lo'taur"
         ]
       },
       {

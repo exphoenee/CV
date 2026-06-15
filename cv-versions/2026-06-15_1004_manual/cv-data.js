@@ -54,7 +54,7 @@ export const CV_DATA = {
     },
   },
   summary:
-    "Frontend Tech Lead with 5+ years of frontend and full-stack experience, specializing in frontend architecture, system design, and large-scale legacy modernization with TypeScript, Svelte, React, and Node.js. I've led full rewrites and migrations of enterprise systems to modern stacks, improving maintainability and scalability of core platforms. I've introduced AI-assisted development workflows and built CI pipelines with automated quality gates, significantly increasing delivery speed, engineering consistency, and release reliability. I lead and mentor engineers, focusing on evidence-driven refactoring, CI-quality standards, and sustainable, system-level frontend foundations.",
+    "Frontend Tech Lead with 5+ years of frontend experience, specializing in frontend architecture, system design, and large-scale legacy modernization with TypeScript, Svelte, React, and Node.js. I've led full rewrites and migrations of enterprise systems to modern stacks, improving maintainability and scalability of core platforms. I've introduced AI-assisted development workflows and built CI pipelines with automated quality gates, significantly increasing delivery speed, engineering consistency, and release reliability. I lead and mentor engineers, focusing on evidence-driven refactoring, CI-quality standards, and sustainable, system-level frontend foundations.",
   workExperience: [
     {
       id: "aegex",

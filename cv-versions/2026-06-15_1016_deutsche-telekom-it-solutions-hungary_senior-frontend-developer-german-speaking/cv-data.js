@@ -1,13 +1,13 @@
 /**
  * CV Data — Job Application Version
  * ============================================================
- * Optimized for: Manual Backup @ —
- * Seniority:     
- * Domain:        
- * Date:          2026-06-13 21:50
- * ATS match:     —% (—% required · —% preferred)
+ * Optimized for: Senior Frontend Developer - German speaking @ Deutsche Telekom IT Solutions Hungary
+ * Seniority:     senior
+ * Domain:        telecommunications, CMS
+ * Date:          2026-06-15 (current)
+ * ATS match:     69% (77% required · 50% preferred)
  * HR Review:     —
- * Changes:       Manual snapshot
+ * Changes:       3 modifications (summary · skill order · 4 bullet rephrases)
  * Locale:        locale-content.json — paste content fields into scripts/locales/<lang>.js to restore
  * ============================================================
  * Point-in-time snapshot for the above position.
@@ -46,9 +46,15 @@ export const CV_DATA = {
       {name: "German", level: "Upper Intermediate (B2)", comment: null},
       {name: "English", level: "Upper Intermediate (B2)", comment: null},
     ],
+    game: {
+      x: 180,
+      y: 100,
+      tech: "Frontend Tech Lead · Pécs, HU",
+      description: "Personal HQ & Contact Details",
+    },
   },
   summary:
-    "Frontend Engineer specializing in frontend architecture, system design, and large-scale legacy modernization. I've led full rewrites and migrations of enterprise systems to modern stacks, improving maintainability and scalability of core platforms. I've introduced AI-assisted development workflows that significantly increased delivery speed, engineering consistency, and release reliability. I focus strongly on evidence-driven refactoring, CI-quality standards, and building sustainable, system-level frontend foundations.",
+    "Senior Frontend Developer with 6+ years of experience building enterprise web applications with React, TypeScript, JavaScript, HTML5, and CSS3. I have hands-on experience working in large-scale Agile environments at Deutsche Telekom IT Solutions, where I built AI-integrated frontend systems and collaborated cross-functionally with product, design, and backend teams. I bring strong CI/CD expertise, customer-oriented delivery practices, and structured engineering standards. I communicate fluently in German (B2) and English (B2), and I actively mentor engineers to improve code quality and team performance.",
   workExperience: [
     {
       id: "aegex",
@@ -95,21 +101,21 @@ export const CV_DATA = {
       ],
 
       skills: [
-        {name: "Svelte",      icon: "svelte.svg"},
-        {name: "React",       icon: "react.svg"},
-        {name: "TypeScript",  icon: "typescript.svg"},
-        {name: "Node.js",     icon: "nodeJS.svg"},
-        {name: "ExpressJS",   icon: "ExpressJS.svg"},
-        {name: "MySQL",       icon: "mysql.svg"},
-        {name: "Python",      icon: "python.svg"},
-        {name: "SCSS",        icon: "scss.svg"},
-        {name: "Vite",        icon: "vite.svg"},
-        {name: "PNPM",        icon: "pnpm.svg"},
-        {name: "Jest",        icon: "jest.svg"},
-        {name: "Vitest",      icon: "vitest.svg"},
-        {name: "Playwright",  icon: "playwright.svg"},
-        {name: "Claude",      icon: "claude.svg"},
-        {name: "Codex",       icon: "codex.svg"},
+        {name: "Svelte", icon: "svelte.svg"},
+        {name: "React", icon: "react.svg"},
+        {name: "TypeScript", icon: "typescript.svg"},
+        {name: "Node.js", icon: "nodeJS.svg"},
+        {name: "ExpressJS", icon: "ExpressJS.svg"},
+        {name: "MySQL", icon: "mysql.svg"},
+        {name: "Python", icon: "python.svg"},
+        {name: "SCSS", icon: "scss.svg"},
+        {name: "Vite", icon: "vite.svg"},
+        {name: "PNPM", icon: "pnpm.svg"},
+        {name: "Jest", icon: "jest.svg"},
+        {name: "Vitest", icon: "vitest.svg"},
+        {name: "Playwright", icon: "playwright.svg"},
+        {name: "Claude", icon: "claude.svg"},
+        {name: "Codex", icon: "codex.svg"},
       ],
 
       refs: [
@@ -118,7 +124,7 @@ export const CV_DATA = {
       ],
 
       game: {
-        x: 420,
+        x: 437,
         y: 340,
         tech: "Svelte · React · TypeScript · Node.js · Express · MySQL · Vitest · Claude AI",
         description: "Aegex Technologies (Current)",
@@ -139,21 +145,21 @@ export const CV_DATA = {
         "I worked in an enterprise Agile environment on an AI-integrated frontend system, focusing on real-time data visualization and frontend-backend integration. I built type-safe UI components and contributed to AI-driven testing workflows and analysis interfaces.",
 
       bullets: [
-        "I developed type-safe React-based UI components for enterprise AI-integrated systems",
-        "I integrated frontend interfaces with AI-driven backend services via API workflows",
+        "I developed type-safe React-based UI components for enterprise AI-integrated systems at Deutsche Telekom IT Solutions",
+        "I integrated frontend interfaces with AI-driven backend services via REST API workflows in a large-scale Agile environment",
         "I built real-time data visualization interfaces for test results and system analysis",
-        "I worked in an Agile delivery environment with continuous integration of frontend and backend systems",
+        "I worked in an Agile/Scrum delivery environment with continuous integration of frontend and backend systems, collaborating with product, design, and QA teams",
       ],
 
       skills: [
-        {name: "React",             icon: "react.svg"},
-        {name: "TypeScript",        icon: "typescript.svg"},
-        {name: "Node.js",           icon: "nodeJS.svg"},
-        {name: "React Redux",       icon: "react_redux.svg"},
+        {name: "React", icon: "react.svg"},
+        {name: "TypeScript", icon: "typescript.svg"},
+        {name: "Node.js", icon: "nodeJS.svg"},
+        {name: "React Redux", icon: "react_redux.svg"},
         {name: "Styled Components", icon: "styled_components.svg"},
-        {name: "Webpack",           icon: "webpack.svg"},
-        {name: "Jest",              icon: "jest.svg"},
-        {name: "NPM",               icon: "npm.svg"},
+        {name: "Webpack", icon: "webpack.svg"},
+        {name: "Jest", icon: "jest.svg"},
+        {name: "NPM", icon: "npm.svg"},
       ],
 
       refs: [
@@ -164,8 +170,8 @@ export const CV_DATA = {
       ],
 
       game: {
-        x: 180,
-        y: 340,
+        x: 183,
+        y: 342,
         tech: "React · TypeScript · Redux · Webpack · Agile",
         description: "Deutsche Telekom IT Solutions",
       },
@@ -188,26 +194,26 @@ export const CV_DATA = {
         "I built a real-time React-based UI for live sports scoring and match tracking",
         "I implemented low-latency data visualization components for live performance analytics",
         "I integrated WebSocket-based real-time data streams into the frontend architecture",
-        "I collaborated with design and backend teams to deliver responsive, high-performance UI systems",
+        "I partnered with design and backend teams to ship low-latency, high-throughput real-time UI under live data load",
       ],
 
       skills: [
-        {name: "React",       icon: "react.svg"},
-        {name: "Redux Saga",  icon: "redux_saga.svg"},
-        {name: "WebSocket",   icon: "websocket.svg"},
-        {name: "JavaScript",  icon: "javascript.svg"},
-        {name: "SCSS",        icon: "scss.svg"},
-        {name: "CSS",         icon: "css.svg"},
-        {name: "HTML",        icon: "html.svg"},
-        {name: "MongoDB",     icon: "mongodb.svg"},
-        {name: "Jest",        icon: "jest.svg"},
-        {name: "Webpack",     icon: "webpack.svg"},
+        {name: "React", icon: "react.svg"},
+        {name: "Redux Saga", icon: "redux_saga.svg"},
+        {name: "WebSocket", icon: "websocket.svg"},
+        {name: "JavaScript", icon: "javascript.svg"},
+        {name: "SCSS", icon: "scss.svg"},
+        {name: "CSS", icon: "css.svg"},
+        {name: "HTML", icon: "html.svg"},
+        {name: "MongoDB", icon: "mongodb.svg"},
+        {name: "Jest", icon: "jest.svg"},
+        {name: "Webpack", icon: "webpack.svg"},
       ],
 
       refs: [{url: "https://scoliadarts.com", label: "scoliadarts.com"}],
 
       game: {
-        x: 1140,
+        x: 1142,
         y: 100,
         tech: "React · Redux Saga · WebSocket · MongoDB · Webpack",
         description: "Scolia Technologies",
@@ -235,24 +241,24 @@ export const CV_DATA = {
       ],
 
       skills: [
-        {name: "React",             icon: "react.svg"},
-        {name: "Next.js",           icon: "nextjs.svg"},
-        {name: "TypeScript",        icon: "typescript.svg"},
-        {name: "JavaScript",        icon: "javascript.svg"},
-        {name: "SCSS",              icon: "scss.svg"},
+        {name: "React", icon: "react.svg"},
+        {name: "Next.js", icon: "nextjs.svg"},
+        {name: "TypeScript", icon: "typescript.svg"},
+        {name: "JavaScript", icon: "javascript.svg"},
+        {name: "SCSS", icon: "scss.svg"},
         {name: "Styled Components", icon: "styled_components.svg"},
-        {name: "HTML",              icon: "html.svg"},
-        {name: "CSS",               icon: "css.svg"},
-        {name: "Jest",              icon: "jest.svg"},
-        {name: "Webpack",           icon: "webpack.svg"},
-        {name: "NPM",               icon: "npm.svg"},
+        {name: "HTML", icon: "html.svg"},
+        {name: "CSS", icon: "css.svg"},
+        {name: "Jest", icon: "jest.svg"},
+        {name: "Webpack", icon: "webpack.svg"},
+        {name: "NPM", icon: "npm.svg"},
       ],
 
       refs: [{url: "https://www.fundmypitch.com", label: "fundmypitch.com"}],
 
       game: {
-        x: 900,
-        y: 100,
+        x: 892,
+        y: 102,
         tech: "React · Next.js · TypeScript · SCSS · Jest · Webpack",
         description: "Cubicfox Technologies",
       },
@@ -280,23 +286,23 @@ export const CV_DATA = {
       ],
 
       skills: [
-        {name: "Industrial Automation",  icon: "industrial_automation.svg"},
-        {name: "Robot Applications",     icon: "robot_applications.svg"},
-        {name: "PLC Systems",            icon: "plc_systems.svg"},
-        {name: "Universal Robot",        icon: "universal_robot.svg"},
-        {name: "OnRobot",               icon: "OnRobot.svg"},
-        {name: "Machine Vision",         icon: "machine_vision.svg"},
-        {name: "Project Management",     icon: "project_management.svg"},
-        {name: "Python",                 icon: "python.svg"},
-        {name: "OnShape",               icon: "OnShape.svg"},
+        {name: "Industrial Automation", icon: "industrial_automation.svg"},
+        {name: "Robot Applications", icon: "robot_applications.svg"},
+        {name: "PLC Systems", icon: "plc_systems.svg"},
+        {name: "Universal Robot", icon: "universal_robot.svg"},
+        {name: "OnRobot", icon: "OnRobot.svg"},
+        {name: "Machine Vision", icon: "machine_vision.svg"},
+        {name: "Project Management", icon: "project_management.svg"},
+        {name: "Python", icon: "python.svg"},
+        {name: "OnShape", icon: "OnShape.svg"},
         {name: "Mechanical Engineering", icon: "mechanical_engineering.svg"},
       ],
 
       refs: [],
 
       game: {
-        x: 660,
-        y: 100,
+        x: 661,
+        y: 104,
         tech: "Universal Robots · PLC · Machine Vision · Python",
         description: "CobotX Technologies",
       },
@@ -324,18 +330,18 @@ export const CV_DATA = {
       ],
 
       skills: [
-        {name: "React",       icon: "react.svg"},
-        {name: "Next.js",     icon: "nextjs.svg"},
-        {name: "Node.js",     icon: "nodeJS.svg"},
-        {name: "PHP",         icon: "php.svg"},
-        {name: "Laravel",     icon: "Laravel.svg"},
-        {name: "MySQL",       icon: "mysql.svg"},
-        {name: "MongoDB",     icon: "mongodb.svg"},
-        {name: "JavaScript",  icon: "javascript.svg"},
-        {name: "TypeScript",  icon: "typescript.svg"},
-        {name: "CSS",         icon: "css.svg"},
-        {name: "jQuery",      icon: "jquery.svg"},
-        {name: "NestJS",      icon: "NestJS.svg"},
+        {name: "React", icon: "react.svg"},
+        {name: "Next.js", icon: "nextjs.svg"},
+        {name: "Node.js", icon: "nodeJS.svg"},
+        {name: "PHP", icon: "php.svg"},
+        {name: "Laravel", icon: "Laravel.svg"},
+        {name: "MySQL", icon: "mysql.svg"},
+        {name: "MongoDB", icon: "mongodb.svg"},
+        {name: "JavaScript", icon: "javascript.svg"},
+        {name: "TypeScript", icon: "typescript.svg"},
+        {name: "CSS", icon: "css.svg"},
+        {name: "jQuery", icon: "jquery.svg"},
+        {name: "NestJS", icon: "NestJS.svg"},
       ],
 
       refs: [
@@ -345,8 +351,8 @@ export const CV_DATA = {
       ],
 
       game: {
-        x: 420,
-        y: 100,
+        x: 439,
+        y: 102,
         tech: "React · Next.js · NestJS · PHP · Laravel · MySQL · MongoDB",
         description: "WebforSol (Freelance)",
       },
@@ -368,30 +374,36 @@ export const CV_DATA = {
         years: "2000 - 2004",
       },
     ],
+    game: {
+      x: 762,
+      y: 338,
+      tech: "University of Pécs · Neumann János Awards · Hobby Arcade",
+      description: "Education, Community & Projects",
+    },
   },
   skillGroups: {
     primary: {
       list: [
         "TypeScript",
         "JavaScript",
-        "Svelte",
         "React",
+        "Svelte",
         "Node.js",
-        "SCSS",
         "HTML",
         "CSS",
+        "SCSS",
       ],
       comment: null,
     },
     backend: {
-      list: ["Express.js", "NestJS", "Python", "PHP", "MySQL", "MongoDB"],
+      list: ["Express.js", "NestJS", "Python", "PHP", "MySQL", "MongoDB", "REST API", "WebSocket"],
       comment: null,
     },
     testing: {
       list: ["Jest", "Vitest", "Playwright"],
       comment: "yes, all three",
     },
-    tooling: {list: ["Vite", "Webpack", "PNPM", "Next.js"], comment: null},
+    tooling: {list: ["Vite", "Webpack", "PNPM", "Next.js", "CI/CD"], comment: null},
     ai: {
       list: ["Claude", "Codex"],
       comment: "meta: this CV was probably reviewed by one of these",
