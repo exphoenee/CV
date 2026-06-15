@@ -31,6 +31,12 @@ export const CV_DATA = {
       {name: "German", level: "Upper Intermediate (B2)", comment: null},
       {name: "English", level: "Upper Intermediate (B2)", comment: null},
     ],
+    game: {
+      x: 180,
+      y: 100,
+      tech: "Frontend Tech Lead · Pécs, HU",
+      description: "Personal HQ & Contact Details",
+    },
   },
   summary:
     "Frontend Engineer specializing in frontend architecture, system design, and large-scale legacy modernization. I've led full rewrites and migrations of enterprise systems to modern stacks, improving maintainability and scalability of core platforms. I've introduced AI-assisted development workflows that significantly increased delivery speed, engineering consistency, and release reliability. I focus strongly on evidence-driven refactoring, CI-quality standards, and building sustainable, system-level frontend foundations.",
@@ -353,6 +359,12 @@ export const CV_DATA = {
         years: "2000 - 2004",
       },
     ],
+    game: {
+      x: 762,
+      y: 338,
+      tech: "University of Pécs · Neumann János Awards · Hobby Arcade",
+      description: "Education, Community & Projects",
+    },
   },
   skillGroups: {
     primary: {

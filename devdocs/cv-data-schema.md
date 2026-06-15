@@ -50,6 +50,7 @@ meta: {
 | `location` | `string` | igen |
 | `contacts` | `Contact[]` | igen |
 | `languages` | `Language[]` | opcionális |
+| `game` | `GamePosition` | opcionális — a játékbeli „Personal HQ" (welcome) station koordinátái és felirata (lásd [GamePosition](#gameposition)) |
 
 ### Contact
 
@@ -193,6 +194,7 @@ Példa:
 |---|---|---|
 | `institution` | `string` | igen |
 | `degrees` | `Degree[]` | igen |
+| `game` | `GamePosition` | opcionális — a játékbeli „Education, Community & Projects" station koordinátái és felirata (lásd [GamePosition](#gameposition)) |
 
 ### Degree
 

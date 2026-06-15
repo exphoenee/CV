@@ -177,13 +177,14 @@ function generateEducationContent(data) {
 function buildStations(data) {
   var stations = [];
 
-  // 1. Welcome station
+  // 1. Welcome station (coordinates + labels from CV_DATA.identity.game)
+  var welcomeGame = (data && data.identity && data.identity.game) || {};
   stations.push({
     id: 'welcome',
-    x: 180,
-    y: 100,
-    title: 'Personal HQ & Contact Details',
-    tech: 'Frontend Tech Lead · Pécs, HU',
+    x: welcomeGame.x,
+    y: welcomeGame.y,
+    title: welcomeGame.description,
+    tech: welcomeGame.tech,
     content: generateWelcomeContent(data)
   });
 
@@ -203,13 +204,14 @@ function buildStations(data) {
     });
   }
 
-  // 3. Education station
+  // 3. Education station (coordinates + labels from CV_DATA.education.game)
+  var eduGame = (data && data.education && data.education.game) || {};
   stations.push({
     id: 'education',
-    x: 780,
-    y: 340,
-    title: 'Education, Community & Projects',
-    tech: 'University of Pécs · Neumann János Awards · Hobby Arcade',
+    x: eduGame.x,
+    y: eduGame.y,
+    title: eduGame.description,
+    tech: eduGame.tech,
     content: generateEducationContent(data)
   });
 
