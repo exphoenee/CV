@@ -36,9 +36,9 @@
  *   FENCE_CELLS["5,3"] = "H";
  */
 export const FENCE_CELLS = {
-    // Add fence placements here as "row,col": key entries.
-    // Example row of horizontal fence:
-    // "4,2": "TL", "4,3": "H", "4,4": "H", "4,5": "TR",
-    // "5,2": "V",                            "5,5": "V",
-    // "6,2": "BL", "6,3": "H", "6,4": "H", "6,5": "BR",
+  // Add fence placements here as "row,col": key entries.
+  // Example row of horizontal fence:
+  // "4,2": "TL", "4,3": "H", "4,4": "H", "4,5": "TR",
+  // "5,2": "V",                            "5,5": "V",
+  // "6,2": "BL", "6,3": "H", "6,4": "H", "6,5": "BR",
 };

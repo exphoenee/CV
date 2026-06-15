@@ -11,5 +11,5 @@ dist/
 *.otf
 *.jpg
 *.jfif
-letter/
+letters/
 debug/

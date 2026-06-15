@@ -2,10 +2,14 @@ import { escHtml } from '../../shared.js';
 import { locale } from '../../locale.js';
 
 export function renderEducation(data) {
-  const degrees = data.education.degrees.map(deg => `
+  const degrees = data.education.degrees
+    .map(
+      (deg) => `
     <div><i class="bullet-icon"></i>${escHtml(deg.title)}</div>
     <div style="opacity: 0.7; font-size: 0.9em; text-align: right; white-space: nowrap;">${escHtml(deg.years)}</div>
-  `).join('');
+  `,
+    )
+    .join('');
 
   return `
     <div class="blockTitle noBreakBeforeAfter cv-block-title"><span>${locale.t('education')}</span></div>

@@ -6,7 +6,25 @@ export function renderHobbyProjectsSection(data) {
   var E = escHtml;
   var hobbyResp = '';
   data.hobbyProjects.forEach(function (p) {
-    hobbyResp += '<p class="cv-kv"><code>' + E(p.name.replace(/[\s-]/g, '').toLowerCase()) + '</code><a href="' + E(p.url) + '" target="_blank">' + E(p.name) + '</a></p>';
+    hobbyResp +=
+      '<p class="cv-kv"><code>' +
+      E(p.name.replace(/[\s-]/g, '').toLowerCase()) +
+      '</code><a href="' +
+      E(p.url) +
+      '" target="_blank">' +
+      E(p.name) +
+      '</a></p>';
   });
-  return swgTagSection('hobbyProjects', swgGet('hobbyProjects', 'get_hobbyProjects', '/hobbyProjects', 'Side projects & open-source work', '<p>Returns hobby projects and open-source contributions.</p>', null, [{code: '200', bodyHtml: hobbyResp, linksHtml: 'No links'}]));
+  return swgTagSection(
+    'hobbyProjects',
+    swgGet(
+      'hobbyProjects',
+      'get_hobbyProjects',
+      '/hobbyProjects',
+      'Side projects & open-source work',
+      '<p>Returns hobby projects and open-source contributions.</p>',
+      null,
+      [{ code: '200', bodyHtml: hobbyResp, linksHtml: 'No links' }],
+    ),
+  );
 }

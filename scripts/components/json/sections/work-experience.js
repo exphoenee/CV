@@ -6,7 +6,14 @@ export function renderWorkExperience(data, push) {
   push(0, '');
 
   data.workExperience.forEach(function (exp, ei) {
-    var companyNames = ['Aegex Technologies', 'Deutsche Telekom IT Solutions HU', 'Scolia Technologies Ltd.', 'Cubicfox', 'CobotX Technologies', 'WebforSol (Freelance)'];
+    var companyNames = [
+      'Aegex Technologies',
+      'Deutsche Telekom IT Solutions HU',
+      'Scolia Technologies Ltd.',
+      'Cubicfox',
+      'CobotX Technologies',
+      'WebforSol (Freelance)',
+    ];
     var alias = companyNames[ei] || exp.company;
     var dashLen = Math.max(55 - alias.length, 5);
     var dashes = '─'.repeat(dashLen);
@@ -19,9 +26,14 @@ export function renderWorkExperience(data, push) {
     var toSpan = exp.period.to
       ? html`<span class="s">"${exp.period.to}"</span>`
       : '<span class="nl">null</span>';
-    var periodLine = html`<span class="k">"period"</span><span class="p">: { </span><span class="k">"from"</span><span class="p">: </span><span class="s">"${exp.period.from}"</span><span class="p">, </span><span class="k">"to"</span><span class="p">: </span>${raw(toSpan)}<span class="p"> }</span><span class="p">,</span>`;
+    var periodLine = html`<span class="k">"period"</span><span class="p">: { </span
+      ><span class="k">"from"</span><span class="p">: </span
+      ><span class="s">"${exp.period.from}"</span><span class="p">, </span
+      ><span class="k">"to"</span><span class="p">: </span>${raw(toSpan)}<span class="p"> }</span
+      ><span class="p">,</span>`;
     if (exp.isCurrent) periodLine += '  <span class="c">// null = still here</span>';
-    else if (exp.id === 'telekom') periodLine += '  <span class="c">// 4 months - short but intense</span>';
+    else if (exp.id === 'telekom')
+      periodLine += '  <span class="c">// 4 months - short but intense</span>';
     push(3, periodLine);
 
     if (exp.id === 'aegex') {
@@ -33,10 +45,24 @@ export function renderWorkExperience(data, push) {
     pushStr(push, 3, 'description', exp.description);
 
     if (exp.id === 'cobotx') {
-      pushBool(push, 3, 'robots', true, true, 'literal robots. Universal Robots. not metaphorical.');
+      pushBool(
+        push,
+        3,
+        'robots',
+        true,
+        true,
+        'literal robots. Universal Robots. not metaphorical.',
+      );
     }
     if (exp.id === 'webforsol') {
-      pushBool(push, 3, 'parallel_with_cobotx', true, true, '24h is enough for two jobs, apparently');
+      pushBool(
+        push,
+        3,
+        'parallel_with_cobotx',
+        true,
+        true,
+        '24h is enough for two jobs, apparently',
+      );
     }
 
     if (exp.projects) {
@@ -47,9 +73,26 @@ export function renderWorkExperience(data, push) {
         pushStr(push, 5, 'type', proj.subtitle);
         if (proj.name === 'FACTS') {
           pushNum(push, 5, 'releaseCycle_before_days', 30);
-          pushNum(push, 5, 'releaseCycle_after_days', 14, true, 'targeting 7 - AI-assisted workflow');
-          pushNum(push, 5, 'testCoverage_before', 0, true, 'yes, zero. it was fine. (it was not fine.)');
-          push(5, '<span class="k">"qualityIssues_after"</span><span class="p">: </span><span class="s">"near eliminated"</span><span class="p">,</span>');
+          pushNum(
+            push,
+            5,
+            'releaseCycle_after_days',
+            14,
+            true,
+            'targeting 7 - AI-assisted workflow',
+          );
+          pushNum(
+            push,
+            5,
+            'testCoverage_before',
+            0,
+            true,
+            'yes, zero. it was fine. (it was not fine.)',
+          );
+          push(
+            5,
+            '<span class="k">"qualityIssues_after"</span><span class="p">: </span><span class="s">"near eliminated"</span><span class="p">,</span>',
+          );
         }
         pushStringArray(push, 5, proj.bullets, true);
         if (proj.name !== 'FACTS') {
@@ -76,10 +119,15 @@ export function renderWorkExperience(data, push) {
       var allBullets = [];
       Object.keys(exp.bullets).forEach(function (key) {
         var arr = exp.bullets[key];
-        if (Array.isArray(arr)) arr.forEach(function (b) { allBullets.push(b); });
+        if (Array.isArray(arr))
+          arr.forEach(function (b) {
+            allBullets.push(b);
+          });
       });
       if (exp.id === 'cubicfox') {
-        allBullets.push('Established team code conventions - arrived, fixed things, left. classic.');
+        allBullets.push(
+          'Established team code conventions - arrived, fixed things, left. classic.',
+        );
       }
       push(3, '<span class="k">"highlights"</span><span class="p">: [</span>');
       allBullets.forEach(function (b, bi) {
@@ -93,7 +141,11 @@ export function renderWorkExperience(data, push) {
     if (!exp.projects && exp.refs && exp.refs.length > 0) {
       if (exp.refs.length === 1) {
         var link1 = html`<a href="${exp.refs[0].url}" target="_blank">${exp.refs[0].label}</a>`;
-        push(3, html`<span class="k">"ref"</span><span class="p">: </span><span class="s">"${raw(link1)}"</span><span class="p">,</span>`);
+        push(
+          3,
+          html`<span class="k">"ref"</span><span class="p">: </span
+            ><span class="s">"${raw(link1)}"</span><span class="p">,</span>`,
+        );
       } else {
         push(3, '<span class="k">"refs"</span><span class="p">: [</span>');
         exp.refs.forEach(function (r, ri) {
