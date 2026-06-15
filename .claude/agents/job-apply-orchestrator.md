@@ -127,6 +127,60 @@ Store all as: `CHANGE_PLAN = [...]`
 
 ---
 
+## Step 2e — Suitability gate (alkalmassági kapu)
+
+Before deciding to proceed, verify that Viktor is actually a credible candidate for this role,
+based **only** on evidence in `cv-data.js` AND `profile/*.md` (PROFILE_DATA from Step 1b).
+
+### 2e-1 — Collect matching evidence
+
+Determine whether ANY of Viktor's existing skills/experience genuinely qualify him for `JD_TITLE`:
+
+- `REQUIRED_MATCHED` — required JD skills (`JD_REQUIRED`) found as `MATCH` or `PARTIAL` in cv-data.js or PROFILE_DATA
+- `PROFILE_EVIDENCE` — concrete skills, roles, or achievements from `profile/*.md` that map to `JD_REQUIRED` / `JD_RESPONSIBILITIES`
+  (cite the source file for each, e.g. `profile/aegex.md → "led CI pipeline migration"`)
+
+A skill only counts as evidence if it is traceable to cv-data.js OR a profile file
+(anti-hallucination rule from `.claude/rules/career-profile-usage.md`). Never count an
+invented or merely "implied" skill.
+
+### 2e-2 — Decide if the job exceeds Viktor's profile
+
+Treat the job as **beyond Viktor's abilities and experience** if ALL of these hold:
+
+- `REQUIRED_SCORE < 40` (less than ~40% of required skills are covered), AND
+- `REQUIRED_MATCHED` contains no core/critical requirement of the role, AND
+- `PROFILE_EVIDENCE` is empty — i.e. nothing in `profile/*.md` adds qualifying evidence beyond what cv-data already showed
+
+If the job is **NOT** beyond his profile → continue to Step 3 normally.
+
+### 2e-3 — If beyond his profile: warn and ask
+
+Display (in Hungarian):
+
+```
+⚠️ Ez az állás meghaladja a jelenlegi képességeidet és tapasztalataidat.
+
+Pozíció: JD_TITLE @ JD_COMPANY
+Kötelező követelmény-egyezés: REQUIRED_SCORE% (küszöb: 40%)
+
+Az átnézett profil fájlok (profile/*.md) és a cv-data.js alapján nem találtam
+elegendő bizonyítékot arra, hogy alkalmas lennél erre a pozícióra:
+- Hiányzó kulcskövetelmények: <MISSING required skills listája>
+- Profilban talált releváns bizonyíték: <PROFILE_EVIDENCE vagy "nincs">
+
+Biztosan elkészítsem ennek ellenére az optimalizált CV-t? (igen / nem)
+```
+
+Wait for explicit user input:
+- `nem` / `n` → stop. Display: `Megszakítva — nem módosítottam egyetlen fájlt sem.` Do NOT touch any file.
+- `igen` / `y` → continue to Step 3 (and through to the normal confirmation in Step 4).
+
+Never invent skills to bridge the gap — the optimization in later steps still only reorders
+and rephrases existing, traceable content.
+
+---
+
 ## Step 3 — Decision: proceed?
 
 If `OVERALL_SCORE >= 90` AND `CHANGE_PLAN` is empty:
@@ -300,6 +354,10 @@ Display:
 - ❌ Never suggest a rephrase that implies experience not traceable to cv-data.js or profile/*.md
 - ❌ Never apply changes without user confirmation (Step 4)
 - ❌ Never modify cv-data.js if OVERALL_SCORE >= 90 and CHANGE_PLAN is empty
+- ✅ Suitability gate (Step 2e): if the job is beyond Viktor's traceable abilities/experience
+  (REQUIRED_SCORE < 40 AND no qualifying profile/*.md evidence), warn the user and require an
+  explicit `igen` before proceeding. On `nem` → stop without touching any file. Never invent
+  skills to close the gap.
 - ✅ If no argument: create tmp/jd-draft.md and wait for user to fill it in (Step 0a)
 - ✅ VERSION_BASE = DATE_COMPANY_SLUG_TITLE_SLUG — passed to cv-backup-agent; final VERSION_FOLDER determined by the agent
 - ✅ Each version is a folder: VERSION_FOLDER/cv-data.js + VERSION_FOLDER/locale-content.json (created by cv-backup-agent)
