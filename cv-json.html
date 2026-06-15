@@ -34,11 +34,21 @@
         />
         <button class="menubar-item" aria-label="File menu" aria-haspopup="true">File</button>
         <button class="menubar-item" aria-label="Edit menu" aria-haspopup="true">Edit</button>
-        <button class="menubar-item" aria-label="Selection menu" aria-haspopup="true">Selection</button>
-        <button class="menubar-item" id="view-menu-btn" aria-label="View menu" aria-haspopup="true">View</button>
-        <button class="menubar-item" id="music-menu-btn" aria-label="Open music player">Music</button>
+        <button class="menubar-item" aria-label="Selection menu" aria-haspopup="true">
+          Selection
+        </button>
+        <button class="menubar-item" id="view-menu-btn" aria-label="View menu" aria-haspopup="true">
+          View
+        </button>
+        <button class="menubar-item" id="music-menu-btn" aria-label="Open music player">
+          Music
+        </button>
         <button class="menubar-item" id="meet-menu-btn" aria-label="Book a meeting">Meet</button>
-        <button class="cv-json-inline-1 menubar-item" id="hire-json-btn" aria-label="Hire Viktor — open contact form">
+        <button
+          class="cv-json-inline-1 menubar-item"
+          id="hire-json-btn"
+          aria-label="Hire Viktor — open contact form"
+        >
           Hire
         </button>
       </nav>
@@ -89,13 +99,7 @@
           <span aria-hidden="true">10</span>
         </div>
         <div class="menubar-layout-icon" aria-hidden="true">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            opacity="0.8"
-          >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" opacity="0.8">
             <rect x="1" y="1" width="6" height="14" rx="1" />
             <rect x="9" y="1" width="6" height="6" rx="1" />
             <rect x="9" y="9" width="6" height="6" rx="1" />
@@ -120,7 +124,12 @@
             <rect x=".5" y=".5" width="9" height="9" />
           </svg>
         </button>
-        <button class="wc-btn wc-close" id="wc-close-btn" title="Close" aria-label="Close — go back to hub">
+        <button
+          class="wc-btn wc-close"
+          id="wc-close-btn"
+          title="Close"
+          aria-label="Close — go back to hub"
+        >
           <svg
             width="10"
             height="10"
@@ -138,7 +147,12 @@
       </div>
     </header>
 
-    <div class="titlebar" role="tab" aria-selected="true" aria-label="Open file: viktor_bozzay.json">
+    <div
+      class="titlebar"
+      role="tab"
+      aria-selected="true"
+      aria-label="Open file: viktor_bozzay.json"
+    >
       <div class="tab">
         <span class="tab-json" aria-hidden="true">{ }</span>
         viktor_bozzay.json
@@ -147,26 +161,29 @@
 
     <main class="editor" aria-label="JSON editor">
       <div class="gutter" id="G" aria-hidden="true"></div>
-      <div class="code" id="C" role="region" aria-label="viktor_bozzay.json content" aria-live="polite"></div>
+      <div
+        class="code"
+        id="C"
+        role="region"
+        aria-label="viktor_bozzay.json content"
+        aria-live="polite"
+      ></div>
     </main>
 
     <footer class="statusbar" role="status" aria-label="Editor status bar">
       <span>JSON</span><span>UTF-8</span>
       <span>Ln <span id="ln">1</span></span>
       <span class="r"
-        >Frontend Tech Lead &nbsp;·&nbsp; Pécs, HU &nbsp;·&nbsp;
-        bozzay.viktor@gmail.com</span
+        >Frontend Tech Lead &nbsp;·&nbsp; Pécs, HU &nbsp;·&nbsp; bozzay.viktor@gmail.com</span
       >
     </footer>
 
     <script type="module" src="./scripts/cv-json.js"></script>
 
     <script>
-      document
-        .getElementById("music-menu-btn")
-        ?.addEventListener("click", function () {
-          document.getElementById("music-toggle")?.click();
-        });
+      document.getElementById('music-menu-btn')?.addEventListener('click', function () {
+        document.getElementById('music-toggle')?.click();
+      });
     </script>
     <div id="cv-toaster-container"></div>
   </body>

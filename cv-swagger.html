@@ -7,7 +7,12 @@
     <title>Viktor Bozzay - CV API</title>
     <link rel="stylesheet" href="./styles/cv-swagger.css" />
     <link rel="stylesheet" href="./styles/cv-music-player.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
     <div id="loading-overlay" role="status" aria-label="Loading">
@@ -19,13 +24,17 @@
         <header class="topbar" role="banner">
           <div class="topbar-wrapper">
             <a class="cv-inline-0 link"
-
               ><img src="assets/images/swagger.svg" height="36" alt="Swagger" /><span
                 class="cv-inline-1"
                 ><span class="cv-inline-2">viktor</span
                 ><span class="cv-inline-3">bozzay</span></span
               ></a
-            ><button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">
+            ><button
+              class="theme-toggle"
+              id="theme-toggle"
+              title="Toggle dark mode"
+              aria-label="Toggle dark mode"
+            >
               <svg class="light-icon" viewBox="0 0 24 24" height="22">
                 <path
                   d="M12 2C9.76 2 7.78 3.05 6.5 4.68l9.81 9.82C17.94 13.21 19 11.24 19 9a7 7 0 0 0-7-7M3.28 4 2 5.27 5.04 8.3C5 8.53 5 8.76 5 9c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h5.73l4 4L20 20.72zM9 20v1a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1z"
@@ -36,10 +45,10 @@
                 />
               </svg>
             </button>
-            <form class="cv-inline-4 download-url-wrapper" >
+            <form class="cv-inline-4 download-url-wrapper">
               <label class="cv-inline-5 select-label"
                 ><span>Endpoint</span>
-                <div class="cv-inline-5 servers" >
+                <div class="cv-inline-5 servers">
                   <label class="cv-inline-5"
                     ><select class="cv-inline-5">
                       <option>https://bozzayviktor.hu/cv/api - Viktor Bozzay CV API v4.2.0</option>
@@ -103,15 +112,34 @@
               </div>
             </div>
             <div class="auth-wrapper">
-              <button class="btn meet-swagger-btn" id="meet-swagger-btn" aria-label="Book a meeting with Viktor">
+              <button
+                class="btn meet-swagger-btn"
+                id="meet-swagger-btn"
+                aria-label="Book a meeting with Viktor"
+              >
                 <span>Meet</span>
                 <i class="fa-regular fa-calendar-check" aria-hidden="true"></i>
               </button>
-              <button class="btn authorize locked" id="hire-btn" aria-label="Hire Viktor — open contact form">
+              <button
+                class="btn authorize locked"
+                id="hire-btn"
+                aria-label="Hire Viktor — open contact form"
+              >
                 <span>Hire</span>
-                <svg class="lock-icon" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true">
-                  <path d="M15.8 8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z" />
-                  <path class="lock-shackle" d="M14 8V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8h2z" />
+                <svg
+                  class="lock-icon"
+                  viewBox="0 0 20 20"
+                  width="20"
+                  height="20"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15.8 8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
+                  />
+                  <path
+                    class="lock-shackle"
+                    d="M14 8V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8h2z"
+                  />
                 </svg>
               </button>
             </div>
@@ -123,7 +151,12 @@
               <div class="opblock-tag-section is-open" id="operations-tag-identity">
                 <h3 class="opblock-tag no-desc">
                   <span>identity</span><small></small
-                  ><button class="expand-operation" title="Collapse operation" aria-label="Collapse operation section" aria-expanded="true">
+                  ><button
+                    class="expand-operation"
+                    title="Collapse operation"
+                    aria-label="Collapse operation section"
+                    aria-expanded="true"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -142,7 +175,11 @@
                   <div class="operation-tag-content">
                     <div class="opblock opblock-get" id="operations-identity-get_identity_profile">
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -151,7 +188,13 @@
                             <div class="opblock-summary-description">Name, role, location</div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -184,7 +227,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -215,7 +262,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -283,7 +335,11 @@
                     </div>
                     <div class="opblock opblock-get" id="operations-identity-get_identity_contact">
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -292,7 +348,13 @@
                             <div class="opblock-summary-description">All contact channels</div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -325,7 +387,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -349,7 +415,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -436,7 +507,11 @@
                       id="operations-identity-get_identity_languages"
                     >
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -447,7 +522,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -480,7 +561,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -504,7 +589,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -573,7 +663,12 @@
               <div class="opblock-tag-section is-open" id="operations-tag-summary">
                 <h3 class="opblock-tag no-desc">
                   <span>summary</span><small></small
-                  ><button class="expand-operation" title="Collapse operation" aria-label="Collapse operation section" aria-expanded="true">
+                  ><button
+                    class="expand-operation"
+                    title="Collapse operation"
+                    aria-label="Collapse operation section"
+                    aria-expanded="true"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -592,7 +687,11 @@
                   <div class="operation-tag-content">
                     <div class="opblock opblock-get" id="operations-summary-get_summary">
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -601,7 +700,13 @@
                             <div class="opblock-summary-description">Professional overview</div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -634,7 +739,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -658,7 +767,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -732,7 +846,12 @@
               <div class="opblock-tag-section is-open" id="operations-tag-workExperience">
                 <h3 class="opblock-tag no-desc">
                   <span>workExperience</span><small></small
-                  ><button class="expand-operation" title="Collapse operation" aria-label="Collapse operation section" aria-expanded="true">
+                  ><button
+                    class="expand-operation"
+                    title="Collapse operation"
+                    aria-label="Collapse operation section"
+                    aria-expanded="true"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -754,7 +873,11 @@
                       id="operations-workExperience-post_experience_aegex"
                     >
                       <div class="opblock-summary opblock-summary-post">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">POST</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -766,7 +889,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -799,7 +928,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -835,7 +968,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -1010,7 +1148,11 @@
                       id="operations-workExperience-post_experience_telekom"
                     >
                       <div class="opblock-summary opblock-summary-post">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">POST</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -1021,7 +1163,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -1054,7 +1202,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -1088,7 +1240,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -1210,7 +1367,11 @@
                       id="operations-workExperience-post_experience_scolia"
                     >
                       <div class="opblock-summary opblock-summary-post">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">POST</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -1221,7 +1382,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -1254,7 +1421,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -1289,7 +1460,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -1405,7 +1581,11 @@
                       id="operations-workExperience-post_experience_cubicfox"
                     >
                       <div class="opblock-summary opblock-summary-post">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">POST</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -1416,7 +1596,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -1449,7 +1635,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -1484,7 +1674,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -1604,7 +1799,11 @@
                       id="operations-workExperience-put_experience_cobotx"
                     >
                       <div class="opblock-summary opblock-summary-put">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">PUT</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -1615,7 +1814,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -1648,7 +1853,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -1683,7 +1892,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -1829,7 +2043,11 @@
                       id="operations-workExperience-put_experience_webforsol"
                     >
                       <div class="opblock-summary opblock-summary-put">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">PUT</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -1840,7 +2058,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -1873,7 +2097,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -1908,7 +2136,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -2044,7 +2277,12 @@
               <div class="opblock-tag-section is-open" id="operations-tag-education">
                 <h3 class="opblock-tag no-desc">
                   <span>education</span><small></small
-                  ><button class="expand-operation" title="Collapse operation" aria-label="Collapse operation section" aria-expanded="true">
+                  ><button
+                    class="expand-operation"
+                    title="Collapse operation"
+                    aria-label="Collapse operation section"
+                    aria-expanded="true"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -2066,7 +2304,11 @@
                       id="operations-education-get_education_quality-manager"
                     >
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -2077,7 +2319,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -2110,7 +2358,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2134,7 +2386,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -2199,7 +2456,11 @@
                       id="operations-education-get_education_teacher"
                     >
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -2210,7 +2471,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -2243,7 +2510,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2267,7 +2538,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -2333,7 +2609,11 @@
                       id="operations-education-get_education_engineering"
                     >
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -2344,7 +2624,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -2377,7 +2663,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2401,7 +2691,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -2473,7 +2768,12 @@
               <div class="opblock-tag-section is-open" id="operations-tag-skills">
                 <h3 class="opblock-tag no-desc">
                   <span>skills</span><small></small
-                  ><button class="expand-operation" title="Collapse operation" aria-label="Collapse operation section" aria-expanded="true">
+                  ><button
+                    class="expand-operation"
+                    title="Collapse operation"
+                    aria-label="Collapse operation section"
+                    aria-expanded="true"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -2492,7 +2792,11 @@
                   <div class="operation-tag-content">
                     <div class="opblock opblock-get" id="operations-skills-get_skills_primary">
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -2501,7 +2805,13 @@
                             <div class="opblock-summary-description">Core frontend stack</div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -2534,7 +2844,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2558,7 +2872,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -2601,7 +2920,11 @@
                     </div>
                     <div class="opblock opblock-get" id="operations-skills-get_skills_backend">
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -2610,7 +2933,13 @@
                             <div class="opblock-summary-description">Backend & databases</div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -2643,7 +2972,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2667,7 +3000,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -2708,7 +3046,11 @@
                     </div>
                     <div class="opblock opblock-patch" id="operations-skills-patch_skills_testing">
                       <div class="opblock-summary opblock-summary-patch">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">PATCH</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -2719,7 +3061,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -2752,7 +3100,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2776,7 +3128,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -2814,7 +3171,11 @@
                     </div>
                     <div class="opblock opblock-get" id="operations-skills-get_skills_tooling">
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -2823,7 +3184,13 @@
                             <div class="opblock-summary-description">Build tooling</div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -2856,7 +3223,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2880,7 +3251,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -2919,7 +3295,11 @@
                     </div>
                     <div class="opblock opblock-get" id="operations-skills-get_skills_ai">
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -2931,7 +3311,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -2964,7 +3350,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -2988,7 +3378,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -3025,7 +3420,11 @@
                     </div>
                     <div class="opblock opblock-get" id="operations-skills-get_skills_robotics">
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -3036,7 +3435,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -3069,7 +3474,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -3093,7 +3502,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -3135,7 +3549,11 @@
                       id="operations-skills-delete_skills_willRefactorYourEntireCodebaseIf"
                     >
                       <div class="opblock-summary opblock-summary-delete">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">DELETE</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -3148,7 +3566,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -3181,7 +3605,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -3205,7 +3633,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -3270,7 +3703,12 @@
               <div class="opblock-tag-section is-open" id="operations-tag-community">
                 <h3 class="opblock-tag no-desc">
                   <span>community</span><small></small
-                  ><button class="expand-operation" title="Collapse operation" aria-label="Collapse operation section" aria-expanded="true">
+                  ><button
+                    class="expand-operation"
+                    title="Collapse operation"
+                    aria-label="Collapse operation section"
+                    aria-expanded="true"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -3292,7 +3730,11 @@
                       id="operations-community-post_community_mentoring"
                     >
                       <div class="opblock-summary opblock-summary-post">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">POST</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -3303,7 +3745,13 @@
                             </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -3336,7 +3784,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -3360,7 +3812,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -3432,7 +3889,12 @@
               <div class="opblock-tag-section is-open" id="operations-tag-hobbyProjects">
                 <h3 class="opblock-tag no-desc">
                   <span>hobbyProjects</span><small></small
-                  ><button class="expand-operation" title="Collapse operation" aria-label="Collapse operation section" aria-expanded="true">
+                  ><button
+                    class="expand-operation"
+                    title="Collapse operation"
+                    aria-label="Collapse operation section"
+                    aria-expanded="true"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -3449,18 +3911,33 @@
                 </h3>
                 <div class="no-margin">
                   <div class="operation-tag-content">
-                    <div class="opblock opblock-get" id="operations-hobbyProjects-get_hobbyProjects">
+                    <div
+                      class="opblock opblock-get"
+                      id="operations-hobbyProjects-get_hobbyProjects"
+                    >
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
                               ><a class="nostyle"><span>/hobbyProjects</span></a></span
                             >
-                            <div class="opblock-summary-description">Side projects &amp; open-source work</div>
+                            <div class="opblock-summary-description">
+                              Side projects &amp; open-source work
+                            </div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -3513,7 +3990,10 @@
                         <div class="opblock-description-wrapper">
                           <div class="opblock-description">
                             <div class="renderedMarkdown">
-                              <p>A collection of side projects, experiments, and open-source contributions.</p>
+                              <p>
+                                A collection of side projects, experiments, and open-source
+                                contributions.
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -3525,7 +4005,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -3548,17 +4033,105 @@
                                   <td class="response-col_status">200</td>
                                   <td class="response-col_description">
                                     <div class="renderedMarkdown">
-                                      <p><a href="https://github.com/exphoenee/realtime_space_travel" target="_blank" rel="noopener noreferrer">Real-time Space Travel</a> — <code>github.com/exphoenee/realtime_space_travel</code></p>
-                                      <p><a href="https://github.com/exphoenee/SudokuSolver-API" target="_blank" rel="noopener noreferrer">Sudoku Solver API</a> — <code>github.com/exphoenee/SudokuSolver-API</code></p>
-                                      <p><a href="https://github.com/exphoenee/bullseyes" target="_blank" rel="noopener noreferrer">Bullseyes</a> — <code>github.com/exphoenee/bullseyes</code></p>
-                                      <p><a href="https://github.com/BZZYFMLY/Space-dodge" target="_blank" rel="noopener noreferrer">Space Dodge</a> — <code>github.com/BZZYFMLY/Space-dodge</code></p>
-                                      <p><a href="https://github.com/ViktorBozzay/Arrganizer" target="_blank" rel="noopener noreferrer">Arrganizer</a> — <code>github.com/ViktorBozzay/Arrganizer</code></p>
-                                      <p><a href="https://github.com/exphoenee/SpaceGame" target="_blank" rel="noopener noreferrer">Space Game</a> — <code>github.com/exphoenee/SpaceGame</code></p>
-                                      <p><a href="https://github.com/exphoenee/RockPaperScissors" target="_blank" rel="noopener noreferrer">Rock Paper Scissors</a> — <code>github.com/exphoenee/RockPaperScissors</code></p>
-                                      <p><a href="https://github.com/exphoenee/auditorium" target="_blank" rel="noopener noreferrer">Auditorium</a> — <code>github.com/exphoenee/auditorium</code></p>
-                                      <p><a href="https://exphoenee.github.io/ba-team-docs/#home" target="_blank" rel="noopener noreferrer">BA Team</a> — <code>exphoenee.github.io/ba-team-docs/#home</code></p>
-                                      <p><a href="https://www.npmjs.com/package/domelemjs" target="_blank" rel="noopener noreferrer">domelemjs</a> — <code>npmjs.com/package/domelemjs</code></p>
-                                      <p><a href="https://www.npmjs.com/package/romannumbersjs" target="_blank" rel="noopener noreferrer">romannumbersjs</a> — <code>npmjs.com/package/romannumbersjs</code></p>
+                                      <p>
+                                        <a
+                                          href="https://github.com/exphoenee/realtime_space_travel"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          >Real-time Space Travel</a
+                                        >
+                                        — <code>github.com/exphoenee/realtime_space_travel</code>
+                                      </p>
+                                      <p>
+                                        <a
+                                          href="https://github.com/exphoenee/SudokuSolver-API"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          >Sudoku Solver API</a
+                                        >
+                                        — <code>github.com/exphoenee/SudokuSolver-API</code>
+                                      </p>
+                                      <p>
+                                        <a
+                                          href="https://github.com/exphoenee/bullseyes"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          >Bullseyes</a
+                                        >
+                                        — <code>github.com/exphoenee/bullseyes</code>
+                                      </p>
+                                      <p>
+                                        <a
+                                          href="https://github.com/BZZYFMLY/Space-dodge"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          >Space Dodge</a
+                                        >
+                                        — <code>github.com/BZZYFMLY/Space-dodge</code>
+                                      </p>
+                                      <p>
+                                        <a
+                                          href="https://github.com/ViktorBozzay/Arrganizer"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          >Arrganizer</a
+                                        >
+                                        — <code>github.com/ViktorBozzay/Arrganizer</code>
+                                      </p>
+                                      <p>
+                                        <a
+                                          href="https://github.com/exphoenee/SpaceGame"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          >Space Game</a
+                                        >
+                                        — <code>github.com/exphoenee/SpaceGame</code>
+                                      </p>
+                                      <p>
+                                        <a
+                                          href="https://github.com/exphoenee/RockPaperScissors"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          >Rock Paper Scissors</a
+                                        >
+                                        — <code>github.com/exphoenee/RockPaperScissors</code>
+                                      </p>
+                                      <p>
+                                        <a
+                                          href="https://github.com/exphoenee/auditorium"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          >Auditorium</a
+                                        >
+                                        — <code>github.com/exphoenee/auditorium</code>
+                                      </p>
+                                      <p>
+                                        <a
+                                          href="https://exphoenee.github.io/ba-team-docs/#home"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          >BA Team</a
+                                        >
+                                        — <code>exphoenee.github.io/ba-team-docs/#home</code>
+                                      </p>
+                                      <p>
+                                        <a
+                                          href="https://www.npmjs.com/package/domelemjs"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          >domelemjs</a
+                                        >
+                                        — <code>npmjs.com/package/domelemjs</code>
+                                      </p>
+                                      <p>
+                                        <a
+                                          href="https://www.npmjs.com/package/romannumbersjs"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          >romannumbersjs</a
+                                        >
+                                        — <code>npmjs.com/package/romannumbersjs</code>
+                                      </p>
                                     </div>
                                     <section class="response-controls">
                                       <div
@@ -3594,7 +4167,12 @@
               <div class="opblock-tag-section is-open" id="operations-tag-meta">
                 <h3 class="opblock-tag no-desc">
                   <span>meta</span><small></small
-                  ><button class="expand-operation" title="Collapse operation" aria-label="Collapse operation section" aria-expanded="true">
+                  ><button
+                    class="expand-operation"
+                    title="Collapse operation"
+                    aria-label="Collapse operation section"
+                    aria-expanded="true"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -3613,7 +4191,11 @@
                   <div class="operation-tag-content">
                     <div class="opblock opblock-get" id="operations-meta-get_meta">
                       <div class="opblock-summary opblock-summary-get">
-                        <button class="opblock-summary-control" aria-expanded="false" aria-label="Toggle endpoint details">
+                        <button
+                          class="opblock-summary-control"
+                          aria-expanded="false"
+                          aria-label="Toggle endpoint details"
+                        >
                           <span class="opblock-summary-method">GET</span>
                           <div class="opblock-summary-path-description-wrapper">
                             <span class="opblock-summary-path"
@@ -3622,7 +4204,13 @@
                             <div class="opblock-summary-description">About this CV</div>
                           </div>
                         </button>
-                        <div class="view-line-link copy-to-clipboard" title="Copy to clipboard" role="button" tabindex="0" aria-label="Copy endpoint URL to clipboard">
+                        <div
+                          class="view-line-link copy-to-clipboard"
+                          title="Copy to clipboard"
+                          role="button"
+                          tabindex="0"
+                          aria-label="Copy endpoint URL to clipboard"
+                        >
                           <svg
                             viewBox="0 0 15 16"
                             width="15"
@@ -3655,7 +4243,11 @@
                               d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"
                             ></path>
                           </svg></button
-                        ><button class="opblock-control-arrow" aria-label="Toggle response details" aria-expanded="false">
+                        ><button
+                          class="opblock-control-arrow"
+                          aria-label="Toggle response details"
+                          aria-expanded="false"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -3679,7 +4271,12 @@
                               </div>
                             </div>
                             <div class="try-out">
-                              <button class="try-out__btn hire-trigger" aria-label="Hire Viktor — open contact form">Hire me</button>
+                              <button
+                                class="try-out__btn hire-trigger"
+                                aria-label="Hire Viktor — open contact form"
+                              >
+                                Hire me
+                              </button>
                             </div>
                           </div>
                           <div class="parameters-container">
@@ -3750,7 +4347,6 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </section>
         </div>
@@ -3764,17 +4360,10 @@
           <button class="hire-close" id="hire-close" type="button">&#x2715;</button>
         </div>
         <div data-fs-success class="cv-success-hidden">
-          <p class="cv-inline-8">
-            Thanks for reaching out!
-          </p>
-          <p class="cv-inline-9">
-            Your message was sent successfully. I'll get back to you soon.
-          </p>
+          <p class="cv-inline-8">Thanks for reaching out!</p>
+          <p class="cv-inline-9">Your message was sent successfully. I'll get back to you soon.</p>
         </div>
-        <div
-          data-fs-error
-          class="cv-error-hidden"
-        ></div>
+        <div data-fs-error class="cv-error-hidden"></div>
         <form id="hire-form">
           <input type="hidden" name="_subject" id="hire-subject" value="Hire inquiry from CV" />
           <div class="hire-field">
@@ -3816,6 +4405,6 @@
       </div>
     </div>
 
-<script type="module" src="./scripts/cv-swagger.js"></script>
+    <script type="module" src="./scripts/cv-swagger.js"></script>
   </body>
 </html>
