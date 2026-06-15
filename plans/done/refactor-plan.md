@@ -4,13 +4,13 @@
 
 A CV adatai **5 helyen** duplikálva, eltérő formátumban:
 
-| Forrás | Adatmennyiség | Formátum |
-|--------|---------------|----------|
-| `cv-plain.html` | ~600 sor CV | Inline HTML (teljes DOM struktúrával) |
-| `scripts/cv-json.js` | ~400+ sor a `L[]` tömbben | JS tömb, HTML escaped JSON sorok |
-| `cv-swagger.html` | ~200KB egyetlen HTML-ben | Swagger stílusú HTML szekciók |
-| `scripts/game/world/stations.js` | 8 CV állomás | Template literal stringek |
-| `index.html` | Név, role, linkek | Inline HTML |
+| Forrás                           | Adatmennyiség             | Formátum                              |
+| -------------------------------- | ------------------------- | ------------------------------------- |
+| `cv-plain.html`                  | ~600 sor CV               | Inline HTML (teljes DOM struktúrával) |
+| `scripts/cv-json.js`             | ~400+ sor a `L[]` tömbben | JS tömb, HTML escaped JSON sorok      |
+| `cv-swagger.html`                | ~200KB egyetlen HTML-ben  | Swagger stílusú HTML szekciók         |
+| `scripts/game/world/stations.js` | 8 CV állomás              | Template literal stringek             |
+| `index.html`                     | Név, role, linkek         | Inline HTML                           |
 
 **Következmény:** Ha változik a CV (pl. új munkahely, új skill), mind az 5 fájlt kézzel kell szerkeszteni. Ez elkerülhetetlenül inkonzisztenciához vezet.
 
@@ -34,26 +34,27 @@ styles/
 
 ## Implementációs státusz (2026-05-26)
 
-| # | Lépés | Státusz | Megjegyzés |
-|---|-------|---------|------------|
-| 1 | `cv-data.js` létrehozása | ✅ **KÉSZ** | Teljes adatobjektum minden mezővel + game specifikus pozíciókkal |
-| 2 | `shared.js` bővítése template-ekkel | ✅ **KÉSZ** | CV.renderPlainCV + helper-ek (escHtml, skillChip, refLinks, renderBullets, renderWorkItem) |
-| 3 | `cv-plain.html` + `cv-plain.js` átírása | ✅ **KÉSZ** | HTML → cv-content div; JS → renderPlainCV(CV_DATA) |
-| 4 | `cv-json.js` átírása (CV_DATA-ból) | ✅ **KÉSZ** | L[] tömb kivéve, helyette `CV.renderJsonCV(CV_DATA)`. Minden fold/gutter/sync mechanizmus változatlan. Hire modal init null-check-kel. |
-| 5 | `cv-swagger.html` + `cv-swagger.js` átírása | ✅ **KÉSZ** | Dinamikus render CV_DATA-ból, ~8KB template + hire modal + music player statikus HTML. 8 szekció, 23 endpoint. |
-| 6 | `stations.js` átírása | ✅ **KÉSZ** | Generál CV_DATA-ból, fallback statikus adatra |
-| 7 | Közös elemek kiszervezése | ✅ **KÉSZ** | Music player + hire modal HTML deduplikáció: shared.js-be kiszervezve, auto-injection IIFE + page-specific fallback injection |
-| 8 | Ellenőrzés | ✅ **KÉSZ** | cv-plain.html, cv-json.html, cv-swagger.html működik; cv-game.html betölt hiba nélkül. cv-plain.js duplikáció eltávolítva — `CV.renderPlainCV(CV_DATA)`-t használ shared.js-ből |
+| #   | Lépés                                       | Státusz     | Megjegyzés                                                                                                                                                                      |
+| --- | ------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | `cv-data.js` létrehozása                    | ✅ **KÉSZ** | Teljes adatobjektum minden mezővel + game specifikus pozíciókkal                                                                                                                |
+| 2   | `shared.js` bővítése template-ekkel         | ✅ **KÉSZ** | CV.renderPlainCV + helper-ek (escHtml, skillChip, refLinks, renderBullets, renderWorkItem)                                                                                      |
+| 3   | `cv-plain.html` + `cv-plain.js` átírása     | ✅ **KÉSZ** | HTML → cv-content div; JS → renderPlainCV(CV_DATA)                                                                                                                              |
+| 4   | `cv-json.js` átírása (CV_DATA-ból)          | ✅ **KÉSZ** | L[] tömb kivéve, helyette `CV.renderJsonCV(CV_DATA)`. Minden fold/gutter/sync mechanizmus változatlan. Hire modal init null-check-kel.                                          |
+| 5   | `cv-swagger.html` + `cv-swagger.js` átírása | ✅ **KÉSZ** | Dinamikus render CV_DATA-ból, ~8KB template + hire modal + music player statikus HTML. 8 szekció, 23 endpoint.                                                                  |
+| 6   | `stations.js` átírása                       | ✅ **KÉSZ** | Generál CV_DATA-ból, fallback statikus adatra                                                                                                                                   |
+| 7   | Közös elemek kiszervezése                   | ✅ **KÉSZ** | Music player + hire modal HTML deduplikáció: shared.js-be kiszervezve, auto-injection IIFE + page-specific fallback injection                                                   |
+| 8   | Ellenőrzés                                  | ✅ **KÉSZ** | cv-plain.html, cv-json.html, cv-swagger.html működik; cv-game.html betölt hiba nélkül. cv-plain.js duplikáció eltávolítva — `CV.renderPlainCV(CV_DATA)`-t használ shared.js-ből |
 
 ### Ismert problémák
 
-*(Nincs ismert problém)*
+_(Nincs ismert problém)_
 
 ---
 
 ## 4. lépés: ✅ `cv-json.js` átírása (KÉSZ)
 
 **Megvalósítás:**
+
 - `CV.renderJsonCV(data)` a `shared.js`-ben — generálja a teljes `L[]` struktúrát a `CV_DATA`-ból, beleértve:
   - indent depth (0-6) minden sorhoz
   - Syntax highlighting HTML wrapper-ek
@@ -74,6 +75,7 @@ styles/
 ## 1. lépés: ✅ `scripts/cv-data.js` — Központi adatobjektum (KÉSZ)
 
 Egyetlen `CV_DATA` globális objektum, ami a teljes CV-t tartalmazza. Tartalmazza:
+
 - `meta` — név, role, verzió
 - `identity` — név, role, lokáció, kontaktok, nyelvek
 - `summary` — szakmai összefoglaló
@@ -106,6 +108,7 @@ Egyetlen `CV_DATA` globális objektum, ami a teljes CV-t tartalmazza. Tartalmazz
 ## 4. lépés: ⏳ `cv-json.js` átírása (FÜGGŐBEN)
 
 **Terv:**
+
 - A jelenlegi `L[]` tömb generálása a `CV_DATA`-ból
 - Meg kell tartani: indent depth (0-6), syntax highlighting HTML wrapper-ek (`<span class="k">`, `<span class="s">`, `<span class="c">` stb.), szellemes kommentek
 - A fold mechanizmus változatlan marad
@@ -118,6 +121,7 @@ Egyetlen `CV_DATA` globális objektum, ami a teljes CV-t tartalmazza. Tartalmazz
 ## 5. lépés: ✅ `cv-swagger.html` + `cv-swagger.js` átírása (KÉSZ)
 
 **Megvalósítás:**
+
 - `CV.renderSwaggerContent(data)` a `shared.js`-ben — generálja a teljes Swagger UI HTML-t
 - 8 tag section: identity (3 GET), summary (1 GET), workExperience (4 POST + 2 PUT), education (3 GET), skills (4 GET + 1 PATCH + 1 DELETE), community (1 POST), hobbyProjects (1 GET), meta (1 GET) = 23 endpoint
 - `cv-swagger.html`: hire modal + music player statikus HTML, üres `#swagger-ui` div, scriptek: shared.js → cv-data.js → cv-music-player.js → cv-swagger.js + formspree
@@ -141,6 +145,7 @@ Egyetlen `CV_DATA` globális objektum, ami a teljes CV-t tartalmazza. Tartalmazz
 ## 7. lépés: ✅ Közös elemek kiszervezése (KÉSZ)
 
 **Változtatások:**
+
 - `shared.js`:
   - `CV.musicPlayerHTML()` — visszaadja a music player HTML stringet (helyettesíti a 3x duplikált ~70 sort)
   - `CV.hireModalHTML(prefix, opts)` — visszaadja a hire modal HTML-t konfigurálható paraméterekkel (helyettesíti a 4x duplikált ~40 sort)

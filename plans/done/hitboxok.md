@@ -15,12 +15,12 @@ collisionBox: {
 
 ## Példák
 
-| Objektum | Hitbox | Magyarázat |
-|---|---|---|
-| **Sign** | `{ offsetX: 6, offsetY: 14, width: 20, height: 16 }` | Csak a tábla alsó része blokkol, a „karó" nem |
-| **Tree** | `{ offsetX: 10, offsetY: 36, width: 12, height: 10 }` | Csak a törzs töve akadály, a lombon át lehet menni |
-| **SmallTree** | `{ offsetX: 10, offsetY: 36, width: 12, height: 10 }` | Ugyanaz, mint a nagy fánál |
-| **House** | Az ajtó előtti keskeny sáv | A ház teljes sprite-ja nem blokkol, csak az ajtó előtti sáv |
+| Objektum      | Hitbox                                                | Magyarázat                                                  |
+| ------------- | ----------------------------------------------------- | ----------------------------------------------------------- |
+| **Sign**      | `{ offsetX: 6, offsetY: 14, width: 20, height: 16 }`  | Csak a tábla alsó része blokkol, a „karó" nem               |
+| **Tree**      | `{ offsetX: 10, offsetY: 36, width: 12, height: 10 }` | Csak a törzs töve akadály, a lombon át lehet menni          |
+| **SmallTree** | `{ offsetX: 10, offsetY: 36, width: 12, height: 10 }` | Ugyanaz, mint a nagy fánál                                  |
+| **House**     | Az ajtó előtti keskeny sáv                            | A ház teljes sprite-ja nem blokkol, csak az ajtó előtti sáv |
 
 ## Nulla hitbox (nincs ütközés)
 

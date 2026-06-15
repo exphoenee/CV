@@ -30,17 +30,21 @@ Asset pack credit to **Kenmi-art**'s **Cute Fantasy RPG** (https://kenmi-art.itc
 ## Proposed Changes
 
 ### 1. Map Configuration (`map.js`)
+
 We will create a structured `map.js` module that stores:
+
 - **Tiles definition:** Grid map utilizing tiles like Grass, Path, Water, and Cliff.
 - **Collisions:** A coordinate collision grid where static decorations (fences, trees) and house walls prevent player/NPC/Enemy crossing.
 - **Spawn Coordinates:** Start coordinates for the Player, NPCs, Enemies, and Buildings.
 
 ### 2. Base Game Engine & Main Loop
+
 - **`cv-game.html` [NEW]**: The HTML shell for the game view. Imports the stylesheet and the ES6 module `main.js`. It contains the HTML modal for the CV Dialogue with Scroll Up, Scroll Down, and Exit buttons. It also displays a small credits note referencing the Kenmi-art Cute Fantasy RPG pack.
 - **`styles/cv-game.css` [NEW]**: Neon-retro game styles, CRT scanline screen effects, responsive centering, and custom retro dialogue modal styles.
 - **`scripts/game/main.js` [NEW]**: Orchestrates the main loop (`requestAnimationFrame`), input managers (WASD, Space), camera tracking, and y-sorting rendering.
 
 ### 3. Object-Oriented Class Hierarchy (Individual Files)
+
 All classes are placed in `scripts/game/` and export clean ES6 classes.
 
 - **`GameObject.js` [NEW]**: Base class for all world objects.
@@ -63,10 +67,12 @@ All classes are placed in `scripts/game/` and export clean ES6 classes.
 ## Verification Plan
 
 ### Automated Tests
+
 - Run browser-based developer console checks for class script exports and texture loadings.
 - Check and log frame rates (targeting smooth 60fps) and AABB collision times.
 
 ### Manual Verification
+
 - **WASD controls:** Walk in 4 directions, verifying correct speed and collision alignment.
 - **Space bar attack:** Verify player swings sword, hitting skeletons, causing flashing damage overlays.
 - **Combat:** Strike Skeletons 3 times. Verify they play a death animation or fade out and drop out of the world.
