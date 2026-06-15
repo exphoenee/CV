@@ -180,3 +180,10 @@ Detailed documentation (with Mermaid diagrams): [`devdocs/ai-workflow.md`](devdo
 - **No backend** — everything is static; Formspree and Google Apps Script are the only exceptions
 - **ES Modules** — every JS file uses `type="module"` with relative import paths
 - **No `innerHTML` with user input** — always use `escHtml()` or the `html\`\`` tag
+
+## Script Placement
+
+- `scripts/` — **Only** CV website product files (views, components, game, data, styles, HTML)
+- `.claude/` — AI workflow scripts (validation, backup, translation, pipeline tools)
+
+Full rule: [`.claude/rules/script-placement.md`](.claude/rules/script-placement.md)

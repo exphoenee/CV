@@ -46,6 +46,7 @@ If the music player is in the header/menu bar → do **NOT** also place a floati
 - Import a framework (React, Vue, etc.)
 - Inject user input with `.innerHTML` — always use `escHtml()` or the `html\`\`` tag
 - Hard-code a URL, LocalStorage key, or feature flag outside of `config.js`
+- ❌ Place AI workflow scripts in `scripts/` — they belong under `.claude/scripts/`, `.claude/skills/<name>/scripts/`, or `.claude/agents/`. The `scripts/` folder is **only** for the CV website product files.
 
 ### Accessibility
 
@@ -87,6 +88,8 @@ These can be run directly from the project root:
 | `.claude/skills/cv-backup/scripts/cv-backup.py`       | `/cv-backup`    | `python .claude/skills/cv-backup/scripts/cv-backup.py [--label ... \| --company ... --title ...]` |
 | `.claude/skills/cv-restore/scripts/cv-restore.py`     | `/cv-restore`   | `python .claude/skills/cv-restore/scripts/cv-restore.py <folder-name> [--list \| --yes]`          |
 | `.claude/skills/locale-check/scripts/locale-check.py` | `/locale-check` | `python .claude/skills/locale-check/scripts/locale-check.py [--json]`                             |
+| `.claude/scripts/check-translation-lengths.py`               | — (pipeline)    | `python .claude/scripts/check-translation-lengths.py`                                            |
+
 
 ### Agents (invoked via Agent tool)
 
@@ -122,3 +125,5 @@ Skill scripts: `.claude/skills/{skillName}/scripts/` — standalone utility scri
 - [`.claude/rules/shared-api.md`](.claude/rules/shared-api.md) — shared.js exports reference
 - [`.claude/rules/aria-labels.md`](.claude/rules/aria-labels.md) — aria label rules and key table
 - [`.claude/rules/responsive.md`](.claude/rules/responsive.md) — responsive CSS rules and breakpoints
+- [`.claude/rules/script-placement.md`](.claude/rules/script-placement.md) — script folder separation: `scripts/` for product vs `.claude/` for AI tools
+

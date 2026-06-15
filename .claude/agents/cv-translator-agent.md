@@ -50,10 +50,20 @@ For each locale in `TARGET_LOCALES`:
 Also read `scripts/cv-data.js` to have the full English context available.
 
 Read `.claude/rules/translation-length.md` → store as `LENGTH_RULE`. This is a HARD
-constraint: every translated `content` field must not exceed the character count of its
-English source field. For each field in `CHANGED_FIELDS`, record the English source length:
-`EN_LEN[field] = CHANGED_FIELDS.<field>.new.length` (JS String `.length`). These are the
-per-field budgets you must stay within.
+constraint: every translated `content` field must fall within **-5% to +2%** of the
+ORIGINAL English source character count (i.e. `EN_ORIGINAL * 0.95 <= translated.length <= EN_ORIGINAL * 1.02`).
+
+The reference is the ORIGINAL English text, with lengths pre-extracted in
+`.claude/reference/original-english-lengths.json`
+(from the `cv-versions/2026-06-10_1000_original/cv-data.js` backup before any job-apply
+optimizations), NOT the current `scripts/cv-data.js`.
+
+For each field in `CHANGED_FIELDS`, find the original English source length from the backup:
+`EN_LEN[field] = original_en_field.length` (JS String `.length`).
+Compute the tolerance band:
+- `EN_MIN[field] = floor(EN_LEN[field] * 0.95)` — minimum allowed length
+- `EN_MAX[field] = ceil(EN_LEN[field] * 1.02)` — maximum allowed length
+These are the per-field bounds you must stay within.
 
 ---
 
@@ -113,21 +123,49 @@ using the established fictional vocabulary.
 - Maintain the same length and energy as the existing fictional content
 - Do NOT simply copy the old fictional text — update it to reflect the new English emphasis
 
-### 2c-len — Enforce the length budget (per `LENGTH_RULE`)
+### 2c-len — Enforce the length budget (-5% to +2% tolerance band, HARD constraint)
 
-After drafting each translated field, measure its character count (`.length`) and compare
-against the English source budget `EN_LEN[field]`:
+This is a **HARD CONSTRAINT** — the pipeline WILL REJECT any translation outside the
+tolerance band.
+
+**IMPORTANT:** The reference is the ORIGINAL English source, with lengths pre-extracted in
+`.claude/reference/original-english-lengths.json`
+(from `cv-versions/2026-06-10_1000_original/cv-data.js` backup),
+NOT the current `scripts/cv-data.js`.
+The current English may have been modified by job-apply optimizations and could be longer.
+
+After drafting each translated field, find the ORIGINAL English field length and compare:
 
 ```
-translated.length  <=  EN_LEN[field]
+EN_ORIGINAL[field] * 0.95  <=  translated.length  <=  EN_ORIGINAL[field] * 1.02
 ```
 
-If a draft exceeds its budget, **do not truncate mid-sentence** — condense per
-`.claude/rules/translation-length.md`: shorten redundant lists (three items → two), drop
-filler words, and avoid restating a concept already mentioned. Keep the key tech keywords
-(TypeScript, React, Svelte, Node.js, CI, …) and the field's core meaning. Re-measure and
-repeat until within budget. Apply this to every changed field: `summary`,
-`workExperience[].description`, each changed `bullets[]` item.
+**The translation must fall within -5% to +2% of the ORIGINAL English source length.**
+This means:
+- **If translated.length < EN_ORIGINAL * 0.95** → the translation is TOO SHORT. Expand it.
+- **If translated.length > EN_ORIGINAL * 1.02** → the translation is TOO LONG. Condense it.
+- **If within the band** → perfect, no adjustment needed.
+
+**If too short — EXPAND the text.** Do not just pad with filler. Add natural language
+structure that fits the target language:
+- Use full verb forms instead of terse ones ("ich habe geleitet" instead of "geleitet")
+- Add clarifying connective words natural to the target language
+- For fictional languages: use more elaborate, decorative phrasing
+- NEVER add information not present in the English source
+
+**If too long — CONDENSE the text.** Do not truncate mid-sentence:
+- Remove filler words: "with a focus on" → "focusing on" or simply drop
+- Shorten redundant lists: "for writing, refactoring, and documenting code" → "to write, refactor, and document code"
+- Drop adverbs that add no meaning: "significantly", "greatly", "substantially"
+- Avoid restating categories already known: "enterprise-level corporate" → "enterprise"
+- Use shorter synonyms: "I have implemented" → "I implemented", "in order to" → "to"
+- Merge two clauses into one: "I led X, which resulted in Y" → "I led X, achieving Y"
+
+Keep the key tech keywords (TypeScript, React, Svelte, Node.js, CI, …) and the field's core
+meaning. Re-measure against the ORIGINAL English length and repeat until within the -5% – +2% band.
+
+**Apply this to EVERY changed field:** `summary`, `workExperience[].description`,
+each changed `bullets[]` item. Do not skip any field.
 
 Fields backed by `content: null` fall back to English automatically and need no action.
 
@@ -149,9 +187,17 @@ After writing each file:
 
 - Verify the file still has valid JS syntax structure (labels object + content object both present)
 - Verify no keys were accidentally removed
-- **Length check (per `LENGTH_RULE`):** for every changed field, confirm
-  `translated.length <= EN_LEN[field]`. If any field is over budget, condense it and rewrite
-  the file before continuing. Report the final per-field lengths in Step 4.
+- **Length check (per `LENGTH_RULE` — -5% to +2% band against ORIGINAL English):** for every changed field, confirm
+  `EN_ORIGINAL[field] * 0.95 <= translated.length <= EN_ORIGINAL[field] * 1.02`.
+  If ANY field is outside the band, adjust it (expand if too short, condense if too long)
+  and rewrite the file before continuing. Do NOT skip or fudge the measurement.
+  After all 11 locale files are done, ALSO run the automated validator:
+  ```bash
+  python .claude/scripts/check-translation-lengths.py
+  ```
+  This script exits with code 1 if ANY translated field is outside the tolerance band.
+  If it fails, identify the offenders, adjust them, and re-run until it passes.
+  Report the final per-field lengths in Step 4.
 
 If any file fails validation: report the error and restore the original content.
 
@@ -187,11 +233,12 @@ Javasolt ellenőrzés:
 
 ## Hard Constraints
 
+- ❌ **ALWAYS** keep each translated field within the -5% to +2% tolerance band compared to the ORIGINAL English (`EN_ORIGINAL * 0.95 <= translated.length <= EN_ORIGINAL * 1.02`). If a translation is too short, expand it naturally; if too long, condense it. Do not proceed until every field is within the band. The orchestrator automatically rejects out-of-band translations.
 - ❌ Never translate proper nouns: TypeScript, React, Svelte, Node.js, MySQL, etc. stay unchanged
 - ❌ Never change `labels` fields — only `content` is in scope
 - ❌ Never add new `content` subfields that don't exist in the current locale file
 - ❌ Never remove existing `content` fields — only update values that correspond to CHANGED_FIELDS
-- ❌ Never let a translated field exceed its English source length — enforce `.claude/rules/translation-length.md` (translated.length ≤ EN_LEN[field]); condense, never truncate
+- ❌ Always ensure each translated field is within the -5% to +2% tolerance band against the ORIGINAL English — enforce `.claude/rules/translation-length.md` (EN_ORIGINAL * 0.95 ≤ translated.length ≤ EN_ORIGINAL * 1.02); expand if too short, condense if too long, never truncate mid-sentence
 - ✅ For fictional languages: adapt meaning using established vocabulary, not literal translation
 - ✅ Always read the existing content for style calibration before translating
 - ✅ Match the indentation and formatting of each file exactly
