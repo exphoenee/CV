@@ -2,8 +2,22 @@
 
 ## Referencia
 
-A **referencia** a `.claude/reference/current-english-lengths.json` fájlban tárolt
-**jelenlegi angol** mezőhosszak (hero summary + munkahelyenkénti összes karakter).
+A **referencia egy FIX budget** — **NEM** a mindenkori `scripts/cv-data.js`-ből számolódik.
+A budget **egyetlen helyen él** (single source of truth):
+
+**`.claude/reference/current-english-lengths.json`** — itt vannak a budget-számok **és** a
+tűrési sáv (`_tolerance`) is. Ezt olvassa a Python ellenőrző (`check-translation-lengths.py`),
+és ez az egyetlen mérvadó forrás. Ez a szabály-fájl már **nem** tartalmaz kézzel karbantartott
+számtáblázatot — a számokat a scriptből kérdezheted le:
+
+```bash
+python .claude/scripts/check-translation-lengths.py --print
+```
+
+> ⚠️ A budget-ot **soha ne generáld újra** a `cv-data.js`-ből egy-egy futáskor. Ha az angol
+> tartalom hossza megváltozik (pl. egy `/job-apply` átírja a summary-t), attól a budget **nem**
+> változik — a budget a fix layout-kapacitást védi, nem a pillanatnyi angol szöveg hosszát követi.
+> A budget módosítása **tudatos, kézi döntés**: csak a JSON-t írd át (a tűrést is ott állítod).
 
 **Csak két dolog van ellenőrizve:**
 1. **hero** (summary) — a teljes összefoglaló karakterszáma
@@ -21,35 +35,31 @@ egy kicsit rövidebb legyen, de ne túlzottan.
 ## A szabály
 
 ```
-hero (summary):  EN_current_summary * 0.95  <=  translated_summary  <=  EN_current_summary * 1.02
-munkahely:       EN_workplace_total * 0.95  <=  translated_total  <=  EN_workplace_total * 1.02
+hero (summary):  BUDGET_summary * 0.95  <=  translated_summary  <=  BUDGET_summary * 1.02
+munkahely:       BUDGET_workplace * 0.95  <=  translated_total  <=  BUDGET_workplace * 1.02
 ```
 
 Ahol `munkahely_total` = az adott workExperience elem `description` + összes `bullets[]` + összes `projects[].bullets[]` hossza.
 
-Példa a jelenlegi angol értékekkel:
-| Elem | Angol (ch) | -5% (min) | +2% (max) |
-|------|:----------:|:---------:|:---------:|
-| hero (summary) | 793 | 753 | 808 |
-| aegex | 1826 | 1734 | 1862 |
-| telekom | 675 | 641 | 688 |
-| scolia | 585 | 555 | 596 |
-| cubicfox | 613 | 582 | 625 |
-| cobotx | 727 | 690 | 741 |
-| webforsol | 694 | 659 | 707 |
+A konkrét budget-értékek (és a tűrési sáv) a `.claude/reference/current-english-lengths.json`
+fájlban élnek — ez az egyetlen mérvadó forrás. Az aktuális táblázat kiíratása:
+
+```bash
+python .claude/scripts/check-translation-lengths.py --print
+```
 
 ---
 
 ## Javítási útmutató
 
-### Ha a fordítás TÚL RÖVID (translated < EN * 0.95)
+### Ha a fordítás TÚL RÖVID (translated < BUDGET * 0.95)
 
 Bővítsd a munkahely teljes szövegét (description + bullets együtt) természetes módon:
 1. Használj teljesebb nyelvtani formákat
 2. Adj hozzá a nyelvtanilag helyes mondathoz szükséges kötőszavakat
 3. Fiktív nyelveknél használj hosszabb, díszítőbb kifejezéseket
 
-### Ha a fordítás TÚL HOSSZÚ (translated > EN * 1.02)
+### Ha a fordítás TÚL HOSSZÚ (translated > BUDGET * 1.02)
 
 Tömörítsd a munkahely teljes szövegét:
 1. Töltelékszavak elhagyása

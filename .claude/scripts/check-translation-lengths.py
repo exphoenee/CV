@@ -1,28 +1,35 @@
 #!/usr/bin/env python3
 """
 check-translation-lengths.py
-Compares translated content field lengths against the CURRENT English source.
+Compares translated content lengths against a FIXED budget.
+
+The budget is NOT derived from the current cv-data.js. It is the authoritative layout
+budget. Its ONLY home is the JSON this script reads — both the budget numbers AND the
+tolerance band live there. .claude/rules/translation-length.md only explains the rule and
+points here; it no longer carries a hand-maintained copy of the numbers.
 
 Rule: Only two things are validated:
   1. hero (summary) — individual field length
   2. per-workplace TOTAL — description + all bullets + all project bullets combined
 
-Tolerance: -5% to +2% of the CURRENT English length.
+Tolerance: read from the JSON's "_tolerance" block (default -5% to +2%).
 Not validated: community, education, hobbyProjects, programmingLanguages, skillGroups.
 
-Reference: .claude/reference/current-english-lengths.json
+Reference (single source of truth): .claude/reference/current-english-lengths.json
 
-If translated.length < EN * 0.95 -> TOO_SHORT
-If translated.length > EN * 1.02 -> TOO_LONG
+If translated.length < BUDGET * min -> TOO_SHORT
+If translated.length > BUDGET * max -> TOO_LONG
 
-Exit code: 0 if all OK, 1 if any field is outside the tolerance band.
+Usage:
+  python check-translation-lengths.py          # validate all locales
+  python check-translation-lengths.py --print   # print the budget table and exit
+
+Exit code: 0 if all OK, 1 if any item is outside the tolerance band.
 """
 import json, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
-TOLERANCE_MIN = 0.95
-TOLERANCE_MAX = 1.02
 REFERENCE_FILE = ROOT / '.claude' / 'reference' / 'current-english-lengths.json'
 
 exit_code = 0
@@ -32,8 +39,20 @@ def load_reference():
     if not REFERENCE_FILE.exists():
         print(f"ERROR: {REFERENCE_FILE} not found")
         sys.exit(1)
-    with open(REFERENCE_FILE) as f:
+    with open(REFERENCE_FILE, encoding='utf-8') as f:
         return json.load(f)
+
+def get_tolerance(ref):
+    """Read the tolerance band from the reference JSON (single source of truth)."""
+    tol = ref.get('_tolerance', {})
+    return float(tol.get('min', 0.95)), float(tol.get('max', 1.02))
+
+def budget_items(ref):
+    """Yield (key, budget) for real budget entries, skipping _-prefixed meta keys."""
+    for k, v in ref.items():
+        if k.startswith('_'):
+            continue
+        yield k, v
 
 def extract_string_value(t, field):
     pat = re.compile(
@@ -118,10 +137,23 @@ def extract_locale_data(filepath):
 
 # --- Main ---
 ref = load_reference()
+TOLERANCE_MIN, TOLERANCE_MAX = get_tolerance(ref)
 
-print("=== Forditasi hossz-ellenorzes (JELENLEGI angol, munkahelyenkenti osszeg) ===")
-print(f"Referencia: {REFERENCE_FILE.name}")
-print(f"Szabaly: EN_jelenlegi * {TOLERANCE_MIN:.2f} <= forditott <= EN_jelenlegi * {TOLERANCE_MAX:.2f}")
+# --print: show the budget table (single source of truth) and exit.
+if '--print' in sys.argv:
+    print("=== Forditasi hossz-budget (FIX, single source of truth) ===")
+    print(f"Forras: {REFERENCE_FILE.relative_to(ROOT)}")
+    print(f"Turesi sav: -{(1-TOLERANCE_MIN)*100:.0f}% / +{(TOLERANCE_MAX-1)*100:.0f}%")
+    print()
+    print(f"{'Elem':<16}{'Budget':>8}{'min':>8}{'max':>8}")
+    print("-" * 40)
+    for k, v in budget_items(ref):
+        print(f"{k:<16}{v:>8}{int(v*TOLERANCE_MIN):>8}{int(v*TOLERANCE_MAX):>8}")
+    sys.exit(0)
+
+print("=== Forditasi hossz-ellenorzes (FIX budget, munkahelyenkenti osszeg) ===")
+print(f"Referencia (fix budget): {REFERENCE_FILE.name}")
+print(f"Szabaly: BUDGET * {TOLERANCE_MIN:.2f} <= forditott <= BUDGET * {TOLERANCE_MAX:.2f}")
 print()
 print("Ellenorzott elemek:")
 print("  hero (summary) + munkahelyenkenti osszes (description+bullets+project bullets)")
@@ -154,7 +186,7 @@ for lf in LOCALES:
             print(f"  OK  {lang}.hero(summary): {tr_len}ch (sav {mn}-{mx})")
     
     # Check per-workplace totals
-    for wid, en in ref.items():
+    for wid, en in budget_items(ref):
         if wid == 'summary': continue
         if wid not in tr: continue
         tr_len = tr[wid]

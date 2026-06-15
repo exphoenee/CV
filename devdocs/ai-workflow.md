@@ -366,12 +366,12 @@ A fordítások elkészülte után az orchestrator automatikusan spot-checket fut
 
 ### Valódi nyelvek (hu, de, fr, es, it)
 
-| Ellenőrzés                            | ✅ átmegy                             | ⚠️ figyelmeztet          |
-| ------------------------------------- | ------------------------------------- | ------------------------ |
-| Nagybetűs kezdés és pont végén        | ✓                                     | Hiányzik                 |
-| Technológia nevek megőrzése           | TypeScript, React, Svelte stb. megvan | kisbetűs vagy lefordítva |
-| Szöveghossz (±30% az angolhoz képest) | Belül                                 | Kívül                    |
-| Nem marad lefordítatlan angol mondat  | Nincs angol bekezdés                  | Van angol bekezdés       |
+| Ellenőrzés                              | ✅ átmegy                             | ⚠️ figyelmeztet          |
+| --------------------------------------- | ------------------------------------- | ------------------------ |
+| Nagybetűs kezdés és pont végén          | ✓                                     | Hiányzik                 |
+| Technológia nevek megőrzése             | TypeScript, React, Svelte stb. megvan | kisbetűs vagy lefordítva |
+| Summary hossz a fix budget −5%/+2% sávjában | Belül                             | Kívül                    |
+| Nem marad lefordítatlan angol mondat    | Nincs angol bekezdés                  | Van angol bekezdés       |
 
 Eredmény: `✅ Ellenőrzött fordítás` vagy `⚠️ Emberi ellenőrzés ajánlott`
 
@@ -380,6 +380,42 @@ Eredmény: `✅ Ellenőrzött fordítás` vagy `⚠️ Emberi ellenőrzés aján
 Mindig: `⚠️ Stílus-adaptáció (emberi ellenőrzés ajánlott)` — ez várt viselkedés, nem hiba.
 
 A spot-check ellenőrzi a kulcsszótár meglétét és a fonetikai konvenciókat (pl. aposztróf Klingonban, diaeresis Quenya-ban), de a stílus-adaptáció kreatív jellege miatt az emberi ellenőrzés mindig javasolt.
+
+---
+
+## Fordítási hossz-budget (Step 7d)
+
+A Step 7b emberi szintű spot-check; rajta felül a Step 7d egy **automatikus, kötelező**
+ellenőrzés futtatja a [`check-translation-lengths.py`](../.claude/scripts/check-translation-lengths.py)
+scriptet, ami a [`.claude/rules/translation-length.md`](../.claude/rules/translation-length.md)
+szabályt kényszeríti ki.
+
+**A budget FIX, beégetett — NEM a `cv-data.js`-ből számolódik futásonként.** Két helyen él,
+és a kettőnek egyeznie kell:
+
+1. a szabályfájl táblázata (mérvadó, kézzel karbantartott),
+2. [`.claude/reference/current-english-lengths.json`](../.claude/reference/current-english-lengths.json) — ugyanaz JSON-ban, ezt olvassa a script.
+
+Csak **két dolgot** ellenőriz, mindkettőt a budget **−5% … +2%** sávjában:
+
+- **hero (summary)** — az összefoglaló hossza,
+- **munkahelyenkénti összeg** — `description` + összes `bullets[]` + összes `projects[].bullets[]` együtt.
+
+NINCS ellenőrizve: community, education, hobbyProjects, programmingLanguages, skillGroups.
+
+```bash
+cd scripts/locales
+python ../../.claude/scripts/check-translation-lengths.py   # exit 1, ha bármi a sávon kívül
+```
+
+Ha a script 1-gyel lép ki, a pipeline **nem mehet tovább** a Step 8-ra: a túl rövid mezőket
+bővíteni, a túl hosszúakat tömöríteni kell, majd újra futtatni, amíg 0-val ki nem lép. A
+`cv-translator-agent` már a fordítás közben is erre a budget-re dolgozik; a Step 7d csak a
+független, automatikus megerősítés.
+
+> ⚠️ A budget-ot soha ne generáld újra a `cv-data.js`-ből. Ha az angol tartalom változik
+> (pl. egy `/job-apply` átírja a summary-t), a budget akkor sem változik — a fix
+> layout-kapacitást védi. Módosítása tudatos, kézi döntés: a táblázatot ÉS a JSON-t együtt.
 
 ---
 

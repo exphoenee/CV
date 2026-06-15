@@ -275,7 +275,7 @@ Check:
 
 - Does the translated summary start with a capital letter and end with a period?
 - Are technology names preserved correctly? (TypeScript, React, Svelte, Node.js — not translated or lowercased)
-- Does the text length fall within the -5% to +2% tolerance band compared to the ORIGINAL English? (EN_ORIGINAL * 0.95 <= translated.length <= EN_ORIGINAL * 1.02)
+- Is the summary length within budget? (the Step 7d validator is the authority; this is just a quick eyeball)
 - Are any English sentences left untranslated (verbatim English paragraph present)?
 
 If all checks pass → mark as `✅ Ellenőrzött fordítás`
@@ -335,12 +335,11 @@ After JS syntax validation, RUN THE AUTOMATED TRANSLATION LENGTH CHECK.
 The `cv-translator-agent` is instructed to enforce the length budget, but this step provides
 an independent, automated verification that catches any over-budget fields automatically.
 
-See `.claude/rules/translation-length.md` for the rule — every translated `content` field must
-fall within **-5% to +2%** of its ORIGINAL English source character count.
-The ORIGINAL English reference is `.claude/reference/original-english-lengths.json`
-(pre-extracted from `cv-versions/2026-06-10_1000_original/cv-data.js` backup,
-before any job-apply optimizations changed the English text).
-(EN_ORIGINAL * 0.95 <= translated.length <= EN_ORIGINAL * 1.02)
+See `.claude/rules/translation-length.md` for the rule. The budget and tolerance band live in
+a **single source of truth**, `.claude/reference/current-english-lengths.json` (NOT derived from
+cv-data) — the validator reads it and enforces the rule. Only two things are validated: the
+**hero (summary)** and each **per-workplace TOTAL** (description + all bullets + all project
+bullets, combined).
 
 ```bash
 cd scripts/locales
@@ -348,9 +347,9 @@ python ../../.claude/scripts/check-translation-lengths.py || { echo "FAIL: Trans
 ```
 
 **If the script exits with code 1:**
-1. Read the output — it lists every out-of-band field with the exact status (TOO_SHORT or TOO_LONG)
-2. For each TOO_SHORT field: expand the text naturally (full verb forms, connectives, natural language structure)
-3. For each TOO_LONG field: condense the text (remove filler words, shorten lists, merge clauses)
+1. Read the output — it lists every out-of-band item (summary or a workplace total) with its status (TOO_SHORT or TOO_LONG)
+2. For each TOO_SHORT item: expand the text naturally (full verb forms, connectives, natural language structure)
+3. For each TOO_LONG item: condense the text (remove filler words, shorten lists, merge clauses)
 4. Re-run `python ../../.claude/scripts/check-translation-lengths.py`
 5. Repeat until ALL locales pass
 6. Do NOT proceed to Step 8 until the script exits with code 0 — the `exit 1` above ensures the pipeline CANNOT continue with out-of-band translations

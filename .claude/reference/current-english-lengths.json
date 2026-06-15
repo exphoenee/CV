@@ -1,4 +1,6 @@
 {
+  "_comment": "FIXED layout budget — single source of truth for both numbers AND tolerance. NOT derived from cv-data.js. Editing this is a deliberate manual decision. See .claude/rules/translation-length.md. Run `python .claude/scripts/check-translation-lengths.py --print` to display the budget table.",
+  "_tolerance": { "min": 0.95, "max": 1.02 },
   "summary": 793,
   "aegex": 1826,
   "telekom": 675,

@@ -188,6 +188,12 @@ CV/
 │
 ├── .claude/
 │   ├── rules/            # Projekt konvenciók, AI szabályok
+│   │   └── translation-length.md   # Fordítási hossz-budget (fix, beégetett)
+│   ├── reference/
+│   │   └── current-english-lengths.json  # Fix hossz-budget JSON (kézzel karbantartott)
+│   ├── scripts/          # Globális AI segédscriptek
+│   │   ├── cv-ledger.py                   # Marker + history.md kezelő
+│   │   └── check-translation-lengths.py  # Fordítási hossz-budget ellenőrző
 │   ├── agents/           # AI agent definíciók
 │   └── skills/
 │       ├── cv-backup/
