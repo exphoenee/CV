@@ -12,15 +12,16 @@ Gilt für `scripts/locales/de.js` UI-Labels und etwaige deutsche CV-Inhaltserwei
 
 ## Zeitformen
 
-| Kontext | Zeitform | Beispiel |
-|---|---|---|
-| Aktueller Job | Präsens | „Ich leite ein 2-köpfiges Team" |
-| Frühere Jobs | Präteritum / Perfekt | „Ich entwickelte…", „Ich habe eingeführt…" |
-| Zusammenfassung | Präsens + Perfekt | „Ich habe … geleitet. Ich fokussiere mich auf…" |
+| Kontext         | Zeitform             | Beispiel                                        |
+| --------------- | -------------------- | ----------------------------------------------- |
+| Aktueller Job   | Präsens              | „Ich leite ein 2-köpfiges Team"                 |
+| Frühere Jobs    | Präteritum / Perfekt | „Ich entwickelte…", „Ich habe eingeführt…"      |
+| Zusammenfassung | Präsens + Perfekt    | „Ich habe … geleitet. Ich fokussiere mich auf…" |
 
 ## Substantivierung
 
 Im Deutschen werden Nomen großgeschrieben — auch englische Technikbegriffe, wenn als Nomen verwendet:
+
 - „das React-Framework", „ein TypeScript-Projekt", „der CI-Pipeline"
 - Zusammensetzungen: „Frontend-Architektur", „CI-Pipeline", „Monorepo-Migration"
 - Nicht übermäßig substantivieren: „Ich leitete die Migration" statt „Die Durchführung der Migration lag in meiner Verantwortung"

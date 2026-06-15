@@ -6,7 +6,7 @@ description: >
 version: 1.0.0
 author: Viktor Bozzay
 disable-model-invocation: false
-argument-hint: "[--fix]"
+argument-hint: '[--fix]'
 ---
 
 # locale-check — Locale Completeness Audit
@@ -37,6 +37,7 @@ Read each file and extract all keys from its `labels: { ... }` object.
 For each file: compute `MISSING = EN_KEYS - keys_in_this_file`.
 
 Build a result map:
+
 ```
 {
   "hu": ["key1", "key2"],
@@ -85,6 +86,7 @@ kl.js — 1 hiányzó:
 For each file that has missing keys:
 
 Spawn `locale-agent` and pass:
+
 - The page file path (e.g. `scripts/locales/hu-page.js`)
 - Reference: the `labels` object in en-page.js has the canonical key order
 - The list of missing key names

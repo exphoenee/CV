@@ -7,7 +7,7 @@ description: >
 version: 1.0.0
 author: Viktor Bozzay
 disable-model-invocation: true
-argument-hint: "<folder-name>"
+argument-hint: '<folder-name>'
 ---
 
 # cv-restore — Restore CV from Backup
@@ -19,20 +19,21 @@ Restores the CV to a previously snapshotted state from `cv-versions/`.
 If no argument → ❌ "Add meg a mappa nevét. Elérhető backupok: `cv-versions/`" and stop.
 
 Normalize the argument:
+
 - Strip leading `cv-versions/` prefix if present
 - Strip trailing `/`
 - `FOLDER_NAME` = remaining string, e.g. `"2026-06-13_acme-corp_senior-frontend-engineer"`
 
 Check that `cv-versions/FOLDER_NAME/` exists.
 Check that `cv-versions/FOLDER_NAME/cv-data.js` exists.
-Check that `cv-versions/FOLDER_NAME/locale-content.json` exists.
+Check that `cv-versions/FOLDER_NAME/locales/` (directory) exists.
 
 If any check fails → ❌ "Nem található: cv-versions/FOLDER_NAME/ — ellenőrizd a mappa nevét." and stop.
 
 ## Step 2 — Show backup metadata
 
 Read first 15 lines of `cv-versions/FOLDER_NAME/cv-data.js` to extract the header comment.
-Read `_meta` from `cv-versions/FOLDER_NAME/locale-content.json`.
+List the files in `cv-versions/FOLDER_NAME/locales/`.
 
 Display:
 
@@ -46,19 +47,9 @@ Módosítások: [Changes from header]
 
 Visszaállítandó fájlok:
   scripts/cv-data.js          ← felülírja a jelenlegit
-  scripts/locales/hu.js       ← content mező frissül
-  scripts/locales/de.js       ← content mező frissül
-  scripts/locales/fr.js       ← content mező frissül
-  scripts/locales/es.js       ← content mező frissül
-  scripts/locales/it.js       ← content mező frissül
-  scripts/locales/asg.js      ← content mező frissül
-  scripts/locales/dot.js      ← content mező frissül
-  scripts/locales/kl.js       ← content mező frissül
-  scripts/locales/qu.js       ← content mező frissül
-  scripts/locales/goa.js      ← content mező frissül
-  scripts/locales/ya.js       ← content mező frissül
+  scripts/locales/*.js        ← felülírva a backupból (11-12 fájl)
 
-⚠️  A jelenlegi scripts/cv-data.js tartalma felülíródik.
+⚠️  A jelenlegi scripts/cv-data.js és scripts/locales/ tartalma felülíródik.
     A megerősítés után automatikusan készül egy pre-restore biztonsági mentés
     (cv-versions/DATE_manual_pre-restore/), mielőtt bármit felülírnánk.
 
@@ -75,19 +66,24 @@ Strip the header comment block: remove everything from the first `/**` up to and
 
 Write the stripped content to `scripts/cv-data.js`.
 
-## Step 4 — Restore locale content fields
+## Step 4 — Restore locale files
 
-Read `cv-versions/FOLDER_NAME/locale-content.json`.
+Copy the entire `cv-versions/FOLDER_NAME/locales/` directory over `scripts/locales/`.
+This restores all 12 locale files (hu, de, fr, es, it, asg, dot, kl, qu, goa, ya) in their
+**original JS format** — no parsing, no serialization, no JSON conversion.
 
-For each language key in the JSON (hu, de, fr, es, it, asg, dot, kl, qu, goa, ya):
+```python
+import shutil
+shutil.copytree("cv-versions/FOLDER_NAME/locales", "scripts/locales", dirs_exist_ok=True)
+```
 
-1. Read `scripts/locales/<lang>.js` in full.
-2. The content value from the JSON may be `null` or a nested object.
-3. Locate the `content:` property in the locale file (it is always the last top-level key before the closing `}`).
-4. Replace the entire `content:` value — from `content:` through its closing brace or `null` — with the restored value.
-   - If the JSON value is `null` → write `content: null`
-   - If the JSON value is an object → write `content: ` followed by the JSON-serialized object (2-space indent, matching the file's existing style)
-5. Write the updated file back.
+**Why this is better than the old approach:**
+
+- No fragile regex-based content extraction during backup
+- No JSON serialization that converts single quotes to double quotes
+- No complex JS re-serialization during restore
+- The files are byte-identical to the original — marker lines, comments, formatting all preserved
+- If a new locale file is added to `scripts/locales/`, it gets automatically backed up and restored
 
 ## Step 4b — Traceability marker + audit log (automatic)
 
@@ -111,10 +107,8 @@ script reports it as a warning.
 Pre-restore mentés: cv-versions/DATE_manual_pre-restore/
 Forrás: cv-versions/FOLDER_NAME/
 Visszaállítva:
-  ✓ scripts/cv-data.js
-  ✓ scripts/locales/hu.js  (content: [null | restored])
-  ✓ scripts/locales/de.js
-  ... (all 11)
+  ✓ scripts/cv-data.js (header stripped)
+  ✓ scripts/locales/   (N fájl visszamásolva)
 🧾 Marker a visszaállított verzióra állítva + sor a history.md-ben
 
 Javaslat: Ellenőrizd a változásokat git diff-fel, majd indítsd el a szervert.
@@ -127,5 +121,4 @@ Javaslat: Ellenőrizd a változásokat git diff-fel, majd indítsd el a szervert
 - ✅ Always create the automatic pre-restore backup before overwriting (aborts the restore if the backup fails); only skip with `--no-backup`
 - ✅ After restoring, stamp the marker to the restored APP_ID and append a `mutation` row to history.md (Step 4b) — done automatically by cv-restore.py
 - ✅ Strip the header comment exactly — the restored cv-data.js must be valid JS
-- ✅ If a locale JSON value is `null`, write `content: null` (not `content: {}`)
 - ✅ All user-facing output in Hungarian

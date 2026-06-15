@@ -19,6 +19,7 @@ Exit codes:
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 
@@ -109,103 +110,86 @@ def restore_cv_data(backup_path, target_path):
 
 
 # ── Restore locale content ─────────────────────────────────────────────
-def _serialize_content(value, indent=2):
-    """Return a JS-compatible string for the `content:` field value."""
-    if value is None:
-        return "null"
-    return json.dumps(value, ensure_ascii=False, indent=indent)
-
-
-def replace_content_in_js(locale_js, new_value_str):
-    """Replace the entire `content:` field value in a locale JS file.
-
-    Uses brace-depth tracking to find the exact range of the current value.
-    Returns the modified JS string.
+def restore_locales(backup_locales_dir, target_dir):
+    """Copy all locale files from the backup's locales/ directory back to
+    scripts/locales/. This is a simple file copy — no parsing, no serialization,
+    no JSON conversion. The files are restored exactly as they were backed up.
     """
-    m = re.search(r'(?<!\w)(content\s*:)', locale_js)
-    if not m:
-        return None  # content: field not found
+    if not os.path.isdir(backup_locales_dir):
+        return False
+    shutil.copytree(backup_locales_dir, target_dir, dirs_exist_ok=True)
+    return True
 
-    if new_value_str == "null":
-        # Simple: replace `content: <value>` with `content: null,`
-        # Find the comma after the value
-        after = locale_js[m.end():]
-        # Skip whitespace
-        rest = after.lstrip()
-        consumed = len(after) - len(rest)
-        if rest.startswith("null"):
-            val_end = m.end() + consumed + 4
-            # Find the comma closing this field (must be within 3 chars of null)
-            comma = locale_js.find(",", val_end)
-            if comma >= 0 and comma - val_end <= 3:
-                # Trailing comma found — replace and preserve rest
-                return locale_js[:m.start()] + "content: null," + locale_js[comma + 1:]
-            else:
-                # No comma or comma too far — preserve everything after null
-                return locale_js[:m.start()] + "content: null" + locale_js[val_end:]
+
+# ── Old-format restore (locale-content.json) — backward compat ─────────
+def _js_parse_value(val):
+    """Simple recursive converter from JSON-deserialized Python value to
+    JS source code with single-quoted strings. Only used for backward
+    compatibility with old backup folders that have locale-content.json
+    instead of locales/ directory.
+    """
+    if val is None:
+        return 'null'
+    if isinstance(val, bool):
+        return 'true' if val else 'false'
+    if isinstance(val, (int, float)):
+        return str(val)
+    if isinstance(val, str):
+        escaped = val.replace('\\', '\\\\').replace("'", "\\'")
+        escaped = escaped.replace('\n', '\\n').replace('\r', '\\r').replace('\t', '\\t')
+        return f"'{escaped}'"
+    if isinstance(val, (list, tuple)):
+        if not val:
+            return '[]'
+        items = ', '.join(_js_parse_value(v) for v in val)
+        return f'[{items}]'
+    if isinstance(val, dict):
+        if not val:
+            return '{}'
+        entries = ', '.join(
+            f"{k}: {_js_parse_value(v)}" if isinstance(k, str) and k.isidentifier()
+            else f"'{k}': {_js_parse_value(v)}"
+            for k, v in val.items()
+        )
+        return f'{{{entries}}}'
+    return str(val)
+
+
+def rebuild_locale_from_json(locale_js, new_value, lang_code):
+    """Rebuild a locale JS file using content from locale-content.json.
+    Preserves marker lines. Only used for backward compatibility.
+    """
+    marker_lines = []
+    for line in locale_js.split('\n'):
+        stripped = line.strip()
+        if stripped.startswith('// @job-application:') or stripped.startswith('// @cv-last-change:'):
+            marker_lines.append(line.rstrip())
         else:
-            # Not null — fall through to depth-based approach below
-            pass
+            break
+    lang_upper = 'EN' if lang_code == 'en' else lang_code.upper()
+    content_js = 'null' if new_value is None else _js_parse_value(new_value)
+    new_js_lines = list(marker_lines)
+    new_js_lines.append(f'export const {lang_upper} = {{\n  content: {content_js},\n}};\n')
+    return '\n'.join(new_js_lines)
 
-    # Depth-based tracking to find the value span
-    after = locale_js[m.end():]
-    rest = after.lstrip()
-    consumed = len(after) - len(rest)
 
-    if not rest.startswith("{"):
-        return None  # shouldn't happen
-
-    depth = 0
-    i = 0
-    while i < len(rest):
-        ch = rest[i]
-        if ch in ('"', "'", '`'):
-            # Skip string
-            i += 1
-            quote = ch
-            while i < len(rest):
-                if rest[i] == '\\':
-                    i += 2
-                    continue
-                if rest[i] == quote:
-                    break
-                i += 1
-        elif ch == '{':
-            depth += 1
-        elif ch == '}':
-            depth -= 1
-            if depth == 0:
-                val_end_idx = m.end() + consumed + i + 1
-                # Find next comma to keep or remove
-                comma_pos = locale_js.find(",", val_end_idx)
-                if comma_pos > 0 and comma_pos - val_end_idx < 5:
-                    # Remove the comma too
-                    cls_brace = locale_js[val_end_idx:comma_pos].strip()
-                    if cls_brace == "" or cls_brace == "}":
-                        val_end_idx = comma_pos + 1
-                # Build new content with proper indentation
-                # Detect the indentation of the original content: line
-                line_start = locale_js.rfind("\n", 0, m.start())
-                if line_start < 0:
-                    line_start = 0
-                else:
-                    line_start += 1
-                line_indent = locale_js[line_start:m.start()]
-
-                # Indent the serialized value by the same amount
-                indented_lines = []
-                for line_num, l in enumerate(new_value_str.split("\n")):
-                    if line_num == 0:
-                        indented_lines.append(l)
-                    else:
-                        indented_lines.append("  " + l)
-                new_block = "content: " + "\n".join(indented_lines) + ","
-
-                return locale_js[:m.start()] + line_indent + new_block + locale_js[val_end_idx:]
-        i += 1
-
-    # Fallback: couldn't find end — should not happen
-    return None
+def restore_locales_old_format(json_path, target_dir):
+    """Restore locale content from old-format locale-content.json.
+    Handles the 11 language content fields individually.
+    """
+    data = json.loads(read_file(json_path))
+    count = 0
+    for lang, path in LOCALE_PATHS.items():
+        new_val = data.get(lang)
+        js = read_file(path)
+        if js is None:
+            continue
+        result = rebuild_locale_from_json(js, new_val, lang)
+        if result is None:
+            continue
+        write_file(path, result)
+        count += 1
+    return count
 
 
 # ── List & metadata ────────────────────────────────────────────────────
@@ -275,7 +259,8 @@ def main():
 
     # Validate
     cv_back   = os.path.join(vf, "cv-data.js")
-    loc_back  = os.path.join(vf, "locale-content.json")
+    loc_dir   = os.path.join(vf, "locales")
+    loc_json  = os.path.join(vf, "locale-content.json")
 
     if not os.path.isdir(vf):
         _out(f"{FAIL} Nem talalhato: {vf}/")
@@ -283,8 +268,13 @@ def main():
     if not os.path.exists(cv_back):
         _out(f"{FAIL} Nem talalhato: {cv_back}")
         sys.exit(1)
-    if not os.path.exists(loc_back):
-        _out(f"{FAIL} Nem talalhato: {loc_back}")
+
+    # Support both old format (locale-content.json) and new format (locales/ directory)
+    old_format = os.path.exists(loc_json) and not os.path.isdir(loc_dir)
+    new_format = os.path.isdir(loc_dir)
+    if not old_format and not new_format:
+        _out(f"{FAIL} Nem talalhato: {vf}/locales/ vagy {vf}/locale-content.json")
+        _out(f"       A backup mappaban nincs locale adat.")
         sys.exit(1)
 
     # Preview
@@ -324,27 +314,17 @@ def main():
     if restore_cv_data(cv_back, CV_DATA_PATH):
         _out(f"   {OK} scripts/cv-data.js")
 
-    # Read locale-content.json
-    locale_json = json.loads(read_file(loc_back))
-
-    # Restore each locale
-    for lang, lpath in LOCALE_PATHS.items():
-        new_val = locale_json.get(lang)
-        js = read_file(lpath)
-        if js is None:
-            _out(f"   {FAIL} scripts/locales/{lang}.js -- nem talalhato")
-            continue
-
-        new_str = _serialize_content(new_val)
-        result = replace_content_in_js(js, new_str)
-        if result is None:
-            _out(f"   {FAIL} scripts/locales/{lang}.js -- nem sikerult frissiteni")
-            continue
-
-        write_file(lpath, result)
-        status = f"{OK}" if new_val else f"{OK} (null)"
-        _out(f"   {status} scripts/locales/{lang}.js")
-
+    # Restore locale files — new format (locales/ directory) or old format (locale-content.json)
+    locales_target = _project_path("scripts", "locales")
+    if new_format:
+        if restore_locales(loc_dir, locales_target):
+            count = len([f for f in os.listdir(loc_dir) if f.endswith('.js')])
+            _out(f"   {OK} scripts/locales/  ({count} locale files restored)")
+    else:
+        count = restore_locales_old_format(loc_json, locales_target)
+        _out(f"   {WARN} Regi formatumu backup (locale-content.json) — {count} locale frissitve")
+        _out(f"       Ajanlott: keszits uj backupot a /cv-backup paranccsal,")
+        _out(f"       hogy a locales/ konyvtar is elmentodjon.")
     # ── Traceability: stamp the live-file marker to the restored version + log ──
     def _clean(val):
         val = (val or "").strip()

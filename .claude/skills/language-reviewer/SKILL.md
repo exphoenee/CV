@@ -8,7 +8,7 @@ description: >
 version: 1.0.0
 author: Viktor Bozzay
 disable-model-invocation: false
-argument-hint: "<lang-code | all>"
+argument-hint: '<lang-code | all>'
 ---
 
 # language-reviewer — CV Language Quality Audit
@@ -52,6 +52,7 @@ Set `TARGET_LANGS = [en, hu, de, fr, es, it, asg, dot, kl, qu, goa, ya]`.
 ## Step 2 — Load rule files
 
 For each language in `TARGET_LANGS`:
+
 - Load `.claude/rules/locales/<lang>.md`
 - If the rule file does not exist: ⚠️ WARN "Nincs szabályfájl: .claude/rules/locales/<lang>.md — alapértelmezett ellenőrzés fut" and continue with generic checks only
 
@@ -72,6 +73,7 @@ Extract all `labels: { ... }` key-value pairs: `LABELS[lang] = { key: value, ...
 
 Read `scripts/cv-data.js` in full.
 Extract:
+
 - `CV_SUMMARY`: the `summary` field
 - `CV_BULLETS`: all bullets from `workExperience[].bullets[]` and `workExperience[].projects[].bullets[]`
 - `CV_JOB_DESCRIPTIONS`: all `description` fields from `workExperience[]`
@@ -91,12 +93,14 @@ For each language in `TARGET_LANGS`, run the following checks using `RULES[lang]
 
 Does the register match the expected style for this language?
 (See rules file: formal/informal, honorific forms, aggressive/poetic/archaic style)
+
 - Flag labels that feel out of register
 - Flag if formal and informal forms are mixed within the same file
 
 ### Check B — Tense consistency
 
 For `en` and `hu` content fields:
+
 - Are past-tense verbs used for past jobs?
 - Are present-tense verbs used for the current job?
 - Is there mixing within a single job entry?
@@ -113,6 +117,7 @@ Flag any incorrect capitalization or misspelling in label values.
 ### Check D — Language-specific grammar
 
 Apply the grammar rules from `RULES[lang]`:
+
 - For real languages: check gender agreement, case endings, verb forms, articles
 - For fictional languages: check phonetic conventions, apostrophe placement, characteristic markers
 
@@ -122,6 +127,7 @@ Be strict about the fictional language consistency rules — they define the aes
 
 For each fictional language: verify that the established vocabulary table terms match
 what is actually in the locale file. Flag any drift:
+
 - e.g. `kl.js` uses `"jabbI'ID"` — check apostrophe is present
 - e.g. `ya.js` uses `"Hk'nde"` — check apostrophe and capitalization
 - e.g. `qu.js` uses `"Nossë"` with diaeresis — check diaeresis is not omitted
@@ -135,6 +141,7 @@ For each missing key: flag as ⚠️ MISSING KEY — but note this is also check
 ### Check G — Placeholder text cultural fit
 
 For form labels: are placeholder names culturally appropriate?
+
 - `en`: "Jane Smith" ✅
 - `hu`: "Gipsz Jakab" ✅ (Hungarian equivalent of John Doe)
 - `de`: "Max Mustermann" ✅
@@ -145,9 +152,11 @@ For form labels: are placeholder names culturally appropriate?
 ## Step 5 — Decision: is there anything to report?
 
 ### "No issues" for a language:
+
 All checks A–G pass with no findings.
 
 ### "Has issues":
+
 At least one finding in checks A–G.
 
 ---

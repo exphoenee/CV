@@ -67,10 +67,13 @@ Ha az ikon mellett van szöveg, vagy az ikon csak vizuális dekoráció, el kell
 ```html
 <form novalidate aria-label="Contact form">
   <label for="[prefix]-name">Your name <span aria-label="required">*</span></label>
-  <input id="[prefix]-name" type="text"
-         aria-required="true"
-         aria-describedby="[prefix]-name-err"
-         autocomplete="name" />
+  <input
+    id="[prefix]-name"
+    type="text"
+    aria-required="true"
+    aria-describedby="[prefix]-name-err"
+    autocomplete="name"
+  />
   <span id="[prefix]-name-err" role="alert" aria-live="polite"></span>
 </form>
 ```
@@ -84,10 +87,8 @@ Ha az ikon mellett van szöveg, vagy az ikon csak vizuális dekoráció, el kell
 ### Range inputok (csúszkák)
 
 ```html
-<input type="range" id="music-volume" min="0" max="1" step="0.05"
-       aria-label="Music volume" />
-<input type="range" id="track-seek" min="0" max="100"
-       aria-label="Track position" />
+<input type="range" id="music-volume" min="0" max="1" step="0.05" aria-label="Music volume" />
+<input type="range" id="track-seek" min="0" max="100" aria-label="Track position" />
 ```
 
 - Minden range input kap `aria-label`-t (a `<label for>` kevéssé olvasóbarát csúszkáknál)
@@ -95,9 +96,13 @@ Ha az ikon mellett van szöveg, vagy az ikon csak vizuális dekoráció, el kell
 ### Progressbar
 
 ```html
-<div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
-     aria-label="Loading progress">
-</div>
+<div
+  role="progressbar"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-valuenow="0"
+  aria-label="Loading progress"
+></div>
 ```
 
 - `role="progressbar"` + `aria-valuemin` + `aria-valuemax` + `aria-valuenow` kötelező
@@ -185,28 +190,28 @@ Az aria labelek **lokalizáltak** — minden `aria-label` értéke `locale.t('ar
 
 ### Meglévő aria kulcsok (`scripts/locales/en.js`)
 
-| Kulcs | Érték (EN) |
-|-------|-----------|
-| `ariaToggleTheme` | `"Toggle light/dark theme"` |
-| `ariaOpenMusicPlayer` | `"Open music player"` |
-| `ariaCloseMusicPlayer` | `"Close music player"` |
-| `ariaBackToHub` | `"Back to CV hub"` |
-| `ariaCloseDialog` | `"Close dialog"` |
-| `ariaHireForm` | `"open contact form"` |
-| `ariaCloseContactForm` | `"Close contact form"` |
-| `ariaCloseBooking` | `"Close booking dialog"` |
-| `ariaTrackPosition` | `"Track position"` |
-| `ariaMusicVolume` | `"Music volume"` |
-| `ariaPlayMusic` | `"Play music"` |
-| `ariaPauseMusic` | `"Pause music"` |
-| `ariaNextTrack` | `"Next track"` |
-| `ariaPrevTrack` | `"Previous track"` |
-| `ariaToggleRepeat` | `"Toggle repeat"` |
-| `ariaShowLyrics` | `"Show lyrics"` |
-| `ariaGenreSelect` | `"Music genre"` |
-| `ariaBookSlot` | `"Book time slot"` |
-| `ariaContactsPopup` | `"Contacts"` |
-| `ariaSendMessage` | `"Send message"` |
+| Kulcs                  | Érték (EN)                  |
+| ---------------------- | --------------------------- |
+| `ariaToggleTheme`      | `"Toggle light/dark theme"` |
+| `ariaOpenMusicPlayer`  | `"Open music player"`       |
+| `ariaCloseMusicPlayer` | `"Close music player"`      |
+| `ariaBackToHub`        | `"Back to CV hub"`          |
+| `ariaCloseDialog`      | `"Close dialog"`            |
+| `ariaHireForm`         | `"open contact form"`       |
+| `ariaCloseContactForm` | `"Close contact form"`      |
+| `ariaCloseBooking`     | `"Close booking dialog"`    |
+| `ariaTrackPosition`    | `"Track position"`          |
+| `ariaMusicVolume`      | `"Music volume"`            |
+| `ariaPlayMusic`        | `"Play music"`              |
+| `ariaPauseMusic`       | `"Pause music"`             |
+| `ariaNextTrack`        | `"Next track"`              |
+| `ariaPrevTrack`        | `"Previous track"`          |
+| `ariaToggleRepeat`     | `"Toggle repeat"`           |
+| `ariaShowLyrics`       | `"Show lyrics"`             |
+| `ariaGenreSelect`      | `"Music genre"`             |
+| `ariaBookSlot`         | `"Book time slot"`          |
+| `ariaContactsPopup`    | `"Contacts"`                |
+| `ariaSendMessage`      | `"Send message"`            |
 
 ### Új aria kulcs hozzáadásakor
 
@@ -218,10 +223,10 @@ Az aria labelek **lokalizáltak** — minden `aria-label` értéke `locale.t('ar
 
 ```js
 // NEM HELYES — hard-coded string, nem lokalizált
-'<button aria-label="Open music player">'
+'<button aria-label="Open music player">';
 
 // HELYES — locale-ból jön
-'<button aria-label="' + locale.t('ariaOpenMusicPlayer') + '">'
+'<button aria-label="' + locale.t('ariaOpenMusicPlayer') + '">';
 ```
 
 ### HTML fájlban (`data-i18n` nem működik aria-labelen)
@@ -229,8 +234,8 @@ Az aria labelek **lokalizáltak** — minden `aria-label` értéke `locale.t('ar
 ```html
 <!-- NEM MŰKÖDIK — data-i18n csak textContent-et frissít -->
 <button data-i18n="ariaOpenMusicPlayer" aria-label="Open music player">
-
-<!-- Helyes megoldás: JS-sel frissíteni localechange eseményen, vagy JS-ből injektálni -->
+  <!-- Helyes megoldás: JS-sel frissíteni localechange eseményen, vagy JS-ből injektálni -->
+</button>
 ```
 
 Ha egy HTML fájlban van aria-label és a szövege változhat nyelvváltáskor,

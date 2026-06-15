@@ -13,40 +13,40 @@ Commanding, imperious, self-aggrandizing — system lords speak as gods.
 
 ## Core Commands and Particles
 
-| Term | Meaning | Usage |
-|---|---|---|
-| `Kree!` | Attention! Listen! Hail! | Opening exclamation, attention-getter |
-| `Jaffa` | Warrior / Servant | Used for the "reader" — slight condescension |
-| `Shol'va` | Traitor (used ironically) | For competitor roles (PM, Scrum) |
-| `Hok'tar` | Advanced human / enhanced | Used for developer roles |
-| `Tal` | Enough / proceed | |
-| `Nok` | Understood / acknowledged | |
-| `Mak` | Choose / select | |
-| `Chel nok` | Hail and acknowledge | Greeting/salute |
-| `Kek` | Death / serious consequence | Used humorously for deadlines |
+| Term       | Meaning                     | Usage                                        |
+| ---------- | --------------------------- | -------------------------------------------- |
+| `Kree!`    | Attention! Listen! Hail!    | Opening exclamation, attention-getter        |
+| `Jaffa`    | Warrior / Servant           | Used for the "reader" — slight condescension |
+| `Shol'va`  | Traitor (used ironically)   | For competitor roles (PM, Scrum)             |
+| `Hok'tar`  | Advanced human / enhanced   | Used for developer roles                     |
+| `Tal`      | Enough / proceed            |                                              |
+| `Nok`      | Understood / acknowledged   |                                              |
+| `Mak`      | Choose / select             |                                              |
+| `Chel nok` | Hail and acknowledge        | Greeting/salute                              |
+| `Kek`      | Death / serious consequence | Used humorously for deadlines                |
 
 ## Core Vocabulary
 
-| English concept | Goa'uld | Notes |
-|---|---|---|
-| CV / document | `Joma i` | "the record/document of" |
-| Frontend | `Yesta-Tau'ri` | Tau'ri = humans of Earth, Yesta = front/first |
-| Backend | `Nak-Tau'ri` | Nak = deep/hidden |
-| Developer | `Hok'tar` | advanced human/craftsman |
-| Tech Lead | `Kree Hok'tar` | commanding advanced human |
-| Work experience | `Joma i kel'shah` | lit. "record of deeds/battles" |
-| Education | `Hok'tar noc` | lit. "advanced learning" |
-| Language | `Tau'ri lam` | Earth language |
-| Programming language | `Joma lam` | document language |
-| Hire me | `Lo'taur! Kree!` | "Lord/Hire! Attention!" |
-| Send | `Kree joma ngeH` / short `ngeH` | |
-| Close | `Tal loka` | enough, close |
-| Open | `Kree joma` | lit. "attend to the document" |
-| Community | `Jaffa ar lo'taur noc` | warriors and lords learning |
-| Meeting | `Tal mak` | select/meeting |
-| Message | `Joma` | document/message |
-| Good | `Chel` | |
-| Current | `DaH` / `sí` | |
+| English concept      | Goa'uld                         | Notes                                         |
+| -------------------- | ------------------------------- | --------------------------------------------- |
+| CV / document        | `Joma i`                        | "the record/document of"                      |
+| Frontend             | `Yesta-Tau'ri`                  | Tau'ri = humans of Earth, Yesta = front/first |
+| Backend              | `Nak-Tau'ri`                    | Nak = deep/hidden                             |
+| Developer            | `Hok'tar`                       | advanced human/craftsman                      |
+| Tech Lead            | `Kree Hok'tar`                  | commanding advanced human                     |
+| Work experience      | `Joma i kel'shah`               | lit. "record of deeds/battles"                |
+| Education            | `Hok'tar noc`                   | lit. "advanced learning"                      |
+| Language             | `Tau'ri lam`                    | Earth language                                |
+| Programming language | `Joma lam`                      | document language                             |
+| Hire me              | `Lo'taur! Kree!`                | "Lord/Hire! Attention!"                       |
+| Send                 | `Kree joma ngeH` / short `ngeH` |                                               |
+| Close                | `Tal loka`                      | enough, close                                 |
+| Open                 | `Kree joma`                     | lit. "attend to the document"                 |
+| Community            | `Jaffa ar lo'taur noc`          | warriors and lords learning                   |
+| Meeting              | `Tal mak`                       | select/meeting                                |
+| Message              | `Joma`                          | document/message                              |
+| Good                 | `Chel`                          |                                               |
+| Current              | `DaH` / `sí`                    |                                               |
 
 ## Style Rules
 

@@ -3,7 +3,8 @@ name: cv-backup-agent
 description: >
   Creates a versioned snapshot of the current cv-data.js and all 11 locale content fields.
   Handles version conflict detection (asks user when a matching folder already exists).
-  Writes VERSION_FOLDER/cv-data.js (with metadata header) and VERSION_FOLDER/locale-content.json.
+  Copies the entire scripts/locales/ directory into VERSION_FOLDER/locales/ for a clean,
+  format-preserving backup.
   Called by job-apply-orchestrator and by the /cv-backup skill.
 ---
 
@@ -16,7 +17,8 @@ You create a point-in-time snapshot of the CV data and locale content into `cv-v
 ## Inputs you receive
 
 - `MODE` — `"job-apply"` | `"manual"`
-- `VERSION_BASE` — folder name base, e.g. `"2026-06-13_acme-corp_senior-frontend-engineer"` or `"2026-06-13_manual"`
+- `VERSION_BASE` — folder name base, e.g. `"2026-06-15_0915_acme-corp_senior-frontend-engineer"` or `"2026-06-15_0915_manual"`
+  Note: TIME (HHMM) is always included for uniqueness — distinguishes snapshots made the same day
 - `JD_TITLE` — job title, or `"Manual Backup"` in manual mode
 - `JD_COMPANY` — company name, or `"—"` in manual mode
 - `JD_SENIORITY` — (optional, empty string if manual)
@@ -35,6 +37,10 @@ You create a point-in-time snapshot of the CV data and locale content into `cv-v
 
 Scan `cv-versions/` for **directories** whose name starts with `VERSION_BASE`.
 
+**Note:** VERSION_BASE now includes TIME (HHMM), e.g. `2026-06-15_0915_acme-corp_senior-fe`.
+Old backups created before this change (e.g. `2026-06-13_manual`) have no time suffix but
+are still fully supported by the restore script.
+
 ### If no match found
 
 Set `VERSION_FOLDER = cv-versions/VERSION_BASE`.
@@ -44,7 +50,7 @@ Set `VERSION_FOLDER = cv-versions/VERSION_BASE`.
 Sort matches by name (most recent first).
 For each: read first 15 lines of `<dir>/cv-data.js` to extract Optimized-for, Date, ATS-match.
 
-Display a numbered list (path · Optimized for · Date · ATS match · "Tartalmazza: cv-data.js + locale-content.json"), then ask:
+Display a numbered list (path · Optimized for · Date · ATS match · "Tartalmazza: cv-data.js + locales/"), then ask:
 
 ```
 Mit szeretnél tenni?
@@ -73,6 +79,7 @@ Create `VERSION_FOLDER/` directory.
 Read `scripts/cv-data.js` in full.
 
 Prepend the header block from `.claude/rules/version-snapshot-format.md` (cv-data.js section), filling in:
+
 - `JD_TITLE`, `JD_COMPANY`, `JD_SENIORITY`, `JD_DOMAIN`
 - `DATE TIME`
 - `OVERALL_SCORE`, `REQUIRED_SCORE`, `PREFERRED_SCORE` (use `"—"` if not provided)
@@ -83,15 +90,22 @@ Write the result to `VERSION_FOLDER/cv-data.js`.
 
 ---
 
-## Step 4 — Write locale-content.json snapshot
+## Step 4 — Copy locales/ directory
 
-Read the `content` field from each of the 11 locale files:
-`hu`, `de`, `fr`, `es`, `it`, `asg`, `dot`, `kl`, `qu`, `goa`, `ya`
-(files at `scripts/locales/<lang>.js`)
+Copy the entire `scripts/locales/` directory to `VERSION_FOLDER/locales/`.
+All 12 locale files (hu.js, de.js, fr.js, es.js, it.js, asg.js, dot.js, kl.js, qu.js,
+goa.js, ya.js) are preserved in their **original JS format** — no JSON conversion,
+no content extraction, no syntax risk.
 
-Write `VERSION_FOLDER/locale-content.json` using the structure from `.claude/rules/version-snapshot-format.md` (locale-content.json section), filling in:
-- `_meta`: JD_TITLE, JD_COMPANY, DATE TIME, OVERALL_SCORE
-- Each language's full `content` object (or `null` if no content override exists)
+```python
+import shutil
+shutil.copytree("scripts/locales", "VERSION_FOLDER/locales")
+```
+
+**Why file copy instead of JSON extraction:** JSON serialization converts single-quoted
+strings to double-quoted format (`"key": "value"` instead of `key: 'value'`), which breaks
+the project's JS conventions and causes syntax errors on restore. File copy preserves the
+exact file content — byte-identical to the original.
 
 ---
 

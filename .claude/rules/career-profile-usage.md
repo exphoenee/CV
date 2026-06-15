@@ -16,30 +16,30 @@ Every `profile/*.md` file has the following header:
 
 ```yaml
 ---
-title: "Frontend Tech Lead"           # munkakör / fájl címe
-seniority: "Senior"                   # Junior | Mid | Senior | N/A
+title: 'Frontend Tech Lead' # munkakör / fájl címe
+seniority: 'Senior' # Junior | Mid | Senior | N/A
 period:
-  from: "2023-11"                     # YYYY-MM kezdés (null ha nem alkalmazható)
-  to: null                            # YYYY-MM vég (null = jelenleg is)
-profession: "software"                # software | mechanical | both
-type: "work"                          # work | education | community | reference
-domain: "enterprise SaaS, compliance" # iparág / domén — JD illesztéshez
+  from: '2023-11' # YYYY-MM kezdés (null ha nem alkalmazható)
+  to: null # YYYY-MM vég (null = jelenleg is)
+profession: 'software' # software | mechanical | both
+type: 'work' # work | education | community | reference
+domain: 'enterprise SaaS, compliance' # iparág / domén — JD illesztéshez
 ---
 ```
 
 ### Field descriptions
 
-| Mező | Lehetséges értékek | Használata |
-|---|---|---|
-| `title` | szabad szöveg | Munkakör megnevezése, vagy fájl típusa (pl. "LinkedIn Profile") |
-| `seniority` | `Junior`, `Mid`, `Senior`, `N/A` | Senioritás a pozícióban |
-| `period.from` | `YYYY-MM` vagy `null` | Kezdő dátum |
-| `period.to` | `YYYY-MM` vagy `null` | Vég dátum (`null` = jelenleg is tart) |
-| `profession` | `software`, `mechanical`, `both` | Melyik szakmához tartozik |
-| `type` | `work`, `education`, `community`, `reference` | Fájl típusa — elsődleges szűrő |
-| `domain` | szabad szöveg | Iparág/domén — JD-hez illesztéshez |
-| `leader` | `true`, `false` | Volt-e vezetői/irányítási szerepe ebben a pozícióban |
-| `skills` | `[string]` | Kulcs skill-ek listája — gyors relevancia ellenőrzéshez a fájl teljes beolvasása nélkül |
+| Mező          | Lehetséges értékek                            | Használata                                                                              |
+| ------------- | --------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `title`       | szabad szöveg                                 | Munkakör megnevezése, vagy fájl típusa (pl. "LinkedIn Profile")                         |
+| `seniority`   | `Junior`, `Mid`, `Senior`, `N/A`              | Senioritás a pozícióban                                                                 |
+| `period.from` | `YYYY-MM` vagy `null`                         | Kezdő dátum                                                                             |
+| `period.to`   | `YYYY-MM` vagy `null`                         | Vég dátum (`null` = jelenleg is tart)                                                   |
+| `profession`  | `software`, `mechanical`, `both`              | Melyik szakmához tartozik                                                               |
+| `type`        | `work`, `education`, `community`, `reference` | Fájl típusa — elsődleges szűrő                                                          |
+| `domain`      | szabad szöveg                                 | Iparág/domén — JD-hez illesztéshez                                                      |
+| `leader`      | `true`, `false`                               | Volt-e vezetői/irányítási szerepe ebben a pozícióban                                    |
+| `skills`      | `[string]`                                    | Kulcs skill-ek listája — gyors relevancia ellenőrzéshez a fájl teljes beolvasása nélkül |
 
 ---
 
@@ -59,15 +59,18 @@ Do NOT read the full file body yet.
 Based on the YAML header, decide if this file is worth reading in full.
 
 **IMPORTANT: Do NOT over-filter by `profession` or `title`.**
+
 - A mechanical engineering role (e.g. CobotX, Hauni) may contain **leadership, project management, mentoring, or cross-functional skills** relevant to a software role
 - A founder role (PCB2GTR) may contain **product ownership, business acumen, and end-to-end delivery skills**
 - The `leader` field explicitly marks where Viktor led teams — this is relevant regardless of profession
 
 **Skip entirely only if ALL of these apply:**
+
 - `type: "reference"` — these are raw LinkedIn exports. They contain duplicate, potentially outdated data. Skip unless you need to cross-reference a specific LinkedIn claim.
 - AND the task has no need for external reference data
 
 **Otherwise, read the file if ANY of these are true:**
+
 - `type: "work"` — always read, regardless of profession (leadership, soft skills, and cross-domain experience may be relevant)
 - `type: "community"` AND the task involves mentoring, teaching, or soft skills
 - `type: "education"` AND the task involves education, training, or certifications
@@ -99,6 +102,7 @@ PROFILE_DATA = {
 ### Step 6 — No match fallback
 
 If after filtering, NO files remain relevant (e.g., all are `type: "reference"` and the task needs factual work data):
+
 - ❌ Fall back to `cv-data.js` only
 - ✅ Note: "A profile fájlok között nincs releváns munkahelyi adat — csak cv-data.js alapján dolgozom."
 
@@ -109,6 +113,7 @@ If after filtering, NO files remain relevant (e.g., all are `type: "reference"` 
 **Only suggest content that can be traced to `cv-data.js` OR `profile/*.md`.**
 
 If a skill, achievement, metric, or claim is not present in either source:
+
 - ❌ Do NOT suggest adding it to the CV
 - ❌ Do NOT rephrase a bullet to imply it
 - ❌ Do NOT use it as evidence of fit for a JD requirement
@@ -119,13 +124,13 @@ If the profile files do not exist or are empty → fall back to `cv-data.js` onl
 
 ## What the Profile Can Help With
 
-| Task | How the profile helps |
-|---|---|
-| Keyword matching | Find hidden connections: JD mentions "monorepo" — profile details the PNPM migration work |
-| Bullet rephrasing | Use Viktor's own words from the profile instead of generic vocabulary |
-| Gap assessment | Distinguish true gaps from "not mentioned in CV but Viktor has experience" |
-| Metric grounding | Use real numbers Viktor documented (%, time saved, team size, release frequency) |
-| Context for summaries | Build summaries from deeper context, not just the short CV bullets |
+| Task                  | How the profile helps                                                                     |
+| --------------------- | ----------------------------------------------------------------------------------------- |
+| Keyword matching      | Find hidden connections: JD mentions "monorepo" — profile details the PNPM migration work |
+| Bullet rephrasing     | Use Viktor's own words from the profile instead of generic vocabulary                     |
+| Gap assessment        | Distinguish true gaps from "not mentioned in CV but Viktor has experience"                |
+| Metric grounding      | Use real numbers Viktor documented (%, time saved, team size, release frequency)          |
+| Context for summaries | Build summaries from deeper context, not just the short CV bullets                        |
 
 ---
 
@@ -135,6 +140,7 @@ After the YAML header, the file body uses free-form Markdown.
 Agents should extract information semantically — not parse rigid structure.
 
 Common patterns to recognize:
+
 - Section headers for each employer or skill
 - Bullet lists of details, metrics, decisions
 - Tables for skill depth or technology context

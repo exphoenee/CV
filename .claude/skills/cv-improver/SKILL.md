@@ -8,7 +8,7 @@ description: >
 version: 1.0.0
 author: Viktor Bozzay
 disable-model-invocation: false
-argument-hint: "<hr-review/report-file.md>"
+argument-hint: '<hr-review/report-file.md>'
 ---
 
 # cv-improver — Apply HR Review Recommendations to CV Data
@@ -41,20 +41,22 @@ Parse the report and build a structured list of all recommendations.
 
 For each section present, extract:
 
-| Report section | What to extract |
-|---|---|
-| `## Javasolt összefoglaló` | The blockquote text — new summary content |
-| `## Skill-ek ajánlott sorrendje` | The ordered list of skill names |
+| Report section                         | What to extract                                      |
+| -------------------------------------- | ---------------------------------------------------- |
+| `## Javasolt összefoglaló`             | The blockquote text — new summary content            |
+| `## Skill-ek ajánlott sorrendje`       | The ordered list of skill names                      |
 | `## Legfontosabb bullet-ok kiemelésre` | Which bullets to move up, with source company/period |
-| `## Átfogalmazási javaslatok` | Current text → suggested text pairs |
+| `## Átfogalmazási javaslatok`          | Current text → suggested text pairs                  |
 
 Build: `CHANGES = [{ type, description, old_value, new_value, source_field }]`
 
 If no actionable recommendations are found in the report:
+
 ```
 ℹ️ Ez a riport nem tartalmaz végrehajtható javaslatot.
 A CV nem igényel módosítást.
 ```
+
 and stop.
 
 ---
@@ -64,6 +66,7 @@ and stop.
 Read `scripts/cv-data.js` in full.
 
 For each change in `CHANGES`:
+
 - Locate the exact text in cv-data.js that corresponds to `old_value`
 - Verify it exists (exact or near-exact match)
 - If a change cannot be located: mark it as `UNLOCATABLE` — report it but do not skip silently
@@ -106,8 +109,9 @@ If the user confirms `n` or declines: stop without modifying any file.
 confirmed in Step 3, and before any change is written.
 
 Dispatch `cv-backup-agent` with:
+
 - `MODE = "manual"`
-- `VERSION_BASE = DATE_manual_pre-improver`  (`DATE` = today YYYY-MM-DD; add `-vN` if it already exists)
+- `VERSION_BASE = DATE_manual_pre-improver` (`DATE` = today YYYY-MM-DD; add `-vN` if it already exists)
 - `JD_TITLE = "Pre cv-improver backup"`
 - `JD_COMPANY = "—"`
 - `JD_SENIORITY = ""`, `JD_DOMAIN = ""`, `OVERALL_SCORE = ""`, `REQUIRED_SCORE = ""`, `PREFERRED_SCORE = ""`
@@ -119,6 +123,7 @@ If the agent returns `STATUS = "cancelled"` or fails:
 ❌ "A biztonsági mentés nem sikerült — nem módosítom a cv-data.js-t." and stop without applying anything.
 
 On success, note the backup folder and continue:
+
 ```
 💾 Biztonsági mentés kész: VERSION_FOLDER/
 ```
@@ -166,6 +171,7 @@ Agent: cv-translator-agent
 ```
 
 Pass:
+
 - `CHANGED_FIELDS` — only the summary/bullets that changed (skip skillOrder)
 - `JD_TITLE = ""`, `JD_COMPANY = ""` — no job context here; this is an hr-review-driven edit
 - The 11 locale files to update (`hu`, `de`, `fr`, `es`, `it`, `asg`, `dot`, `kl`, `qu`, `goa`, `ya`)

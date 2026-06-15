@@ -12,11 +12,11 @@ Copre i label di `scripts/locales/it.js` e qualsiasi contenuto CV in italiano.
 
 ## Tempi verbali
 
-| Contesto | Tempo | Esempio |
-|---|---|---|
-| Posizione attuale | Presente | «Guido un team di 2 persone» |
-| Posizioni precedenti | Passato prossimo | «Ho sviluppato…», «Ho migrato…» |
-| Sommario | Presente + passato prossimo | «Mi specializzo in… Ho guidato…» |
+| Contesto             | Tempo                       | Esempio                          |
+| -------------------- | --------------------------- | -------------------------------- |
+| Posizione attuale    | Presente                    | «Guido un team di 2 persone»     |
+| Posizioni precedenti | Passato prossimo            | «Ho sviluppato…», «Ho migrato…»  |
+| Sommario             | Presente + passato prossimo | «Mi specializzo in… Ho guidato…» |
 
 ## Terminologia tecnica
 

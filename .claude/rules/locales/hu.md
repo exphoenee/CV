@@ -12,16 +12,17 @@ A `scripts/cv-data.js` `content` felülírásait és a `scripts/locales/hu.js` U
 
 ## Igeidők
 
-| Kontextus | Igeidő | Példa |
-|---|---|---|
-| Jelenlegi munkahely bullet-ok | Jelen idő | „Vezetek egy 2 fős csapatot" |
-| Korábbi munkahelyek bullet-ok | Múlt idő | „Megvalósítottam", „Bevezettem" |
-| Munka leírások | Múlt idő | „Az architekturális modernizációt én vezettem." |
-| Összefoglaló | Jelen / jelen perfect | „Frontend architektúra területén specializálódtam…" |
+| Kontextus                     | Igeidő                | Példa                                               |
+| ----------------------------- | --------------------- | --------------------------------------------------- |
+| Jelenlegi munkahely bullet-ok | Jelen idő             | „Vezetek egy 2 fős csapatot"                        |
+| Korábbi munkahelyek bullet-ok | Múlt idő              | „Megvalósítottam", „Bevezettem"                     |
+| Munka leírások                | Múlt idő              | „Az architekturális modernizációt én vezettem."     |
+| Összefoglaló                  | Jelen / jelen perfect | „Frontend architektúra területén specializálódtam…" |
 
 ## Bullet-ok minősége
 
 Jó bullet struktúra: **ige + tárgy + eredmény/kontextus**
+
 - ✅ „A release-ciklust havontáról kéthetentére csökkentettem AI-alapú fejlesztési munkafolyamatokkal"
 - ❌ „Release-ciklus javítása" (nincs alany, nincs ige)
 

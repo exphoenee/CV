@@ -23,6 +23,7 @@ that are identical to the English source and were not modified.
 ## Step 0 — Receive inputs
 
 From the calling orchestrator, you receive:
+
 - `CHANGED_FIELDS` — structured object describing what changed:
   ```
   {
@@ -41,6 +42,7 @@ If `CHANGED_FIELDS` has no non-null entries and no bullets: report "Nincs fordí
 ## Step 1 — Load all locale files and rule files
 
 For each locale in `TARGET_LOCALES`:
+
 1. Read `scripts/locales/<lang>.js` in full → store as `LOCALE_FILE[lang]`
 2. Read `.claude/rules/locales/<lang>.md` → store as `RULES[lang]`
    If rule file missing: proceed with generic style guidance
@@ -71,6 +73,7 @@ Read 5–10 sentences of the existing content to calibrate your translation styl
 ### 2b — Load language rules
 
 From `RULES[lang]`, extract:
+
 - Register and tone requirements
 - Tense conventions
 - Key vocabulary table (for fictional languages: established terms)
@@ -104,6 +107,7 @@ should emphasize the equivalent "battle for the front realm" / "hunt for the vis
 using the established fictional vocabulary.
 
 **Specifically:**
+
 - Keep proper nouns unchanged: `TypeScript`, `React`, `Svelte`, `Node.js`
 - Adapt the narrative: new skills emphasized in English → those skill names appear earlier in fictional text
 - Maintain the same length and energy as the existing fictional content
@@ -130,6 +134,7 @@ Fields backed by `content: null` fall back to English automatically and need no 
 ### 2d — Write updated locale file
 
 For each changed field:
+
 - Locate the corresponding key in `LOCALE_FILE[lang]` → `content.summary`, `content.workExperience[id].description`, `content.workExperience[id].bullets[N]`
 - Replace ONLY the changed value — do not touch any other field
 - Match the exact formatting (indentation, quotes, commas) of the file
@@ -141,6 +146,7 @@ Write the updated file back to `scripts/locales/<lang>.js`.
 ## Step 3 — Validate
 
 After writing each file:
+
 - Verify the file still has valid JS syntax structure (labels object + content object both present)
 - Verify no keys were accidentally removed
 - **Length check (per `LENGTH_RULE`):** for every changed field, confirm

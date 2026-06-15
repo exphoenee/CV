@@ -12,11 +12,11 @@ Cubre los labels de `scripts/locales/es.js` y cualquier contenido de CV en espa�
 
 ## Tiempos verbales
 
-| Contexto | Tiempo | Ejemplo |
-|---|---|---|
-| Puesto actual | Presente | «Dirijo un equipo de 2 personas» |
-| Puestos anteriores | Pretérito indefinido | «Desarrollé…», «Migré…», «Introduje…» |
-| Resumen | Presente + pretérito perfecto | «Me especializo en… He liderado…» |
+| Contexto           | Tiempo                        | Ejemplo                               |
+| ------------------ | ----------------------------- | ------------------------------------- |
+| Puesto actual      | Presente                      | «Dirijo un equipo de 2 personas»      |
+| Puestos anteriores | Pretérito indefinido          | «Desarrollé…», «Migré…», «Introduje…» |
+| Resumen            | Presente + pretérito perfecto | «Me especializo en… He liderado…»     |
 
 ## Terminología técnica
 

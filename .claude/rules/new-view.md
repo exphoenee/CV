@@ -21,8 +21,12 @@ styles/cv-[name].css    # nézet-specifikus stílusok
     <link rel="stylesheet" href="./styles/cv-[name].css" />
     <link rel="stylesheet" href="./styles/lang-dropdown.css" />
     <link rel="stylesheet" href="./styles/cv-music-player.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <script type="module" src="./scripts/cv-[name].js"></script>
   </head>
   <body>
@@ -118,6 +122,7 @@ A két megoldás egyszerre **nem** szerepelhet egy oldalon.
 Lásd: [responsive.md](responsive.md)
 
 Töréspontok iránya: mobile-first. Minimális elvárás:
+
 - `max-width: 600px` — single-column, touch-friendly
 - `max-width: 900px` — tablet köztes állapot ha szükséges
 - `min-width: 901px` — desktop layout

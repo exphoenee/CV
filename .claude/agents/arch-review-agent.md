@@ -32,23 +32,28 @@ site must remain directly runnable without them.
 Read all of the following in full (regardless of FOCUS — context is needed for every dimension):
 
 ### 1a — HTML views
+
 Read: every `cv-*.html` file in the project root.
 Build: `VIEWS = [{ name, path, headLineCount, bodyLineCount }]`
 
 ### 1b — JavaScript entry points
+
 Read: all `scripts/cv-*.js` and `scripts/shared.js`, `scripts/config.js`, `scripts/locale.js`
 Build: `JS_FILES = [{ name, path, lineCount, imports: [], exports: [] }]`
 
 ### 1c — Stylesheets
+
 Read: all `styles/*.css` files.
 Build: `CSS_FILES = [{ name, path, lineCount, mediaQueryCount, varUsageCount }]`
 
 ### 1d — Locale files
+
 Read: `scripts/locales/en.js` in full.
 Read the first 60 lines of each other locale file (hu, de, fr, es, it, asg, dot, kl, qu, goa, ya).
 Build: `LOCALE_KEYS_EN = [list of all key names from en.js labels object]`
 
 ### 1e — Project rules and constraints
+
 Read: `CLAUDE.md`, `AGENTS.md`, `.claude/rules/shared-api.md`, `.claude/rules/localization.md`
 
 ---
@@ -62,23 +67,27 @@ Run analyses relevant to FOCUS (if `all`, run all five).
 ### A — Template Duplication (focus: templating)
 
 For each `cv-*.html`:
+
 - Extract all lines inside `<head>...</head>`
 - Extract all `<link rel="stylesheet">` references
 - Extract all `<script ...>` references
 - Extract the `<body>` boilerplate: `#cv-toaster-container`, any hard-coded `<div>` wrappers
 
 Compute:
+
 - `HEAD_IDENTICAL_LINES` — count lines that are byte-for-byte identical across all views
 - `HEAD_VARYING_LINES` — count lines that differ only by view name or title string
 - `SHARED_CSS_IMPORTS` — list of CSS files imported by every view
 - `SHARED_FONT_AWESOME` — is Font Awesome CDN link repeated in every file?
 
 For each `scripts/cv-*.js`:
+
 - Extract import statements
 - Identify the DOMContentLoaded initialization block
 - Note which modal/player injections are always identical
 
 Findings to report:
+
 - What % of each HTML `<head>` is shared boilerplate across all views?
 - How many import statements are duplicated verbatim across view JS files?
 - Could an HTML template + a simple `node generate.js` script reduce this duplication?
@@ -90,6 +99,7 @@ Findings to report:
 Read `scripts/cv-data.js` in full.
 
 Metrics to extract:
+
 - `TOP_LEVEL_KEYS` — list of all top-level keys in the `CV_DATA` object
 - `WORK_ENTRIES` — count of `workExperience[]` entries
 - `TOTAL_BULLETS` — total bullet strings across all jobs and projects
@@ -101,6 +111,7 @@ Metrics to extract:
 - `LOCALE_OVERRIDES_EN` — does any section have `content` locale overrides at the source?
 
 Assess:
+
 - **Schema clarity**: Does the data structure have a clear, documented shape? Are nested types obvious?
 - **Extension ease**: If a new top-level section were added (e.g. `publications`, `certifications`), what would be required?
 - **Redundancy**: Is any piece of data duplicated within the file?
@@ -114,6 +125,7 @@ Assess:
 Count total `labels` keys in `en.js`: `EN_KEY_COUNT`
 
 For each locale file, check:
+
 - Total keys present vs. `EN_KEY_COUNT` → `MISSING_KEY_COUNT`
 - Has `content` override? → `HAS_CONTENT`
 - Structural match to en.js?
@@ -121,6 +133,7 @@ For each locale file, check:
 Build `LOCALE_COVERAGE = [{ lang, missingKeys, hasContent }]`
 
 Assess:
+
 - **Sync burden**: Adding a new key requires editing 12 files. How often does this happen in practice? (check git log if possible)
 - **Content vs. labels split**: Is the purpose of each clearly communicated? Are all CV-text strings in `content` and all UI strings in `labels`?
 - **AI-safety**: Which fields are safe for the LLM to translate autonomously? Which need human review?
@@ -128,6 +141,7 @@ Assess:
 - **Fictional language maintenance**: How many fictional locale keys are there vs. real-language keys?
 
 Identify:
+
 - Any keys in `en.js` that seem redundant or could be merged
 - Any `content` overrides that are identical to the English source (wasted override)
 - Whether the `labels` key count is growing at a concerning rate
@@ -139,22 +153,26 @@ Identify:
 Read all CSS files in full.
 
 Extract from `styles/cv-index.css`:
+
 - All CSS custom property (`--`) definitions → `GLOBAL_VARS`
 - All `@media` breakpoint definitions
 - All `:root` and `[data-theme]` blocks
 
 For each `styles/cv-*.css`:
+
 - Count `--var` usage vs. hard-coded color/size values
 - Count `@media` breakpoints
 - Find any `--var` defined locally that overlaps with `GLOBAL_VARS`
 - Find repeated rule blocks (same selector + same properties in multiple files)
 
 Compute:
+
 - `VAR_COVERAGE_RATIO` — % of color and spacing values that use CSS variables vs. hard-coded
 - `DUPLICATE_MEDIA_QUERIES` — breakpoints redefined identically in multiple files
 - `SPECIFICITY_ISSUES` — chains of 3+ selectors that could be simplified
 
 Assess:
+
 - Is the theme system (light/dark) fully CSS-variable-driven, or are some colors hard-coded?
 - Are breakpoints consistent with the standard defined in `.claude/rules/responsive.md`?
 - Is `cv-index.css` doing too much (global + view-specific styles mixed)?
@@ -167,7 +185,9 @@ Assess:
 Assess the developer experience for the four most common tasks:
 
 #### E1 — Adding a new CV view
+
 Steps currently required:
+
 1. Create 3 files (HTML, JS, CSS)
 2. Add carousel card to index.html
 3. Add locale keys to 12 files
@@ -175,17 +195,21 @@ Steps currently required:
 Calculate: approximate number of manual edits per new view.
 
 #### E2 — Adding a new locale key
+
 Steps currently required:
+
 1. Add key to en.js
 2. Add key to 11 other locale files (manually or via /locale-check --fix)
 
 Calculate: approximate time burden. Is the locale-agent sufficient automation?
 
 #### E3 — Updating CV content (cv-data.js)
+
 Steps: edit cv-data.js → run /cv-improver or manually edit.
 How discoverable is the schema? Is there autocomplete support?
 
 #### E4 — Deploying
+
 Current: copy files to static host (Netlify, GitHub Pages, etc.).
 Is there a deploy script? CI/CD workflow?
 
@@ -205,16 +229,19 @@ Tooling opportunities to assess (only suggest what's clearly justified):
 For each analyzed dimension, assign based on findings:
 
 **Pain Level** (how much friction it causes TODAY):
+
 - 🔴 High — a regular task is tedious or error-prone
 - 🟡 Medium — some friction but manageable
 - 🟢 Low — no real problem
 
 **Improvement Potential** (how much better it could get):
+
 - ⬆️ High — clear win available
 - ➡️ Medium — marginal gain
 - ⬇️ Low — already near-optimal
 
 **Effort to fix**:
+
 - 💪 Large (multi-day refactor)
 - 🔧 Medium (few hours)
 - ⚡ Small (under an hour)
@@ -230,12 +257,14 @@ Collect all proposals found during analysis. Group into four tiers.
 ### Tier 1 — Gyors győzelmek (⚡ azonnali, kockázatmentes)
 
 Constraints:
+
 - No new files required (or trivial single-file change)
 - No breaking changes
 - No new dependencies
 - Benefit is immediate
 
 Examples (only include if analysis confirms the gap):
+
 - Add `@typedef` JSDoc types to `cv-data.js` for editor autocomplete
 - Extract repeated CSS media query breakpoints into a shared comment block / CSS layer
 - Add `max-length` attribute to form inputs in shared.js
@@ -244,11 +273,13 @@ Examples (only include if analysis confirms the gap):
 ### Tier 2 — Közepes javítások (🔧 1–3 nap, mérsékelt kockázat)
 
 Constraints:
+
 - Requires creating or refactoring 1–3 files
 - Site still runs without a build step after the change
 - Migration is safe and reversible
 
 Examples (only include if analysis confirms the gap):
+
 - `node scripts/check-locales.js` — locale key sync validation script
 - Restructure `cv-index.css` to split global theme vars from shared component styles
 - Extract a `templates/shared-head.html` reference document (not a generated file — a source of truth for manual copying)
@@ -260,7 +291,8 @@ For each: describe what breaks during migration, what gets better, and explicitl
 "A site a migráció után is fut build lépés nélkül."
 
 Examples (only include if analysis confirms the pain):
-- HTML template generator (Node.js script, optional): generates cv-*.html from a shared template. Production HTML files remain static.
+
+- HTML template generator (Node.js script, optional): generates cv-\*.html from a shared template. Production HTML files remain static.
 - Refactor locale system to support a `base.js` that all languages extend (reduces per-file boilerplate)
 - Restructure `cv-data.js` into multiple domain files (`cv-work.js`, `cv-skills.js`, `cv-identity.js`) with a barrel `cv-data.js` that re-exports
 
@@ -269,6 +301,7 @@ Examples (only include if analysis confirms the pain):
 Only include this section if analysis reveals a pain point that Tier 1–3 cannot address.
 
 Consider:
+
 - **Vite dev mode only** (not for production): `vite` as a dev server with HMR, but production build outputs plain HTML+CSS+JS. Adds a dev dependency but does not change the runtime.
 - **Eleventy (11ty)** as a static site generator: Templates → generates the HTML views. Production output is identical plain HTML. Eliminates the boilerplate duplication completely.
 - **TypeScript** with `tsc --noEmit` for type checking only: No output files; source remains `.js`. Editor integration only.
@@ -282,6 +315,7 @@ For each option: state the exact benefit, the migration cost, and the trade-off 
 ### 5a — Compute return values
 
 From the analysis, derive:
+
 - `PAIN_HIGH` — list of dimension names with 🔴 High pain
 - `PAIN_MED` — list of dimension names with 🟡 Medium pain
 - `PAIN_LOW` — list of dimension names with 🟢 Low pain

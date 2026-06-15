@@ -21,41 +21,41 @@ Sparse, guttural, hunter-centric. Honor through the hunt. Economy of words.
 
 ## Pronouns and Particles
 
-| Concept | Yautja form | Notes |
-|---|---|---|
-| I / life-record | `Yin` | also means "life/career" |
-| You / observer | implied, no explicit form | Yautja does not address directly often |
-| Hunt / work | `kainde` | lit. "prey-hunt" used for tasks |
-| See / look | `pauk` | |
-| Good / honor | `gkei'moun` | |
-| Warrior/developer | `Hk'nde` | hunter-craftsman |
-| Current | `di'tkae` | active/present status |
+| Concept           | Yautja form               | Notes                                  |
+| ----------------- | ------------------------- | -------------------------------------- |
+| I / life-record   | `Yin`                     | also means "life/career"               |
+| You / observer    | implied, no explicit form | Yautja does not address directly often |
+| Hunt / work       | `kainde`                  | lit. "prey-hunt" used for tasks        |
+| See / look        | `pauk`                    |                                        |
+| Good / honor      | `gkei'moun`               |                                        |
+| Warrior/developer | `Hk'nde`                  | hunter-craftsman                       |
+| Current           | `di'tkae`                 | active/present status                  |
 
 ## Core Vocabulary
 
-| English concept | Yautja | Notes |
-|---|---|---|
-| CV / life record | `Yin tekai` | "life record/marks" |
-| Frontend | `yeyinde` | lit. "visible hunt / facing" |
-| Backend | `nain-de` | lit. "deep hunt / hidden" |
-| Developer | `Hk'nde` | hunter-maker |
-| Tech Lead | `Kwei Hk'nde` | warrior-class hunter |
-| Work experience | `Chiva yin` | lit. "hunts of life" |
-| Education | `Del kehrite` | lit. "learning path" |
-| Language | `Sain-del lam` | |
-| Programming language | `Kainde lam` | hunt-language |
-| Hire me | `Aya Kwei na` / `Aya! Kwei ne!` | "yes, warrior-class, me!" |
-| Send | `Sain pauk` | "look and send" |
-| Close | `Gkei loka` | |
-| Open | `Di'tkae pauk` | lit. "active, look" |
-| Community | `Hk'nde kwei` | hunter-warriors together |
-| Meeting | `nau'gkon` | gathering of hunters |
-| Message | `Sain` | signal/sign |
-| View/look | `pauk-de` | |
-| Hobby projects | `Yin yommë` | life-hunts for pleasure |
-| Choose | `Yin-del. Kainde nain-de` | "life-path. Choose the hunt." |
-| Excellence / honor | `gkei'moun` | |
-| Current | `di'tkae` | |
+| English concept      | Yautja                          | Notes                         |
+| -------------------- | ------------------------------- | ----------------------------- |
+| CV / life record     | `Yin tekai`                     | "life record/marks"           |
+| Frontend             | `yeyinde`                       | lit. "visible hunt / facing"  |
+| Backend              | `nain-de`                       | lit. "deep hunt / hidden"     |
+| Developer            | `Hk'nde`                        | hunter-maker                  |
+| Tech Lead            | `Kwei Hk'nde`                   | warrior-class hunter          |
+| Work experience      | `Chiva yin`                     | lit. "hunts of life"          |
+| Education            | `Del kehrite`                   | lit. "learning path"          |
+| Language             | `Sain-del lam`                  |                               |
+| Programming language | `Kainde lam`                    | hunt-language                 |
+| Hire me              | `Aya Kwei na` / `Aya! Kwei ne!` | "yes, warrior-class, me!"     |
+| Send                 | `Sain pauk`                     | "look and send"               |
+| Close                | `Gkei loka`                     |                               |
+| Open                 | `Di'tkae pauk`                  | lit. "active, look"           |
+| Community            | `Hk'nde kwei`                   | hunter-warriors together      |
+| Meeting              | `nau'gkon`                      | gathering of hunters          |
+| Message              | `Sain`                          | signal/sign                   |
+| View/look            | `pauk-de`                       |                               |
+| Hobby projects       | `Yin yommë`                     | life-hunts for pleasure       |
+| Choose               | `Yin-del. Kainde nain-de`       | "life-path. Choose the hunt." |
+| Excellence / honor   | `gkei'moun`                     |                               |
+| Current              | `di'tkae`                       |                               |
 
 ## Style Rules
 

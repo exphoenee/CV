@@ -9,7 +9,7 @@ description: >
 version: 1.0.0
 author: Viktor Bozzay
 disable-model-invocation: false
-argument-hint: "[--fix]"
+argument-hint: '[--fix]'
 ---
 
 # security-review — Anti-Spam & Security Audit
@@ -26,12 +26,14 @@ are your primary defense — but they must be layered and not easily bypassed.**
 ## Step 1 — Inventory interactive features
 
 Read the following files in full:
+
 - `scripts/shared.js` — Hire Me modal and Booking modal implementation
 - `scripts/config.js` — feature flags, endpoint URLs, storage keys
 - `scripts/cv-music-player.js` (if exists) — music player
 - Any `cv-*.js` files that contain additional form or submission logic
 
 Identify ALL features that:
+
 - Send external HTTP requests (`fetch`, `XMLHttpRequest`)
 - Store user state in `localStorage` or `sessionStorage`
 - Accept user-provided text input
@@ -143,15 +145,16 @@ For each: note the URL, what data is sent, and whether it's user-controlled.
 
 Build a risk matrix for all findings:
 
-| Finding | Feature | Severity | Bypass difficulty | Recommended fix |
-|---|---|---|---|---|
-| No honeypot on hire form | Hire Me | HIGH | Easy (any bot) | Add honeypot field |
-| localStorage only rate limit | Hire Me + Booking | MEDIUM | Easy (clear storage) | Add server-side token |
-| No max message length | Hire Me | LOW | Trivial | Add maxlength attribute |
-| GAS endpoint accepts arbitrary slots | Booking | HIGH | Medium (requires inspection) | Validate slot server-side |
-| ... | ... | ... | ... | ... |
+| Finding                              | Feature           | Severity | Bypass difficulty            | Recommended fix           |
+| ------------------------------------ | ----------------- | -------- | ---------------------------- | ------------------------- |
+| No honeypot on hire form             | Hire Me           | HIGH     | Easy (any bot)               | Add honeypot field        |
+| localStorage only rate limit         | Hire Me + Booking | MEDIUM   | Easy (clear storage)         | Add server-side token     |
+| No max message length                | Hire Me           | LOW      | Trivial                      | Add maxlength attribute   |
+| GAS endpoint accepts arbitrary slots | Booking           | HIGH     | Medium (requires inspection) | Validate slot server-side |
+| ...                                  | ...               | ...      | ...                          | ...                       |
 
 Severity:
+
 - **CRITICAL**: Can be exploited by anyone, immediately, to flood inboxes or calendar
 - **HIGH**: Easy exploit with minor effort (incognito, DevTools)
 - **MEDIUM**: Requires moderate effort or technical knowledge
@@ -164,6 +167,7 @@ Severity:
 For each HIGH or CRITICAL finding, provide a concrete implementation suggestion.
 
 Since this is a **static site with no backend**, recommendations must be:
+
 - Client-side enhancements (layered rate limiting, honeypot, timing checks)
 - Third-party service configuration (Formspree spam settings, GAS server-side validation)
 - Free/no-backend solutions (Cloudflare Turnstile CAPTCHA, hCaptcha)
@@ -189,6 +193,7 @@ Since this is a **static site with no backend**, recommendations must be:
 ## Step 7 — Report
 
 Generate filename:
+
 ```
 DATE  = today YYYY-MM-DD
 TIME  = current time HHMM
@@ -201,6 +206,7 @@ Write report to `FILENAME` regardless of whether issues were found:
 
 ```markdown
 # Biztonsági Átvizsgálás — CV Site
+
 **Típus:** security-review
 **Dátum:** YYYY-MM-DD HH:MM
 **Összesítés:** N kritikus · N magas · N közepes · N alacsony
@@ -210,12 +216,12 @@ Write report to `FILENAME` regardless of whether issues were found:
 
 ## Összefoglalás
 
-| Súlyosság | Darab |
-|---|---|
-| 🔴 KRITIKUS | N |
-| 🟠 MAGAS | N |
-| 🟡 KÖZEPES | N |
-| 🟢 ALACSONY | N |
+| Súlyosság   | Darab |
+| ----------- | ----- |
+| 🔴 KRITIKUS | N     |
+| 🟠 MAGAS    | N     |
+| 🟡 KÖZEPES  | N     |
+| 🟢 ALACSONY | N     |
 
 ---
 
@@ -237,7 +243,7 @@ Write report to `FILENAME` regardless of whether issues were found:
 
 ---
 
-*Generálta: /security-review skill*
+_Generálta: /security-review skill_
 ```
 
 Display summary to user:
@@ -264,6 +270,7 @@ Ask for confirmation before each change.
 Apply confirmed changes one at a time.
 
 Do NOT auto-fix:
+
 - Anything requiring a new external service (CAPTCHA)
 - Google Apps Script server-side validation (not in this repo)
 - Formspree configuration (done via Formspree dashboard)

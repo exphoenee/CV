@@ -8,7 +8,7 @@ description: >
 version: 1.0.0
 author: Viktor Bozzay
 disable-model-invocation: false
-argument-hint: "[--focus=localization|templating|data|css|tooling|all]"
+argument-hint: '[--focus=localization|templating|data|css|tooling|all]'
 ---
 
 # arch-review — Architecture Review
@@ -21,10 +21,12 @@ Parse the argument, brief the user on what will be analyzed, then dispatch `arch
 ## Step 0 — Parse argument
 
 If argument contains `--focus=`:
+
 - Extract the value: `localization`, `templating`, `data`, `css`, `tooling`, or `all`
 - Set `FOCUS = <value>`
 
 If no argument or `--focus=all` or unrecognized value:
+
 - Set `FOCUS = all`
 
 ---
@@ -56,10 +58,12 @@ Agent: arch-review-agent
 ```
 
 Pass:
+
 - `FOCUS` — the selected focus area
 - Today's date and current time
 
 Wait for the agent to complete and collect:
+
 - `REPORT_FILE` — path to the written report
 - `PAIN_HIGH`, `PAIN_MED`, `PAIN_LOW` — lists of dimension names by severity
 - `PROPOSAL_COUNTS` — `{ tier1, tier2, tier3, tier4 }` — number of proposals per tier
