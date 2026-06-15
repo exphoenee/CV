@@ -5,6 +5,9 @@ description: >
   runs HR/ATS analysis, applies evidence-based improvements to cv-data.js, saves a
   versioned copy to cv-versions/ with a job-identifying comment at the top, then
   dispatches cv-translator-agent to regenerate all 11 locale content translations.
+  Finally saves the formatted job description into the version folder, stamps a
+  // @job-application: APP_ID marker into the live cv-data.js and all 12 locale files,
+  and records the application in cv-versions/applications.md.
   Every destructive step requires explicit user confirmation.
 ---
 
@@ -335,13 +338,72 @@ is not "en" or "hu", it also writes a third cover letter (e.g. cover-letter-de.m
 
 ---
 
+## Step 8c — Register the application (JD save · marker · log)
+
+This step records the application so the live files and a single log always show which job the
+current CV is tuned for. See `.claude/rules/version-snapshot-format.md` for all three formats.
+
+**If the backup in Step 8 returned `STATUS = "cancelled"` (no VERSION_FOLDER):** skip this whole
+step and note in the final report that the JD was not saved and no log row was written (the user
+declined the snapshot). Otherwise:
+
+### 8c-1 — Resolve APP_ID
+
+`APP_ID` = `VERSION_FOLDER` basename (strip the `cv-versions/` prefix), e.g.
+`2026-06-15_acme-corp_senior-frontend-engineer`.
+
+### 8c-2 — Write the formatted job description
+
+Write `VERSION_FOLDER/job-description.md` using the **job-description.md structure** from
+`.claude/rules/version-snapshot-format.md`. Fill the YAML frontmatter from JD_TITLE, JD_COMPANY,
+JD_SENIORITY, JD_DOMAIN, DATE/TIME, OVERALL_SCORE, APP_ID. Build the body sections from
+`JD_REQUIRED`, `JD_PREFERRED`, `JD_RESPONSIBILITIES`, and blockquote the original `JD` verbatim under
+"Eredeti állásleírás". Reformat for readability only — never add or drop requirements.
+
+### 8c-3 — Stamp the live-file marker (via ledger)
+
+Run the ledger helper — it stamps the two-line marker block on `scripts/cv-data.js` and the 12
+`<lang>.js` content files (it excludes the `-page.js` label files and handles idempotency itself):
+
+```bash
+python .claude/scripts/cv-ledger.py mark --set-application \
+  --app-id "APP_ID" --title "JD_TITLE" --company "JD_COMPANY" \
+  --operation job-apply --actor job-apply-orchestrator
+```
+
+If the command exits non-zero, surface the error in the final report (do not silently continue).
+
+### 8c-4 — Append the audit-log row (via ledger)
+
+```bash
+python .claude/scripts/cv-ledger.py log --category mutation --operation job-apply \
+  --actor job-apply-orchestrator --app-id "APP_ID" \
+  --what "<one-line CHANGE_SUMMARY + N translations>" --artifact "cv-versions/APP_ID/"
+```
+
+### 8c-5 — Update the application index
+
+Open `cv-versions/applications.md` (create it with the header from the rule file if missing).
+Insert a row **directly under the header row** (newest first) using the **applications.md** format:
+- Dátum = DATE · Pozíció/Cég/Szint = JD_TITLE/JD_COMPANY/JD_SENIORITY · ATS = OVERALL_SCORE%
+- APP_ID (mappa) = relative link to `APP_ID/` · JD = link to `APP_ID/job-description.md`
+- Fordítások = count of locales updated by cv-translator-agent (e.g. `11/11`)
+- Mot. levél = `igen` if any cover letter was written (Step 8b), else `nem`
+
+If a row with the same `APP_ID` already exists (a `-vN` overwrite), update it in place instead of duplicating.
+
+---
+
 ## Step 9 — Final report
 
 Display:
 - `✅ Állásjelentkezési optimalizálás kész`
 - Position: JD_TITLE @ JD_COMPANY, OVERALL_SCORE%
+- APP_ID (azonosító + snapshot mappa neve)
 - Changes: cv-data.js modification count + locale count
-- VERSION_FOLDER contents: cv-data.js · locale-content.json · (cover-letter-en.md · cover-letter-hu.md if written)
+- VERSION_FOLDER contents: cv-data.js · locale-content.json · job-description.md · (cover-letter-en.md · cover-letter-hu.md if written)
+- Marker: kétsoros `// @job-application:` + `// @cv-last-change:` blokk a live cv-data.js + 12 content locale fájlon (cv-ledger.py)
+- Napló: új sor a `cv-versions/applications.md` indexben ÉS a `cv-versions/history.md` audit naplóban
 - Translation quality per language from TRANSLATION_QUALITY: real languages show ✅/⚠️ with note; fictional languages always ⚠️ (expected)
 - Missing keywords that could not be added (MISSING list)
 - Suggestions: `/language-reviewer hu`, `/language-reviewer kl`, `/security-review`, `git add/commit`
@@ -362,6 +424,10 @@ Display:
 - ✅ VERSION_BASE = DATE_COMPANY_SLUG_TITLE_SLUG — passed to cv-backup-agent; final VERSION_FOLDER determined by the agent
 - ✅ Each version is a folder: VERSION_FOLDER/cv-data.js + VERSION_FOLDER/locale-content.json (created by cv-backup-agent)
 - ✅ Dispatch cv-backup-agent AFTER translation (Step 8) — snapshot contains the optimized + translated state
+- ✅ Step 8c: save the formatted JD to VERSION_FOLDER/job-description.md; stamp the marker block via `cv-ledger.py mark --set-application` (cv-data.js + 12 `<lang>.js` content files only — NOT `-page.js`); append a `mutation` row via `cv-ledger.py log`; and add/update the row in cv-versions/applications.md
+- ✅ APP_ID = final VERSION_FOLDER basename — the one id linking JD, live files, snapshot, and the log
+- ✅ The job-description.md must reformat the given JD only — never invent or omit requirements
+- ✅ If the backup was cancelled (no VERSION_FOLDER), skip Step 8c and say so — do not stamp a marker pointing to a missing snapshot
 - ✅ CHANGE_PLAN may be empty if score is good — always report before stopping
 - ✅ Fictional language translations are always marked ⚠️ — this is expected, not an error
 - ✅ All user-facing output in Hungarian; code, field names, and versioned file content in English

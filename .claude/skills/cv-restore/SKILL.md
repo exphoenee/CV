@@ -58,8 +58,9 @@ Visszaállítandó fájlok:
   scripts/locales/goa.js      ← content mező frissül
   scripts/locales/ya.js       ← content mező frissül
 
-⚠️  A jelenlegi scripts/cv-data.js tartalma elvész (nem menthető vissza automatikusan).
-    Javasolt: /cv-backup most — mielőtt visszaállítasz.
+⚠️  A jelenlegi scripts/cv-data.js tartalma felülíródik.
+    A megerősítés után automatikusan készül egy pre-restore biztonsági mentés
+    (cv-versions/DATE_manual_pre-restore/), mielőtt bármit felülírnánk.
 
 Folytatod? (y / n)
 ```
@@ -88,17 +89,33 @@ For each language key in the JSON (hu, de, fr, es, it, asg, dot, kl, qu, goa, ya
    - If the JSON value is an object → write `content: ` followed by the JSON-serialized object (2-space indent, matching the file's existing style)
 5. Write the updated file back.
 
+## Step 4b — Traceability marker + audit log (automatic)
+
+The restored `cv-data.js` comes from a snapshot with its header stripped, so it carries no marker.
+After restoring, the script (`cv-restore.py`) stamps the live-file marker block to the **restored**
+version's identity and logs the event — via `.claude/scripts/cv-ledger.py`:
+
+- `@job-application` is set to `FOLDER_NAME` (the restored APP_ID), title/company taken from the
+  snapshot header's `Optimized for:` line; `@cv-last-change` records the restore.
+- A `mutation` row (`operation: cv-restore`, `what: restored from FOLDER_NAME`) is appended to
+  `cv-versions/history.md`.
+
+This is automatic — no manual step. If marker stamping fails, the restore still succeeded; the
+script reports it as a warning.
+
 ## Step 5 — Report
 
 ```
 ✅ Visszaállítás kész
 
+Pre-restore mentés: cv-versions/DATE_manual_pre-restore/
 Forrás: cv-versions/FOLDER_NAME/
 Visszaállítva:
   ✓ scripts/cv-data.js
   ✓ scripts/locales/hu.js  (content: [null | restored])
   ✓ scripts/locales/de.js
   ... (all 11)
+🧾 Marker a visszaállított verzióra állítva + sor a history.md-ben
 
 Javaslat: Ellenőrizd a változásokat git diff-fel, majd indítsd el a szervert.
 ```
@@ -106,8 +123,9 @@ Javaslat: Ellenőrizd a változásokat git diff-fel, majd indítsd el a szervert
 ## Hard Constraints
 
 - ❌ Never restore without explicit `y` confirmation from the user
-- ❌ Never modify any file in `cv-versions/` — only read from there
-- ✅ Always offer `/cv-backup` suggestion before overwriting (shown in Step 2 warning)
+- ❌ Never modify any file in `cv-versions/` — only read from there (a NEW pre-restore backup folder is created, never an edit of an existing one)
+- ✅ Always create the automatic pre-restore backup before overwriting (aborts the restore if the backup fails); only skip with `--no-backup`
+- ✅ After restoring, stamp the marker to the restored APP_ID and append a `mutation` row to history.md (Step 4b) — done automatically by cv-restore.py
 - ✅ Strip the header comment exactly — the restored cv-data.js must be valid JS
 - ✅ If a locale JSON value is `null`, write `content: null` (not `content: {}`)
 - ✅ All user-facing output in Hungarian

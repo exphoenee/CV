@@ -1,7 +1,7 @@
 export const HU = {
   content: {
     summary:
-      "Frontend Tech Leadként 5+ év frontend és full-stack tapasztalattal rendelkezem, frontend architektúrára, rendszertervezésre és nagyszabású legacy rendszerek modernizációjára specializálódtam TypeScript, Svelte, React és Node.js technológiákkal. Vállalati rendszerek teljes újraírását és migrációját vezettem modern technológiai stackekre, javítva az alapplatformok karbantarthatóságát és skálázhatóságát. AI-asszisztált fejlesztési munkafolyamatokat vezettem be, és automatizált minőségi kapukkal ellátott CI pipeline-okat építettem, jelentősen növelve a szállítási sebességet, a mérnöki konzisztenciát és a kiadási megbízhatóságot. Mérnököket vezetek és mentorálok, kiemelt hangsúlyt fektetve az evidencián alapuló refaktorálásra, a CI-minőségi szabványokra és a fenntartható, rendszerszintű frontend alapokra.",
+      "Frontend Tech Leadként 5+ év frontend és full-stack tapasztalattal frontend architektúrára, rendszertervezésre és nagyszabású legacy rendszerek modernizációjára specializálódtam TypeScript, Svelte, React és Node.js technológiákkal. Vállalati rendszerek teljes újraírását és migrációját vezettem modern stackekre, javítva az alapplatformok karbantarthatóságát és skálázhatóságát. AI-asszisztált munkafolyamatokat vezettem be, és automatizált minőségi kapukkal ellátott CI pipeline-okat építettem. Mérnököket vezetek és mentorálok, az evidencián alapuló refaktorálásra és a fenntartható, rendszerszintű frontend alapokra fókuszálva.",
     workExperience: [
       {
         id: "aegex",

@@ -26,6 +26,20 @@ grounded in what already exists in `scripts/cv-data.js`.**
 
 ---
 
+## Step 0 — Identify the reviewed CV version
+
+Read the current marker so this review is traceable to an exact CV version:
+
+```bash
+python .claude/scripts/cv-ledger.py current   # → "APP_ID — label" or "—"
+```
+
+Store `CV_APP_ID` (leading token or `—`) and `CV_VERSION_LABEL` (full line, or
+`"alap CV (nincs aktív pályázati marker)"`). Put `CV_VERSION_LABEL` in the report header (Step 6b)
+and the inline outputs (Step 7). Log the review at the end (Step 8).
+
+---
+
 ## Step 1 — Detect mode and load inputs
 
 ### 1a — Check for argument
@@ -249,6 +263,7 @@ Create `review/` if it does not exist.
 # HR Review — [JD_TITLE][ @ JD_COMPANY if known]
 **Típus:** hr-review
 **Dátum:** YYYY-MM-DD HH:MM
+**CV verzió:** CV_VERSION_LABEL
 **Mód:** [JD-alapú / Általános]
 [If JD mode:] **Egyezési arány:** REQUIRED_SCORE% kötelező · PREFERRED_SCORE% előnyben részesített · OVERALL_SCORE% összesített
 [If JD mode:] **Pozíció:** JD_TITLE @ JD_COMPANY
@@ -368,6 +383,22 @@ Legfontosabb teendők:
 
 Riport mentve: review/FILENAME
 ```
+
+---
+
+## Step 8 — Log the review (audit trail)
+
+Append a `review` row so the audit log records that this CV version was HR-reviewed (both in the
+clean and the report branch):
+
+```bash
+python .claude/scripts/cv-ledger.py log --category=review --operation=hr-review \
+  --actor=hr-review --app-id="CV_APP_ID" \
+  --what="<JD/General · OVERALL_SCORE% · actionable: igen/nem>" \
+  --artifact="<review/FILENAME if written, else —>"
+```
+
+Logging failure is non-fatal — the review result still stands.
 
 ---
 

@@ -1,7 +1,7 @@
 export const IT = {
   content: {
     summary:
-      "Frontend Tech Lead con oltre 5 anni di esperienza frontend e full-stack, specializzato in architettura frontend, progettazione di sistemi e modernizzazione su larga scala di sistemi legacy con TypeScript, Svelte, React e Node.js. Ho guidato riscritture complete e migrazioni di sistemi aziendali verso stack moderni, migliorando la manutenibilità e la scalabilità delle piattaforme principali. Ho introdotto flussi di lavoro di sviluppo assistiti dall'IA e costruito pipeline CI con quality gate automatizzati, aumentando significativamente la velocità di consegna, la coerenza tecnica e l'affidabilità dei release. Guido e mentoro ingegneri, concentrandomi sul refactoring basato su evidenze, sugli standard di qualità CI e su fondamenta frontend sostenibili a livello di sistema.",
+      "Frontend Tech Lead con oltre 5 anni di esperienza frontend e full-stack, specializzato in architettura frontend, progettazione di sistemi e modernizzazione su larga scala di sistemi legacy con TypeScript, Svelte, React e Node.js. Ho guidato riscritture complete e migrazioni di sistemi aziendali verso stack moderni, migliorando la manutenibilità e la scalabilità delle piattaforme. Ho introdotto flussi di lavoro assistiti dall'IA e costruito pipeline CI con quality gate automatizzati. Guido e mentoro ingegneri, concentrandomi sul refactoring basato su evidenze e su fondamenta frontend sostenibili a livello di sistema.",
 
     workExperience: [
       {

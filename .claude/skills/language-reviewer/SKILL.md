@@ -22,6 +22,19 @@ CV strategy. Never suggest adding or changing factual content.
 
 ---
 
+## Step 0 — Identify the reviewed CV version
+
+Read the current marker so the review is traceable to an exact CV version:
+
+```bash
+python .claude/scripts/cv-ledger.py current   # → "APP_ID — label" or "—"
+```
+
+Store as `CV_APP_ID` (the leading token, or `—`) and `CV_VERSION_LABEL` (the full line).
+Show `CV_VERSION_LABEL` in the output header (Step 6). You will also log this review (Step 7).
+
+---
+
 ## Step 1 — Determine target languages
 
 ### If argument is a specific language code (e.g. `en`, `hu`, `kl`):
@@ -145,6 +158,7 @@ At least one finding in checks A–G.
 
 ```
 📋 Nyelvi lektorálás: [lang] ([language name])
+CV verzió: CV_VERSION_LABEL
 
 ✅ Rendben:
   • Regiszter: konzisztens
@@ -185,6 +199,21 @@ At least one finding in checks A–G.
 ```
 
 No file is written — output is inline only.
+
+---
+
+## Step 7 — Log the review (audit trail)
+
+Append a `review` row so the audit log shows this CV version was language-reviewed:
+
+```bash
+python .claude/scripts/cv-ledger.py log --category=review --operation="language-reviewer" \
+  --actor=language-reviewer --app-id="CV_APP_ID" \
+  --what="<TARGET_LANGS scope · total errors/warnings>"
+```
+
+(e.g. `--what="all: 1 hiba, 2 figyelmeztetés"` or `--what="hu: rendben"`.)
+Logging failure is non-fatal — the review output still stands.
 
 ---
 

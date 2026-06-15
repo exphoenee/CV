@@ -282,8 +282,78 @@ python .claude/skills/cv-restore/scripts/cv-restore.py <folder> --yes          #
 **Biztonsági lépések:**
 1. Megmutatja a snapshot metaadatait (pozíció, dátum, ATS%, módosítások)
 2. Felsorolja a felülírandó fájlokat
-3. Figyelmeztet: javasolja `/cv-backup` futtatását a visszaállítás előtt
-4. Csak `y` jóváhagyás után módosít bármit
+3. Csak `y` jóváhagyás után módosít bármit
+4. A jóváhagyás után **automatikusan** készít egy `pre-restore` biztonsági mentést a jelenlegi
+   állapotról (`cv-versions/DATE_manual_pre-restore/`), mielőtt bármit felülírna — ha ez nem
+   sikerül, megszakítja a visszaállítást (`--no-backup` kapcsolja ki)
+5. A visszaállítás után a markert a visszaállított verzióra állítja és sort ír a `history.md`-be
+
+---
+
+## CV verzió-követhetőség (traceability)
+
+Cél: bármikor megválaszolható legyen, **mikor melyik CV-verzióval mi történt**. Az egész CV-állapot
+egyetlen azonosítóval (`APP_ID` = a snapshot mappa neve, `DATE_company_title`) követhető, három,
+egymást kiegészítő rétegen át. Mindhárom réteget egyetlen helper tartja szinkronban:
+[`.claude/scripts/cv-ledger.py`](../.claude/scripts/cv-ledger.py).
+
+```mermaid
+graph TD
+    subgraph Ops["CV-t érintő műveletek"]
+        JA["/job-apply"]
+        CI["/cv-improver"]
+        CVR["/cv-restore"]
+        CB["/cv-backup"]
+        HR["/hr-review"]
+        LRV["/language-reviewer"]
+        CRV["/cv-review"]
+    end
+
+    LEDGER["cv-ledger.py<br/>(mark · log · current)"]
+
+    subgraph Trace["Követhetőségi rétegek"]
+        MARK["Live marker blokk<br/>cv-data.js + 12 &lt;lang&gt;.js<br/>@job-application + @cv-last-change"]
+        HIST["cv-versions/history.md<br/>append-only audit napló"]
+        APPS["cv-versions/applications.md<br/>pályázat-index + job-description.md"]
+    end
+
+    JA -->|"mark --set-application · log mutation"| LEDGER
+    CI -->|"mark (csak @cv-last-change) · log mutation"| LEDGER
+    CVR -->|"mark --set-application · log mutation"| LEDGER
+    CB -->|"log backup"| LEDGER
+    HR -->|"current · log review"| LEDGER
+    LRV -->|"current · log review"| LEDGER
+    CRV -->|"current · log review"| LEDGER
+
+    LEDGER --> MARK
+    LEDGER --> HIST
+    JA --> APPS
+```
+
+**1. Live marker blokk** — kétsoros comment a `scripts/cv-data.js` és a 12 CV-tartalom locale
+(`scripts/locales/<lang>.js`, **nem** a `-page.js` felirat-fájlok) tetején:
+
+```js
+// @job-application: APP_ID — Title @ Company (date) · snapshot: cv-versions/APP_ID/
+// @cv-last-change: YYYY-MM-DD HHMM — művelet (aktor) · see cv-versions/history.md
+```
+
+- `@job-application` — melyik verzióra van hangolva a live CV. `/job-apply` állítja be, `/cv-restore`
+  a visszaállított verzióra írja át. A `/cv-improver` **nem** változtatja (csak a tartalom drift-el).
+- `@cv-last-change` — a legutóbbi bármilyen módosítás. `/job-apply`, `/cv-improver`, `/cv-restore` frissíti.
+
+**2. `cv-versions/history.md`** — append-only audit napló. **Minden** CV-esemény egy sor:
+`mutation` (job-apply, cv-improver, cv-restore), `backup` (snapshot készült) és `review`
+(hr-review, language-reviewer, cv-review — read-only elemzés is). Oszlopok: Időpont · Kategória ·
+Művelet · Aktor · APP_ID · Mi történt · Artefaktum.
+
+**3. `cv-versions/applications.md`** — pályázat-index (egy sor / APP_ID: állás → CV-verzió +
+fordítások + motivációs levél). A formázott állásleírás a `cv-versions/APP_ID/job-description.md`-ben.
+
+**Vezérelv:** egyetlen skill/agent sem írja kézzel a markert vagy a naplót — mindig a
+`cv-ledger.py`-t hívják (`mark` / `log` / `current`). A read-only review-k a `current`-tel olvassák
+ki a vizsgált verziót, és a riportjuk fejlécébe teszik. Formátumok:
+[`.claude/rules/version-snapshot-format.md`](../.claude/rules/version-snapshot-format.md).
 
 ---
 
@@ -417,7 +487,7 @@ Egyéb szabályfájlok:
 | Fájl | Tartalom |
 |---|---|
 | `.claude/rules/jd-draft-template.md` | A `tmp/jd-draft.md` pontos sablonja és kezelési logikája |
-| `.claude/rules/version-snapshot-format.md` | Verzió mappa névformátum, cv-data.js fejléc blokk, locale-content.json struktúra |
+| `.claude/rules/version-snapshot-format.md` | Verzió mappa névformátum, cv-data.js fejléc blokk, locale-content.json, job-description.md, history.md, applications.md és a marker blokk formátuma |
 | `.claude/rules/arch-review-report-format.md` | Az arch-review riport teljes markdown sablona |
 
 ---
@@ -429,8 +499,9 @@ mappájában található. Ezek közvetlenül futtathatók a projekt gyökerébő
 
 | Script | Skill | Funkció |
 |--------|-------|---------|
-| `.claude/skills/cv-backup/scripts/cv-backup.py` | `/cv-backup` | CV snapshot készítése |
-| `.claude/skills/cv-restore/scripts/cv-restore.py` | `/cv-restore` | CV visszaállítása backupból |
+| `.claude/scripts/cv-ledger.py` | *(megosztott)* | Verzió-követhetőség: marker blokk (`mark`), audit napló (`log`), aktuális verzió (`current`) — lásd a *CV verzió-követhetőség* szekciót |
+| `.claude/skills/cv-backup/scripts/cv-backup.py` | `/cv-backup` | CV snapshot készítése (automatikusan `backup` sort ír a history.md-be a cv-ledger-en át) |
+| `.claude/skills/cv-restore/scripts/cv-restore.py` | `/cv-restore` | CV visszaállítása backupból (auto pre-restore mentés + marker + history napló) |
 | `.claude/skills/locale-check/scripts/locale-check.py` | `/locale-check` | Locale kulcsok ellenőrzése (JSON kimenettel is) |
 
 ### locale-check.py — parancssori használat

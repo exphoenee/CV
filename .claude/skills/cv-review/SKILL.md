@@ -17,6 +17,22 @@ Covers locale completeness, aria labels, security, config hygiene, and new view 
 
 ---
 
+## Step 0 — Identify the reviewed CV version
+
+Read the current marker via the ledger helper so the review is traceable to an exact CV version:
+
+```bash
+python .claude/scripts/cv-ledger.py current   # → "APP_ID — JD_TITLE @ JD_COMPANY (DATE)" or "—"
+```
+
+- `CV_APP_ID` = the leading token of the output (or `—`)
+- `CV_APP_LABEL` = the full line, or `"alap CV (nincs aktív pályázati marker)"` if the output is `—`
+
+Carry `CV_APP_ID` / `CV_APP_LABEL` into the Step 7 report header and the Step 8 log so the review is
+traceable to an exact CV version.
+
+---
+
 ## Step 1 — Read the diff
 
 Run:
@@ -138,6 +154,7 @@ Display findings in Hungarian:
 
 ```
 📋 CV Review — [dátum]
+CV verzió: CV_APP_ID — CV_APP_LABEL
 
 ❌ Hibák (N):
   • [fájl:sor] [leírás]
@@ -160,6 +177,20 @@ Display findings in Hungarian:
 
 If `--fix` was passed and there are fixable warnings (hardcoded aria strings, missing aria-hidden):
 Apply the fixes directly and report what was changed.
+
+---
+
+## Step 8 — Log the review (audit trail)
+
+Append a `review` row so the audit log records that this CV version was reviewed:
+
+```bash
+python .claude/scripts/cv-ledger.py log --category=review --operation=cv-review \
+  --actor=cv-review --app-id="CV_APP_ID" --what="<N hiba · M figyelmeztetés>"
+```
+
+If `--fix` applied changes, use `--category=mutation` and note the fixes in `--what` instead
+(a `--fix` run modifies files). Logging failure is non-fatal.
 
 ---
 

@@ -1127,7 +1127,7 @@ body {
 }
 
 .roleContacts {
-  width: 33.333333%;
+  width: 200px;
 }
 
 .role {
@@ -1158,7 +1158,7 @@ body {
 }
 
 .intro {
-  width: calc(66% - 16px);
+  width: calc(690px - 200px - 16px);
   font-size: var(--font-size-0875rem);
   line-height: 1.25rem;
 }

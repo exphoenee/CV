@@ -4,7 +4,9 @@ description: >
   Translates changed CV content fields (summary, job descriptions, bullets) into all
   11 non-English locale files. Loads language-specific style rules from
   .claude/rules/locales/<lang>.md before translating each language. Follows the
-  established vocabulary and register of each locale's existing content field.
+  established vocabulary and register of each locale's existing content field, and
+  enforces .claude/rules/translation-length.md so no translated field exceeds its
+  English source character count.
   Called by job-apply-orchestrator after cv-data.js changes are applied.
 ---
 
@@ -44,6 +46,12 @@ For each locale in `TARGET_LOCALES`:
    If rule file missing: proceed with generic style guidance
 
 Also read `scripts/cv-data.js` to have the full English context available.
+
+Read `.claude/rules/translation-length.md` → store as `LENGTH_RULE`. This is a HARD
+constraint: every translated `content` field must not exceed the character count of its
+English source field. For each field in `CHANGED_FIELDS`, record the English source length:
+`EN_LEN[field] = CHANGED_FIELDS.<field>.new.length` (JS String `.length`). These are the
+per-field budgets you must stay within.
 
 ---
 
@@ -101,6 +109,24 @@ using the established fictional vocabulary.
 - Maintain the same length and energy as the existing fictional content
 - Do NOT simply copy the old fictional text — update it to reflect the new English emphasis
 
+### 2c-len — Enforce the length budget (per `LENGTH_RULE`)
+
+After drafting each translated field, measure its character count (`.length`) and compare
+against the English source budget `EN_LEN[field]`:
+
+```
+translated.length  <=  EN_LEN[field]
+```
+
+If a draft exceeds its budget, **do not truncate mid-sentence** — condense per
+`.claude/rules/translation-length.md`: shorten redundant lists (three items → two), drop
+filler words, and avoid restating a concept already mentioned. Keep the key tech keywords
+(TypeScript, React, Svelte, Node.js, CI, …) and the field's core meaning. Re-measure and
+repeat until within budget. Apply this to every changed field: `summary`,
+`workExperience[].description`, each changed `bullets[]` item.
+
+Fields backed by `content: null` fall back to English automatically and need no action.
+
 ### 2d — Write updated locale file
 
 For each changed field:
@@ -117,6 +143,9 @@ Write the updated file back to `scripts/locales/<lang>.js`.
 After writing each file:
 - Verify the file still has valid JS syntax structure (labels object + content object both present)
 - Verify no keys were accidentally removed
+- **Length check (per `LENGTH_RULE`):** for every changed field, confirm
+  `translated.length <= EN_LEN[field]`. If any field is over budget, condense it and rewrite
+  the file before continuing. Report the final per-field lengths in Step 4.
 
 If any file fails validation: report the error and restore the original content.
 
@@ -156,6 +185,7 @@ Javasolt ellenőrzés:
 - ❌ Never change `labels` fields — only `content` is in scope
 - ❌ Never add new `content` subfields that don't exist in the current locale file
 - ❌ Never remove existing `content` fields — only update values that correspond to CHANGED_FIELDS
+- ❌ Never let a translated field exceed its English source length — enforce `.claude/rules/translation-length.md` (translated.length ≤ EN_LEN[field]); condense, never truncate
 - ✅ For fictional languages: adapt meaning using established vocabulary, not literal translation
 - ✅ Always read the existing content for style calibration before translating
 - ✅ Match the indentation and formatting of each file exactly

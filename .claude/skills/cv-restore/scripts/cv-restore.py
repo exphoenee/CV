@@ -19,6 +19,7 @@ Exit codes:
 import json
 import os
 import re
+import subprocess
 import sys
 
 # ── Encoding-safe output ───────────────────────────────────────────────
@@ -60,6 +61,22 @@ LOCALE_PATHS = {
     "ya":  _project_path("scripts", "locales", "ya.js"),
 }
 LOCALE_LANGS = sorted(LOCALE_PATHS.keys())
+
+
+CV_BACKUP_SCRIPT = _project_path(".claude", "skills", "cv-backup", "scripts", "cv-backup.py")
+CV_LEDGER_SCRIPT = _project_path(".claude", "scripts", "cv-ledger.py")
+
+
+def _run_script(script_path, extra_args):
+    """Run a sibling project python script. Returns (exit_code, combined_output)."""
+    try:
+        proc = subprocess.run(
+            [sys.executable, script_path] + extra_args,
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+        )
+        return proc.returncode, (proc.stdout or "") + (proc.stderr or "")
+    except Exception as exc:  # noqa: BLE001
+        return 1, str(exc)
 
 
 def read_file(path):
@@ -239,6 +256,8 @@ def main():
     parser.add_argument("folder", nargs="?", help="Backup folder name")
     parser.add_argument("--list", action="store_true", help="List available backups")
     parser.add_argument("--yes", action="store_true", help="Skip confirmation")
+    parser.add_argument("--no-backup", action="store_true",
+                        help="Skip the automatic pre-restore safety backup")
     args = parser.parse_args()
 
     if args.list:
@@ -290,6 +309,16 @@ def main():
             _out(f"\n{FAIL} Visszaallitas megszakitva.")
             sys.exit(1)
 
+    # ── Automatic safety backup of the CURRENT state before overwriting ──
+    if not args.no_backup:
+        _out(f"\n   Biztonsagi mentes a jelenlegi allapotrol (pre-restore)...")
+        rc, out = _run_script(CV_BACKUP_SCRIPT, ["--label", "pre-restore", "--yes"])
+        if rc != 0:
+            _out(f"   {FAIL} A pre-restore backup nem sikerult — megszakitom a visszaallitast.")
+            _out(out.strip())
+            sys.exit(1)
+        _out(f"   {OK} pre-restore backup kesz")
+
     # Restore cv-data.js
     _out(f"\n   Visszaallitas folyamatban...")
     if restore_cv_data(cv_back, CV_DATA_PATH):
@@ -315,6 +344,35 @@ def main():
         write_file(lpath, result)
         status = f"{OK}" if new_val else f"{OK} (null)"
         _out(f"   {status} scripts/locales/{lang}.js")
+
+    # ── Traceability: stamp the live-file marker to the restored version + log ──
+    def _clean(val):
+        val = (val or "").strip()
+        return "—" if val in ("", "--") else val
+
+    opt = meta.get("optimized_for", "--")
+    r_title_raw, _sep, r_company_raw = opt.partition(" @ ")
+    r_title = _clean(r_title_raw)
+    r_company = _clean(r_company_raw)
+
+    # Use --opt=value form so values starting with "-" (or the "--" placeholder)
+    # are never mistaken for argparse option terminators.
+    rc, out = _run_script(CV_LEDGER_SCRIPT, [
+        "mark", "--set-application", f"--app-id={folder}",
+        f"--title={r_title}", f"--company={r_company}",
+        "--operation=cv-restore", "--actor=cv-restore",
+    ])
+    if rc != 0:
+        _out(f"   {WARN} Marker frissites sikertelen (a visszaallitas megtortent):")
+        _out(out.strip())
+    else:
+        _out(f"   {OK} marker frissitve a visszaallitott verziora")
+
+    _run_script(CV_LEDGER_SCRIPT, [
+        "log", "--category=mutation", "--operation=cv-restore",
+        "--actor=cv-restore", f"--app-id={folder}",
+        f"--what=restored from {folder}", f"--artifact=cv-versions/{folder}/",
+    ])
 
     _out(f"\n{OK} Visszaallitas kesz")
     _out(f"\n   Forras: cv-versions/{folder}/")

@@ -1,7 +1,7 @@
 export const DE = {
   content: {
     summary:
-      "Frontend Tech Lead mit über 5 Jahren Erfahrung in Frontend und Full-Stack, spezialisiert auf Frontend-Architektur, Systemdesign und die Modernisierung großer Legacy-Systeme mit TypeScript, Svelte, React und Node.js. Ich habe vollständige Rewrites und Migrationen von Unternehmenssystemen auf moderne Stacks geleitet und die Wartbarkeit und Skalierbarkeit der Kernplattformen verbessert. Ich habe KI-gestützte Entwicklungs-Workflows eingeführt und CI-Pipelines mit automatisierten Quality Gates aufgebaut, was Liefergeschwindigkeit, Entwicklerkonsistenz und Release-Zuverlässigkeit deutlich steigerte. Ich leite und mentoriere Ingenieure und lege starken Fokus auf evidenzbasiertes Refactoring, CI-Qualitätsstandards und nachhaltige, systemweite Frontend-Grundlagen.",
+      "Frontend Tech Lead mit über 5 Jahren Erfahrung in Frontend und Full-Stack, spezialisiert auf Frontend-Architektur, Systemdesign und die Modernisierung großer Legacy-Systeme mit TypeScript, Svelte, React und Node.js. Ich habe vollständige Rewrites und Migrationen auf moderne Stacks geleitet und so Wartbarkeit und Skalierbarkeit der Kernplattformen verbessert. Ich habe KI-gestützte Workflows eingeführt und CI-Pipelines mit automatisierten Quality Gates aufgebaut, was Liefergeschwindigkeit und Release-Zuverlässigkeit deutlich steigerte. Ich leite und mentoriere Ingenieure mit Fokus auf evidenzbasiertes Refactoring und nachhaltige, systemweite Frontend-Grundlagen.",
 
     workExperience: [
       {

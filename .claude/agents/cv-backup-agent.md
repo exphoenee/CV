@@ -95,7 +95,22 @@ Write `VERSION_FOLDER/locale-content.json` using the structure from `.claude/rul
 
 ---
 
-## Step 5 — Return to caller
+## Step 5 — Audit log
+
+The snapshot is an event in the CV's history. The backup script `cv-backup.py` appends a
+`backup` row to `cv-versions/history.md` automatically (via `.claude/scripts/cv-ledger.py`).
+If you performed the backup by writing files manually instead of running the script, append the
+row yourself:
+
+```bash
+python .claude/scripts/cv-ledger.py log --category backup --operation cv-backup \
+  --actor cv-backup --app-id "VERSION_FOLDER_NAME" --what "CHANGE_SUMMARY" \
+  --artifact "cv-versions/VERSION_FOLDER_NAME/"
+```
+
+A backup does **not** change the live files, so it never touches the marker — only logs.
+
+## Step 6 — Return to caller
 
 Return:
 

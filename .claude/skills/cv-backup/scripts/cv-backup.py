@@ -31,6 +31,7 @@ Exit codes:
 import json
 import os
 import re
+import subprocess
 import sys
 from datetime import datetime
 
@@ -58,6 +59,7 @@ def _project_path(*parts):
 
 CV_DATA_PATH    = _project_path("scripts", "cv-data.js")
 VERSIONS_DIR    = _project_path("cv-versions")
+CV_LEDGER_SCRIPT = _project_path(".claude", "scripts", "cv-ledger.py")
 
 LOCALE_FILES = {
     "hu":  _project_path("scripts", "locales", "hu.js"),
@@ -374,8 +376,21 @@ def main():
     write_file(json_path, json.dumps(locale_content, ensure_ascii=False, indent=2))
     _out(f"   {OK} locale-content.json")
 
-    # Summary
+    # Audit log — record the snapshot in cv-versions/history.md
     folder_name = os.path.basename(vf)
+    op = "job-apply backup" if is_job else "cv-backup"
+    try:
+        subprocess.run(
+            [sys.executable, CV_LEDGER_SCRIPT, "log",
+             "--category=backup", f"--operation={op}", "--actor=cv-backup",
+             f"--app-id={folder_name}", f"--what={summary}",
+             f"--artifact=cv-versions/{folder_name}/"],
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+        )
+    except Exception:  # noqa: BLE001 — logging must never break a successful backup
+        _out(f"   {WARN} history.md naplozas kihagyva (cv-ledger.py nem futott)")
+
+    # Summary
     _out(f"\n{OK} Backup kesz")
     _out(f"\n   Mappa: {vf}/")
     _out(f"     - cv-data.js")
