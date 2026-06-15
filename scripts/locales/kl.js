@@ -2,10 +2,9 @@ export const KL = {
   content: {
     summary:
       "HoS naQHom Sa' jIH — 5+ DIS HoS naQHom ma Hoch-naQHom Qu'mey vIta'. lurDech patmey vIchel TypeScript, Svelte, React, Node.js. jIvumpu' DaH. AI qoq vIazh ma CI HeH vIchenmoH — HeH cendmey nargh — Qu' ray' Qap, ngeHlu' batlh. SuvwI'pu' vISa' ma vIHaDmoH. De' legh patmey vIvum. HoS naQHomlIj boQmeH jIvum. Qapla'!",
-
     workExperience: [
       {
-        id: "aegex",
+        id: 'aegex',
         description:
           "SafeSy ma FACTS — lurDech patmey vIchel vIvumpu' Hoch, pat chu' vIchenmoHpu'. AI qoq ma CI HeH vIchenmoHpu' — De' legh patmey vIvum batlh. Qu' ray' Qap, ngeHlu' batlh. Qapla'!",
         bullets: [
@@ -18,7 +17,7 @@ export const KL = {
         ],
         projects: [
           {
-            name: "SafeSy",
+            name: 'SafeSy',
             subtitle: "qo' pat DaH Qu'",
             bullets: [
               "qo' Hoch HoD ma ghom vIchenmoH — SuvwI' Hoch, DaH mIwmey ma De' legh",
@@ -27,19 +26,19 @@ export const KL = {
             ],
           },
           {
-            name: "FACTS",
+            name: 'FACTS',
             subtitle: "qoq De' ma HeH De' qo'",
             bullets: [
               "Qu' Qap vIchav: jar → cha' jar (poQlu': wa' jar) — Claude AI qoq",
               "CI HeH vIchenmoH — De' legh pagh tat, qo' Qu' Qap ray'",
-              "pat vIchenmoH PNPM monorepo — wavmey FACTS/Driver Hoch",
+              'pat vIchenmoH PNPM monorepo — wavmey FACTS/Driver Hoch',
               "CLI qoq wa' vIchenmoH — monorepo mIwmey ma SuvwI' chenmoHwI'",
             ],
           },
         ],
       },
       {
-        id: "telekom",
+        id: 'telekom',
         description:
           "Agile qo' Qu'mey vIvum — AI qoq HoS naQHom, De' leghmoH DaH, HoS naQHom-qo' naQHom pat. HeH chu' wavmey vIchenmoH. AI De' mIwmey vIazh. Qapla'.",
         bullets: [
@@ -50,7 +49,7 @@ export const KL = {
         ],
       },
       {
-        id: "scolia",
+        id: 'scolia',
         description:
           "SuvwI' HoS naQHom vIvum Scolia — De' leghmoH DaH mI' chelwI' qoj argh Qu'. Qapla':",
         bullets: [
@@ -59,7 +58,7 @@ export const KL = {
         ],
       },
       {
-        id: "cubicfox",
+        id: 'cubicfox',
         description:
           "Qu' batlh HoS naQHom ghItlhmey vIchenmoH qorDu'mey Sep Hoch, Agile qo'. pat batlh, HeH HoS naQHom, jabbI'ID qorDu' — Hoch batlh.",
         bullets: [
@@ -70,7 +69,7 @@ export const KL = {
         ],
       },
       {
-        id: "cobotx",
+        id: 'cobotx',
         description:
           "qoqmoH HoS ma mIwmey Qu'mey vIta' — SuvwI' De', PLC patmey, qoq ghItlhmey. pat qo', HoD ghom, Qu' — qo' Qob taH.",
         bullets: [
@@ -82,7 +81,7 @@ export const KL = {
         ],
       },
       {
-        id: "webforsol",
+        id: 'webforsol',
         description:
           "Hoch ghItlhmey HoS naQHom-qo' naQHom vIchenmoH wa'logh qorDu'mey Sep Hoch. pat qo', taHmoHlaH ghItlhmey, Qu' Hoch ngeHlu' — batlh.",
         bullets: [
@@ -94,15 +93,13 @@ export const KL = {
         ],
       },
     ],
-
     community:
       "Pro bono HaDmoH ghItlhmey ma Hol vIchenmoH HoD Mátyás Király, Pécs (cha'Ioq 2026, DaH taH). Qu' Hoch vIchenmoH wa'logh. SuvwI' ghom vIHaDmoH: wa' ghom Qap \"Hack and Code\" 2026 (Radnóti SZKI), ma wa' ma wej 22nd Neumann János ghItlhmey Qu'. Qapla'!",
-
     identity: {
       languages: [
-        {name: "Magyar", level: "Hol wa'DIch jIH", comment: null},
-        {name: "Deutsch", level: "B2 — Dajmo'?", comment: null},
-        {name: "English", level: "B2 — Qapla'", comment: null},
+        { name: 'Magyar', level: "Hol wa'DIch jIH", comment: null },
+        { name: 'Deutsch', level: "B2 — Dajmo'?", comment: null },
+        { name: 'English', level: "B2 — Qapla'", comment: null },
       ],
     },
   },
