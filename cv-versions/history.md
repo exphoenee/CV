@@ -9,4 +9,3 @@ Formátum: `.claude/rules/version-snapshot-format.md`. Generálja: `.claude/scri
 | Időpont | Kategória | Művelet | Aktor | CV-verzió (APP_ID) | Mi történt | Artefaktum |
 |---|---|---|---|---|---|---|
 | 2026-06-13 2150 | backup | cv-backup | cv-backup | 2026-06-13_manual | Manual snapshot | cv-versions/2026-06-13_manual/ |
-| 2026-06-15 0945 | backup | cv-backup | cv-backup | 2026-06-15_manual | Manual snapshot | cv-versions/2026-06-15_manual/ |
