@@ -1,0 +1,15 @@
+node_modules/
+cv-versions/
+cv-game.html
+review/
+tmp/
+.parcel-cache/
+dist/
+*.png
+*.wav
+*.ttf
+*.otf
+*.jpg
+*.jfif
+letter/
+debug/
