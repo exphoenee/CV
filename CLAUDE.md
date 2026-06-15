@@ -140,18 +140,19 @@ Claude Code skills and agents are built into this project to automate developmen
 
 **Available slash commands:**
 
-| Skill | Purpose | Review file |
-|-------|---------|-------------|
-| `/locale-check [--fix]` | Check all 12 locale files for missing keys vs. en.js; `--fix` dispatches locale-agent | — |
-| `/cv-review` | Locale, aria, security, config, and new-view audit before committing | — |
-| `/hr-review [JD]` | CV quality check or job-description-targeted ATS optimization → `review/` | `review/YYYY-MM-DD_HHMM_hr-review-SLUG.md` |
-| `/cv-improver <report>` | Applies hr-review report changes to `cv-data.js`, after confirmation | — |
-| `/language-reviewer [lang\|all]` | Language quality audit against `.claude/rules/locales/<lang>.md` rules | — |
-| `/security-review [--fix]` | Spam/flood audit: Hire Me form, booking → always writes a report to `review/` | `review/YYYY-MM-DD_HHMM_security-review.md` |
-| `/cv-backup [label]` | Snapshot current `cv-data.js` + 11 locale content fields → `cv-versions/DATE_[label]/` | — |
-| `/cv-restore <folder>` | Restore `cv-data.js` and 11 locale content fields from a `cv-versions/` backup folder | — |
-| `/cover-letter [JD]` | Write English + Hungarian cover letters grounded in `profile/*.md` → `letters/DATE_company_title/` | — |
-| `/job-apply [JD]` | Full pipeline: ATS analysis → cv-data.js optimization → 11 locale translations → versioned backup → JD save + log → optional cover letter. No argument: interactive `tmp/jd-draft.md` template. | — |
+| Skill                            | Purpose                                                                                                                                                                                         | Review file                                   |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| `/locale-check [--fix]`          | Check all 12 locale files for missing keys vs. en.js; `--fix` dispatches locale-agent                                                                                                           | —                                             |
+| `/cv-review`                     | Locale, aria, security, config, and new-view audit before committing                                                                                                                            | —                                             |
+| `/hr-review [JD]`                | CV quality check or job-description-targeted ATS optimization → `review/`                                                                                                                       | `review/YYYY-MM-DD_HHMM_hr-review-SLUG.md`    |
+| `/cv-improver <report>`          | Applies hr-review report changes to `cv-data.js`, after confirmation                                                                                                                            | —                                             |
+| `/language-reviewer [lang\|all]` | Language quality audit against `.claude/rules/locales/<lang>.md` rules                                                                                                                          | —                                             |
+| `/security-review [--fix]`       | Spam/flood audit: Hire Me form, booking → always writes a report to `review/`                                                                                                                   | `review/YYYY-MM-DD_HHMM_security-review.md`   |
+| `/cv-backup [label]`             | Snapshot current `cv-data.js` + 11 locale content fields → `cv-versions/DATE_[label]/`                                                                                                          | —                                             |
+| `/cv-restore <folder>`           | Restore `cv-data.js` and 11 locale content fields from a `cv-versions/` backup folder                                                                                                           | —                                             |
+| `/cover-letter [JD]`             | Write English + Hungarian cover letters grounded in `profile/*.md` → `letters/DATE_company_title/`                                                                                              | —                                             |
+| `/job-apply [JD]`                | Full pipeline: ATS analysis → cv-data.js optimization → 11 locale translations → versioned backup → JD save + log → optional cover letter. No argument: interactive `tmp/jd-draft.md` template. | —                                             |
+| `/cv-generator [--dry-run]`      | Generates `cv-data.js` from `profile/*.md` files. Parses YAML frontmatter + markdown body to produce a complete CV_DATA object. Never invents content.                                           | —                                             |
 | `/arch-review [--focus=...]` | Architecture analysis: template duplication, data structure, locale, CSS, tooling → `review/` | `review/YYYY-MM-DD_HHMM_arch-review-FOCUS.md` |
 
 **Review files:** Every skill that produces a report saves it to `./review/`, in `YYYY-MM-DD_HHMM_<type>[-focus].md` format.
