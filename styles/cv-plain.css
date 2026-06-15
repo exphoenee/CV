@@ -2646,11 +2646,8 @@ body {
 
 /* Nightvision flex fix: nv-word span-ek ne szóródjanak szét space-between miatt */
 [data-theme='nightvision'] .itemDetailsWithDate {
-  justify-content: flex-start !important;
+  justify-content: flex-start;
   gap: 0 0.25em;
-}
-[data-theme='nightvision'] .itemDetailsWithDate .itemDate {
-  margin-left: auto;
 }
 
 /* ============================================================
