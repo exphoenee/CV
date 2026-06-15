@@ -8,79 +8,67 @@ tartalom-karbantartási és álláspályázati munkafolyamatokat automatizáljá
 
 ## Architektúra áttekintés
 
+A rendszer három rétegből áll: a felhasználó **skill-eket** (slash commandok) hív; egyes skill-ek **ügynököket** indítanak (dispatch); a skill-ek és ügynökök közös **adatforrásokon** dolgoznak. Az alábbi áttekintés az orchestrációt mutatja — a részletes, kulcsonkénti adatfolyamokat a lenti dedikált diagramok és táblázatok írják le.
+
 ```mermaid
 graph TD
-    User["👤 Felhasználó"]
+    User(["👤 Felhasználó"])
 
-    subgraph Skills["Skill-ek (slash commandok)"]
+    subgraph Skills["1 · Skill-ek (slash commandok)"]
+        direction LR
         LC["/locale-check"]
         CR["/cv-review"]
-        HR["/hr-review"]
-        CI["/cv-improver"]
         LR["/language-reviewer"]
         SR["/security-review"]
+        AR["/arch-review"]
+        HR["/hr-review"]
+        CI["/cv-improver"]
+        CL["/cover-letter"]
+        JA["/job-apply"]
         CB["/cv-backup"]
         CVR["/cv-restore"]
-        JA["/job-apply"]
-        AR["/arch-review"]
     end
 
-    subgraph Agents["Ügynökök"]
-        LA["locale-agent"]
-        VCA["view-check-agent"]
+    subgraph Agents["2 · Ügynökök (dispatch)"]
+        direction LR
         JAO["job-apply-orchestrator"]
         CTA["cv-translator-agent"]
         CBA["cv-backup-agent"]
+        CLA["cover-letter-agent"]
+        LA["locale-agent"]
+        VCA["view-check-agent"]
         ARA["arch-review-agent"]
     end
 
-    subgraph Data["Adatforrások"]
-        CVD["scripts/cv-data.js"]
-        LOC["scripts/locales/*.js (×12)"]
-        RULES[".claude/rules/locales/*.md (×12)"]
+    subgraph Data["3 · Adatforrások"]
+        direction LR
+        CVD["cv-data.js"]
+        LOC["locales/*.js ×12"]
+        RULES["rules/locales/*.md ×12"]
         REV["review/*.md"]
-        VER["cv-versions/DATE_ceg_pozicio/"]
+        VER["cv-versions/…"]
+        LET["letters/…"]
         TMP["tmp/jd-draft.md"]
     end
 
-    User -->|"/locale-check [--fix]"| LC
-    User -->|"/cv-review [--fix]"| CR
-    User -->|"/hr-review [JD]"| HR
-    User -->|"/cv-improver <report>"| CI
-    User -->|"/language-reviewer [lang]"| LR
-    User -->|"/security-review [--fix]"| SR
-    User -->|"/cv-backup [label]"| CB
-    User -->|"/cv-restore <folder>"| CVR
-    User -->|"/job-apply [JD]"| JA
-    User -->|"/arch-review [--focus]"| AR
+    User ==> Skills
 
-    LC -->|"--fix"| LA
-    CR -->|"new view detected"| VCA
-    HR -->|"issues found"| REV
-    SR -->|"always"| REV
-    AR -->|dispatches| ARA
-    ARA -->|writes report| REV
-    CI -->|reads| REV
-    CI -->|modifies| CVD
-    LR -->|reads| RULES
-    LR -->|reads| LOC
-    LR -->|reads| CVD
-    CB -->|dispatches| CBA
-    CVR -->|reads snapshot| VER
-    CVR -->|restores| CVD
-    CVR -->|restores content| LOC
-    JA -->|dispatches| JAO
+    %% Skill → ügynök dispatch (a szaggatott él feltételes)
+    LC -. --fix .-> LA
+    CR -. új nézet .-> VCA
+    AR --> ARA
+    CB --> CBA
+    CL --> CLA
+    JA --> JAO
 
-    JAO -->|"no-arg: creates"| TMP
-    JAO -->|reads/writes| CVD
-    JAO -->|dispatches| CTA
-    JAO -->|dispatches| CBA
-    CTA -->|reads| RULES
-    CTA -->|updates content fields| LOC
-    CBA -->|writes snapshot| VER
+    %% Orchestrator → al-ügynökök
+    JAO --> CTA
+    JAO --> CBA
+    JAO -. opcionális .-> CLA
 
-    LA -->|adds keys| LOC
-    VCA -->|reads| CVD
+    %% Réteg → adat (összevont hozzáférés)
+    Skills ==> Data
+    Agents ==> Data
 ```
 
 ---
@@ -127,6 +115,7 @@ sequenceDiagram
     participant JAO as job-apply-orchestrator
     participant CTA as cv-translator-agent
     participant CBA as cv-backup-agent
+    participant CLA as cover-letter-agent
 
     User->>JA: /job-apply [állásleírás.txt | inline szöveg]
     JA->>JAO: dispatch(JD)
@@ -181,7 +170,15 @@ sequenceDiagram
             CBA->>CBA: locale-content.json snapshot írása (11 lang)
             CBA->>JAO: VERSION_FOLDER, STATUS
 
-            JAO->>User: ✅ Pipeline kész (összefoglaló + fordítási minőség + backup mappa)
+            Note over JAO: Step 8 — Motivációs levél (opcionális)
+            JAO->>User: Szeretnél motivációs levelet is? (y/n)
+            alt y
+                JAO->>CLA: dispatch(JD metadata, PROFILE_DATA, OUTPUT_FOLDER=VERSION_FOLDER)
+                CLA->>CLA: cover-letter-en.md + cover-letter-hu.md (+ JD-nyelv, ha eltér)
+                CLA->>JAO: COVER_LETTER_*, STATUS
+            end
+
+            JAO->>User: ✅ Pipeline kész (összefoglaló + fordítási minőség + backup mappa + levelek)
         else Elutasítva
             JAO->>User: Pipeline leállítva
         end
@@ -382,7 +379,9 @@ graph LR
     JA["/job-apply"] -->|dispatch| JAO["job-apply-orchestrator"]
     JAO -->|dispatch| CTA["cv-translator-agent"]
     JAO -->|dispatch| CBA["cv-backup-agent"]
+    JAO -->|"dispatch (optional)"| CLA["cover-letter-agent"]
     CB["/cv-backup"] -->|dispatch| CBA
+    CL["/cover-letter"] -->|dispatch| CLA
     LC["/locale-check --fix"] -->|dispatch| LA["locale-agent"]
     CR["/cv-review"] -->|dispatch| VCA["view-check-agent"]
     AR["/arch-review"] -->|dispatch| ARA["arch-review-agent"]
@@ -411,7 +410,7 @@ A `.claude/rules/locales/` mappában mind a 12 locale-hoz van szabályfájl:
 | `goa.md` | Goa'uld stílus, `Kree!` parancsok, apostróf szavak |
 | `ya.md` | Yautja stílus, gutturális hangok, szótár |
 
-A `language-reviewer`, `cv-translator-agent` és `cv-backup-agent` ezeket töltik be futás közben.
+A `language-reviewer`, `cv-translator-agent` és `cover-letter-agent` ezeket töltik be futás közben.
 
 Egyéb szabályfájlok:
 

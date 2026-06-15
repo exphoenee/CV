@@ -259,7 +259,7 @@ export const ENTITY_SPAWNS = {
 };
 ```
 
-A `buildWorld()` `main.js:245` szerint:
+A `buildWorld()` (`main.js:293`) szerint:
 - `decorations` → `DECOR_CLASSES` map alapján példányosítva (`solid` esetén `obstacles[]`, különben `decorations[]`)
 - `npcs` → típus szerinti switch (Chicken, Cow, Pig, Sheep) → `npcs[]`
 - `enemies` → mind `Skeleton` → `enemies[]`

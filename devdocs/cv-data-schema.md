@@ -9,6 +9,8 @@ CV_DATA
  ├── summary            (string, kötelező)
  ├── workExperience[]   (array, opcionális)
  ├── education          (object, opcionális)
+ ├── skillGroups        (object, opcionális)
+ ├── skillNote          (object, opcionális)
  ├── programmingLanguages[] (array, opcionális)
  ├── community          (string, opcionális)
  └── hobbyProjects[]    (array, opcionális)
@@ -111,8 +113,8 @@ Egy munkahely tömb. Minden elem:
 | `teamSize` | `number` | opcionális |
 | `description` | `string` | igen |
 | `bullets` | `string[] \| object` | opcionális — lehet sima tömb vagy kategorizált objektum (pl. `{ hardSkills: [...], softSkills: [...] }`) |
-| `projects` | `Project[]` | opcionális — ha van, `bullets` helyett projektenként bontva |
-| `skills` | `string[]` | opcionális |
+| `projects` | `Project[]` | opcionális — ha van, `bullets` mellett projektenként bontva |
+| `skills` | `Skill[]` | opcionális — `{ name, icon }` objektumok tömbje |
 | `refs` | `Ref[]` | opcionális |
 | `hasDecor` | `boolean` | opcionális — plain nézet dekorációkhoz |
 | `game` | `GamePosition \| null` | opcionális — ha van, a játékban is megjelenik házként |
@@ -124,6 +126,13 @@ Egy munkahely tömb. Minden elem:
 | `name` | `string` | igen |
 | `subtitle` | `string` | igen |
 | `bullets` | `string[]` | igen |
+
+### Skill
+
+| Mező | Típus | Kötelező? |
+|---|---|---|
+| `name` | `string` | igen — készség neve, pl. `"TypeScript"` |
+| `icon` | `string` | igen — fájlnév az `assets/images/`-ből, pl. `"typescript.svg"` |
 
 ### Ref
 
@@ -139,8 +148,8 @@ Egy munkahely tömb. Minden elem:
 | `x` | `number` | igen — világkoordináta pixelben |
 | `y` | `number` | igen — világkoordináta pixelben |
 | `tech` | `string` | igen — rövid tech stack szöveg |
-| `description` | `string` | igen — rövid cím |
-| `highlights` | `string[]` | igen — játékbeli dialogue bullet pontok |
+| `description` | `string` | igen — rövid cím (a játékban a station fejléce) |
+| `highlights` | `string[]` | opcionális — extra játékbeli dialogue bullet pontok (a jelenlegi adatban nincs használva; ha hiányzik, csak a `bullets`/`projects` jelenik meg) |
 
 Példa:
 ```js
@@ -161,14 +170,17 @@ Példa:
       bullets: [ "Cross-role platform...", "Designed and built..." ]
     }
   ],
-  skills: ["Svelte", "React", "ExpressJS"],
+  skills: [
+    { name: "Svelte", icon: "svelte.svg" },
+    { name: "React", icon: "react.svg" },
+    { name: "ExpressJS", icon: "ExpressJS.svg" }
+  ],
   refs: [ { url: "https://facts.aegex.com", label: "facts.aegex.com" } ],
   hasDecor: true,
   game: {
     x: 420, y: 340,
-    tech: "Svelte · React · TypeScript",
-    description: "Aegex Technologies (Current)",
-    highlights: [ "SafeSy: Designed...", "FACTS: CI pipeline..." ]
+    tech: "Svelte · React · TypeScript · Node.js",
+    description: "Aegex Technologies (Current)"
   }
 }
 ```
@@ -188,6 +200,52 @@ Példa:
 |---|---|---|
 | `title` | `string` | igen |
 | `years` | `string` | igen |
+
+---
+
+## skillGroups
+
+Készségek kategóriákba sorolva. Kulcsozott objektum — minden kulcs egy csoport (pl. `primary`, `backend`, `testing`, `tooling`, `ai`, `robotics`). A csoportnevek szabadon bővíthetők.
+
+| Mező (csoportonként) | Típus | Kötelező? |
+|---|---|---|
+| `list` | `string[]` | igen — a csoportba tartozó készségek nevei |
+| `comment` | `string \| null` | opcionális — opcionális megjegyzés a csoporthoz |
+
+Példa:
+```js
+skillGroups: {
+  primary: {
+    list: ["TypeScript", "JavaScript", "Svelte", "React", "Node.js"],
+    comment: null,
+  },
+  testing: {
+    list: ["Jest", "Vitest", "Playwright"],
+    comment: "yes, all three",
+  },
+}
+```
+
+---
+
+## skillNote
+
+Egyetlen, kiemelt „easter egg" jellegű készség-megjegyzés.
+
+| Mező | Típus | Kötelező? |
+|---|---|---|
+| `key` | `string` | igen |
+| `value` | `string` | igen |
+| `comment` | `string \| null` | opcionális |
+
+Példa:
+```js
+skillNote: {
+  key: "willRefactorYourEntireCodebaseIf",
+  value: "evidence justifies it",
+  comment: "(often)",
+}
+```
 
 ---
 

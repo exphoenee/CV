@@ -12,6 +12,7 @@ Többnézetes, interaktív önéletrajz böngészőben. Egy központi adatforrá
 - [Játékmotor](#j%C3%A1t%C3%A9kmotor)
 - [Kapcsolatfelvétel](#kapcsolatfelv%C3%A9tel)
 - [Naptári foglalás](#napt%C3%A1ri-foglal%C3%A1s)
+- [AI munkafolyamat](#ai-munkafolyamat)
 - [Telepítés és futtatás](#telep%C3%ADt%C3%A9s-%C3%A9s-futtat%C3%A1s)
 
 ## Nézetek
@@ -57,6 +58,8 @@ Minden nézet saját CSS-t és egyedi JavaScript belépési pontot használ (`ty
 - `skills[]` (technológiai készségek kategóriákba sorolva)
 - `community[]` (közösségi tevékenységek)
 - `hobbyProjects[]` (mellékprojektek)
+
+A teljes mezőszintű séma (típusok, kötelező/opcionális mezők, példák) a [devdocs/cv-data-schema.md](devdocs/cv-data-schema.md) dokumentumban található.
 
 ### Megjelenítő réteg
 
@@ -198,7 +201,10 @@ CV/
 │       │       └── locale-check.py  # Locale kulcs ellenőrzés
 │       └── ... (további skill definíciók)
 │
-└── devdocs/         # Tervezési dokumentumok
+└── devdocs/                 # Tervezési dokumentumok
+    ├── ai-workflow.md       # AI skill/agent munkafolyamatok
+    ├── cv-data-schema.md    # CV_DATA mezőszintű séma
+    └── game-dev-notes.md    # Játékmotor fejlesztői jegyzetek
 ```
 
 ## Lokalizáció
@@ -236,6 +242,8 @@ A `scripts/game/` alatt található RPG motor Canvas 2D-re épül:
 - **Combat** — Skeleton ellenségek, támadás (space), életerő rendszer
 - **Pause menü** — Játék szüneteltetése zenei vezérlőkkel
 - **Mobilos támogatás** — NippleJS joystick, reszponzív UI, tájolásfigyelés
+
+A motor részletes fejlesztői dokumentációja (új station/entitás hozzáadása, BMP → tilemap pipeline, collision rendszer, dialogue rendszer, térkép szerkesztése) a [devdocs/game-dev-notes.md](devdocs/game-dev-notes.md) fájlban olvasható.
 
 ## Zenelejátszó
 
@@ -293,6 +301,12 @@ Minden nézet tartalmaz egy **Meet** gombot is, amely időpontfoglalásra szolg�
 - A dátumok és napnevek lokalizáltak: a `Intl.DateTimeFormat` API-t használja a kiválasztott felhasználói nyelvvel; fiktív nyelveknél angol fallback érvényesül
 - Nyelváltáskor a dátumkártyák azonnal újrarenderelődnek
 - Játék nézetben szintén lefagyasztja a motort nyitáskor, MutationObserver figyeli a bezárást
+
+## AI munkafolyamat
+
+A projekthez Claude Code skill-ek és agent-ek vannak építve, amelyek a fejlesztési, tartalom-karbantartási és álláspályázati munkafolyamatokat automatizálják (pl. `/locale-check`, `/cv-review`, `/hr-review`, `/job-apply`).
+
+A skill-ek, agent-ek és a köztük lévő adatfolyam részletes leírása (Mermaid diagramokkal) a [devdocs/ai-workflow.md](devdocs/ai-workflow.md) dokumentumban található.
 
 ## Futtatás
 
