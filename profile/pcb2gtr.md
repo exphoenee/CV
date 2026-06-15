@@ -1,12 +1,12 @@
 ---
-title: "Founder"
-seniority: "Senior"
+title: 'Founder'
+seniority: 'Senior'
 period:
-  from: "2015-06"
+  from: '2015-06'
   to: null
-profession: "mechanical"
-type: "work"
-domain: "hardware product development"
+profession: 'mechanical'
+type: 'work'
+domain: 'hardware product development'
 leader: true
 skills: [PCB Design, Embedded Systems, Microcontrollers, Product Design, Manufacturing]
 ---

@@ -1,12 +1,12 @@
 ---
-title: "Developer"
-seniority: "Mid"
+title: 'Developer'
+seniority: 'Mid'
 period:
-  from: "2023-07"
-  to: "2023-11"
-profession: "software"
-type: "work"
-domain: "telecommunications, AI"
+  from: '2023-07'
+  to: '2023-11'
+profession: 'software'
+type: 'work'
+domain: 'telecommunications, AI'
 leader: false
 skills: [React, TypeScript, Redux, Styled Components, Webpack, Jest, Data Visualization]
 ---

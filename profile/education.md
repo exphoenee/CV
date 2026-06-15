@@ -1,12 +1,12 @@
 ---
-title: "Education & Certifications"
-seniority: "N/A"
+title: 'Education & Certifications'
+seniority: 'N/A'
 period:
   from: null
   to: null
-profession: "both"
-type: "education"
-domain: "education"
+profession: 'both'
+type: 'education'
+domain: 'education'
 leader: false
 skills: []
 ---
@@ -16,18 +16,21 @@ skills: []
 ## Pécsi Tudományegyetem — Műszaki és Informatikai Kar
 
 ### Minőségbiztosítási mérnök BSc (2003 – 2007)
+
 - **Szakdolgozat:** Folyamattervezési módszertan fejlesztése egyedi gépek tervezéséhez, mérnöki hatékonyság mérésére. Validálva és implementálva Hauninál — közel 10 évig volt használatban.
 - **Ami releváns a szoftverfejlesztés szempontjából:** minőségbiztosítás, folyamattervezés, mérhetőség
 
 <!-- Főbb tantárgyak / specializáció -->
 
 ### Gépész műszaki tanár BSc (2001 – 2004)
+
 - **Szakdolgozat:** Szervezeti kommunikáció hatékonyságának vizsgálata szociometriai kérdőívekkel, faktoranalízissel és klaszterelemzéssel. Feltárta a kapcsolatot a vezetési stílusok és a csoportkommunikáció hatékonysága között.
 - **Ami releváns:** pedagógiai tapasztalat, komplex rendszerek megértése, statisztikai elemzés
 
 <!-- Főbb tantárgyak -->
 
 ### Gépészmérnök BEng (2000 – 2004)
+
 - **Szakdolgozat:** RCM (Reliability Centered Maintenance) rendszer alapjainak lefektetése a British American Tobacco Pécs cigarettagyártó soraira.
 - **Ami releváns a szoftverfejlesztés szempontjából:** rendszertervezés, precizitás, logika, megbízhatósági elemzés
 
@@ -50,6 +53,7 @@ LabVIEW → web development: 8 hónapos intenzív tanfolyam, International Educa
 Lásd teljes lista: [linkedin-licences.md](linkedin-licences.md)
 
 **Web Development:**
+
 - Responsive Web Design — freeCodeCamp (2021)
 - JavaScript Algorithms and Data Structures — freeCodeCamp (2021)
 - Front End Libraries — freeCodeCamp (2021)
@@ -62,23 +66,27 @@ Lásd teljes lista: [linkedin-licences.md](linkedin-licences.md)
 - Svelte and Firebase — Udemy (2023)
 
 **Blockchain / Web3:**
+
 - BNB Chain Developer Specialization — Binance Academy (2024)
 - Blockchain / DeFi / DApps / NFT Deep Dive — Binance Academy (2024)
 - AWS Node Runners for BNB Chain — Binance Academy (2025)
 
 **Industrial Automation:**
+
 - Universal Robots e-Series (Core, Pro, Application, CB3) — Universal Robots (2021)
 - Core Training + Service & Troubleshooting — Universal Robots (2021–2022)
 - KUKA Robot Programming 1 — KUKA (2018)
 - FANUC Robot Operating and Programming — FANUC (2017)
 
 **Measurements / LabVIEW:**
+
 - NI Certified LabVIEW Associate Developer — National Instruments (2012)
 - Data Acquisition and Signal Conditioning — NI (2011)
 - LabVIEW Core 1-2 — NI (2010)
 - Strain Gage Installation — HBM (2010/2012)
 
 **Language:**
+
 - Zertifikat Deutsch — ÖSD Mittelstufe Komplex (Goethe-Institut, 2004)
 
 <!-- Konferenciák, workshopok, meetupok ahol aktívan részt vettem? -->

@@ -1,11 +1,11 @@
 ---
-title: "LinkedIn Awards"
-seniority: "N/A"
+title: 'LinkedIn Awards'
+seniority: 'N/A'
 period:
   from: null
   to: null
-profession: "both"
-type: "reference"
+profession: 'both'
+type: 'reference'
 domain: null
 leader: false
 skills: []
@@ -13,7 +13,7 @@ skills: []
 
 # Awards
 
-| Award | Issuer | Date |
-|-------|--------|------|
+| Award                | Issuer                        | Date          |
+| -------------------- | ----------------------------- | ------------- |
 | Employee of the Year | Hauni Hungaria Gépgyártó Kft. | December 2016 |
 | Employee of the Year | Hauni Hungaria Gépgyártó Kft. | December 2012 |

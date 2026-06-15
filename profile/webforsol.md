@@ -1,12 +1,12 @@
 ---
-title: "Freelancer Full Stack Developer"
-seniority: "Mid"
+title: 'Freelancer Full Stack Developer'
+seniority: 'Mid'
 period:
-  from: "2020-06"
-  to: "2022-11"
-profession: "software"
-type: "work"
-domain: "freelance web development"
+  from: '2020-06'
+  to: '2022-11'
+profession: 'software'
+type: 'work'
+domain: 'freelance web development'
 leader: false
 skills: [React, Next.js, Node.js, PHP, Laravel, MySQL, MongoDB, NestJS, Full Stack]
 ---
@@ -57,20 +57,25 @@ Coaching website + blog, PHP backend, no CMS/framework.
 **Tech stack:** React · Next.js · Node.js · PHP · Laravel · MySQL · MongoDB · JavaScript · TypeScript · CSS · jQuery · NestJS
 
 ### React / Next.js
+
 <!-- Milyen szintű SSR/SSG munka? -->
 <!-- Milyen state management? -->
 
 ### Node.js backend
+
 <!-- REST API design: saját konvenciók, verziókezelés? -->
 <!-- Milyen adatbázis connectorok, ORM? -->
 
 ### PHP / Laravel
+
 <!-- Milyen típusú Laravel projektek? WordPress is volt? -->
 
 ### MySQL / MongoDB
+
 <!-- Adatbázis design tapasztalat: sémák, indexelés, relációk? -->
 
 ### NestJS
+
 <!-- Melyik projekthez? Milyen szintű használat? -->
 
 ---

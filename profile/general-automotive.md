@@ -1,12 +1,12 @@
 ---
-title: "Robotics and Integrated Intelligence Expert"
-seniority: "Senior"
+title: 'Robotics and Integrated Intelligence Expert'
+seniority: 'Senior'
 period:
-  from: "2018-01"
-  to: "2021-08"
-profession: "mechanical"
-type: "work"
-domain: "automotive, manufacturing"
+  from: '2018-01'
+  to: '2021-08'
+profession: 'mechanical'
+type: 'work'
+domain: 'automotive, manufacturing'
 leader: false
 skills: [LabVIEW, PLC, Industrial Robotics, Data Acquisition, Automated Testing]
 ---

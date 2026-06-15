@@ -1,12 +1,12 @@
 ---
-title: "Mechanical Engineer & Industrial Automation Specialist"
-seniority: "Senior"
+title: 'Mechanical Engineer & Industrial Automation Specialist'
+seniority: 'Senior'
 period:
-  from: "2018-01"
-  to: "2021-08"
-profession: "mechanical"
-type: "work"
-domain: "industrial automation"
+  from: '2018-01'
+  to: '2021-08'
+profession: 'mechanical'
+type: 'work'
+domain: 'industrial automation'
 leader: false
 skills: [LabVIEW, FANUC Robotics, Machine Vision, PLC, Industrial Automation, Measurement Systems]
 ---

@@ -1,14 +1,15 @@
 ---
-title: "Frontend Tech Lead"
-seniority: "Senior"
+title: 'Frontend Tech Lead'
+seniority: 'Senior'
 period:
-  from: "2023-11"
+  from: '2023-11'
   to: null
-profession: "software"
-type: "work"
-domain: "enterprise SaaS, compliance"
+profession: 'software'
+type: 'work'
+domain: 'enterprise SaaS, compliance'
 leader: true
-skills: [Svelte, React, TypeScript, Node.js, Express, MySQL, Python, CI/CD, Claude, Codex, Mentoring]
+skills:
+  [Svelte, React, TypeScript, Node.js, Express, MySQL, Python, CI/CD, Claude, Codex, Mentoring]
 ---
 
 # Aegex Technologies — Frontend Tech Lead (Nov 2023 – jelen)
@@ -38,7 +39,9 @@ Felelősségi körök: end-to-end delivery of SafeSy and FACTS — system design
 ## SafeSy projekt — Belső gyártásirányítási rendszer
 
 ### Mit oldottunk meg
+
 <!-- Mi volt az üzleti probléma? Miért kellett ez a rendszer? -->
+
 “FACTS” stands for Feedstock and Compliance Tracking System. It is a comprehensive set of software solutions including the FACTS Portal that have been designed to streamline the process for companies that are required by the Environmental Protection Agency (“EPA”) under 40 CFR § 80.1454(j)(1) to have source (points of origin) records for separated yard waste, separated food waste, and biogenic waste oils/fats/greases.
 The FACTS Portal serves as an online interface within the FACTS system, empowering users to easily upload and manage source data, including bills of lading and product transfer documents. This secure platform facilitates the confidential exchange of point-of-origin information between buyers and sellers.
 Account Admin: Manage company users. Add/Edit or Enable/Disable users.
@@ -57,6 +60,7 @@ Upload Sources: Upload Source (point of origin) data to FACTS.
 - Express backend contribution: SQL query design and optimization
 
 ### Technológia kontextus
+
 <!-- Svelte: hogyan használtam, milyen szinten, mit csináltam vele -->
 <!-- Belső komponenskönyvtár: méret, struktúra, design rendszer -->
 <!-- Express backend: milyen részek, SQL optimalizálás konkrétan -->
@@ -64,6 +68,7 @@ Upload Sources: Upload Source (point of origin) data to FACTS.
 **Tech stack:** Svelte · TypeScript · Node.js · ExpressJS · MySQL · SCSS · Vite
 
 ### Eredmények
+
 <!-- Mérőszámok, ha vannak: fejlesztési idő, hibák száma, felhasználói elégedettség -->
 
 ---
@@ -73,6 +78,7 @@ Upload Sources: Upload Source (point of origin) data to FACTS.
 **Link:** https://facts.aegex.com · https://driver.aegex.com
 
 ### Mit oldottunk meg
+
 <!-- Mi volt a kiinduló állapot? Milyen problémák volt a régi rendszerrel? -->
 
 ### Amit építettem

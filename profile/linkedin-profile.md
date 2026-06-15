@@ -1,11 +1,11 @@
 ---
-title: "LinkedIn Profile"
-seniority: "N/A"
+title: 'LinkedIn Profile'
+seniority: 'N/A'
 period:
   from: null
   to: null
-profession: "both"
-type: "reference"
+profession: 'both'
+type: 'reference'
 domain: null
 leader: false
 skills: []
@@ -31,11 +31,13 @@ My greatest strength is the ability to bridge the worlds of manufacturing, produ
 ---
 
 ## Top Skills
+
 Artificial Intelligence (AI), NestJS, Anthropic Claude
 
 ---
 
 ## Languages
+
 - Hungarian (Native / Bilingual)
 - German (Professional Working)
 - English (Limited Working)
@@ -45,6 +47,7 @@ Artificial Intelligence (AI), NestJS, Anthropic Claude
 ## Experience
 
 ### Frontend Tech Lead — Aegex Technologies
+
 **Nov 2023 – Present** (2 years 8 months)
 
 Building enterprise manufacturing and compliance platforms with React, Svelte, TypeScript, and Node.js.
@@ -57,6 +60,7 @@ Building enterprise manufacturing and compliance platforms with React, Svelte, T
 ---
 
 ### Founder — PCB2GTR
+
 **Jun 2015 – Present** (11 years 1 month)
 
 Built PCB2GTR from a personal electronics project into a commercial product business.
@@ -69,6 +73,7 @@ Built PCB2GTR from a personal electronics project into a commercial product busi
 ---
 
 ### Software Developer — Deutsche Telekom IT Solutions HU
+
 **Aug 2023 – Nov 2023** (4 months)
 
 Worked on an AI-powered test automation platform, building React and TypeScript interfaces for test management and real-time AI-driven analysis.
@@ -79,6 +84,7 @@ Worked on an AI-powered test automation platform, building React and TypeScript 
 ---
 
 ### Frontend Developer — Scolia Technologies Ltd.
+
 **Jan 2023 – Jul 2023** (7 months)
 
 Built real-time UI systems for an automated sports scoring and analytics platform.
@@ -90,6 +96,7 @@ Built real-time UI systems for an automated sports scoring and analytics platfor
 ---
 
 ### Frontend Developer — Cubicfox
+
 **Sep 2022 – Dec 2022** (4 months)
 
 Delivered production-grade web applications for international clients.
@@ -101,6 +108,7 @@ Delivered production-grade web applications for international clients.
 ---
 
 ### Engineering Manager — CobotX Technologies
+
 **Aug 2021 – Jul 2022** (1 year)
 
 Led engineering teams delivering robotics and custom machine solutions for industrial applications.
@@ -113,6 +121,7 @@ Led engineering teams delivering robotics and custom machine solutions for indus
 ---
 
 ### Freelance Full-Stack Developer — WebforSol
+
 **Jun 2020 – Jun 2022** (2 years 1 month)
 
 Software product development with a product-oriented mindset focused on real-world problem solving.
@@ -125,6 +134,7 @@ Software product development with a product-oriented mindset focused on real-wor
 ---
 
 ### Mechanical Engineer & Industrial Automation Specialist — EnforSol
+
 **Jan 2018 – Aug 2021** (3 years 8 months)
 
 Self-employed engineer delivering custom machine design and automation systems for industrial environments.
@@ -138,6 +148,7 @@ Self-employed engineer delivering custom machine design and automation systems f
 ---
 
 ### Robotics and Integrated Intelligence Expert — General Automotive
+
 **Jan 2018 – Aug 2021** (3 years 8 months)
 
 - Built automated measurement and test systems using LabVIEW for production validation.
@@ -150,6 +161,7 @@ Self-employed engineer delivering custom machine design and automation systems f
 ### Hauni Hungaria Gépgyártó Kft. — 12 years 6 months
 
 #### Senior R&D Mechanical Engineer — Test & Measurement Systems
+
 **Aug 2010 – Jan 2018** (7 years 6 months)
 
 Specializing in test systems and measurement technologies.
@@ -161,11 +173,13 @@ Specializing in test systems and measurement technologies.
 - Applied FEM and engineering analysis to solve complex structural and dynamic issues in large-scale machinery.
 
 #### Mechanical Designer
+
 **Sep 2007 – Aug 2010** (3 years)
 
 Worked as part of an international engineering team in Hamburg. Contributed to mechanical design, prototype development, and engineering analysis of conveyor and production systems.
 
 #### Product Engineering Manager
+
 **Jun 2006 – Sep 2007** (1 year 4 months)
 
 - Owned technical documentation standards for logistics systems.
@@ -173,6 +187,7 @@ Worked as part of an international engineering team in Hamburg. Contributed to m
 - Ensured alignment between design, engineering, and manufacturing for production execution.
 
 #### Mechanical Designer
+
 **Aug 2005 – Jun 2006** (11 months)
 
 - Designed mechanical components and supported prototype development of production machinery.
@@ -183,20 +198,23 @@ Worked as part of an international engineering team in Hamburg. Contributed to m
 ## Education
 
 ### Faculty of Engineering and Information Technology — University of Pécs
+
 **Bachelor of Engineering (BEng), Mechanical Engineering** · 2001 – 2005
 
 ### Faculty of Engineering and Information Technology — University of Pécs
+
 **Bachelor's Degree, Machinery Technical Teacher Education** · 2002 – 2005
 
 ### Faculty of Engineering and Information Technology — University of Pécs
+
 **Bachelor's Degree, Quality Manager** · 2004 – 2008
 
 ---
 
 ## Honors & Awards
 
-| Award | Issuer | Date |
-|-------|--------|------|
+| Award                | Issuer                        | Date          |
+| -------------------- | ----------------------------- | ------------- |
 | Employee of the Year | Hauni Hungaria Gépgyártó Kft. | December 2016 |
 | Employee of the Year | Hauni Hungaria Gépgyártó Kft. | December 2012 |
 
