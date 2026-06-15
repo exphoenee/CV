@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "format": "prettier --write \"**/*.{js,mjs,css,html,json,md}\" --ignore-unknown",
+    "format:check": "prettier --check \"**/*.{js,mjs,css,html,json,md}\" --ignore-unknown",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
   },
@@ -8,6 +10,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
-    "playwright": "^1.60.0"
+    "playwright": "^1.60.0",
+    "prettier": "^3.8.4"
   }
 }
