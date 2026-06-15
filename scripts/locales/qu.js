@@ -1,7 +1,7 @@
 export const QU = {
   content: {
     summary:
-      "Ohtar Noldo i Yesta-Nárëo — turinyë cantëa nórëo ar yára tengwaron nórissë. Turinye quentar ilyë nossëo TypeScript, React, Svelte nóressë — laurëa cárëa, mára lendëa. AI-parmë ar CI-sirë antanye — cárëa sí taita, lendëa sí alcarinquë. Tengwar-cantëa istanyë mára. Yesta-Nárë lya tirinyë, ní cárë. Aiya ar Namárië!",
+      "Noldo Yesta-Nárëo — lúmi 5+ Yesta-Nárë ar Yesta-Tárë-Nórë cárëo istanyë — turinyë cantëa nórëo ar yára tengwaron nórissë TypeScript, Svelte, React, Node.js. Turinye quentar ilyë nossëo — laurëa cárëa, mára lendëa. AI-parmë antanye ar CI-sirë cárienye — cendë-andon vinya — cárëa sí taita, lendëa sí alcarinquë. Ohtari tirinyë ar istamórë antanye. Tengwar-cantëa istanyë mára. Yesta-Nárë lya tirinyë, ní cárë. Aiya ar Namárië!",
 
     workExperience: [
       {
@@ -54,7 +54,7 @@ export const QU = {
         description:
           "Ohtar Yesta-Nárë Scolia nóressë cárienye — tengwar-cendë sí quentassë darts. Aiya:",
         bullets: [
-          "Cantëa sí ar alcarinquë cárienye nossë-cantëo.",
+          "Cantëa ar Tárë-Nórë nossë cárienye — tengwar-cendë sí cantëa lerya, alcarinquë antë, coirëa-tengwaro lúmessë.",
           "Tengwar-cendë sí cárienye cárëa ar nórë-cendë.",
         ],
       },

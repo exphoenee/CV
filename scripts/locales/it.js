@@ -1,7 +1,7 @@
 export const IT = {
   content: {
     summary:
-      "Ingegnere Frontend specializzato in architettura frontend, progettazione di sistemi e modernizzazione su larga scala di sistemi legacy. Ho guidato riscritture complete e migrazioni di sistemi aziendali verso stack moderni, migliorando la manutenibilità e la scalabilità delle piattaforme principali. Ho introdotto flussi di lavoro di sviluppo assistiti dall'IA che hanno aumentato significativamente la velocità di consegna, la coerenza tecnica e l'affidabilità dei release. Mi concentro fortemente sul refactoring basato su evidenze, sugli standard di qualità CI e sulla costruzione di fondamenta frontend sostenibili a livello di sistema.",
+      "Frontend Tech Lead con oltre 5 anni di esperienza frontend e full-stack, specializzato in architettura frontend, progettazione di sistemi e modernizzazione su larga scala di sistemi legacy con TypeScript, Svelte, React e Node.js. Ho guidato riscritture complete e migrazioni di sistemi aziendali verso stack moderni, migliorando la manutenibilità e la scalabilità delle piattaforme principali. Ho introdotto flussi di lavoro di sviluppo assistiti dall'IA e costruito pipeline CI con quality gate automatizzati, aumentando significativamente la velocità di consegna, la coerenza tecnica e l'affidabilità dei release. Guido e mentoro ingegneri, concentrandomi sul refactoring basato su evidenze, sugli standard di qualità CI e su fondamenta frontend sostenibili a livello di sistema.",
 
     workExperience: [
       {
@@ -54,7 +54,7 @@ export const IT = {
         description:
           "Come sviluppatore Frontend in Scolia, ho lavorato su una soluzione di punteggio automatico in tempo reale per freccette a punta d'acciaio:",
         bullets: [
-          "Ho costruito interfacce utente responsive e dinamiche in collaborazione con il team di design.",
+          "In collaborazione con i team di design e backend, ho consegnato UI in tempo reale a bassa latenza e ad alto throughput sotto carico di dati in tempo reale.",
           "Ho creato visualizzazioni interattive per il tracciamento del progresso in tempo reale e l'analisi delle prestazioni.",
         ],
       },

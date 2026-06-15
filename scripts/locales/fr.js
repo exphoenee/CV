@@ -1,7 +1,7 @@
 export const FR = {
   content: {
     summary:
-      "Ingénieur Frontend spécialisé dans l'architecture frontend, la conception de systèmes et la modernisation à grande échelle de systèmes legacy. J'ai dirigé des réécritures complètes et des migrations de systèmes d'entreprise vers des stacks modernes, améliorant la maintenabilité et la scalabilité des plateformes principales. J'ai introduit des workflows de développement assistés par IA qui ont considérablement augmenté la vitesse de livraison, la cohérence technique et la fiabilité des releases. Je mets un fort accent sur le refactoring basé sur les preuves, les standards qualité CI et la construction de fondations frontend durables à l'échelle du système.",
+      "Frontend Tech Lead avec plus de 5 ans d'expérience en frontend et full-stack, spécialisé dans l'architecture frontend, la conception de systèmes et la modernisation à grande échelle de systèmes legacy avec TypeScript, Svelte, React et Node.js. J'ai dirigé des réécritures complètes et des migrations de systèmes d'entreprise vers des stacks modernes, améliorant la maintenabilité et la scalabilité des plateformes principales. J'ai introduit des workflows de développement assistés par IA et construit des pipelines CI avec des quality gates automatisés, augmentant considérablement la vitesse de livraison, la cohérence technique et la fiabilité des releases. Je dirige et encadre des ingénieurs, en mettant l'accent sur le refactoring basé sur les preuves, les standards qualité CI et des fondations frontend durables à l'échelle du système.",
 
     workExperience: [
       {
@@ -55,7 +55,7 @@ export const FR = {
         description:
           "En tant que développeur Frontend chez Scolia, j'ai travaillé sur une solution de score automatique en temps réel pour les fléchettes à pointe acier :",
         bullets: [
-          "J'ai construit des interfaces utilisateur responsives et dynamiques en collaboration avec l'équipe design.",
+          "En partenariat avec les équipes design et backend, j'ai livré des UIs en temps réel à faible latence et à haut débit sous charge de données en direct.",
           "J'ai créé des visualisations interactives pour le suivi de progression en temps réel et l'analyse des performances.",
         ],
       },

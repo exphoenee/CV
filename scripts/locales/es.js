@@ -1,7 +1,7 @@
 export const ES = {
   content: {
     summary:
-      "Ingeniero Frontend especializado en arquitectura frontend, diseño de sistemas y modernización a gran escala de sistemas legacy. He liderado reescrituras completas y migraciones de sistemas empresariales a stacks modernos, mejorando la mantenibilidad y escalabilidad de las plataformas principales. He introducido flujos de trabajo de desarrollo asistidos por IA que han aumentado significativamente la velocidad de entrega, la consistencia técnica y la fiabilidad de los releases. Me enfoco fuertemente en el refactoring basado en evidencias, los estándares de calidad CI y la construcción de bases frontend sostenibles a nivel de sistema.",
+      "Frontend Tech Lead con más de 5 años de experiencia en frontend y full-stack, especializado en arquitectura frontend, diseño de sistemas y modernización a gran escala de sistemas legacy con TypeScript, Svelte, React y Node.js. He liderado reescrituras completas y migraciones de sistemas empresariales a stacks modernos, mejorando la mantenibilidad y escalabilidad de las plataformas principales. He introducido flujos de trabajo de desarrollo asistidos por IA y construido pipelines CI con quality gates automatizados, aumentando significativamente la velocidad de entrega, la consistencia técnica y la fiabilidad de los releases. Lidero y mentorizo a ingenieros, enfocándome en el refactoring basado en evidencias, los estándares de calidad CI y bases frontend sostenibles a nivel de sistema.",
 
     workExperience: [
       {
@@ -55,7 +55,7 @@ export const ES = {
         description:
           "Como desarrollador Frontend en Scolia, trabajé en una solución de puntuación automática en tiempo real para dardos de punta de acero:",
         bullets: [
-          "Construí interfaces de usuario responsivas y dinámicas en colaboración con el equipo de diseño.",
+          "En colaboración con los equipos de diseño y backend, entregué UIs en tiempo real de baja latencia y alto rendimiento bajo carga de datos en vivo.",
           "Creé visualizaciones interactivas para el seguimiento del progreso en tiempo real y el análisis de rendimiento.",
         ],
       },

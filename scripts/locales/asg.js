@@ -1,7 +1,7 @@
 export const ASG = {
   content: {
     summary:
-      "Ek em framhlið smiðr, kunnattr i kerfissmið ok storum endursmiðum gamalla kerfa. Ek hef leiðt fulla endursmið storra stofnanakerfa til nýrra staflana ok batt viðhaldshafni þeirra. Ek hef innleitt AI-meðliðsverklag er mjök aukið hefr afköst, samkvamni ok areiðanleika utgafna. Ek legg aherslu a sannanlegataktar endurbatur, CI-gaðastaðla ok sjalfbaran framhliðargrunn.",
+      "Ek em framhlið taknileiðtogi með 5+ ara framhlið ok full-stack starfsferil, kunnattr i kerfissmið ok storum endursmiðum gamalla kerfa með TypeScript, Svelte, React ok Node.js. Ek hef leiðt fulla endursmið storra stofnanakerfa til nýrra staflana ok batt viðhaldshafni þeirra. Ek hef innleitt AI-meðliðsverklag ok smiðað CI-pipar með sjalfvirkum gaðahliðum er mjök aukið hefr afköst, samkvamni ok areiðanleika utgafna. Ek leiði ok þjalfa verkfraðinga, ok legg aherslu a sannanlegataktar endurbatur, CI-gaðastaðla ok sjalfbaran framhliðargrunn.",
 
     workExperience: [
       {

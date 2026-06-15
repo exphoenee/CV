@@ -39,7 +39,7 @@ export const CV_DATA = {
     },
   },
   summary:
-    "Frontend Engineer specializing in frontend architecture, system design, and large-scale legacy modernization. I've led full rewrites and migrations of enterprise systems to modern stacks, improving maintainability and scalability of core platforms. I've introduced AI-assisted development workflows that significantly increased delivery speed, engineering consistency, and release reliability. I focus strongly on evidence-driven refactoring, CI-quality standards, and building sustainable, system-level frontend foundations.",
+    "Frontend Tech Lead with 5+ years of frontend and full-stack experience, specializing in frontend architecture, system design, and large-scale legacy modernization with TypeScript, Svelte, React, and Node.js. I've led full rewrites and migrations of enterprise systems to modern stacks, improving maintainability and scalability of core platforms. I've introduced AI-assisted development workflows and built CI pipelines with automated quality gates, significantly increasing delivery speed, engineering consistency, and release reliability. I lead and mentor engineers, focusing on evidence-driven refactoring, CI-quality standards, and sustainable, system-level frontend foundations.",
   workExperience: [
     {
       id: "aegex",
@@ -179,7 +179,7 @@ export const CV_DATA = {
         "I built a real-time React-based UI for live sports scoring and match tracking",
         "I implemented low-latency data visualization components for live performance analytics",
         "I integrated WebSocket-based real-time data streams into the frontend architecture",
-        "I collaborated with design and backend teams to deliver responsive, high-performance UI systems",
+        "I partnered with design and backend teams to ship low-latency, high-throughput real-time UI under live data load",
       ],
 
       skills: [
@@ -381,14 +381,14 @@ export const CV_DATA = {
       comment: null,
     },
     backend: {
-      list: ["Express.js", "NestJS", "Python", "PHP", "MySQL", "MongoDB"],
+      list: ["Express.js", "NestJS", "Python", "PHP", "MySQL", "MongoDB", "REST API", "WebSocket"],
       comment: null,
     },
     testing: {
       list: ["Jest", "Vitest", "Playwright"],
       comment: "yes, all three",
     },
-    tooling: {list: ["Vite", "Webpack", "PNPM", "Next.js"], comment: null},
+    tooling: {list: ["Vite", "Webpack", "PNPM", "Next.js", "CI/CD"], comment: null},
     ai: {
       list: ["Claude", "Codex"],
       comment: "meta: this CV was probably reviewed by one of these",
