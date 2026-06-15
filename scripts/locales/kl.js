@@ -1,7 +1,7 @@
 export const KL = {
   content: {
     summary:
-      "HoS naQHom SuvwI' jIH. lurDech patmey vIchel — jIvumpu' DaH. TypeScript, React, Svelte — Qu'mey vIta' ghom Hoch boQtaH. AI qoq ma CI HeH vIchenmoHpu' — Qu' ray' Qap, ngeHlu' batlh. De' legh patmey vIvum. HoS naQHomlIj boQmeH jIvum. Qapla'!",
+      "HoS naQHom Sa' jIH — 5+ DIS HoS naQHom ma Hoch-naQHom Qu'mey vIta'. lurDech patmey vIchel TypeScript, Svelte, React, Node.js. jIvumpu' DaH. AI qoq vIazh ma CI HeH vIchenmoH — HeH cendmey nargh — Qu' ray' Qap, ngeHlu' batlh. SuvwI'pu' vISa' ma vIHaDmoH. De' legh patmey vIvum. HoS naQHomlIj boQmeH jIvum. Qapla'!",
 
     workExperience: [
       {
@@ -54,7 +54,7 @@ export const KL = {
         description:
           "SuvwI' HoS naQHom vIvum Scolia — De' leghmoH DaH mI' chelwI' qoj argh Qu'. Qapla':",
         bullets: [
-          "wavmey DaH ma batlh vIchenmoH ghom pat boQtaHvIS.",
+          "qech ma qo' naQHom ghom vISuv — De' leghmoH DaH wavmey nargh, HoS law', yIn De' bIr botlhDaq.",
           "De' leghmoH DaH vIchenmoH Qu' ma qo' chel legh.",
         ],
       },

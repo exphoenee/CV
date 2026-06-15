@@ -1,7 +1,7 @@
 export const DE = {
   content: {
     summary:
-      "Frontend-Ingenieur, spezialisiert auf Frontend-Architektur, Systemdesign und die Modernisierung großer Legacy-Systeme. Ich habe vollständige Rewrites und Migrationen von Unternehmenssystemen auf moderne Stacks geleitet und die Wartbarkeit und Skalierbarkeit der Kernplattformen verbessert. Ich habe KI-gestützte Entwicklungs-Workflows eingeführt, die Liefergeschwindigkeit, Entwicklerkonsistenz und Release-Zuverlässigkeit deutlich steigerten. Ich lege starken Fokus auf evidenzbasiertes Refactoring, CI-Qualitätsstandards und den Aufbau nachhaltiger, systemweiter Frontend-Grundlagen.",
+      "Frontend Tech Lead mit über 5 Jahren Erfahrung in Frontend und Full-Stack, spezialisiert auf Frontend-Architektur, Systemdesign und die Modernisierung großer Legacy-Systeme mit TypeScript, Svelte, React und Node.js. Ich habe vollständige Rewrites und Migrationen von Unternehmenssystemen auf moderne Stacks geleitet und die Wartbarkeit und Skalierbarkeit der Kernplattformen verbessert. Ich habe KI-gestützte Entwicklungs-Workflows eingeführt und CI-Pipelines mit automatisierten Quality Gates aufgebaut, was Liefergeschwindigkeit, Entwicklerkonsistenz und Release-Zuverlässigkeit deutlich steigerte. Ich leite und mentoriere Ingenieure und lege starken Fokus auf evidenzbasiertes Refactoring, CI-Qualitätsstandards und nachhaltige, systemweite Frontend-Grundlagen.",
 
     workExperience: [
       {
@@ -54,7 +54,7 @@ export const DE = {
         description:
           "Als Frontend-Entwickler bei Scolia arbeitete ich an einer Echtzeit-Automatik-Scorekeeping-Lösung für Steel-Tip-Darts:",
         bullets: [
-          "Ich entwickelte responsive, dynamische UIs in Zusammenarbeit mit dem Design-Team.",
+          "In Zusammenarbeit mit Design- und Backend-Teams lieferte ich latenzarme, durchsatzstarke Echtzeit-UIs unter Live-Datenlast.",
           "Ich erstellte interaktive Visualisierungen für Echtzeit-Fortschrittsverfolgung und Leistungsanalyse.",
         ],
       },

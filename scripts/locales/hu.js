@@ -1,7 +1,7 @@
 export const HU = {
   content: {
     summary:
-      "Frontend mérnökként frontend architektúrára, rendszertervezésre és nagyszabású legacy rendszerek modernizációjára specializálódtam. Vállalati rendszerek teljes újraírását és migrációját vezettem modern technológiai stackekre, javítva az alapplatformok karbantarthatóságát és skálázhatóságát. AI-asszisztált fejlesztési munkafolyamatokat vezettem be, amelyek jelentősen növelték a szállítási sebességet, a mérnöki konzisztenciát és a kiadási megbízhatóságot. Munkám során kiemelt hangsúlyt fektettem az evidencián alapuló refaktorálásra, a CI-minőségi szabványok kialakítására és a fenntartható, rendszerszintű frontend alapok megteremtésére.",
+      "Frontend Tech Leadként 5+ év frontend és full-stack tapasztalattal rendelkezem, frontend architektúrára, rendszertervezésre és nagyszabású legacy rendszerek modernizációjára specializálódtam TypeScript, Svelte, React és Node.js technológiákkal. Vállalati rendszerek teljes újraírását és migrációját vezettem modern technológiai stackekre, javítva az alapplatformok karbantarthatóságát és skálázhatóságát. AI-asszisztált fejlesztési munkafolyamatokat vezettem be, és automatizált minőségi kapukkal ellátott CI pipeline-okat építettem, jelentősen növelve a szállítási sebességet, a mérnöki konzisztenciát és a kiadási megbízhatóságot. Mérnököket vezetek és mentorálok, kiemelt hangsúlyt fektetve az evidencián alapuló refaktorálásra, a CI-minőségi szabványokra és a fenntartható, rendszerszintű frontend alapokra.",
     workExperience: [
       {
         id: "aegex",
@@ -53,7 +53,7 @@ export const HU = {
         description:
           "Frontend fejlesztőként dolgoztam a Scoliánál, egy acélhegyű darts valós idejű automatikus pontszámláló megoldásánál:",
         bullets: [
-          "Reszponzív, dinamikus UI-okat építettem a dizájn csapattal együttműködve.",
+          "A dizájn és backend csapatokkal együttműködve alacsony késleltetésű, nagy áteresztőképességű valós idejű UI-t szállítottam élő adatterhelés alatt.",
           "Interaktív vizualizációkat hoztam létre valós idejű haladáskövetéshez és teljesítmény-elemzéshez.",
         ],
       },

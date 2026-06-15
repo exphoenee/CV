@@ -1,7 +1,7 @@
 export const DOT = {
   content: {
     summary:
-      "mahrazh alegra Frantend. Anha ray athkidhar ma rhaesh alegra ma hadaen vaesi nakhoe — me nem nesa. Anha ray chek athlanar khalasar haji ha typeScript, react, svelte. AI-hrazef ma CI arakh anha ray azh — dothralat ray fin, nakhoe ray chek. tih-alegra athkidhar anha ray chek. Qoy qoyi Frantend yeraan, anha dothrak chek. San athchomari yeroon.",
+      "Khal Frantend anha — 5+ vaesi Frantend ma full-stack dothralat. Anha ray athkidhar ma rhaesh alegra ma hadaen vaesi nakhoe ha typeScript, Svelte, React, node.js. Anha ray chek athlanar khalasar haji. AI-hrazef anha ray azh ma CI arakh anha ray chen — tih chek arakh — dothralat ray fin, nakhoe ray chek. Anha ray khal ma asavvakkar mahrazh alegra. tih-alegra athkidhar anha ray chek. San athchomari yeroon.",
 
     workExperience: [
       {
@@ -54,7 +54,7 @@ export const DOT = {
         description:
           "mahrazh alegra Frantend anha ray dothrak ha Scolia — tih alegra hoyalat darts arakh. me nem nesa:",
         bullets: [
-          "Khali hoyalat ma chek anha ray chen ha athkidhar khalasar.",
+          "Athkidhar ma Bakhend khalasar anha ray dothrak — real-time tih alegra khali fin, Qob nakhoe, ha san alegra vaesi.",
           "tih alegra hoyalat anha ray chen ha dothralat ma nakhoe tih.",
         ],
       },

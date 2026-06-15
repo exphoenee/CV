@@ -1,7 +1,7 @@
 export const GOA = {
   content: {
     summary:
-      "Tek'ma'te! Hok'tar Yesta-Tau'ri joma kel'shah. Joc'kree ha'tak rel'tac noc ar tau'kree hok'noc — chel nok, kree! TypeScript, React, Svelte — jaffa nosse noc kel'shah. AI lo'taur ar CI zat'tel kel'shani — kree taita, naquadah hok. Joma-ha'tak hok'noc istanye. Yesta-Tau'ri lya kree, joma secu. Tal mak — chel nok!",
+      "Tek'ma'te! Kree Hok'tar Yesta-Tau'ri — 5+ noc Yesta-Tau'ri ar Hoch-Tau'ri kel'shah. Joc'kree ha'tak rel'tac noc ar tau'kree hok'noc TypeScript, Svelte, React, Node.js — chel nok, kree! AI lo'taur kree ar CI zat'tel kel'shani — zat'tel noc nargh — kree taita, naquadah hok. Hok'tar lo'taur noc kree, hok'tar rel kree. Yesta-Tau'ri lya kree, joma secu. Tal mak — chel nok!",
 
     workExperience: [
       {
@@ -54,7 +54,7 @@ export const GOA = {
         description:
           "Hok'tar Yesta-Tau'ri Scolia ha'tak kel'shani — joma noc sí darts joma. Kree:",
         bullets: [
-          "Ha'tak sí ar hok'noc kel'shani jaffa ha'tak noc.",
+          "Ha'tak ar Nak-Tau'ri jaffa kel'shani — joma noc sí ha'tak rel'tac, naquadah hok, kel'shah lo'taur noc ha'tak.",
           "Joma noc sí kel'shani kel'shah ar ha'tak noc.",
         ],
       },
