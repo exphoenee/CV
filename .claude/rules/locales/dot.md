@@ -13,37 +13,37 @@ Inspired by real Dothraki but adapted for a CV context — consistency over ling
 
 ## Pronouns and Verb Markers
 
-| Concept | Dothraki form | Notes |
-|---|---|---|
-| I | `anha` | "Anha tih CV" = I see the CV |
-| You | `yer` | "Hash yer dothrae chek?" = Are you well? |
-| He/She | `me` | |
-| Verb: ride/work/do | `dothrak` | "Anha dothrak Frantend" = I work Frontend |
-| Verb: see/look | `tih` | |
-| Verb: hire/take | `aqqisi` | "Aqqisi anni!" = Hire me! |
-| Verb: send | `ngeH` (borrowed from Klingon-style) / `chiori` | |
+| Concept            | Dothraki form                                   | Notes                                     |
+| ------------------ | ----------------------------------------------- | ----------------------------------------- |
+| I                  | `anha`                                          | "Anha tih CV" = I see the CV              |
+| You                | `yer`                                           | "Hash yer dothrae chek?" = Are you well?  |
+| He/She             | `me`                                            |                                           |
+| Verb: ride/work/do | `dothrak`                                       | "Anha dothrak Frantend" = I work Frontend |
+| Verb: see/look     | `tih`                                           |                                           |
+| Verb: hire/take    | `aqqisi`                                        | "Aqqisi anni!" = Hire me!                 |
+| Verb: send         | `ngeH` (borrowed from Klingon-style) / `chiori` |                                           |
 
 ## Core Vocabulary
 
-| English concept | Dothraki | Notes |
-|---|---|---|
-| I / me | `anha` / `anni` | "anni" is object form |
-| CV / document | `arakh anni` | lit. "my blade/record" |
-| Frontend | `Frantend` | transliterated, no native term |
-| Backend | `Bakhend` | transliterated |
-| Developer | `dothrak [tech]` | "one who rides [tech]" |
-| Leader / Khan | `khal` | "Khal Frantend" = Frontend Lead |
+| English concept   | Dothraki              | Notes                            |
+| ----------------- | --------------------- | -------------------------------- |
+| I / me            | `anha` / `anni`       | "anni" is object form            |
+| CV / document     | `arakh anni`          | lit. "my blade/record"           |
+| Frontend          | `Frantend`            | transliterated, no native term   |
+| Backend           | `Bakhend`             | transliterated                   |
+| Developer         | `dothrak [tech]`      | "one who rides [tech]"           |
+| Leader / Khan     | `khal`                | "Khal Frantend" = Frontend Lead  |
 | Work / Experience | `dothralat ma nakhoe` | lit. "riding with kills/results" |
-| Education | `asavva anni` | lit. "my learning/lore" |
-| Language | `lekia` | |
-| Open | `tih fichat` | lit. "look at this" |
-| Hire | `aqqisi` | |
-| Send | `chiori` / `ngeH` | |
-| Close | `loka` | borrowed |
-| Community | `khal ma asavvakkar` | lit. "leader and teachers" |
-| Message | `alegra` | lit. "word/news" |
-| Meeting | `timuvak` | lit. "gathering" |
-| Many / lots | `san` | |
+| Education         | `asavva anni`         | lit. "my learning/lore"          |
+| Language          | `lekia`               |                                  |
+| Open              | `tih fichat`          | lit. "look at this"              |
+| Hire              | `aqqisi`              |                                  |
+| Send              | `chiori` / `ngeH`     |                                  |
+| Close             | `loka`                | borrowed                         |
+| Community         | `khal ma asavvakkar`  | lit. "leader and teachers"       |
+| Message           | `alegra`              | lit. "word/news"                 |
+| Meeting           | `timuvak`             | lit. "gathering"                 |
+| Many / lots       | `san`                 |                                  |
 
 ## Style Rules
 

@@ -68,9 +68,18 @@ bármelyik túllép, tömörítsd és mérd újra, amíg `translated.length <= e
 Példa mérő-snippet (Node, ideiglenes fájlból futtatva):
 
 ```js
-const fs = require("fs");
-function field(file, re){ const m = fs.readFileSync(file,"utf8").match(re); return m ? JSON.parse(m[1]) : null; }
-const en = field("scripts/cv-data.js", /summary:\s*("(?:[^"\\]|\\.)*")/);
-const tr = field("scripts/locales/hu.js", /summary:\s*("(?:[^"\\]|\\.)*")/);
-console.log("EN", en.length, "| HU", tr.length, tr.length <= en.length ? "OK" : "OVER +" + (tr.length - en.length));
+const fs = require('fs');
+function field(file, re) {
+  const m = fs.readFileSync(file, 'utf8').match(re);
+  return m ? JSON.parse(m[1]) : null;
+}
+const en = field('scripts/cv-data.js', /summary:\s*("(?:[^"\\]|\\.)*")/);
+const tr = field('scripts/locales/hu.js', /summary:\s*("(?:[^"\\]|\\.)*")/);
+console.log(
+  'EN',
+  en.length,
+  '| HU',
+  tr.length,
+  tr.length <= en.length ? 'OK' : 'OVER +' + (tr.length - en.length),
+);
 ```

@@ -20,40 +20,40 @@ Not strict linguistic Quenya — style and feel matter. Mellifluous, vowel-rich,
 
 ## Pronouns and Verb Markers
 
-| Concept | Quenya form | Notes |
-|---|---|---|
-| I (subject) | `ní` | short form of `ninyë` |
-| I (verb suffix) | `-nyë` | "cárinyë" = I make |
-| You | `lyë` | formal |
-| He/She | `sé` / `sí` | |
-| Now / current | `sí` | |
-| This | `sina` | |
+| Concept         | Quenya form | Notes                 |
+| --------------- | ----------- | --------------------- |
+| I (subject)     | `ní`        | short form of `ninyë` |
+| I (verb suffix) | `-nyë`      | "cárinyë" = I make    |
+| You             | `lyë`       | formal                |
+| He/She          | `sé` / `sí` |                       |
+| Now / current   | `sí`        |                       |
+| This            | `sina`      |                       |
 
 ## Core Vocabulary
 
-| English concept | Quenya | Notes |
-|---|---|---|
-| CV / record | `Quenta i` | "the tale of" — as used in existing labels |
-| Frontend | `Yesta-Nárë` | lit. "first-fire" / beginning light |
-| Backend | `Tárë-Nórë` | lit. "high land / depth" |
-| Developer / Craftsman | `ohtar` | lit. "warrior/skilled one" — used in existing labels |
-| Tech Lead | `Noldo Yesta-Nárë` | Noldo = deep elf / master of craft |
-| Work experience | `Quentar i cárëo` | lit. "tales of the making" |
-| Education | `Istanyë` | lit. "my knowing/lore" |
-| Language | `Lambë` | |
-| Programming language | `Lambë tengwaron` | lit. "language of letters" |
-| View / look | `cendalë` | |
-| Hire me | `Hirë ní, hinya!` | lit. "take me, my dear one!" |
-| Send | `Centa!` | imperative — "send/communicate!" |
-| Close | `Tancë` / `Panta` | to close/shut |
-| Open | `Anta cendalë` | lit. "give a view" |
-| Meeting | `Maquë` | meeting/consultation |
-| Message | `Centa` | communication |
-| Community | `Nossë ar Istamórë` | lit. "family and wisdom-sharers" |
-| Greeting | `Aiya` | "Hail!" |
-| Farewell | `Namárië` | "Be well! / Goodbye!" |
-| Now / current | `sí` | |
-| Success / complete | `Vanyarë` / `Lendë` | |
+| English concept       | Quenya              | Notes                                                |
+| --------------------- | ------------------- | ---------------------------------------------------- |
+| CV / record           | `Quenta i`          | "the tale of" — as used in existing labels           |
+| Frontend              | `Yesta-Nárë`        | lit. "first-fire" / beginning light                  |
+| Backend               | `Tárë-Nórë`         | lit. "high land / depth"                             |
+| Developer / Craftsman | `ohtar`             | lit. "warrior/skilled one" — used in existing labels |
+| Tech Lead             | `Noldo Yesta-Nárë`  | Noldo = deep elf / master of craft                   |
+| Work experience       | `Quentar i cárëo`   | lit. "tales of the making"                           |
+| Education             | `Istanyë`           | lit. "my knowing/lore"                               |
+| Language              | `Lambë`             |                                                      |
+| Programming language  | `Lambë tengwaron`   | lit. "language of letters"                           |
+| View / look           | `cendalë`           |                                                      |
+| Hire me               | `Hirë ní, hinya!`   | lit. "take me, my dear one!"                         |
+| Send                  | `Centa!`            | imperative — "send/communicate!"                     |
+| Close                 | `Tancë` / `Panta`   | to close/shut                                        |
+| Open                  | `Anta cendalë`      | lit. "give a view"                                   |
+| Meeting               | `Maquë`             | meeting/consultation                                 |
+| Message               | `Centa`             | communication                                        |
+| Community             | `Nossë ar Istamórë` | lit. "family and wisdom-sharers"                     |
+| Greeting              | `Aiya`              | "Hail!"                                              |
+| Farewell              | `Namárië`           | "Be well! / Goodbye!"                                |
+| Now / current         | `sí`                |                                                      |
+| Success / complete    | `Vanyarë` / `Lendë` |                                                      |
 
 ## Style Rules
 

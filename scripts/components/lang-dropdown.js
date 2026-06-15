@@ -1,10 +1,35 @@
 import { locale, AVAILABLE_LANGS } from '../locale.js';
 
-export const LANG_LABELS = { en: 'EN', hu: 'HU', de: 'DE', fr: 'FR', es: 'ES', it: 'IT', dot: 'DOT', kl: 'KL', qu: 'QU', goa: 'GOA', asg: 'ASG', ya: 'YA' };
-export const LANG_NAMES  = { en: 'English', hu: 'Magyar', de: 'Deutsch', fr: 'Français', es: 'Español', it: 'Italiano', dot: 'Dothraki', kl: 'tlhIngan Hol', qu: 'Elvish', goa: "Goa'uld", asg: 'Forn Norræna', ya: 'Yautja' };
+export const LANG_LABELS = {
+  en: 'EN',
+  hu: 'HU',
+  de: 'DE',
+  fr: 'FR',
+  es: 'ES',
+  it: 'IT',
+  dot: 'DOT',
+  kl: 'KL',
+  qu: 'QU',
+  goa: 'GOA',
+  asg: 'ASG',
+  ya: 'YA',
+};
+export const LANG_NAMES = {
+  en: 'English',
+  hu: 'Magyar',
+  de: 'Deutsch',
+  fr: 'Français',
+  es: 'Español',
+  it: 'Italiano',
+  dot: 'Dothraki',
+  kl: 'tlhIngan Hol',
+  qu: 'Elvish',
+  goa: "Goa'uld",
+  asg: 'Forn Norræna',
+  ya: 'Yautja',
+};
 
 const CHEVRON = `<svg class="ld-chevron" viewBox="0 0 12 7" width="10" height="6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1L6 6L11 1"/></svg>`;
-
 
 export function langDropdownHTML({ fullWidth = false } = {}) {
   const lang = locale.lang;
@@ -12,12 +37,14 @@ export function langDropdownHTML({ fullWidth = false } = {}) {
     ? `<span class="ld-current"><span class="ld-name">${LANG_NAMES[lang]}</span><span class="ld-code">${LANG_LABELS[lang]}</span></span>`
     : `<span class="ld-current-code">${LANG_LABELS[lang]}</span>`;
 
-  const options = AVAILABLE_LANGS.map(l => `
+  const options = AVAILABLE_LANGS.map(
+    (l) => `
     <li class="ld-option${l === lang ? ' ld-option--active' : ''}"
         data-ld-lang="${l}" role="option" aria-selected="${l === lang}">
       <span class="ld-name">${LANG_NAMES[l]}</span>
       <span class="ld-code">${LANG_LABELS[l]}</span>
-    </li>`).join('');
+    </li>`,
+  ).join('');
 
   return `<div class="ld-select${fullWidth ? ' ld-select--full' : ''}">
     <button class="ld-trigger" type="button" aria-haspopup="listbox">
@@ -55,7 +82,7 @@ export function initLangDropdown(el, { onChange } = {}) {
       const cur = el.querySelector('.ld-current-code');
       if (cur) cur.textContent = LANG_LABELS[lang];
     }
-    el.querySelectorAll('.ld-option').forEach(opt => {
+    el.querySelectorAll('.ld-option').forEach((opt) => {
       const active = opt.dataset.ldLang === lang;
       opt.classList.toggle('ld-option--active', active);
       opt.setAttribute('aria-selected', active);
@@ -70,7 +97,10 @@ export function initLangDropdown(el, { onChange } = {}) {
       optionsEl?.classList.toggle('open', !isOpen);
       if (!isOpen) {
         const away = (ev) => {
-          if (!el.contains(ev.target)) { close(); document.removeEventListener('click', away); }
+          if (!el.contains(ev.target)) {
+            close();
+            document.removeEventListener('click', away);
+          }
         };
         document.addEventListener('click', away);
       }
@@ -92,5 +122,9 @@ export function createLangDropdown(container, { onChange, fullWidth = false } = 
   const el = tmp.firstElementChild;
   container.appendChild(el);
   initLangDropdown(el, { onChange });
-  return { destroy() { el.remove(); } };
+  return {
+    destroy() {
+      el.remove();
+    },
+  };
 }

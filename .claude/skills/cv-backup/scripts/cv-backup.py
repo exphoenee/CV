@@ -28,9 +28,9 @@ Exit codes:
     1  — cancelled or error
 """
 
-import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 from datetime import datetime
@@ -97,105 +97,6 @@ def write_file(path, content):
         f.write(content)
 
 
-# ── Extract `content:` from locale JS files ───────────────────────────
-def _skip_string(js, i, quote):
-    """Advance i past a JS string, handling escapes. Returns new index."""
-    i += 1
-    while i < len(js):
-        if js[i] == '\\':
-            i += 2  # skip escape + next char
-            continue
-        if js[i] == quote:
-            return i + 1
-        i += 1
-    return i
-
-
-def extract_content_value(js):
-    """Return the value of the `content:` field as a Python object.
-
-    Uses brace-depth tracking with proper string escape handling.
-    Returns None for `content: null`.
-    """
-    m = re.search(r'(?<!\w)(content)\s*:', js)
-    if not m:
-        return None
-
-    after = js[m.end():].lstrip()
-    if after.startswith("null"):
-        return None
-    if not after.startswith("{"):
-        return None
-
-    # Find the matching closing brace, respecting strings and escapes
-    depth = 0
-    i = 0
-    while i < len(after):
-        ch = after[i]
-        if ch in ('"', "'", '`'):
-            i = _skip_string(after, i, ch)
-            continue
-        if ch == '{':
-            depth += 1
-        elif ch == '}':
-            depth -= 1
-            if depth == 0:
-                raw = after[:i + 1]
-                return _js_to_py(raw)
-        i += 1
-    return None
-
-
-def _js_to_py(js_obj):
-    """Convert a JS object literal string to a Python dict via JSON.
-
-    Handles: trailing commas, unquoted keys, single quotes, null/true/false.
-    """
-    # Strip wrapping whitespace
-    s = js_obj.strip()
-
-    # Unquote keys: { key: value } -> { "key": value }
-    s = re.sub(r'(?<=[{,\s])([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:', r'"\1":', s)
-
-    # Normalise quotes: replace single quotes with double quotes,
-    # but only outside of already-double-quoted strings.
-    result = []
-    in_dq = False
-    in_sq = False
-    for ch in s:
-        if ch == '"' and not in_sq:
-            in_dq = not in_dq
-            result.append(ch)
-        elif ch == "'" and not in_dq:
-            in_sq = not in_sq
-            result.append('"' if not in_sq else '"')
-        else:
-            result.append(ch)
-    s = ''.join(result)
-
-    # Keep null/true/false (valid JS, needs conversion for Python)
-    s = s.replace(': null', ': None')
-    s = s.replace(': true', ': True')
-    s = s.replace(': false', ': False')
-
-    # Remove trailing commas before } or ]
-    s = re.sub(r',\s*}', '}', s)
-    s = re.sub(r',\s*]', ']', s)
-
-    try:
-        # Use ast.literal_eval for safe evaluation
-        import ast
-        return ast.literal_eval(s)
-    except (ValueError, SyntaxError):
-        # Fallback: try JSON (already close to valid)
-        s = s.replace("'", '"')  # any remaining single quotes
-        s = s.replace('None', 'null').replace('True', 'true').replace('False', 'false')
-        try:
-            return json.loads(s)
-        except json.JSONDecodeError:
-            return None
-
-
 # ── Header generation ─────────────────────────────────────────────────
 def generate_header(jd_title, jd_company, seniority, domain,
                     date_str, time_str,
@@ -214,7 +115,7 @@ def generate_header(jd_title, jd_company, seniority, domain,
         f" * ATS match:     {score_line}\n"
         f" * HR Review:     {hr_line}\n"
         f" * Changes:       {change_summary}\n"
-        f" * Locale:        locale-content.json -- paste into scripts/locales/<lang>.js\n"
+        f" * Locale:        locales/ directory -- full locale files included\n"
         f" * ============================================================\n"
         f" * Point-in-time snapshot. Do not import directly.\n"
         f" */\n"
@@ -302,10 +203,12 @@ def main():
 
     is_job = bool(args.company) or bool(args.title)
 
+    time_slug = time_str  # HHMM — always included in folder name for uniqueness
+
     if is_job:
         cs = slugify(args.company) if args.company else "unknown"
         ts = slugify(args.title) if args.title else "position"
-        base = f"{date_str}_{cs}_{ts}"
+        base = f"{date_str}_{time_slug}_{cs}_{ts}"
         if args.label:
             base += f"_{slugify(args.label)}"
         jd_title   = args.title or "Unknown Position"
@@ -318,7 +221,7 @@ def main():
         summary    = args.changes
         hr_review  = args.hr_review or ""
     else:
-        base = f"{date_str}_manual"
+        base = f"{date_str}_{time_slug}_manual"
         if args.label:
             base += f"_{slugify(args.label)}"
         jd_title   = "Manual Backup"
@@ -351,30 +254,13 @@ def main():
     write_file(os.path.join(vf, "cv-data.js"), header + cv_data)
     _out(f"   {OK} cv-data.js")
 
-    # Extract locale content
-    locale_content = {
-        "_meta": {
-            "optimized_for": f"{jd_title} @ {jd_company}",
-            "date": f"{date_str} {time_str}",
-            "ats_match": f"{o_score}%",
-            "source": "scripts/locales/",
-            "restore": "Paste each language block back into scripts/locales/<lang>.js"
-        }
-    }
-    for lang, path in LOCALE_FILES.items():
-        js = read_file(path)
-        if js is None:
-            locale_content[lang] = None
-            _out(f"   {WARN} {lang}.js -- file not found")
-        else:
-            val = extract_content_value(js)
-            locale_content[lang] = val
-            tag = f"(content: {'object' if val else 'null'})"
-            _out(f"   {OK} {lang}.js {tag}")
-
-    json_path = os.path.join(vf, "locale-content.json")
-    write_file(json_path, json.dumps(locale_content, ensure_ascii=False, indent=2))
-    _out(f"   {OK} locale-content.json")
+    # Copy entire locales/ directory
+    locales_src = _project_path("scripts", "locales")
+    locales_dst = os.path.join(vf, "locales")
+    if os.path.exists(locales_dst):
+        shutil.rmtree(locales_dst)
+    shutil.copytree(locales_src, locales_dst)
+    _out(f"   {OK} locales/ ({len(os.listdir(locales_dst))} files)")
 
     # Audit log — record the snapshot in cv-versions/history.md
     folder_name = os.path.basename(vf)
@@ -394,7 +280,7 @@ def main():
     _out(f"\n{OK} Backup kesz")
     _out(f"\n   Mappa: {vf}/")
     _out(f"     - cv-data.js")
-    _out(f"     - locale-content.json")
+    _out(f"     - locales/  ({len(os.listdir(locales_dst))} locale files)")
     _out(f"\n   Visszaallitashoz: python .claude/skills/cv-restore/scripts/cv-restore.py {folder_name}")
 
 

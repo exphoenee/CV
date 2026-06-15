@@ -5,27 +5,24 @@ When `/job-apply` is invoked without an argument, write this exact content to `t
 
 ```markdown
 # Állásleírás — töltsd ki és mentsd el
+
 <!-- Töröld ezt a kommentet, majd írd ide az állás adatait. -->
 <!-- A job-apply-orchestrator a mentés után folytatja, ha beírod: kész -->
 
 ## Pozíció
 
-**Cím:** 
-**Cég:** 
+**Cím:**
+**Cég:**
 **Szint:** (junior / mid / senior / lead)
-**Iparág / domain:** 
+**Iparág / domain:**
 
 ## Kötelező követelmények
 
-
 ## Előnyben részesített
-
 
 ## Feladatok / felelősségek
 
-
 ## Állásleírás (teljes szöveg másolható ide)
-
 ```
 
 After writing, display:
@@ -39,6 +36,7 @@ Amikor kész vagy, írd be: kész
 ```
 
 Wait for user input:
+
 - `n` → stop
 - `kész` → read the file, strip `<!-- ... -->` comment lines, store as `JD`
 - If `JD` is empty after stripping → ❌ "A tmp/jd-draft.md fájl üres. Töltsd ki és próbáld újra." and stop

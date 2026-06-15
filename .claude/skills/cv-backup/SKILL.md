@@ -7,7 +7,7 @@ description: >
 version: 1.0.0
 author: Viktor Bozzay
 disable-model-invocation: true
-argument-hint: "[label]"
+argument-hint: '[label]'
 ---
 
 # cv-backup — Manual CV Snapshot
@@ -18,11 +18,13 @@ fields into `cv-versions/`. Useful before manual edits, experiments, or refactor
 ## Step 1 — Parse argument
 
 If an argument was provided:
+
 - `LABEL_SLUG` = argument → lowercase, spaces→hyphens, special chars removed
-- `VERSION_BASE = DATE_manual_LABEL_SLUG`  (e.g. `"2026-06-13_manual_pre-refactor"`)
+- `VERSION_BASE = DATE_TIME_manual_LABEL_SLUG` (e.g. `"2026-06-15_0915_manual_pre-refactor"`)
 
 If no argument:
-- `VERSION_BASE = DATE_manual`  (e.g. `"2026-06-13_manual"`)
+
+- `VERSION_BASE = DATE_TIME_manual` (e.g. `"2026-06-15_0915_manual"`)
 
 `DATE` = today YYYY-MM-DD, `TIME` = current time HHMM.
 
@@ -33,6 +35,7 @@ Agent: cv-backup-agent
 ```
 
 Pass:
+
 - `MODE = "manual"`
 - `VERSION_BASE` (computed above)
 - `JD_TITLE = "Manual Backup"`
@@ -57,7 +60,7 @@ If `STATUS = "ok"`:
 
 Mappa: VERSION_FOLDER/
   - cv-data.js           ← CV adat snapshot
-  - locale-content.json  ← 11 locale content snapshot
+  - locales/             ← 11 locale fájl (eredeti JS formátumban)
 
 Visszaállításhoz: /cv-restore VERSION_FOLDER_NAME
 ```

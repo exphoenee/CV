@@ -1,6 +1,15 @@
 import { CV_DATA } from './cv-data.js';
 import { renderSwaggerContent } from './components/swagger/index.js';
-import { initHireModal, initThemeToggle, initFormspree, musicPlayerHTML, hireModalHTML, bookingModalHTML, initBookingModal, hideLoadingOverlay } from './shared.js';
+import {
+  initHireModal,
+  initThemeToggle,
+  initFormspree,
+  musicPlayerHTML,
+  hireModalHTML,
+  bookingModalHTML,
+  initBookingModal,
+  hideLoadingOverlay,
+} from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { svgArrowUp, svgArrowDown } from './components/swagger/ui/icons.js';
 import { THEME_DARK, THEME_LIGHT } from './config.js';
@@ -21,9 +30,7 @@ document.querySelectorAll('.opblock-tag-section').forEach(function (section) {
     section.classList.toggle('is-open');
     var arrow = section.querySelector('.expand-operation');
     if (arrow) {
-      arrow.innerHTML = section.classList.contains('is-open')
-        ? svgArrowDown
-        : svgArrowUp;
+      arrow.innerHTML = section.classList.contains('is-open') ? svgArrowDown : svgArrowUp;
     }
   });
 });
@@ -36,12 +43,14 @@ function toggleOpblock(opblock) {
   }
 }
 
-document.querySelectorAll('.opblock-summary-control, .opblock-control-arrow').forEach(function (ctrl) {
-  ctrl.addEventListener('click', function () {
-    var opblock = ctrl.closest('.opblock');
-    if (opblock) toggleOpblock(opblock);
+document
+  .querySelectorAll('.opblock-summary-control, .opblock-control-arrow')
+  .forEach(function (ctrl) {
+    ctrl.addEventListener('click', function () {
+      var opblock = ctrl.closest('.opblock');
+      if (opblock) toggleOpblock(opblock);
+    });
   });
-});
 
 var themeBtn = document.getElementById('theme-toggle');
 if (themeBtn) {
@@ -56,9 +65,12 @@ document.getElementById('meet-swagger-btn')?.addEventListener('click', function 
 });
 
 if (!document.getElementById('hire-modal')) {
-  document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire', {
-    dynamicSubject: true
-  }));
+  document.body.insertAdjacentHTML(
+    'beforeend',
+    hireModalHTML('hire', {
+      dynamicSubject: true,
+    }),
+  );
 }
 
 var modalEl = document.getElementById('hire-modal');
@@ -85,7 +97,9 @@ window.showToast = function (msg) {
   container.appendChild(toast);
   setTimeout(function () {
     toast.classList.add('cv-toast-fade');
-    setTimeout(function () { toast.remove(); }, 400);
+    setTimeout(function () {
+      toast.remove();
+    }, 400);
   }, 3000);
 };
 

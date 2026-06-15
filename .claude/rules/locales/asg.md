@@ -13,37 +13,37 @@ archaic Norse-English character. No correct translation exists — consistency i
 
 ## Pronouns and Verb Forms
 
-| Concept | Asgardian form | Example usage |
-|---|---|---|
-| I (subject) | `ek` / `ég` | "Ek byggja…", "Ég em smiðr" |
-| You | `þu` | "Hvat kýss þu?" |
-| Is/am | `em` | "Ek em smiðr" |
-| We | `vit` | rare in this CV |
+| Concept     | Asgardian form | Example usage               |
+| ----------- | -------------- | --------------------------- |
+| I (subject) | `ek` / `ég`    | "Ek byggja…", "Ég em smiðr" |
+| You         | `þu`           | "Hvat kýss þu?"             |
+| Is/am       | `em`           | "Ek em smiðr"               |
+| We          | `vit`          | rare in this CV             |
 
 Use `ek` and `ég` interchangeably but not within the same label — pick one per phrase.
 
 ## Core Vocabulary
 
-| English concept | Asgardian | Notes |
-|---|---|---|
-| Developer / Maker | `smiðr` | "framhlið smiðr" = frontend developer |
-| Frontend | `framhlið` | lit. "front side" |
-| Backend | `bakhlið` | lit. "back side" |
-| Skill / Trade | `list` / `iðn` | |
-| Work / Experience | `starfsferill` | used for Work Experience section |
-| Education | `menntun` | |
-| Language | `tungumal` / `mal` | |
-| Open / View | `opna sýn` | "open view" |
-| Hire | `rað` | "Rað mik!" = Hire me! |
-| Send (message) | `senda` | |
-| Close | `loka` | |
-| Meeting | `fundur` | |
-| Print | `prenta` | |
-| Community | `felag` | lit. "fellowship" |
-| Master / Expert | `meistri` | |
-| Leader | `leiðtogi` | |
-| Document | `skjöl` | |
-| Path / Route | `stig` | |
+| English concept   | Asgardian          | Notes                                 |
+| ----------------- | ------------------ | ------------------------------------- |
+| Developer / Maker | `smiðr`            | "framhlið smiðr" = frontend developer |
+| Frontend          | `framhlið`         | lit. "front side"                     |
+| Backend           | `bakhlið`          | lit. "back side"                      |
+| Skill / Trade     | `list` / `iðn`     |                                       |
+| Work / Experience | `starfsferill`     | used for Work Experience section      |
+| Education         | `menntun`          |                                       |
+| Language          | `tungumal` / `mal` |                                       |
+| Open / View       | `opna sýn`         | "open view"                           |
+| Hire              | `rað`              | "Rað mik!" = Hire me!                 |
+| Send (message)    | `senda`            |                                       |
+| Close             | `loka`             |                                       |
+| Meeting           | `fundur`           |                                       |
+| Print             | `prenta`           |                                       |
+| Community         | `felag`            | lit. "fellowship"                     |
+| Master / Expert   | `meistri`          |                                       |
+| Leader            | `leiðtogi`         |                                       |
+| Document          | `skjöl`            |                                       |
+| Path / Route      | `stig`             |                                       |
 
 ## Style Rules
 

@@ -1,5 +1,14 @@
 import { renderPlainCV } from './components/plain/index.js';
-import { initHireModal, initFormspree, getSystemTheme, musicPlayerHTML, hireModalHTML, bookingModalHTML, initBookingModal, hideLoadingOverlay } from './shared.js';
+import {
+  initHireModal,
+  initFormspree,
+  getSystemTheme,
+  musicPlayerHTML,
+  hireModalHTML,
+  bookingModalHTML,
+  initBookingModal,
+  hideLoadingOverlay,
+} from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES, CURSOR_KEY } from './config.js';
 import { locale } from './locale.js';
@@ -11,17 +20,28 @@ function render() {
   document.getElementById('cv-content').innerHTML = renderPlainCV(locale.getData());
   initDecors();
   const headerLd = document.querySelector('#cv-content .ld-select');
-  if (headerLd) initLangDropdown(headerLd, { onChange(lang) { locale.setLang(lang); render(); buildSettingsModal(); window.dispatchEvent(new CustomEvent('localechange')); } });
+  if (headerLd)
+    initLangDropdown(headerLd, {
+      onChange(lang) {
+        locale.setLang(lang);
+        render();
+        buildSettingsModal();
+        window.dispatchEvent(new CustomEvent('localechange'));
+      },
+    });
 }
 
 render();
 
-document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire-plain', {
-  subject: 'Hire inquiry from CV - plain',
-  p1Class: 'cv-plain-inline-11',
-  p2Class: 'cv-plain-inline-12',
-  errClass: 'cv-plain-inline-14'
-}));
+document.body.insertAdjacentHTML(
+  'beforeend',
+  hireModalHTML('hire-plain', {
+    subject: 'Hire inquiry from CV - plain',
+    p1Class: 'cv-plain-inline-11',
+    p2Class: 'cv-plain-inline-12',
+    errClass: 'cv-plain-inline-14',
+  }),
+);
 
 initHireModal('hire-plain');
 
@@ -65,7 +85,12 @@ function buildSettingsModal() {
   `;
   createLangDropdown(settingsBackdrop.querySelector('#modal-lang-slot'), {
     fullWidth: true,
-    onChange(lang) { locale.setLang(lang); render(); buildSettingsModal(); window.dispatchEvent(new CustomEvent('localechange')); }
+    onChange(lang) {
+      locale.setLang(lang);
+      render();
+      buildSettingsModal();
+      window.dispatchEvent(new CustomEvent('localechange'));
+    },
   });
 }
 
@@ -77,9 +102,13 @@ function openSettings() {
 }
 function closeSettings() {
   settingsBackdrop.classList.remove('is-open');
-  settingsBackdrop.addEventListener('transitionend', () => {
-    settingsBackdrop.classList.remove('is-visible');
-  }, { once: true });
+  settingsBackdrop.addEventListener(
+    'transitionend',
+    () => {
+      settingsBackdrop.classList.remove('is-visible');
+    },
+    { once: true },
+  );
 }
 gearBtn.addEventListener('click', openSettings);
 
@@ -105,18 +134,21 @@ document.body.addEventListener('click', function (e) {
   }
 });
 
-window.showToast = function(message) {
+window.showToast = function (message) {
   var container = document.getElementById('cv-toaster-container');
   if (!container) return;
   var toast = document.createElement('div');
   toast.className = 'cv-toast';
-  toast.innerHTML = '<span>' + message + '</span><button class="cv-toast-close" aria-label="Close">×</button>';
+  toast.innerHTML =
+    '<span>' + message + '</span><button class="cv-toast-close" aria-label="Close">×</button>';
 
   var closeBtn = toast.querySelector('.cv-toast-close');
 
   function removeToast() {
     toast.classList.add('hiding');
-    setTimeout(function() { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
+    setTimeout(function () {
+      if (toast.parentNode) toast.parentNode.removeChild(toast);
+    }, 300);
   }
 
   closeBtn.addEventListener('click', removeToast);
@@ -129,22 +161,36 @@ window.showToast = function(message) {
   var btn = document.getElementById('theme-toggle');
   var overlay = null;
   var isTouch = window.matchMedia('(pointer: coarse)').matches;
-  var states = isTouch ? [THEME_LIGHT, THEME_DARK] : [THEME_LIGHT, THEME_DARK].concat(PLAIN_ONLY_THEMES);
+  var states = isTouch
+    ? [THEME_LIGHT, THEME_DARK]
+    : [THEME_LIGHT, THEME_DARK].concat(PLAIN_ONLY_THEMES);
   var icons = isTouch
     ? ['assets/images/sun.webp', 'assets/images/moon.webp']
-    : ['assets/images/sun.webp', 'assets/images/moon.webp', 'assets/images/flashlight.webp', 'assets/images/nightvision.webp', 'assets/images/predator.webp'];
+    : [
+        'assets/images/sun.webp',
+        'assets/images/moon.webp',
+        'assets/images/flashlight.webp',
+        'assets/images/nightvision.webp',
+        'assets/images/predator.webp',
+      ];
   var savedTheme = localStorage.getItem(THEME_KEY);
-  var current = (savedTheme && states.indexOf(savedTheme) !== -1) ? savedTheme : getSystemTheme();
+  var current = savedTheme && states.indexOf(savedTheme) !== -1 ? savedTheme : getSystemTheme();
   if (states.indexOf(current) === -1) current = THEME_LIGHT;
   var wordsWrapped = false;
 
   function updateOverlay(x, y) {
     if (!overlay) return;
-    overlay.style.background = 'radial-gradient(circle 250px at ' + x + 'px ' + y + 'px, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 12%, transparent 25%, transparent 52%, rgba(0,0,0,0.15) 65%, rgba(0,0,0,0.5) 78%, rgba(0,0,0,0.8) 88%, rgba(0,0,0,0.9) 94%, rgba(0,0,0,0.92) 100%)';
+    overlay.style.background =
+      'radial-gradient(circle 250px at ' +
+      x +
+      'px ' +
+      y +
+      'px, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 12%, transparent 25%, transparent 52%, rgba(0,0,0,0.15) 65%, rgba(0,0,0,0.5) 78%, rgba(0,0,0,0.8) 88%, rgba(0,0,0,0.9) 94%, rgba(0,0,0,0.92) 100%)';
   }
 
   function onMouseMove(e) {
-    var x = e.clientX, y = e.clientY;
+    var x = e.clientX,
+      y = e.clientY;
     updateOverlay(x, y);
     localStorage.setItem(CURSOR_KEY, x + ',' + y);
   }
@@ -154,7 +200,7 @@ window.showToast = function(message) {
       if (!element.textContent.trim()) return;
       const words = element.textContent.split(/(\s+)/);
       const fragments = document.createDocumentFragment();
-      words.forEach(word => {
+      words.forEach((word) => {
         if (word.trim()) {
           const span = document.createElement('span');
           span.className = 'nv-word';
@@ -169,13 +215,15 @@ window.showToast = function(message) {
         }
       });
       element.replaceWith(fragments);
-    } else if (element.nodeType === Node.ELEMENT_NODE &&
-               element.tagName !== 'SCRIPT' &&
-               element.tagName !== 'STYLE' &&
-               element.tagName !== 'SVG' &&
-               !element.classList.contains('blockTitle')) {
+    } else if (
+      element.nodeType === Node.ELEMENT_NODE &&
+      element.tagName !== 'SCRIPT' &&
+      element.tagName !== 'STYLE' &&
+      element.tagName !== 'SVG' &&
+      !element.classList.contains('blockTitle')
+    ) {
       const children = Array.from(element.childNodes);
-      children.forEach(child => wrapWords(child));
+      children.forEach((child) => wrapWords(child));
     }
   }
 
@@ -240,7 +288,9 @@ function initDecors() {
 
   for (var i = decors.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
-    var tmp = decors[i]; decors[i] = decors[j]; decors[j] = tmp;
+    var tmp = decors[i];
+    decors[i] = decors[j];
+    decors[j] = tmp;
   }
 
   for (var k = 0; k < items.length - 1; k++) {
@@ -248,7 +298,8 @@ function initDecors() {
     img.src = './assets/images/' + decors[k % decors.length];
     img.alt = '';
     img.className = 'work-decor';
-    img.style.cssText = 'display:block;width:400px;max-width:80%;height:30px;object-fit:contain;margin:3mm auto 3mm';
+    img.style.cssText =
+      'display:block;width:400px;max-width:80%;height:30px;object-fit:contain;margin:3mm auto 3mm';
     items[k].parentNode.insertBefore(img, items[k].nextSibling);
   }
 }

@@ -1,9 +1,15 @@
 import { CV_DATA } from './cv-data.js';
 import { locale } from './locale.js';
 import {
-  initHireModal, initFormspree, hireModalHTML,
-  bookingModalHTML, initBookingModal,
-  getSystemTheme, musicPlayerHTML, showToast, hideLoadingOverlay,
+  initHireModal,
+  initFormspree,
+  hireModalHTML,
+  bookingModalHTML,
+  initBookingModal,
+  getSystemTheme,
+  musicPlayerHTML,
+  showToast,
+  hideLoadingOverlay,
 } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT } from './config.js';
@@ -11,24 +17,24 @@ import { langDropdownHTML, initLangDropdown } from './components/lang-dropdown.j
 
 // ── Colors ────────────────────────────────────────────────────────────────────
 const CARD_COLORS = {
-  aegex:     '#ff7024',
-  telekom:   '#e05aab',
-  scolia:    '#22c55e',
-  cubicfox:  '#f59e0b',
-  cobotx:    '#6366f1',
+  aegex: '#ff7024',
+  telekom: '#e05aab',
+  scolia: '#22c55e',
+  cubicfox: '#f59e0b',
+  cobotx: '#6366f1',
   webforsol: '#8b5cf6',
   community: '#06b6d4',
 };
 
 // ── Community row ─────────────────────────────────────────────────────────────
 const COMMUNITY_ROW = {
-  id:          'community',
-  company:     'Mátyás Király Primary School, Pécs',
-  logo:        null,
-  title:       'Pro Bono IT Mentor',
-  period:      { from: '2026-02', to: null },
+  id: 'community',
+  company: 'Mátyás Király Primary School, Pécs',
+  logo: null,
+  title: 'Pro Bono IT Mentor',
+  period: { from: '2026-02', to: null },
   periodLabel: 'Feb 2026 – Present',
-  isCurrent:   true,
+  isCurrent: true,
   description: CV_DATA.community,
   bullets: [
     'Founded free after-school IT and programming club (ongoing)',
@@ -42,11 +48,13 @@ const COMMUNITY_ROW = {
 // ── Render helpers ────────────────────────────────────────────────────────────
 function renderCard(job) {
   const color = CARD_COLORS[job.id] || '#8b949e';
-  const logo  = job.logo
+  const logo = job.logo
     ? `<img class="sb-card-logo" src="assets/images/${job.logo}" alt="${job.company} logo" onerror="this.style.display='none'">`
     : `<span class="sb-card-initials" style="background:${color}18;color:${color};border-color:${color}30" aria-hidden="true">${job.company.charAt(0)}</span>`;
-  const chips = (job.skills || []).slice(0, 4)
-    .map(s => `<span class="sb-chip">${s.name}</span>`).join('');
+  const chips = (job.skills || [])
+    .slice(0, 4)
+    .map((s) => `<span class="sb-chip">${s.name}</span>`)
+    .join('');
 
   return `<div class="sb-card" draggable="true" data-job="${job.id}" role="listitem" tabindex="0" aria-label="${job.title} at ${job.company}, ${job.periodLabel}${job.isCurrent ? ' (current)' : ''}">
     <div class="sb-card-accent" style="background:${color}" aria-hidden="true"></div>
@@ -113,25 +121,28 @@ function renderPage() {
   const t = locale.t.bind(locale);
 
   const contacts = CV_DATA.identity.contacts
-    .filter(c => c.url)
+    .filter((c) => c.url)
     .slice(0, 4)
-    .map(c => `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`)
+    .map(
+      (c) =>
+        `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`,
+    )
     .join('');
 
   const allContactLinks = CV_DATA.identity.contacts
-    .filter(c => c.url)
-    .map(c => `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`)
+    .filter((c) => c.url)
+    .map(
+      (c) =>
+        `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`,
+    )
     .join('');
 
-  const inProgressCards = [
-    renderCard(CV_DATA.workExperience[0]),
-    renderCard(COMMUNITY_ROW),
-  ];
+  const inProgressCards = [renderCard(CV_DATA.workExperience[0]), renderCard(COMMUNITY_ROW)];
   const doneCards = CV_DATA.workExperience.slice(1).map(renderCard);
 
-  const backlogCol    = renderColumn('todo',         t('sbTodo'),        '#f59e0b', [renderSkeleton()]);
+  const backlogCol = renderColumn('todo', t('sbTodo'), '#f59e0b', [renderSkeleton()]);
   const inProgressCol = renderColumn('in-progress', t('sbInProgress'), '#22c55e', inProgressCards);
-  const doneCol       = renderColumn('done',        t('sbDone'),       '#8b949e', doneCards);
+  const doneCol = renderColumn('done', t('sbDone'), '#8b949e', doneCards);
 
   document.getElementById('board-root').innerHTML = `
   <div class="sb-page">
@@ -185,16 +196,19 @@ function initHeader() {
   if (ldEl) {
     initLangDropdown(ldEl, {
       onChange(lang) {
-        const skeletonCol = document.querySelector('.sb-card.is-skeleton')
-          ?.closest('.sb-col-body')?.dataset.col;
+        const skeletonCol = document.querySelector('.sb-card.is-skeleton')?.closest('.sb-col-body')
+          ?.dataset.col;
         locale.setLang(lang);
         renderPage();
         initHeader();
         // Restore skeleton column after re-render
         if (skeletonCol && skeletonCol !== 'todo') {
-          const col      = document.querySelector(`.sb-col-body[data-col="${skeletonCol}"]`);
+          const col = document.querySelector(`.sb-col-body[data-col="${skeletonCol}"]`);
           const skeleton = document.querySelector('.sb-card.is-skeleton');
-          if (col && skeleton) { col.appendChild(skeleton); updateCounts(); }
+          if (col && skeleton) {
+            col.appendChild(skeleton);
+            updateCounts();
+          }
         }
         window.dispatchEvent(new CustomEvent('localechange'));
       },
@@ -237,17 +251,17 @@ function jobModalHTML() {
 
 function updateJobModalText() {
   const t = locale.t.bind(locale);
-  const el = id => document.getElementById(id);
+  const el = (id) => document.getElementById(id);
   if (!el('sb-job-overlay')) return;
-  el('sb-job-modal-title').textContent  = t('sbNewPosition');
-  el('sb-job-company-lbl').textContent  = t('sbJobCompany');
-  el('sb-job-company').placeholder      = t('sbJobCompanyPh');
-  el('sb-job-role-lbl').textContent     = t('sbJobRole');
-  el('sb-job-role').placeholder         = t('sbJobRolePh');
-  el('sb-job-details-lbl').textContent  = t('sbJobDetails');
-  el('sb-job-details').placeholder      = t('sbJobDetailsPh');
-  el('sb-job-cancel').textContent       = t('sbJobCancel');
-  el('sb-job-submit').textContent       = t('sbJobAdd');
+  el('sb-job-modal-title').textContent = t('sbNewPosition');
+  el('sb-job-company-lbl').textContent = t('sbJobCompany');
+  el('sb-job-company').placeholder = t('sbJobCompanyPh');
+  el('sb-job-role-lbl').textContent = t('sbJobRole');
+  el('sb-job-role').placeholder = t('sbJobRolePh');
+  el('sb-job-details-lbl').textContent = t('sbJobDetails');
+  el('sb-job-details').placeholder = t('sbJobDetailsPh');
+  el('sb-job-cancel').textContent = t('sbJobCancel');
+  el('sb-job-submit').textContent = t('sbJobAdd');
 }
 
 function showJobForm(skeletonCard) {
@@ -256,10 +270,10 @@ function showJobForm(skeletonCard) {
   const overlay = document.getElementById('sb-job-overlay');
   overlay.style.display = 'flex';
   document.getElementById('sb-job-company').value = '';
-  document.getElementById('sb-job-role').value    = '';
+  document.getElementById('sb-job-role').value = '';
   document.getElementById('sb-job-details').value = '';
   document.getElementById('sb-job-company-err').textContent = '';
-  document.getElementById('sb-job-role-err').textContent    = '';
+  document.getElementById('sb-job-role-err').textContent = '';
   document.getElementById('sb-job-company').classList.remove('is-error');
   document.getElementById('sb-job-role').classList.remove('is-error');
   setTimeout(() => document.getElementById('sb-job-company').focus(), 50);
@@ -282,9 +296,9 @@ function cancelJobForm() {
 
 function submitJobForm() {
   const company = document.getElementById('sb-job-company').value.trim();
-  const role    = document.getElementById('sb-job-role').value.trim();
+  const role = document.getElementById('sb-job-role').value.trim();
   const details = document.getElementById('sb-job-details').value.trim();
-  const minLen  = 3;
+  const minLen = 3;
   let valid = true;
 
   const setErr = (inputId, errId, msg) => {
@@ -296,12 +310,14 @@ function submitJobForm() {
   document.getElementById('sb-job-company').classList.remove('is-error');
   document.getElementById('sb-job-role').classList.remove('is-error');
   document.getElementById('sb-job-company-err').textContent = '';
-  document.getElementById('sb-job-role-err').textContent    = '';
+  document.getElementById('sb-job-role-err').textContent = '';
 
-  if (!company)              setErr('sb-job-company', 'sb-job-company-err', locale.t('errFieldRequired'));
-  else if (company.length < minLen) setErr('sb-job-company', 'sb-job-company-err', locale.t('sbJobMinLength'));
-  if (!role)                 setErr('sb-job-role', 'sb-job-role-err', locale.t('errFieldRequired'));
-  else if (role.length < minLen)    setErr('sb-job-role', 'sb-job-role-err', locale.t('sbJobMinLength'));
+  if (!company) setErr('sb-job-company', 'sb-job-company-err', locale.t('errFieldRequired'));
+  else if (company.length < minLen)
+    setErr('sb-job-company', 'sb-job-company-err', locale.t('sbJobMinLength'));
+  if (!role) setErr('sb-job-role', 'sb-job-role-err', locale.t('errFieldRequired'));
+  else if (role.length < minLen)
+    setErr('sb-job-role', 'sb-job-role-err', locale.t('sbJobMinLength'));
   if (!valid) return;
 
   closeJobForm();
@@ -310,11 +326,11 @@ function submitJobForm() {
   const newCard = document.createElement('div');
   newCard.className = 'sb-card';
   newCard.setAttribute('draggable', 'true');
-  newCard.dataset.job        = 'future';
-  newCard.dataset.jobTitle   = role;
+  newCard.dataset.job = 'future';
+  newCard.dataset.jobTitle = role;
   newCard.dataset.jobCompany = company;
-  newCard.dataset.jobPeriod  = '2026 – …';
-  newCard.dataset.jobDesc    = details;
+  newCard.dataset.jobPeriod = '2026 – …';
+  newCard.dataset.jobDesc = details;
   newCard.innerHTML = `
     <div class="sb-card-accent" style="background:${color}"></div>
     <div class="sb-card-body">
@@ -334,31 +350,48 @@ function submitJobForm() {
   _pendingSkeleton = null;
   updateCounts();
 
-  const ipBody   = document.querySelector('.sb-col-body[data-col="in-progress"]');
+  const ipBody = document.querySelector('.sb-col-body[data-col="in-progress"]');
   const doneBody = document.querySelector('.sb-col-body[data-col="done"]');
-  const mover    = ipBody?.querySelector('.sb-card:not(.is-skeleton)');
+  const mover = ipBody?.querySelector('.sb-card:not(.is-skeleton)');
   if (mover && doneBody) {
     mover.classList.add('sb-card--completing');
-    mover.addEventListener('animationend', () => {
-      mover.classList.remove('sb-card--completing');
-      mover.classList.add('sb-card--arriving');
-      mover.querySelector('.sb-live-badge')?.remove();
-      doneBody.prepend(mover);
-      mover.addEventListener('animationend', () => {
-        mover.classList.remove('sb-card--arriving');
-      }, { once: true });
-      updateCounts();
-    }, { once: true });
+    mover.addEventListener(
+      'animationend',
+      () => {
+        mover.classList.remove('sb-card--completing');
+        mover.classList.add('sb-card--arriving');
+        mover.querySelector('.sb-live-badge')?.remove();
+        doneBody.prepend(mover);
+        mover.addEventListener(
+          'animationend',
+          () => {
+            mover.classList.remove('sb-card--arriving');
+          },
+          { once: true },
+        );
+        updateCounts();
+      },
+      { once: true },
+    );
   }
 }
 
 function initJobModal() {
-  document.addEventListener('click', e => {
-    if (e.target.closest('#sb-job-cancel'))  { cancelJobForm(); return; }
-    if (e.target.closest('#sb-job-submit'))  { submitJobForm(); return; }
-    if (e.target.id === 'sb-job-overlay')    { cancelJobForm(); return; }
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#sb-job-cancel')) {
+      cancelJobForm();
+      return;
+    }
+    if (e.target.closest('#sb-job-submit')) {
+      submitJobForm();
+      return;
+    }
+    if (e.target.id === 'sb-job-overlay') {
+      cancelJobForm();
+      return;
+    }
   });
-  document.addEventListener('keydown', e => {
+  document.addEventListener('keydown', (e) => {
     if (document.getElementById('sb-job-overlay')?.style.display === 'none') return;
     if (e.key === 'Enter') {
       // Don't submit form when typing in the textarea (Enter = new line)
@@ -378,15 +411,15 @@ let _lastDragEnd = 0;
 
 function getJobData(jobId, card) {
   if (jobId === 'community') return { ...COMMUNITY_ROW, description: locale.getData().community };
-  const found = locale.getData().workExperience.find(j => j.id === jobId);
+  const found = locale.getData().workExperience.find((j) => j.id === jobId);
   if (found) return found;
   if (jobId === 'future' && card) {
     return {
       id: 'future',
-      title: card.dataset.jobTitle   || '',
+      title: card.dataset.jobTitle || '',
       company: card.dataset.jobCompany || '',
-      periodLabel: card.dataset.jobPeriod  || '2026 – …',
-      description: card.dataset.jobDesc    || '',
+      periodLabel: card.dataset.jobPeriod || '2026 – …',
+      description: card.dataset.jobDesc || '',
       isCurrent: true,
       bullets: [],
       skills: [],
@@ -397,8 +430,8 @@ function getJobData(jobId, card) {
 
 function renderDetailContent(job) {
   const color = CARD_COLORS[job.id] || '#a78bfa';
-  const chips = (job.skills || []).map(s => `<span class="sb-chip">${s.name}</span>`).join('');
-  const lis   = (job.bullets || []).map(b => `<li>${b}</li>`).join('');
+  const chips = (job.skills || []).map((s) => `<span class="sb-chip">${s.name}</span>`).join('');
+  const lis = (job.bullets || []).map((b) => `<li>${b}</li>`).join('');
   return `
     <div class="sb-detail-accent" style="background:${color}"></div>
     <div class="sb-detail-title" style="color:${color}">${job.title}</div>
@@ -425,9 +458,15 @@ function closeDetailPanel() {
 }
 
 function initDetailPanel() {
-  document.addEventListener('click', e => {
-    if (e.target.closest('#sb-detail-close')) { closeDetailPanel(); return; }
-    if (e.target.closest('.sb-detail-overlay')) { closeDetailPanel(); return; }
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#sb-detail-close')) {
+      closeDetailPanel();
+      return;
+    }
+    if (e.target.closest('.sb-detail-overlay')) {
+      closeDetailPanel();
+      return;
+    }
 
     if (Date.now() - _lastDragEnd < 120) return;
 
@@ -448,18 +487,20 @@ function initDetailPanel() {
       closeDetailPanel();
     }
   });
-  document.addEventListener('keydown', e => {
+  document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeDetailPanel();
   });
 }
 
 // ── Global event delegation (set up once) ─────────────────────────────────────
 function initGlobalHandlers() {
-  document.addEventListener('click', e => {
+  document.addEventListener('click', (e) => {
     // Theme toggle
     if (e.target.closest('#theme-toggle')) {
-      const next = document.documentElement.getAttribute('data-theme') === THEME_DARK
-        ? THEME_LIGHT : THEME_DARK;
+      const next =
+        document.documentElement.getAttribute('data-theme') === THEME_DARK
+          ? THEME_LIGHT
+          : THEME_DARK;
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem(THEME_KEY, next);
       return;
@@ -479,7 +520,7 @@ function initGlobalHandlers() {
         const rect = e.target.closest('#sb-contacts-btn').getBoundingClientRect();
         const btnCenter = rect.left + rect.width / 2;
         popup.style.right = btnCenter > window.innerWidth / 2 ? '0' : 'auto';
-        popup.style.left  = btnCenter > window.innerWidth / 2 ? 'auto' : '0';
+        popup.style.left = btnCenter > window.innerWidth / 2 ? 'auto' : '0';
         popup.classList.toggle('open');
       }
       return;
@@ -496,24 +537,27 @@ function initGlobalHandlers() {
 // ── Drag & drop ───────────────────────────────────────────────────────────────
 function getDragAfterElement(container, y) {
   const cards = [...container.querySelectorAll('.sb-card:not(.dragging)')];
-  return cards.reduce((closest, child) => {
-    const box    = child.getBoundingClientRect();
-    const offset = y - box.top - box.height / 2;
-    if (offset < 0 && offset > closest.offset) return { offset, element: child };
-    return closest;
-  }, { offset: Number.NEGATIVE_INFINITY }).element;
+  return cards.reduce(
+    (closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) return { offset, element: child };
+      return closest;
+    },
+    { offset: Number.NEGATIVE_INFINITY },
+  ).element;
 }
 
 function initDragDrop() {
-  let draggedCard      = null;
-  let _dragOriginCol   = null;
+  let draggedCard = null;
+  let _dragOriginCol = null;
   let _dragOriginNextSib = null;
 
-  document.addEventListener('dragstart', e => {
+  document.addEventListener('dragstart', (e) => {
     const card = e.target.closest('.sb-card');
     if (!card) return;
-    draggedCard        = card;
-    _dragOriginCol     = card.closest('.sb-col-body');
+    draggedCard = card;
+    _dragOriginCol = card.closest('.sb-col-body');
     _dragOriginNextSib = card.nextElementSibling;
     card.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
@@ -522,26 +566,30 @@ function initDragDrop() {
   document.addEventListener('dragend', () => {
     _lastDragEnd = Date.now();
     if (draggedCard) draggedCard.classList.remove('dragging');
-    document.querySelectorAll('.sb-col-body.drag-over').forEach(el => el.classList.remove('drag-over'));
+    document
+      .querySelectorAll('.sb-col-body.drag-over')
+      .forEach((el) => el.classList.remove('drag-over'));
     draggedCard = _dragOriginCol = _dragOriginNextSib = null;
   });
 
-  document.addEventListener('dragover', e => {
+  document.addEventListener('dragover', (e) => {
     if (!draggedCard) return;
     const col = e.target.closest('.sb-col-body');
     if (!col) return;
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
-    document.querySelectorAll('.sb-col-body.drag-over').forEach(el => el.classList.remove('drag-over'));
+    document
+      .querySelectorAll('.sb-col-body.drag-over')
+      .forEach((el) => el.classList.remove('drag-over'));
     col.classList.add('drag-over');
   });
 
-  document.addEventListener('dragleave', e => {
+  document.addEventListener('dragleave', (e) => {
     const col = e.target.closest('.sb-col-body');
     if (col && !col.contains(e.relatedTarget)) col.classList.remove('drag-over');
   });
 
-  document.addEventListener('drop', e => {
+  document.addEventListener('drop', (e) => {
     if (!draggedCard) return;
     const col = e.target.closest('.sb-col-body');
     if (!col) return;
@@ -549,12 +597,12 @@ function initDragDrop() {
     col.classList.remove('drag-over');
 
     const isSkeleton = draggedCard.classList.contains('is-skeleton');
-    const sameCol    = col === _dragOriginCol;
+    const sameCol = col === _dragOriginCol;
 
     if (sameCol) {
       const afterEl = getDragAfterElement(col, e.clientY);
       if (afterEl) col.insertBefore(draggedCard, afterEl);
-      else          col.appendChild(draggedCard);
+      else col.appendChild(draggedCard);
     } else if (isSkeleton) {
       col.appendChild(draggedCard);
       updateCounts();
@@ -562,13 +610,13 @@ function initDragDrop() {
     } else {
       showToast(locale.t('sbCannotChangePast'));
       if (_dragOriginNextSib) _dragOriginCol.insertBefore(draggedCard, _dragOriginNextSib);
-      else                    _dragOriginCol.appendChild(draggedCard);
+      else _dragOriginCol.appendChild(draggedCard);
     }
   });
 }
 
 function updateCounts() {
-  document.querySelectorAll('.sb-column').forEach(col => {
+  document.querySelectorAll('.sb-column').forEach((col) => {
     col.querySelector('.sb-col-count').textContent =
       col.querySelector('.sb-col-body').children.length;
   });
@@ -583,12 +631,18 @@ initJobModal();
 initDetailPanel();
 
 document.body.insertAdjacentHTML('beforeend', jobModalHTML());
-document.body.insertAdjacentHTML('beforeend', `<aside class="sb-detail-panel" id="sb-detail-panel"><div class="sb-detail-inner"></div></aside><div class="sb-detail-overlay" id="sb-detail-overlay"></div>`);
+document.body.insertAdjacentHTML(
+  'beforeend',
+  `<aside class="sb-detail-panel" id="sb-detail-panel"><div class="sb-detail-inner"></div></aside><div class="sb-detail-overlay" id="sb-detail-overlay"></div>`,
+);
 
 document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
 initMusicPlayer();
 
-document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire-scrumboard', { subject: 'Hire inquiry from CV - Scrum Board' }));
+document.body.insertAdjacentHTML(
+  'beforeend',
+  hireModalHTML('hire-scrumboard', { subject: 'Hire inquiry from CV - Scrum Board' }),
+);
 initHireModal('hire-scrumboard');
 initFormspree('#hire-scrumboard-form');
 

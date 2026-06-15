@@ -23,10 +23,12 @@ You never invent skills, experience, or achievements — only reorganize and rep
 ### 0a — Job description input
 
 If the argument looks like a file path (`.txt`, `.md`, `.pdf`, or starts with `./`, `/`, drive letter):
+
 - Read the file. If missing → ❌ "Nem található: <path>" and stop.
 - Store content as `JD`.
 
 If the argument is non-empty inline text:
+
 - Store as `JD`.
 
 If NO argument was provided:
@@ -36,6 +38,7 @@ write the template to `tmp/jd-draft.md`, display the prompt, wait for user input
 ### 0b — Extract job metadata
 
 From `JD`:
+
 - `JD_TITLE` — job title (e.g. "Senior Frontend Engineer")
 - `JD_COMPANY` — company name or `"ismeretlen"`
 - `JD_SENIORITY` — junior / mid / senior / lead / principal
@@ -58,6 +61,7 @@ From `JD`:
 Read `scripts/cv-data.js` in full. Store as `CV_ORIGINAL`.
 
 Extract:
+
 - `CV_SUMMARY` — `summary` field
 - `CV_SKILLS_ALL` — all skill names from `skillGroups.*` and `workExperience[].skills[].name`, with job count
 - `CV_BULLETS_ALL` — all bullets with context `{ company, jobTitle, period, text }`
@@ -68,6 +72,7 @@ Extract:
 Follow the instructions in `.claude/rules/career-profile-usage.md` — this file contains the complete YAML filtering logic.
 
 **Summary:**
+
 1. List all `.md` files in `profile/`
 2. Parse each file's **YAML frontmatter** (the `---` block at the top) — read ONLY the header, not the body
 3. Filter by relevance using `type`, `profession`, `domain`, and other YAML fields
@@ -176,6 +181,7 @@ Biztosan elkészítsem ennek ellenére az optimalizált CV-t? (igen / nem)
 ```
 
 Wait for explicit user input:
+
 - `nem` / `n` → stop. Display: `Megszakítva — nem módosítottam egyetlen fájlt sem.` Do NOT touch any file.
 - `igen` / `y` → continue to Step 3 (and through to the normal confirmation in Step 4).
 
@@ -187,12 +193,14 @@ and rephrases existing, traceable content.
 ## Step 3 — Decision: proceed?
 
 If `OVERALL_SCORE >= 90` AND `CHANGE_PLAN` is empty:
+
 ```
 ✅ Nem szükséges optimalizálás.
 
 Egyezés: OVERALL_SCORE% — a CV már nagyon jól illeszkedik ehhez az álláshoz.
 Nincs érdemi javaslat. Nem módosítom a cv-data.js-t és nem hozok létre verziófájlt.
 ```
+
 Stop.
 
 ---
@@ -214,14 +222,17 @@ Read `scripts/cv-data.js` again (to get current state for editing).
 Apply each item in `CHANGE_PLAN`:
 
 ### CHANGE_SUMMARY
+
 Locate the `summary:` field. Replace the string value with the new summary text.
 Preserve surrounding formatting.
 
 ### CHANGE_SKILL_ORDER
+
 Locate the relevant `skillGroups` array. Reorder entries to match `new_order`.
 Do NOT add or remove entries.
 
 ### CHANGE_REPHRASE
+
 Locate each bullet string in the relevant `workExperience[].bullets[]` or
 `workExperience[].projects[].bullets[]`. Replace with the rephrased version.
 Preserve formatting exactly.
@@ -236,6 +247,7 @@ Track which fields changed and their new values:
 ## Step 7 — Dispatch cv-translator-agent
 
 Pass to `cv-translator-agent`:
+
 - `CHANGED_FIELDS` — what changed in the English cv-data.js
 - `JD_TITLE`, `JD_COMPANY` — for context
 - The list of all 11 locale files to update (`hu`, `de`, `fr`, `es`, `it`, `asg`, `dot`, `kl`, `qu`, `goa`, `ya`)
@@ -260,6 +272,7 @@ Read the updated `content.summary` (and any changed bullets) from the locale fil
 Load `.claude/rules/locales/<lang>.md`.
 
 Check:
+
 - Does the translated summary start with a capital letter and end with a period?
 - Are technology names preserved correctly? (TypeScript, React, Svelte, Node.js — not translated or lowercased)
 - Does the text length roughly match the English source (±30%)?
@@ -274,6 +287,7 @@ Read the updated `content.summary` from the locale file.
 Load `.claude/rules/locales/<lang>.md` and extract the vocabulary table.
 
 Check:
+
 - Are the established key terms present? (e.g. for `kl`: "Qapla'", "HoS", "jIH"; for `qu`: "Nossë", "Hirë", "Namárië")
 - Are the phonetic conventions preserved? (apostrophes in Klingon/Yautja, diaereses in Quenya)
 - Is the text roughly the same length as the original fictional summary?
@@ -292,6 +306,7 @@ Agent: cv-backup-agent
 ```
 
 Pass:
+
 - `MODE = "job-apply"`
 - `VERSION_BASE` (computed in Step 0b)
 - `JD_TITLE`, `JD_COMPANY`, `JD_SENIORITY`, `JD_DOMAIN`
@@ -324,11 +339,12 @@ Agent: cover-letter-agent
 ```
 
 Pass:
+
 - `JD_TITLE`, `JD_COMPANY`, `JD_DOMAIN`, `JD_SENIORITY`
 - `JD_REQUIRED`, `JD_RESPONSIBILITIES`, `JD_PRIMARY_LANGUAGE`
 - `PROFILE_DATA` (from Step 1b)
 - `CV_SUMMARY`, `CV_BULLETS_ALL`, `CV_EXPERIENCE_SUMMARY`
-- `OUTPUT_FOLDER = VERSION_FOLDER` (same folder as cv-data.js and locale-content.json)
+- `OUTPUT_FOLDER = VERSION_FOLDER` (same folder as cv-data.js and locales/)
 - `DATE`, `TIME`
 
 Wait for agent to return `COVER_LETTER_EN`, `COVER_LETTER_HU`, `COVER_LETTER_JD`, `STATUS`.
@@ -385,6 +401,7 @@ python .claude/scripts/cv-ledger.py log --category mutation --operation job-appl
 
 Open `cv-versions/applications.md` (create it with the header from the rule file if missing).
 Insert a row **directly under the header row** (newest first) using the **applications.md** format:
+
 - Dátum = DATE · Pozíció/Cég/Szint = JD_TITLE/JD_COMPANY/JD_SENIORITY · ATS = OVERALL_SCORE%
 - APP_ID (mappa) = relative link to `APP_ID/` · JD = link to `APP_ID/job-description.md`
 - Fordítások = count of locales updated by cv-translator-agent (e.g. `11/11`)
@@ -397,11 +414,12 @@ If a row with the same `APP_ID` already exists (a `-vN` overwrite), update it in
 ## Step 9 — Final report
 
 Display:
+
 - `✅ Állásjelentkezési optimalizálás kész`
 - Position: JD_TITLE @ JD_COMPANY, OVERALL_SCORE%
 - APP_ID (azonosító + snapshot mappa neve)
 - Changes: cv-data.js modification count + locale count
-- VERSION_FOLDER contents: cv-data.js · locale-content.json · job-description.md · (cover-letter-en.md · cover-letter-hu.md if written)
+- VERSION_FOLDER contents: cv-data.js · locales/ · job-description.md · (cover-letter-en.md · cover-letter-hu.md if written)
 - Marker: kétsoros `// @job-application:` + `// @cv-last-change:` blokk a live cv-data.js + 12 content locale fájlon (cv-ledger.py)
 - Napló: új sor a `cv-versions/applications.md` indexben ÉS a `cv-versions/history.md` audit naplóban
 - Translation quality per language from TRANSLATION_QUALITY: real languages show ✅/⚠️ with note; fictional languages always ⚠️ (expected)
@@ -412,17 +430,17 @@ Display:
 
 ## Hard Constraints
 
-- ❌ Never add skills, technologies, or achievements not already in cv-data.js OR profile/*.md
-- ❌ Never suggest a rephrase that implies experience not traceable to cv-data.js or profile/*.md
+- ❌ Never add skills, technologies, or achievements not already in cv-data.js OR profile/\*.md
+- ❌ Never suggest a rephrase that implies experience not traceable to cv-data.js or profile/\*.md
 - ❌ Never apply changes without user confirmation (Step 4)
 - ❌ Never modify cv-data.js if OVERALL_SCORE >= 90 and CHANGE_PLAN is empty
 - ✅ Suitability gate (Step 2e): if the job is beyond Viktor's traceable abilities/experience
-  (REQUIRED_SCORE < 40 AND no qualifying profile/*.md evidence), warn the user and require an
+  (REQUIRED_SCORE < 40 AND no qualifying profile/\*.md evidence), warn the user and require an
   explicit `igen` before proceeding. On `nem` → stop without touching any file. Never invent
   skills to close the gap.
 - ✅ If no argument: create tmp/jd-draft.md and wait for user to fill it in (Step 0a)
 - ✅ VERSION_BASE = DATE_COMPANY_SLUG_TITLE_SLUG — passed to cv-backup-agent; final VERSION_FOLDER determined by the agent
-- ✅ Each version is a folder: VERSION_FOLDER/cv-data.js + VERSION_FOLDER/locale-content.json (created by cv-backup-agent)
+- ✅ Each version is a folder: VERSION_FOLDER/cv-data.js + VERSION_FOLDER/locales/ (created by cv-backup-agent)
 - ✅ Dispatch cv-backup-agent AFTER translation (Step 8) — snapshot contains the optimized + translated state
 - ✅ Step 8c: save the formatted JD to VERSION_FOLDER/job-description.md; stamp the marker block via `cv-ledger.py mark --set-application` (cv-data.js + 12 `<lang>.js` content files only — NOT `-page.js`); append a `mutation` row via `cv-ledger.py log`; and add/update the row in cv-versions/applications.md
 - ✅ APP_ID = final VERSION_FOLDER basename — the one id linking JD, live files, snapshot, and the log

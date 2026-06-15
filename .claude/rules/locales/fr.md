@@ -12,11 +12,11 @@ Couvre les labels `scripts/locales/fr.js` et tout contenu CV en français.
 
 ## Temps verbaux
 
-| Contexte | Temps | Exemple |
-|---|---|---|
-| Poste actuel | Présent | « Je dirige une équipe de 2 personnes » |
-| Postes antérieurs | Passé composé | « J'ai développé… », « J'ai migré… » |
-| Résumé | Présent + passé composé | « Je me spécialise… J'ai dirigé… » |
+| Contexte          | Temps                   | Exemple                                 |
+| ----------------- | ----------------------- | --------------------------------------- |
+| Poste actuel      | Présent                 | « Je dirige une équipe de 2 personnes » |
+| Postes antérieurs | Passé composé           | « J'ai développé… », « J'ai migré… »    |
+| Résumé            | Présent + passé composé | « Je me spécialise… J'ai dirigé… »      |
 
 ## Terminologie technique
 

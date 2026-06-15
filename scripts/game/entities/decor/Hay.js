@@ -9,18 +9,18 @@ const SHEET = './assets/sprites/Cute/Outdoor decoration/Outdoor_Decor_Free.png';
  * Pickable hay / straw bale. Has a collision box but does not block movement.
  */
 export default class Hay extends Pickable {
-    constructor({ x, y }) {
-        super({
-            x,
-            y,
-            drawWidth: 32,
-            drawHeight: 32,
-            spriteX: 96,
-            spriteY: 48,
-            spriteW: 16,
-            spriteH: 16,
-            imageSrc: SHEET,
-            collisionBox: { offsetX: 6, offsetY: 10, width: 20, height: 18 }
-        });
-    }
+  constructor({ x, y }) {
+    super({
+      x,
+      y,
+      drawWidth: 32,
+      drawHeight: 32,
+      spriteX: 96,
+      spriteY: 48,
+      spriteW: 16,
+      spriteH: 16,
+      imageSrc: SHEET,
+      collisionBox: { offsetX: 6, offsetY: 10, width: 20, height: 18 },
+    });
+  }
 }

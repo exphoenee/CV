@@ -29,6 +29,8 @@
 
     <div id="gantt-root"></div>
     <div id="cv-toaster-container"></div>
+    <script>/* fallback: if module load fails, show error on blur cover */
+(function(){var o=document.getElementById('loading-overlay');if(!o)return;var d=false;function e(){if(d||o.classList.contains('loaded'))return;d=true;var s=o.querySelector('.loading-spinner');if(s)s.style.display='none';var c=document.createElement('div');c.style.cssText='display:flex;flex-direction:column;align-items:center;gap:16px;font-family:system-ui,sans-serif;text-align:center;padding:20px;';var ic=document.createElement('div');ic.style.cssText='width:56px;height:56px;border-radius:50%;border:3px solid rgba(255,112,36,0.25);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#ff7024;';ic.textContent='!';c.appendChild(ic);var t=document.createElement('div');t.style.cssText='font-size:16px;font-weight:600;color:#e0e0e0;';t.textContent='Something went wrong';c.appendChild(t);var sub=document.createElement('div');sub.style.cssText='font-size:13px;color:#999;max-width:260px;line-height:1.5;';sub.textContent='The page failed to load. Please try refreshing.';c.appendChild(sub);o.appendChild(c)}window.addEventListener('error',function(n){if(n.target&&n.target.tagName==='SCRIPT')e()},true);window.onerror=function(){e()}})();</script>
     <script type="module" src="./scripts/cv-gantt.js"></script>
   </body>
 </html>

@@ -1,32 +1,41 @@
 import { CV_DATA } from './cv-data.js';
 import { locale } from './locale.js';
-import { initHireModal, initFormspree, hireModalHTML, bookingModalHTML, initBookingModal, getSystemTheme, musicPlayerHTML, hideLoadingOverlay } from './shared.js';
+import {
+  initHireModal,
+  initFormspree,
+  hireModalHTML,
+  bookingModalHTML,
+  initBookingModal,
+  getSystemTheme,
+  musicPlayerHTML,
+  hideLoadingOverlay,
+} from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT } from './config.js';
 import { createLangDropdown } from './components/lang-dropdown.js';
 
 // ── Chart config ──────────────────────────────────────────────────────────────
-const START_YEAR  = 2020;
-const START_MONTH = 0;      // Jan
-const END_YEAR    = 2027;
-const END_MONTH   = 0;      // Jan
-const MONTH_W     = 20;     // px per month
-const SIDEBAR_W   = 230;    // px
-const ROW_H       = 54;     // px
-const BAR_H       = 32;     // px
-const GRP_H       = 28;     // group header height
-const HDR_H       = 44;     // time axis header height
+const START_YEAR = 2020;
+const START_MONTH = 0; // Jan
+const END_YEAR = 2027;
+const END_MONTH = 0; // Jan
+const MONTH_W = 20; // px per month
+const SIDEBAR_W = 230; // px
+const ROW_H = 54; // px
+const BAR_H = 32; // px
+const GRP_H = 28; // group header height
+const HDR_H = 44; // time axis header height
 
 const TOTAL_MONTHS = (END_YEAR - START_YEAR) * 12 + (END_MONTH - START_MONTH); // 84
-const CHART_W      = TOTAL_MONTHS * MONTH_W;                                    // 1680px
+const CHART_W = TOTAL_MONTHS * MONTH_W; // 1680px
 
 // ── Colors ────────────────────────────────────────────────────────────────────
 const BAR_COLORS = {
-  aegex:     '#ff7024',
-  telekom:   '#e05aab',
-  scolia:    '#22c55e',
-  cubicfox:  '#f59e0b',
-  cobotx:    '#6366f1',
+  aegex: '#ff7024',
+  telekom: '#e05aab',
+  scolia: '#22c55e',
+  cubicfox: '#f59e0b',
+  cobotx: '#6366f1',
   webforsol: '#8b5cf6',
   community: '#06b6d4',
 };
@@ -53,13 +62,13 @@ const MILESTONES = {
 
 // ── Extra row: Community ──────────────────────────────────────────────────────
 const COMMUNITY_ROW = {
-  id:          'community',
-  company:     'Mátyás Király Primary School, Pécs',
-  logo:        null,
-  title:       'Pro Bono IT Mentor',
-  period:      { from: '2026-02', to: null },
+  id: 'community',
+  company: 'Mátyás Király Primary School, Pécs',
+  logo: null,
+  title: 'Pro Bono IT Mentor',
+  period: { from: '2026-02', to: null },
   periodLabel: 'Feb 2026 – Present',
-  isCurrent:   true,
+  isCurrent: true,
   description: CV_DATA.community,
   bullets: [
     'Founded free after-school IT and programming club (ongoing)',
@@ -79,8 +88,9 @@ function monthOffset(yyyyMM) {
 // Returns fractional pixel offset for an exact Date (day-accurate)
 function dateToPx(date) {
   const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-  const fraction    = (date.getDate() - 1) / daysInMonth;
-  const months      = (date.getFullYear() - START_YEAR) * 12 + (date.getMonth() - START_MONTH) + fraction;
+  const fraction = (date.getDate() - 1) / daysInMonth;
+  const months =
+    (date.getFullYear() - START_YEAR) * 12 + (date.getMonth() - START_MONTH) + fraction;
   return Math.min(CHART_W, Math.max(0, months * MONTH_W));
 }
 
@@ -90,7 +100,7 @@ function todayPx() {
 
 function barGeometry(from, to) {
   const startPx = Math.max(0, monthOffset(from) * MONTH_W);
-  const endPx   = to
+  const endPx = to
     ? Math.min(CHART_W, (monthOffset(to) + 1) * MONTH_W)
     : dateToPx(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000));
   return { left: startPx, width: Math.max(8, endPx - startPx) };
@@ -98,7 +108,8 @@ function barGeometry(from, to) {
 
 // ── Render: time axis ─────────────────────────────────────────────────────────
 function renderTimeAxis() {
-  let years = '', quarters = '';
+  let years = '',
+    quarters = '';
   for (let y = START_YEAR; y < END_YEAR; y++) {
     years += `<div class="gt-year" style="width:${12 * MONTH_W}px">${y}</div>`;
     for (let q = 0; q < 4; q++) {
@@ -110,13 +121,15 @@ function renderTimeAxis() {
 
 // ── Render: milestones ────────────────────────────────────────────────────────
 function renderMilestones(jobId, barLeft) {
-  return (MILESTONES[jobId] || []).map(({ month, label }) => {
-    const x = monthOffset(month) * MONTH_W - barLeft;
-    return `<span class="gt-ms" style="left:${x}px" title="${label}">
+  return (MILESTONES[jobId] || [])
+    .map(({ month, label }) => {
+      const x = monthOffset(month) * MONTH_W - barLeft;
+      return `<span class="gt-ms" style="left:${x}px" title="${label}">
       <span class="gt-ms-dot"></span>
       <span class="gt-ms-tip">${label}</span>
     </span>`;
-  }).join('');
+    })
+    .join('');
 }
 
 // ── Render: bar ───────────────────────────────────────────────────────────────
@@ -160,46 +173,59 @@ function renderGroupDivider(label) {
 }
 
 // ── Render: skills section ────────────────────────────────────────────────────
-const SKILL_NAMES = { primary: 'Frontend Core', backend: 'Backend', testing: 'Testing',
-                      tooling: 'Tooling', ai: 'AI Tools', robotics: 'Robotics / Hardware' };
+const SKILL_NAMES = {
+  primary: 'Frontend Core',
+  backend: 'Backend',
+  testing: 'Testing',
+  tooling: 'Tooling',
+  ai: 'AI Tools',
+  robotics: 'Robotics / Hardware',
+};
 
 function renderSkills() {
-  return Object.entries(CV_DATA.skillGroups).map(([k, g]) => `
+  return Object.entries(CV_DATA.skillGroups)
+    .map(
+      ([k, g]) => `
     <div class="gt-skill-group" draggable="true" data-skill-key="${k}">
       <div class="gt-skill-group-name">${SKILL_NAMES[k] || k}</div>
       <div class="gt-skill-chips">
-        ${g.list.map(s => `<span class="gt-chip">${s}</span>`).join('')}
+        ${g.list.map((s) => `<span class="gt-chip">${s}</span>`).join('')}
         ${g.comment ? `<span class="gt-chip gt-chip-note">${g.comment}</span>` : ''}
       </div>
-    </div>`).join('');
+    </div>`,
+    )
+    .join('');
 }
 
 // ── Row drag & drop (Career Timeline only) ────────────────────────────────────
 function initRowsDragDrop() {
   const sidebar = document.getElementById('gt-sidebar');
-  const tracks  = document.getElementById('gt-tracks');
+  const tracks = document.getElementById('gt-tracks');
   if (!sidebar || !tracks) return;
 
   let dragged = null;
 
   function syncClass(jobId, cls, add) {
-    [`#gt-sidebar .gt-row-label[data-job="${jobId}"]`,
-     `#gt-tracks .gt-row-track[data-job="${jobId}"]`].forEach(sel => {
+    [
+      `#gt-sidebar .gt-row-label[data-job="${jobId}"]`,
+      `#gt-tracks .gt-row-track[data-job="${jobId}"]`,
+    ].forEach((sel) => {
       const el = document.querySelector(sel);
       if (el) el.classList[add ? 'add' : 'remove'](cls);
     });
   }
 
   function clearDragOver() {
-    document.querySelectorAll('.gt-row-label.gt-drag-over, .gt-row-track.gt-drag-over')
-      .forEach(el => el.classList.remove('gt-drag-over'));
+    document
+      .querySelectorAll('.gt-row-label.gt-drag-over, .gt-row-track.gt-drag-over')
+      .forEach((el) => el.classList.remove('gt-drag-over'));
   }
 
   function careerLabels() {
     return [...sidebar.querySelectorAll('.gt-row-draggable')];
   }
 
-  sidebar.addEventListener('dragstart', e => {
+  sidebar.addEventListener('dragstart', (e) => {
     const label = e.target.closest('.gt-row-draggable');
     if (!label) return;
     dragged = label.dataset.job;
@@ -213,7 +239,7 @@ function initRowsDragDrop() {
     dragged = null;
   });
 
-  sidebar.addEventListener('dragover', e => {
+  sidebar.addEventListener('dragover', (e) => {
     e.preventDefault();
     const target = e.target.closest('.gt-row-draggable');
     if (!target || target.dataset.job === dragged) return;
@@ -221,23 +247,23 @@ function initRowsDragDrop() {
     syncClass(target.dataset.job, 'gt-drag-over', true);
   });
 
-  sidebar.addEventListener('dragleave', e => {
+  sidebar.addEventListener('dragleave', (e) => {
     if (!e.relatedTarget || !sidebar.contains(e.relatedTarget)) clearDragOver();
   });
 
-  sidebar.addEventListener('drop', e => {
+  sidebar.addEventListener('drop', (e) => {
     e.preventDefault();
     const target = e.target.closest('.gt-row-draggable');
     if (!target || !dragged || target.dataset.job === dragged) return;
     clearDragOver();
 
-    const labels      = careerLabels();
+    const labels = careerLabels();
     const draggedLabel = sidebar.querySelector(`.gt-row-label[data-job="${dragged}"]`);
     const draggedTrack = tracks.querySelector(`.gt-row-track[data-job="${dragged}"]`);
-    const targetTrack  = tracks.querySelector(`.gt-row-track[data-job="${target.dataset.job}"]`);
+    const targetTrack = tracks.querySelector(`.gt-row-track[data-job="${target.dataset.job}"]`);
 
     const fromIdx = labels.indexOf(draggedLabel);
-    const toIdx   = labels.indexOf(target);
+    const toIdx = labels.indexOf(target);
 
     if (fromIdx < toIdx) {
       target.after(draggedLabel);
@@ -254,7 +280,7 @@ function initSkillsDragDrop() {
   if (!grid) return;
   let dragged = null;
 
-  grid.addEventListener('dragstart', e => {
+  grid.addEventListener('dragstart', (e) => {
     dragged = e.target.closest('.gt-skill-group');
     if (!dragged) return;
     dragged.classList.add('gt-drag-active');
@@ -263,31 +289,31 @@ function initSkillsDragDrop() {
 
   grid.addEventListener('dragend', () => {
     if (dragged) dragged.classList.remove('gt-drag-active');
-    grid.querySelectorAll('.gt-drag-over').forEach(el => el.classList.remove('gt-drag-over'));
+    grid.querySelectorAll('.gt-drag-over').forEach((el) => el.classList.remove('gt-drag-over'));
     dragged = null;
   });
 
-  grid.addEventListener('dragover', e => {
+  grid.addEventListener('dragover', (e) => {
     e.preventDefault();
     const target = e.target.closest('.gt-skill-group');
     if (!target || target === dragged) return;
-    grid.querySelectorAll('.gt-drag-over').forEach(el => el.classList.remove('gt-drag-over'));
+    grid.querySelectorAll('.gt-drag-over').forEach((el) => el.classList.remove('gt-drag-over'));
     target.classList.add('gt-drag-over');
   });
 
-  grid.addEventListener('dragleave', e => {
+  grid.addEventListener('dragleave', (e) => {
     const target = e.target.closest('.gt-skill-group');
     if (target) target.classList.remove('gt-drag-over');
   });
 
-  grid.addEventListener('drop', e => {
+  grid.addEventListener('drop', (e) => {
     e.preventDefault();
     const target = e.target.closest('.gt-skill-group');
     if (!target || target === dragged || !dragged) return;
     target.classList.remove('gt-drag-over');
     const allCards = [...grid.querySelectorAll('.gt-skill-group')];
     const fromIdx = allCards.indexOf(dragged);
-    const toIdx   = allCards.indexOf(target);
+    const toIdx = allCards.indexOf(target);
     if (fromIdx < toIdx) target.after(dragged);
     else target.before(dragged);
   });
@@ -296,20 +322,28 @@ function initSkillsDragDrop() {
 // ── Render: legend ────────────────────────────────────────────────────────────
 function renderLegend(communityRow = COMMUNITY_ROW) {
   const all = [...CV_DATA.workExperience, communityRow];
-  return all.map(j => `
+  return all
+    .map(
+      (j) => `
     <div class="gt-legend-item">
       <span class="gt-legend-dot" style="background:${BAR_COLORS[j.id] || '#8b949e'}"></span>
       ${j.company}
-    </div>`).join('');
+    </div>`,
+    )
+    .join('');
 }
 
 // ── Render: detail panel ──────────────────────────────────────────────────────
 function renderDetail(job) {
-  const color  = BAR_COLORS[job.id] || '#8b949e';
-  const logo   = job.logo ? `<img class="gt-detail-logo" src="assets/images/${job.logo}" alt="${job.company} logo" onerror="this.style.display='none'">` : '';
-  const chips  = (job.skills || []).map(s => `<span class="gt-chip">${s.name}</span>`).join('');
-  const lis    = (job.bullets || []).map(b => `<li>${b}</li>`).join('');
-  const refs   = (job.refs || []).map(r => `<a href="${r.url}" target="_blank" rel="noopener noreferrer">${r.label}</a>`).join('');
+  const color = BAR_COLORS[job.id] || '#8b949e';
+  const logo = job.logo
+    ? `<img class="gt-detail-logo" src="assets/images/${job.logo}" alt="${job.company} logo" onerror="this.style.display='none'">`
+    : '';
+  const chips = (job.skills || []).map((s) => `<span class="gt-chip">${s.name}</span>`).join('');
+  const lis = (job.bullets || []).map((b) => `<li>${b}</li>`).join('');
+  const refs = (job.refs || [])
+    .map((r) => `<a href="${r.url}" target="_blank" rel="noopener noreferrer">${r.label}</a>`)
+    .join('');
   return `<div class="gt-detail-inner" role="article" aria-label="${job.title} at ${job.company}">
     <div class="gt-detail-head">
       ${logo}
@@ -341,30 +375,36 @@ function renderPage() {
   document.documentElement.style.setProperty('--sidebar-w', SIDEBAR_W + 'px');
 
   const data = locale.getData();
-  const jobs  = data.workExperience;
+  const jobs = data.workExperience;
   const communityRow = { ...COMMUNITY_ROW, description: data.community };
-  const todayX  = todayPx();
+  const todayX = todayPx();
 
   const contacts = CV_DATA.identity.contacts
-    .filter(c => c.url)
+    .filter((c) => c.url)
     .slice(0, 4)
-    .map(c => `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`)
+    .map(
+      (c) =>
+        `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`,
+    )
     .join('');
 
   const allContactLinks = CV_DATA.identity.contacts
-    .filter(c => c.url)
-    .map(c => `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`)
+    .filter((c) => c.url)
+    .map(
+      (c) =>
+        `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`,
+    )
     .join('');
 
   const careerGroup = renderGroupDivider(locale.t('ganttCareerTimeline'));
-  const commGroup   = renderGroupDivider(locale.t('ganttCommunity'));
+  const commGroup = renderGroupDivider(locale.t('ganttCommunity'));
 
   const careerRows = [...jobs].reverse();
-  const commRows   = [communityRow];
+  const commRows = [communityRow];
 
   const sidebarLabels = `
     ${careerGroup.label}
-    ${careerRows.map(j => renderLabel(j, true)).join('')}
+    ${careerRows.map((j) => renderLabel(j, true)).join('')}
     ${commGroup.label}
     ${commRows.map(renderLabel).join('')}`;
 
@@ -453,7 +493,7 @@ function renderPage() {
       <div class="gt-footer-col">
         <div class="gt-footer-title">${locale.t('ganttEducation')} — ${CV_DATA.education.institution}</div>
         <ul class="gt-edu-list">
-          ${CV_DATA.education.degrees.map(d => `<li>${d.title} <em>${d.years}</em></li>`).join('')}
+          ${CV_DATA.education.degrees.map((d) => `<li>${d.title} <em>${d.years}</em></li>`).join('')}
         </ul>
       </div>
       <div class="gt-footer-col">
@@ -467,20 +507,20 @@ function renderPage() {
 
 // ── Interactivity ─────────────────────────────────────────────────────────────
 function initInteractivity() {
-  const main   = document.getElementById('gt-main');
+  const main = document.getElementById('gt-main');
   const detail = document.getElementById('gt-detail');
-  let active   = null;
+  let active = null;
 
   function openDetail(jobId) {
     const allJobs = [...CV_DATA.workExperience, COMMUNITY_ROW];
-    const job = allJobs.find(j => j.id === jobId);
+    const job = allJobs.find((j) => j.id === jobId);
     if (!job) return;
 
     active = jobId;
     detail.innerHTML = renderDetail(job);
     detail.classList.add('open');
 
-    document.querySelectorAll('.gt-row-label, .gt-row-track').forEach(el => {
+    document.querySelectorAll('.gt-row-label, .gt-row-track').forEach((el) => {
       el.classList.toggle('is-active', el.dataset.job === jobId);
     });
 
@@ -493,13 +533,13 @@ function initInteractivity() {
     active = null;
     detail.classList.remove('open');
     detail.innerHTML = '';
-    document.querySelectorAll('.gt-row-label, .gt-row-track').forEach(el => {
+    document.querySelectorAll('.gt-row-label, .gt-row-track').forEach((el) => {
       el.classList.remove('is-active');
     });
   }
 
   // Click on sidebar labels
-  document.getElementById('gt-sidebar').addEventListener('click', function(e) {
+  document.getElementById('gt-sidebar').addEventListener('click', function (e) {
     const label = e.target.closest('.gt-row-label');
     if (!label) return;
     const jobId = label.dataset.job;
@@ -508,7 +548,7 @@ function initInteractivity() {
   });
 
   // Click on track bars
-  document.getElementById('gt-tracks').addEventListener('click', function(e) {
+  document.getElementById('gt-tracks').addEventListener('click', function (e) {
     const bar = e.target.closest('.gt-bar');
     if (!bar) return;
     const jobId = bar.dataset.job;
@@ -523,25 +563,25 @@ function initInteractivity() {
 
 // ── Contacts popup (mobile) ───────────────────────────────────────────────────
 function initContactsPopup() {
-  const btn   = document.getElementById('gt-contacts-btn');
+  const btn = document.getElementById('gt-contacts-btn');
   const popup = document.getElementById('gt-contacts-popup');
   if (!btn || !popup) return;
 
-  btn.addEventListener('click', e => {
+  btn.addEventListener('click', (e) => {
     e.stopPropagation();
     const rect = btn.getBoundingClientRect();
     const btnCenter = rect.left + rect.width / 2;
     if (btnCenter > window.innerWidth / 2) {
       popup.style.right = '0';
-      popup.style.left  = 'auto';
+      popup.style.left = 'auto';
     } else {
-      popup.style.left  = '0';
+      popup.style.left = '0';
       popup.style.right = 'auto';
     }
     popup.classList.toggle('open');
   });
 
-  document.addEventListener('click', e => {
+  document.addEventListener('click', (e) => {
     if (!popup.contains(e.target) && e.target !== btn) {
       popup.classList.remove('open');
     }
@@ -556,7 +596,9 @@ function initTheme() {
     localStorage.setItem(THEME_KEY, t);
   }
   btn.addEventListener('click', () => {
-    setTheme(document.documentElement.getAttribute('data-theme') === THEME_DARK ? THEME_LIGHT : THEME_DARK);
+    setTheme(
+      document.documentElement.getAttribute('data-theme') === THEME_DARK ? THEME_LIGHT : THEME_DARK,
+    );
   });
   setTheme(localStorage.getItem(THEME_KEY) || getSystemTheme());
 }
@@ -572,7 +614,7 @@ function initLangDropdown_() {
       renderPage();
       initPage();
       document.getElementById('gt-main').scrollLeft = scrollLeft;
-    }
+    },
   });
 }
 
@@ -596,7 +638,10 @@ initPage();
 document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
 initMusicPlayer();
 
-document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire-gantt', { subject: 'Hire inquiry from CV - Gantt' }));
+document.body.insertAdjacentHTML(
+  'beforeend',
+  hireModalHTML('hire-gantt', { subject: 'Hire inquiry from CV - Gantt' }),
+);
 initHireModal('hire-gantt');
 initFormspree('#hire-gantt-form');
 

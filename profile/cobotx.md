@@ -1,14 +1,23 @@
 ---
-title: "Engineering Manager"
-seniority: "Senior"
+title: 'Engineering Manager'
+seniority: 'Senior'
 period:
-  from: "2021-08"
-  to: "2022-08"
-profession: "mechanical"
-type: "work"
-domain: "industrial robotics"
+  from: '2021-08'
+  to: '2022-08'
+profession: 'mechanical'
+type: 'work'
+domain: 'industrial robotics'
 leader: true
-skills: [PLC, Robotics, Machine Vision, Engineering Management, Project Management, Python, Team Leadership]
+skills:
+  [
+    PLC,
+    Robotics,
+    Machine Vision,
+    Engineering Management,
+    Project Management,
+    Python,
+    Team Leadership,
+  ]
 ---
 
 # CobotX Technologies — Engineering Manager (Aug 2021 – Aug 2022)
@@ -58,15 +67,19 @@ Ipari robotika és automatizálás (Universal Robot és OnRobot integrátor).
 **Tech stack:** Universal Robot · OnRobot · PLC Systems · Machine Vision · Python · OnShape · Mechanical Engineering · Project Management
 
 ### Universal Robot
+
 <!-- UR Script? URCaps? Collaborative robot programming szintje -->
 
 ### PLC programozás
+
 <!-- Milyen PLC platform? (Siemens, Beckhoff, stb.) Milyen szinten? -->
 
 ### Machine Vision
+
 <!-- Milyen rendszer? (Cognex, Keyence, OpenCV?) Alkalmazás típusa? -->
 
 ### OnShape (CAD)
+
 <!-- Milyen szintű CAD munka? Milyen alkatrészek? -->
 
 ---

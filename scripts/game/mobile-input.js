@@ -1,6 +1,6 @@
 export function isTouchDevice() {
   // Only the most reliable indicator: true touch-only devices (phones, tablets)
-  return window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 }
 
 function checkOrientation(game) {
@@ -51,15 +51,15 @@ export function initMobileInput(game) {
   });
 
   const DIR_MAP = {
-    0: {w: false, a: false, s: false, d: true},
-    45: {w: true, a: false, s: false, d: true},
-    90: {w: true, a: false, s: false, d: false},
-    135: {w: true, a: true, s: false, d: false},
-    180: {w: false, a: true, s: false, d: false},
-    225: {w: false, a: true, s: true, d: false},
-    270: {w: false, a: false, s: true, d: false},
-    315: {w: false, a: false, s: true, d: true},
-    360: {w: false, a: false, s: false, d: true},
+    0: { w: false, a: false, s: false, d: true },
+    45: { w: true, a: false, s: false, d: true },
+    90: { w: true, a: false, s: false, d: false },
+    135: { w: true, a: true, s: false, d: false },
+    180: { w: false, a: true, s: false, d: false },
+    225: { w: false, a: true, s: true, d: false },
+    270: { w: false, a: false, s: true, d: false },
+    315: { w: false, a: false, s: true, d: true },
+    360: { w: false, a: false, s: false, d: true },
   };
 
   const angleToDir = (angle) => {
@@ -72,18 +72,30 @@ export function initMobileInput(game) {
     const d = evt?.data || evt;
     if (!d || !d.angle) return;
     const dir = angleToDir(d.angle);
-    Object.entries(dir).forEach(([key, val]) => { game.keys[key] = val; });
+    Object.entries(dir).forEach(([key, val]) => {
+      game.keys[key] = val;
+    });
   });
 
   joystick.on('end', () => {
-    ['w','a','s','d'].forEach(k => { game.keys[k] = false; });
+    ['w', 'a', 's', 'd'].forEach((k) => {
+      game.keys[k] = false;
+    });
   });
 
   const btn = document.getElementById('attack-btn');
   if (btn) {
-    btn.addEventListener('touchstart', e => { e.preventDefault(); game.keys[' '] = true; });
-    btn.addEventListener('touchend',   e => { e.preventDefault(); game.keys[' '] = false; });
-    btn.addEventListener('touchcancel', e => { game.keys[' '] = false; });
+    btn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      game.keys[' '] = true;
+    });
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      game.keys[' '] = false;
+    });
+    btn.addEventListener('touchcancel', (e) => {
+      game.keys[' '] = false;
+    });
   }
 
   const infoBtn = document.getElementById('info-btn');

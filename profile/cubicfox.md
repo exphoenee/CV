@@ -1,12 +1,12 @@
 ---
-title: "Frontend Developer"
-seniority: "Junior"
+title: 'Frontend Developer'
+seniority: 'Junior'
 period:
-  from: "2022-09"
-  to: "2023-01"
-profession: "software"
-type: "work"
-domain: "digital agency"
+  from: '2022-09'
+  to: '2023-01'
+profession: 'software'
+type: 'work'
+domain: 'digital agency'
 leader: false
 skills: [React, Next.js, TypeScript, JavaScript, SCSS, Jest, Webpack]
 ---
@@ -18,7 +18,7 @@ skills: [React, Next.js, TypeScript, JavaScript, SCSS, Jest, Webpack]
 <!-- Mi a Cubicfox? Ügynökség, termékház, nearshore? -->
 <!-- Milyen ügyfeleknek dolgoztam? -->
 
-*„Mindenben melletted állunk.”* — Szakértő csapat a teljes termékéletciklusra, stratégiától az indulásig.
+_„Mindenben melletted állunk.”_ — Szakértő csapat a teljes termékéletciklusra, stratégiától az indulásig.
 
 ### 01 Stratégia & Feltárás
 
@@ -56,6 +56,7 @@ Csapataink iOS és Android platformokra terveznek és fejlesztenek mobilalkalmaz
 
 <!-- Csapatméret, Agile folyamat, ügyfél kommunikáció megléte -->
 <!-- Mi volt konkrét felelősségem vs. a csapat többi tagja? -->
+
 3 fő frontend és 3 fő backend fejlesztőből álló csapatban dolgoztam, Scrum folyamatban. A frontend csapatban én voltam a legjuniorabb, de aktív részt vállaltam a fejlesztési folyamatban.
 
 Fókusz: scalable UI architecture, frontend standards, requirement clarity between stakeholders and dev teams.
@@ -73,6 +74,7 @@ Fókusz: scalable UI architecture, frontend standards, requirement clarity betwe
 <!-- Architektúra döntések: miért Next.js, SSR/SSG mix? -->
 
 ### Egyéb projektek (ha volt)
+
 <!-- Más ügyfelek, más technológiák? -->
 
 ---

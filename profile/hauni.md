@@ -1,14 +1,15 @@
 ---
-title: "Senior R&D Mechanical Engineer"
-seniority: "Senior"
+title: 'Senior R&D Mechanical Engineer'
+seniority: 'Senior'
 period:
-  from: "2005-08"
-  to: "2018-01"
-profession: "mechanical"
-type: "work"
-domain: "industrial machinery, manufacturing"
+  from: '2005-08'
+  to: '2018-01'
+profession: 'mechanical'
+type: 'work'
+domain: 'industrial machinery, manufacturing'
 leader: true
-skills: [LabVIEW, FEM Analysis, Strain Gauge, Data Acquisition, PLC, Mechanical Design, Test Systems]
+skills:
+  [LabVIEW, FEM Analysis, Strain Gauge, Data Acquisition, PLC, Mechanical Design, Test Systems]
 ---
 
 # Hauni Hungaria Gépgyártó Kft. — Senior R&D Mechanical Engineer (Aug 2005 – Jan 2018)
@@ -21,6 +22,7 @@ skills: [LabVIEW, FEM Analysis, Strain Gauge, Data Acquisition, PLC, Mechanical 
 **Parent:** Körber Group (Hauni AG, Hamburg)
 
 <!-- Hány fős a magyar leányvállalat? Milyen termékeket gyártanak lokálisan? -->
+
 1000 fős magyarországi leányvállalat, dohányipari gépek gyártása és fejlesztése. A magyar mérnökcsapat a hamburgi központtal szoros együttműködésben dolgozik, a termékfejlesztés és a gyártás támogatása érdekében.
 
 ## Szerepek

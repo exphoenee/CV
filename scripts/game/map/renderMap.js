@@ -25,18 +25,18 @@
  * the tile is at a concave corner where grass intrudes into the path.
  */
 
-import {SHEET_TILE_FRAMES} from "./map.js";
+import { SHEET_TILE_FRAMES } from './map.js';
 
 // ── Bitmask bit positions ──────────────────────────────────────────────
 const B = {
-  N:  1 << 0,  // 1
-  NE: 1 << 1,  // 2
-  E:  1 << 2,  // 4
-  SE: 1 << 3,  // 8
-  S:  1 << 4,  // 16
-  SW: 1 << 5,  // 32
-  W:  1 << 6,  // 64
-  NW: 1 << 7,  // 128
+  N: 1 << 0, // 1
+  NE: 1 << 1, // 2
+  E: 1 << 2, // 4
+  SE: 1 << 3, // 8
+  S: 1 << 4, // 16
+  SW: 1 << 5, // 32
+  W: 1 << 6, // 64
+  NW: 1 << 7, // 128
 };
 
 // ── Build the 256-entry lookup table ONCE ──────────────────────────────
@@ -45,14 +45,14 @@ function buildLookupTable() {
   const F = SHEET_TILE_FRAMES;
 
   for (let mask = 0; mask < 256; mask++) {
-    const n  = (mask & B.N)  ? 1 : 0;
-    const e  = (mask & B.E)  ? 1 : 0;
-    const s  = (mask & B.S)  ? 1 : 0;
-    const w  = (mask & B.W)  ? 1 : 0;
-    const ne = (mask & B.NE) ? 1 : 0;
-    const se = (mask & B.SE) ? 1 : 0;
-    const sw = (mask & B.SW) ? 1 : 0;
-    const nw = (mask & B.NW) ? 1 : 0;
+    const n = mask & B.N ? 1 : 0;
+    const e = mask & B.E ? 1 : 0;
+    const s = mask & B.S ? 1 : 0;
+    const w = mask & B.W ? 1 : 0;
+    const ne = mask & B.NE ? 1 : 0;
+    const se = mask & B.SE ? 1 : 0;
+    const sw = mask & B.SW ? 1 : 0;
+    const nw = mask & B.NW ? 1 : 0;
 
     const cardCount = n + e + s + w;
 
@@ -75,26 +75,35 @@ function buildLookupTable() {
         table[mask] = F.center;
       } else {
         // ── Outer corners (2 perpendicular cardinals) ──────────────
-        if (n && e) table[mask] = F.cornerTR;  // N+E → grass at BL
-        else if (n && w) table[mask] = F.cornerTL;  // N+W → grass at BR
-        else if (s && e) table[mask] = F.cornerBR;  // S+E → grass at TL
-        else table[mask] = F.cornerBL;  // S+W → grass at TR
+        if (n && e)
+          table[mask] = F.cornerTR; // N+E → grass at BL
+        else if (n && w)
+          table[mask] = F.cornerTL; // N+W → grass at BR
+        else if (s && e)
+          table[mask] = F.cornerBR; // S+E → grass at TL
+        else table[mask] = F.cornerBL; // S+W → grass at TR
       }
     } else if (cardCount === 3) {
       // ── T-junctions ──────────────────────────────────────────────
-      if (!n) table[mask] = F.straightHT;  // missing N
-      else if (!s) table[mask] = F.straightHB;  // missing S
-      else if (!e) table[mask] = F.straightVR;  // missing E
-      else table[mask] = F.straightVL;  // missing W
+      if (!n)
+        table[mask] = F.straightHT; // missing N
+      else if (!s)
+        table[mask] = F.straightHB; // missing S
+      else if (!e)
+        table[mask] = F.straightVR; // missing E
+      else table[mask] = F.straightVL; // missing W
     } else {
       // ── 4 cardinals (cross intersection) ─────────────────────────
-      const missingDiags = (!ne) + (!se) + (!sw) + (!nw);
+      const missingDiags = !ne + !se + !sw + !nw;
       if (missingDiags === 1) {
         // Exactly one diagonal missing → inner corner (concave)
-        if (!se) table[mask] = F.innerBR;  // grass at BR
-        else if (!sw) table[mask] = F.innerBL;  // grass at BL
-        else if (!ne) table[mask] = F.innerTR;  // grass at TR
-        else table[mask] = F.innerTL;  // grass at TL
+        if (!se)
+          table[mask] = F.innerBR; // grass at BR
+        else if (!sw)
+          table[mask] = F.innerBL; // grass at BL
+        else if (!ne)
+          table[mask] = F.innerTR; // grass at TR
+        else table[mask] = F.innerTL; // grass at TL
       } else {
         // 0 or 2+ missing diagonals → center
         table[mask] = F.center;
@@ -109,7 +118,7 @@ function buildLookupTable() {
 const TILE_LOOKUP = buildLookupTable();
 
 export class MapRenderer {
-  constructor({fullMapGrid, tileTypes, tileImages, tileSize, sheetTileSize}) {
+  constructor({ fullMapGrid, tileTypes, tileImages, tileSize, sheetTileSize }) {
     this.fullMapGrid = fullMapGrid;
     this.tileTypes = tileTypes;
     this.tileImages = tileImages;
@@ -124,7 +133,7 @@ export class MapRenderer {
   // ── Render loop ──────────────────────────────────────────────────────
 
   drawTiles(ctx, camera, rows, cols, virtualWidth, virtualHeight) {
-    const {tileSize, sheetTileSize} = this;
+    const { tileSize, sheetTileSize } = this;
     const floorCamX = Math.floor(camera.x);
     const floorCamY = Math.floor(camera.y);
     const startCol = Math.floor(camera.x / tileSize);
@@ -156,13 +165,7 @@ export class MapRenderer {
             tileSize + 2,
           );
         } else {
-          ctx.drawImage(
-            img,
-            ox - 1,
-            oy - 1,
-            tileSize + 2,
-            tileSize + 2,
-          );
+          ctx.drawImage(img, ox - 1, oy - 1, tileSize + 2, tileSize + 2);
         }
       }
     }
@@ -179,10 +182,10 @@ export class MapRenderer {
   computeBitmask(row, col, isSame) {
     if (!isSame) return 0;
 
-    const N  = isSame(row - 1, col);
-    const E  = isSame(row, col + 1);
-    const S  = isSame(row + 1, col);
-    const W  = isSame(row, col - 1);
+    const N = isSame(row - 1, col);
+    const E = isSame(row, col + 1);
+    const S = isSame(row + 1, col);
+    const W = isSame(row, col - 1);
 
     // Effective diagonals: both adjacent cardinals must be set
     const NE = N && E && isSame(row - 1, col + 1);
@@ -191,13 +194,13 @@ export class MapRenderer {
     const NW = N && W && isSame(row - 1, col - 1);
 
     return (
-      (N  ? B.N  : 0) |
+      (N ? B.N : 0) |
       (NE ? B.NE : 0) |
-      (E  ? B.E  : 0) |
+      (E ? B.E : 0) |
       (SE ? B.SE : 0) |
-      (S  ? B.S  : 0) |
+      (S ? B.S : 0) |
       (SW ? B.SW : 0) |
-      (W  ? B.W  : 0) |
+      (W ? B.W : 0) |
       (NW ? B.NW : 0)
     );
   }
@@ -209,19 +212,20 @@ export class MapRenderer {
    * Uses the pre-computed 256-entry lookup table for O(1) selection.
    */
   getAutoTileFrame(row, col, terrainType) {
-    const isFn = terrainType === "cliff"
-      ? (r, c) => this.isCliffTile(r, c)
-      : (r, c) => this.getMapTileKey(r, c) === this._terrainKeyFor(terrainType);
+    const isFn =
+      terrainType === 'cliff'
+        ? (r, c) => this.isCliffTile(r, c)
+        : (r, c) => this.getMapTileKey(r, c) === this._terrainKeyFor(terrainType);
 
     return this.maskToFrame(this.computeBitmask(row, col, isFn));
   }
 
   /** Convert a terrain type string to the grid key it matches */
   _terrainKeyFor(type) {
-    if (type === "path") return "P";
-    if (type === "water") return "W";
-    if (type === "cliff") return "C";
-    return "G";
+    if (type === 'path') return 'P';
+    if (type === 'water') return 'W';
+    if (type === 'cliff') return 'C';
+    return 'G';
   }
 
   /** O(1) lookup: 8-bit mask → {x, y} frame position */
@@ -262,9 +266,9 @@ export class MapRenderer {
 
   /** Return a matching function for a given tile key */
   _getMatcher(tileKey) {
-    if (tileKey === "P") return (r, c) => this.isPathTile(r, c);
-    if (tileKey === "W") return (r, c) => this.isWaterTile(r, c);
-    if (tileKey === "C") return (r, c) => this.isCliffTile(r, c);
+    if (tileKey === 'P') return (r, c) => this.isPathTile(r, c);
+    if (tileKey === 'W') return (r, c) => this.isWaterTile(r, c);
+    if (tileKey === 'C') return (r, c) => this.isCliffTile(r, c);
     return () => false;
   }
 
@@ -292,22 +296,22 @@ export class MapRenderer {
   // ── Map grid helpers ─────────────────────────────────────────────────
 
   getMapTileKey(row, col) {
-    if (!this.fullMapGrid || row < 0 || col < 0) return "G";
-    if (row >= this.fullMapGrid.length) return "G";
+    if (!this.fullMapGrid || row < 0 || col < 0) return 'G';
+    if (row >= this.fullMapGrid.length) return 'G';
     const rowData = this.fullMapGrid[row];
-    if (!rowData) return "G";
-    return rowData[col] || "G";
+    if (!rowData) return 'G';
+    return rowData[col] || 'G';
   }
 
   isPathTile(row, col) {
-    return this.getMapTileKey(row, col) === "P";
+    return this.getMapTileKey(row, col) === 'P';
   }
 
   isWaterTile(row, col) {
-    return this.getMapTileKey(row, col) === "W";
+    return this.getMapTileKey(row, col) === 'W';
   }
 
   isCliffTile(row, col) {
-    return this.getMapTileKey(row, col) === "C";
+    return this.getMapTileKey(row, col) === 'C';
   }
 }

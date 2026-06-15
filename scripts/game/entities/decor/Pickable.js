@@ -9,29 +9,29 @@ import DecorObject from '../base/DecorObject.js';
  * Subclasses can override onPickup() to implement item-specific logic.
  */
 export default class Pickable extends DecorObject {
-    constructor(opts) {
-        super({
-            ...opts,
-            solid: false,
-        });
+  constructor(opts) {
+    super({
+      ...opts,
+      solid: false,
+    });
 
-        this.pickable = true;    // flag for engine pickup detection
-        this.collected = false;
-    }
+    this.pickable = true; // flag for engine pickup detection
+    this.collected = false;
+  }
 
-    /**
-     * Called by the engine when the player overlaps this item.
-     * Returns true if the item was actually collected.
-     * @param {object} player
-     */
-    onPickup(player) {
-        if (this.collected) return false;
-        this.collected = true;
-        return true;
-    }
+  /**
+   * Called by the engine when the player overlaps this item.
+   * Returns true if the item was actually collected.
+   * @param {object} player
+   */
+  onPickup(player) {
+    if (this.collected) return false;
+    this.collected = true;
+    return true;
+  }
 
-    draw(ctx, camera) {
-        if (this.collected) return;
-        super.draw(ctx, camera);
-    }
+  draw(ctx, camera) {
+    if (this.collected) return;
+    super.draw(ctx, camera);
+  }
 }

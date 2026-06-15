@@ -70,22 +70,22 @@ scripts/
 
 ### Modul határok
 
-| Fájl / mappa | Felelőssége | Exportál |
-|---|---|---|
-| `cv-data.js` | CV adatok | `CV_DATA` |
-| `shared.js` | Utility: escHtml, skillChip, initModal, initTheme, toast, formspree | named exportok |
-| `cv-music-player.js` | Zenelejátszó logika | `initMusicPlayer` |
-| `components/plain/index.js` | Plain CV teljes HTML | `renderPlainCV` |
-| `components/plain/*.js` | Plain CV egy-egy szekciója | named render függvény |
-| `components/swagger/ui/*.js` | Swagger UI építőkövek | named builder függvények |
-| `components/swagger/sections/*.js` | Swagger tartalom szekciónként | named render függvény |
-| `components/swagger/index.js` | Swagger CV teljes HTML | `renderSwaggerContent` |
-| `components/json/helpers.js` | JSON viewer push helper-ek | named push függvények |
-| `components/json/sections/*.js` | JSON tartalom szekciónként | named render függvény |
-| `components/json/index.js` | JSON CV teljes HTML | `renderJsonCV` |
-| `cv-plain.js` | Oldal bootstrap | — |
-| `cv-swagger.js` | Oldal bootstrap | — |
-| `cv-json.js` | Oldal bootstrap | — |
+| Fájl / mappa                       | Felelőssége                                                         | Exportál                 |
+| ---------------------------------- | ------------------------------------------------------------------- | ------------------------ |
+| `cv-data.js`                       | CV adatok                                                           | `CV_DATA`                |
+| `shared.js`                        | Utility: escHtml, skillChip, initModal, initTheme, toast, formspree | named exportok           |
+| `cv-music-player.js`               | Zenelejátszó logika                                                 | `initMusicPlayer`        |
+| `components/plain/index.js`        | Plain CV teljes HTML                                                | `renderPlainCV`          |
+| `components/plain/*.js`            | Plain CV egy-egy szekciója                                          | named render függvény    |
+| `components/swagger/ui/*.js`       | Swagger UI építőkövek                                               | named builder függvények |
+| `components/swagger/sections/*.js` | Swagger tartalom szekciónként                                       | named render függvény    |
+| `components/swagger/index.js`      | Swagger CV teljes HTML                                              | `renderSwaggerContent`   |
+| `components/json/helpers.js`       | JSON viewer push helper-ek                                          | named push függvények    |
+| `components/json/sections/*.js`    | JSON tartalom szekciónként                                          | named render függvény    |
+| `components/json/index.js`         | JSON CV teljes HTML                                                 | `renderJsonCV`           |
+| `cv-plain.js`                      | Oldal bootstrap                                                     | —                        |
+| `cv-swagger.js`                    | Oldal bootstrap                                                     | —                        |
+| `cv-json.js`                       | Oldal bootstrap                                                     | —                        |
 
 ---
 
@@ -145,7 +145,7 @@ import { escHtml, skillChip } from '../../shared.js';
 
 function renderBullets(bullets) {
   if (!bullets?.length) return '';
-  return bullets.map(b => `<div><i class="bullet-icon"></i>${b}</div>`).join('');
+  return bullets.map((b) => `<div><i class="bullet-icon"></i>${b}</div>`).join('');
 }
 
 function renderRefs(exp) {
@@ -155,7 +155,7 @@ function renderRefs(exp) {
     <div class="cv-plain-inline-3">
       <div class="cv-plain-inline-4"><strong>Reference(s):</strong></div>
       <div class="${refClass}">
-        ${exp.refs.map(r => `<a href="${escHtml(r.url)}" target="_blank">${escHtml(r.label)}</a>`).join('\n')}
+        ${exp.refs.map((r) => `<a href="${escHtml(r.url)}" target="_blank">${escHtml(r.label)}</a>`).join('\n')}
       </div>
     </div>
   `;
@@ -166,12 +166,16 @@ function renderDescription(exp) {
     return `
       <p>${exp.description}</p>
       <div class="cv-plain-inline-2">
-        ${exp.projects.map(p => `
+        ${exp.projects
+          .map(
+            (p) => `
           <div>
             <div><strong>${escHtml(p.name)}</strong> - ${escHtml(p.subtitle)}</div>
             ${renderBullets(p.bullets)}
           </div>
-        `).join('')}
+        `,
+          )
+          .join('')}
       </div>
     `;
   }
@@ -182,12 +186,16 @@ function renderDescription(exp) {
     return `
       ${exp.description}
       <div class="cv-plain-inline-7">
-        ${Object.entries(exp.bullets).map(([key, arr]) => `
+        ${Object.entries(exp.bullets)
+          .map(
+            ([key, arr]) => `
           <div>
-            <div><strong>${key.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase())}</strong></div>
+            <div><strong>${key.replace(/([A-Z])/g, ' $1').replace(/^./, (s) => s.toUpperCase())}</strong></div>
             ${renderBullets(arr)}
           </div>
-        `).join('')}
+        `,
+          )
+          .join('')}
       </div>
     `;
   }
@@ -212,7 +220,7 @@ export function renderWorkItem(exp) {
           ${renderDescription(exp)}
         </div>
         ${renderRefs(exp)}
-        ${exp.skills?.length ? `<div class="itemSkills">${exp.skills.map(s => skillChip(s)).join('')}</div>` : ''}
+        ${exp.skills?.length ? `<div class="itemSkills">${exp.skills.map((s) => skillChip(s)).join('')}</div>` : ''}
       </div>
     </div>
   `;
@@ -311,12 +319,14 @@ Ez az egyetlen változás az adatfájlban.
 ## shared.js
 
 A jelenlegi shared.js-ből kikerül:
+
 - `CV.renderPlainCV` → `cv-render-plain.js`
-- `CV.renderSwaggerContent` → `cv-render-swagger.js`  
+- `CV.renderSwaggerContent` → `cv-render-swagger.js`
 - `CV.renderJsonCV` → `cv-render-json.js`
 - Swagger helper függvények (`_swgGet`, `_swgPost`, stb.) → `cv-render-swagger.js`-be
 
 Marad a `shared.js`-ben:
+
 - `escHtml`
 - `skillChip`, `refLinks`, `renderBullets` (megosztott helperek, ha több render is használja)
 - `initHireModal`, `hireModalHTML`
@@ -339,12 +349,12 @@ Marad a `shared.js`-ben:
 
 ## Kockázatok
 
-| Kockázat | Valószínűség | Kezelés |
-|----------|--------------|---------|
-| Valamelyik helper hiányzik az importból | Közepes | Oldalanként tesztelni a refaktoring után |
-| `cv-music-player.js` IIFE-ként fut, nem exportál | Biztos — kezelendő | Átírni: IIFE → `export function initMusicPlayer()`, a HTML inject marad `shared.js`-ben |
-| `shared.js` auto-inject IIFE-je konfliktust okoz | Közepes | Az auto-inject IIFE-t eltávolítani, explicit hívásokra cserélni az oldal scriptjeiben |
-| Formspree szkript (külső CDN) konfliktusa | Alacsony | A `<script src="formspree">` tag marad a HTML-ben, az `initFormspree` hívás a module scriptből |
+| Kockázat                                         | Valószínűség       | Kezelés                                                                                        |
+| ------------------------------------------------ | ------------------ | ---------------------------------------------------------------------------------------------- |
+| Valamelyik helper hiányzik az importból          | Közepes            | Oldalanként tesztelni a refaktoring után                                                       |
+| `cv-music-player.js` IIFE-ként fut, nem exportál | Biztos — kezelendő | Átírni: IIFE → `export function initMusicPlayer()`, a HTML inject marad `shared.js`-ben        |
+| `shared.js` auto-inject IIFE-je konfliktust okoz | Közepes            | Az auto-inject IIFE-t eltávolítani, explicit hívásokra cserélni az oldal scriptjeiben          |
+| Formspree szkript (külső CDN) konfliktusa        | Alacsony           | A `<script src="formspree">` tag marad a HTML-ben, az `initFormspree` hívás a module scriptből |
 
 ---
 

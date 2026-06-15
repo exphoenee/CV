@@ -46,44 +46,134 @@
   font-display: swap;
 }
 
-[data-lang="ya"] body, [data-lang="ya"] body * { font-family: 'Yautja', monospace !important; }
-[data-lang="qu"] body, [data-lang="qu"] body * { font-family: 'Elvish', serif !important; }
-[data-lang="asg"] body, [data-lang="asg"] body * { font-family: 'Asgard', serif !important; }
-[data-lang="kl"] body, [data-lang="kl"] body * { font-family: 'Klingon', monospace !important; }
-[data-lang="goa"] body, [data-lang="goa"] body * { font-family: 'Goauld', serif !important; }
-[data-lang="dot"] body, [data-lang="dot"] body * { font-family: 'Dothraki', serif !important; }
+[data-lang='ya'] body,
+[data-lang='ya'] body * {
+  font-family: 'Yautja', monospace !important;
+}
+[data-lang='qu'] body,
+[data-lang='qu'] body * {
+  font-family: 'Elvish', serif !important;
+}
+[data-lang='asg'] body,
+[data-lang='asg'] body * {
+  font-family: 'Asgard', serif !important;
+}
+[data-lang='kl'] body,
+[data-lang='kl'] body * {
+  font-family: 'Klingon', monospace !important;
+}
+[data-lang='goa'] body,
+[data-lang='goa'] body * {
+  font-family: 'Goauld', serif !important;
+}
+[data-lang='dot'] body,
+[data-lang='dot'] body * {
+  font-family: 'Dothraki', serif !important;
+}
 
-[data-lang="ya"] .ld-select, [data-lang="ya"] .ld-select * { font-family: system-ui, sans-serif !important; }
-[data-lang="qu"] .ld-select, [data-lang="qu"] .ld-select * { font-family: system-ui, sans-serif !important; }
-[data-lang="asg"] .ld-select, [data-lang="asg"] .ld-select * { font-family: system-ui, sans-serif !important; }
-[data-lang="kl"] .ld-select, [data-lang="kl"] .ld-select * { font-family: system-ui, sans-serif !important; }
-[data-lang="goa"] .ld-select, [data-lang="goa"] .ld-select * { font-family: system-ui, sans-serif !important; }
-[data-lang="dot"] .ld-select, [data-lang="dot"] .ld-select * { font-family: system-ui, sans-serif !important; }
+[data-lang='ya'] .ld-select,
+[data-lang='ya'] .ld-select * {
+  font-family: system-ui, sans-serif !important;
+}
+[data-lang='qu'] .ld-select,
+[data-lang='qu'] .ld-select * {
+  font-family: system-ui, sans-serif !important;
+}
+[data-lang='asg'] .ld-select,
+[data-lang='asg'] .ld-select * {
+  font-family: system-ui, sans-serif !important;
+}
+[data-lang='kl'] .ld-select,
+[data-lang='kl'] .ld-select * {
+  font-family: system-ui, sans-serif !important;
+}
+[data-lang='goa'] .ld-select,
+[data-lang='goa'] .ld-select * {
+  font-family: system-ui, sans-serif !important;
+}
+[data-lang='dot'] .ld-select,
+[data-lang='dot'] .ld-select * {
+  font-family: system-ui, sans-serif !important;
+}
 
 /* Font Awesome icon override — restores icon font for FA elements */
-[data-lang="ya"] .fa, [data-lang="ya"] .fas, [data-lang="ya"] .far, [data-lang="ya"] .fab, [data-lang="ya"] .fal, [data-lang="ya"] .fad,
-[data-lang="ya"] [class*=" fa-"] { font-family: "Font Awesome 6 Free" !important; }
-[data-lang="ya"] .fab { font-family: "Font Awesome 6 Brands" !important; }
+[data-lang='ya'] .fa,
+[data-lang='ya'] .fas,
+[data-lang='ya'] .far,
+[data-lang='ya'] .fab,
+[data-lang='ya'] .fal,
+[data-lang='ya'] .fad,
+[data-lang='ya'] [class*=' fa-'] {
+  font-family: 'Font Awesome 6 Free' !important;
+}
+[data-lang='ya'] .fab {
+  font-family: 'Font Awesome 6 Brands' !important;
+}
 
-[data-lang="qu"] .fa, [data-lang="qu"] .fas, [data-lang="qu"] .far, [data-lang="qu"] .fab, [data-lang="qu"] .fal, [data-lang="qu"] .fad,
-[data-lang="qu"] [class*=" fa-"] { font-family: "Font Awesome 6 Free" !important; }
-[data-lang="qu"] .fab { font-family: "Font Awesome 6 Brands" !important; }
+[data-lang='qu'] .fa,
+[data-lang='qu'] .fas,
+[data-lang='qu'] .far,
+[data-lang='qu'] .fab,
+[data-lang='qu'] .fal,
+[data-lang='qu'] .fad,
+[data-lang='qu'] [class*=' fa-'] {
+  font-family: 'Font Awesome 6 Free' !important;
+}
+[data-lang='qu'] .fab {
+  font-family: 'Font Awesome 6 Brands' !important;
+}
 
-[data-lang="asg"] .fa, [data-lang="asg"] .fas, [data-lang="asg"] .far, [data-lang="asg"] .fab, [data-lang="asg"] .fal, [data-lang="asg"] .fad,
-[data-lang="asg"] [class*=" fa-"] { font-family: "Font Awesome 6 Free" !important; }
-[data-lang="asg"] .fab { font-family: "Font Awesome 6 Brands" !important; }
+[data-lang='asg'] .fa,
+[data-lang='asg'] .fas,
+[data-lang='asg'] .far,
+[data-lang='asg'] .fab,
+[data-lang='asg'] .fal,
+[data-lang='asg'] .fad,
+[data-lang='asg'] [class*=' fa-'] {
+  font-family: 'Font Awesome 6 Free' !important;
+}
+[data-lang='asg'] .fab {
+  font-family: 'Font Awesome 6 Brands' !important;
+}
 
-[data-lang="kl"] .fa, [data-lang="kl"] .fas, [data-lang="kl"] .far, [data-lang="kl"] .fab, [data-lang="kl"] .fal, [data-lang="kl"] .fad,
-[data-lang="kl"] [class*=" fa-"] { font-family: "Font Awesome 6 Free" !important; }
-[data-lang="kl"] .fab { font-family: "Font Awesome 6 Brands" !important; }
+[data-lang='kl'] .fa,
+[data-lang='kl'] .fas,
+[data-lang='kl'] .far,
+[data-lang='kl'] .fab,
+[data-lang='kl'] .fal,
+[data-lang='kl'] .fad,
+[data-lang='kl'] [class*=' fa-'] {
+  font-family: 'Font Awesome 6 Free' !important;
+}
+[data-lang='kl'] .fab {
+  font-family: 'Font Awesome 6 Brands' !important;
+}
 
-[data-lang="goa"] .fa, [data-lang="goa"] .fas, [data-lang="goa"] .far, [data-lang="goa"] .fab, [data-lang="goa"] .fal, [data-lang="goa"] .fad,
-[data-lang="goa"] [class*=" fa-"] { font-family: "Font Awesome 6 Free" !important; }
-[data-lang="goa"] .fab { font-family: "Font Awesome 6 Brands" !important; }
+[data-lang='goa'] .fa,
+[data-lang='goa'] .fas,
+[data-lang='goa'] .far,
+[data-lang='goa'] .fab,
+[data-lang='goa'] .fal,
+[data-lang='goa'] .fad,
+[data-lang='goa'] [class*=' fa-'] {
+  font-family: 'Font Awesome 6 Free' !important;
+}
+[data-lang='goa'] .fab {
+  font-family: 'Font Awesome 6 Brands' !important;
+}
 
-[data-lang="dot"] .fa, [data-lang="dot"] .fas, [data-lang="dot"] .far, [data-lang="dot"] .fab, [data-lang="dot"] .fal, [data-lang="dot"] .fad,
-[data-lang="dot"] [class*=" fa-"] { font-family: "Font Awesome 6 Free" !important; }
-[data-lang="dot"] .fab { font-family: "Font Awesome 6 Brands" !important; }
+[data-lang='dot'] .fa,
+[data-lang='dot'] .fas,
+[data-lang='dot'] .far,
+[data-lang='dot'] .fab,
+[data-lang='dot'] .fal,
+[data-lang='dot'] .fad,
+[data-lang='dot'] [class*=' fa-'] {
+  font-family: 'Font Awesome 6 Free' !important;
+}
+[data-lang='dot'] .fab {
+  font-family: 'Font Awesome 6 Brands' !important;
+}
 
 .ld-select {
   position: relative;
@@ -120,7 +210,9 @@
   letter-spacing: 0;
   border-color: rgba(128, 128, 128, 0.25);
   border-radius: 8px;
-  transition: border-color 0.15s, background 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 }
 
 .ld-trigger:hover,
@@ -148,7 +240,9 @@
   gap: 10px;
 }
 
-.ld-name { font-weight: 600; }
+.ld-name {
+  font-weight: 600;
+}
 
 .ld-code {
   font-size: 10px;
@@ -203,12 +297,25 @@
   left: auto;
   right: 0;
 }
-.ld-options.open { display: block; }
+.ld-options.open {
+  display: block;
+}
 
-[data-theme="dark"] .ld-options,
-[data-theme="superdark"] .ld-options { background: #1e1e1e; border-color: rgba(255,255,255,0.1); color: #e0e0e0; }
-[data-theme="nightvision"] .ld-options { background: #001200; color: #00ff41; }
-[data-theme="predator"] .ld-options   { background: #0a0500; border-color: rgba(255,51,0,0.3); color: #ff6633; }
+[data-theme='dark'] .ld-options,
+[data-theme='superdark'] .ld-options {
+  background: #1e1e1e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+}
+[data-theme='nightvision'] .ld-options {
+  background: #001200;
+  color: #00ff41;
+}
+[data-theme='predator'] .ld-options {
+  background: #0a0500;
+  border-color: rgba(255, 51, 0, 0.3);
+  color: #ff6633;
+}
 
 .ld-option {
   display: flex;
@@ -223,13 +330,19 @@
   transition: background 0.1s;
   list-style: none;
 }
-.ld-option:hover { background: rgba(255, 112, 36, 0.1); }
+.ld-option:hover {
+  background: rgba(255, 112, 36, 0.1);
+}
 .ld-option--active {
   background: rgba(255, 112, 36, 0.12);
   color: var(--accent, var(--cv-accent-color, #ff7024));
 }
-.ld-option--active .ld-code { opacity: 0.7; }
+.ld-option--active .ld-code {
+  opacity: 0.7;
+}
 
 @media print {
-  .ld-select { display: none !important; }
+  .ld-select {
+    display: none !important;
+  }
 }

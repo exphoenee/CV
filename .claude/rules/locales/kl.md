@@ -14,49 +14,49 @@ Not strict linguistic Klingon — style and feel matter more than accuracy.
 
 ## Phonetic Conventions
 
-| Sound | Spelling | Examples |
-|---|---|---|
-| Hard Q (uvular) | `Q` (capital) | `Qapla'`, `Qu'mey` |
-| H (guttural) | `H` (capital) | `HoS`, `Hol`, `HaDlu'` |
-| tlh sound | `tlh` | rare in labels |
-| Glottal stop | `'` (apostrophe) | `jabbI'ID`, `ta'wI'`, `vIH` |
-| Aspirated D | `D` (capital) | `DaH` (now), `De'` (data) |
+| Sound           | Spelling         | Examples                    |
+| --------------- | ---------------- | --------------------------- |
+| Hard Q (uvular) | `Q` (capital)    | `Qapla'`, `Qu'mey`          |
+| H (guttural)    | `H` (capital)    | `HoS`, `Hol`, `HaDlu'`      |
+| tlh sound       | `tlh`            | rare in labels              |
+| Glottal stop    | `'` (apostrophe) | `jabbI'ID`, `ta'wI'`, `vIH` |
+| Aspirated D     | `D` (capital)    | `DaH` (now), `De'` (data)   |
 
 **Capital letters are phonemic, not stylistic** — `Q`, `H`, `D`, `S`, `I` (capital i = different from lowercase l).
 
 ## Pronouns and Prefixes
 
-| Concept | Klingon form | Notes |
-|---|---|---|
-| I | `jIH` (noun) | subject pronoun as standalone |
+| Concept  | Klingon form | Notes                              |
+| -------- | ------------ | ---------------------------------- |
+| I        | `jIH` (noun) | subject pronoun as standalone      |
 | I + verb | `jI-` prefix | "jIlaD" = I read, "jIvum" = I work |
-| You | `SoH` | |
-| He/She | `ghaH` | |
-| It/This | `'oH` | |
-| Now | `DaH` | |
+| You      | `SoH`        |                                    |
+| He/She   | `ghaH`       |                                    |
+| It/This  | `'oH`        |                                    |
+| Now      | `DaH`        |                                    |
 
 ## Core Vocabulary
 
-| English concept | Klingon form | Notes |
-|---|---|---|
-| CV / record | `ghItlh vIta'wI'` | lit. "written record of my deeds" |
-| Frontend | `HoS naQHom` | lit. "force interface" (approximation) |
-| Backend | `qo' naQHom` | lit. "world interface" |
-| Developer | `vum wI'` / `ta'wI'` | |
-| Work experience | `Qu'mey vIta'` | lit. "missions I accomplished" |
-| Education | `HaDlu' vIH` | lit. "study path" |
-| Language | `Hol` | |
-| Programming language | `Hol ghItlh` | lit. "written language" |
-| Success | `Qapla'` | the universal Klingon word |
-| Honor | `batlh` | |
-| Message / transmission | `jabbI'ID` | |
-| Hire me | `HIvqa' veqlargh!` | lit. "attack again, demon!" (ironic hire me) |
-| Send | `yIngeH` | imperative: "send it!" |
-| Close | `yIlop` / short form | |
-| View | `legh` | to see/view |
-| Now / current | `DaH` | |
-| Data | `De'` | |
-| Mission / job | `Qu'` | |
+| English concept        | Klingon form         | Notes                                        |
+| ---------------------- | -------------------- | -------------------------------------------- |
+| CV / record            | `ghItlh vIta'wI'`    | lit. "written record of my deeds"            |
+| Frontend               | `HoS naQHom`         | lit. "force interface" (approximation)       |
+| Backend                | `qo' naQHom`         | lit. "world interface"                       |
+| Developer              | `vum wI'` / `ta'wI'` |                                              |
+| Work experience        | `Qu'mey vIta'`       | lit. "missions I accomplished"               |
+| Education              | `HaDlu' vIH`         | lit. "study path"                            |
+| Language               | `Hol`                |                                              |
+| Programming language   | `Hol ghItlh`         | lit. "written language"                      |
+| Success                | `Qapla'`             | the universal Klingon word                   |
+| Honor                  | `batlh`              |                                              |
+| Message / transmission | `jabbI'ID`           |                                              |
+| Hire me                | `HIvqa' veqlargh!`   | lit. "attack again, demon!" (ironic hire me) |
+| Send                   | `yIngeH`             | imperative: "send it!"                       |
+| Close                  | `yIlop` / short form |                                              |
+| View                   | `legh`               | to see/view                                  |
+| Now / current          | `DaH`                |                                              |
+| Data                   | `De'`                |                                              |
+| Mission / job          | `Qu'`                |                                              |
 
 ## Style Rules
 

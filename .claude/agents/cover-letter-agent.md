@@ -41,12 +41,13 @@ From `PROFILE_DATA` + `CV_BULLETS_ALL` + `CV_EXPERIENCE_SUMMARY`, build:
 `EVIDENCE = [{ claim, source, detail }]` — a list of true, citable facts.
 
 Focus on:
+
 - Specific projects Viktor built that match JD responsibilities
 - Measurable outcomes (release cycle changes, team size, CI from scratch, etc.)
 - Technologies named in the JD that Viktor actually used (with context from profile)
 - Leadership, mentoring, architecture decisions relevant to the role
 
-**Do not use any claim that cannot be traced to cv-data.js or profile/*.md.**
+**Do not use any claim that cannot be traced to cv-data.js or profile/\*.md.**
 
 ---
 
@@ -55,6 +56,7 @@ Focus on:
 Match EVIDENCE against `JD_RESPONSIBILITIES` and `JD_REQUIRED`.
 
 Select:
+
 - `OPENING_HOOK` — one specific, compelling reason Viktor is interested in this company/role
   (Use JD_COMPANY + JD_DOMAIN for personalization — be concrete, not generic)
 - `PARA1_EXPERIENCE` — 2–3 evidence items most relevant to the JD's core requirements
@@ -73,6 +75,7 @@ Length: 3–4 tight paragraphs. No filler sentences.
 No: "I am writing to apply for...", "I believe I would be a great fit", generic openers.
 
 Structure:
+
 ```
 [Opening] — specific hook: why this company/role, one concrete connection
 [Para 1] — 2–3 specific experiences mapped to JD core requirements
@@ -81,6 +84,7 @@ Structure:
 ```
 
 Header format:
+
 ```
 Viktor Bozzay
 bozzay.viktor@gmail.com | +36 30 610 6608 | linkedin.com/in/viktorbozzay
@@ -104,6 +108,7 @@ Tone: Szakmai, közvetlen, magabiztos — matches hu.md language rules.
 Register: Tegező forma kerülendő (levélben magázó).
 
 Header format:
+
 ```
 Bozzay Viktor
 bozzay.viktor@gmail.com | +36 30 610 6608 | linkedin.com/in/viktorbozzay
@@ -136,14 +141,15 @@ If `JD_PRIMARY_LANGUAGE` is one of `"de"`, `"fr"`, `"es"`, `"it"`:
 
 3. Use the language-specific date format and header convention:
 
-   | Kód | Nyelv | Dátum formátum | Megszólítás |
-   |---|---|---|---|
-   | `de` | Német | `13. Juni 2026` | `Betreff: [JD_TITLE]` |
-   | `fr` | Francia | `13 juin 2026` | `Objet : [JD_TITLE]` |
-   | `es` | Spanyol | `13 de junio de 2026` | `Asunto: [JD_TITLE]` |
-   | `it` | Olasz | `13 giugno 2026` | `Oggetto: [JD_TITLE]` |
+   | Kód  | Nyelv   | Dátum formátum        | Megszólítás           |
+   | ---- | ------- | --------------------- | --------------------- |
+   | `de` | Német   | `13. Juni 2026`       | `Betreff: [JD_TITLE]` |
+   | `fr` | Francia | `13 juin 2026`        | `Objet : [JD_TITLE]`  |
+   | `es` | Spanyol | `13 de junio de 2026` | `Asunto: [JD_TITLE]`  |
+   | `it` | Olasz   | `13 giugno 2026`      | `Oggetto: [JD_TITLE]` |
 
    Header format template:
+
    ```
    Viktor Bozzay
    bozzay.viktor@gmail.com | +36 30 610 6608 | linkedin.com/in/viktorbozzay
@@ -159,6 +165,7 @@ If `JD_PRIMARY_LANGUAGE` is one of `"de"`, `"fr"`, `"es"`, `"it"`:
 4. Store as `JD_LETTER` with the language code: e.g. for German → `DE_LETTER`, for French → `FR_LETTER`
 
 If `JD_PRIMARY_LANGUAGE` is some other language (not en/hu/de/fr/es/it):
+
 - Do NOT write a JD-language cover letter
 - Set `COVER_LETTER_JD = null`
 - Note in the report: "A(z) [lang] nyelv nem támogatott — csak angol és magyar levél készült."
@@ -258,7 +265,7 @@ This step is informational — you do NOT dispatch any agent here, just recommen
 
 ## Hard Constraints
 
-- ❌ Never invent a skill, metric, or achievement not in cv-data.js or profile/*.md
+- ❌ Never invent a skill, metric, or achievement not in cv-data.js or profile/\*.md
 - ❌ No generic filler: "I am a passionate developer", "I believe I would be a great fit"
 - ❌ No hollow claims: "I have extensive experience in..." without a specific example following
 - ❌ Never use first-person plural ("we built") for solo work — be accurate

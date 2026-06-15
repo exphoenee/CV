@@ -4,32 +4,27 @@ import {
   TILE_SHEET_TILE_SIZE,
   MAP_IMAGE_SRC,
   loadMapGridFromImage,
-} from "./map/map.js";
-import { MapRenderer } from "./map/renderMap.js";
-import { CV_STATIONS } from "./world/stations.js";
-import { ENTITY_SPAWNS } from "./world/spawns.js";
-import Player from "./entities/player/Player.js";
-import Skeleton from "./entities/enemies/Skeleton.js";
-import Chicken from "./entities/npcs/Chicken.js";
-import Cow from "./entities/npcs/Cow.js";
-import Pig from "./entities/npcs/Pig.js";
-import Sheep from "./entities/npcs/Sheep.js";
-import Tree from "./entities/obstacles/Tree.js";
-import SmallTree from "./entities/obstacles/SmallTree.js";
-import Chest from "./entities/obstacles/Chest.js";
-import House from "./entities/obstacles/House.js";
-import { sfx } from "./audio/sfx.js";
-import Flower from "./entities/decor/Flower.js";
-import Mushroom from "./entities/decor/Mushroom.js";
-import Log from "./entities/decor/Log.js";
-import GoldOre from "./entities/decor/GoldOre.js";
-import PickableOre from "./entities/decor/PickableOre.js";
-import {
-  MUSIC_GENRES,
-  initFormspree,
-  bookingModalHTML,
-  initBookingModal,
-} from "../shared.js";
+} from './map/map.js';
+import { MapRenderer } from './map/renderMap.js';
+import { CV_STATIONS } from './world/stations.js';
+import { ENTITY_SPAWNS } from './world/spawns.js';
+import Player from './entities/player/Player.js';
+import Skeleton from './entities/enemies/Skeleton.js';
+import Chicken from './entities/npcs/Chicken.js';
+import Cow from './entities/npcs/Cow.js';
+import Pig from './entities/npcs/Pig.js';
+import Sheep from './entities/npcs/Sheep.js';
+import Tree from './entities/obstacles/Tree.js';
+import SmallTree from './entities/obstacles/SmallTree.js';
+import Chest from './entities/obstacles/Chest.js';
+import House from './entities/obstacles/House.js';
+import { sfx } from './audio/sfx.js';
+import Flower from './entities/decor/Flower.js';
+import Mushroom from './entities/decor/Mushroom.js';
+import Log from './entities/decor/Log.js';
+import GoldOre from './entities/decor/GoldOre.js';
+import PickableOre from './entities/decor/PickableOre.js';
+import { MUSIC_GENRES, initFormspree, bookingModalHTML, initBookingModal } from '../shared.js';
 import {
   MUSIC_STATE_KEY,
   MUSIC_TIME_KEY,
@@ -37,41 +32,40 @@ import {
   MUSIC_GENRE_KEY,
   MUSIC_REPEAT_KEY,
   SFX_VOLUME_KEY,
-} from "../config.js";
-import Hay from "./entities/decor/Hay.js";
-import Carrot from "./entities/decor/Carrot.js";
-import GoldBoulder from "./entities/decor/GoldBoulder.js";
-import Boulder from "./entities/decor/Boulder.js";
-import DecorStone from "./entities/decor/DecorStone.js";
-import Stump from "./entities/decor/Stump.js";
-import Basket from "./entities/decor/Basket.js";
-import Sign from "./entities/decor/Sign.js";
-import Plant from "./entities/decor/Plant.js";
-import Leaf from "./entities/decor/Leaf.js";
-import { initMobileInput } from "./mobile-input.js";
+} from '../config.js';
+import Hay from './entities/decor/Hay.js';
+import Carrot from './entities/decor/Carrot.js';
+import GoldBoulder from './entities/decor/GoldBoulder.js';
+import Boulder from './entities/decor/Boulder.js';
+import DecorStone from './entities/decor/DecorStone.js';
+import Stump from './entities/decor/Stump.js';
+import Basket from './entities/decor/Basket.js';
+import Sign from './entities/decor/Sign.js';
+import Plant from './entities/decor/Plant.js';
+import Leaf from './entities/decor/Leaf.js';
+import { initMobileInput } from './mobile-input.js';
 
 class GameEngine {
   constructor() {
-    this.canvas = document.getElementById("game-canvas");
-    this.ctx = this.canvas.getContext("2d");
+    this.canvas = document.getElementById('game-canvas');
+    this.ctx = this.canvas.getContext('2d');
 
     // Setup internal virtual resolution (640x360 for perfect pixel-art scale)
     this.virtualWidth = 640;
     this.virtualHeight = 360;
     this.zoom = 1;
     this.resizeCanvas();
-    window.addEventListener("resize", () => this.resizeCanvas());
+    window.addEventListener('resize', () => this.resizeCanvas());
     const onFSChange = () => {
       this.resizeCanvas();
-      const btn = document.getElementById("btn-fullscreen");
+      const btn = document.getElementById('btn-fullscreen');
       if (btn) {
-        const fsEl =
-          document.fullscreenElement || document.webkitFullscreenElement;
-        btn.textContent = fsEl ? "Exit Fullscreen" : "Fullscreen";
+        const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+        btn.textContent = fsEl ? 'Exit Fullscreen' : 'Fullscreen';
       }
     };
-    document.addEventListener("fullscreenchange", onFSChange);
-    document.addEventListener("webkitfullscreenchange", onFSChange);
+    document.addEventListener('fullscreenchange', onFSChange);
+    document.addEventListener('webkitfullscreenchange', onFSChange);
 
     // Keyboard inputs
     this.keys = {};
@@ -124,7 +118,7 @@ class GameEngine {
 
     // HUD heart image
     this.hearthImage = new Image();
-    this.hearthImage.src = "./assets/sprites/Cute/Hearth/hearth.png";
+    this.hearthImage.src = './assets/sprites/Cute/Hearth/hearth.png';
 
     this.init();
   }
@@ -133,8 +127,8 @@ class GameEngine {
    * Fit virtual canvas on screen, maintaining crisp pixel scaling.
    */
   resizeCanvas() {
-    const container = document.getElementById("canvas-container");
-    const wrapper = document.getElementById("game-wrapper");
+    const container = document.getElementById('canvas-container');
+    const wrapper = document.getElementById('game-wrapper');
     if (!container || !wrapper) return;
 
     const w = container.clientWidth;
@@ -162,17 +156,14 @@ class GameEngine {
   }
 
   toggleFullscreen() {
-    const container = document.getElementById("game-container");
+    const container = document.getElementById('game-container');
     if (!container) return;
     const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
     if (!fsEl) {
-      const req =
-        container.requestFullscreen?.() ||
-        container.webkitRequestFullscreen?.();
+      const req = container.requestFullscreen?.() || container.webkitRequestFullscreen?.();
       if (req) req.catch(() => {});
     } else {
-      const exit =
-        document.exitFullscreen?.() || document.webkitExitFullscreen?.();
+      const exit = document.exitFullscreen?.() || document.webkitExitFullscreen?.();
       if (exit) exit.catch(() => {});
     }
   }
@@ -208,17 +199,17 @@ class GameEngine {
    * Start loading and build game assets.
    */
   async init() {
-    const loadingBar = document.getElementById("loading-bar");
-    const loadingLabel = document.getElementById("loading-label");
+    const loadingBar = document.getElementById('loading-bar');
+    const loadingLabel = document.getElementById('loading-label');
 
     function setLabel(text) {
       if (loadingLabel) loadingLabel.textContent = text;
     }
     function setProgress(ratio) {
-      if (loadingBar) loadingBar.style.width = ratio * 100 + "%";
+      if (loadingBar) loadingBar.style.width = ratio * 100 + '%';
     }
 
-    setLabel("Loading map…");
+    setLabel('Loading map…');
     try {
       const mapData = await loadMapGridFromImage(MAP_IMAGE_SRC);
       this.fullMapGrid = mapData.fullMapGrid;
@@ -227,24 +218,22 @@ class GameEngine {
       this.width = this.cols * TILE_SIZE;
       this.height = this.rows * TILE_SIZE;
     } catch (err) {
-      console.error("[Map] BMP load failed:", err);
+      console.error('[Map] BMP load failed:', err);
       return;
     }
     setProgress(0.2);
 
-    setLabel("Loading tiles…");
+    setLabel('Loading tiles…');
     await new Promise((resolve) => this.preloadAssets(resolve));
     setProgress(0.4);
     sfx.preload();
 
-    setLabel("Building world…");
+    setLabel('Building world…');
     this.buildWorld();
     setProgress(0.5);
 
-    setLabel("Loading sprites…");
-    const images = this.gameObjects
-      .filter((obj) => obj && obj.image)
-      .map((obj) => obj.image);
+    setLabel('Loading sprites…');
+    const images = this.gameObjects.filter((obj) => obj && obj.image).map((obj) => obj.image);
 
     if (images.length > 0) {
       let done = 0;
@@ -261,8 +250,8 @@ class GameEngine {
                 tick();
                 return;
               }
-              img.addEventListener("load", tick, { once: true });
-              img.addEventListener("error", tick, { once: true });
+              img.addEventListener('load', tick, { once: true });
+              img.addEventListener('error', tick, { once: true });
             }),
         ),
       );
@@ -270,9 +259,9 @@ class GameEngine {
       setProgress(1);
     }
 
-    const loadingScreen = document.getElementById("loading-screen");
+    const loadingScreen = document.getElementById('loading-screen');
     if (loadingScreen) {
-      loadingScreen.classList.add("loading-done");
+      loadingScreen.classList.add('loading-done');
       await new Promise((r) => setTimeout(r, 420));
       loadingScreen.remove();
     }
@@ -353,14 +342,10 @@ class GameEngine {
     // 4. Spawn NPCs (Chicken, Cow, Pig, Sheep)
     ENTITY_SPAWNS.npcs.forEach((npcSpawn) => {
       let animal = null;
-      if (npcSpawn.type === "Chicken")
-        animal = new Chicken({ x: npcSpawn.x, y: npcSpawn.y });
-      else if (npcSpawn.type === "Cow")
-        animal = new Cow({ x: npcSpawn.x, y: npcSpawn.y });
-      else if (npcSpawn.type === "Pig")
-        animal = new Pig({ x: npcSpawn.x, y: npcSpawn.y });
-      else if (npcSpawn.type === "Sheep")
-        animal = new Sheep({ x: npcSpawn.x, y: npcSpawn.y });
+      if (npcSpawn.type === 'Chicken') animal = new Chicken({ x: npcSpawn.x, y: npcSpawn.y });
+      else if (npcSpawn.type === 'Cow') animal = new Cow({ x: npcSpawn.x, y: npcSpawn.y });
+      else if (npcSpawn.type === 'Pig') animal = new Pig({ x: npcSpawn.x, y: npcSpawn.y });
+      else if (npcSpawn.type === 'Sheep') animal = new Sheep({ x: npcSpawn.x, y: npcSpawn.y });
 
       if (animal) this.npcs.push(animal);
     });
@@ -454,10 +439,7 @@ class GameEngine {
     this.enemies = this.enemies.filter((e) => !e.deathAnimDone);
     this.npcs = this.npcs.filter((n) => !n.deathAnimDone);
 
-    if (
-      this.enemies.length !== enemiesBefore ||
-      this.npcs.length !== npcsBefore
-    ) {
+    if (this.enemies.length !== enemiesBefore || this.npcs.length !== npcsBefore) {
       this.rebuildGameObjectList();
     }
   }
@@ -466,15 +448,18 @@ class GameEngine {
    * Map keyboard arrow keys and prevent page scrolling.
    */
   setupKeyboardListeners() {
-    window.addEventListener("keydown", (e) => {
+    window.addEventListener('keydown', (e) => {
       this.keys[e.key] = true;
 
       // Prevent scroll/navigation on Space/Enter/Arrows — but not when typing in form fields or activating buttons
-      if (
-        [" ", "Enter", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)
-      ) {
+      if ([' ', 'Enter', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
         const tag = document.activeElement?.tagName || '';
-        const isInteractive = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'BUTTON' || tag === 'SELECT' || document.activeElement?.isContentEditable;
+        const isInteractive =
+          tag === 'INPUT' ||
+          tag === 'TEXTAREA' ||
+          tag === 'BUTTON' ||
+          tag === 'SELECT' ||
+          document.activeElement?.isContentEditable;
         if (!isInteractive) {
           e.preventDefault();
         }
@@ -488,14 +473,14 @@ class GameEngine {
       }
 
       // P or Escape to toggle pause menu (ignore key repeat to prevent flicker)
-      if ((e.key === "p" || e.key === "P" || e.key === "Escape") && !e.repeat) {
-        const startScreen = document.getElementById("start-screen");
-        const gameOverScreen = document.getElementById("game-over-screen");
-        const diagOverlay = document.getElementById("dialogue-overlay");
+      if ((e.key === 'p' || e.key === 'P' || e.key === 'Escape') && !e.repeat) {
+        const startScreen = document.getElementById('start-screen');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        const diagOverlay = document.getElementById('dialogue-overlay');
 
         if (
-          startScreen?.classList.contains("dialogue-visible") ||
-          gameOverScreen?.classList.contains("dialogue-visible")
+          startScreen?.classList.contains('dialogue-visible') ||
+          gameOverScreen?.classList.contains('dialogue-visible')
         )
           return;
 
@@ -508,15 +493,15 @@ class GameEngine {
       }
 
       // F3 to toggle debug mode
-      if (e.key === "F3") {
+      if (e.key === 'F3') {
         this.debugMode = !this.debugMode;
         this.player.debugMode = this.debugMode;
       }
 
       // M to toggle music play/pause
-      if (e.key === "m" || e.key === "M") {
-        const musicAudio = document.getElementById("game-music-audio");
-        const musicPlayBtn = document.getElementById("game-music-playpause");
+      if (e.key === 'm' || e.key === 'M') {
+        const musicAudio = document.getElementById('game-music-audio');
+        const musicPlayBtn = document.getElementById('game-music-playpause');
         if (musicPlayBtn) {
           musicPlayBtn.click();
         } else if (musicAudio) {
@@ -524,11 +509,9 @@ class GameEngine {
           if (musicAudio.paused) {
             if (!musicAudio.src) {
               // Load first option if no track selected
-              const firstOption = document.querySelector(
-                "#game-genre-select .custom-option",
-              );
+              const firstOption = document.querySelector('#game-genre-select .custom-option');
               if (firstOption) {
-                musicAudio.src = firstOption.getAttribute("data-value");
+                musicAudio.src = firstOption.getAttribute('data-value');
                 musicAudio.load();
               }
             }
@@ -540,7 +523,7 @@ class GameEngine {
       }
     });
 
-    window.addEventListener("keyup", (e) => {
+    window.addEventListener('keyup', (e) => {
       this.keys[e.key] = false;
     });
   }
@@ -549,25 +532,25 @@ class GameEngine {
    * Wire up dialogue interface triggers and scrolling.
    */
   setupDialogueListeners() {
-    const upBtn = document.getElementById("btn-scroll-up");
-    const downBtn = document.getElementById("btn-scroll-down");
-    const exitBtn = document.getElementById("btn-scroll-exit");
-    const textBox = document.getElementById("dialogue-text");
+    const upBtn = document.getElementById('btn-scroll-up');
+    const downBtn = document.getElementById('btn-scroll-down');
+    const exitBtn = document.getElementById('btn-scroll-exit');
+    const textBox = document.getElementById('dialogue-text');
 
     if (upBtn && textBox) {
-      upBtn.addEventListener("click", () => {
-        textBox.scrollBy({ top: -60, behavior: "smooth" });
+      upBtn.addEventListener('click', () => {
+        textBox.scrollBy({ top: -60, behavior: 'smooth' });
       });
     }
 
     if (downBtn && textBox) {
-      downBtn.addEventListener("click", () => {
-        textBox.scrollBy({ top: 60, behavior: "smooth" });
+      downBtn.addEventListener('click', () => {
+        textBox.scrollBy({ top: 60, behavior: 'smooth' });
       });
     }
 
     if (exitBtn) {
-      exitBtn.addEventListener("click", () => {
+      exitBtn.addEventListener('click', () => {
         this.closeDialogue();
       });
     }
@@ -577,10 +560,10 @@ class GameEngine {
    * Pause / Resume Game Menus
    */
   togglePauseMenu() {
-    const pauseMenu = document.getElementById("pause-menu");
+    const pauseMenu = document.getElementById('pause-menu');
     if (!pauseMenu) return;
 
-    const isPaused = pauseMenu.classList.contains("dialogue-visible");
+    const isPaused = pauseMenu.classList.contains('dialogue-visible');
     if (isPaused) {
       this.resumeGame();
     } else {
@@ -589,24 +572,24 @@ class GameEngine {
   }
 
   pauseGame() {
-    const pauseMenu = document.getElementById("pause-menu");
+    const pauseMenu = document.getElementById('pause-menu');
     if (!pauseMenu) return;
 
     this.isFrozen = true;
-    pauseMenu.classList.remove("dialogue-hidden");
-    pauseMenu.classList.add("dialogue-visible");
+    pauseMenu.classList.remove('dialogue-hidden');
+    pauseMenu.classList.add('dialogue-visible');
   }
 
   resumeGame() {
-    const pauseMenu = document.getElementById("pause-menu");
+    const pauseMenu = document.getElementById('pause-menu');
     if (!pauseMenu) return;
 
-    pauseMenu.classList.remove("dialogue-visible");
-    pauseMenu.classList.add("dialogue-hidden");
+    pauseMenu.classList.remove('dialogue-visible');
+    pauseMenu.classList.add('dialogue-hidden');
 
     // Close dropdown
-    const customSelect = document.getElementById("game-genre-select");
-    if (customSelect) customSelect.classList.remove("open");
+    const customSelect = document.getElementById('game-genre-select');
+    if (customSelect) customSelect.classList.remove('open');
 
     this.isFrozen = false;
   }
@@ -615,58 +598,52 @@ class GameEngine {
    * Wire up Pause Menu resume/backdrop elements and music player events.
    */
   setupPauseMenuListeners() {
-    const resumeBtn = document.getElementById("btn-resume-game");
-    const backdrop = document.getElementById("pause-backdrop");
+    const resumeBtn = document.getElementById('btn-resume-game');
+    const backdrop = document.getElementById('pause-backdrop');
 
-    const fullscreenBtn = document.getElementById("btn-fullscreen");
+    const fullscreenBtn = document.getElementById('btn-fullscreen');
     if (fullscreenBtn) {
-      fullscreenBtn.addEventListener("click", () => this.toggleFullscreen());
+      fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
     }
 
     if (resumeBtn) {
-      resumeBtn.addEventListener("click", () => this.resumeGame());
+      resumeBtn.addEventListener('click', () => this.resumeGame());
     }
     if (backdrop) {
-      backdrop.addEventListener("click", () => this.resumeGame());
+      backdrop.addEventListener('click', () => this.resumeGame());
     }
 
     // Music Player Setup
-    const audio = document.getElementById("game-music-audio");
-    const playPauseBtn = document.getElementById("game-music-playpause");
-    const stopBtn = document.getElementById("game-music-stop");
-    const prevBtn = document.getElementById("game-music-prev");
-    const nextBtn = document.getElementById("game-music-next");
-    const customSelect = document.getElementById("game-genre-select");
-    const volumeSlider = document.getElementById("game-music-volume");
+    const audio = document.getElementById('game-music-audio');
+    const playPauseBtn = document.getElementById('game-music-playpause');
+    const stopBtn = document.getElementById('game-music-stop');
+    const prevBtn = document.getElementById('game-music-prev');
+    const nextBtn = document.getElementById('game-music-next');
+    const customSelect = document.getElementById('game-genre-select');
+    const volumeSlider = document.getElementById('game-music-volume');
 
     if (!customSelect || !audio || !playPauseBtn) return;
 
     // Populate genre options from shared MUSIC_GENRES
-    var optionsContainer = document.getElementById("game-genre-options");
+    var optionsContainer = document.getElementById('game-genre-options');
     if (optionsContainer) {
       optionsContainer.innerHTML = MUSIC_GENRES.map(function (g) {
-        return (
-          '<div class="custom-option" data-value="' +
-          g.value +
-          '">' +
-          g.label +
-          "</div>"
-        );
-      }).join("");
+        return '<div class="custom-option" data-value="' + g.value + '">' + g.label + '</div>';
+      }).join('');
     }
 
-    const trigger = customSelect.querySelector(".custom-select-trigger");
-    const triggerText = trigger.querySelector("span");
-    const options = customSelect.querySelectorAll(".custom-option");
+    const trigger = customSelect.querySelector('.custom-select-trigger');
+    const triggerText = trigger.querySelector('span');
+    const options = customSelect.querySelectorAll('.custom-option');
 
     let isPlaying = false;
     let currentIndex = 0;
-    let currentValue = options[0].getAttribute("data-value");
+    let currentValue = options[0].getAttribute('data-value');
     let currentLabel = options[0].textContent;
 
     // Persist music state
     const saveState = () => {
-      localStorage.setItem(MUSIC_STATE_KEY, isPlaying ? "playing" : "paused");
+      localStorage.setItem(MUSIC_STATE_KEY, isPlaying ? 'playing' : 'paused');
       if (!isPlaying) localStorage.setItem(MUSIC_TIME_KEY, audio.currentTime);
     };
     const saveTime = () => {
@@ -684,35 +661,31 @@ class GameEngine {
     }
 
     // Volume target — updated live when the slider changes
-    let targetVolume =
-      parseFloat(localStorage.getItem(MUSIC_VOLUME_KEY)) || 0.5;
+    let targetVolume = parseFloat(localStorage.getItem(MUSIC_VOLUME_KEY)) || 0.5;
 
     if (volumeSlider) {
-      volumeSlider.addEventListener("input", (e) => {
+      volumeSlider.addEventListener('input', (e) => {
         const vol = parseFloat(e.target.value);
         targetVolume = vol;
         audio.volume = vol;
         localStorage.setItem(MUSIC_VOLUME_KEY, vol);
-        volumeSlider.style.setProperty("--volume-pct", vol * 100 + "%");
+        volumeSlider.style.setProperty('--volume-pct', vol * 100 + '%');
       });
     }
 
     // SFX volume slider
-    const sfxSlider = document.getElementById("game-sfx-volume");
+    const sfxSlider = document.getElementById('game-sfx-volume');
     var savedSfxVol = localStorage.getItem(SFX_VOLUME_KEY);
     if (savedSfxVol !== null) {
       sfx.setVolume(parseFloat(savedSfxVol));
       if (sfxSlider) sfxSlider.value = savedSfxVol;
     }
     if (sfxSlider) {
-      sfxSlider.style.setProperty(
-        "--volume-pct",
-        parseFloat(sfxSlider.value) * 100 + "%",
-      );
-      sfxSlider.addEventListener("input", function () {
+      sfxSlider.style.setProperty('--volume-pct', parseFloat(sfxSlider.value) * 100 + '%');
+      sfxSlider.addEventListener('input', function () {
         var vol = parseFloat(this.value);
         sfx.setVolume(vol);
-        this.style.setProperty("--volume-pct", vol * 100 + "%");
+        this.style.setProperty('--volume-pct', vol * 100 + '%');
       });
     }
 
@@ -720,7 +693,7 @@ class GameEngine {
     const savedGenre = localStorage.getItem(MUSIC_GENRE_KEY);
     if (savedGenre) {
       for (let i = 0; i < options.length; i++) {
-        if (options[i].getAttribute("data-value") === savedGenre) {
+        if (options[i].getAttribute('data-value') === savedGenre) {
           currentIndex = i;
           currentValue = savedGenre;
           currentLabel = options[i].textContent;
@@ -739,7 +712,7 @@ class GameEngine {
 
     const selectTrackByIndex = (index) => {
       currentIndex = index;
-      currentValue = options[currentIndex].getAttribute("data-value");
+      currentValue = options[currentIndex].getAttribute('data-value');
       currentLabel = options[currentIndex].textContent;
       triggerText.textContent = currentLabel;
       localStorage.setItem(MUSIC_GENRE_KEY, currentValue);
@@ -750,9 +723,9 @@ class GameEngine {
         ? '<i class="fas fa-pause"></i>'
         : '<i class="fas fa-play"></i>';
       if (isPlaying) {
-        playPauseBtn.classList.add("playing");
+        playPauseBtn.classList.add('playing');
       } else {
-        playPauseBtn.classList.remove("playing");
+        playPauseBtn.classList.remove('playing');
       }
     };
 
@@ -818,21 +791,21 @@ class GameEngine {
       }
     };
 
-    trigger.addEventListener("click", (e) => {
+    trigger.addEventListener('click', (e) => {
       e.stopPropagation();
-      customSelect.classList.toggle("open");
+      customSelect.classList.toggle('open');
     });
 
-    document.addEventListener("click", (e) => {
+    document.addEventListener('click', (e) => {
       if (!customSelect.contains(e.target)) {
-        customSelect.classList.remove("open");
+        customSelect.classList.remove('open');
       }
     });
 
     options.forEach((opt, i) => {
-      opt.addEventListener("click", (e) => {
+      opt.addEventListener('click', (e) => {
         selectTrackByIndex(i);
-        customSelect.classList.remove("open");
+        customSelect.classList.remove('open');
 
         if (isPlaying) {
           fadeOutThen(() => {
@@ -849,7 +822,7 @@ class GameEngine {
     });
 
     // Play/Pause toggle
-    playPauseBtn.addEventListener("click", () => {
+    playPauseBtn.addEventListener('click', () => {
       if (isPlaying) {
         fadeOut(() => saveState());
       } else {
@@ -860,31 +833,31 @@ class GameEngine {
 
     // Stop: fade out, pause and reset playback position to the beginning
     if (stopBtn) {
-      stopBtn.addEventListener("click", () => {
+      stopBtn.addEventListener('click', () => {
         fadeOut(() => {
           audio.currentTime = 0;
-          localStorage.setItem(MUSIC_STATE_KEY, "stopped");
+          localStorage.setItem(MUSIC_STATE_KEY, 'stopped');
           localStorage.setItem(MUSIC_TIME_KEY, 0);
         });
       });
     }
 
     // Repeat toggle
-    const repeatBtn = document.getElementById("game-music-repeat");
+    const repeatBtn = document.getElementById('game-music-repeat');
     let repeatMode = parseInt(localStorage.getItem(MUSIC_REPEAT_KEY)) || 0; // 0 = no repeat, 1 = repeat all, 2 = repeat one
 
     function updateRepeatBtnUI() {
       if (!repeatBtn) return;
       if (repeatMode === 0) {
         repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
-        repeatBtn.classList.remove("active", "repeat-one");
+        repeatBtn.classList.remove('active', 'repeat-one');
       } else if (repeatMode === 1) {
         repeatBtn.innerHTML = '<i class="fas fa-repeat"></i>';
-        repeatBtn.classList.add("active");
-        repeatBtn.classList.remove("repeat-one");
+        repeatBtn.classList.add('active');
+        repeatBtn.classList.remove('repeat-one');
       } else {
         repeatBtn.innerHTML = '<i class="fas fa-repeat-1"></i>';
-        repeatBtn.classList.add("active", "repeat-one");
+        repeatBtn.classList.add('active', 'repeat-one');
       }
     }
 
@@ -892,7 +865,7 @@ class GameEngine {
       // Restore saved repeat mode UI
       updateRepeatBtnUI();
 
-      repeatBtn.addEventListener("click", () => {
+      repeatBtn.addEventListener('click', () => {
         repeatMode = (repeatMode + 1) % 3;
         localStorage.setItem(MUSIC_REPEAT_KEY, repeatMode);
         updateRepeatBtnUI();
@@ -902,7 +875,7 @@ class GameEngine {
     // Prev: if > 10s into the track, restart from beginning.
     // Otherwise, jump to the previous track (wraps to last if at first).
     if (prevBtn) {
-      prevBtn.addEventListener("click", () => {
+      prevBtn.addEventListener('click', () => {
         if (audio.currentTime > 10) {
           audio.currentTime = 0;
           saveTime();
@@ -922,7 +895,7 @@ class GameEngine {
 
     // Next: jump to the next track (wraps to first if at last).
     if (nextBtn) {
-      nextBtn.addEventListener("click", () => {
+      nextBtn.addEventListener('click', () => {
         localStorage.setItem(MUSIC_TIME_KEY, 0);
         const nextIndex = (currentIndex + 1) % options.length;
         selectTrackByIndex(nextIndex);
@@ -935,15 +908,15 @@ class GameEngine {
     }
 
     // Track seek elements
-    const seekSlider = document.getElementById("track-seek");
-    const trackTimeCurrent = document.getElementById("track-time-current");
-    const trackTimeTotal = document.getElementById("track-time-total");
+    const seekSlider = document.getElementById('track-seek');
+    const trackTimeCurrent = document.getElementById('track-time-current');
+    const trackTimeTotal = document.getElementById('track-time-total');
 
     const formatTime = (seconds) => {
-      if (isNaN(seconds) || !isFinite(seconds)) return "00:00";
+      if (isNaN(seconds) || !isFinite(seconds)) return '00:00';
       const m = Math.floor(seconds / 60);
       const s = Math.floor(seconds % 60);
-      return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
     };
 
     let userScrubbing = false;
@@ -959,8 +932,8 @@ class GameEngine {
         seekSlider.max = audio.duration;
         seekSlider.value = audio.currentTime;
         seekSlider.style.setProperty(
-          "--seek-pct",
-          (audio.currentTime / audio.duration) * 100 + "%",
+          '--seek-pct',
+          (audio.currentTime / audio.duration) * 100 + '%',
         );
       }
       // Auto-save every 3 seconds
@@ -971,7 +944,7 @@ class GameEngine {
     };
 
     if (seekSlider) {
-      seekSlider.addEventListener("input", () => {
+      seekSlider.addEventListener('input', () => {
         userScrubbing = true;
         audio.currentTime = parseFloat(seekSlider.value);
         if (trackTimeCurrent) {
@@ -979,34 +952,28 @@ class GameEngine {
         }
         if (audio.duration) {
           seekSlider.style.setProperty(
-            "--seek-pct",
-            (audio.currentTime / audio.duration) * 100 + "%",
+            '--seek-pct',
+            (audio.currentTime / audio.duration) * 100 + '%',
           );
         }
       });
-      seekSlider.addEventListener("change", () => {
+      seekSlider.addEventListener('change', () => {
         userScrubbing = false;
         audio.currentTime = parseFloat(seekSlider.value);
         saveTime();
       });
       // Explicit click handler for browsers where track-click doesn't work with appearance:none
-      seekSlider.addEventListener("click", (e) => {
+      seekSlider.addEventListener('click', (e) => {
         userScrubbing = true;
         const rect = seekSlider.getBoundingClientRect();
-        const pct = Math.max(
-          0,
-          Math.min(1, (e.clientX - rect.left) / rect.width),
-        );
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
         const max = parseFloat(seekSlider.max) || 1;
         const min = parseFloat(seekSlider.min) || 0;
         const val = min + pct * (max - min);
         seekSlider.value = val;
         audio.currentTime = val;
         if (audio.duration) {
-          seekSlider.style.setProperty(
-            "--seek-pct",
-            (val / audio.duration) * 100 + "%",
-          );
+          seekSlider.style.setProperty('--seek-pct', (val / audio.duration) * 100 + '%');
         }
         if (trackTimeCurrent) {
           trackTimeCurrent.textContent = formatTime(val);
@@ -1016,14 +983,14 @@ class GameEngine {
       });
     }
 
-    audio.addEventListener("loadedmetadata", () => {
+    audio.addEventListener('loadedmetadata', () => {
       if (seekSlider && audio.duration) {
         seekSlider.max = audio.duration;
       }
       updateTrackTime();
     });
-    audio.addEventListener("timeupdate", updateTrackTime);
-    audio.addEventListener("ended", () => {
+    audio.addEventListener('timeupdate', updateTrackTime);
+    audio.addEventListener('ended', () => {
       if (repeatMode === 2) {
         // Repeat one: replay from beginning
         audio.currentTime = 0;
@@ -1048,7 +1015,7 @@ class GameEngine {
 
       // No repeat: stop
       isPlaying = false;
-      localStorage.setItem(MUSIC_STATE_KEY, "stopped");
+      localStorage.setItem(MUSIC_STATE_KEY, 'stopped');
       updatePlayPause();
     });
 
@@ -1063,10 +1030,10 @@ class GameEngine {
 
     // Load track, restore time and playing state
     loadTrack();
-    if (savedTime > 0 && savedState !== "stopped") {
+    if (savedTime > 0 && savedState !== 'stopped') {
       audio.currentTime = savedTime;
     }
-    if (savedState === "playing") {
+    if (savedState === 'playing') {
       audio.volume = 0;
       audio
         .play()
@@ -1088,14 +1055,14 @@ class GameEngine {
                 fadeTo(targetVolume);
               })
               .catch(() => {});
-            window.removeEventListener("click", startOnInteraction);
-            window.removeEventListener("keydown", startOnInteraction);
+            window.removeEventListener('click', startOnInteraction);
+            window.removeEventListener('keydown', startOnInteraction);
           };
-          window.addEventListener("click", startOnInteraction);
-          window.addEventListener("keydown", startOnInteraction);
+          window.addEventListener('click', startOnInteraction);
+          window.addEventListener('keydown', startOnInteraction);
           updatePlayPause();
         });
-    } else if (savedState === "paused") {
+    } else if (savedState === 'paused') {
       isPlaying = false;
       updatePlayPause();
     } else {
@@ -1104,115 +1071,112 @@ class GameEngine {
     }
 
     // Unload event: save state
-    window.addEventListener("beforeunload", saveState);
+    window.addEventListener('beforeunload', saveState);
   }
 
   initHireModal() {
-    const hireBtn = document.getElementById("hire-btn");
-    const hireModal = document.getElementById("hire-modal");
-    const hireClose = document.getElementById("hire-close");
-    const hireBackdrop = document.getElementById("hire-backdrop");
-    const form = document.getElementById("hire-game-form");
+    const hireBtn = document.getElementById('hire-btn');
+    const hireModal = document.getElementById('hire-modal');
+    const hireClose = document.getElementById('hire-close');
+    const hireBackdrop = document.getElementById('hire-backdrop');
+    const form = document.getElementById('hire-game-form');
 
     if (!hireModal || !form) return;
 
-    const COOLDOWN_KEY = "hire_sent_ts";
+    const COOLDOWN_KEY = 'hire_sent_ts';
     const COOLDOWN_MS = 24 * 60 * 60 * 1000;
     const isOnCooldown = () => {
-      const ts = parseInt(localStorage.getItem(COOLDOWN_KEY) || "0", 10);
+      const ts = parseInt(localStorage.getItem(COOLDOWN_KEY) || '0', 10);
       return ts > 0 && Date.now() - ts < COOLDOWN_MS;
     };
 
-    const fsSuccess = hireModal.querySelector("[data-fs-success]");
-    const cooldownEl = hireModal.querySelector("[data-hire-cooldown]");
-    const fsError = hireModal.querySelector("[data-fs-error]");
+    const fsSuccess = hireModal.querySelector('[data-fs-success]');
+    const cooldownEl = hireModal.querySelector('[data-hire-cooldown]');
+    const fsError = hireModal.querySelector('[data-fs-error]');
     const submitBtn = form.querySelector('[type="submit"]');
 
     const openHire = () => {
-      fsSuccess?.classList.add("cv-success-hidden");
+      fsSuccess?.classList.add('cv-success-hidden');
       if (fsError) {
-        fsError.classList.add("cv-error-hidden");
-        fsError.textContent = "";
+        fsError.classList.add('cv-error-hidden');
+        fsError.textContent = '';
       }
 
       if (isOnCooldown()) {
-        form.style.display = "none";
-        cooldownEl?.classList.remove("cv-success-hidden");
+        form.style.display = 'none';
+        cooldownEl?.classList.remove('cv-success-hidden');
       } else {
-        cooldownEl?.classList.add("cv-success-hidden");
-        form.style.display = "";
+        cooldownEl?.classList.add('cv-success-hidden');
+        form.style.display = '';
         form.reset();
         if (submitBtn) submitBtn.disabled = false;
       }
 
-      hireModal.classList.remove("dialogue-hidden");
-      hireModal.classList.add("dialogue-visible");
+      hireModal.classList.remove('dialogue-hidden');
+      hireModal.classList.add('dialogue-visible');
       this.isFrozen = true;
     };
 
     const closeHire = () => {
-      hireModal.classList.remove("dialogue-visible");
-      hireModal.classList.add("dialogue-hidden");
+      hireModal.classList.remove('dialogue-visible');
+      hireModal.classList.add('dialogue-hidden');
       if (!this.gameOverActive) this.isFrozen = false;
     };
 
-    hireBtn?.addEventListener("click", openHire);
-    hireClose?.addEventListener("click", closeHire);
-    hireBackdrop?.addEventListener("click", closeHire);
+    hireBtn?.addEventListener('click', openHire);
+    hireClose?.addEventListener('click', closeHire);
+    hireBackdrop?.addEventListener('click', closeHire);
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
       e.stopImmediatePropagation();
       if (submitBtn) submitBtn.disabled = true;
       const formData = new FormData(form);
-      fetch("https://formspree.io/f/mrejlned", {
-        method: "POST",
+      fetch('https://formspree.io/f/mrejlned', {
+        method: 'POST',
         body: formData,
-        headers: { Accept: "application/json" },
+        headers: { Accept: 'application/json' },
       })
         .then((res) => {
           if (res.ok) {
             localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
-            form.style.display = "none";
-            cooldownEl?.classList.add("cv-success-hidden");
-            fsSuccess?.classList.remove("cv-success-hidden");
+            form.style.display = 'none';
+            cooldownEl?.classList.add('cv-success-hidden');
+            fsSuccess?.classList.remove('cv-success-hidden');
           } else {
             if (submitBtn) submitBtn.disabled = false;
             if (fsError) {
-              fsError.classList.remove("cv-error-hidden");
-              fsError.textContent = "Failed to send. Please try again.";
+              fsError.classList.remove('cv-error-hidden');
+              fsError.textContent = 'Failed to send. Please try again.';
             }
           }
         })
         .catch(() => {
           if (submitBtn) submitBtn.disabled = false;
           if (fsError) {
-            fsError.classList.remove("cv-error-hidden");
-            fsError.textContent = "Failed to send. Please try again.";
+            fsError.classList.remove('cv-error-hidden');
+            fsError.textContent = 'Failed to send. Please try again.';
           }
         });
     });
   }
 
   initMeetModal() {
-    document.body.insertAdjacentHTML("beforeend", bookingModalHTML("game"));
-    const bkModal = initBookingModal("game");
-    const modalEl = document.getElementById("game-booking-modal");
+    document.body.insertAdjacentHTML('beforeend', bookingModalHTML('game'));
+    const bkModal = initBookingModal('game');
+    const modalEl = document.getElementById('game-booking-modal');
 
-    document.getElementById("meet-game-btn")?.addEventListener("click", () => {
+    document.getElementById('meet-game-btn')?.addEventListener('click', () => {
       bkModal.openModal();
       this.isFrozen = true;
     });
 
     if (modalEl) {
       new MutationObserver(() => {
-        if (
-          modalEl.classList.contains("cv-modal-hidden") &&
-          !this.gameOverActive
-        ) {
+        if (modalEl.classList.contains('cv-modal-hidden') && !this.gameOverActive) {
           this.isFrozen = false;
         }
-      }).observe(modalEl, { attributes: true, attributeFilter: ["class"] });
+      }).observe(modalEl, { attributes: true, attributeFilter: ['class'] });
     }
   }
 
@@ -1220,13 +1184,13 @@ class GameEngine {
    * Wire up Start Screen button events.
    */
   setupStartScreenListeners() {
-    const startBtn = document.getElementById("btn-start-game");
+    const startBtn = document.getElementById('btn-start-game');
     if (startBtn) {
-      startBtn.addEventListener("click", () => this.startGame());
+      startBtn.addEventListener('click', () => this.startGame());
     }
-    const fsBtn = document.getElementById("btn-start-fullscreen");
+    const fsBtn = document.getElementById('btn-start-fullscreen');
     if (fsBtn) {
-      fsBtn.addEventListener("click", () => this.toggleFullscreen());
+      fsBtn.addEventListener('click', () => this.toggleFullscreen());
     }
   }
 
@@ -1234,12 +1198,12 @@ class GameEngine {
    * Begin the game — hide start screen, unfreeze loop.
    */
   startGame() {
-    const startScreen = document.getElementById("start-screen");
-    startScreen.classList.remove("dialogue-visible");
-    startScreen.classList.add("dialogue-hidden");
+    const startScreen = document.getElementById('start-screen');
+    startScreen.classList.remove('dialogue-visible');
+    startScreen.classList.add('dialogue-hidden');
     // Drop focus off the Start button and clear key state so Space goes to the
     // game (attack) and doesn't re-activate the focused button.
-    document.getElementById("btn-start-game")?.blur();
+    document.getElementById('btn-start-game')?.blur();
     this.keys = {};
     this.isFrozen = false;
     this.gameStarted = true;
@@ -1250,11 +1214,11 @@ class GameEngine {
    * Wire up Game Over screen button events.
    */
   setupGameOverListeners() {
-    const restartBtn = document.getElementById("btn-restart-game");
+    const restartBtn = document.getElementById('btn-restart-game');
     if (restartBtn) {
       // Restart is click-only. restartGame() blurs this button and clears key
       // state, so a focused-button Space activation can't happen.
-      restartBtn.addEventListener("click", () => this.restartGame());
+      restartBtn.addEventListener('click', () => this.restartGame());
     }
   }
 
@@ -1265,10 +1229,10 @@ class GameEngine {
     this.gameOverActive = true;
     this.isFrozen = true;
     this.keys[' '] = false; // Prevent lingering Space state from triggering restart
-    sfx.play("defeat");
-    const gameOverScreen = document.getElementById("game-over-screen");
-    gameOverScreen.classList.remove("dialogue-hidden");
-    gameOverScreen.classList.add("dialogue-visible");
+    sfx.play('defeat');
+    const gameOverScreen = document.getElementById('game-over-screen');
+    gameOverScreen.classList.remove('dialogue-hidden');
+    gameOverScreen.classList.add('dialogue-visible');
   }
 
   /**
@@ -1276,9 +1240,9 @@ class GameEngine {
    */
   hideGameOver() {
     this.gameOverActive = false;
-    const gameOverScreen = document.getElementById("game-over-screen");
-    gameOverScreen.classList.remove("dialogue-visible");
-    gameOverScreen.classList.add("dialogue-hidden");
+    const gameOverScreen = document.getElementById('game-over-screen');
+    gameOverScreen.classList.remove('dialogue-visible');
+    gameOverScreen.classList.add('dialogue-hidden');
   }
 
   /**
@@ -1289,7 +1253,7 @@ class GameEngine {
     this.hideGameOver();
     // Drop focus off the Restart button and clear key state so Space attacks in
     // the fresh game instead of re-triggering the still-focused button.
-    document.getElementById("btn-restart-game")?.blur();
+    document.getElementById('btn-restart-game')?.blur();
     this.keys = {};
     this.isFrozen = false;
 
@@ -1302,14 +1266,10 @@ class GameEngine {
     });
     ENTITY_SPAWNS.npcs.forEach((npcSpawn) => {
       let animal = null;
-      if (npcSpawn.type === "Chicken")
-        animal = new Chicken({ x: npcSpawn.x, y: npcSpawn.y });
-      else if (npcSpawn.type === "Cow")
-        animal = new Cow({ x: npcSpawn.x, y: npcSpawn.y });
-      else if (npcSpawn.type === "Pig")
-        animal = new Pig({ x: npcSpawn.x, y: npcSpawn.y });
-      else if (npcSpawn.type === "Sheep")
-        animal = new Sheep({ x: npcSpawn.x, y: npcSpawn.y });
+      if (npcSpawn.type === 'Chicken') animal = new Chicken({ x: npcSpawn.x, y: npcSpawn.y });
+      else if (npcSpawn.type === 'Cow') animal = new Cow({ x: npcSpawn.x, y: npcSpawn.y });
+      else if (npcSpawn.type === 'Pig') animal = new Pig({ x: npcSpawn.x, y: npcSpawn.y });
+      else if (npcSpawn.type === 'Sheep') animal = new Sheep({ x: npcSpawn.x, y: npcSpawn.y });
       if (animal) this.npcs.push(animal);
     });
     this.rebuildGameObjectList();
@@ -1323,18 +1283,18 @@ class GameEngine {
     this._dialogueOpen = true;
 
     // Populate dialogue elements
-    document.getElementById("dialogue-title").innerText = house.cvTitle;
-    document.getElementById("dialogue-tech").innerText = house.tech;
+    document.getElementById('dialogue-title').innerText = house.cvTitle;
+    document.getElementById('dialogue-tech').innerText = house.tech;
 
-    const textBox = document.getElementById("dialogue-text");
+    const textBox = document.getElementById('dialogue-text');
     textBox.innerHTML = house.cvContent;
     textBox.scrollTop = 0;
 
-    sfx.play("door_open");
+    sfx.play('door_open');
 
-    const overlay = document.getElementById("dialogue-overlay");
-    overlay.classList.remove("dialogue-hidden");
-    overlay.classList.add("dialogue-visible");
+    const overlay = document.getElementById('dialogue-overlay');
+    overlay.classList.remove('dialogue-hidden');
+    overlay.classList.add('dialogue-visible');
   }
 
   /**
@@ -1344,11 +1304,11 @@ class GameEngine {
     if (!this._dialogueOpen) return;
     this._dialogueOpen = false;
 
-    sfx.play("door_close");
+    sfx.play('door_close');
 
-    const overlay = document.getElementById("dialogue-overlay");
-    overlay.classList.remove("dialogue-visible");
-    overlay.classList.add("dialogue-hidden");
+    const overlay = document.getElementById('dialogue-overlay');
+    overlay.classList.remove('dialogue-visible');
+    overlay.classList.add('dialogue-hidden');
 
     if (!this.gameOverActive) this.isFrozen = false;
 
@@ -1413,10 +1373,7 @@ class GameEngine {
 
     // 4. Spawn new skeletons
     this.enemySpawnTimer += dt;
-    if (
-      this.enemySpawnTimer >= this.enemySpawnInterval &&
-      this.enemies.length < this.maxEnemies
-    ) {
+    if (this.enemySpawnTimer >= this.enemySpawnInterval && this.enemies.length < this.maxEnemies) {
       this.spawnSkeleton();
       this.enemySpawnTimer = 0;
       this.enemySpawnInterval = this._randomInterval(20, 50);
@@ -1424,10 +1381,7 @@ class GameEngine {
 
     // 5. Spawn new NPCs
     this.npcSpawnTimer += dt;
-    if (
-      this.npcSpawnTimer >= this.npcSpawnInterval &&
-      this.npcs.length < this.maxNpcs
-    ) {
+    if (this.npcSpawnTimer >= this.npcSpawnInterval && this.npcs.length < this.maxNpcs) {
       this.spawnNpc();
       this.npcSpawnTimer = 0;
       this.npcSpawnInterval = this._randomInterval(30, 50);
@@ -1467,20 +1421,18 @@ class GameEngine {
       this.player.getTerrainAt({
         grid: this.fullMapGrid,
         tileSize: TILE_SIZE,
-      }) === "water";
+      }) === 'water';
     if (onWater && !this._waterAmbientActive) {
-      sfx.startLoop("water_ambient");
+      sfx.startLoop('water_ambient');
       this._waterAmbientActive = true;
     } else if (!onWater && this._waterAmbientActive) {
-      sfx.stopLoop("water_ambient");
+      sfx.stopLoop('water_ambient');
       this._waterAmbientActive = false;
     }
 
     // 9. Smooth Camera Tracking on Player
-    const targetCamX =
-      this.player.x + this.player.width / 2 - this.virtualWidth / 2;
-    const targetCamY =
-      this.player.y + this.player.height / 2 - this.virtualHeight / 2;
+    const targetCamX = this.player.x + this.player.width / 2 - this.virtualWidth / 2;
+    const targetCamY = this.player.y + this.player.height / 2 - this.virtualHeight / 2;
 
     const lerpX = 1 - Math.pow(0.01, dt);
     const lerpY = 1 - Math.pow(0.01, dt);
@@ -1492,14 +1444,8 @@ class GameEngine {
     if (Math.abs(targetCamY - this.camera.y) < 0.5) this.camera.y = targetCamY;
 
     // Bind camera to world edges
-    this.camera.x = Math.max(
-      0,
-      Math.min(this.camera.x, this.width - this.virtualWidth),
-    );
-    this.camera.y = Math.max(
-      0,
-      Math.min(this.camera.y, this.height - this.virtualHeight),
-    );
+    this.camera.x = Math.max(0, Math.min(this.camera.x, this.width - this.virtualWidth));
+    this.camera.y = Math.max(0, Math.min(this.camera.y, this.height - this.virtualHeight));
   }
 
   /**
@@ -1566,7 +1512,7 @@ class GameEngine {
     const y = 16;
     const heartSize = 20;
 
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     this.ctx.beginPath();
     if (this.ctx.roundRect) {
       this.ctx.roundRect(
@@ -1577,12 +1523,7 @@ class GameEngine {
         6,
       );
     } else {
-      this.ctx.rect(
-        x - 4,
-        y - 4,
-        this.player.maxHealth * (heartSize + 6) + 8,
-        heartSize + 8,
-      );
+      this.ctx.rect(x - 4, y - 4, this.player.maxHealth * (heartSize + 6) + 8, heartSize + 8);
     }
     this.ctx.fill();
 
@@ -1600,8 +1541,8 @@ class GameEngine {
         // not just faded (a faint red heart reads as "still alive").
         this.ctx.save();
         this.ctx.globalAlpha = 0.4;
-        if ("filter" in this.ctx) {
-          this.ctx.filter = "grayscale(100%) brightness(0.45)";
+        if ('filter' in this.ctx) {
+          this.ctx.filter = 'grayscale(100%) brightness(0.45)';
         }
         this.ctx.drawImage(this.hearthImage, hx, hy, heartSize, heartSize);
         this.ctx.restore();
@@ -1615,12 +1556,12 @@ class GameEngine {
   drawDebugOverlay() {
     const { ctx } = this;
 
-    ctx.fillStyle = "rgba(0,0,0,0.5)";
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
     ctx.fillRect(4, 4, 180, 56);
-    ctx.fillStyle = "#0f0";
-    ctx.font = "12px monospace";
-    ctx.fillText("DEBUG MODE [F3]", 10, 20);
-    ctx.fillStyle = "#aaa";
+    ctx.fillStyle = '#0f0';
+    ctx.font = '12px monospace';
+    ctx.fillText('DEBUG MODE [F3]', 10, 20);
+    ctx.fillStyle = '#aaa';
     ctx.fillText(`Objects: ${this.gameObjects.length}`, 10, 36);
     ctx.fillText(`Player: ${~~this.player.x},${~~this.player.y}`, 10, 52);
   }
@@ -1632,7 +1573,7 @@ class GameEngine {
     const { ctx } = this;
     const camera = renderCam || this.camera;
 
-    ctx.strokeStyle = "#ff0000";
+    ctx.strokeStyle = '#ff0000';
     ctx.lineWidth = 1;
 
     for (const obj of this.gameObjects) {
@@ -1650,9 +1591,9 @@ class GameEngine {
 // one canvas + the sfx singleton, which manifests as "died at full HP" (one
 // engine's player dies while the other's HUD shows full) and the Game Over sound
 // playing twice.
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener('DOMContentLoaded', () => {
   if (window.Game) {
-    console.warn("[Game] A GameEngine already exists — skipping duplicate init.");
+    console.warn('[Game] A GameEngine already exists — skipping duplicate init.');
     return;
   }
   window.Game = new GameEngine();

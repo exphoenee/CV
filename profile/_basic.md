@@ -1,0 +1,2 @@
+- csak minimális backend tapasztalatom van, egyszerű backendeket készítettem saját projektjeimhez.
+- Sose írd a CV-be, hogy Full-stack, vagy backend tapasztalatom van, maximum azt, hogy hobbiprojektjeim backendjét NODE.JS, és korábban pár egyszerű projekt bakcendjt készítettem PHP nyelven készítettem

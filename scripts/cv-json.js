@@ -1,6 +1,14 @@
 import { CV_DATA } from './cv-data.js';
 import { renderJsonCV } from './components/json/index.js';
-import { initHireModal, initFormspree, musicPlayerHTML, hireModalHTML, bookingModalHTML, initBookingModal, hideLoadingOverlay } from './shared.js';
+import {
+  initHireModal,
+  initFormspree,
+  musicPlayerHTML,
+  hireModalHTML,
+  bookingModalHTML,
+  initBookingModal,
+  hideLoadingOverlay,
+} from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES } from './config.js';
 
@@ -71,12 +79,26 @@ L.forEach(([depth, content], idx) => {
 
   const isFoldable = FOLDS[idx] !== undefined;
   const foldBtn = isFoldable
-    ? '<span class="fold-icon foldable" data-open="' + idx + '" role="button" tabindex="0" aria-label="Collapse section" aria-expanded="true">▾</span>'
+    ? '<span class="fold-icon foldable" data-open="' +
+      idx +
+      '" role="button" tabindex="0" aria-label="Collapse section" aria-expanded="true">▾</span>'
     : '<span class="fold-icon" aria-hidden="true"></span>';
-  const foldHint = isFoldable ? '<span class="fold-hint" data-open="' + idx + '" aria-label="Collapsed section">…</span>' : '';
+  const foldHint = isFoldable
+    ? '<span class="fold-hint" data-open="' + idx + '" aria-label="Collapsed section">…</span>'
+    : '';
 
   gHTML += '<div data-n="' + num + '" data-gi="' + idx + '">' + foldBtn + num + '</div>';
-  cHTML += '<div class="l" data-n="' + num + '" data-li="' + idx + '">' + indents + '<span class="t">' + content + foldHint + '</span></div>';
+  cHTML +=
+    '<div class="l" data-n="' +
+    num +
+    '" data-li="' +
+    idx +
+    '">' +
+    indents +
+    '<span class="t">' +
+    content +
+    foldHint +
+    '</span></div>';
 });
 
 G.innerHTML = gHTML;
@@ -135,7 +157,10 @@ G.addEventListener('click', (e) => {
 G.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
     const btn = e.target.closest('.fold-icon.foldable');
-    if (btn) { e.preventDefault(); toggleFold(parseInt(btn.dataset.open)); }
+    if (btn) {
+      e.preventDefault();
+      toggleFold(parseInt(btn.dataset.open));
+    }
   }
 });
 
@@ -157,12 +182,15 @@ document.getElementById('meet-menu-btn')?.addEventListener('click', function () 
 });
 
 if (!document.getElementById('hire-json-modal')) {
-  document.body.insertAdjacentHTML('beforeend', hireModalHTML('hire-json', {
-    subject: 'Hire inquiry from CV - json',
-    p1Class: 'cv-json-inline-5',
-    p2Class: 'cv-json-inline-6',
-    errClass: 'cv-json-inline-8'
-  }));
+  document.body.insertAdjacentHTML(
+    'beforeend',
+    hireModalHTML('hire-json', {
+      subject: 'Hire inquiry from CV - json',
+      p1Class: 'cv-json-inline-5',
+      p2Class: 'cv-json-inline-6',
+      errClass: 'cv-json-inline-8',
+    }),
+  );
 }
 
 var hireBtn = document.getElementById('hire-json-btn');
@@ -185,7 +213,8 @@ document.getElementById('wc-close-btn')?.addEventListener('click', function () {
   document.documentElement.setAttribute('data-theme', saved || THEME_DARK);
 
   document.getElementById('view-menu-btn')?.addEventListener('click', function () {
-    var next = document.documentElement.getAttribute('data-theme') === THEME_DARK ? THEME_LIGHT : THEME_DARK;
+    var next =
+      document.documentElement.getAttribute('data-theme') === THEME_DARK ? THEME_LIGHT : THEME_DARK;
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem(THEME_KEY, next);
   });

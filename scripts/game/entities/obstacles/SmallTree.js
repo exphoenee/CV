@@ -1,4 +1,4 @@
-import GameObject from "../base/GameObject.js";
+import GameObject from '../base/GameObject.js';
 
 // Oak_Tree_Small.png: 96×48px → 3 trees, each 32×48px (asset is at 2× scale)
 // Variant 0 is intentionally scaled up in-game (2.5×) to create a larger small-tree look.
@@ -28,7 +28,7 @@ export default class SmallTree extends GameObject {
       y,
       width: Math.round(BASE_W * scale),
       height: Math.round(BASE_H * scale),
-      imageSrc: "./assets/sprites/Cute/Outdoor decoration/Oak_Tree_Small.png",
+      imageSrc: './assets/sprites/Cute/Outdoor decoration/Oak_Tree_Small.png',
       solid: true,
       ySortOffset: 0,
       collisionBox: {
@@ -46,13 +46,8 @@ export default class SmallTree extends GameObject {
 
   draw(ctx, camera) {
     if (!this.image || !this.isLoaded) {
-      ctx.fillStyle = "rgba(255,0,0,0.4)";
-      ctx.fillRect(
-        this.x - camera.x,
-        this.y - camera.y,
-        this.width,
-        this.height,
-      );
+      ctx.fillStyle = 'rgba(255,0,0,0.4)';
+      ctx.fillRect(this.x - camera.x, this.y - camera.y, this.width, this.height);
       return;
     }
     ctx.drawImage(

@@ -21,6 +21,7 @@ You are called by `/cv-review` when a new view page is detected, or invoked dire
 Read the calling context or argument to get VIEW_NAME (e.g. `plain`, `gantt`, `game`).
 
 Expected files:
+
 - `cv-${VIEW_NAME}.html`
 - `scripts/cv-${VIEW_NAME}.js`
 - `styles/cv-${VIEW_NAME}.css`
@@ -32,11 +33,13 @@ If the HTML file does not exist: ❌ ERROR "Nem található: cv-${VIEW_NAME}.htm
 ## Step 1 — Read view files
 
 Read all three files in full:
+
 1. `cv-${VIEW_NAME}.html`
 2. `scripts/cv-${VIEW_NAME}.js`
 3. `styles/cv-${VIEW_NAME}.css`
 
 Also read:
+
 - `index.html` (to check carousel registration)
 - `scripts/locales/en.js` (to check locale key coverage)
 
@@ -84,12 +87,14 @@ Missing keys → ❌ FAIL per key: "Hiányzó locale kulcs: 'keyName'"
 ### CHECK 7 — Responsive CSS
 
 In `styles/cv-${VIEW_NAME}.css`:
+
 - At least one `@media` query exists → ✅ / ❌ FAIL
 - Has a mobile breakpoint (`max-width: 600px` or `max-width: 601px` boundary) → ✅ / ⚠️ WARN
 
 ### CHECK 8 — Accessibility
 
 Scan the JS file for generated HTML strings:
+
 - Any `<button` containing only `<i class="fa` without `aria-label` → ❌ FAIL per button
 - Any `role="dialog"` without `aria-modal="true"` → ❌ FAIL
 - Any `<input` without `aria-label` or `<label for=` → ⚠️ WARN
@@ -97,6 +102,7 @@ Scan the JS file for generated HTML strings:
 ### CHECK 9 — Security
 
 Scan the JS file:
+
 - Any `.innerHTML =` with non-literal right-hand side not using `html\`\`` tag → ❌ FAIL
 - Any hardcoded URL string not in `config.js` → ⚠️ WARN
 

@@ -15,15 +15,15 @@ Every view (plain, swagger, json, gantt, scrumboard, game) renders from this obj
 
 ## View Pages
 
-| File | Target audience |
-|------|-----------------|
-| `index.html` | Landing page (carousel) |
-| `cv-plain.html` | Reader (traditional CV layout) |
-| `cv-gantt.html` | Project manager (Gantt chart) |
-| `cv-scrumboard.html` | Scrum master (Kanban board) |
-| `cv-swagger.html` | Frontend developer (Swagger-style) |
-| `cv-json.html` | Backend developer (JSON/VS Code style) |
-| `cv-game.html` | Gamer (RPG pixel-art game) |
+| File                 | Target audience                        |
+| -------------------- | -------------------------------------- |
+| `index.html`         | Landing page (carousel)                |
+| `cv-plain.html`      | Reader (traditional CV layout)         |
+| `cv-gantt.html`      | Project manager (Gantt chart)          |
+| `cv-scrumboard.html` | Scrum master (Kanban board)            |
+| `cv-swagger.html`    | Frontend developer (Swagger-style)     |
+| `cv-json.html`       | Backend developer (JSON/VS Code style) |
+| `cv-game.html`       | Gamer (RPG pixel-art game)             |
 
 ## Localization — 12 Languages
 
@@ -31,20 +31,20 @@ Localization system: `scripts/locale.js` → `LocaleManager` → `locale.t('key'
 
 **Available languages and their files:**
 
-| Code | File | Note |
-|------|------|------|
-| `en` | `scripts/locales/en.js` | English (fallback) |
-| `hu` | `scripts/locales/hu.js` | Hungarian |
-| `de` | `scripts/locales/de.js` | German |
-| `fr` | `scripts/locales/fr.js` | French |
-| `es` | `scripts/locales/es.js` | Spanish |
-| `it` | `scripts/locales/it.js` | Italian |
+| Code  | File                     | Note                  |
+| ----- | ------------------------ | --------------------- |
+| `en`  | `scripts/locales/en.js`  | English (fallback)    |
+| `hu`  | `scripts/locales/hu.js`  | Hungarian             |
+| `de`  | `scripts/locales/de.js`  | German                |
+| `fr`  | `scripts/locales/fr.js`  | French                |
+| `es`  | `scripts/locales/es.js`  | Spanish               |
+| `it`  | `scripts/locales/it.js`  | Italian               |
 | `asg` | `scripts/locales/asg.js` | Asgardian (fictional) |
-| `dot` | `scripts/locales/dot.js` | Dothraki (fictional) |
-| `kl` | `scripts/locales/kl.js` | Klingon (fictional) |
-| `qu` | `scripts/locales/qu.js` | Quenya (fictional) |
-| `goa` | `scripts/locales/goa.js` | Goa'uld (fictional) |
-| `ya` | `scripts/locales/ya.js` | Yautja (fictional) |
+| `dot` | `scripts/locales/dot.js` | Dothraki (fictional)  |
+| `kl`  | `scripts/locales/kl.js`  | Klingon (fictional)   |
+| `qu`  | `scripts/locales/qu.js`  | Quenya (fictional)    |
+| `goa` | `scripts/locales/goa.js` | Goa'uld (fictional)   |
+| `ya`  | `scripts/locales/ya.js`  | Yautja (fictional)    |
 
 **Rule:** When adding a new `labels` key, it must go into all 12 files.
 `en.js` is the reference — derive structure from it. For fictional languages, follow the style of neighboring keys.
@@ -58,6 +58,7 @@ Detailed rules: [`.claude/rules/localization.md`](.claude/rules/localization.md)
 Every view imports from here. Full reference: [`.claude/rules/shared-api.md`](.claude/rules/shared-api.md)
 
 **Main exports:**
+
 - `html` / `raw` / `escHtml` — safe HTML template literal
 - `skillChip(name, iconFile)` — skill badge HTML
 - `refLinks(refs)` — reference link HTML
@@ -106,6 +107,7 @@ but only one location may be used at a time.
 Detailed checklist: [`.claude/rules/new-view.md`](.claude/rules/new-view.md)
 
 **Short summary:**
+
 1. Create `cv-[name].html`, `scripts/cv-[name].js`, and `styles/cv-[name].css`
 2. Add a `.cv-slide` card to `#cv-carousel-stage` in `index.html`
 3. Add the new view's label keys to all 12 locale files under `scripts/locales/`
@@ -152,8 +154,7 @@ Claude Code skills and agents are built into this project to automate developmen
 | `/cv-restore <folder>`           | Restore `cv-data.js` and 11 locale content fields from a `cv-versions/` backup folder                                                                                                           | —                                             |
 | `/cover-letter [JD]`             | Write English + Hungarian cover letters grounded in `profile/*.md` → `letters/DATE_company_title/`                                                                                              | —                                             |
 | `/job-apply [JD]`                | Full pipeline: ATS analysis → cv-data.js optimization → 11 locale translations → versioned backup → JD save + log → optional cover letter. No argument: interactive `tmp/jd-draft.md` template. | —                                             |
-| `/cv-generator [--dry-run]`      | Generates `cv-data.js` from `profile/*.md` files. Parses YAML frontmatter + markdown body to produce a complete CV_DATA object. Never invents content.                                           | —                                             |
-| `/arch-review [--focus=...]` | Architecture analysis: template duplication, data structure, locale, CSS, tooling → `review/` | `review/YYYY-MM-DD_HHMM_arch-review-FOCUS.md` |
+| `/arch-review [--focus=...]`     | Architecture analysis: template duplication, data structure, locale, CSS, tooling → `review/`                                                                                                   | `review/YYYY-MM-DD_HHMM_arch-review-FOCUS.md` |
 
 **Review files:** Every skill that produces a report saves it to `./review/`, in `YYYY-MM-DD_HHMM_<type>[-focus].md` format.
 

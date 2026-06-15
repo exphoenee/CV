@@ -28,14 +28,43 @@ import { GOA_PAGE } from './locales/goa-page.js';
 import { ASG_PAGE } from './locales/asg-page.js';
 import { YA_PAGE } from './locales/ya-page.js';
 
-const CV_CONTENT = { en: EN, hu: HU, de: DE, fr: FR, es: ES, it: IT, dot: DOT, kl: KL, qu: QU, goa: GOA, asg: ASG, ya: YA };
-const PAGE_LABELS = { en: EN_PAGE.labels, hu: HU_PAGE.labels, de: DE_PAGE.labels, fr: FR_PAGE.labels, es: ES_PAGE.labels, it: IT_PAGE.labels, dot: DOT_PAGE.labels, kl: KL_PAGE.labels, qu: QU_PAGE.labels, goa: GOA_PAGE.labels, asg: ASG_PAGE.labels, ya: YA_PAGE.labels };
+const CV_CONTENT = {
+  en: EN,
+  hu: HU,
+  de: DE,
+  fr: FR,
+  es: ES,
+  it: IT,
+  dot: DOT,
+  kl: KL,
+  qu: QU,
+  goa: GOA,
+  asg: ASG,
+  ya: YA,
+};
+const PAGE_LABELS = {
+  en: EN_PAGE.labels,
+  hu: HU_PAGE.labels,
+  de: DE_PAGE.labels,
+  fr: FR_PAGE.labels,
+  es: ES_PAGE.labels,
+  it: IT_PAGE.labels,
+  dot: DOT_PAGE.labels,
+  kl: KL_PAGE.labels,
+  qu: QU_PAGE.labels,
+  goa: GOA_PAGE.labels,
+  asg: ASG_PAGE.labels,
+  ya: YA_PAGE.labels,
+};
 const STORAGE_KEY = 'cv_lang';
 
 function _detectBrowserLang() {
-  const list = (typeof navigator !== 'undefined')
-    ? (navigator.languages?.length ? navigator.languages : [navigator.language])
-    : [];
+  const list =
+    typeof navigator !== 'undefined'
+      ? navigator.languages?.length
+        ? navigator.languages
+        : [navigator.language]
+      : [];
   for (const l of list) {
     const code = l.split('-')[0].toLowerCase();
     if (CV_CONTENT[code]) return code;
@@ -46,11 +75,13 @@ function _detectBrowserLang() {
 class LocaleManager {
   constructor() {
     const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null;
-    this._lang = (saved && CV_CONTENT[saved]) ? saved : _detectBrowserLang();
+    this._lang = saved && CV_CONTENT[saved] ? saved : _detectBrowserLang();
     if (typeof document !== 'undefined') document.documentElement.dataset.lang = this._lang;
   }
 
-  get lang() { return this._lang; }
+  get lang() {
+    return this._lang;
+  }
 
   setLang(lang) {
     if (!CV_CONTENT[lang]) return;
@@ -82,8 +113,8 @@ function _mergeContent(base, overrides) {
   }
 
   if (overrides.workExperience) {
-    result.workExperience = base.workExperience.map(exp => {
-      const ov = overrides.workExperience.find(o => o.id === exp.id);
+    result.workExperience = base.workExperience.map((exp) => {
+      const ov = overrides.workExperience.find((o) => o.id === exp.id);
       if (!ov) return exp;
       const merged = { ...exp };
       if (ov.description != null) merged.description = ov.description;
@@ -108,4 +139,17 @@ function _mergeContent(base, overrides) {
 }
 
 export const locale = new LocaleManager();
-export const AVAILABLE_LANGS = ['en', 'de', 'es', 'fr', 'it', 'hu', 'asg', 'dot', 'qu', 'goa', 'kl', 'ya'];
+export const AVAILABLE_LANGS = [
+  'en',
+  'de',
+  'es',
+  'fr',
+  'it',
+  'hu',
+  'asg',
+  'dot',
+  'qu',
+  'goa',
+  'kl',
+  'ya',
+];

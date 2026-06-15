@@ -43,7 +43,7 @@ A `#game-wrapper`-on belül, a `</canvas>` után:
 <div id="mobile-controls" class="mobile-hidden">
   <div id="joystick-zone"></div>
   <button id="attack-btn">
-    <img src="./assets/sprites/Cute/sword.png" alt="Attack">
+    <img src="./assets/sprites/Cute/sword.png" alt="Attack" />
   </button>
 </div>
 ```
@@ -65,7 +65,11 @@ A `#game-wrapper`-on belül, a `</canvas>` után:
       <button id="credits-close">✕</button>
     </div>
     <div class="credits-modal-body">
-      <p>Assets by <a href="https://kenmi-art.itch.io/cute-fantasy-rpg" target="_blank">Kenmi-art</a> (Cute Fantasy RPG pack)</p>
+      <p>
+        Assets by
+        <a href="https://kenmi-art.itch.io/cute-fantasy-rpg" target="_blank">Kenmi-art</a> (Cute
+        Fantasy RPG pack)
+      </p>
       <p>Virtual joystick: <a href="https://yoannmoi.net/nipplejs/" target="_blank">NippleJS</a></p>
     </div>
   </div>
@@ -286,18 +290,30 @@ Fájl: `styles/cv-game.css`
 }
 
 /* --- Desktop/mobile visibility --- */
-.desktop-only { display: none; }
-.mobile-hidden { display: none; }
+.desktop-only {
+  display: none;
+}
+.mobile-hidden {
+  display: none;
+}
 
 @media (hover: hover) and (pointer: fine) {
-  .desktop-only { display: flex; }
-  .mobile-hidden { display: none !important; }
+  .desktop-only {
+    display: flex;
+  }
+  .mobile-hidden {
+    display: none !important;
+  }
 }
 @media (hover: none) and (pointer: coarse) {
-  .desktop-only { display: none !important; }
+  .desktop-only {
+    display: none !important;
+  }
   #mobile-controls.mobile-visible,
   #info-btn.mobile-visible,
-  #credits-modal.mobile-visible { display: flex; }
+  #credits-modal.mobile-visible {
+    display: flex;
+  }
 }
 ```
 
@@ -347,14 +363,14 @@ export function initMobileInput(game) {
   });
 
   const DIR_MAP = {
-    0:   { w: false, a: false, s: false, d: false },
-    45:  { w: true,  a: false, s: false, d: true  },
-    90:  { w: true,  a: false, s: false, d: false },
-    135: { w: true,  a: true,  s: false, d: false },
-    180: { w: false, a: true,  s: false, d: false },
-    225: { w: false, a: true,  s: true,  d: false },
-    270: { w: false, a: false, s: true,  d: false },
-    315: { w: false, a: false, s: true,  d: true  },
+    0: { w: false, a: false, s: false, d: false },
+    45: { w: true, a: false, s: false, d: true },
+    90: { w: true, a: false, s: false, d: false },
+    135: { w: true, a: true, s: false, d: false },
+    180: { w: false, a: true, s: false, d: false },
+    225: { w: false, a: true, s: true, d: false },
+    270: { w: false, a: false, s: true, d: false },
+    315: { w: false, a: false, s: true, d: true },
   };
 
   const angleToDir = (angle) => {
@@ -366,19 +382,31 @@ export function initMobileInput(game) {
   joystick.on('move', (evt, data) => {
     if (!data.angle) return;
     const dir = angleToDir(data.angle);
-    Object.entries(dir).forEach(([key, val]) => { game.keys[key] = val; });
+    Object.entries(dir).forEach(([key, val]) => {
+      game.keys[key] = val;
+    });
   });
 
   joystick.on('end', () => {
-    ['w','a','s','d'].forEach(k => { game.keys[k] = false; });
+    ['w', 'a', 's', 'd'].forEach((k) => {
+      game.keys[k] = false;
+    });
   });
 
   // Attack gomb
   const btn = document.getElementById('attack-btn');
   if (btn) {
-    btn.addEventListener('touchstart', e => { e.preventDefault(); game.keys[' '] = true; });
-    btn.addEventListener('touchend',   e => { e.preventDefault(); game.keys[' '] = false; });
-    btn.addEventListener('touchcancel', e => { game.keys[' '] = false; });
+    btn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      game.keys[' '] = true;
+    });
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      game.keys[' '] = false;
+    });
+    btn.addEventListener('touchcancel', (e) => {
+      game.keys[' '] = false;
+    });
   }
 
   // Info gomb → credits modal
@@ -442,9 +470,9 @@ A képfájlt a felhasználó később adja meg.
 
 ## Változtatandó fájlok összefoglaló
 
-| Fájl | Művelet |
-|---|---|
-| `cv-game.html` | `#mobile-controls`, `#info-btn`, `#credits-modal`, `.tech-boxes` hozzáadása |
-| `styles/cv-game.css` | Mobil kontrollerek, info gomb, credits modal, tech boxes CSS |
-| `scripts/game/mobile-input.js` | **Új fájl** – NippleJS, eszközdetekció, touch események |
-| `scripts/game/main.js` | Import + `initMobileInput()` hívás |
+| Fájl                           | Művelet                                                                     |
+| ------------------------------ | --------------------------------------------------------------------------- |
+| `cv-game.html`                 | `#mobile-controls`, `#info-btn`, `#credits-modal`, `.tech-boxes` hozzáadása |
+| `styles/cv-game.css`           | Mobil kontrollerek, info gomb, credits modal, tech boxes CSS                |
+| `scripts/game/mobile-input.js` | **Új fájl** – NippleJS, eszközdetekció, touch események                     |
+| `scripts/game/main.js`         | Import + `initMobileInput()` hívás                                          |

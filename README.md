@@ -17,15 +17,15 @@ Többnézetes, interaktív önéletrajz böngészőben. Egy központi adatforrá
 
 ## Nézetek
 
-| Útvonal | Célközönség | Leírás |
-|---|---|---|
-| `index.html` | — | Indítóoldal — karuszel-navigáció a hat CV nézet felé |
-| `cv-plain.html` | Olvasó | Hagyományos, nyomtatható önéletrajz téma-váltással (light/dark/superdark/nightvision/predator) és dekorációs effektekkel |
-| `cv-gantt.html` | Projektmenedzser | Projektidővonal Gantt-diagram formátumban (2020–2027), cégenként és projektenként lebontva |
-| `cv-scrumboard.html` | Scrum Master | Kanban/Scrum tábla — munkáltatónként oszlopokba rendezett karrierkártyák drag-and-drop nélkül |
-| `cv-swagger.html` | Frontend fejlesztő | API-dokumentáció stílusú CV — OpenAPI-szerű UI összecsukható szekciókkal és endpoint-blokkokkal (GET/POST/PUT/PATCH/DELETE) |
-| `cv-json.html` | Backend fejlesztő | JSON / VS Code-szerű CV — szintaxiskiemeléssel, összecsukható régiókkal ("folding"), sorszámozással |
-| `cv-game.html` | Gamer | RPG játék CV — pixel-art világban lehet felfedezni a CV-t házak (stationök) meglátogatásával |
+| Útvonal              | Célközönség        | Leírás                                                                                                                      |
+| -------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `index.html`         | —                  | Indítóoldal — karuszel-navigáció a hat CV nézet felé                                                                        |
+| `cv-plain.html`      | Olvasó             | Hagyományos, nyomtatható önéletrajz téma-váltással (light/dark/superdark/nightvision/predator) és dekorációs effektekkel    |
+| `cv-gantt.html`      | Projektmenedzser   | Projektidővonal Gantt-diagram formátumban (2020–2027), cégenként és projektenként lebontva                                  |
+| `cv-scrumboard.html` | Scrum Master       | Kanban/Scrum tábla — munkáltatónként oszlopokba rendezett karrierkártyák drag-and-drop nélkül                               |
+| `cv-swagger.html`    | Frontend fejlesztő | API-dokumentáció stílusú CV — OpenAPI-szerű UI összecsukható szekciókkal és endpoint-blokkokkal (GET/POST/PUT/PATCH/DELETE) |
+| `cv-json.html`       | Backend fejlesztő  | JSON / VS Code-szerű CV — szintaxiskiemeléssel, összecsukható régiókkal ("folding"), sorszámozással                         |
+| `cv-game.html`       | Gamer              | RPG játék CV — pixel-art világban lehet felfedezni a CV-t házak (stationök) meglátogatásával                                |
 
 ## Architektúra
 
@@ -96,19 +96,19 @@ Minden nézet saját komponenskészlettel rendereli az adatokat:
 
 ## Technológiai stack
 
-| Technológia | Használat |
-|---|---|
-| Vanilla JS (ES Modules) | Nincs keretrendszer, nincs bundler — tiszta moduláris JS |
-| CSS (vanilla) | Nézetenként elkülönített CSS fájlok, preprocesszor nélkül |
-| Canvas 2D API | Játékmotor renderelés és Gantt-diagram |
-| BMP → tilemap | A játéktérkép BMP kép pixeladataiból épül fel, bitmaszkos autotile-lal (RPG Maker 2000/2003 stílus) |
-| Intl.DateTimeFormat | Lokalizált dátumok a booking modálban (fiktív nyelveknél angol fallback) |
-| Formspree | Kapcsolatfelvételi űrlap küldése |
-| NippleJS | Mobilos virtuális joystick |
-| LocalStorage | UI állapot, zenei beállítások, téma, nyelv perzisztálása |
-| SessionStorage | E-mail domain ellenőrzés cache-elése (MX lookup) |
-| Font Awesome | Ikonok |
-| Press Start 2P | Pixel-art retro betűtípus (játék nézet) |
+| Technológia             | Használat                                                                                           |
+| ----------------------- | --------------------------------------------------------------------------------------------------- |
+| Vanilla JS (ES Modules) | Nincs keretrendszer, nincs bundler — tiszta moduláris JS                                            |
+| CSS (vanilla)           | Nézetenként elkülönített CSS fájlok, preprocesszor nélkül                                           |
+| Canvas 2D API           | Játékmotor renderelés és Gantt-diagram                                                              |
+| BMP → tilemap           | A játéktérkép BMP kép pixeladataiból épül fel, bitmaszkos autotile-lal (RPG Maker 2000/2003 stílus) |
+| Intl.DateTimeFormat     | Lokalizált dátumok a booking modálban (fiktív nyelveknél angol fallback)                            |
+| Formspree               | Kapcsolatfelvételi űrlap küldése                                                                    |
+| NippleJS                | Mobilos virtuális joystick                                                                          |
+| LocalStorage            | UI állapot, zenei beállítások, téma, nyelv perzisztálása                                            |
+| SessionStorage          | E-mail domain ellenőrzés cache-elése (MX lookup)                                                    |
+| Font Awesome            | Ikonok                                                                                              |
+| Press Start 2P          | Pixel-art retro betűtípus (játék nézet)                                                             |
 
 ## Könyvtárstruktúra
 
@@ -211,20 +211,20 @@ CV/
 
 A teljes felület 12 nyelven elérhető, a `scripts/locale.js` `LocaleManager` osztályán keresztül:
 
-| Kód | Nyelv |
-|-----|-------|
-| `en` | Angol |
-| `hu` | Magyar |
-| `de` | Német |
-| `fr` | Francia |
-| `es` | Spanyol |
-| `it` | Olasz |
+| Kód   | Nyelv     |
+| ----- | --------- |
+| `en`  | Angol     |
+| `hu`  | Magyar    |
+| `de`  | Német     |
+| `fr`  | Francia   |
+| `es`  | Spanyol   |
+| `it`  | Olasz     |
 | `asg` | Asgardian |
-| `dot` | Dothraki |
-| `kl` | Klingon |
-| `qu` | Quenya |
-| `goa` | Goa'uld |
-| `ya` | Yautja |
+| `dot` | Dothraki  |
+| `kl`  | Klingon   |
+| `qu`  | Quenya    |
+| `goa` | Goa'uld   |
+| `ya`  | Yautja    |
 
 A kiválasztott nyelv `localStorage`-ban marad, az oldalváltások között is megőrződik. A böngésző alapértelmezett nyelve automatikusan detektálódik. Fiktív nyelveknél (`kl`, `qu`, `goa`, `ya`, `asg`, `dot`) az Intl.DateTimeFormat angol fallback-re vált.
 
@@ -277,12 +277,12 @@ A kapcsolatfelvételi és foglalási űrlapokon az e-mail mező valódi domain-e
 - **Cache**: `sessionStorage`-ban domain-enként tárolva (`mx_gmail.com = '1'`) — ugyanarra a domainre nem fut újra hálózati kérés
 - **Lokalizálva**: `errEmailVerifying` és `errEmailNoMailServer` kulcsok mind a 12 locale fájlban
 
-| Eset | Viselkedés |
-|------|-----------|
+| Eset                              | Viselkedés                         |
+| --------------------------------- | ---------------------------------- |
 | Érvényes domain (pl. `gmail.com`) | Ellenőrzés átmegy, form beküldhető |
-| Nem létező domain | Hibaüzenet az e-mail mező alatt |
-| Offline / hálózati hiba | Fail-open — form átengedi |
-| Ugyanaz a domain másodszor | Nincs újabb hálózati kérés (cache) |
+| Nem létező domain                 | Hibaüzenet az e-mail mező alatt    |
+| Offline / hálózati hiba           | Fail-open — form átengedi          |
+| Ugyanaz a domain másodszor        | Nincs újabb hálózati kérés (cache) |
 
 ## Kapcsolatfelvétel
 

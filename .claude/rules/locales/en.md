@@ -12,18 +12,19 @@ Covers both `scripts/cv-data.js` English content and `scripts/locales/en.js` UI 
 
 ## Tense Convention
 
-| Context | Tense | Example |
-|---|---|---|
-| Current job bullets | Present | "I own", "I lead", "I mentor" |
-| Past job bullets | Past simple | "I built", "I designed", "I introduced" |
-| Job descriptions | Past simple (even current, for archival consistency) | "I led the modernization…" |
-| Summary | Present / present perfect | "I've led… I focus on…" |
+| Context             | Tense                                                | Example                                 |
+| ------------------- | ---------------------------------------------------- | --------------------------------------- |
+| Current job bullets | Present                                              | "I own", "I lead", "I mentor"           |
+| Past job bullets    | Past simple                                          | "I built", "I designed", "I introduced" |
+| Job descriptions    | Past simple (even current, for archival consistency) | "I led the modernization…"              |
+| Summary             | Present / present perfect                            | "I've led… I focus on…"                 |
 
 Viktor's CV consistently uses first-person: `"I built"` not `"Built"`. **Never drop the subject.**
 
 ## Bullet Point Quality
 
 Good bullet structure: **verb + object + context/impact**
+
 - ✅ "I reduced the release cycle from monthly to biweekly using AI-assisted workflows"
 - ❌ "Release cycle improvements" (no verb, no agent)
 - ❌ "I was involved in CI pipeline work" (passive, vague)

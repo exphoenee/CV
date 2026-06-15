@@ -75,7 +75,7 @@ A `scripts/game/entities/obstacles/House.js` fájlban add hozzá a `HOUSE_LABELS
 ```js
 const HOUSE_LABELS = {
   // ... meglévők ...
-  'ujceg': { shortLabel: 'Új Cég', period: '2026' },
+  ujceg: { shortLabel: 'Új Cég', period: '2026' },
 };
 ```
 
@@ -85,16 +85,16 @@ A `shortLabel` jelenik meg a ház fölött lebegő névjegyben. A `period` az al
 
 A `(x, y)` koordináta a játék világában pixelben értendő. A tilemap 32×32 pixeles tile-okból áll. Háznak olyan területet válassz, ahol a tilemap nem solid (pl. fű). Jelenleg használt pozíciók:
 
-| Station | X | Y |
-|---|---|---|
-| welcome (Personal HQ) | 180 | 100 |
-| webforsol | 420 | 100 |
-| cobotx | 660 | 100 |
-| cubicfox | 900 | 100 |
-| scolia | 1140 | 100 |
-| telekom | 180 | 340 |
-| aegex | 420 | 340 |
-| education | 780 | 340 |
+| Station               | X    | Y   |
+| --------------------- | ---- | --- |
+| welcome (Personal HQ) | 180  | 100 |
+| webforsol             | 420  | 100 |
+| cobotx                | 660  | 100 |
+| cubicfox              | 900  | 100 |
+| scolia                | 1140 | 100 |
+| telekom               | 180  | 340 |
+| aegex                 | 420  | 340 |
+| education             | 780  | 340 |
 
 ---
 
@@ -117,15 +117,20 @@ import GameObject from '../base/GameObject.js';
 export default class Pumpkin extends GameObject {
   constructor({ x, y }) {
     super({
-      x, y,
-      width: 32, height: 32,
-      spriteWidth: 32, spriteHeight: 32,
-      imageSrc: "./assets/sprites/Cute/Outdoor decoration/Pumpkin.png",
+      x,
+      y,
+      width: 32,
+      height: 32,
+      spriteWidth: 32,
+      spriteHeight: 32,
+      imageSrc: './assets/sprites/Cute/Outdoor decoration/Pumpkin.png',
       solid: true,
       collisionBox: {
-        offsetX: 4, offsetY: 20,
-        width: 24, height: 12
-      }
+        offsetX: 4,
+        offsetY: 20,
+        width: 24,
+        height: 12,
+      },
     });
   }
 }
@@ -136,14 +141,18 @@ export default class Pumpkin extends GameObject {
 1. **Import** a `main.js` fájlban:
 
 ```js
-import Pumpkin from "./entities/obstacles/Pumpkin.js";
+import Pumpkin from './entities/obstacles/Pumpkin.js';
 ```
 
 2. **DECOR_CLASSES** map bővítése a `buildWorld()`-ban:
 
 ```js
 const DECOR_CLASSES = {
-  Tree, SmallTree, Chest, Flower, /* ... */ Pumpkin,
+  Tree,
+  SmallTree,
+  Chest,
+  Flower,
+  /* ... */ Pumpkin,
 };
 ```
 
@@ -152,8 +161,8 @@ const DECOR_CLASSES = {
 ```js
 decorations: [
   // ...
-  {type: "Pumpkin", x: 500, y: 300},
-]
+  { type: 'Pumpkin', x: 500, y: 300 },
+];
 ```
 
 ---
@@ -166,12 +175,12 @@ decorations: [
 2. `loadMapGridFromImage()` (`map.js:128`) betölti a BMP-t egy Canvas segítségével
 3. Minden pixel RGB értékét egy tile típusra képezi le:
 
-| Szín | RGB | Tile típus | Solid? |
-|---|---|---|---|
-| Zöld | `#00FF00` | `G` — Grass (fű) | nem |
-| Sárga | `#FFFF00` | `P` — Path (út) | nem |
-| Kék | `#0000FF` | `W` — Water (víz) | igen |
-| Piros | `#FF0000` | `C` — Cliff (domb) | igen |
+| Szín  | RGB       | Tile típus         | Solid? |
+| ----- | --------- | ------------------ | ------ |
+| Zöld  | `#00FF00` | `G` — Grass (fű)   | nem    |
+| Sárga | `#FFFF00` | `P` — Path (út)    | nem    |
+| Kék   | `#0000FF` | `W` — Water (víz)  | igen   |
+| Piros | `#FF0000` | `C` — Cliff (domb) | igen   |
 
 4. Az eredmény egy `mapGrid[][]` kétdimenziós tömb (karakterekkel)
 5. `MapRenderer` bitmaszkos autotile-lal rendereli: minden tile megvizsgálja a 8 szomszédját, és egy 256-bejegyzésű lookup tábla alapján kiválasztja a megfelelő sprite kockát a tile sheet-ből
@@ -242,24 +251,25 @@ A `scripts/game/world/spawns.js` exportálja az `ENTITY_SPAWNS` objektumot. Ez t
 
 ```js
 export const ENTITY_SPAWNS = {
-  player: {x: 100, y: 240},
+  player: { x: 100, y: 240 },
   npcs: [
-    {type: "Chicken", x: 260, y: 250},
+    { type: 'Chicken', x: 260, y: 250 },
     // ...
   ],
   enemies: [
-    {type: "Skeleton", x: 600, y: 250},
+    { type: 'Skeleton', x: 600, y: 250 },
     // ...
   ],
   decorations: [
-    {type: "Tree", x: 70, y: 100},
-    {type: "Chest", x: 130, y: 210},
+    { type: 'Tree', x: 70, y: 100 },
+    { type: 'Chest', x: 130, y: 210 },
     // ...
   ],
 };
 ```
 
 A `buildWorld()` (`main.js:293`) szerint:
+
 - `decorations` → `DECOR_CLASSES` map alapján példányosítva (`solid` esetén `obstacles[]`, különben `decorations[]`)
 - `npcs` → típus szerinti switch (Chicken, Cow, Pig, Sheep) → `npcs[]`
 - `enemies` → mind `Skeleton` → `enemies[]`

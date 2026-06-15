@@ -7,7 +7,7 @@ description: >
 version: 1.0.0
 author: Viktor Bozzay
 disable-model-invocation: false
-argument-hint: "[--fix]"
+argument-hint: '[--fix]'
 ---
 
 # cv-review — CV Project Compliance Review
@@ -36,11 +36,13 @@ traceable to an exact CV version.
 ## Step 1 — Read the diff
 
 Run:
+
 ```bash
 git diff HEAD
 ```
 
 Also run:
+
 ```bash
 git diff --name-only HEAD
 ```
@@ -57,6 +59,7 @@ If the diff is empty: report "Nincs változás a HEAD-hez képest." and stop.
 ### 2a — New keys added to en-page.js?
 
 If `scripts/locales/en-page.js` appears in the diff:
+
 - Extract all keys added in the diff (`+  keyName:` lines inside `labels: { ... }`)
 - For each new key: check whether the same key exists in the other 11 page locale files (`*-page.js`)
 - If missing in any file → ⚠️ WARNING per file
@@ -82,6 +85,7 @@ Scan changed `.js` and `.html` files.
 ### 3a — Hardcoded aria-label strings
 
 If `aria-label="` appears with a literal string (not `locale.t(...)` output):
+
 - Check whether the literal string matches a known aria key value from `scripts/locales/en-page.js`
 - If yes → ⚠️ WARNING: "Hardcoded aria-label — használj locale.t('ariaKulcs') helyette"
 - If the string is clearly a one-off, non-localized technical label → skip

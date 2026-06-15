@@ -1,12 +1,12 @@
 ---
-title: "Frontend Developer"
-seniority: "Junior"
+title: 'Frontend Developer'
+seniority: 'Junior'
 period:
-  from: "2023-01"
-  to: "2023-07"
-profession: "software"
-type: "work"
-domain: "sports technology"
+  from: '2023-01'
+  to: '2023-07'
+profession: 'software'
+type: 'work'
+domain: 'sports technology'
 leader: false
 skills: [React, Redux Saga, WebSocket, JavaScript, MongoDB, Jest, Webpack, Real-time Systems]
 ---
@@ -14,6 +14,7 @@ skills: [React, Redux Saga, WebSocket, JavaScript, MongoDB, Jest, Webpack, Real-
 # Scolia Technologies Ltd. — Frontend Developer (Jan 2023 – Jul 2023)
 
 ## Cégháttér
+
 <!-- Hány felhasználó? Milyen piacra szól (B2C, B2B, sport létesítmények)? Méret? -->
 
 Automatizált dart-scoring és analytics platform. **Link:** https://scoliadarts.com

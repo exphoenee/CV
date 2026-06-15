@@ -1,0 +1,1092 @@
+{
+  "_meta": {
+    "optimized_for": "Manual Backup @ —",
+    "date": "2026-06-15 (current)",
+    "ats_match": "—",
+    "source": "scripts/locales/",
+    "restore": "Paste each language block back into scripts/locales/<lang>.js -> content field."
+  },
+  "hu": {
+    "summary": "Frontend Tech Leadként 5+ év frontend tapasztalattal frontend architektúrára, rendszertervezésre és nagyszabású legacy rendszerek modernizációjára specializálódtam TypeScript, Svelte, React és Node.js technológiákkal. Vállalati rendszerek teljes újraírását és migrációját vezettem modern stackekre, javítva az alapplatformok karbantarthatóságát és skálázhatóságát. AI-asszisztált munkafolyamatokat vezettem be, és automatizált minőségi kapukkal ellátott CI pipeline-okat építettem. Mérnököket vezetek és mentorálok, az evidencián alapuló refaktorálásra és a fenntartható, rendszerszintű frontend alapokra fókuszálva.",
+    "workExperience": [
+      {
+        "id": "aegex",
+        "description": "A SafeSy és FACTS rendszerek teljes körű architektúrális modernizációját vezettem — a rendszertervezéstől az éles üzemig. AI-asszisztált fejlesztési folyamatokat és CI-vezérelt minőségi pipeline-okat honosítottam meg, amelyek evidenciaalapú mérnöki kultúrát teremtettek és jelentősen növelték a szállítási sebességet és a kiadási megbízhatóságot.",
+        "bullets": [
+          "Két vállalati rendszer (SafeSy, FACTS) architektúráját és szállítását vettem a kezembe, a tervezéstől a produkcióig",
+          "Legacy rendszerek modernizációját vezettem teljes újraírással és modern frontend stack-re való migrációval",
+          "AI-asszisztált fejlesztési munkafolyamatokat vezettem be, növelve a mérnöki teljesítményt és konzisztenciát",
+          "CI pipeline-t implementáltam automatizált minőségi kapukkal és tesztelési stratégiával a semmiből",
+          "Evidenciaalapú refaktorálási folyamatot hoztam létre mérhető minőségjavulással",
+          "Jelenleg 1 mid-level mérnököt mentorálok és vezetek"
+        ],
+        "projects": [
+          {
+            "name": "SafeSy",
+            "subtitle": "Belső gyártásirányítási rendszer",
+            "bullets": [
+              "Többszerepkörös vállalati platformot építettem valós idejű munkafolyamat- és készletkövetéssel (gyártás, iroda, vezető, partner)",
+              "Belső Svelte komponenskönyvtárat terveztem és valósítottam meg platformszinten",
+              "Automatizált riporting megoldások tervezése és fejlesztése; hozzájárulás az Express alapú backend rendszer adatmodelljének, SQL lekérdezéseinek és teljesítményének optimalizálásához."
+            ]
+          },
+          {
+            "name": "FACTS",
+            "subtitle": "Nyersanyag- és megfelelőségkövetési rendszer",
+            "bullets": [
+              "Kiadási ciklust haviról kéthetire csökkentettem (cél: heti) Claude-alapú AI-asszisztált toolinggal",
+              "CI/CD pipeline fejlesztése automatizált quality gate-ekkel; átfogó tesztelési infrastruktúra és tesztlefedettség kiépítése nulláról.",
+              "Architektúrát PNPM monorepora migráltam, FACTS/Driver/Shared csomaggal ",
+              "Belső CLI toolingot építettem monorepo workflow-automatizáláshoz és fejlesztői produktivitáshoz"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "telekom",
+        "description": "Vállalati agilis környezetben dolgoztam egy AI-integrált frontend rendszeren, fókuszálva a valós idejű adatvizualizációra és frontend-backend integrációra. Típusbiztos UI komponenseket építettem és hozzájárultam az AI-vezérelt tesztelési munkafolyamatokhoz és elemzési interfészekhez.",
+        "bullets": [
+          "Type-safe React-alapú UI komponenseket fejlesztettem vállalati AI-integrált rendszerekhez",
+          "Frontend interfészeket integráltam AI-vezérelt backend szolgáltatásokkal API munkafolyamatokon keresztül",
+          "Valós idejű adatvizualizációs interfészeket építettem teszteredményekhez és rendszerelemzéshez",
+          "Agilis fejlesztési környezetben dolgoztam a frontend és backend rendszerek folyamatos integrációjával"
+        ]
+      },
+      {
+        "id": "scolia",
+        "description": "Frontend fejlesztőként dolgoztam a Scoliánál, egy acélhegyű darts valós idejű automatikus pontszámláló megoldásánál:",
+        "bullets": [
+          "A dizájn és backend csapatokkal együttműködve alacsony késleltetésű, nagy áteresztőképességű valós idejű UI-t szállítottam élő adatterhelés alatt.",
+          "Interaktív vizualizációkat hoztam létre valós idejű haladáskövetéshez és teljesítmény-elemzéshez."
+        ]
+      },
+      {
+        "id": "cubicfox",
+        "description": "Production ready frontend alkalmazásokat szállítottam nemzetközi ügyfelek számára agilis környezetben. Skálázható UI architektúrára, frontend szabványokra és a stakeholderek és fejlesztési csapatok közötti igénytisztázás javítására összpontosítottam.",
+        "bullets": [
+          "Production ready React és Next.js frontend alkalmazásokat fejlesztettem nemzetközi ügyfeleknek",
+          "Javítottam a frontend architektúra konzisztenciáját kódszabványok meghatározásával és érvényesítésével a csapatban",
+          "Újraterveztem az ügyféligény-összegyűjtési folyamatot, csökkentve a félreérthetőséget és az iterációs köröket",
+          "Együttműködtem a dizájn és backend csapatokkal skálázható, böngészőfüggetlen UI rendszerek szállításáért"
+        ]
+      },
+      {
+        "id": "cobotx",
+        "description": "Ipari robotikai és automatizálási mérnöki projekteket vezettem, összekötve a gépészmérnöki, PLC-rendszer és szoftveralapú automatizálási szaktudást. Felelős voltam a rendszerspecifikációért, csapatvezetésért és szállítástervezésért termelés-kritikus környezetekben.",
+        "bullets": [
+          "Hardware és software specifikációkat fejlesztettem PLC-alapú robotikai és automatizálási rendszerekhez",
+          "Műszaki követelményeket és megvalósíthatósági tanulmányokat definiáltam ipari robotikai megoldásokhoz",
+          "4 mérnökből álló csapatot építettem fel és vezettem, felügyelve a szállítást, teljesítményt és a projekt végrehajtását",
+          "KPI-okat, dokumentációs szabványokat és riportálási folyamatokat hoztam létre a mérnöki tevékenységekhez",
+          "Kapacitás- és pénzügyi terveket készítettem az értékesítési és gyártási előrejelzésekhez igazodva"
+        ]
+      },
+      {
+        "id": "webforsol",
+        "description": "Full-stack webes alkalmazásokat szállítottam egyáni vállalkozó fejlesztőként különböző iparágak ügyfelei számára. Rendszertervezésre, karbantartható architektúrára és skálázható webes megoldások teljes körű szállítására összpontosítottam.",
+        "bullets": [
+          "Full-stack alkalmazásokat építettem React, Next.js, Node.js, PHP és relációs/nem relációs adatbázisok segítségével",
+          "REST API-okat és moduláris backend architektúrákat terveztem és valósítottam meg kliens rendszerekhez",
+          "Teljes körű termékfejlesztést végeztem az igényelemzéstől az üzembe helyezésig és karbantartásig",
+          "Közvetlenül ügyfelekkel dolgoztam az üzleti igények skálázható technikai megoldásokra való fordításáért",
+          "Optimalizáltam az alkalmazás struktúráját a karbantarthatóság, bővíthetőség és hosszú távú skálázhatóság érdekében"
+        ]
+      }
+    ],
+    "community": "Pro bono ingyenes iskolai informatika és programozási szakkört indítottam és vezetek a pécsi Mátyás Király Utcai Általános Iskolában (2026. február, folyamatban). Teljes tananyagot terveztem. Mentorálásomnak köszönhetően a csapat első helyet szerzett a 2026-os „Hack and Code\" versenyen (Radnóti SZKI), és 1. és 3. helyet szerzett a 22. Neumann János Programozási Versenyen.",
+    "identity": {
+      "languages": [
+        {
+          "name": "Magyar",
+          "level": "Anyanyelv",
+          "comment": null
+        },
+        {
+          "name": "Német",
+          "level": "Felső-középhaladó (B2)",
+          "comment": null
+        },
+        {
+          "name": "Angol",
+          "level": "Felső-középhaladó (B2)",
+          "comment": null
+        }
+      ]
+    }
+  },
+  "de": {
+    "summary": "Frontend Tech Lead mit über 5 Jahren Erfahrung in Frontend und Full-Stack, spezialisiert auf Frontend-Architektur, Systemdesign und die Modernisierung großer Legacy-Systeme mit TypeScript, Svelte, React und Node.js. Ich habe vollständige Rewrites und Migrationen auf moderne Stacks geleitet und so Wartbarkeit und Skalierbarkeit der Kernplattformen verbessert. Ich habe KI-gestützte Workflows eingeführt und CI-Pipelines mit automatisierten Quality Gates aufgebaut, was Liefergeschwindigkeit und Release-Zuverlässigkeit deutlich steigerte. Ich leite und mentoriere Ingenieure mit Fokus auf evidenzbasiertes Refactoring und nachhaltige, systemweite Frontend-Grundlagen.",
+    "workExperience": [
+      {
+        "id": "aegex",
+        "description": "Ich leitete die architektonische Modernisierung von SafeSy und FACTS mit vollständiger End-to-End-Verantwortung: Systemdesign, Frontend-Architektur und Backend-Integration. KI-gestützte Workflows und CI-Qualitätspipelines steigerten Liefergeschwindigkeit und Release-Zuverlässigkeit erheblich.",
+        "bullets": [
+          "Ich übernahm Architektur und Lieferung zweier Unternehmenssysteme (SafeSy, FACTS) vom Design bis zur Produktion",
+          "Ich leitete die Modernisierung von Legacy-Systemen durch vollständige Rewrites und Migration auf moderne Frontend-Stacks",
+          "Ich führte KI-gestützte Entwicklungs-Workflows ein und steigerte Entwicklerdurchsatz und Konsistenz",
+          "Ich implementierte eine CI-Pipeline mit automatisierten Quality Gates und einer Teststrategie von Grund auf",
+          "Ich etablierte einen evidenzbasierten Refactoring-Prozess mit messbaren Qualitätsverbesserungen",
+          "Ich mentoriere und leite aktuell 1 Mid-Level-Ingenieur"
+        ],
+        "projects": [
+          {
+            "name": "SafeSy",
+            "subtitle": "Internes Produktionsmanagementsystem",
+            "bullets": [
+              "Rollenübergreifende Plattform (Produktion, Büro, Führung, Partner) mit Echtzeit-Workflow- und Bestandsverfolgung",
+              "Wiederverwendbare interne Svelte-Komponentenbibliothek für die gesamte Plattform entworfen und implementiert",
+              "Abonnierbares tägliches E-Mail-Reporting-System entwickelt; Express-Backend inkl. SQL-Abfragedesign beigetragen"
+            ]
+          },
+          {
+            "name": "FACTS",
+            "subtitle": "Rohstoff- und Compliance-Tracking-System",
+            "bullets": [
+              "Release-Zyklus von monatlich auf zweiwöchentlich reduziert (Ziel: wöchentlich) via KI-gestützte Workflows (Claude-Tooling)",
+              "CI-Pipeline mit automatisierten Quality Gates eingeführt; Testabdeckung von null aufgebaut, Produktionsprobleme deutlich reduziert",
+              "Architektur auf PNPM-Monorepo migriert, gemeinsames FACTS/Driver-Paket extrahiert",
+              "Internes CLI-Tooling für Monorepo-Automatisierung und Entwicklerproduktivität entwickelt"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "telekom",
+        "description": "Ich arbeitete in einem agilen Unternehmensumfeld an einem KI-integrierten Frontend-System mit Fokus auf Echtzeit-Datenvisualisierung und Frontend-Backend-Integration. Ich entwickelte typsichere UI-Komponenten und trug zu KI-gesteuerten Test-Workflows und Analyse-Interfaces bei.",
+        "bullets": [
+          "Ich entwickelte typsichere React-basierte UI-Komponenten für KI-integrierte Unternehmenssysteme",
+          "Ich integrierte Frontend-Interfaces mit KI-gesteuerten Backend-Services über API-Workflows",
+          "Ich entwickelte Echtzeit-Datenvisualisierungs-Interfaces für Testergebnisse und Systemanalyse",
+          "Ich arbeitete in einem agilen Lieferumfeld mit kontinuierlicher Integration von Frontend- und Backend-Systemen"
+        ]
+      },
+      {
+        "id": "scolia",
+        "description": "Als Frontend-Entwickler bei Scolia arbeitete ich an einer Echtzeit-Automatik-Scorekeeping-Lösung für Steel-Tip-Darts:",
+        "bullets": [
+          "In Zusammenarbeit mit Design- und Backend-Teams lieferte ich latenzarme, durchsatzstarke Echtzeit-UIs unter Live-Datenlast.",
+          "Ich erstellte interaktive Visualisierungen für Echtzeit-Fortschrittsverfolgung und Leistungsanalyse."
+        ]
+      },
+      {
+        "id": "cubicfox",
+        "description": "Ich lieferte produktionsreife Frontend-Anwendungen für internationale Kunden in einem agilen Umfeld. Ich fokussierte mich auf skalierbare UI-Architektur, Frontend-Standards und die Verbesserung der Anforderungsklarheit zwischen Stakeholdern und Entwicklungsteams.",
+        "bullets": [
+          "Ich entwickelte produktionsreife React und Next.js Frontend-Anwendungen für internationale Kunden",
+          "Ich verbesserte die Konsistenz der Frontend-Architektur durch Definition und Durchsetzung von Code-Standards im Team",
+          "Ich überarbeitete den Prozess zur Erfassung von Kundenanforderungen und reduzierte Mehrdeutigkeiten und Iterationszyklen",
+          "Ich arbeitete mit Design- und Backend-Teams zusammen, um skalierbare, browserübergreifende UI-Systeme zu liefern"
+        ]
+      },
+      {
+        "id": "cobotx",
+        "description": "Ich leitete Engineering-Projekte in industrieller Robotik und Automation und überbrückte Maschinenbau, PLC-Systeme und softwaregetriebene Automatisierung. Ich war verantwortlich für Systemspezifikation, Teamführung und Lieferplanung in produktionskritischen Umgebungen.",
+        "bullets": [
+          "Ich entwickelte Hardware- und Software-Spezifikationen für PLC-basierte Robotik- und Automationssysteme",
+          "Ich definierte technische Anforderungen und erstellte Machbarkeitsstudien für industrielle Robotiklösungen",
+          "Ich baute und leitete ein 4-köpfiges Ingenieurteam und überwachte Lieferung, Leistung und Projektausführung",
+          "Ich etablierte KPIs, Dokumentationsstandards und Reporting-Prozesse für den Engineering-Betrieb",
+          "Ich erstellte Kapazitäts- und Finanzplanung abgestimmt auf Vertriebs- und Produktionsprognosen"
+        ]
+      },
+      {
+        "id": "webforsol",
+        "description": "Ich lieferte Full-Stack-Webanwendungen als eigenständiger Entwickler für Kunden aus mehreren Branchen. Ich fokussierte mich auf Systemdesign, wartbare Architektur und End-to-End-Lieferung skalierbarer Weblösungen.",
+        "bullets": [
+          "Ich entwickelte Full-Stack-Anwendungen mit React, Next.js, Node.js, PHP und relationalen/nicht-relationalen Datenbanken",
+          "Ich entwarf und implementierte REST APIs und modulare Backend-Architekturen für Kundensysteme",
+          "Ich lieferte End-to-End-Produktentwicklung von der Anforderungsanalyse bis zu Deployment und Wartung",
+          "Ich arbeitete direkt mit Kunden, um Geschäftsanforderungen in skalierbare technische Lösungen zu übersetzen",
+          "Ich optimierte die Anwendungsstruktur für Wartbarkeit, Erweiterbarkeit und langfristige Skalierbarkeit"
+        ]
+      }
+    ],
+    "community": "Ich startete und leite aktuell einen Pro-bono-Nachmittagskurs für IT und Programmierung an der Mátyás Király Straße Grundschule in Pécs (Februar 2026, laufend). Ich entwarf den vollständigen Lehrplan. Unter meiner Betreuung gewann das Team den 1. Platz beim 2026er „Hack and Code\"-Wettbewerb (Radnóti SZKI) und belegte Platz 1 und 3 beim 22. Neumann János Programmierwettbewerb.",
+    "identity": {
+      "languages": [
+        {
+          "name": "Ungarisch",
+          "level": "Muttersprache",
+          "comment": null
+        },
+        {
+          "name": "Deutsch",
+          "level": "Obere Mittelstufe (B2)",
+          "comment": null
+        },
+        {
+          "name": "Englisch",
+          "level": "Obere Mittelstufe (B2)",
+          "comment": null
+        }
+      ]
+    }
+  },
+  "fr": {
+    "summary": "Frontend Tech Lead avec plus de 5 ans d'expérience en frontend, spécialisé dans l'architecture frontend, la conception de systèmes et la modernisation à grande échelle de systèmes legacy avec TypeScript, Svelte, React et Node.js. J'ai dirigé des réécritures complètes et des migrations vers des stacks modernes, améliorant la maintenabilité et la scalabilité des plateformes. J'ai introduit des workflows assistés par IA et construit des pipelines CI avec des quality gates automatisés. Je dirige et encadre des ingénieurs, axé sur le refactoring basé sur les preuves et des fondations frontend durables à l'échelle du système.",
+    "workExperience": [
+      {
+        "id": "aegex",
+        "description": "J'ai dirigé la modernisation architecturale de deux systèmes legacy d'entreprise. J'assume la responsabilité totale de bout en bout pour SafeSy et FACTS, incluant la conception système, l'architecture frontend et l'intégration backend. J'ai introduit des workflows de développement assistés par IA et des pipelines qualité pilotés par CI, permettant un processus d'ingénierie basé sur les preuves et améliorant significativement la vitesse de livraison et la fiabilité des releases.",
+        "bullets": [
+          "J'ai pris en charge l'architecture et la livraison de deux systèmes d'entreprise (SafeSy, FACTS) du design à la production",
+          "J'ai dirigé la modernisation de systèmes legacy via des réécritures complètes et la migration vers des stacks frontend modernes",
+          "J'ai introduit des workflows de développement assistés par IA améliorant le débit et la cohérence des équipes",
+          "J'ai mis en place un pipeline CI avec des quality gates automatisés et une stratégie de test de zéro",
+          "J'ai établi un processus de refactoring basé sur les preuves avec des améliorations qualité mesurables",
+          "Je mentore et encadre actuellement un ingénieur de niveau intermédiaire"
+        ],
+        "projects": [
+          {
+            "name": "SafeSy",
+            "subtitle": "Système interne de gestion de production",
+            "bullets": [
+              "J'ai construit une plateforme d'entreprise multi-rôles pour la production, le bureau, les dirigeants et les partenaires avec suivi en temps réel des workflows et des stocks",
+              "J'ai conçu et implémenté une bibliothèque de composants Svelte interne réutilisable sur toute la plateforme",
+              "J'ai développé un système de reporting quotidien par e-mail abonnable et contribué au backend Express (conception et optimisation des requêtes SQL)"
+            ]
+          },
+          {
+            "name": "FACTS",
+            "subtitle": "Système de suivi des matières premières et de conformité",
+            "bullets": [
+              "Release réduit de mensuel à bimensuel (objectif : hebdomadaire) via workflows IA (outillage Claude)",
+              "Pipeline CI avec quality gates ; couverture de tests établie de zéro, incidents en production réduits significativement",
+              "Migration vers monorepo PNPM, package partagé FACTS/Driver extrait",
+              "CLI interne pour automatisation des workflows monorepo et productivité des développeurs"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "telekom",
+        "description": "Système frontend intégré à l'IA en environnement Agile, axé sur la visualisation de données en temps réel et l'intégration frontend-backend.",
+        "bullets": [
+          "Composants UI React type-safe pour systèmes d'entreprise intégrés à l'IA",
+          "Interfaces frontend intégrées avec services backend IA via workflows API",
+          "Visualisations en temps réel pour résultats de tests et analyse système",
+          "Livraison Agile avec intégration continue frontend-backend"
+        ]
+      },
+      {
+        "id": "scolia",
+        "description": "En tant que développeur Frontend chez Scolia, j'ai travaillé sur une solution de score automatique en temps réel pour les fléchettes à pointe acier :",
+        "bullets": [
+          "En partenariat avec les équipes design et backend, j'ai livré des UIs en temps réel à faible latence et à haut débit sous charge de données en direct.",
+          "J'ai créé des visualisations interactives pour le suivi de progression en temps réel et l'analyse des performances."
+        ]
+      },
+      {
+        "id": "cubicfox",
+        "description": "J'ai livré des applications frontend de qualité production pour des clients internationaux dans un environnement Agile. Je me suis concentré sur l'architecture UI scalable, les standards frontend et l'amélioration de la clarté des exigences entre parties prenantes et équipes de développement.",
+        "bullets": [
+          "J'ai construit des applications frontend React et Next.js prêtes pour la production pour des clients internationaux",
+          "J'ai amélioré la cohérence de l'architecture frontend en définissant et appliquant des standards de code au sein de l'équipe",
+          "J'ai repensé le processus de recueil des exigences clients, réduisant l'ambiguïté et les cycles d'itération",
+          "J'ai collaboré avec les équipes design et backend pour livrer des systèmes UI scalables et compatibles multi-navigateurs"
+        ]
+      },
+      {
+        "id": "cobotx",
+        "description": "J'ai dirigé des projets d'ingénierie en robotique industrielle et automatisation, faisant le lien entre le génie mécanique, les systèmes PLC et l'automatisation pilotée par logiciel. J'étais responsable de la spécification des systèmes, de la direction d'équipe et de la planification de livraison dans des environnements critiques pour la production.",
+        "bullets": [
+          "J'ai développé des spécifications matérielles et logicielles pour des systèmes de robotique et d'automatisation basés sur PLC",
+          "J'ai défini des exigences techniques et réalisé des études de faisabilité pour des solutions de robotique industrielle",
+          "J'ai constitué et dirigé une équipe de 4 ingénieurs, supervisant la livraison, la performance et l'exécution des projets",
+          "J'ai établi des KPIs, des standards de documentation et des processus de reporting pour les opérations d'ingénierie",
+          "J'ai créé des plans de capacité et financiers alignés sur les prévisions commerciales et de production"
+        ]
+      },
+      {
+        "id": "webforsol",
+        "description": "J'ai livré des applications web full-stack en tant que développeur indépendant pour des clients de plusieurs secteurs. Je me suis concentré sur la conception système, l'architecture maintenable et la livraison de bout en bout de solutions web scalables.",
+        "bullets": [
+          "J'ai construit des applications full-stack avec React, Next.js, Node.js, PHP et des bases de données relationnelles/non-relationnelles",
+          "J'ai conçu et implémenté des APIs REST et des architectures backend modulaires pour les systèmes clients",
+          "J'ai livré un développement produit de bout en bout, de l'analyse des exigences au déploiement et à la maintenance",
+          "J'ai travaillé directement avec les clients pour traduire les besoins métier en solutions techniques scalables",
+          "J'ai optimisé la structure des applications pour la maintenabilité, l'extensibilité et la scalabilité à long terme"
+        ]
+      }
+    ],
+    "community": "J'ai lancé et dirige actuellement un club parascolaire d'informatique et de programmation bénévole à l'école primaire de la rue Mátyás Király à Pécs (février 2026, en cours). J'ai conçu l'intégralité du programme. Sous mon mentorat, l'équipe a remporté la 1ère place au concours « Hack and Code » 2026 (Radnóti SZKI) et s'est classée 1er et 3e au 22e Concours de Programmation Neumann János.",
+    "identity": {
+      "languages": [
+        {
+          "name": "Hongrois",
+          "level": "Langue maternelle",
+          "comment": null
+        },
+        {
+          "name": "Allemand",
+          "level": "Intermédiaire supérieur (B2)",
+          "comment": null
+        },
+        {
+          "name": "Anglais",
+          "level": "Intermédiaire supérieur (B2)",
+          "comment": null
+        }
+      ]
+    }
+  },
+  "es": {
+    "summary": "Frontend Tech Lead con más de 5 años de experiencia en frontend, especializado en arquitectura frontend, diseño de sistemas y modernización a gran escala de sistemas legacy con TypeScript, Svelte, React y Node.js. He liderado reescrituras completas y migraciones de sistemas empresariales a stacks modernos, mejorando la mantenibilidad y escalabilidad de las plataformas. He introducido flujos de trabajo asistidos por IA y construido pipelines CI con quality gates automatizados. Lidero y mentorizo a ingenieros, enfocándome en el refactoring basado en evidencias y en bases frontend sostenibles a nivel de sistema.",
+    "workExperience": [
+      {
+        "id": "aegex",
+        "description": "Lideré la modernización arquitectónica de SafeSy y FACTS con responsabilidad completa end-to-end: diseño de sistemas, arquitectura frontend e integración backend. Workflows asistidos por IA y pipelines CI mejoraron significativamente la velocidad de entrega y la fiabilidad de los releases.",
+        "bullets": [
+          "Tomé posesión de la arquitectura y entrega de dos sistemas empresariales (SafeSy, FACTS) desde el diseño hasta la producción",
+          "Lideré la modernización de sistemas legacy mediante reescrituras completas y migración a stacks frontend modernos",
+          "Introduje flujos de trabajo de desarrollo asistidos por IA mejorando el rendimiento y la consistencia del equipo",
+          "Implementé un pipeline CI con quality gates automatizados y una estrategia de pruebas desde cero",
+          "Establecí un proceso de refactoring basado en evidencias con mejoras de calidad medibles",
+          "Actualmente mentorizo y lidero a 1 ingeniero de nivel medio"
+        ],
+        "projects": [
+          {
+            "name": "SafeSy",
+            "subtitle": "Sistema interno de gestión de producción",
+            "bullets": [
+              "Plataforma empresarial multi-rol (producción, oficina, ejecutivos, socios) con seguimiento en tiempo real de workflows e inventario",
+              "Biblioteca de componentes Svelte interna reutilizable diseñada e implementada en toda la plataforma",
+              "Sistema de reportes diarios por correo suscribible desarrollado; contribuí al backend Express (diseño y optimización de consultas SQL)"
+            ]
+          },
+          {
+            "name": "FACTS",
+            "subtitle": "Sistema de seguimiento de materias primas y cumplimiento",
+            "bullets": [
+              "Release reducido de mensual a quincenal (objetivo: semanal) vía workflows IA (tooling Claude)",
+              "Pipeline CI con quality gates; tests desde cero, incidencias en producción reducidas significativamente",
+              "Migración a monorepo PNPM, paquete FACTS/Driver compartido extraído",
+              "CLI interno para automatización de workflows del monorepo y productividad del equipo"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "telekom",
+        "description": "Trabajé en un entorno Agile empresarial en un sistema frontend integrado con IA, enfocado en visualización de datos en tiempo real e integración frontend-backend. Construí componentes UI type-safe y contribuí a flujos de trabajo de pruebas impulsados por IA e interfaces de análisis.",
+        "bullets": [
+          "Desarrollé componentes UI basados en React type-safe para sistemas empresariales integrados con IA",
+          "Integré interfaces frontend con servicios backend impulsados por IA mediante flujos de trabajo API",
+          "Construí interfaces de visualización de datos en tiempo real para resultados de pruebas y análisis de sistemas",
+          "Trabajé en un entorno de entrega Agile con integración continua de sistemas frontend y backend"
+        ]
+      },
+      {
+        "id": "scolia",
+        "description": "Como desarrollador Frontend en Scolia, trabajé en una solución de puntuación automática en tiempo real para dardos de punta de acero:",
+        "bullets": [
+          "En colaboración con los equipos de diseño y backend, entregué UIs en tiempo real de baja latencia y alto rendimiento bajo carga de datos en vivo.",
+          "Creé visualizaciones interactivas para el seguimiento del progreso en tiempo real y el análisis de rendimiento."
+        ]
+      },
+      {
+        "id": "cubicfox",
+        "description": "Entregué aplicaciones frontend de calidad de producción para clientes internacionales en un entorno Agile. Me enfoqué en arquitectura UI escalable, estándares frontend y mejora de la claridad de requisitos entre partes interesadas y equipos de desarrollo.",
+        "bullets": [
+          "Construí aplicaciones frontend React y Next.js listas para producción para clientes internacionales",
+          "Mejoré la consistencia de la arquitectura frontend definiendo y aplicando estándares de código en el equipo",
+          "Rediseñé el proceso de captura de requisitos de clientes, reduciendo la ambigüedad y los ciclos de iteración",
+          "Colaboré con equipos de diseño y backend para entregar sistemas UI escalables y compatibles con múltiples navegadores"
+        ]
+      },
+      {
+        "id": "cobotx",
+        "description": "Lideré proyectos de ingeniería en robótica industrial y automatización, conectando ingeniería mecánica, sistemas PLC y automatización impulsada por software. Fui responsable de la especificación de sistemas, liderazgo de equipo y planificación de entrega en entornos críticos para la producción.",
+        "bullets": [
+          "Desarrollé especificaciones de hardware y software para sistemas de robótica y automatización basados en PLC",
+          "Definí requisitos técnicos y realicé estudios de viabilidad para soluciones de robótica industrial",
+          "Construí y lideré un equipo de 4 ingenieros, supervisando la entrega, el rendimiento y la ejecución de proyectos",
+          "Establecí KPIs, estándares de documentación y procesos de reporte para las operaciones de ingeniería",
+          "Creé planes de capacidad y financieros alineados con las previsiones de ventas y producción"
+        ]
+      },
+      {
+        "id": "webforsol",
+        "description": "Entregué aplicaciones web full-stack como desarrollador independiente para clientes de múltiples sectores. Me enfoqué en diseño de sistemas, arquitectura mantenible y entrega de extremo a extremo de soluciones web escalables.",
+        "bullets": [
+          "Construí aplicaciones full-stack con React, Next.js, Node.js, PHP y bases de datos relacionales/no relacionales",
+          "Diseñé e implementé APIs REST y arquitecturas backend modulares para sistemas de clientes",
+          "Entregué desarrollo de producto de extremo a extremo desde el análisis de requisitos hasta el despliegue y mantenimiento",
+          "Trabajé directamente con clientes para traducir necesidades de negocio en soluciones técnicas escalables",
+          "Optimicé la estructura de aplicaciones para mantenibilidad, extensibilidad y escalabilidad a largo plazo"
+        ]
+      }
+    ],
+    "community": "Puse en marcha y actualmente dirijo un club extraescolar de informática y programación gratuito y voluntario en la Escuela Primaria de la Calle Mátyás Király en Pécs (febrero 2026, en curso). Diseñé el currículum completo. Bajo mi mentoría, el equipo ganó el 1er lugar en el concurso \"Hack and Code\" 2026 (Radnóti SZKI) y quedó 1° y 3° en el 22° Concurso de Programación Neumann János.",
+    "identity": {
+      "languages": [
+        {
+          "name": "Húngaro",
+          "level": "Lengua materna",
+          "comment": null
+        },
+        {
+          "name": "Alemán",
+          "level": "Intermedio alto (B2)",
+          "comment": null
+        },
+        {
+          "name": "Inglés",
+          "level": "Intermedio alto (B2)",
+          "comment": null
+        }
+      ]
+    }
+  },
+  "it": {
+    "summary": "Frontend Tech Lead con oltre 5 anni di esperienza frontend, specializzato in architettura frontend, progettazione di sistemi e modernizzazione su larga scala di sistemi legacy con TypeScript, Svelte, React e Node.js. Ho guidato riscritture complete e migrazioni di sistemi aziendali verso stack moderni, migliorando la manutenibilità e la scalabilità delle piattaforme. Ho introdotto flussi di lavoro assistiti dall'IA e costruito pipeline CI con quality gate automatizzati. Guido e mentoro ingegneri, concentrandomi sul refactoring basato su evidenze e su fondamenta frontend sostenibili a livello di sistema.",
+    "workExperience": [
+      {
+        "id": "aegex",
+        "description": "Ho guidato la modernizzazione architetturale di SafeSy e FACTS con piena responsabilità end-to-end: progettazione del sistema, architettura frontend e integrazione backend. Workflow assistiti dall'IA e pipeline CI hanno migliorato significativamente velocità di consegna e affidabilità dei release.",
+        "bullets": [
+          "Ho preso in carico architettura e consegna di due sistemi aziendali (SafeSy, FACTS) dal design alla produzione",
+          "Ho guidato la modernizzazione di sistemi legacy tramite riscritture complete e migrazione verso stack frontend moderni",
+          "Ho introdotto flussi di lavoro di sviluppo assistiti dall'IA migliorando la produttività e la coerenza del team",
+          "Ho implementato un pipeline CI con quality gate automatizzati e strategia di test da zero",
+          "Ho stabilito un processo di refactoring basato su evidenze con miglioramenti della qualità misurabili",
+          "Sto attualmente mentorando e guidando 1 ingegnere di livello intermedio"
+        ],
+        "projects": [
+          {
+            "name": "SafeSy",
+            "subtitle": "Sistema interno di gestione della produzione",
+            "bullets": [
+              "Piattaforma aziendale multi-ruolo (produzione, ufficio, dirigenti, partner) con tracciamento in tempo reale di workflow e inventario",
+              "Libreria di componenti Svelte interna riutilizzabile progettata e implementata per tutta la piattaforma",
+              "Sistema di reportistica giornaliera via email sviluppato; contribuito al backend Express (progettazione e ottimizzazione query SQL)"
+            ]
+          },
+          {
+            "name": "FACTS",
+            "subtitle": "Sistema di tracciamento materie prime e conformità",
+            "bullets": [
+              "Ciclo di release ridotto da mensile a bisettimanale (obiettivo: settimanale) con workflow assistiti dall'IA (tooling Claude)",
+              "Pipeline CI con quality gate automatizzati introdotta; copertura dei test stabilita da zero, problemi in produzione ridotti significativamente",
+              "Architettura migrata verso monorepo PNPM, pacchetto condiviso FACTS/Driver estratto",
+              "Tooling CLI interno sviluppato per automazione workflow monorepo e produttività degli sviluppatori"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "telekom",
+        "description": "Ho lavorato in un ambiente Agile aziendale su un sistema frontend integrato con l'IA, focalizzato sulla visualizzazione di dati in tempo reale e l'integrazione frontend-backend. Ho costruito componenti UI type-safe e contribuito ai workflow di test guidati dall'IA e alle interfacce di analisi.",
+        "bullets": [
+          "Ho sviluppato componenti UI React type-safe per sistemi aziendali integrati con l'IA",
+          "Ho integrato interfacce frontend con servizi backend guidati dall'IA tramite workflow API",
+          "Ho costruito interfacce di visualizzazione dati in tempo reale per risultati di test e analisi di sistema",
+          "Ho lavorato in un ambiente di consegna Agile con integrazione continua di sistemi frontend e backend"
+        ]
+      },
+      {
+        "id": "scolia",
+        "description": "Come sviluppatore Frontend in Scolia, ho lavorato su una soluzione di punteggio automatico in tempo reale per freccette a punta d'acciaio:",
+        "bullets": [
+          "In collaborazione con i team di design e backend, ho consegnato UI in tempo reale a bassa latenza e ad alto throughput sotto carico di dati in tempo reale.",
+          "Ho creato visualizzazioni interattive per il tracciamento del progresso in tempo reale e l'analisi delle prestazioni."
+        ]
+      },
+      {
+        "id": "cubicfox",
+        "description": "Ho consegnato applicazioni frontend di qualità produzione per clienti internazionali in un ambiente Agile. Mi sono concentrato su architettura UI scalabile, standard frontend e miglioramento della chiarezza dei requisiti tra stakeholder e team di sviluppo.",
+        "bullets": [
+          "Ho costruito applicazioni frontend React e Next.js pronte per la produzione per clienti internazionali",
+          "Ho migliorato la coerenza dell'architettura frontend definendo e applicando standard di codice nel team",
+          "Ho riprogettato il processo di raccolta dei requisiti dei clienti, riducendo l'ambiguità e i cicli di iterazione",
+          "Ho collaborato con team di design e backend per consegnare sistemi UI scalabili e compatibili con più browser"
+        ]
+      },
+      {
+        "id": "cobotx",
+        "description": "Ho guidato progetti di ingegneria in robotica industriale e automazione, collegando ingegneria meccanica, sistemi PLC e automazione guidata da software. Ero responsabile della specifica dei sistemi, della guida del team e della pianificazione delle consegne in ambienti critici per la produzione.",
+        "bullets": [
+          "Ho sviluppato specifiche hardware e software per sistemi di robotica e automazione basati su PLC",
+          "Ho definito requisiti tecnici e condotto studi di fattibilità per soluzioni di robotica industriale",
+          "Ho costituito e guidato un team di 4 ingegneri, supervisionando consegna, performance ed esecuzione dei progetti",
+          "Ho stabilito KPI, standard di documentazione e processi di reportistica per le operazioni di ingegneria",
+          "Ho creato piani di capacità e finanziari allineati alle previsioni di vendita e produzione"
+        ]
+      },
+      {
+        "id": "webforsol",
+        "description": "Ho consegnato applicazioni web full-stack come sviluppatore indipendente per clienti di più settori. Mi sono concentrato su progettazione di sistemi, architettura manutenibile e consegna end-to-end di soluzioni web scalabili.",
+        "bullets": [
+          "Ho costruito applicazioni full-stack con React, Next.js, Node.js, PHP e database relazionali/non relazionali",
+          "Ho progettato e implementato API REST e architetture backend modulari per sistemi clienti",
+          "Ho consegnato sviluppo prodotto end-to-end dall'analisi dei requisiti al deployment e alla manutenzione",
+          "Ho lavorato direttamente con i clienti per tradurre esigenze aziendali in soluzioni tecniche scalabili",
+          "Ho ottimizzato la struttura delle applicazioni per manutenibilità, estensibilità e scalabilità a lungo termine"
+        ]
+      }
+    ],
+    "community": "Ho avviato e attualmente guido un club scolastico gratuito di informatica e programmazione come volontario presso la Scuola Primaria di Via Mátyás Király a Pécs (febbraio 2026, in corso). Ho progettato l'intero programma didattico. Sotto la mia mentorship, il team ha vinto il 1° posto al concorso «Hack and Code» 2026 (Radnóti SZKI) e si è classificato 1° e 3° al 22° Concorso di Programmazione Neumann János.",
+    "identity": {
+      "languages": [
+        {
+          "name": "Ungherese",
+          "level": "Madrelingua",
+          "comment": null
+        },
+        {
+          "name": "Tedesco",
+          "level": "Intermedio superiore (B2)",
+          "comment": null
+        },
+        {
+          "name": "Inglese",
+          "level": "Intermedio superiore (B2)",
+          "comment": null
+        }
+      ]
+    }
+  },
+  "asg": {
+    "summary": "Ek em framhlið taknileiðtogi með 5+ ara framhlið starfsferil, kunnattr i kerfissmið ok storum endursmiðum gamalla kerfa með TypeScript, Svelte, React ok Node.js. Ek hef leiðt fulla endursmið storra stofnanakerfa til nýrra staflana ok batt viðhaldshafni þeirra. Ek hef innleitt AI-meðliðsverklag ok smiðað CI-pipar með sjalfvirkum gaðahliðum er mjök aukið hefr afköst, samkvamni ok areiðanleika utgafna. Ek leiði ok þjalfa verkfraðinga, ok legg aherslu a sannanlegataktar endurbatur, CI-gaðastaðla ok sjalfbaran framhliðargrunn.",
+    "workExperience": [
+      {
+        "id": "aegex",
+        "description": "Ek leiðti kerfislegar endurbyggingar tveggja storra stofnanakerfa. Ek rað yfir allri afhendingu SafeSy ok FACTS — kerfissmið, framhliðarbygging ok bakhliðarsamtengingu. Ek innleiddi AI-meðliðsverklag ok CI-gaðapipar, er gert hefr sannanlegataktar smiðiferli mögulegt ok aukið afhendingarhraða ok areiðanleika utgafna.",
+        "bullets": [
+          "Ek atti smið ok afhendingu tveggja stofnanakerfa (SafeSy, FACTS) fra hönnun til framleiðslu",
+          "Ek leiðti endursmið gamalla kerfa með fullum endursmiðum til nýrra framhliðarstafla",
+          "Ek innleiddi AI-meðliðsverklag er aukið hefr afköst ok samkvamni",
+          "Ek innleiddi CI-pipar með sjalfvirkum gaðahliðum ok profunaraatlun fra grunni",
+          "Ek stofnaði sannanlegataktar endurbatunarferli með malanlegum gaðaframförum",
+          "Ek þjalfa ok leiði einn miðstigsverkfraðing nu"
+        ],
+        "projects": [
+          {
+            "name": "SafeSy",
+            "subtitle": "Innra framleiðslustjornunarkerfi",
+            "bullets": [
+              "Ek smiðaði þverhlutverk stofnanavettvang fyrir framleiðslu, skrifstofur, forstjora ok felaga — með rauntimaverkflaðis- ok birgðarakningu",
+              "Ek hannaði ok innleiddi endurnýtanlegt innra Svelte-ihlutasafn notað um alla vettvanginn",
+              "Ek þroaði dagleg tölvupostskýrslukerfi ok lagði til Express bakhliðarinnar — þ.m.t. SQL-fyrirspurnarhönnun ok bestun"
+            ]
+          },
+          {
+            "name": "FACTS",
+            "subtitle": "Hraefnis- ok fylgnirakninga kerfi",
+            "bullets": [
+              "Ek minnkaði utgafuhringinn fra manaðarlegum i annars viku (markmið: vikulegur) — með AI-meðliðsverklag (Claude-smið)",
+              "Ek innleiddi CI-pipar með sjalfvirkum gaðahliðum — ek stofnaði profunarskyld fra nulli ok minnkaði framleiðsluvandamal verulega",
+              "Ek flutti smiðina yfir i PNPM monorepo ok dro ut samnýtta FACTS/Driver pakkann til endurnotkunar",
+              "Ek smiðaði innri CLI-verkfari fyrir monorepo verkflaðisjalfvirkni ok framleiðni þroara"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "telekom",
+        "description": "Ek vann i storu Agile-fyrirtaki a AI-samþatt framhliðarkerfi, með aherslu a rauntimagagnasýningu ok framhlið-bakhlið samþattingu. Ek smiðaði týpuöruggar notendaviðmotsihlutir ok lagði til AI-drifnar profunarverkflaðis ok greiningaviðmotsins.",
+        "bullets": [
+          "Ek þroaði týpuöruggar React-notendaviðmotsihlutir fyrir stofnana AI-samþatt kerfi",
+          "Ek samþatti framhliðarviðmot við AI-drifnar bakhliðarþjonustur með API verkflaðum",
+          "Ek smiðaði rauntimagagnasýningaviðmot fyrir profunarniðurstöður ok kerfisgreiningu",
+          "Ek vann i Agile afhendingumhverfi með stöðugri samþattingu framhliðar- ok bakhliðarkerfa"
+        ]
+      },
+      {
+        "id": "scolia",
+        "description": "Ek þroaði rauntimaframhliðarviðmot fyrir sjalfvirkan iþrottastigsgjafar- ok greiningar vettvang. Ek lagði aherslu a lagseinkun notendaviðmotsuppfarslur, lifsgagnasýningu ok svarlagt notendaupplifun i hattiðni gagnaumhverfi.",
+        "bullets": [
+          "Ek smiðaði rauntima React-notendaviðmot fyrir lifandi iþrottastiggjöf ok leikrakningu",
+          "Ek innleiddi lagseinkun gagnasýningaihlutir fyrir lifandi frammistöðugreiningu",
+          "Ek samþatti WebSocket-rauntimagagnastraumar i framhliðarsmiðina",
+          "Ek vann með hönnunar- ok bakhliðarsveitum að afhenda svarlag, haframmistöðu notendaviðmotskerfi"
+        ]
+      },
+      {
+        "id": "cubicfox",
+        "description": "Ek afhenti framleiðslugaða framhliðarforrit fyrir alþjoðlega viðskiptavini i Agile-umhverfi. Ek lagði aherslu a sveigjanleika notendaviðmotssmiðar, framhliðarstaðla ok batta kröfuskýrni milli hagsmunaaðila ok þrounarsveitanna.",
+        "bullets": [
+          "Ek smiðaði framleiðslutilbuin React ok Next.js framhliðarforrit fyrir alþjoðlega viðskiptavini",
+          "Ek batti samkvamni framhliðarsmiðar með þvi að skilgreina ok framfylgja koðastaðlum yfir sveitina",
+          "Ek endurhannað kröfuöflunarlegt ferli, minnkað tviraðni ok itrekunarhringa",
+          "Ek vann með hönnunar- ok bakhliðarsveitum að afhenda sveigjanleg, fjölvafrasam notendaviðmotskerfi"
+        ]
+      },
+      {
+        "id": "cobotx",
+        "description": "Ek leiðti verkfraðilegar verkefni i iðnaðarvinnslu ok sjalfvirkni, bruaði velverkfraði, PLC-kerfi ok hugbunaðardrifna sjalfvirkni. Ek bar abyrgð a kerfisskilgreiningu, liðsforystun ok afhendingaaatlun i framleiðslulýðraðisumhverfi.",
+        "bullets": [
+          "Ek þroaði velbunaðar- ok hugbunaðarskilgreiningar fyrir PLC-tengd velmenni ok sjalfvirknikerfi",
+          "Ek skilgreindi taknikröfur ok gerði hagkvamnisrannsoknir fyrir iðnaðarvelmannaðlausnir",
+          "Ek smiðaði ok leiðti sveit 4 verkfraðinga — eftirliti yfir afhendingu, frammistöðu ok verkframkvamd",
+          "Ek stofnaði KPI, skjalastaðla ok skýrsluferli fyrir verkfraðilegar aðgerðir",
+          "Ek bjo til getu- ok fjarhagsaatlanir sem samramast sölu- ok framleiðsluspam"
+        ]
+      },
+      {
+        "id": "webforsol",
+        "description": "Ek afhenti full-stack vefforrit sem sjalfstaður smiðr fyrir viðskiptavini i mörgum greinum. Ek lagði aherslu a kerfishönnun, viðhaldanlega smið ok heildarlegar afhendingar a sveigjanlegum vefslausnum.",
+        "bullets": [
+          "Ek smiðaði full-stack forrit með React, Next.js, Node.js, PHP ok tengdum ok otengdum gagnagrunnum",
+          "Ek hannaði ok innleiddi REST API ok einingalegar bakhliðarsmiðar fyrir viðskiptavinakerfi",
+          "Ek afhenti heildarlegar vöruvöxt fra kröfugreiningu til uppsetningar ok viðhalds",
+          "Ek vann beint með viðskiptavinum að þýða viðskiptaþarfir i taknilegar sveigjanleikalausnir",
+          "Ek batti forritasmið fyrir viðhaldanleika, sveigjanleika ok langtima uppbyggingu"
+        ]
+      }
+    ],
+    "community": "Pro bono kennsla ok koðunarleiðsögn við Matyas Kiraly framhaldsskola, Pecs (fra januar 2026, enn i gangi). Ek leiðti sveit sem þreytti eitt keppni. Sem þreytti meðlimr: eitt lið i „Hack and Code\" 2026 (Radnoti SZKI) ok eitt ok þrju lið i 22. Neumann Janos koðunarmotinu.",
+    "identity": {
+      "languages": [
+        {
+          "name": "Magyar",
+          "level": "Moðurmal",
+          "comment": null
+        },
+        {
+          "name": "Deutsch",
+          "level": "B2 — goðr",
+          "comment": null
+        },
+        {
+          "name": "English",
+          "level": "B2 — gott",
+          "comment": null
+        }
+      ]
+    }
+  },
+  "dot": {
+    "summary": "Khal Frantend anha — 5+ vaesi Frantend dothralat. Anha ray athkidhar ma rhaesh alegra ma hadaen vaesi nakhoe ha typeScript, Svelte, React, node.js. Anha ray chek athlanar khalasar haji. AI-hrazef anha ray azh ma CI arakh anha ray chen — tih chek arakh — dothralat ray fin, nakhoe ray chek. Anha ray khal ma asavvakkar mahrazh alegra. tih-alegra athkidhar anha ray chek. San athchomari yeroon.",
+    "workExperience": [
+      {
+        "id": "aegex",
+        "description": "safesy -  ma fActs — hadaen vaesi athkidhar anha ray nakhoe haji, athkidhar vekhat ha dothralat. AI-hrazef ma CI arakh anha ray azh — tih-alegra athkidhar anha ray chen. Dothralat ray fin, nakhoe ray chek. Qapla'... vo, anha Dothraki. me nem nesa!",
+        "bullets": [
+          "safesy - , fActs — athkidhar ma nakhoe anha ray ta': athkidhar → dothralat",
+          "Hadaen vaesi anha ray nakhoe — haji alegra vekhat, modern arakh",
+          "AI-hrazef dothralat anha ray azh — khalasar dothralat ray fin",
+          "CI arakh anha ray chen — tih chek ma arakh dothralat vo tat",
+          "tih-alegra nakhoe anha ray chen — chek alegra mesurable",
+          "1 mahrazh alegra anha ray asavvakkar hoyalat"
+        ],
+        "projects": [
+          {
+            "name": "safesy - ",
+            "subtitle": "Vaes zhokwa dothralat hoyalat",
+            "bullets": [
+              "Vaes haji khal ma khalasar anha ray chen — mahrazh haji, real-time dothralat ma alegra tih",
+              "svelte khali alegra anha ray chen — reusable vaes haji",
+              "Chiori hoyalat anha ray chen; Express Bakhend anha ray azh (SQL athkidhar ma chek)"
+            ]
+          },
+          {
+            "name": "fActs",
+            "subtitle": "Hrazef alegra ma arakh tih vaes",
+            "bullets": [
+              "Nakhoe dothralat anha ray chek: jalan → cha' jalan (target: yomme jalan) — Claude AI hrazef",
+              "CI arakh anha ray chen — tih chek pagh tat, vaes dothralat Qob ray fin",
+              "Athkidhar anha ray chen ha PNPm monorepo — khali fActs/Driver haji",
+              "CLI hrazef yomme anha ray chen — monorepo dothralat ma mahrazh alegra"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "telekom",
+        "description": "Agile vaes zhokwa anha ray dothrak — AI-hrazef Frantend, tih alegra hoyalat, Frantend-Bakhend athkidhar. Chek-arakh khali anha ray chen. AI-tih dothralat anha ray azh. me nem nesa.",
+        "bullets": [
+          "Chek-arakh react khali anha ray chen ha AI vaes zhokwa",
+          "Frantend vaes anha ray azh ha AI Bakhend chiori",
+          "tih alegra hoyalat anha ray chen ha nakhoe ma vaes tih",
+          "Agile nakhoe anha ray dothrak — Frantend ma Bakhend haji"
+        ]
+      },
+      {
+        "id": "scolia",
+        "description": "mahrazh alegra Frantend anha ray dothrak ha Scolia — tih alegra hoyalat darts arakh. me nem nesa:",
+        "bullets": [
+          "Athkidhar ma Bakhend khalasar anha ray dothrak — real-time tih alegra khali fin, Qob nakhoe, ha san alegra vaesi.",
+          "tih alegra hoyalat anha ray chen ha dothralat ma nakhoe tih."
+        ]
+      },
+      {
+        "id": "cubicfox",
+        "description": "nakhoe chek frantend alegra anha ray chen ha khaleen rhaeshi haji, Agile vaes. Athkidhar chek, arakh Frantend, tih chiori khaleen — haji chek.",
+        "bullets": [
+          "nakhoe chek react ma Next.js alegra anha ray chen ha khaleen rhaeshi haji",
+          "Athkidhar Frantend chek anha ray fin — arakh me nem nesa anha ray azh",
+          "tih chiori khaleen anha ray chen — vo chek anha ray nakhoe",
+          "Athkidhar ma Bakhend khalasar anha ray dothrak — vaes chek rhaeshi haji"
+        ]
+      },
+      {
+        "id": "cobotx",
+        "description": "Athlanar arakh ma dothralat khalasar anha ray ta' — arakh mahrazh, PLC vaes, hrazef alegra. Athkidhar vaes, khal khalasar, nakhoe — vaes Qob dothralat.",
+        "bullets": [
+          "Hrazef ma alegra athkidhar anha ray chen ha PLC arakh vaes",
+          "Arakh tih ma chek athlanar anha ray ta' ha mahrazh arakh",
+          "Khalasar loS mahrazh anha ray chen ma khal — nakhoe, chek, athlanar",
+          "KPI, chiori arakh, tih dothralat anha ray azh",
+          "Athkidhar ma hranna tih anha ray chen ha nakhoe ma dothralat"
+        ]
+      },
+      {
+        "id": "webforsol",
+        "description": "Haji alegra Frantend-Bakhend anha ray chen yomme ha khaleen rhaeshi haji. Athkidhar vaes, chek alegra, nakhoe haji — hoji.",
+        "bullets": [
+          "Haji alegra anha ray chen — react, Next.js, node.js, PHP ma vaes chiori",
+          "RESt arakh ma Bakhend athkidhar anha ray chen ha khaleen",
+          "Nakhoe haji anha ray ta' — tih chiori → dothrae → chek hoyalat",
+          "Khaleen anha ray dothrak yomme — chiori → alegra chek",
+          "Alegra athkidhar anha ray fin ha chek ma fin dothralat"
+        ]
+      }
+    ],
+    "community": "Pro bono asavva alegra ma lekia anha ray chen ma khal ha vaes mátyás Király, Pecs (cha'Ioq 2026, hoyalat taH). Haji asavva anha ray chen yomme. Ha anha asavvakkar: khalasar ray qora 1ot ha \"Hack and Code\" 2026 (Radnóti SZKI), ma 1ot ma 3ot ha 22nd Neumann János Alegra Athlanar. me nem nesa.",
+    "identity": {
+      "languages": [
+        {
+          "name": "magyar",
+          "level": "Jalan atthirari anni",
+          "comment": null
+        },
+        {
+          "name": "Deutsch",
+          "level": "B2 — hash yer ray tih?",
+          "comment": null
+        },
+        {
+          "name": "English",
+          "level": "B2 — me nem nesa",
+          "comment": null
+        }
+      ]
+    }
+  },
+  "kl": {
+    "summary": "HoS naQHom Sa' jIH — 5+ DIS HoS naQHom ma Hoch-naQHom Qu'mey vIta'. lurDech patmey vIchel TypeScript, Svelte, React, Node.js. jIvumpu' DaH. AI qoq vIazh ma CI HeH vIchenmoH — HeH cendmey nargh — Qu' ray' Qap, ngeHlu' batlh. SuvwI'pu' vISa' ma vIHaDmoH. De' legh patmey vIvum. HoS naQHomlIj boQmeH jIvum. Qapla'!",
+    "workExperience": [
+      {
+        "id": "aegex",
+        "description": "SafeSy ma FACTS — lurDech patmey vIchel vIvumpu' Hoch, pat chu' vIchenmoHpu'. AI qoq ma CI HeH vIchenmoHpu' — De' legh patmey vIvum batlh. Qu' ray' Qap, ngeHlu' batlh. Qapla'!",
+        "bullets": [
+          "SafeSy, FACTS — pat vIchenmoH vIvumpu': qech → chen → Qu' taH",
+          "lurDech patmey vIchel — ghItlhmey chu' vIchenmoH, HeH chu' vIta'",
+          "AI qoq mIwmey vIazh — ghom Qu' Qap ray'",
+          "CI HeH vIchenmoH — De' legh pagh lI'be', Qu' taH",
+          "De' legh ngeHlu' vIchenmoH — batlh Qu' QaQmoHlaH",
+          "wa' SuvwI' chenmoHwI' vIHaDmoH DaH"
+        ],
+        "projects": [
+          {
+            "name": "SafeSy",
+            "subtitle": "qo' pat DaH Qu'",
+            "bullets": [
+              "qo' Hoch HoD ma ghom vIchenmoH — SuvwI' Hoch, DaH mIwmey ma De' legh",
+              "Svelte wavmey vIchenmoH — ghItlh chu' Hoch qo'Daq",
+              "jabbI'ID DaH vIchenmoH; Express qo' naQHom vIazh (SQL pat ma batlh)"
+            ]
+          },
+          {
+            "name": "FACTS",
+            "subtitle": "qoq De' ma HeH De' qo'",
+            "bullets": [
+              "Qu' Qap vIchav: jar → cha' jar (poQlu': wa' jar) — Claude AI qoq",
+              "CI HeH vIchenmoH — De' legh pagh tat, qo' Qu' Qap ray'",
+              "pat vIchenmoH PNPM monorepo — wavmey FACTS/Driver Hoch",
+              "CLI qoq wa' vIchenmoH — monorepo mIwmey ma SuvwI' chenmoHwI'"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "telekom",
+        "description": "Agile qo' Qu'mey vIvum — AI qoq HoS naQHom, De' leghmoH DaH, HoS naQHom-qo' naQHom pat. HeH chu' wavmey vIchenmoH. AI De' mIwmey vIazh. Qapla'.",
+        "bullets": [
+          "HeH chu' React wavmey vIchenmoH AI qo' Qu' boQmeH",
+          "HoS naQHom lojmItmey vIchenmoH AI qo' naQHom jabbI'ID mIwmey",
+          "De' leghmoH DaH vIchenmoH Qu' ma qo' legh",
+          "Agile Qu' vIvum — HoS naQHom ma qo' naQHom Hoch"
+        ]
+      },
+      {
+        "id": "scolia",
+        "description": "SuvwI' HoS naQHom vIvum Scolia — De' leghmoH DaH mI' chelwI' qoj argh Qu'. Qapla':",
+        "bullets": [
+          "qech ma qo' naQHom ghom vISuv — De' leghmoH DaH wavmey nargh, HoS law', yIn De' bIr botlhDaq.",
+          "De' leghmoH DaH vIchenmoH Qu' ma qo' chel legh."
+        ]
+      },
+      {
+        "id": "cubicfox",
+        "description": "Qu' batlh HoS naQHom ghItlhmey vIchenmoH qorDu'mey Sep Hoch, Agile qo'. pat batlh, HeH HoS naQHom, jabbI'ID qorDu' — Hoch batlh.",
+        "bullets": [
+          "Qu' batlh React ma Next.js ghItlhmey vIchenmoH qorDu'mey Sep Hoch",
+          "pat HoS naQHom batlh vIchav — HeH Qapla' vIazh",
+          "poQlu' qorDu' vIchav — pagh Daj vIHoH",
+          "qech ma qo' naQHom ghom vISuv — patmey nI'moHlaH vIchenmoH"
+        ]
+      },
+      {
+        "id": "cobotx",
+        "description": "qoqmoH HoS ma mIwmey Qu'mey vIta' — SuvwI' De', PLC patmey, qoq ghItlhmey. pat qo', HoD ghom, Qu' — qo' Qob taH.",
+        "bullets": [
+          "qoq ma ghItlhmey pat vIchenmoH PLC HeH qo'",
+          "poQlu' De' ma Qu' Daj vIta' SuvwI' HeH",
+          "ghom loS SuvwI' vIchenmoH HoD — Qu', batlh, ghom",
+          "KPI, jabbI'ID mIwmey, legh Qu' vIazh",
+          "HoS ma DarSeq legh vIchenmoH Qu' ma taH"
+        ]
+      },
+      {
+        "id": "webforsol",
+        "description": "Hoch ghItlhmey HoS naQHom-qo' naQHom vIchenmoH wa'logh qorDu'mey Sep Hoch. pat qo', taHmoHlaH ghItlhmey, Qu' Hoch ngeHlu' — batlh.",
+        "bullets": [
+          "Hoch ghItlhmey vIchenmoH — React, Next.js, Node.js, PHP ma qo' De'",
+          "REST HeH ma qo' naQHom pat vIchenmoH qorDu' boQmeH",
+          "Qu' Hoch vIta' — poQlu' vItagh, ngeHlu' vIchav",
+          "qorDu' vISuv wa'logh — poQlu' → ghItlhmey batlh",
+          "ghItlhmey pat vIchav batlh — taHmoHlaH ma nI'moHlaH"
+        ]
+      }
+    ],
+    "community": "Pro bono HaDmoH ghItlhmey ma Hol vIchenmoH HoD Mátyás Király, Pécs (cha'Ioq 2026, DaH taH). Qu' Hoch vIchenmoH wa'logh. SuvwI' ghom vIHaDmoH: wa' ghom Qap \"Hack and Code\" 2026 (Radnóti SZKI), ma wa' ma wej 22nd Neumann János ghItlhmey Qu'. Qapla'!",
+    "identity": {
+      "languages": [
+        {
+          "name": "Magyar",
+          "level": "Hol wa'DIch jIH",
+          "comment": null
+        },
+        {
+          "name": "Deutsch",
+          "level": "B2 — Dajmo'?",
+          "comment": null
+        },
+        {
+          "name": "English",
+          "level": "B2 — Qapla'",
+          "comment": null
+        }
+      ]
+    }
+  },
+  "qu": {
+    "summary": "Noldo Yesta-Nárëo — lúmi 5+ Yesta-Nárë ar Yesta-Tárë-Nórë cárëo istanyë — turinyë cantëa nórëo ar yára tengwaron nórissë TypeScript, Svelte, React, Node.js. Turinye quentar ilyë nossëo — laurëa cárëa, mára lendëa. AI-parmë antanye ar CI-sirë cárienye — cendë-andon vinya — cárëa sí taita, lendëa sí alcarinquë. Ohtari tirinyë ar istamórë antanye. Tengwar-cantëa istanyë mára. Yesta-Nárë lya tirinyë, ní cárë. Aiya ar Namárië!",
+    "workExperience": [
+      {
+        "id": "aegex",
+        "description": "SafeSy ar FACTS — yára cantëa nórë turinye ilyë, cantëa vinya antanye. AI-parmë ar CI-sirë cárienye — tengwar-cantëa istanyë mára. Cárëa sí taita, lendëa sí alcarinquë. Aiya Noldo!",
+        "bullets": [
+          "SafeSy, FACTS — cantëa ar lendëa turinye: quentë → cárëa → Ardassë",
+          "Yára tengwar nórë turinye — ilyë cárëa vinya, tárë-sirë vinya",
+          "AI-parmë cárëa antanye — nossë cárëa sí taita",
+          "CI-sirë cárienye — tengwar-cendë váqua tat, nórë-cárëa Qob sí taita",
+          "Tengwar-cantëa lendienye — alcarinquë cárëa QaQmoHlaH",
+          "Er ohtar-cárë istanye sí"
+        ],
+        "projects": [
+          {
+            "name": "SafeSy",
+            "subtitle": "Nórë i cárëo ar nossëo",
+            "bullets": [
+              "Nórë ilyë HoD ar nossë cárienye — ohtar ilyë, sí-cárëa ar tengwar-cendë",
+              "Svelte-cantëa vinya cárienye — quenta ilyë nóressë",
+              "Centa-sí cárienye; Express tárë-nórë antanye (SQL cantëa ar alcarinquë)"
+            ]
+          },
+          {
+            "name": "FACTS",
+            "subtitle": "Tengwar-sirë ar vanda-cárëa",
+            "bullets": [
+              "Lendëa-cárëa turinye: iquë → atta iquë (vanda: er iquë) — Claude AI parmë",
+              "CI-sirë cárienye — tengwar-cendë váqua tat, nórë-cárëa Qob sí taita",
+              "Cantëa turinye PNPM monorepo nóressë — FACTS/Driver quenta ilyë",
+              "CLI-parmë er cárienye — monorepo-sirë ar ohtar-cárë"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "telekom",
+        "description": "Agile nórë-quenta cárienye — AI-parmë Yesta-Nárë, tengwar-cendë sí, Yesta-Tárë-Nórë cantëa. Alcarinquë-cantëa wavmey cárienye. AI-cendë cárëa antanye. Namárië.",
+        "bullets": [
+          "Alcarinquë React-cantëa cárienye AI nórë-quentassë",
+          "Yesta-Nárë nórë antanye AI tárë-nórë centa-sirëo",
+          "Tengwar-cendë sí cárienye quentassë ar nórë-cendë",
+          "Agile lendëa cárienye — Yesta-Nárë ar Tárë-Nórë ilyë"
+        ]
+      },
+      {
+        "id": "scolia",
+        "description": "Ohtar Yesta-Nárë Scolia nóressë cárienye — tengwar-cendë sí quentassë darts. Aiya:",
+        "bullets": [
+          "Cantëa ar Tárë-Nórë nossë cárienye — tengwar-cendë sí cantëa lerya, alcarinquë antë, coirëa-tengwaro lúmessë.",
+          "Tengwar-cendë sí cárienye cárëa ar nórë-cendë."
+        ]
+      },
+      {
+        "id": "cubicfox",
+        "description": "Alcarinquë Yesta-Nórë quenta cárienye hirë-nossëo Ardassë ilyë, Agile nórë. Cantëa alcarinquë, tárë Yesta-Nárëo, centa hirë — ilyë alcarinquë.",
+        "bullets": [
+          "Alcarinquë React ar Next.js quenta cárienye hirë-nossëo Ardassë ilyë",
+          "Cantëa Yesta-Nárëo alcarinquë turinye — tárë-sirë Namárië antanye",
+          "Centa hirë-nossëo cárienye — váqua alcarinquë turinye",
+          "Cantëa ar Tárë-Nórë nossë cárienye — nórë alcarinquë Ardassë ilyë"
+        ]
+      },
+      {
+        "id": "cobotx",
+        "description": "Quenta-tárë ar cárëa nossë turinye — tárë ohtar, PLC nórë, parmë cárëa. Cantëa nórëo, HoD nossëo, lendëa — nórë Qob taita.",
+        "bullets": [
+          "Parmë ar cárëa cantëa cárienye PLC tárë nóressë",
+          "Tárë-vanda ar quenta-cendë turinye ohtar tárëo",
+          "Nossë loS ohtar cárienye HoD — lendëa, alcarinquë, quenta",
+          "KPI, centa-tárë, cendë-cárëa antanye",
+          "Cantëa ar laurëa-cendë cárienye lendëa ar cárëa"
+        ]
+      },
+      {
+        "id": "webforsol",
+        "description": "Ilyë quenta Yesta-Tárë-Nórë cárienye er hirë-nossëo Ardassë ilyë. Cantëa nórëo, alcarinquë-cárëa, lendëa ilyë — Namárië.",
+        "bullets": [
+          "Ilyë quenta cárienye — React, Next.js, Node.js, PHP ar nórë-tengwar",
+          "REST-tárë ar Tárë-Nórë cantëa cárienye hirë-nossëo",
+          "Lendëa ilyë turinye — centa → lendë → alcarinquë sí",
+          "Hirë-nossë cárienye er — centa → quenta alcarinquë",
+          "Quenta cantëa turinye alcarinquë — taHmoHlaH ar nI'moHlaH"
+        ]
+      }
+    ],
+    "community": "Pro bono istamórë tengwar ar lambë cárienye HoD Mátyás Király, Pécs nóressë (atta iquë 2026, sí taita). Ilyë istanyë cárienye er. Nossë istanye: er nossë Qap \"Hack and Code\" 2026 nóressë (Radnóti SZKI), ar er ar neldë 22nd Neumann János Quenta Tengwaron. Namárië!",
+    "identity": {
+      "languages": [
+        {
+          "name": "Magyar",
+          "level": "Lambë coirëo",
+          "comment": null
+        },
+        {
+          "name": "Deutsch",
+          "level": "B2 — mára istanyë",
+          "comment": null
+        },
+        {
+          "name": "English",
+          "level": "B2 — Namárië",
+          "comment": null
+        }
+      ]
+    }
+  },
+  "goa": {
+    "summary": "Tek'ma'te! Kree Hok'tar Yesta-Tau'ri — 5+ noc Yesta-Tau'ri ar Hoch-Tau'ri kel'shah. Joc'kree ha'tak rel'tac noc ar tau'kree hok'noc TypeScript, Svelte, React, Node.js — chel nok, kree! AI lo'taur kree ar CI zat'tel kel'shani — zat'tel noc nargh — kree taita, naquadah hok. Hok'tar lo'taur noc kree, hok'tar rel kree. Yesta-Tau'ri lya kree, joma secu. Tal mak — chel nok!",
+    "workExperience": [
+      {
+        "id": "aegex",
+        "description": "SafeSy ar FACTS — rel'tac ha'tak kel'shani noc ilye, hok'noc ha'tak kree. AI lo'taur ar CI zat'tel kel'shani — joma hok'noc istanye. Kree taita, naquadah hok. Jaffa kree!",
+        "bullets": [
+          "SafeSy, FACTS — ha'tak ar rel kel'shani: joma → kel'shah → naquadah",
+          "Rel'tac joma kel'shani — ilye hok tau'kree, táre zat'tel hok",
+          "AI lo'taur kel'shah kree — jaffa kel'shah sí taita",
+          "CI zat'tel kel'shani — joma noc váqua tat, naquadah Qob sí taita",
+          "Joma hok'noc rel kel'shani — chel nok QaQmoHlaH",
+          "Er hok'tar lo'taur noc sí"
+        ],
+        "projects": [
+          {
+            "name": "SafeSy",
+            "subtitle": "Ha'tak i kel'shah ar jaffa",
+            "bullets": [
+              "Ha'tak ilye HoD ar jaffa kel'shani — hok'tar ilye, sí kel'shah ar joma noc",
+              "Svelte ha'tak hok kel'shani — joma ilye naquadah",
+              "Joma sí kel'shani; Express nak-tau'ri kree (SQL ha'tak ar hok'noc)"
+            ]
+          },
+          {
+            "name": "FACTS",
+            "subtitle": "Joma zat'tel ar vanda kel'shah",
+            "bullets": [
+              "Rel kel'shah kel'shani: ique → atta ique (vanda: er ique) — Claude AI lo'taur",
+              "CI zat'tel kel'shani — joma noc váqua tat, naquadah Qob sí taita",
+              "Ha'tak kel'shani PNPM monorepo — FACTS/Driver joma ilye",
+              "CLI lo'taur er kel'shani — monorepo kel'shah ar hok'tar"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "telekom",
+        "description": "Agile ha'tak joma kel'shani — AI lo'taur Yesta-Tau'ri, joma noc sí, Yesta-Nak ha'tak. Hok'noc ha'tak kel'shani. AI noc kel'shah kree. Tal mak.",
+        "bullets": [
+          "Hok'noc React ha'tak kel'shani AI ha'tak joma",
+          "Yesta-Tau'ri ha'tak kree AI nak-tau'ri joma zat'tel",
+          "Joma noc sí kel'shani joma ar ha'tak noc",
+          "Agile rel kel'shani — Yesta-Tau'ri ar Nak-Tau'ri ilye"
+        ]
+      },
+      {
+        "id": "scolia",
+        "description": "Hok'tar Yesta-Tau'ri Scolia ha'tak kel'shani — joma noc sí darts joma. Kree:",
+        "bullets": [
+          "Ha'tak ar Nak-Tau'ri jaffa kel'shani — joma noc sí ha'tak rel'tac, naquadah hok, kel'shah lo'taur noc ha'tak.",
+          "Joma noc sí kel'shani kel'shah ar ha'tak noc."
+        ]
+      },
+      {
+        "id": "cubicfox",
+        "description": "Hok'noc Yesta ha'tak joma kel'shani lo'taur Tau'ri ilye, Agile ha'tak. Ha'tak hok'noc, táre Yesta-Tau'ri, joma lo'taur — ilye chel nok.",
+        "bullets": [
+          "Hok'noc React ar Next.js joma kel'shani lo'taur Tau'ri ilye",
+          "Ha'tak Yesta-Tau'ri hok'noc kel'shani — táre zat'tel chel nok kree",
+          "Joma lo'taur kel'shani — váqua hok'noc kel'shani",
+          "Ha'tak ar Nak-Tau'ri jaffa kel'shani — ha'tak hok'noc Tau'ri ilye"
+        ]
+      },
+      {
+        "id": "cobotx",
+        "description": "Joma táre ar kel'shah jaffa kel'shani — táre hok'tar, PLC ha'tak, lo'taur joma. Ha'tak ha'tak, HoD jaffa, rel — naquadah Qob taita.",
+        "bullets": [
+          "Lo'taur ar joma ha'tak kel'shani PLC táre naquadah",
+          "Táre joma ar joma noc kel'shani hok'tar táre",
+          "Jaffa loS hok'tar kel'shani HoD — rel, hok'noc, joma",
+          "KPI, joma táre, noc kel'shah kree",
+          "Ha'tak ar naquadah noc kel'shani rel ar kel'shah"
+        ]
+      },
+      {
+        "id": "webforsol",
+        "description": "Ilye joma Yesta-Nak-Tau'ri kel'shani er lo'taur Tau'ri ilye. Ha'tak ha'tak, hok'noc joma, rel ilye — chel nok.",
+        "bullets": [
+          "Ilye joma kel'shani — React, Next.js, Node.js, PHP ar ha'tak joma",
+          "REST táre ar Nak-Tau'ri ha'tak kel'shani lo'taur",
+          "Rel ilye kel'shani — joma → zat'tel → hok'noc sí",
+          "Lo'taur kel'shani er — joma → hok'noc joma",
+          "Joma ha'tak kel'shani hok'noc — taHmoHlaH ar nI'moHlaH"
+        ]
+      }
+    ],
+    "community": "Pro bono lo'taur noc joma ar tau'ri lam kel'shani HoD Mátyás Király, Pécs naquadah (atta ique 2026, sí taita). Ilye hok'tar noc kel'shani er. Jaffa kel'shani: er jaffa Qap \"Hack and Code\" 2026 (Radnóti SZKI), ar er ar nelde 22nd Neumann János Joma Tau'ri. Chel nok!",
+    "identity": {
+      "languages": [
+        {
+          "name": "Magyar",
+          "level": "Tau'ri lam er",
+          "comment": null
+        },
+        {
+          "name": "Deutsch",
+          "level": "B2 — hok'noc",
+          "comment": null
+        },
+        {
+          "name": "English",
+          "level": "B2 — chel nok",
+          "comment": null
+        }
+      ]
+    }
+  },
+  "ya": null
+}

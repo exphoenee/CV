@@ -36,18 +36,48 @@ function generateWelcomeContent(data) {
   if (!id) return '';
 
   var contacts = id.contacts || [];
-  var langHtml = (id.languages || []).map(function(l) {
-    return '  <li><strong>' + esc(l.name) + ':</strong> ' + esc(l.level) + '</li>';
-  }).join('\n');
+  var langHtml = (id.languages || [])
+    .map(function (l) {
+      return '  <li><strong>' + esc(l.name) + ':</strong> ' + esc(l.level) + '</li>';
+    })
+    .join('\n');
 
   return `
 <h3>${esc(id.name)}</h3>
 <p><strong>Role:</strong> ${esc(id.role)}</p>
 <p><strong>Location:</strong> ${esc(id.location)}</p>
-${contacts.filter(function(c) { return c.url && c.url.indexOf('mailto:') === 0; }).map(function(c) { return '<p><strong>Email:</strong> ' + esc(c.label) + '</p>'; }).join('\n')}
-${contacts.filter(function(c) { return c.url && c.url.indexOf('tel:') === 0; }).map(function(c) { return '<p><strong>Phone:</strong> ' + esc(c.label) + '</p>'; }).join('\n')}
-${contacts.filter(function(c) { return c.url && c.url.indexOf('github') > -1; }).map(function(c) { return '<p><strong>GitHub:</strong> ' + esc(c.label) + '</p>'; }).join('\n')}
-${contacts.filter(function(c) { return c.url && c.url.indexOf('linkedin') > -1; }).map(function(c) { return '<p><strong>LinkedIn:</strong> ' + esc(c.label) + '</p>'; }).join('\n')}
+${contacts
+  .filter(function (c) {
+    return c.url && c.url.indexOf('mailto:') === 0;
+  })
+  .map(function (c) {
+    return '<p><strong>Email:</strong> ' + esc(c.label) + '</p>';
+  })
+  .join('\n')}
+${contacts
+  .filter(function (c) {
+    return c.url && c.url.indexOf('tel:') === 0;
+  })
+  .map(function (c) {
+    return '<p><strong>Phone:</strong> ' + esc(c.label) + '</p>';
+  })
+  .join('\n')}
+${contacts
+  .filter(function (c) {
+    return c.url && c.url.indexOf('github') > -1;
+  })
+  .map(function (c) {
+    return '<p><strong>GitHub:</strong> ' + esc(c.label) + '</p>';
+  })
+  .join('\n')}
+${contacts
+  .filter(function (c) {
+    return c.url && c.url.indexOf('linkedin') > -1;
+  })
+  .map(function (c) {
+    return '<p><strong>LinkedIn:</strong> ' + esc(c.label) + '</p>';
+  })
+  .join('\n')}
 <hr/>
 <h3>Languages</h3>
 <ul>
@@ -72,11 +102,11 @@ function generateExpContent(exp) {
   content += '<p><strong>Title:</strong> ' + title + '</p>\n';
 
   if (exp.projects) {
-    exp.projects.forEach(function(proj) {
+    exp.projects.forEach(function (proj) {
       content += '<hr/>\n';
       content += '<h3>' + esc(proj.name) + ' (' + esc(proj.subtitle || '') + ')</h3>\n';
       content += '<ul>\n';
-      (proj.bullets || []).forEach(function(b) {
+      (proj.bullets || []).forEach(function (b) {
         content += '  <li>' + esc(b) + '</li>\n';
       });
       content += '</ul>\n';
@@ -90,20 +120,20 @@ function generateExpContent(exp) {
     if (Array.isArray(exp.bullets)) {
       bullets = exp.bullets;
     } else if (exp.bullets && typeof exp.bullets === 'object') {
-      Object.keys(exp.bullets).forEach(function(key) {
+      Object.keys(exp.bullets).forEach(function (key) {
         if (Array.isArray(exp.bullets[key])) {
           bullets = bullets.concat(exp.bullets[key]);
         }
       });
     }
 
-    bullets.forEach(function(b) {
+    bullets.forEach(function (b) {
       content += '  <li>' + esc(b) + '</li>\n';
     });
 
     // Add game-specific highlights
     if (exp.game && exp.game.highlights) {
-      exp.game.highlights.forEach(function(h) {
+      exp.game.highlights.forEach(function (h) {
         content += '  <li>' + esc(h) + '</li>\n';
       });
     }
@@ -114,9 +144,11 @@ function generateExpContent(exp) {
   // References
   if (exp.refs && exp.refs.length > 0) {
     content += '<p><strong>Reference(s):</strong> ';
-    content += exp.refs.map(function(r) {
-      return '<a href="' + esc(r.url) + '" target="_blank">' + esc(r.label) + '</a>';
-    }).join(', ');
+    content += exp.refs
+      .map(function (r) {
+        return '<a href="' + esc(r.url) + '" target="_blank">' + esc(r.label) + '</a>';
+      })
+      .join(', ');
     content += '</p>\n';
   }
 
@@ -146,7 +178,7 @@ function generateEducationContent(data) {
   var content = '\n';
   content += '<h3>' + esc(data.education.institution || 'Education') + '</h3>\n';
   content += '<ul>\n';
-  (data.education.degrees || []).forEach(function(d) {
+  (data.education.degrees || []).forEach(function (d) {
     content += '  <li><strong>' + esc(d.title) + '</strong> (' + esc(d.years) + ')</li>\n';
   });
   content += '</ul>\n';
@@ -163,8 +195,9 @@ function generateEducationContent(data) {
     content += '<hr/>\n';
     content += '<h3>Hobby Projects</h3>\n';
     content += '<ul>\n';
-    data.hobbyProjects.forEach(function(p) {
-      content += '  <li><a href="' + esc(p.url) + '" target="_blank">' + esc(p.name) + '</a></li>\n';
+    data.hobbyProjects.forEach(function (p) {
+      content +=
+        '  <li><a href="' + esc(p.url) + '" target="_blank">' + esc(p.name) + '</a></li>\n';
     });
     content += '</ul>\n';
   }
@@ -185,12 +218,12 @@ function buildStations(data) {
     y: welcomeGame.y,
     title: welcomeGame.description,
     tech: welcomeGame.tech,
-    content: generateWelcomeContent(data)
+    content: generateWelcomeContent(data),
   });
 
   // 2. Work experience stations (in order, using game positions)
   if (data && data.workExperience) {
-    data.workExperience.forEach(function(exp) {
+    data.workExperience.forEach(function (exp) {
       if (exp.game) {
         stations.push({
           id: exp.id,
@@ -198,7 +231,7 @@ function buildStations(data) {
           y: exp.game.y,
           title: exp.game.description,
           tech: exp.game.tech,
-          content: generateExpContent(exp)
+          content: generateExpContent(exp),
         });
       }
     });
@@ -212,7 +245,7 @@ function buildStations(data) {
     y: eduGame.y,
     title: eduGame.description,
     tech: eduGame.tech,
-    content: generateEducationContent(data)
+    content: generateEducationContent(data),
   });
 
   return stations;

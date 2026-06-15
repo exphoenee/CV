@@ -1,11 +1,11 @@
 ---
-title: "LinkedIn Volunteering"
-seniority: "N/A"
+title: 'LinkedIn Volunteering'
+seniority: 'N/A'
 period:
-  from: "2026-02"
+  from: '2026-02'
   to: null
-profession: "software"
-type: "reference"
+profession: 'software'
+type: 'reference'
 domain: null
 leader: false
 skills: []
@@ -14,6 +14,7 @@ skills: []
 # Volunteering
 
 ## IT & Programming Club Mentor
+
 **Mátyás Király Utcai Általános Iskola, Pécs** · Education  
 February 2026 – Present
 

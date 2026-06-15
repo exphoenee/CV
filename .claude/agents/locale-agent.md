@@ -19,6 +19,7 @@ You are called by `/locale-check --fix` or directly when a developer adds a new 
 ## Step 0 — Parse inputs
 
 Read the calling context to determine:
+
 - `NEW_KEYS`: list of key names to add (e.g. `["ariaNewButton", "btnTimelineLabel"]`)
 - `EN_VALUES`: the corresponding English values from `en.js`
 - `TARGET_FILES`: which locale files to update (default: all 11 non-en files; may be a subset)
@@ -36,6 +37,7 @@ Note the keys that appear immediately before and after each new key — this det
 where to insert in the other page files.
 
 If any key in `NEW_KEYS` is NOT in `en-page.js`:
+
 - ❌ ERROR: "A(z) 'keyName' kulcs nem található en-page.js-ben — add hozzá előbb az en-page.js-hez."
 - Stop.
 
@@ -47,13 +49,13 @@ For each key in `NEW_KEYS`, determine the value to use per language:
 
 ### Real languages: translate the en.js value
 
-| Code | Language | Approach |
-|------|----------|----------|
+| Code | Language  | Approach             |
+| ---- | --------- | -------------------- |
 | `hu` | Hungarian | Accurate translation |
-| `de` | German | Accurate translation |
-| `fr` | French | Accurate translation |
-| `es` | Spanish | Accurate translation |
-| `it` | Italian | Accurate translation |
+| `de` | German    | Accurate translation |
+| `fr` | French    | Accurate translation |
+| `es` | Spanish   | Accurate translation |
+| `it` | Italian   | Accurate translation |
 
 ### Fictional languages: style-based adaptation
 
@@ -61,14 +63,14 @@ For each fictional language file, read 5–10 neighboring keys (the keys immedia
 and after the insertion point) to understand the style pattern of that file.
 Then create a stylistically consistent value:
 
-| Code | Language | Style notes |
-|------|----------|-------------|
-| `asg` | Asgardian | Noble, archaic English-adjacent, old Norse feel |
-| `dot` | Dothraki | Short, guttural, consonant-heavy words |
-| `kl` | Klingon | Hard consonants, apostrophes, aggressive tone — e.g. `"jabbI'ID legh"` |
-| `qu` | Quenya | Elvish, flowing vowels, poetic — e.g. `"Centapoldo cendë"` |
-| `goa` | Goa'uld | Pompous, commanding, short phrases — e.g. `"Kree! Tal shak"` |
-| `ya` | Yautja | Predator language, clicks/guttural, sparse — e.g. `"C'jit kahdé"` |
+| Code  | Language  | Style notes                                                            |
+| ----- | --------- | ---------------------------------------------------------------------- |
+| `asg` | Asgardian | Noble, archaic English-adjacent, old Norse feel                        |
+| `dot` | Dothraki  | Short, guttural, consonant-heavy words                                 |
+| `kl`  | Klingon   | Hard consonants, apostrophes, aggressive tone — e.g. `"jabbI'ID legh"` |
+| `qu`  | Quenya    | Elvish, flowing vowels, poetic — e.g. `"Centapoldo cendë"`             |
+| `goa` | Goa'uld   | Pompous, commanding, short phrases — e.g. `"Kree! Tal shak"`           |
+| `ya`  | Yautja    | Predator language, clicks/guttural, sparse — e.g. `"C'jit kahdé"`      |
 
 ---
 

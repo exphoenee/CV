@@ -5,16 +5,20 @@ Each job application version is saved as a **folder** under `cv-versions/`.
 ## Folder naming
 
 ```
-VERSION_BASE   = DATE_COMPANY_SLUG_TITLE_SLUG
+VERSION_BASE   = DATE_TIME_COMPANY_SLUG_TITLE_SLUG
 VERSION_FOLDER = cv-versions/VERSION_BASE[-vN]
 ```
 
 - `DATE` = today YYYY-MM-DD
+- `TIME` = HHMM (24-hour format, always included for uniqueness)
 - `COMPANY_SLUG` = JD_COMPANY → lowercase, spaces→hyphens, special chars removed; `"unknown"` if unknown
 - `TITLE_SLUG` = JD_TITLE → lowercase, spaces→hyphens, special chars removed
 - `-vN` suffix added only when a folder for the same base already exists (v2, v3, …)
 
-Example: `cv-versions/2026-06-13_acme-corp_senior-frontend-engineer/`
+Examples:
+
+- Manual: `cv-versions/2026-06-15_0915_manual/`
+- Job: `cv-versions/2026-06-15_0915_acme-corp_senior-frontend-engineer/`
 
 ## APP_ID — application identifier
 
@@ -22,6 +26,7 @@ Example: `cv-versions/2026-06-13_acme-corp_senior-frontend-engineer/`
 `2026-06-13_acme-corp_senior-frontend-engineer` or `..._senior-frontend-engineer-v2`.
 
 This single id ties together, for one application:
+
 - the snapshot folder `cv-versions/APP_ID/`
 - the formatted job description `cv-versions/APP_ID/job-description.md`
 - the `// @job-application: APP_ID` marker stamped into the live `scripts/cv-data.js` and every `scripts/locales/*.js`
@@ -32,7 +37,7 @@ This single id ties together, for one application:
 ```
 VERSION_FOLDER/
   cv-data.js           ← optimized CV data (see header format below)
-  locale-content.json  ← 11 locale content snapshots (see format below)
+  locales/             ← full scripts/locales/ directory copied as-is (12 JS files)
   job-description.md    ← formatted job description this version was made for (job-apply mode only)
   cover-letter-en.md   ← English cover letter (optional, written by cover-letter-agent)
   cover-letter-hu.md   ← Hungarian cover letter (optional, written by cover-letter-agent)
@@ -55,7 +60,7 @@ Prepend this comment block to the full content of `scripts/cv-data.js`:
  * ATS match:     OVERALL_SCORE% (REQUIRED_SCORE% required · PREFERRED_SCORE% preferred)
  * HR Review:     review/DATE_COMPANY_SLUG_hr-review.md (if written)
  * Changes:       N modifications (summary · skill order · N bullet rephrases)
- * Locale:        locale-content.json — paste content fields into scripts/locales/<lang>.js to restore
+ * Locale:        locales/ directory — full locale files included
  * ============================================================
  * Point-in-time snapshot for the above position.
  * Do not import directly — use scripts/cv-data.js.
@@ -64,32 +69,39 @@ Prepend this comment block to the full content of `scripts/cv-data.js`:
 
 ---
 
-## locale-content.json structure
+## locales/ directory structure
 
-Captures the `content` field from all 11 non-English locale files after translation.
+The complete `scripts/locales/` directory is copied as-is into the backup folder.
+All 12 locale files (hu.js, de.js, fr.js, es, it, asg, dot, kl, qu, goa, ya) are preserved
+in their **original JS format** — no JSON conversion, no content extraction.
 
-```json
-{
-  "_meta": {
-    "optimized_for": "JD_TITLE @ JD_COMPANY",
-    "date": "YYYY-MM-DD HH:MM",
-    "ats_match": "OVERALL_SCORE%",
-    "source": "scripts/locales/",
-    "restore": "Paste each language block back into scripts/locales/<lang>.js → content field."
-  },
-  "hu": { /* full content object from scripts/locales/hu.js */ },
-  "de": { /* ... */ },
-  "fr": { /* ... */ },
-  "es": { /* ... */ },
-  "it": { /* ... */ },
-  "asg": { /* ... */ },
-  "dot": { /* ... */ },
-  "kl": { /* ... */ },
-  "qu": { /* ... */ },
-  "goa": { /* ... */ },
-  "ya": { /* ... */ }
-}
 ```
+VERSION_FOLDER/locales/
+  hu.js    ← original JS file with export const HU = { content: { ... } }
+  de.js
+  fr.js
+  es.js
+  it.js
+  asg.js
+  dot.js
+  kl.js
+  qu.js
+  goa.js
+  ya.js    ← content: null (falls back to English)
+```
+
+**Why file copy instead of JSON extraction:** The old `locale-content.json` approach required:
+
+1. Parsing the JS content field via fragile regex during backup
+2. Storing it as JSON (double-quoted strings, quoted keys)
+3. Re-serializing back to JS syntax during restore (single quotes, unquoted keys)
+
+This process was error-prone and caused syntax errors when the JSON serialization didn't
+match the project's JS conventions. The file-copy approach eliminates all of these steps
+— files are byte-identical to the originals.
+
+**Backward compatibility:** If a backup folder exists with the old `locale-content.json` format
+(no `locales/` directory), the restore script can detect this and handle it separately.
 
 ---
 
@@ -103,29 +115,33 @@ omit requirements, only reformat what was given.
 
 ```markdown
 ---
-app_id: "APP_ID"
-title: "JD_TITLE"
-company: "JD_COMPANY"
-seniority: "JD_SENIORITY"
-domain: "JD_DOMAIN"
-date: "YYYY-MM-DD HH:MM"
-ats_match: "OVERALL_SCORE%"
-cv_version: "cv-versions/APP_ID/"
-source: "user-provided"
+app_id: 'APP_ID'
+title: 'JD_TITLE'
+company: 'JD_COMPANY'
+seniority: 'JD_SENIORITY'
+domain: 'JD_DOMAIN'
+date: 'YYYY-MM-DD HH:MM'
+ats_match: 'OVERALL_SCORE%'
+cv_version: 'cv-versions/APP_ID/'
+source: 'user-provided'
 ---
 
 # JD_TITLE — JD_COMPANY
 
 ## Kötelező követelmények
+
 - …
 
 ## Előnyben részesített
+
 - …
 
 ## Feladatok / felelősségek
+
 - …
 
 ## Eredeti állásleírás
+
 > [the full original JD text, blockquoted verbatim]
 ```
 
@@ -143,12 +159,13 @@ overwritten), update that row in place instead of adding a duplicate.
 
 Minden sor egy optimalizált CV-verzióhoz tartozik. Az APP_ID egyben a `cv-versions/` mappa neve is.
 
-| Dátum | Pozíció | Cég | Szint | ATS | APP_ID (mappa) | JD | Fordítások | Mot. levél |
-|---|---|---|---|---|---|---|---|---|
-| 2026-06-13 | Senior Frontend Engineer | Acme Corp | senior | 78% | [2026-06-13_acme-corp_senior-frontend-engineer](2026-06-13_acme-corp_senior-frontend-engineer/) | [JD](2026-06-13_acme-corp_senior-frontend-engineer/job-description.md) | 11/11 | igen |
+| Dátum      | Pozíció                  | Cég       | Szint  | ATS | APP_ID (mappa)                                                                                  | JD                                                                     | Fordítások | Mot. levél |
+| ---------- | ------------------------ | --------- | ------ | --- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------- | ---------- |
+| 2026-06-13 | Senior Frontend Engineer | Acme Corp | senior | 78% | [2026-06-13_acme-corp_senior-frontend-engineer](2026-06-13_acme-corp_senior-frontend-engineer/) | [JD](2026-06-13_acme-corp_senior-frontend-engineer/job-description.md) | 11/11      | igen       |
 ```
 
 Column meaning:
+
 - **Dátum** — `DATE`
 - **Pozíció / Cég / Szint** — `JD_TITLE` / `JD_COMPANY` / `JD_SENIORITY`
 - **ATS** — `OVERALL_SCORE%` (`—` if no optimization was needed)
@@ -163,6 +180,7 @@ Column meaning:
 
 So that anyone reading the **live working files** can tell which application the current CV is
 tuned for **and when it last changed**, a two-line marker block is stamped at the **top** of:
+
 - `scripts/cv-data.js`
 - the **12 CV-content** locale files `scripts/locales/<lang>.js` (`en` + the 11 translated)
 - **NOT** the `scripts/locales/<lang>-page.js` label files — those hold page UI labels, not
@@ -180,6 +198,7 @@ tuned for **and when it last changed**, a two-line marker block is stamped at th
   and cv-restore**.
 
 Rules:
+
 - **Do not hand-edit the marker.** All stamping goes through the ledger helper (see below), which
   is idempotent: it strips any existing `@job-application` / `@cv-last-change` lines at the top and
   rewrites them — exactly one block per file, never accumulating.
@@ -191,8 +210,8 @@ Rules:
 
 ## history.md — append-only audit log
 
-`cv-versions/history.md` is the chronological event log answering *when did what happen to which
-CV version*. **Every** CV event appends one row — mutations, backups, **and** read-only reviews
+`cv-versions/history.md` is the chronological event log answering _when did what happen to which
+CV version_. **Every** CV event appends one row — mutations, backups, **and** read-only reviews
 (full audit trail). Created on first event if missing. Append at the bottom; never rewrite past rows.
 
 ```markdown
@@ -201,12 +220,12 @@ CV version*. **Every** CV event appends one row — mutations, backups, **and** 
 Append-only esemény-napló: minden CV-állapotot érintő művelet egy sor.
 Formátum: `.claude/rules/version-snapshot-format.md`. Generálja: `.claude/scripts/cv-ledger.py`.
 
-| Időpont | Kategória | Művelet | Aktor | CV-verzió (APP_ID) | Mi történt | Artefaktum |
-|---|---|---|---|---|---|---|
-| 2026-06-15 0900 | mutation | job-apply | job-apply-orchestrator | 2026-06-15_acme_senior-fe | summary + 2 bullet + skill order | cv-versions/2026-06-15_acme_senior-fe/ |
-| 2026-06-15 1015 | mutation | hr-review edit | cv-improver | 2026-06-15_acme_senior-fe | summary átírva + 11 fordítás | review/2026-06-15_0905_hr-review-...md |
-| 2026-06-15 1130 | review | cv-review | cv-review | 2026-06-15_acme_senior-fe | 0 hiba · 1 figyelmeztetés | — |
-| 2026-06-15 1200 | backup | cv-backup | cv-backup | 2026-06-15_manual_pre-x | manuális snapshot | cv-versions/2026-06-15_manual_pre-x/ |
+| Időpont         | Kategória | Művelet        | Aktor                  | CV-verzió (APP_ID)        | Mi történt                       | Artefaktum                             |
+| --------------- | --------- | -------------- | ---------------------- | ------------------------- | -------------------------------- | -------------------------------------- |
+| 2026-06-15 0900 | mutation  | job-apply      | job-apply-orchestrator | 2026-06-15_acme_senior-fe | summary + 2 bullet + skill order | cv-versions/2026-06-15_acme_senior-fe/ |
+| 2026-06-15 1015 | mutation  | hr-review edit | cv-improver            | 2026-06-15_acme_senior-fe | summary átírva + 11 fordítás     | review/2026-06-15_0905_hr-review-...md |
+| 2026-06-15 1130 | review    | cv-review      | cv-review              | 2026-06-15_acme_senior-fe | 0 hiba · 1 figyelmeztetés        | —                                      |
+| 2026-06-15 1200 | backup    | cv-backup      | cv-backup              | 2026-06-15_manual_pre-x   | manuális snapshot                | cv-versions/2026-06-15_manual_pre-x/   |
 ```
 
 - **Kategória** — `mutation` (cv-data/locales changed), `backup` (a snapshot was created), or `review` (read-only analysis).
@@ -240,6 +259,7 @@ python .claude/scripts/cv-ledger.py current
 ```
 
 Notes:
+
 - `mark` stamps `scripts/cv-data.js` + the 12 `<lang>.js` content files automatically — callers
   never list the files themselves.
 - Table cells are sanitized (`|` → `/`, newlines → spaces) by the helper.

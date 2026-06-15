@@ -13,47 +13,53 @@ import GameObject from './GameObject.js';
  * @param {number} drawHeight - Rendered height on canvas (default 32).
  */
 export default class DecorObject extends GameObject {
-    constructor({
-        x = 0,
-        y = 0,
-        drawWidth = 32,
-        drawHeight = 32,
-        spriteX = 0,
-        spriteY = 0,
-        spriteW = 16,
-        spriteH = 16,
-        imageSrc = '',
-        solid = false,
-        collisionBox = null,
-        ySortOffset = 0
-    } = {}) {
-        super({
-            x,
-            y,
-            width: drawWidth,
-            height: drawHeight,
-            imageSrc,
-            solid,
-            collisionBox,
-            ySortOffset
-        });
+  constructor({
+    x = 0,
+    y = 0,
+    drawWidth = 32,
+    drawHeight = 32,
+    spriteX = 0,
+    spriteY = 0,
+    spriteW = 16,
+    spriteH = 16,
+    imageSrc = '',
+    solid = false,
+    collisionBox = null,
+    ySortOffset = 0,
+  } = {}) {
+    super({
+      x,
+      y,
+      width: drawWidth,
+      height: drawHeight,
+      imageSrc,
+      solid,
+      collisionBox,
+      ySortOffset,
+    });
 
-        this.spriteX = spriteX;
-        this.spriteY = spriteY;
-        this.spriteW = spriteW;
-        this.spriteH = spriteH;
-    }
+    this.spriteX = spriteX;
+    this.spriteY = spriteY;
+    this.spriteW = spriteW;
+    this.spriteH = spriteH;
+  }
 
-    draw(ctx, camera) {
-        if (!this.image || !this.isLoaded) {
-            ctx.fillStyle = this.solid ? 'rgba(255,0,0,0.4)' : 'rgba(0,160,255,0.3)';
-            ctx.fillRect(this.x - camera.x, this.y - camera.y, this.width, this.height);
-            return;
-        }
-        ctx.drawImage(
-            this.image,
-            this.spriteX, this.spriteY, this.spriteW, this.spriteH,
-            this.x - camera.x, this.y - camera.y, this.width, this.height
-        );
+  draw(ctx, camera) {
+    if (!this.image || !this.isLoaded) {
+      ctx.fillStyle = this.solid ? 'rgba(255,0,0,0.4)' : 'rgba(0,160,255,0.3)';
+      ctx.fillRect(this.x - camera.x, this.y - camera.y, this.width, this.height);
+      return;
     }
+    ctx.drawImage(
+      this.image,
+      this.spriteX,
+      this.spriteY,
+      this.spriteW,
+      this.spriteH,
+      this.x - camera.x,
+      this.y - camera.y,
+      this.width,
+      this.height,
+    );
+  }
 }

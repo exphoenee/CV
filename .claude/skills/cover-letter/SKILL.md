@@ -11,7 +11,7 @@ description: >
 version: 1.1.0
 author: Viktor Bozzay
 disable-model-invocation: true
-argument-hint: "[job-description-file | \"inline job description text\"]"
+argument-hint: '[job-description-file | "inline job description text"]'
 ---
 
 # cover-letter — Motivációs Levél Generáló
@@ -22,6 +22,7 @@ A `/job-apply` pipeline automatikusan hívja, de közvetlenül is használható.
 ## Step 1 — Parse argument
 
 If argument provided:
+
 - File path → read file. Missing → ❌ stop.
 - Inline text → use directly.
 - Store as `JD`.
@@ -31,6 +32,7 @@ If no argument → follow instructions in `.claude/rules/jd-draft-template.md` (
 ## Step 2 — Extract JD metadata
 
 From `JD`:
+
 - `JD_TITLE` — job title
 - `JD_COMPANY` — company name or `"ismeretlen"`
 - `JD_SENIORITY` — junior / mid / senior / lead / principal
@@ -48,6 +50,7 @@ From `JD`:
 ## Step 3 — Load CV data and career profile
 
 Read `scripts/cv-data.js`. Extract:
+
 - `CV_SUMMARY`, `CV_BULLETS_ALL` (all bullets with company/period context), `CV_EXPERIENCE_SUMMARY`
 
 Follow the instructions in `.claude/rules/career-profile-usage.md` — parse YAML headers first, filter by relevance, then read only relevant files in full. Build `PROFILE_DATA`.
@@ -63,10 +66,12 @@ Create `letters/` if it does not exist.
 Create `OUTPUT_FOLDER/` directory.
 
 If `OUTPUT_FOLDER` already exists:
+
 ```
 Már létezik: OUTPUT_FOLDER/
   [a] Felülírja  [b] Új mappa (-v2)  [n] Leáll
 ```
+
 Wait for user input.
 
 ## Step 5 — Dispatch cover-letter-agent
