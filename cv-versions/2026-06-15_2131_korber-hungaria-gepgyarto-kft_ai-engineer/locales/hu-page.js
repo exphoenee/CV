@@ -79,9 +79,6 @@ export const HU_PAGE = {
     bookErrSlotUnavailable: 'Ez az időpont már nem elérhető. Válassz másikat.',
     bookErrRateLimited: 'Ma túl sok foglalás érkezett erről az emailről. Próbáld holnap.',
     bookErrCaptcha: 'A megerősítés nem sikerült. Pipáld ki az ellenőrzést, és próbáld újra.',
-    bookPendingTitle: 'Majdnem kész — erősítsd meg a foglalást',
-    bookPendingNote: 'Megerősítő linket küldtünk az email-címedre. Nyisd meg 30 percen belül a véglegesítéshez — az időpont csak a megerősítés után foglalt.',
-    bookErrDateFull: 'Erre a napra már foglaltak interjút. Kérlek, válassz másik napot.',
     bookCooldownTitle: 'Időpont már foglalva!',
     bookCooldownNote:
       'Az elmúlt 48 órában már foglaltál időpontot. Gyere vissza később egy új foglaláshoz.',

@@ -78,9 +78,6 @@ export const FR_PAGE = {
     bookErrSlotUnavailable: "Ce créneau n'est plus disponible. Veuillez en choisir un autre.",
     bookErrRateLimited: "Trop de réservations aujourd'hui avec cette adresse e-mail. Veuillez réessayer demain.",
     bookErrCaptcha: "La vérification a échoué. Veuillez compléter le contrôle et réessayer.",
-    bookPendingTitle: "Presque terminé — confirmez votre réservation",
-    bookPendingNote: "Nous venons de vous envoyer un lien de confirmation par e-mail. Ouvrez-le dans les 30 minutes pour finaliser — le créneau n'est réservé qu'après confirmation.",
-    bookErrDateFull: "Ce jour est déjà réservé. Veuillez choisir un autre jour.",
     bookCooldownTitle: 'Rendez-vous déjà réservé !',
     bookCooldownNote:
       'Vous avez déjà réservé un rendez-vous dans les dernières 48 heures. Revenez plus tard.',

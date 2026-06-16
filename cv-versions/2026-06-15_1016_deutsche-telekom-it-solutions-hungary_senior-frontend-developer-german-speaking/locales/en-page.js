@@ -79,9 +79,6 @@ export const EN_PAGE = {
     bookErrSlotUnavailable: 'That time slot is no longer available. Please pick another.',
     bookErrRateLimited: 'Too many bookings today from this email. Please try again tomorrow.',
     bookErrCaptcha: 'Verification failed. Please complete the check and try again.',
-    bookPendingTitle: 'Almost done — confirm your booking',
-    bookPendingNote: 'We just emailed you a confirmation link. Open it within 30 minutes to finalize — the slot is not reserved until you confirm.',
-    bookErrDateFull: 'That day is already booked. Please choose another day.',
     bookCooldownTitle: 'Meeting already booked!',
     bookCooldownNote:
       "You've already booked a meeting in the last 48 hours. Come back later to book again.",
