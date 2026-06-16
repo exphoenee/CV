@@ -654,13 +654,13 @@ export function bookingModalHTML(prefix) {
     '      <div id="' +
       p +
       '-bk-step-confirm" class="bk-step bk-step-confirm bk-hidden" role="status" aria-live="polite">',
-    '        <div class="bk-confirm-check" aria-hidden="true"><i class="fa-solid fa-check"></i></div>',
-    '        <p class="bk-confirm-title" data-bk-i18n="bookConfirmTitle">' +
-      t('bookConfirmTitle') +
+    '        <div class="bk-confirm-check" aria-hidden="true"><i class="fa-solid fa-envelope"></i></div>',
+    '        <p class="bk-confirm-title" data-bk-i18n="bookPendingTitle">' +
+      t('bookPendingTitle') +
       '</p>',
     '        <p id="' + p + '-bk-confirm-detail" class="bk-confirm-detail"></p>',
-    '        <p class="bk-confirm-note" data-bk-i18n="bookConfirmNote">' +
-      t('bookConfirmNote') +
+    '        <p class="bk-confirm-note" data-bk-i18n="bookPendingNote">' +
+      t('bookPendingNote') +
       '</p>',
     '        <button class="bk-btn-secondary" id="' +
       p +
@@ -693,6 +693,7 @@ var BOOKING_ERROR_KEYS = {
   MISSING_FIELDS: 'bookErrMissingFields',
   INVALID_EMAIL: 'errEmailInvalid',
   SLOT_UNAVAILABLE: 'bookErrSlotUnavailable',
+  DATE_FULL: 'bookErrDateFull',
   RATE_LIMITED: 'bookErrRateLimited',
   CAPTCHA_FAILED: 'bookErrCaptcha',
   BOOKING_FAILED: 'bookFailed',
@@ -1021,7 +1022,10 @@ export function initBookingModal(prefix) {
       })
       .then(function (data) {
         if (data.success) {
-          localStorage.setItem(BK_COOLDOWN_KEY, Date.now().toString());
+          // Double opt-in: the server emailed a confirm link; the booking is NOT
+          // final yet. Show the "check your email" screen with the chosen slot.
+          // No localStorage cooldown here — the booking only counts once confirmed,
+          // and the real anti-flood limits live server-side.
           var start = new Date(selectedSlot.start);
           var end = new Date(selectedSlot.end);
           document.getElementById(p + '-bk-confirm-detail').textContent = formatSlot(start, end);

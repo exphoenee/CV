@@ -78,6 +78,9 @@ export const DE_PAGE = {
     bookErrSlotUnavailable: 'Dieser Termin ist nicht mehr verfügbar. Bitte wählen Sie einen anderen.',
     bookErrRateLimited: 'Heute wurden zu viele Buchungen von dieser E-Mail vorgenommen. Bitte versuchen Sie es morgen.',
     bookErrCaptcha: 'Verifizierung fehlgeschlagen. Bitte schließen Sie die Prüfung ab und versuchen Sie es erneut.',
+    bookPendingTitle: 'Fast geschafft — bestätigen Sie Ihre Buchung',
+    bookPendingNote: 'Wir haben Ihnen einen Bestätigungslink per E-Mail gesendet. Öffnen Sie ihn innerhalb von 30 Minuten — der Termin ist erst nach der Bestätigung reserviert.',
+    bookErrDateFull: 'Dieser Tag ist bereits belegt. Bitte wählen Sie einen anderen Tag.',
     bookCooldownTitle: 'Termin bereits gebucht!',
     bookCooldownNote:
       'Du hast in den letzten 48 Stunden bereits einen Termin gebucht. Komm später wieder.',

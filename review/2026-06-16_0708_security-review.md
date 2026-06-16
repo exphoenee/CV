@@ -44,10 +44,18 @@ A maradék kockázat a statikus oldal eredendő korlátaiból fakad:
 >   végez; hiba esetén lokalizált `errEmailNoMailServer` üzenet. A játék-űrlap most már a megosztott
 >   űrlapokkal egyenértékű (honeypot + timing + validáció + MX).
 > - 🟡 **KÖZEPES — localStorage cooldown:** 🟡 **RÉSZBEN.** A GAS-oldali napi email-limit kész és
->   deployolva (booking-út). **Nyitott:** Formspree dashboard spam/rate + domain-restrikció, és az
->   opcionális CAPTCHA (Turnstile/hCaptcha) a Hire + Booking űrlapon — ezek külső szolgáltatás-konfigurációk.
+>   deployolva. A **Cloudflare Turnstile** mostantól **mindkét űrlapon** él:
+>   - **Hire (Formspree-oldalon validálva)** — ✅ **TESZTELVE, MŰKÖDIK (2026-06-16).** A saját
+>     Cloudflare sitekey/secret párral konfigurálva, a widget a `shared.js`/játék űrlapba bekötve.
+>   - **Booking (GAS `verifyTurnstile`, fail-closed)** — ✅ bekötve; a működés feltétele a
+>     `TURNSTILE_SECRET` Script Property + re-deploy.
 >
-> **Egyetlen nyitott maradék:** a 🟡 KÖZEPES Formspree/CAPTCHA rész (repón kívüli konfiguráció).
+>   A localStorage cooldown maga elvileg továbbra is megkerülhető — de a valódi kapu immár a
+>   **Turnstile + GAS per-email limit**, nem a cooldown.
+>
+> **Nyitott (opcionális hardening):** slot-kimerítés elleni globális napi plafon / dupla opt-in,
+> auto-invite (`guests`/`sendInvites`) kikapcsolása a meghívó-spam ellen, CSP/SRI, a publikus
+> `action=debug` GAS-végpont lezárása. Részletek: a beszélgetésben felvázolt #1–#3 + hardening pontok.
 
 ---
 
