@@ -804,6 +804,14 @@ h1 small {
   display: none !important;
 }
 
+.bk-turnstile,
+.hire-turnstile {
+  margin: 10px 0;
+  min-height: 65px;
+  display: flex;
+  justify-content: center;
+}
+
 .bk-state {
   display: flex;
   flex-direction: column;

@@ -99,6 +99,19 @@ export function renderBullets(bullets, indent) {
     .join('\n');
 }
 
+// --- Cloudflare Turnstile (shared by Hire + Booking) ---
+export var TURNSTILE_SITEKEY = '0x4AAAAAADlq-gSDTCI_ln-y';
+
+export function loadTurnstileScript() {
+  if (window.turnstile || document.getElementById('cf-turnstile-script')) return;
+  var s = document.createElement('script');
+  s.id = 'cf-turnstile-script';
+  s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+  s.async = true;
+  s.defer = true;
+  document.head.appendChild(s);
+}
+
 export function initHireModal(prefix) {
   var modal = document.getElementById(prefix + '-modal');
   var subjectEl = document.getElementById(prefix + '-subject');
@@ -129,6 +142,41 @@ export function initHireModal(prefix) {
   var COOLDOWN_MS = 24 * 60 * 60 * 1000;
   var MIN_FILL_MS = 2500;
   var openedAt = 0;
+
+  // Cloudflare Turnstile — Formspree verifies the cf-turnstile-response server-side.
+  var hireTurnstileWidgetId = null;
+  var hireTurnstileToken = '';
+
+  function ensureHireTurnstile() {
+    if (hireTurnstileWidgetId !== null) return;
+    var container = document.getElementById(prefix + '-hire-turnstile');
+    if (!container) return;
+    if (!window.turnstile || !window.turnstile.render) {
+      setTimeout(ensureHireTurnstile, 300);
+      return;
+    }
+    hireTurnstileWidgetId = window.turnstile.render(container, {
+      sitekey: TURNSTILE_SITEKEY,
+      callback: function (token) {
+        hireTurnstileToken = token;
+      },
+      'expired-callback': function () {
+        hireTurnstileToken = '';
+      },
+      'error-callback': function () {
+        hireTurnstileToken = '';
+      },
+    });
+  }
+
+  function resetHireTurnstile() {
+    hireTurnstileToken = '';
+    if (hireTurnstileWidgetId !== null && window.turnstile) {
+      window.turnstile.reset(hireTurnstileWidgetId);
+    }
+  }
+
+  loadTurnstileScript();
 
   function isOnCooldown() {
     var ts = parseInt(localStorage.getItem(COOLDOWN_KEY) || '0', 10);
@@ -162,6 +210,7 @@ export function initHireModal(prefix) {
         submitBtn.disabled = false;
         submitBtn.textContent = locale.t('send');
       }
+      ensureHireTurnstile();
     }
 
     modal.classList.remove('cv-modal-hidden');
@@ -222,7 +271,19 @@ export function initHireModal(prefix) {
       emailErr.textContent = '';
     }
 
+    // Require a Turnstile token — Formspree verifies it server-side.
+    if (!hireTurnstileToken) {
+      var fsErrEl = document.querySelector('#' + prefix + '-modal [data-fs-error]');
+      if (fsErrEl) {
+        fsErrEl.classList.remove('cv-error-hidden');
+        fsErrEl.textContent = locale.t('bookErrCaptcha');
+      }
+      if (submitBtn) submitBtn.disabled = false;
+      return;
+    }
+
     var formData = new FormData(form);
+    formData.set('cf-turnstile-response', hireTurnstileToken);
     fetch('https://formspree.io/f/mrejlned', {
       method: 'POST',
       body: formData,
@@ -238,6 +299,7 @@ export function initHireModal(prefix) {
           if (fsSuccess) fsSuccess.classList.remove('cv-success-hidden');
         } else {
           if (submitBtn) submitBtn.disabled = false;
+          resetHireTurnstile();
           var fsError = document.querySelector('#' + prefix + '-modal [data-fs-error]');
           if (fsError) {
             fsError.classList.remove('cv-error-hidden');
@@ -247,6 +309,7 @@ export function initHireModal(prefix) {
       })
       .catch(function () {
         if (submitBtn) submitBtn.disabled = false;
+        resetHireTurnstile();
         var fsError = document.querySelector('#' + prefix + '-modal [data-fs-error]');
         if (fsError) {
           fsError.classList.remove('cv-error-hidden');
@@ -579,6 +642,7 @@ export function bookingModalHTML(prefix) {
       p +
       '-bk-topic-err" role="alert" aria-live="polite"></span>',
     '          </div>',
+    '          <div id="' + p + '-bk-turnstile" class="bk-turnstile"></div>',
     '          <button type="submit" id="' +
       p +
       '-bk-submit" class="bk-btn-primary" data-bk-i18n="bookSubmit">' +
@@ -630,6 +694,7 @@ var BOOKING_ERROR_KEYS = {
   INVALID_EMAIL: 'errEmailInvalid',
   SLOT_UNAVAILABLE: 'bookErrSlotUnavailable',
   RATE_LIMITED: 'bookErrRateLimited',
+  CAPTCHA_FAILED: 'bookErrCaptcha',
   BOOKING_FAILED: 'bookFailed',
 };
 
@@ -655,6 +720,44 @@ export function initBookingModal(prefix) {
   var BK_COOLDOWN_MS = 48 * 60 * 60 * 1000;
   var BK_MIN_FILL_MS = 2500;
   var bkFormShownAt = 0;
+
+  // --- Cloudflare Turnstile (bot verification, validated server-side in GAS) ---
+  var turnstileWidgetId = null;
+  var turnstileToken = '';
+
+  // Renders the widget once into the form step. Retries while the async script
+  // is still loading. The token arrives via the callback.
+  function ensureTurnstile() {
+    if (turnstileWidgetId !== null) return;
+    var container = document.getElementById(p + '-bk-turnstile');
+    if (!container) return;
+    if (!window.turnstile || !window.turnstile.render) {
+      setTimeout(ensureTurnstile, 300);
+      return;
+    }
+    turnstileWidgetId = window.turnstile.render(container, {
+      sitekey: TURNSTILE_SITEKEY,
+      callback: function (token) {
+        turnstileToken = token;
+      },
+      'expired-callback': function () {
+        turnstileToken = '';
+      },
+      'error-callback': function () {
+        turnstileToken = '';
+      },
+    });
+  }
+
+  // Turnstile tokens are single-use — reset after each attempt for a fresh one.
+  function resetTurnstile() {
+    turnstileToken = '';
+    if (turnstileWidgetId !== null && window.turnstile) {
+      window.turnstile.reset(turnstileWidgetId);
+    }
+  }
+
+  loadTurnstileScript();
 
   if (CHECK_EMAIL_DOMAIN) {
     document.getElementById(p + '-bk-email').addEventListener('blur', async function () {
@@ -822,6 +925,7 @@ export function initBookingModal(prefix) {
         bkFormShownAt = Date.now();
         document.getElementById(p + '-bk-slot-badge').textContent = formatSlot(start, end);
         show(p + '-bk-step-form');
+        ensureTurnstile();
       });
       grid.appendChild(btn);
     });
@@ -846,6 +950,7 @@ export function initBookingModal(prefix) {
     document.getElementById(p + '-bk-form').reset();
     document.getElementById(p + '-bk-email-err').textContent = '';
     document.getElementById(p + '-bk-topic-err').textContent = '';
+    resetTurnstile();
     if (bkIsOnCooldown()) {
       show(p + '-bk-cooldown');
     } else {
@@ -890,6 +995,13 @@ export function initBookingModal(prefix) {
       emailErr.textContent = '';
     }
 
+    // Require a Turnstile token (the GAS verifies it server-side).
+    if (!turnstileToken) {
+      alert(bookingErrorMessage('CAPTCHA_FAILED'));
+      submitBtn.disabled = false;
+      return;
+    }
+
     submitBtn.textContent = locale.t('bookSending');
 
     var params = new URLSearchParams({
@@ -899,6 +1011,7 @@ export function initBookingModal(prefix) {
       topic: topicVal,
       start: selectedSlot.start,
       end: selectedSlot.end,
+      token: turnstileToken,
     });
 
     fetch(BOOKING_SCRIPT_URL + '?' + params.toString())
@@ -915,12 +1028,14 @@ export function initBookingModal(prefix) {
           show(p + '-bk-step-confirm');
         } else {
           alert(bookingErrorMessage(data && data.error));
+          resetTurnstile();
           submitBtn.disabled = false;
           submitBtn.textContent = locale.t('bookSubmit');
         }
       })
       .catch(function () {
         alert(bookingErrorMessage('BOOKING_FAILED'));
+        resetTurnstile();
         submitBtn.disabled = false;
         submitBtn.textContent = locale.t('bookSubmit');
       });
@@ -1046,6 +1161,7 @@ export function hireModalHTML(prefix, opts) {
       prefix +
       '-msg-err" role="alert" aria-live="polite"></span>',
     '      </div>',
+    '      <div id="' + prefix + '-hire-turnstile" class="hire-turnstile"></div>',
     '      <button type="submit" class="hire-submit" data-fs-submit-btn data-hire-i18n="send" aria-label="' +
       t('ariaSendMessage') +
       '">' +
