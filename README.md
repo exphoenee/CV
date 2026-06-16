@@ -24,6 +24,8 @@ Többnézetes, interaktív önéletrajz böngészőben. Egy központi adatforrá
     - [Backend — Google Apps Script (Code.gs)](#backend--google-apps-script-codegs)
     - [Frontend — Booking Modal](#frontend--booking-modal)
   - [AI munkafolyamat](#ai-munkafolyamat)
+    - [Képességek áttekintése](#képességek-áttekintése)
+    - [Részletes dokumentáció](#részletes-dokumentáció)
   - [Futtatás](#futtatás)
 
 ## Nézetek
@@ -52,7 +54,7 @@ CV_DATA (cv-data.js)
     │
     ├── locale.js  ─── LocaleManager (12 nyelv)
     ├── config.js  ─── globális konstansok, feature flag-ek
-    └── shared.js  ─── közös segédfüggvények
+    ├── shared.js  ─── közös segédfüggvények
     └── cv-music-player.js ─── zenelejátszó
 ```
 
