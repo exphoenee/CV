@@ -508,8 +508,10 @@ class GameEngine {
         this.player.debugMode = this.debugMode;
       }
 
-      // M to toggle music play/pause
-      if (e.key === 'm' || e.key === 'M') {
+      // M to toggle music play/pause — only while actually playing. When a
+      // modal/form is open the game is frozen and may hold input focus, so M
+      // must not hijack typing (e.g. the letter "m" in a contact message).
+      if ((e.key === 'm' || e.key === 'M') && !this.isFrozen) {
         const musicAudio = document.getElementById('game-music-audio');
         const musicPlayBtn = document.getElementById('game-music-playpause');
         if (musicPlayBtn) {

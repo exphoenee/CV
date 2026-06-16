@@ -1152,6 +1152,15 @@ canvas {
 .hire-dialog-game {
   max-width: 360px !important;
 }
+/* Center the Cloudflare Turnstile box on both game forms (cv-index.css is not
+   loaded here, so the shared .bk-turnstile/.hire-turnstile rule is repeated). */
+.bk-turnstile,
+.hire-turnstile {
+  margin: 10px 0;
+  min-height: 65px;
+  display: flex;
+  justify-content: center;
+}
 .hire-dialog-game form {
   display: flex;
   flex-direction: column;
