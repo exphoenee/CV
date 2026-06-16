@@ -13,9 +13,14 @@ export function showToast(message) {
   if (!container) return;
   var toast = document.createElement('div');
   toast.className = 'cv-toast';
-  toast.innerHTML =
-    '<span>' + message + '</span><button class="cv-toast-close" aria-label="Close">\xD7</button>';
-  var closeBtn = toast.querySelector('.cv-toast-close');
+  var msgSpan = document.createElement('span');
+  msgSpan.textContent = message;
+  var closeBtn = document.createElement('button');
+  closeBtn.className = 'cv-toast-close';
+  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.textContent = '\xD7';
+  toast.appendChild(msgSpan);
+  toast.appendChild(closeBtn);
   function removeToast() {
     toast.classList.add('hiding');
     setTimeout(function () {
@@ -122,6 +127,8 @@ export function initHireModal(prefix) {
 
   var COOLDOWN_KEY = 'hire_sent_ts';
   var COOLDOWN_MS = 24 * 60 * 60 * 1000;
+  var MIN_FILL_MS = 2500;
+  var openedAt = 0;
 
   function isOnCooldown() {
     var ts = parseInt(localStorage.getItem(COOLDOWN_KEY) || '0', 10);
@@ -129,6 +136,7 @@ export function initHireModal(prefix) {
   }
 
   function openModal(subject) {
+    openedAt = Date.now();
     var form = document.getElementById(prefix + '-form');
     var fsSuccess = document.querySelector('#' + prefix + '-modal [data-fs-success]');
     var hireCooldown = document.querySelector('#' + prefix + '-modal [data-hire-cooldown]');
@@ -176,6 +184,9 @@ export function initHireModal(prefix) {
   document.getElementById(prefix + '-form').addEventListener('submit', async function (e) {
     e.preventDefault();
     e.stopImmediatePropagation();
+
+    // Timing check — a submit faster than a human could fill the form is likely a bot.
+    if (openedAt && Date.now() - openedAt < MIN_FILL_MS) return;
 
     var nameVal = document.getElementById(prefix + '-name').value.trim();
     var emailVal = document.getElementById(prefix + '-email').value.trim();
@@ -559,7 +570,7 @@ export function bookingModalHTML(prefix) {
       '</span> <span class="bk-required" aria-label="required">*</span></label>',
     '            <textarea id="' +
       p +
-      '-bk-topic" name="bk-topic" rows="4" required data-bk-i18n-placeholder="bookTopicPlaceholder" placeholder="' +
+      '-bk-topic" name="bk-topic" rows="4" required maxlength="2000" data-bk-i18n-placeholder="bookTopicPlaceholder" placeholder="' +
       t('bookTopicPlaceholder') +
       '" aria-required="true" aria-describedby="' +
       p +
@@ -612,6 +623,20 @@ export function bookingModalHTML(prefix) {
   ].join('\n');
 }
 
+// Maps a server-side booking error CODE (from Code.gs) to its i18n label key.
+// The server sends only stable codes; the UI owns the localized wording.
+var BOOKING_ERROR_KEYS = {
+  MISSING_FIELDS: 'bookErrMissingFields',
+  INVALID_EMAIL: 'errEmailInvalid',
+  SLOT_UNAVAILABLE: 'bookErrSlotUnavailable',
+  RATE_LIMITED: 'bookErrRateLimited',
+  BOOKING_FAILED: 'bookFailed',
+};
+
+function bookingErrorMessage(code) {
+  return locale.t(BOOKING_ERROR_KEYS[code] || 'bookFailed');
+}
+
 export function initBookingModal(prefix) {
   var p = prefix;
   var modal = document.getElementById(p + '-booking-modal');
@@ -628,6 +653,8 @@ export function initBookingModal(prefix) {
 
   var BK_COOLDOWN_KEY = 'booking_sent_ts';
   var BK_COOLDOWN_MS = 48 * 60 * 60 * 1000;
+  var BK_MIN_FILL_MS = 2500;
+  var bkFormShownAt = 0;
 
   if (CHECK_EMAIL_DOMAIN) {
     document.getElementById(p + '-bk-email').addEventListener('blur', async function () {
@@ -792,6 +819,7 @@ export function initBookingModal(prefix) {
       btn.setAttribute('aria-label', locale.t('ariaBookSlot') + ': ' + timeLabel);
       btn.addEventListener('click', function () {
         selectedSlot = slot;
+        bkFormShownAt = Date.now();
         document.getElementById(p + '-bk-slot-badge').textContent = formatSlot(start, end);
         show(p + '-bk-step-form');
       });
@@ -829,6 +857,9 @@ export function initBookingModal(prefix) {
     e.preventDefault();
 
     if (document.getElementById(p + '-bk-hp').value) return;
+
+    // Timing check — a submit faster than a human could fill the form is likely a bot.
+    if (bkFormShownAt && Date.now() - bkFormShownAt < BK_MIN_FILL_MS) return;
 
     var nameVal = document.getElementById(p + '-bk-name').value.trim();
     var emailVal = document.getElementById(p + '-bk-email').value.trim();
@@ -883,13 +914,13 @@ export function initBookingModal(prefix) {
           document.getElementById(p + '-bk-confirm-detail').textContent = formatSlot(start, end);
           show(p + '-bk-step-confirm');
         } else {
-          alert(locale.t('bookFailed'));
+          alert(bookingErrorMessage(data && data.error));
           submitBtn.disabled = false;
           submitBtn.textContent = locale.t('bookSubmit');
         }
       })
       .catch(function () {
-        alert(locale.t('bookFailed'));
+        alert(bookingErrorMessage('BOOKING_FAILED'));
         submitBtn.disabled = false;
         submitBtn.textContent = locale.t('bookSubmit');
       });
@@ -1005,7 +1036,7 @@ export function hireModalHTML(prefix, opts) {
       '</label>',
     '        <textarea id="' +
       prefix +
-      '-message" name="message" required rows="5" placeholder="' +
+      '-message" name="message" required maxlength="2000" rows="5" placeholder="' +
       t('messagePlaceholder') +
       '" data-hire-i18n-placeholder="messagePlaceholder" data-fs-field aria-required="true" aria-describedby="' +
       prefix +

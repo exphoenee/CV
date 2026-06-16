@@ -161,7 +161,7 @@ h1 small {
 .btn-hire {
   border-color: var(--accent);
   background: var(--accent-bg);
-  animation: hire-glow 2s ease-in-out infinite;
+  animation: hire-glow 3s ease-in-out infinite;
 }
 .btn-hire:hover {
   background: var(--accent-bg-hover);
@@ -171,17 +171,26 @@ h1 small {
   color: var(--accent);
 }
 @keyframes hire-glow {
+  /* Pulse rises and falls over the first ~40% of the cycle, then holds dim
+     (a rest) until the end — a pause before the cycle restarts. */
   0%,
+  40%,
   100% {
     box-shadow:
       0 0 10px rgba(255, 112, 36, 0.1),
       0 0 20px rgba(255, 112, 36, 0.05);
   }
-  50% {
+  20% {
     box-shadow:
       0 0 20px rgba(255, 112, 36, 0.5),
       0 0 40px rgba(255, 112, 36, 0.25),
       0 0 60px rgba(255, 112, 36, 0.1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-hire,
+  .btn-book {
+    animation: none;
   }
 }
 .btn-game {
@@ -764,9 +773,13 @@ h1 small {
 .btn-book {
   border-color: var(--accent);
   background: var(--accent-bg);
+  /* Same glow as Hire Me, but started half a cycle early (negative delay on a
+     3s animation = 180° phase shift) so the two buttons pulse alternately. */
+  animation: hire-glow 3s ease-in-out -1.5s infinite;
 }
 .btn-book:hover {
   background: var(--accent-bg-hover);
+  animation: none;
 }
 .btn-book .label {
   color: var(--accent);
