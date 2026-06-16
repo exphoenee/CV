@@ -3109,3 +3109,30 @@ body {
     display: none !important;
   }
 }
+
+.hire-submit {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Submit button spinner while Turnstile loads */
+.hire-submit.is-loading,
+.bk-btn-primary.is-loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+.hire-submit.is-loading::after,
+.bk-btn-primary.is-loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border: 2px solid rgba(255,255,255,0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: bk-spin 0.7s linear infinite;
+}

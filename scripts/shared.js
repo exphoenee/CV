@@ -147,10 +147,17 @@ export function initHireModal(prefix) {
   var hireTurnstileWidgetId = null;
   var hireTurnstileToken = '';
 
+  function updateHireSubmit() {
+    var btn = document.querySelector('#' + prefix + '-modal [type="submit"]');
+    if (btn) btn.disabled = !hireTurnstileToken;
+  }
+
   function ensureHireTurnstile() {
     if (hireTurnstileWidgetId !== null) return;
     var container = document.getElementById(prefix + '-hire-turnstile');
     if (!container) return;
+    var submitBtn = document.querySelector('#' + prefix + '-modal [type="submit"]');
+    if (submitBtn) submitBtn.classList.add('is-loading');
     if (!window.turnstile || !window.turnstile.render) {
       setTimeout(ensureHireTurnstile, 300);
       return;
@@ -159,14 +166,18 @@ export function initHireModal(prefix) {
       sitekey: TURNSTILE_SITEKEY,
       callback: function (token) {
         hireTurnstileToken = token;
+        updateHireSubmit();
       },
       'expired-callback': function () {
         hireTurnstileToken = '';
+        updateHireSubmit();
       },
       'error-callback': function () {
         hireTurnstileToken = '';
+        updateHireSubmit();
       },
     });
+    setTimeout(function () { if (submitBtn) submitBtn.classList.remove('is-loading'); }, 400);
   }
 
   function resetHireTurnstile() {
@@ -194,9 +205,7 @@ export function initHireModal(prefix) {
     if (fsError) {
       fsError.classList.add('cv-error-hidden');
       fsError.textContent = '';
-    }
-
-    if (isOnCooldown()) {
+    }      if (isOnCooldown()) {
       form.style.display = 'none';
       if (hireCooldown) hireCooldown.classList.remove('cv-success-hidden');
     } else {
@@ -207,7 +216,7 @@ export function initHireModal(prefix) {
       clearFieldErrors();
       var submitBtn = form.querySelector('[type="submit"]');
       if (submitBtn) {
-        submitBtn.disabled = false;
+        submitBtn.disabled = true;
         submitBtn.textContent = locale.t('send');
       }
       ensureHireTurnstile();
@@ -217,6 +226,8 @@ export function initHireModal(prefix) {
   }
 
   function closeModal() {
+    var sb = document.querySelector('#' + prefix + '-modal [type="submit"]');
+    if (sb) sb.classList.remove('is-loading');
     modal.classList.add('cv-modal-hidden');
   }
 
@@ -742,12 +753,19 @@ export function initBookingModal(prefix) {
   var turnstileWidgetId = null;
   var turnstileToken = '';
 
+  function updateBkSubmit() {
+    var btn = document.getElementById(p + '-bk-submit');
+    if (btn) btn.disabled = !turnstileToken;
+  }
+
   // Renders the widget once into the form step. Retries while the async script
   // is still loading. The token arrives via the callback.
   function ensureTurnstile() {
     if (turnstileWidgetId !== null) return;
     var container = document.getElementById(p + '-bk-turnstile');
     if (!container) return;
+    var submitBtn = document.getElementById(p + '-bk-submit');
+    if (submitBtn) submitBtn.classList.add('is-loading');
     if (!window.turnstile || !window.turnstile.render) {
       setTimeout(ensureTurnstile, 300);
       return;
@@ -756,14 +774,18 @@ export function initBookingModal(prefix) {
       sitekey: TURNSTILE_SITEKEY,
       callback: function (token) {
         turnstileToken = token;
+        updateBkSubmit();
       },
       'expired-callback': function () {
         turnstileToken = '';
+        updateBkSubmit();
       },
       'error-callback': function () {
         turnstileToken = '';
+        updateBkSubmit();
       },
     });
+    setTimeout(function () { if (submitBtn) submitBtn.classList.remove('is-loading'); }, 400);
   }
 
   // Turnstile tokens are single-use — reset after each attempt for a fresh one.
@@ -825,6 +847,8 @@ export function initBookingModal(prefix) {
   }
 
   function closeModal() {
+    var sb = document.getElementById(p + '-bk-submit');
+    if (sb) sb.classList.remove('is-loading');
     modal.classList.add('cv-modal-hidden');
   }
 
@@ -944,6 +968,7 @@ export function initBookingModal(prefix) {
         document.getElementById(p + '-bk-slot-badge').textContent = formatSlot(start, end);
         show(p + '-bk-step-form');
         ensureTurnstile();
+        updateBkSubmit();
       });
       grid.appendChild(btn);
     });
