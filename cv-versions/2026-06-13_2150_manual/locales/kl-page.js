@@ -77,6 +77,7 @@ export const KL_PAGE = {
     bookErrMissingFields: "Hoch Dochmey yInob. naghbe'.",
     bookErrSlotUnavailable: "ghom poH lujpu'. latlh yIwIv.",
     bookErrRateLimited: "DaHjaj ghom law'. wa'leS yInID.",
+    bookErrDailyCap: "DaHjaj ghom law' rap. wa'leS yIchegh.",
     bookErrCaptcha: "nguSDI' luj. yItob 'ej yItaH.",
     bookCooldownTitle: "ghom 'oH ngeHlu'!",
     bookCooldownNote: "cha'maH loS rep HiQ ghom Dangebbe'. wa'leS yIchegh.",

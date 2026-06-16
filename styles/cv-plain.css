@@ -684,7 +684,8 @@ body {
   background: #fff3ed;
 }
 
-.bk-step-confirm {
+.bk-step-confirm,
+.bk-step-error {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -703,6 +704,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.bk-step-error .bk-confirm-check {
+  color: #d32f2f;
+  background: #fde8e8;
 }
 
 .bk-confirm-title {
@@ -815,6 +821,10 @@ body {
 [data-theme='dark'] .bk-confirm-check,
 [data-theme='superdark'] .bk-confirm-check {
   background: rgba(255, 112, 36, 0.15);
+}
+[data-theme='dark'] .bk-step-error .bk-confirm-check,
+[data-theme='superdark'] .bk-step-error .bk-confirm-check {
+  background: rgba(211, 47, 47, 0.15);
 }
 
 /* Night vision theme */

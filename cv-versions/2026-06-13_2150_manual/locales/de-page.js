@@ -77,6 +77,7 @@ export const DE_PAGE = {
     bookErrMissingFields: 'Bitte füllen Sie alle Pflichtfelder aus.',
     bookErrSlotUnavailable: 'Dieser Termin ist nicht mehr verfügbar. Bitte wählen Sie einen anderen.',
     bookErrRateLimited: 'Heute wurden zu viele Buchungen von dieser E-Mail vorgenommen. Bitte versuchen Sie es morgen.',
+    bookErrDailyCap: 'Heutiges Buchungslimit erreicht. Kommen Sie morgen wieder.',
     bookErrCaptcha: 'Verifizierung fehlgeschlagen. Bitte schließen Sie die Prüfung ab und versuchen Sie es erneut.',
     bookCooldownTitle: 'Termin bereits gebucht!',
     bookCooldownNote:

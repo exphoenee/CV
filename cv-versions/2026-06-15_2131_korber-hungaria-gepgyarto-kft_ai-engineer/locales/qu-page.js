@@ -77,6 +77,7 @@ export const QU_PAGE = {
     bookErrMissingFields: 'Ilyë nattë ú-quantë. Á quantë tai.',
     bookErrSlotUnavailable: 'Lúmë sina ú-engë. Á cilë exë.',
     bookErrRateLimited: 'Rimbë lúmi síra. Á tyarë enwa.',
+    bookErrDailyCap: 'Lúmí sírë quantë. Á tul epë aurë.',
     bookErrCaptcha: 'Tanwë ú-vanwa. Á carë ata, filë.',
     bookCooldownTitle: 'Lúmë sírë vallë!',
     bookCooldownNote: 'Lúmë sírë 48 lúmëar. Á tul epë.',

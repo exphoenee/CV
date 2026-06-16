@@ -73,8 +73,11 @@ export const HU_PAGE = {
     bookLoading: 'Szabad időpontok betöltése…',
     bookError: 'Nem sikerült betölteni az időpontokat.',
     bookRetry: 'Újrapróbálás',
+    bookErrRetryHint: 'Ellenőrizd az adataidat és próbáld újra.',
     bookEmpty: 'Nincs szabad időpont a következő 21 napban.',
     bookFailed: 'Hiba a foglalás során. Kérlek próbáld újra.',
+    bookErrDailyCap: 'A mai foglalási limit betelt. Gyere vissza holnap.',
+    bookErrRateLimited: 'Az elmúlt 24 órában már foglaltál. Kérlek próbáld meg később.',
     bookCooldownTitle: 'Időpont már foglalva!',
     bookCooldownNote:
       'Az elmúlt 48 órában már foglaltál időpontot. Gyere vissza később egy új foglaláshoz.',

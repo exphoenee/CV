@@ -653,6 +653,21 @@ export function bookingModalHTML(prefix) {
 
     '      <div id="' +
       p +
+      '-bk-step-error" class="bk-step bk-step-error bk-hidden" role="alert" aria-live="assertive">',
+    '        <div class="bk-confirm-check" aria-hidden="true"><i class="fa-regular fa-circle-xmark"></i></div>',
+    '        <p id="' + p + '-bk-error-msg" class="bk-confirm-title" data-bk-i18n-dynamic="bk-error-msg"></p>',
+    '        <p class="bk-confirm-note" data-bk-i18n="bookErrRetryHint">' +
+      t('bookErrRetryHint') +
+      '</p>',
+    '        <button class="bk-btn-primary" id="' +
+      p +
+      '-bk-error-back">' +
+      t('bookRetry') +
+      '</button>',
+    '      </div>',
+
+    '      <div id="' +
+      p +
       '-bk-step-confirm" class="bk-step bk-step-confirm bk-hidden" role="status" aria-live="polite">',
     '        <div class="bk-confirm-check" aria-hidden="true"><i class="fa-solid fa-check"></i></div>',
     '        <p class="bk-confirm-title" data-bk-i18n="bookConfirmTitle">' +
@@ -694,6 +709,7 @@ var BOOKING_ERROR_KEYS = {
   INVALID_EMAIL: 'errEmailInvalid',
   SLOT_UNAVAILABLE: 'bookErrSlotUnavailable',
   RATE_LIMITED: 'bookErrRateLimited',
+  DAILY_CAP_REACHED: 'bookErrDailyCap',
   CAPTCHA_FAILED: 'bookErrCaptcha',
   BOOKING_FAILED: 'bookFailed',
 };
@@ -720,6 +736,7 @@ export function initBookingModal(prefix) {
   var BK_COOLDOWN_MS = 48 * 60 * 60 * 1000;
   var BK_MIN_FILL_MS = 2500;
   var bkFormShownAt = 0;
+  var lastErrorCode = null;
 
   // --- Cloudflare Turnstile (bot verification, validated server-side in GAS) ---
   var turnstileWidgetId = null;
@@ -787,6 +804,7 @@ export function initBookingModal(prefix) {
     p + '-bk-step-time',
     p + '-bk-step-form',
     p + '-bk-step-confirm',
+    p + '-bk-step-error',
     p + '-bk-cooldown',
   ];
 
@@ -945,6 +963,11 @@ export function initBookingModal(prefix) {
   document.getElementById(p + '-bk-back-time').addEventListener('click', function () {
     show(p + '-bk-step-time');
   });
+  document.getElementById(p + '-bk-error-back').addEventListener('click', function () {
+    resetTurnstile();
+    // Go back to time slot selection so the user can pick a different slot
+    show(p + '-bk-step-time');
+  });
   document.getElementById(p + '-bk-new').addEventListener('click', function () {
     selectedSlot = null;
     document.getElementById(p + '-bk-form').reset();
@@ -997,8 +1020,10 @@ export function initBookingModal(prefix) {
 
     // Require a Turnstile token (the GAS verifies it server-side).
     if (!turnstileToken) {
-      alert(bookingErrorMessage('CAPTCHA_FAILED'));
+      lastErrorCode = 'CAPTCHA_FAILED';
+      document.getElementById(p + '-bk-error-msg').textContent = bookingErrorMessage(lastErrorCode);
       submitBtn.disabled = false;
+      show(p + '-bk-step-error');
       return;
     }
 
@@ -1027,17 +1052,21 @@ export function initBookingModal(prefix) {
           document.getElementById(p + '-bk-confirm-detail').textContent = formatSlot(start, end);
           show(p + '-bk-step-confirm');
         } else {
-          alert(bookingErrorMessage(data && data.error));
+          lastErrorCode = data && data.error || 'BOOKING_FAILED';
+          document.getElementById(p + '-bk-error-msg').textContent = bookingErrorMessage(lastErrorCode);
           resetTurnstile();
           submitBtn.disabled = false;
           submitBtn.textContent = locale.t('bookSubmit');
+          show(p + '-bk-step-error');
         }
       })
       .catch(function () {
-        alert(bookingErrorMessage('BOOKING_FAILED'));
+        lastErrorCode = 'BOOKING_FAILED';
+        document.getElementById(p + '-bk-error-msg').textContent = bookingErrorMessage(lastErrorCode);
         resetTurnstile();
         submitBtn.disabled = false;
         submitBtn.textContent = locale.t('bookSubmit');
+        show(p + '-bk-step-error');
       });
   });
 
@@ -1052,6 +1081,11 @@ export function initBookingModal(prefix) {
     modal.querySelectorAll('[data-bk-i18n-placeholder]').forEach(function (el) {
       el.placeholder = locale.t(el.dataset.bkI18nPlaceholder);
     });
+    // Re-translate dynamic error message if the error screen is visible
+    var errorScreen = document.getElementById(p + '-bk-step-error');
+    if (lastErrorCode && errorScreen && !errorScreen.classList.contains('bk-hidden')) {
+      document.getElementById(p + '-bk-error-msg').textContent = bookingErrorMessage(lastErrorCode);
+    }
     if (allSlots.length > 0) renderDates();
   }
 

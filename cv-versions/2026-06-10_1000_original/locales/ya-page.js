@@ -77,6 +77,7 @@ export const YA_PAGE = {
     bookErrMissingFields: "Sain ú-thwei. Pyode sain.",
     bookErrSlotUnavailable: "Kainde ú-di'tkae. Pauk nain.",
     bookErrRateLimited: "Thwei kainde di'tkae. Pauk h'dlak.",
+    bookErrDailyCap: "Thwei kainde di'tkae. Pauk h'dlak.",
     bookErrCaptcha: "Sain ú-thwei. Pyode, pauk ata.",
     bookCooldownTitle: 'Del gkei kael-nain!',
     bookCooldownNote: 'Del gkei mae 48 yin. Kehrite nain thari-de.',

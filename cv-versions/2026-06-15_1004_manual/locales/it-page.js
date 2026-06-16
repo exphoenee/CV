@@ -77,6 +77,7 @@ export const IT_PAGE = {
     bookErrMissingFields: "Compila tutti i campi obbligatori.",
     bookErrSlotUnavailable: "Questo orario non è più disponibile. Scegline un altro.",
     bookErrRateLimited: "Troppe prenotazioni oggi da questa email. Riprova domani.",
+    bookErrDailyCap: 'Limite giornaliero di prenotazioni raggiunto. Torna domani.',
     bookErrCaptcha: "Verifica non riuscita. Completa il controllo e riprova.",
     bookCooldownTitle: 'Appuntamento già prenotato!',
     bookCooldownNote: 'Hai già prenotato un appuntamento nelle ultime 48 ore. Torna più tardi.',

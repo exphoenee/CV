@@ -77,6 +77,7 @@ export const DOT_PAGE = {
     bookErrMissingFields: 'Ei mae ú-nakhoe. Fichas san.',
     bookErrSlotUnavailable: 'Hrazef sí ú-laz. Nakhoe mae.',
     bookErrRateLimited: 'San hrazef asshekh. Nakhoe ajjalan.',
+    bookErrDailyCap: 'San hrazef asshekh. Nakhoe ajjalan.',
     bookErrCaptcha: 'Vitihirak ú-nakhoe. Fichas, nakhoe sí.',
     bookCooldownTitle: 'Hrazef nakhoe adakhat!',
     bookCooldownNote: 'Hash yer nakhoe hrazef 48 sinnothi. Nakhoe vosecchi yomme.',

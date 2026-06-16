@@ -77,6 +77,7 @@ export const ASG_PAGE = {
     bookErrMissingFields: 'Fyll öll skyldureit. Reyndu aftur.',
     bookErrSlotUnavailable: 'Þessi tími er ekki laus. Kjós annan.',
     bookErrRateLimited: 'Of margar bókanir í dag. Reyndu á morgun.',
+    bookErrDailyCap: 'Of margar bókanir í dag. Komdu aftur á morgun.',
     bookErrCaptcha: 'Staðfesting mistókst. Ljúk prófun ok reyndu aftur.',
     bookCooldownTitle: 'Tími þegar bókaður!',
     bookCooldownNote: 'Þú hefur þegar bókað tíma á síðustu 48 klukkustundum. Komdu aftur síðar.',

@@ -77,6 +77,7 @@ export const ES_PAGE = {
     bookErrMissingFields: 'Por favor, completa todos los campos obligatorios.',
     bookErrSlotUnavailable: 'Esta franja horaria ya no está disponible. Elige otra.',
     bookErrRateLimited: 'Demasiadas reservas hoy desde este correo. Inténtalo mañana.',
+    bookErrDailyCap: 'Límite de reservas de hoy alcanzado. Vuelve mañana.',
     bookErrCaptcha: 'La verificación falló. Completa la comprobación e inténtalo de nuevo.',
     bookCooldownTitle: '¡Cita ya reservada!',
     bookCooldownNote: 'Ya has reservado una cita en las últimas 48 horas. Vuelve más tarde.',

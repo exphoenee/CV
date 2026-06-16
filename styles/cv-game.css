@@ -1855,7 +1855,8 @@ canvas {
   opacity: 0.5;
   cursor: default;
 }
-.bk-step-confirm {
+.bk-step-confirm,
+.bk-step-error {
   text-align: center;
   padding: 20px 0;
 }
@@ -1863,6 +1864,10 @@ canvas {
   font-size: 40px;
   color: #49cc90;
   margin-bottom: 12px;
+}
+
+.bk-step-error .bk-confirm-check {
+  color: #ef4444;
 }
 .bk-confirm-title {
   font-family: var(--font-pixel);

@@ -78,6 +78,7 @@ export const HU_PAGE = {
     bookErrMissingFields: 'Tölts ki minden kötelező mezőt.',
     bookErrSlotUnavailable: 'Ez az időpont már nem elérhető. Válassz másikat.',
     bookErrRateLimited: 'Ma túl sok foglalás érkezett erről az emailről. Próbáld holnap.',
+    bookErrDailyCap: 'A mai foglalási limit betelt. Gyere vissza holnap.',
     bookErrCaptcha: 'A megerősítés nem sikerült. Pipáld ki az ellenőrzést, és próbáld újra.',
     bookCooldownTitle: 'Időpont már foglalva!',
     bookCooldownNote:

@@ -77,6 +77,7 @@ export const FR_PAGE = {
     bookErrMissingFields: "Veuillez remplir tous les champs obligatoires.",
     bookErrSlotUnavailable: "Ce créneau n'est plus disponible. Veuillez en choisir un autre.",
     bookErrRateLimited: "Trop de réservations aujourd'hui avec cette adresse e-mail. Veuillez réessayer demain.",
+    bookErrDailyCap: "Limite de réservation atteinte aujourd'hui. Revenez demain.",
     bookErrCaptcha: "La vérification a échoué. Veuillez compléter le contrôle et réessayer.",
     bookCooldownTitle: 'Rendez-vous déjà réservé !',
     bookCooldownNote:

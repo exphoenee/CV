@@ -77,6 +77,7 @@ export const GOA_PAGE = {
     bookErrMissingFields: "Joma noc ú-tal. Kree, tal mak ei!",
     bookErrSlotUnavailable: "Tal mak ú-chel. Mak nok exi!",
     bookErrRateLimited: "San joma kek. Kree shek nok!",
+    bookErrDailyCap: 'San joma noc kek. Kree shek nok!',
     bookErrCaptcha: "Tal noc ú-chel. Kree, mak ata!",
     bookCooldownTitle: 'Joma noc chel tal mak!',
     bookCooldownNote: "Joma noc chel 48 kel'shah. Shal kree thari.",

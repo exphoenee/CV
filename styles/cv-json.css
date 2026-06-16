@@ -784,7 +784,8 @@ a:hover {
   opacity: 0.5;
   cursor: default;
 }
-.bk-step-confirm {
+.bk-step-confirm,
+.bk-step-error {
   text-align: center;
   padding: 20px 0;
 }
@@ -792,6 +793,10 @@ a:hover {
   font-size: 40px;
   color: var(--accent);
   margin-bottom: 12px;
+}
+
+.bk-step-error .bk-confirm-check {
+  color: #d32f2f;
 }
 .bk-confirm-title {
   font-size: 15px;

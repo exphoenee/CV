@@ -78,6 +78,7 @@ export const EN_PAGE = {
     bookErrMissingFields: 'Please fill in all required fields.',
     bookErrSlotUnavailable: 'That time slot is no longer available. Please pick another.',
     bookErrRateLimited: 'Too many bookings today from this email. Please try again tomorrow.',
+    bookErrDailyCap: "Today's booking limit reached. Come back tomorrow.",
     bookErrCaptcha: 'Verification failed. Please complete the check and try again.',
     bookCooldownTitle: 'Meeting already booked!',
     bookCooldownNote:

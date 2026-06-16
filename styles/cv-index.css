@@ -1039,7 +1039,8 @@ h1 small {
   background: var(--accent-bg-hover);
 }
 
-.bk-step-confirm {
+.bk-step-confirm,
+.bk-step-error {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1058,6 +1059,11 @@ h1 small {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.bk-step-error .bk-confirm-check {
+  color: #d32f2f;
+  background: rgba(211, 47, 47, 0.1);
 }
 
 .bk-confirm-title {
