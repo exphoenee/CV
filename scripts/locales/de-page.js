@@ -72,8 +72,11 @@ export const DE_PAGE = {
     bookLoading: 'Verfügbare Termine werden geladen…',
     bookError: 'Termine konnten nicht geladen werden.',
     bookRetry: 'Wiederholen',
+    bookErrRetryHint: 'Bitte überprüfen Sie Ihre Angaben und versuchen Sie es erneut.',
     bookEmpty: 'Keine freien Termine in den nächsten 21 Tagen.',
     bookFailed: 'Buchung fehlgeschlagen. Bitte versuchen Sie es erneut.',
+    bookErrDailyCap: 'Heutiges Buchungslimit erreicht. Kommen Sie morgen wieder.',
+    bookErrRateLimited: 'Sie haben bereits in den letzten 24 Stunden gebucht. Bitte versuchen Sie es später erneut.',
     bookCooldownTitle: 'Termin bereits gebucht!',
     bookCooldownNote:
       'Du hast in den letzten 48 Stunden bereits einen Termin gebucht. Komm später wieder.',

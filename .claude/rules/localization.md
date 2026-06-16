@@ -53,6 +53,24 @@ A fiktív nyelveknél nem kell valódi fordítás, de tartsd meg a stílust:
 - Quenya (`qu`): elvontabb, hosszabb szavak, pl. `"Centapoldo cendë…"`
 - A többi saját belső logikával bír — nézd meg a szomszédos kulcsokat és kövesd a mintát
 
+## ⚠️ KÖTELEZŐ: JS szintaxis validálás módosítás után
+
+A locale fájlok ES modul JS fájlok — egy nem escape-elt aposztróf `'` egy single-quote `'...'` stringben
+SyntaxErrort okoz, ami az egész alkalmazást letöri.
+
+**Minden locale fájl módosítása után futtasd:**
+
+```bash
+node -c scripts/locales/<lang>.js
+```
+
+**Bővebben:** `.claude/rules/js-syntax-validation.md`
+
+**Aranyszabály:** Francia, olasz, goa'uld és klingon stringekhez MINDIG dupla idézőjelet (`"..."`) használj —
+soha ne `'...'`-t, mert ezek a nyelvek gyakran tartalmaznak aposztrófot.
+
+---
+
 ## `content` mező (opcionális tartalom-felülírás)
 
 Ha egy locale `content` mezőt tartalmaz (pl. `hu.js`), az felülírhatja a CV szöveges tartalmát:

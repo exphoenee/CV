@@ -467,16 +467,16 @@
         <div class="dialogue-box hire-dialog-game">
           <div class="dialogue-header">
             <span class="dialogue-dot" aria-hidden="true"></span>
-            <span id="hire-modal-title">Contact Viktor</span>
+            <span id="hire-modal-title" data-hire-i18n="contactTitle">Contact Viktor</span>
             <span class="dialogue-dot" aria-hidden="true"></span>
           </div>
           <div data-fs-success class="cv-success-hidden">
-            <p style="font-size:12px;font-family:var(--font-pixel);color:#86efac;">Thanks for reaching out!</p>
-            <p style="font-size:9px;font-family:var(--font-pixel);color:#94a3b8;">Your message was sent successfully. I'll get back to you soon.</p>
+            <p style="font-size:12px;font-family:var(--font-pixel);color:#86efac;" data-hire-i18n="hireThanks">Thanks for reaching out!</p>
+            <p style="font-size:9px;font-family:var(--font-pixel);color:#94a3b8;" data-hire-i18n="hireSentNote">Your message was sent successfully. I'll get back to you soon.</p>
           </div>
           <div data-hire-cooldown class="cv-success-hidden">
-            <p style="font-size:12px;font-family:var(--font-pixel);color:#fbbf24;">Message already sent!</p>
-            <p style="font-size:9px;font-family:var(--font-pixel);color:#94a3b8;">You've already sent a message today. Come back tomorrow.</p>
+            <p style="font-size:12px;font-family:var(--font-pixel);color:#fbbf24;" data-hire-i18n="hireCooldownTitle">Message already sent!</p>
+            <p style="font-size:9px;font-family:var(--font-pixel);color:#94a3b8;" data-hire-i18n="hireCooldownNote">You've already sent a message today. Come back tomorrow.</p>
           </div>
           <div data-fs-error class="cv-error-hidden"></div>
           <form id="hire-game-form">
@@ -485,47 +485,54 @@
               name="_subject"
               value="Hire inquiry from CV - game"
             />
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
             <div class="hire-field">
-              <label for="hire-game-name">Your name</label>
+              <label for="hire-game-name" data-hire-i18n="yourName">Your name</label>
               <input
                 id="hire-game-name"
                 type="text"
                 name="name"
                 required
                 placeholder="Jane Smith"
+                data-hire-i18n-placeholder="namePlaceholder"
                 data-fs-field
               />
             </div>
             <div class="hire-field">
-              <label for="hire-game-email">Your email</label>
+              <label for="hire-game-email" data-hire-i18n="yourEmail">Your email</label>
               <input
                 id="hire-game-email"
                 type="email"
                 name="email"
                 required
                 placeholder="your@email.com"
+                data-hire-i18n-placeholder="emailPlaceholder"
                 data-fs-field
               />
             </div>
             <div class="hire-field">
-              <label for="hire-game-message">Message</label>
+              <label for="hire-game-message" data-hire-i18n="message">Message</label>
               <textarea
                 id="hire-game-message"
                 name="message"
                 required
+                maxlength="2000"
                 rows="4"
                 placeholder="Hi Viktor, we'd like to..."
+                data-hire-i18n-placeholder="messagePlaceholder"
                 data-fs-field
               ></textarea>
             </div>
+            <div id="hire-game-turnstile" class="hire-turnstile"></div>
             <div class="hire-actions">
-              <button type="submit" class="dialogue-btn" data-fs-submit-btn aria-label="Send message to Viktor">
+              <button type="submit" class="dialogue-btn" data-fs-submit-btn data-hire-i18n="send" aria-label="Send message to Viktor">
                 Send
               </button>
               <button
                 type="button"
                 id="hire-close"
                 class="dialogue-btn btn-exit"
+                data-hire-i18n="close"
                 aria-label="Close contact form"
               >
                 Close

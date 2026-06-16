@@ -1,10 +1,10 @@
 ---
 name: cover-letter-agent
 description: >
-  Writes personalized English and Hungarian cover letters for a specific job application.
+  Writes personalized English, Hungarian and JD-language cover letters.
   Grounded exclusively in cv-data.js and profile/*.md — never invents skills or experience.
-  Detects the JD's primary language for tone calibration, but always produces both languages.
-  Saves cover-letter-en.md and cover-letter-hu.md to the target folder.
+  Automatically detects JD_PRIMARY_LANGUAGE and writes a cover letter in that language
+  (if supported: de/fr/es/it) in addition to the always-written EN and HU versions.
 ---
 
 # Cover Letter Agent
@@ -125,9 +125,18 @@ Store as `HU_LETTER`.
 
 ---
 
-## Step 4b — Write cover letter in JD language (IF supported and different from EN/HU)
+## Step 4b — Write cover letter in JD language (ALWAYS, if supported)
 
-If `JD_PRIMARY_LANGUAGE` is one of `"de"`, `"fr"`, `"es"`, `"it"`:
+The agent ALWAYS writes in the JD's primary language, in addition to English and Hungarian.
+
+### 4b-1 — Determine JD language target
+
+- If `JD_PRIMARY_LANGUAGE` is `"de"`, `"fr"`, `"es"`, or `"it"` → write a cover letter in that language.
+- If `JD_PRIMARY_LANGUAGE` is `"en"` → SKIP (English is already written in Step 3).
+- If `JD_PRIMARY_LANGUAGE` is `"hu"` → SKIP (Hungarian is already written in Step 4).
+- If `JD_PRIMARY_LANGUAGE` is something else (not supported) → SKIP with note.
+
+### 4b-2 — Write the JD-language letter
 
 1. Load the locale rules for tone/register guidance:
    Read `.claude/rules/locales/<lang>.md` for the target language.
@@ -164,9 +173,8 @@ If `JD_PRIMARY_LANGUAGE` is one of `"de"`, `"fr"`, `"es"`, `"it"`:
 
 4. Store as `JD_LETTER` with the language code: e.g. for German → `DE_LETTER`, for French → `FR_LETTER`
 
-If `JD_PRIMARY_LANGUAGE` is some other language (not en/hu/de/fr/es/it):
+If the JD language is not supported (not en/hu/de/fr/es/it):
 
-- Do NOT write a JD-language cover letter
 - Set `COVER_LETTER_JD = null`
 - Note in the report: "A(z) [lang] nyelv nem támogatott — csak angol és magyar levél készült."
 
@@ -208,10 +216,11 @@ Write `OUTPUT_FOLDER/cover-letter-hu.md`:
 HU_LETTER
 ```
 
-### 5c — JD language version (if applicable)
+### 5c — JD language version (ALWAYS, if language is supported and different from EN/HU)
 
-If `JD_PRIMARY_LANGUAGE` is not `"en"` and not `"hu"`:
-Determine the language code and file suffix:
+Write the JD-language cover letter if a `JD_LETTER` was created in Step 4b.
+
+Determine file suffix:
 | `JD_PRIMARY_LANGUAGE` | Fájlnév |
 |---|---|
 | `"de"` | `cover-letter-de.md` |
@@ -219,7 +228,7 @@ Determine the language code and file suffix:
 | `"es"` | `cover-letter-es.md` |
 | `"it"` | `cover-letter-it.md` |
 
-Write the file:
+If `JD_PRIMARY_LANGUAGE` is `"en"` or `"hu"` (already covered by Step 3/4): skip — no duplicate.
 
 ```markdown
 <!--
@@ -240,7 +249,7 @@ Write the file:
 ```
 COVER_LETTER_EN = OUTPUT_FOLDER/cover-letter-en.md
 COVER_LETTER_HU = OUTPUT_FOLDER/cover-letter-hu.md
-COVER_LETTER_JD = OUTPUT_FOLDER/cover-letter-[lang].md  (null if JD_PRIMARY_LANGUAGE is en or hu)
+COVER_LETTER_JD = OUTPUT_FOLDER/cover-letter-[lang].md  (null if JD language is not supported)
 STATUS = "ok"
 ```
 
@@ -271,7 +280,7 @@ This step is informational — you do NOT dispatch any agent here, just recommen
 - ❌ Never use first-person plural ("we built") for solo work — be accurate
 - ✅ Every paragraph must contain at least one specific, citable claim from EVIDENCE
 - ✅ **EN and HU letters are ALWAYS written**, regardless of JD language
-- ✅ JD language cover letter is written IF and ONLY IF JD_PRIMARY_LANGUAGE is not en/hu
+- ✅ JD language cover letter is ALWAYS written when JD_PRIMARY_LANGUAGE is de/fr/es/it (in addition to EN + HU which are always written)
 - ✅ Output files are markdown — easy to edit before sending
 - ✅ English letter uses English date format; Hungarian letter uses Hungarian date format; JD language letter uses its own conventions
 - ✅ All agent-facing text and comments in Hungarian; letter content follows the target language

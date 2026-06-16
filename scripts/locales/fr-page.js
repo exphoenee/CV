@@ -72,8 +72,11 @@ export const FR_PAGE = {
     bookLoading: 'Chargement des créneaux disponibles…',
     bookError: 'Impossible de charger les créneaux.',
     bookRetry: 'Réessayer',
+    bookErrRetryHint: 'Veuillez vérifier vos informations et réessayer.',
     bookEmpty: 'Aucun créneau disponible dans les 21 prochains jours.',
     bookFailed: 'La réservation a échoué. Veuillez réessayer.',
+    bookErrDailyCap: "Limite de réservation atteinte aujourd'hui. Revenez demain.",
+    bookErrRateLimited: 'Vous avez déjà réservé au cours des 24 dernières heures. Veuillez réessayer plus tard.',
     bookCooldownTitle: 'Rendez-vous déjà réservé !',
     bookCooldownNote:
       'Vous avez déjà réservé un rendez-vous dans les dernières 48 heures. Revenez plus tard.',

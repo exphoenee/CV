@@ -50,10 +50,26 @@ For each locale in `TARGET_LOCALES`:
 Also read `scripts/cv-data.js` to have the full English context available.
 
 Read `.claude/rules/translation-length.md` → store as `LENGTH_RULE`. This is a HARD
-constraint: every translated `content` field must not exceed the character count of its
-English source field. For each field in `CHANGED_FIELDS`, record the English source length:
-`EN_LEN[field] = CHANGED_FIELDS.<field>.new.length` (JS String `.length`). These are the
-per-field budgets you must stay within.
+constraint enforced on only **two kinds of measurement** — not on every field individually:
+
+1. **hero (summary)** — the summary string length
+2. **per-workplace TOTAL** — for each `workExperience` entry, the COMBINED length of its
+   `description` + all `bullets[]` + all `projects[].bullets[]`
+
+The budget (numbers **and** tolerance band) lives in a **single source of truth**:
+`.claude/reference/current-english-lengths.json`. It is fixed — NOT derived from
+`scripts/cv-data.js`. You do not need to memorize or recompute the numbers or the band: the
+validator `.claude/scripts/check-translation-lengths.py` reads them and enforces the rule.
+Run it to see the budget table:
+
+```bash
+python .claude/scripts/check-translation-lengths.py --print
+```
+
+NOT validated: community, education, hobbyProjects, programmingLanguages, skillGroups.
+
+Because the workplace bound is a TOTAL, a changed bullet may individually grow or shrink as
+long as the workplace's combined text stays within its band — balance across the entry.
 
 ---
 
@@ -113,21 +129,48 @@ using the established fictional vocabulary.
 - Maintain the same length and energy as the existing fictional content
 - Do NOT simply copy the old fictional text — update it to reflect the new English emphasis
 
-### 2c-len — Enforce the length budget (per `LENGTH_RULE`)
+### 2c-len — Enforce the length budget (-5% to +2% tolerance band, HARD constraint)
 
-After drafting each translated field, measure its character count (`.length`) and compare
-against the English source budget `EN_LEN[field]`:
+This is a **HARD CONSTRAINT** — the pipeline WILL REJECT any translation outside the
+tolerance band. The budget and band live in the single source of truth
+`.claude/reference/current-english-lengths.json`; the validator enforces them. Only two things
+are checked: the **summary** and each **workplace TOTAL** (description + all bullets + all
+project bullets).
 
+After drafting the translation, run the validator to see exactly what is out of band:
+
+```bash
+python .claude/scripts/check-translation-lengths.py
 ```
-translated.length  <=  EN_LEN[field]
-```
 
-If a draft exceeds its budget, **do not truncate mid-sentence** — condense per
-`.claude/rules/translation-length.md`: shorten redundant lists (three items → two), drop
-filler words, and avoid restating a concept already mentioned. Keep the key tech keywords
-(TypeScript, React, Svelte, Node.js, CI, …) and the field's core meaning. Re-measure and
-repeat until within budget. Apply this to every changed field: `summary`,
-`workExperience[].description`, each changed `bullets[]` item.
+For each item it reports:
+- **TOO_SHORT** → Expand (the summary, or any text in that workplace).
+- **TOO_LONG** → Condense (the summary, or any text in that workplace).
+- not listed → within the band, no adjustment needed.
+
+Because the workplace bound is a TOTAL, you have freedom to rebalance length across the
+entry's description and bullets — a single bullet need not match its English counterpart, only
+the workplace sum must stay in band.
+
+**If too short — EXPAND the text.** Do not just pad with filler. Add natural language
+structure that fits the target language:
+- Use full verb forms instead of terse ones ("ich habe geleitet" instead of "geleitet")
+- Add clarifying connective words natural to the target language
+- For fictional languages: use more elaborate, decorative phrasing
+- NEVER add information not present in the English source
+
+**If too long — CONDENSE the text.** Do not truncate mid-sentence:
+- Remove filler words: "with a focus on" → "focusing on" or simply drop
+- Shorten redundant lists: "for writing, refactoring, and documenting code" → "to write, refactor, and document code"
+- Drop adverbs that add no meaning: "significantly", "greatly", "substantially"
+- Avoid restating categories already known: "enterprise-level corporate" → "enterprise"
+- Use shorter synonyms: "I have implemented" → "I implemented", "in order to" → "to"
+- Merge two clauses into one: "I led X, which resulted in Y" → "I led X, achieving Y"
+
+Keep the key tech keywords (TypeScript, React, Svelte, Node.js, CI, …) and the core
+meaning. Re-run the validator and repeat until it reports no out-of-band items. Only the
+`summary` and each affected workplace TOTAL are measured — individual bullets need not match
+their English counterpart's length.
 
 Fields backed by `content: null` fall back to English automatically and need no action.
 
@@ -149,9 +192,15 @@ After writing each file:
 
 - Verify the file still has valid JS syntax structure (labels object + content object both present)
 - Verify no keys were accidentally removed
-- **Length check (per `LENGTH_RULE`):** for every changed field, confirm
-  `translated.length <= EN_LEN[field]`. If any field is over budget, condense it and rewrite
-  the file before continuing. Report the final per-field lengths in Step 4.
+- **Length check (per `LENGTH_RULE`):** after all 11 locale files are done, run the validator —
+  it is the authority on the budget and tolerance (both from
+  `.claude/reference/current-english-lengths.json`):
+  ```bash
+  python .claude/scripts/check-translation-lengths.py
+  ```
+  It exits 1 if the summary or any workplace total is out of band. If it fails, identify the
+  offenders, expand (TOO_SHORT) or condense (TOO_LONG) them, rewrite the file, and re-run until
+  it exits 0. Report the final lengths in Step 4.
 
 If any file fails validation: report the error and restore the original content.
 
@@ -187,11 +236,11 @@ Javasolt ellenőrzés:
 
 ## Hard Constraints
 
+- ❌ **ALWAYS** keep the summary and each workplace TOTAL within budget — enforced by `check-translation-lengths.py` (single source: `.claude/reference/current-english-lengths.json`). Expand if too short, condense if too long; do not proceed until the validator exits 0. The orchestrator automatically rejects out-of-band translations.
 - ❌ Never translate proper nouns: TypeScript, React, Svelte, Node.js, MySQL, etc. stay unchanged
 - ❌ Never change `labels` fields — only `content` is in scope
 - ❌ Never add new `content` subfields that don't exist in the current locale file
 - ❌ Never remove existing `content` fields — only update values that correspond to CHANGED_FIELDS
-- ❌ Never let a translated field exceed its English source length — enforce `.claude/rules/translation-length.md` (translated.length ≤ EN_LEN[field]); condense, never truncate
 - ✅ For fictional languages: adapt meaning using established vocabulary, not literal translation
 - ✅ Always read the existing content for style calibration before translating
 - ✅ Match the indentation and formatting of each file exactly

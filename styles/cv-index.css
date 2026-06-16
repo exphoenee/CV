@@ -161,7 +161,7 @@ h1 small {
 .btn-hire {
   border-color: var(--accent);
   background: var(--accent-bg);
-  animation: hire-glow 2s ease-in-out infinite;
+  animation: hire-glow 3s ease-in-out infinite;
 }
 .btn-hire:hover {
   background: var(--accent-bg-hover);
@@ -171,17 +171,26 @@ h1 small {
   color: var(--accent);
 }
 @keyframes hire-glow {
+  /* Pulse rises and falls over the first ~40% of the cycle, then holds dim
+     (a rest) until the end — a pause before the cycle restarts. */
   0%,
+  40%,
   100% {
     box-shadow:
       0 0 10px rgba(255, 112, 36, 0.1),
       0 0 20px rgba(255, 112, 36, 0.05);
   }
-  50% {
+  20% {
     box-shadow:
       0 0 20px rgba(255, 112, 36, 0.5),
       0 0 40px rgba(255, 112, 36, 0.25),
       0 0 60px rgba(255, 112, 36, 0.1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-hire,
+  .btn-book {
+    animation: none;
   }
 }
 .btn-game {
@@ -764,9 +773,13 @@ h1 small {
 .btn-book {
   border-color: var(--accent);
   background: var(--accent-bg);
+  /* Same glow as Hire Me, but started half a cycle early (negative delay on a
+     3s animation = 180° phase shift) so the two buttons pulse alternately. */
+  animation: hire-glow 3s ease-in-out -1.5s infinite;
 }
 .btn-book:hover {
   background: var(--accent-bg-hover);
+  animation: none;
 }
 .btn-book .label {
   color: var(--accent);
@@ -789,6 +802,14 @@ h1 small {
 
 .bk-hidden {
   display: none !important;
+}
+
+.bk-turnstile,
+.hire-turnstile {
+  margin: 10px 0;
+  min-height: 65px;
+  display: flex;
+  justify-content: center;
 }
 
 .bk-state {
@@ -1018,7 +1039,8 @@ h1 small {
   background: var(--accent-bg-hover);
 }
 
-.bk-step-confirm {
+.bk-step-confirm,
+.bk-step-error {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1037,6 +1059,11 @@ h1 small {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.bk-step-error .bk-confirm-check {
+  color: #d32f2f;
+  background: rgba(211, 47, 47, 0.1);
 }
 
 .bk-confirm-title {
@@ -1170,4 +1197,31 @@ h1 small {
 }
 [data-theme='light'] .cv-toast-close:hover {
   color: #172b4d;
+}
+
+.hire-submit {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Submit button spinner while Turnstile loads */
+.hire-submit.is-loading,
+.bk-btn-primary.is-loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+.hire-submit.is-loading::after,
+.bk-btn-primary.is-loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border: 2px solid rgba(255,255,255,0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: bk-spin 0.7s linear infinite;
 }

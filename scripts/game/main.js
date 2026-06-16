@@ -24,7 +24,16 @@ import Mushroom from './entities/decor/Mushroom.js';
 import Log from './entities/decor/Log.js';
 import GoldOre from './entities/decor/GoldOre.js';
 import PickableOre from './entities/decor/PickableOre.js';
-import { MUSIC_GENRES, initFormspree, bookingModalHTML, initBookingModal } from '../shared.js';
+import {
+  MUSIC_GENRES,
+  initFormspree,
+  bookingModalHTML,
+  initBookingModal,
+  checkEmailDomain,
+  TURNSTILE_SITEKEY,
+  loadTurnstileScript,
+} from '../shared.js';
+import { locale } from '../locale.js';
 import {
   MUSIC_STATE_KEY,
   MUSIC_TIME_KEY,
@@ -32,6 +41,7 @@ import {
   MUSIC_GENRE_KEY,
   MUSIC_REPEAT_KEY,
   SFX_VOLUME_KEY,
+  CHECK_EMAIL_DOMAIN,
 } from '../config.js';
 import Hay from './entities/decor/Hay.js';
 import Carrot from './entities/decor/Carrot.js';
@@ -498,8 +508,10 @@ class GameEngine {
         this.player.debugMode = this.debugMode;
       }
 
-      // M to toggle music play/pause
-      if (e.key === 'm' || e.key === 'M') {
+      // M to toggle music play/pause — only while actually playing. When a
+      // modal/form is open the game is frozen and may hold input focus, so M
+      // must not hijack typing (e.g. the letter "m" in a contact message).
+      if ((e.key === 'm' || e.key === 'M') && !this.isFrozen) {
         const musicAudio = document.getElementById('game-music-audio');
         const musicPlayBtn = document.getElementById('game-music-playpause');
         if (musicPlayBtn) {
@@ -1083,8 +1095,57 @@ class GameEngine {
 
     if (!hireModal || !form) return;
 
+    // Localize the modal's static text (title, success/cooldown notes, labels,
+    // placeholders, buttons) and keep it in sync on language change — mirrors the
+    // shared Hire modal's data-hire-i18n pattern (shared.js).
+    const updateHireText = () => {
+      hireModal.querySelectorAll('[data-hire-i18n]').forEach((el) => {
+        el.textContent = locale.t(el.dataset.hireI18n);
+      });
+      hireModal.querySelectorAll('[data-hire-i18n-placeholder]').forEach((el) => {
+        el.placeholder = locale.t(el.dataset.hireI18nPlaceholder);
+      });
+    };
+    updateHireText();
+    window.addEventListener('localechange', updateHireText);
+
     const COOLDOWN_KEY = 'hire_sent_ts';
     const COOLDOWN_MS = 24 * 60 * 60 * 1000;
+    const MIN_FILL_MS = 2500;
+    let gameOpenedAt = 0;
+
+    // Cloudflare Turnstile — Formspree verifies the cf-turnstile-response server-side.
+    let gameTurnstileWidgetId = null;
+    let gameTurnstileToken = '';
+    loadTurnstileScript();
+    const ensureGameTurnstile = () => {
+      if (gameTurnstileWidgetId !== null) return;
+      const container = document.getElementById('hire-game-turnstile');
+      if (!container) return;
+      if (!window.turnstile || !window.turnstile.render) {
+        setTimeout(ensureGameTurnstile, 300);
+        return;
+      }
+      gameTurnstileWidgetId = window.turnstile.render(container, {
+        sitekey: TURNSTILE_SITEKEY,
+        callback: (token) => {
+          gameTurnstileToken = token;
+        },
+        'expired-callback': () => {
+          gameTurnstileToken = '';
+        },
+        'error-callback': () => {
+          gameTurnstileToken = '';
+        },
+      });
+    };
+    const resetGameTurnstile = () => {
+      gameTurnstileToken = '';
+      if (gameTurnstileWidgetId !== null && window.turnstile) {
+        window.turnstile.reset(gameTurnstileWidgetId);
+      }
+    };
+
     const isOnCooldown = () => {
       const ts = parseInt(localStorage.getItem(COOLDOWN_KEY) || '0', 10);
       return ts > 0 && Date.now() - ts < COOLDOWN_MS;
@@ -1096,6 +1157,7 @@ class GameEngine {
     const submitBtn = form.querySelector('[type="submit"]');
 
     const openHire = () => {
+      gameOpenedAt = Date.now();
       fsSuccess?.classList.add('cv-success-hidden');
       if (fsError) {
         fsError.classList.add('cv-error-hidden');
@@ -1110,6 +1172,7 @@ class GameEngine {
         form.style.display = '';
         form.reset();
         if (submitBtn) submitBtn.disabled = false;
+        ensureGameTurnstile();
       }
 
       hireModal.classList.remove('dialogue-hidden');
@@ -1127,11 +1190,63 @@ class GameEngine {
     hireClose?.addEventListener('click', closeHire);
     hireBackdrop?.addEventListener('click', closeHire);
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       e.stopImmediatePropagation();
+
+      // Honeypot — bots fill hidden fields; humans don't.
+      if (form.querySelector('[name="_gotcha"]')?.value) return;
+
+      // Timing check — a submit faster than a human could fill the form is likely a bot.
+      if (gameOpenedAt && Date.now() - gameOpenedAt < MIN_FILL_MS) return;
+
+      // Same content validation as the shared Hire Me modal (shared.js).
+      const nameVal = document.getElementById('hire-game-name').value.trim();
+      const emailVal = document.getElementById('hire-game-email').value.trim();
+      const msgVal = document.getElementById('hire-game-message').value.trim();
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+      const wordCount = msgVal.split(/\s+/).filter(Boolean).length;
+      if (!nameVal || !emailOk || msgVal.length < 20 || wordCount < 4) {
+        if (fsError) {
+          const errKey = !nameVal
+            ? 'errFieldRequired'
+            : !emailOk
+              ? 'errEmailInvalid'
+              : 'errMessageTooShort';
+          fsError.classList.remove('cv-error-hidden');
+          fsError.textContent = locale.t(errKey);
+        }
+        return;
+      }
+      if (fsError) {
+        fsError.classList.add('cv-error-hidden');
+        fsError.textContent = '';
+      }
+
       if (submitBtn) submitBtn.disabled = true;
+
+      // MX domain check — same DoH lookup the shared Hire modal uses.
+      if (CHECK_EMAIL_DOMAIN && !(await checkEmailDomain(emailVal))) {
+        if (fsError) {
+          fsError.classList.remove('cv-error-hidden');
+          fsError.textContent = locale.t('errEmailNoMailServer');
+        }
+        if (submitBtn) submitBtn.disabled = false;
+        return;
+      }
+
+      // Require a Turnstile token — Formspree verifies it server-side.
+      if (!gameTurnstileToken) {
+        if (fsError) {
+          fsError.classList.remove('cv-error-hidden');
+          fsError.textContent = locale.t('bookErrCaptcha');
+        }
+        if (submitBtn) submitBtn.disabled = false;
+        return;
+      }
+
       const formData = new FormData(form);
+      formData.set('cf-turnstile-response', gameTurnstileToken);
       fetch('https://formspree.io/f/mrejlned', {
         method: 'POST',
         body: formData,
@@ -1145,17 +1260,19 @@ class GameEngine {
             fsSuccess?.classList.remove('cv-success-hidden');
           } else {
             if (submitBtn) submitBtn.disabled = false;
+            resetGameTurnstile();
             if (fsError) {
               fsError.classList.remove('cv-error-hidden');
-              fsError.textContent = 'Failed to send. Please try again.';
+              fsError.textContent = locale.t('errSendFailed');
             }
           }
         })
         .catch(() => {
           if (submitBtn) submitBtn.disabled = false;
+          resetGameTurnstile();
           if (fsError) {
             fsError.classList.remove('cv-error-hidden');
-            fsError.textContent = 'Failed to send. Please try again.';
+            fsError.textContent = locale.t('errSendFailed');
           }
         });
     });

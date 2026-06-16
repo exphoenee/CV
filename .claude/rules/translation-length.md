@@ -1,85 +1,81 @@
 # Fordítási karakterlimit szabály (translation length budget)
 
-A **`scripts/cv-data.js` angol szövege az igazságforrás**. Minden lefordított `content`
-mező karakterszáma **NEM lépheti túl** a megfelelő angol forrásmező karakterszámát.
+## Referencia
+
+A **referencia egy FIX budget** — **NEM** a mindenkori `scripts/cv-data.js`-ből számolódik.
+A budget **egyetlen helyen él** (single source of truth):
+
+**`.claude/reference/current-english-lengths.json`** — itt vannak a budget-számok **és** a
+tűrési sáv (`_tolerance`) is. Ezt olvassa a Python ellenőrző (`check-translation-lengths.py`),
+és ez az egyetlen mérvadó forrás. Ez a szabály-fájl már **nem** tartalmaz kézzel karbantartott
+számtáblázatot — a számokat a scriptből kérdezheted le:
+
+```bash
+python .claude/scripts/check-translation-lengths.py --print
+```
+
+> ⚠️ A budget-ot **soha ne generáld újra** a `cv-data.js`-ből egy-egy futáskor. Ha az angol
+> tartalom hossza megváltozik (pl. egy `/job-apply` átírja a summary-t), attól a budget **nem**
+> változik — a budget a fix layout-kapacitást védi, nem a pillanatnyi angol szöveg hosszát követi.
+> A budget módosítása **tudatos, kézi döntés**: csak a JSON-t írd át (a tűrést is ott állítod).
+
+**Csak két dolog van ellenőrizve:**
+1. **hero** (summary) — a teljes összefoglaló karakterszáma
+2. **munkahelyenkénti összes** — description + összes bullet + összes project bullet együttes hossza
+
+**NINCS ellenőrizve:** community, education, hobbyProjects, programmingLanguages, skillGroups
 
 Indok: a nézetek (különösen `cv-plain`, `cv-gantt`, kártyák) fix szélességű/magasságú
-konténerekben jelenítik meg a szöveget. Ha egy fordítás hosszabb az angolnál, eltörheti a
-dokumentum tördelését. Az angol hossz a biztonságos felső korlát.
-
----
-
-## Hatókör — érintett mezők
-
-A szabály a `content` alábbi szöveges mezőire vonatkozik, mezőről mezőre, ugyanarra az
-`id`-ra / bullet-pozícióra illesztve az angol forrással:
-
-- `summary`
-- `workExperience[].description`
-- `workExperience[].bullets[]` — elemenként
-- `workExperience[].projects[].bullets[]` — elemenként
-- `community`
+konténerekben jelenítik meg a szöveget. A +2% felső korlát biztosítja, hogy a fordítás
+ne törje el a dokumentum tördelését. A -5% alsó korlát pedig engedi, hogy a fordítás
+egy kicsit rövidebb legyen, de ne túlzottan.
 
 ---
 
 ## A szabály
 
 ```
-PER MEZŐ:  translated.length  <=  english_source.length
+hero (summary):  BUDGET_summary * 0.95  <=  translated_summary  <=  BUDGET_summary * 1.02
+munkahely:       BUDGET_workplace * 0.95  <=  translated_total  <=  BUDGET_workplace * 1.02
 ```
 
-- Egyenlő hossz **megengedett**; hosszabb **tilos**.
-- A mérés a JS `String.prototype.length` (UTF-16 code unit). Ékezetes/multibyte betűk
-  általában 1-nek számítanak — a tényleges szöveget mérd, nem az escape-elt forrást.
-- Az összevetés mindig az **adott mező** angol eredetijéhez történik (nem a teljes summary-hoz
-  egy bulletet). A bulleteknél pozíció/jelentés szerint párosíts.
+Ahol `munkahely_total` = az adott workExperience elem `description` + összes `bullets[]` + összes `projects[].bullets[]` hossza.
 
----
+A konkrét budget-értékek (és a tűrési sáv) a `.claude/reference/current-english-lengths.json`
+fájlban élnek — ez az egyetlen mérvadó forrás. Az aktuális táblázat kiíratása:
 
-## Ha a fordítás túllépné a limitet
-
-**Ne csonkolj mondat közben.** Tömöríts a jelentés és a kulcsszavak megtartásával:
-
-1. Redundáns felsorolások rövidítése (hármas lista → kettő, vagy a leglényegesebb elem).
-2. Töltelék- és kötőszavak elhagyása („jelentősen", „kiemelt hangsúlyt fektetve", stb.).
-3. Egyszer már kimondott fogalom ismételt említésének elhagyása (pl. ha a „CI pipeline"
-   szerepel, a „CI-minőségi szabványok" külön említése elhagyható).
-4. Hosszabb körülírás → tömör forma.
-
-**Mindig maradjon meg:** a fő tech-kulcsszavak (`TypeScript`, `React`, `Svelte`, `Node.js`,
-`CI`, stb.) és a mező fő állítása/jelentése. A tömörítés nem ronthatja a nyelvi minőséget
-és nem hagyhat ki igazolható tényt.
-
----
-
-## content: null eset
-
-Ha egy locale `content`-je vagy egy adott mezője `null`, az az angol alapszövegre esik
-vissza (lásd `scripts/locale.js` → `_mergeContent`). Ilyenkor a limit automatikusan
-teljesül (a megjelenített szöveg pont az angol), nincs teendő.
-
----
-
-## Verifikáció
-
-Minden **módosított** mezőre számold ki a hosszt és vesd össze az angol forrással. Ha
-bármelyik túllép, tömörítsd és mérd újra, amíg `translated.length <= english.length`.
-
-Példa mérő-snippet (Node, ideiglenes fájlból futtatva):
-
-```js
-const fs = require('fs');
-function field(file, re) {
-  const m = fs.readFileSync(file, 'utf8').match(re);
-  return m ? JSON.parse(m[1]) : null;
-}
-const en = field('scripts/cv-data.js', /summary:\s*("(?:[^"\\]|\\.)*")/);
-const tr = field('scripts/locales/hu.js', /summary:\s*("(?:[^"\\]|\\.)*")/);
-console.log(
-  'EN',
-  en.length,
-  '| HU',
-  tr.length,
-  tr.length <= en.length ? 'OK' : 'OVER +' + (tr.length - en.length),
-);
+```bash
+python .claude/scripts/check-translation-lengths.py --print
 ```
+
+---
+
+## Javítási útmutató
+
+### Ha a fordítás TÚL RÖVID (translated < BUDGET * 0.95)
+
+Bővítsd a munkahely teljes szövegét (description + bullets együtt) természetes módon:
+1. Használj teljesebb nyelvtani formákat
+2. Adj hozzá a nyelvtanilag helyes mondathoz szükséges kötőszavakat
+3. Fiktív nyelveknél használj hosszabb, díszítőbb kifejezéseket
+
+### Ha a fordítás TÚL HOSSZÚ (translated > BUDGET * 1.02)
+
+Tömörítsd a munkahely teljes szövegét:
+1. Töltelékszavak elhagyása
+2. Redundáns felsorolások rövidítése
+3. Hosszabb körülírás → tömör forma
+
+---
+
+## Automatikus verifikáció
+
+```bash
+python .claude/scripts/check-translation-lengths.py
+```
+
+A script:
+- Betölti a referencia hosszakat (`.claude/reference/current-english-lengths.json`)
+- Kiszámolja a hero és a munkahelyenkénti összegeket
+- Összehasonlítja a -5% / +2% sávval
+- Kilép 0-val ha minden OK, 1-gyel ha bármi a sávon kívül van

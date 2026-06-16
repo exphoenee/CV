@@ -4,16 +4,29 @@ Többnézetes, interaktív önéletrajz böngészőben. Egy központi adatforrá
 
 ## Tartalom
 
-- [Nézetek](#n%C3%A9zetek)
-- [Architektúra](#architekt%C3%BAra)
-- [Technológiai stack](#technol%C3%B3giai-stack)
-- [Könyvtárstruktúra](#k%C3%B6nyvt%C3%A1rstrukt%C3%BAra)
-- [Lokalizáció](#lokaliz%C3%A1ci%C3%B3)
-- [Játékmotor](#j%C3%A1t%C3%A9kmotor)
-- [Kapcsolatfelvétel](#kapcsolatfelv%C3%A9tel)
-- [Naptári foglalás](#napt%C3%A1ri-foglal%C3%A1s)
-- [AI munkafolyamat](#ai-munkafolyamat)
-- [Telepítés és futtatás](#telep%C3%ADt%C3%A9s-%C3%A9s-futtat%C3%A1s)
+- [CV — Viktor Bozzay](#cv--viktor-bozzay)
+  - [Tartalom](#tartalom)
+  - [Nézetek](#nézetek)
+  - [Architektúra](#architektúra)
+    - [Adatréteg](#adatréteg)
+    - [Megjelenítő réteg](#megjelenítő-réteg)
+    - [Közös réteg](#közös-réteg)
+    - [Konfiguráció](#konfiguráció)
+  - [Technológiai stack](#technológiai-stack)
+  - [Könyvtárstruktúra](#könyvtárstruktúra)
+  - [Lokalizáció](#lokalizáció)
+  - [Játékmotor](#játékmotor)
+  - [Zenelejátszó](#zenelejátszó)
+  - [Téma rendszer](#téma-rendszer)
+  - [E-mail domain validáció](#e-mail-domain-validáció)
+  - [Kapcsolatfelvétel](#kapcsolatfelvétel)
+  - [Naptári foglalás](#naptári-foglalás)
+    - [Backend — Google Apps Script (Code.gs)](#backend--google-apps-script-codegs)
+    - [Frontend — Booking Modal](#frontend--booking-modal)
+  - [AI munkafolyamat](#ai-munkafolyamat)
+    - [Képességek áttekintése](#képességek-áttekintése)
+    - [Részletes dokumentáció](#részletes-dokumentáció)
+  - [Futtatás](#futtatás)
 
 ## Nézetek
 
@@ -41,7 +54,7 @@ CV_DATA (cv-data.js)
     │
     ├── locale.js  ─── LocaleManager (12 nyelv)
     ├── config.js  ─── globális konstansok, feature flag-ek
-    └── shared.js  ─── közös segédfüggvények
+    ├── shared.js  ─── közös segédfüggvények
     └── cv-music-player.js ─── zenelejátszó
 ```
 
@@ -188,6 +201,12 @@ CV/
 │
 ├── .claude/
 │   ├── rules/            # Projekt konvenciók, AI szabályok
+│   │   └── translation-length.md   # Fordítási hossz-budget (fix, beégetett)
+│   ├── reference/
+│   │   └── current-english-lengths.json  # Fix hossz-budget JSON (kézzel karbantartott)
+│   ├── scripts/          # Globális AI segédscriptek
+│   │   ├── cv-ledger.py                   # Marker + history.md kezelő
+│   │   └── check-translation-lengths.py  # Fordítási hossz-budget ellenőrző
 │   ├── agents/           # AI agent definíciók
 │   └── skills/
 │       ├── cv-backup/
@@ -295,18 +314,94 @@ Minden nézet tartalmaz egy **Hire me** gombot, amely egy modális kapcsolatfelv
 
 ## Naptári foglalás
 
-Minden nézet tartalmaz egy **Meet** gombot is, amely időpontfoglalásra szolgál.
+Minden nézet tartalmaz egy **Meet** gombot, amely online időpontfoglalást nyit meg.
 
-- Az elérhető időpontok listából választható nap- és időpont-kártyákon jelennek meg
-- A dátumok és napnevek lokalizáltak: a `Intl.DateTimeFormat` API-t használja a kiválasztott felhasználói nyelvvel; fiktív nyelveknél angol fallback érvényesül
+### Backend — Google Apps Script (Code.gs)
+
+A foglalási rendszer egy [Google Apps Script](https://script.google.com) backendet használ, amely a Google Calendar API-ra épül. A GAS projekt külön repository-ban található:
+
+> 📁 [GAS]([E:/Projects/GoogleCalendarAPI/](https://github.com/exphoenee/GoogleCalendarAPI)) — `Code.gs`, `index.html`, `app.js`, `config.js`, `style.css`
+
+**Architektúra:**
+
+```
+Böngésző (scripts/shared.js — initBookingModal)
+    │
+    ▼ HTTPS GET (query params)
+Code.gs (Google Apps Script — doGet)
+    │
+    ├── Google Calendar API (naptár ellenőrzés + esemény létrehozás + meghívó)
+    └── ScriptProperties (foglalási adatok perzisztálása)
+```
+
+**Végpontok:**
+
+| `action` paraméter | Művelet |
+|--------------------|--------|
+| `slots` (alapértelmezett) | Szabad időpontok listája a naptárból, figyelembe véve a munkaidőt és rate limitet |
+| `debug` | Részletes napi bontás hibakereséshez |
+| `book` + `name`, `email`, `start`, `end`, `topic` | Foglalás létrehozása — validálás, rate limit ellenőrzés, calendar esemény + meghívó |
+
+**Rate limiting (3 szint):**
+
+1. **Per-email 24 órás blokk** — egy email címről csak egy foglalás 24 óránként (`RATE_LIMITED` hiba)
+2. **Globális napi limit** — maximum 5 foglalás naponta összesen (`DAILY_CAP_REACHED` hiba)
+3. **Interjú dátum nyilvántartás** — ha egy napra már van foglalás, az egész nap eltűnik a választóból
+
+A frontend a hibakódokat lokalizált üzenetekre fordítja (`bookErrRateLimited`, `bookErrDailyCap` locale kulcsok mind a 12 nyelven).
+
+**Konfiguráció (Code.gs tetején):**
+
+| Változó | Alapérték | Leírás |
+|---------|-----------|--------|
+| `SLOT_MINUTES` | 30 | Egy időpont hossza percben |
+| `BUFFER_MINUTES` | 30 | Szünet minden megbeszélés után |
+| `DAYS_AHEAD` | 21 | Hány napra előre mutasson időpontokat |
+| `GLOBAL_DAILY_MAX` | 5 | Maximum foglalások száma naponta |
+| `WORKING_HOURS` | 8-17 (H-P) | Munkaidő intervallumok naponként |
+
+### Frontend — Booking Modal
+
+A CV oldalon a foglalási felület `scripts/shared.js` `initBookingModal()` / `bookingModalHTML()` függvényeivel van implementálva:
+
+1. **Dátum választás** — a GAS-től kapott szabad időpontok alapján nap-kártyák jelennek meg
+2. **Időpont választás** — a kiválasztott nap szabad időpontjai
+3. **Adatok megadása** — név, email, téma + Cloudflare Turnstile CAPTCHA
+4. **Visszaigazolás** — sikeres foglalás esetén
+
+Lokalizáció:
+- A dátumok és napnevek `Intl.DateTimeFormat` API-val formázva a kiválasztott nyelven
+- Fiktív nyelveknél (`kl`, `qu`, `goa`, `ya`, `asg`, `dot`) angol fallback
 - Nyelváltáskor a dátumkártyák azonnal újrarenderelődnek
-- Játék nézetben szintén lefagyasztja a motort nyitáskor, MutationObserver figyeli a bezárást
+- Hibák modalban jelennek meg (nem `alert()`), a hibaüzenetek locale-váltáskor újrafordítódnak
+
+Biztonság:
+- Turnstile CAPTCHA kötelező a foglalás elküldéséhez (submit gomb disabled, amíg nincs elfogadva)
+- E-mail domain validáció DNS-over-HTTPS-en keresztül (Cloudflare 1.1.1.1, MX rekord)
+- Játék nézetben a modal lefagyasztja a motort (`isFrozen = true`), MutationObserver figyeli a bezárást
 
 ## AI munkafolyamat
 
-A projekthez Claude Code skill-ek és agent-ek vannak építve, amelyek a fejlesztési, tartalom-karbantartási és álláspályázati munkafolyamatokat automatizálják (pl. `/locale-check`, `/cv-review`, `/hr-review`, `/job-apply`).
+A projekthez Claude Code skill-ek (slash parancsok) és agent-ek épültek, amelyek a fejlesztési, tartalom-karbantartási és álláspályázási munkafolyamatokat automatizálják.
 
-A skill-ek, agent-ek és a köztük lévő adatfolyam részletes leírása (Mermaid diagramokkal) a [devdocs/ai-workflow.md](devdocs/ai-workflow.md) dokumentumban található.
+### Képességek áttekintése
+
+| Terület | Képesség | Leírás |
+|---------|----------|--------|
+| **Fordítások** | `/locale-check` | 12 nyelvi fájl szinkronizálásának ellenőrzése az angol referenciához képest. `--fix` automatikusan kiegészíti a hiányzó kulcsokat. |
+| **Kódminőség** | `/cv-review` | CV-specifikus kódreview: locale teljesség, aria kompatibilitás, biztonság, konfigurációs sértetlenség. |
+| **Fordítási lektorálás** | `/language-reviewer` | 12 nyelv minőségi auditja a nyelvspecifikus szabályfájlok alapján. Csak jelent — nem javít automatikusan. |
+| **Biztonság** | `/security-review` | Spam/flood audit a Hire Me és booking modálokon (Turnstile, cooldown, rate limiting). |
+| **Architektúra** | `/arch-review` | Teljes kódbázis elemzés: templát duplikáció, adatstruktúra, locale rendszer, CSS, tooling. |
+| **HR/ATS optimalizáció** | `/hr-review` | Általános vagy állásleírás-specifikus ATS minőségértékelés. Csak a meglévő skilleket emeli ki — nem talál ki újat. |
+| **CV javítás** | `/cv-improver` | HR-review jelentés alapján módosítja a `cv-data.js`-t. Diff előnézetet mutat, mielőtt ír. |
+| **Motivációs levél** | `/cover-letter` | Angol + magyar motivációs levél generálása a `profile/*.md` és `cv-data.js` alapján. |
+| **Teljes álláspályázat** | `/job-apply` | Teljes pipeline: ATS elemzés → CV optimalizáció → 11 nyelvű fordítás → verzió snapshot → opcionális motivációs levél. |
+| **Verziókezelés** | `/cv-backup` / `/cv-restore` | CV adatok verziózott snapshot készítése és visszaállítása a `cv-versions/` mappába. |
+
+### Részletes dokumentáció
+
+A skill-ek, agent-ek, azok adatfolyamai, valamint a teljes job-apply pipeline lépésenkénti leírása (Mermaid diagramokkal) a [devdocs/ai-workflow.md](devdocs/ai-workflow.md) dokumentumban található.
 
 ## Futtatás
 

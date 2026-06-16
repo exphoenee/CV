@@ -13,9 +13,14 @@ export function showToast(message) {
   if (!container) return;
   var toast = document.createElement('div');
   toast.className = 'cv-toast';
-  toast.innerHTML =
-    '<span>' + message + '</span><button class="cv-toast-close" aria-label="Close">\xD7</button>';
-  var closeBtn = toast.querySelector('.cv-toast-close');
+  var msgSpan = document.createElement('span');
+  msgSpan.textContent = message;
+  var closeBtn = document.createElement('button');
+  closeBtn.className = 'cv-toast-close';
+  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.textContent = '\xD7';
+  toast.appendChild(msgSpan);
+  toast.appendChild(closeBtn);
   function removeToast() {
     toast.classList.add('hiding');
     setTimeout(function () {
@@ -94,6 +99,19 @@ export function renderBullets(bullets, indent) {
     .join('\n');
 }
 
+// --- Cloudflare Turnstile (shared by Hire + Booking) ---
+export var TURNSTILE_SITEKEY = '0x4AAAAAADlq-gSDTCI_ln-y';
+
+export function loadTurnstileScript() {
+  if (window.turnstile || document.getElementById('cf-turnstile-script')) return;
+  var s = document.createElement('script');
+  s.id = 'cf-turnstile-script';
+  s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+  s.async = true;
+  s.defer = true;
+  document.head.appendChild(s);
+}
+
 export function initHireModal(prefix) {
   var modal = document.getElementById(prefix + '-modal');
   var subjectEl = document.getElementById(prefix + '-subject');
@@ -122,6 +140,54 @@ export function initHireModal(prefix) {
 
   var COOLDOWN_KEY = 'hire_sent_ts';
   var COOLDOWN_MS = 24 * 60 * 60 * 1000;
+  var MIN_FILL_MS = 2500;
+  var openedAt = 0;
+
+  // Cloudflare Turnstile — Formspree verifies the cf-turnstile-response server-side.
+  var hireTurnstileWidgetId = null;
+  var hireTurnstileToken = '';
+
+  function updateHireSubmit() {
+    var btn = document.querySelector('#' + prefix + '-modal [type="submit"]');
+    if (btn) btn.disabled = !hireTurnstileToken;
+  }
+
+  function ensureHireTurnstile() {
+    if (hireTurnstileWidgetId !== null) return;
+    var container = document.getElementById(prefix + '-hire-turnstile');
+    if (!container) return;
+    var submitBtn = document.querySelector('#' + prefix + '-modal [type="submit"]');
+    if (submitBtn) submitBtn.classList.add('is-loading');
+    if (!window.turnstile || !window.turnstile.render) {
+      setTimeout(ensureHireTurnstile, 300);
+      return;
+    }
+    hireTurnstileWidgetId = window.turnstile.render(container, {
+      sitekey: TURNSTILE_SITEKEY,
+      callback: function (token) {
+        hireTurnstileToken = token;
+        updateHireSubmit();
+      },
+      'expired-callback': function () {
+        hireTurnstileToken = '';
+        updateHireSubmit();
+      },
+      'error-callback': function () {
+        hireTurnstileToken = '';
+        updateHireSubmit();
+      },
+    });
+    setTimeout(function () { if (submitBtn) submitBtn.classList.remove('is-loading'); }, 400);
+  }
+
+  function resetHireTurnstile() {
+    hireTurnstileToken = '';
+    if (hireTurnstileWidgetId !== null && window.turnstile) {
+      window.turnstile.reset(hireTurnstileWidgetId);
+    }
+  }
+
+  loadTurnstileScript();
 
   function isOnCooldown() {
     var ts = parseInt(localStorage.getItem(COOLDOWN_KEY) || '0', 10);
@@ -129,6 +195,7 @@ export function initHireModal(prefix) {
   }
 
   function openModal(subject) {
+    openedAt = Date.now();
     var form = document.getElementById(prefix + '-form');
     var fsSuccess = document.querySelector('#' + prefix + '-modal [data-fs-success]');
     var hireCooldown = document.querySelector('#' + prefix + '-modal [data-hire-cooldown]');
@@ -138,9 +205,7 @@ export function initHireModal(prefix) {
     if (fsError) {
       fsError.classList.add('cv-error-hidden');
       fsError.textContent = '';
-    }
-
-    if (isOnCooldown()) {
+    }      if (isOnCooldown()) {
       form.style.display = 'none';
       if (hireCooldown) hireCooldown.classList.remove('cv-success-hidden');
     } else {
@@ -151,15 +216,18 @@ export function initHireModal(prefix) {
       clearFieldErrors();
       var submitBtn = form.querySelector('[type="submit"]');
       if (submitBtn) {
-        submitBtn.disabled = false;
+        submitBtn.disabled = true;
         submitBtn.textContent = locale.t('send');
       }
+      ensureHireTurnstile();
     }
 
     modal.classList.remove('cv-modal-hidden');
   }
 
   function closeModal() {
+    var sb = document.querySelector('#' + prefix + '-modal [type="submit"]');
+    if (sb) sb.classList.remove('is-loading');
     modal.classList.add('cv-modal-hidden');
   }
 
@@ -176,6 +244,9 @@ export function initHireModal(prefix) {
   document.getElementById(prefix + '-form').addEventListener('submit', async function (e) {
     e.preventDefault();
     e.stopImmediatePropagation();
+
+    // Timing check — a submit faster than a human could fill the form is likely a bot.
+    if (openedAt && Date.now() - openedAt < MIN_FILL_MS) return;
 
     var nameVal = document.getElementById(prefix + '-name').value.trim();
     var emailVal = document.getElementById(prefix + '-email').value.trim();
@@ -211,7 +282,19 @@ export function initHireModal(prefix) {
       emailErr.textContent = '';
     }
 
+    // Require a Turnstile token — Formspree verifies it server-side.
+    if (!hireTurnstileToken) {
+      var fsErrEl = document.querySelector('#' + prefix + '-modal [data-fs-error]');
+      if (fsErrEl) {
+        fsErrEl.classList.remove('cv-error-hidden');
+        fsErrEl.textContent = locale.t('bookErrCaptcha');
+      }
+      if (submitBtn) submitBtn.disabled = false;
+      return;
+    }
+
     var formData = new FormData(form);
+    formData.set('cf-turnstile-response', hireTurnstileToken);
     fetch('https://formspree.io/f/mrejlned', {
       method: 'POST',
       body: formData,
@@ -227,6 +310,7 @@ export function initHireModal(prefix) {
           if (fsSuccess) fsSuccess.classList.remove('cv-success-hidden');
         } else {
           if (submitBtn) submitBtn.disabled = false;
+          resetHireTurnstile();
           var fsError = document.querySelector('#' + prefix + '-modal [data-fs-error]');
           if (fsError) {
             fsError.classList.remove('cv-error-hidden');
@@ -236,6 +320,7 @@ export function initHireModal(prefix) {
       })
       .catch(function () {
         if (submitBtn) submitBtn.disabled = false;
+        resetHireTurnstile();
         var fsError = document.querySelector('#' + prefix + '-modal [data-fs-error]');
         if (fsError) {
           fsError.classList.remove('cv-error-hidden');
@@ -559,7 +644,7 @@ export function bookingModalHTML(prefix) {
       '</span> <span class="bk-required" aria-label="required">*</span></label>',
     '            <textarea id="' +
       p +
-      '-bk-topic" name="bk-topic" rows="4" required data-bk-i18n-placeholder="bookTopicPlaceholder" placeholder="' +
+      '-bk-topic" name="bk-topic" rows="4" required maxlength="2000" data-bk-i18n-placeholder="bookTopicPlaceholder" placeholder="' +
       t('bookTopicPlaceholder') +
       '" aria-required="true" aria-describedby="' +
       p +
@@ -568,12 +653,28 @@ export function bookingModalHTML(prefix) {
       p +
       '-bk-topic-err" role="alert" aria-live="polite"></span>',
     '          </div>',
+    '          <div id="' + p + '-bk-turnstile" class="bk-turnstile"></div>',
     '          <button type="submit" id="' +
       p +
       '-bk-submit" class="bk-btn-primary" data-bk-i18n="bookSubmit">' +
       t('bookSubmit') +
       '</button>',
     '        </form>',
+    '      </div>',
+
+    '      <div id="' +
+      p +
+      '-bk-step-error" class="bk-step bk-step-error bk-hidden" role="alert" aria-live="assertive">',
+    '        <div class="bk-confirm-check" aria-hidden="true"><i class="fa-regular fa-circle-xmark"></i></div>',
+    '        <p id="' + p + '-bk-error-msg" class="bk-confirm-title" data-bk-i18n-dynamic="bk-error-msg"></p>',
+    '        <p class="bk-confirm-note" data-bk-i18n="bookErrRetryHint">' +
+      t('bookErrRetryHint') +
+      '</p>',
+    '        <button class="bk-btn-primary" id="' +
+      p +
+      '-bk-error-back">' +
+      t('bookRetry') +
+      '</button>',
     '      </div>',
 
     '      <div id="' +
@@ -612,6 +713,22 @@ export function bookingModalHTML(prefix) {
   ].join('\n');
 }
 
+// Maps a server-side booking error CODE (from Code.gs) to its i18n label key.
+// The server sends only stable codes; the UI owns the localized wording.
+var BOOKING_ERROR_KEYS = {
+  MISSING_FIELDS: 'bookErrMissingFields',
+  INVALID_EMAIL: 'errEmailInvalid',
+  SLOT_UNAVAILABLE: 'bookErrSlotUnavailable',
+  RATE_LIMITED: 'bookErrRateLimited',
+  DAILY_CAP_REACHED: 'bookErrDailyCap',
+  CAPTCHA_FAILED: 'bookErrCaptcha',
+  BOOKING_FAILED: 'bookFailed',
+};
+
+function bookingErrorMessage(code) {
+  return locale.t(BOOKING_ERROR_KEYS[code] || 'bookFailed');
+}
+
 export function initBookingModal(prefix) {
   var p = prefix;
   var modal = document.getElementById(p + '-booking-modal');
@@ -628,6 +745,58 @@ export function initBookingModal(prefix) {
 
   var BK_COOLDOWN_KEY = 'booking_sent_ts';
   var BK_COOLDOWN_MS = 48 * 60 * 60 * 1000;
+  var BK_MIN_FILL_MS = 2500;
+  var bkFormShownAt = 0;
+  var lastErrorCode = null;
+
+  // --- Cloudflare Turnstile (bot verification, validated server-side in GAS) ---
+  var turnstileWidgetId = null;
+  var turnstileToken = '';
+
+  function updateBkSubmit() {
+    var btn = document.getElementById(p + '-bk-submit');
+    if (btn) btn.disabled = !turnstileToken;
+  }
+
+  // Renders the widget once into the form step. Retries while the async script
+  // is still loading. The token arrives via the callback.
+  function ensureTurnstile() {
+    if (turnstileWidgetId !== null) return;
+    var container = document.getElementById(p + '-bk-turnstile');
+    if (!container) return;
+    var submitBtn = document.getElementById(p + '-bk-submit');
+    if (submitBtn) submitBtn.classList.add('is-loading');
+    if (!window.turnstile || !window.turnstile.render) {
+      setTimeout(ensureTurnstile, 300);
+      return;
+    }
+    turnstileWidgetId = window.turnstile.render(container, {
+      sitekey: TURNSTILE_SITEKEY,
+      callback: function (token) {
+        turnstileToken = token;
+        updateBkSubmit();
+      },
+      'expired-callback': function () {
+        turnstileToken = '';
+        updateBkSubmit();
+      },
+      'error-callback': function () {
+        turnstileToken = '';
+        updateBkSubmit();
+      },
+    });
+    setTimeout(function () { if (submitBtn) submitBtn.classList.remove('is-loading'); }, 400);
+  }
+
+  // Turnstile tokens are single-use — reset after each attempt for a fresh one.
+  function resetTurnstile() {
+    turnstileToken = '';
+    if (turnstileWidgetId !== null && window.turnstile) {
+      window.turnstile.reset(turnstileWidgetId);
+    }
+  }
+
+  loadTurnstileScript();
 
   if (CHECK_EMAIL_DOMAIN) {
     document.getElementById(p + '-bk-email').addEventListener('blur', async function () {
@@ -657,6 +826,7 @@ export function initBookingModal(prefix) {
     p + '-bk-step-time',
     p + '-bk-step-form',
     p + '-bk-step-confirm',
+    p + '-bk-step-error',
     p + '-bk-cooldown',
   ];
 
@@ -677,6 +847,8 @@ export function initBookingModal(prefix) {
   }
 
   function closeModal() {
+    var sb = document.getElementById(p + '-bk-submit');
+    if (sb) sb.classList.remove('is-loading');
     modal.classList.add('cv-modal-hidden');
   }
 
@@ -792,8 +964,11 @@ export function initBookingModal(prefix) {
       btn.setAttribute('aria-label', locale.t('ariaBookSlot') + ': ' + timeLabel);
       btn.addEventListener('click', function () {
         selectedSlot = slot;
+        bkFormShownAt = Date.now();
         document.getElementById(p + '-bk-slot-badge').textContent = formatSlot(start, end);
         show(p + '-bk-step-form');
+        ensureTurnstile();
+        updateBkSubmit();
       });
       grid.appendChild(btn);
     });
@@ -813,11 +988,17 @@ export function initBookingModal(prefix) {
   document.getElementById(p + '-bk-back-time').addEventListener('click', function () {
     show(p + '-bk-step-time');
   });
+  document.getElementById(p + '-bk-error-back').addEventListener('click', function () {
+    resetTurnstile();
+    // Go back to time slot selection so the user can pick a different slot
+    show(p + '-bk-step-time');
+  });
   document.getElementById(p + '-bk-new').addEventListener('click', function () {
     selectedSlot = null;
     document.getElementById(p + '-bk-form').reset();
     document.getElementById(p + '-bk-email-err').textContent = '';
     document.getElementById(p + '-bk-topic-err').textContent = '';
+    resetTurnstile();
     if (bkIsOnCooldown()) {
       show(p + '-bk-cooldown');
     } else {
@@ -829,6 +1010,9 @@ export function initBookingModal(prefix) {
     e.preventDefault();
 
     if (document.getElementById(p + '-bk-hp').value) return;
+
+    // Timing check — a submit faster than a human could fill the form is likely a bot.
+    if (bkFormShownAt && Date.now() - bkFormShownAt < BK_MIN_FILL_MS) return;
 
     var nameVal = document.getElementById(p + '-bk-name').value.trim();
     var emailVal = document.getElementById(p + '-bk-email').value.trim();
@@ -859,6 +1043,15 @@ export function initBookingModal(prefix) {
       emailErr.textContent = '';
     }
 
+    // Require a Turnstile token (the GAS verifies it server-side).
+    if (!turnstileToken) {
+      lastErrorCode = 'CAPTCHA_FAILED';
+      document.getElementById(p + '-bk-error-msg').textContent = bookingErrorMessage(lastErrorCode);
+      submitBtn.disabled = false;
+      show(p + '-bk-step-error');
+      return;
+    }
+
     submitBtn.textContent = locale.t('bookSending');
 
     var params = new URLSearchParams({
@@ -868,6 +1061,7 @@ export function initBookingModal(prefix) {
       topic: topicVal,
       start: selectedSlot.start,
       end: selectedSlot.end,
+      token: turnstileToken,
     });
 
     fetch(BOOKING_SCRIPT_URL + '?' + params.toString())
@@ -883,15 +1077,21 @@ export function initBookingModal(prefix) {
           document.getElementById(p + '-bk-confirm-detail').textContent = formatSlot(start, end);
           show(p + '-bk-step-confirm');
         } else {
-          alert(locale.t('bookFailed'));
+          lastErrorCode = data && data.error || 'BOOKING_FAILED';
+          document.getElementById(p + '-bk-error-msg').textContent = bookingErrorMessage(lastErrorCode);
+          resetTurnstile();
           submitBtn.disabled = false;
           submitBtn.textContent = locale.t('bookSubmit');
+          show(p + '-bk-step-error');
         }
       })
       .catch(function () {
-        alert(locale.t('bookFailed'));
+        lastErrorCode = 'BOOKING_FAILED';
+        document.getElementById(p + '-bk-error-msg').textContent = bookingErrorMessage(lastErrorCode);
+        resetTurnstile();
         submitBtn.disabled = false;
         submitBtn.textContent = locale.t('bookSubmit');
+        show(p + '-bk-step-error');
       });
   });
 
@@ -906,6 +1106,11 @@ export function initBookingModal(prefix) {
     modal.querySelectorAll('[data-bk-i18n-placeholder]').forEach(function (el) {
       el.placeholder = locale.t(el.dataset.bkI18nPlaceholder);
     });
+    // Re-translate dynamic error message if the error screen is visible
+    var errorScreen = document.getElementById(p + '-bk-step-error');
+    if (lastErrorCode && errorScreen && !errorScreen.classList.contains('bk-hidden')) {
+      document.getElementById(p + '-bk-error-msg').textContent = bookingErrorMessage(lastErrorCode);
+    }
     if (allSlots.length > 0) renderDates();
   }
 
@@ -1005,7 +1210,7 @@ export function hireModalHTML(prefix, opts) {
       '</label>',
     '        <textarea id="' +
       prefix +
-      '-message" name="message" required rows="5" placeholder="' +
+      '-message" name="message" required maxlength="2000" rows="5" placeholder="' +
       t('messagePlaceholder') +
       '" data-hire-i18n-placeholder="messagePlaceholder" data-fs-field aria-required="true" aria-describedby="' +
       prefix +
@@ -1015,6 +1220,7 @@ export function hireModalHTML(prefix, opts) {
       prefix +
       '-msg-err" role="alert" aria-live="polite"></span>',
     '      </div>',
+    '      <div id="' + prefix + '-hire-turnstile" class="hire-turnstile"></div>',
     '      <button type="submit" class="hire-submit" data-fs-submit-btn data-hire-i18n="send" aria-label="' +
       t('ariaSendMessage') +
       '">' +

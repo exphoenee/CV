@@ -275,7 +275,7 @@ Check:
 
 - Does the translated summary start with a capital letter and end with a period?
 - Are technology names preserved correctly? (TypeScript, React, Svelte, Node.js — not translated or lowercased)
-- Does the text length roughly match the English source (±30%)?
+- Is the summary length within budget? (the Step 7d validator is the authority; this is just a quick eyeball)
 - Are any English sentences left untranslated (verbatim English paragraph present)?
 
 If all checks pass → mark as `✅ Ellenőrzött fordítás`
@@ -296,6 +296,63 @@ Fictional languages always receive: `⚠️ Stílus-adaptáció (emberi ellenőr
 (This is expected — not an error, just a transparency flag.)
 
 Build: `TRANSLATION_QUALITY = { lang: { status, notes } }` for all 11 locales.
+
+---
+
+## Step 7c — JS syntax validation (MANDATORY)
+
+After updating all locale files, VALIDATE EVERY LOCALE FILE for valid JavaScript syntax.
+See `.claude/rules/js-syntax-validation.md` for the full rule.
+
+```bash
+cd scripts/locales
+# Validate each file — ALL must pass, otherwise the pipeline STOPS
+node -c hu.js || { echo "FAIL: hu.js"; exit 1; }
+node -c de.js || { echo "FAIL: de.js"; exit 1; }
+node -c fr.js || { echo "FAIL: fr.js"; exit 1; }
+node -c es.js || { echo "FAIL: es.js"; exit 1; }
+node -c it.js || { echo "FAIL: it.js"; exit 1; }
+node -c asg.js || { echo "FAIL: asg.js"; exit 1; }
+node -c dot.js || { echo "FAIL: dot.js"; exit 1; }
+node -c kl.js || { echo "FAIL: kl.js"; exit 1; }
+node -c qu.js || { echo "FAIL: qu.js"; exit 1; }
+node -c goa.js || { echo "FAIL: goa.js"; exit 1; }
+node -c ya.js || { echo "FAIL: ya.js"; exit 1; }
+node -c en.js || { echo "FAIL: en.js"; exit 1; }
+```
+
+**If ANY file reports a SyntaxError:** 
+1. Identify the broken string (look for single-quoted string containing `'`)
+2. Change the outer delimiter to double quotes (`"..."` instead of `'...'`)
+3. Re-run `node -c` on the fixed file
+4. Do NOT proceed until ALL files pass — the `exit 1` above ensures the pipeline CANNOT continue with a broken locale file
+
+---
+
+## Step 7d — Translation length validation (MANDATORY)
+
+After JS syntax validation, RUN THE AUTOMATED TRANSLATION LENGTH CHECK.
+The `cv-translator-agent` is instructed to enforce the length budget, but this step provides
+an independent, automated verification that catches any over-budget fields automatically.
+
+See `.claude/rules/translation-length.md` for the rule. The budget and tolerance band live in
+a **single source of truth**, `.claude/reference/current-english-lengths.json` (NOT derived from
+cv-data) — the validator reads it and enforces the rule. Only two things are validated: the
+**hero (summary)** and each **per-workplace TOTAL** (description + all bullets + all project
+bullets, combined).
+
+```bash
+cd scripts/locales
+python ../../.claude/scripts/check-translation-lengths.py || { echo "FAIL: Translation length budget violation detected"; exit 1; }
+```
+
+**If the script exits with code 1:**
+1. Read the output — it lists every out-of-band item (summary or a workplace total) with its status (TOO_SHORT or TOO_LONG)
+2. For each TOO_SHORT item: expand the text naturally (full verb forms, connectives, natural language structure)
+3. For each TOO_LONG item: condense the text (remove filler words, shorten lists, merge clauses)
+4. Re-run `python ../../.claude/scripts/check-translation-lengths.py`
+5. Repeat until ALL locales pass
+6. Do NOT proceed to Step 8 until the script exits with code 0 — the `exit 1` above ensures the pipeline CANNOT continue with out-of-band translations
 
 ---
 
@@ -320,17 +377,9 @@ If `STATUS = "cancelled"` → note in final report that no backup was created.
 
 ---
 
-## Step 8b — Cover letter (opcionális)
+## Step 8b — Cover letter (AUTOMATIC)
 
-Ask the user:
-
-```
-Szeretnél motivációs levelet is készíteni? (y / n)
-```
-
-If `n` → skip to Step 9. Set `COVER_LETTER_EN = null`, `COVER_LETTER_HU = null`.
-
-If `y`:
+Cover letters are ALWAYS written — no user prompt needed.
 
 Detect JD primary language from JD text (`JD_PRIMARY_LANGUAGE` — e.g. `"en"`, `"hu"`, `"de"`, `"fr"`, `"es"`, `"it"`).
 
@@ -349,8 +398,9 @@ Pass:
 
 Wait for agent to return `COVER_LETTER_EN`, `COVER_LETTER_HU`, `COVER_LETTER_JD`, `STATUS`.
 
-The agent writes cover-letter-en.md and cover-letter-hu.md in all cases. If JD_PRIMARY_LANGUAGE
-is not "en" or "hu", it also writes a third cover letter (e.g. cover-letter-de.md).
+The agent ALWAYS writes cover-letter-en.md and cover-letter-hu.md. If JD_PRIMARY_LANGUAGE is
+a supported language (de/fr/es/it) different from EN/HU, it also writes a third cover letter
+(e.g. cover-letter-de.md).
 
 ---
 
@@ -362,7 +412,6 @@ current CV is tuned for. See `.claude/rules/version-snapshot-format.md` for all 
 **If the backup in Step 8 returned `STATUS = "cancelled"` (no VERSION_FOLDER):** skip this whole
 step and note in the final report that the JD was not saved and no log row was written (the user
 declined the snapshot). Otherwise:
-
 ### 8c-1 — Resolve APP_ID
 
 `APP_ID` = `VERSION_FOLDER` basename (strip the `cv-versions/` prefix), e.g.
@@ -419,7 +468,7 @@ Display:
 - Position: JD_TITLE @ JD_COMPANY, OVERALL_SCORE%
 - APP_ID (azonosító + snapshot mappa neve)
 - Changes: cv-data.js modification count + locale count
-- VERSION_FOLDER contents: cv-data.js · locales/ · job-description.md · (cover-letter-en.md · cover-letter-hu.md if written)
+- VERSION_FOLDER contents: cv-data.js · locales/ · job-description.md · cover-letter-en.md · cover-letter-hu.md · (cover-letter-[lang].md if JD language != EN/HU)
 - Marker: kétsoros `// @job-application:` + `// @cv-last-change:` blokk a live cv-data.js + 12 content locale fájlon (cv-ledger.py)
 - Napló: új sor a `cv-versions/applications.md` indexben ÉS a `cv-versions/history.md` audit naplóban
 - Translation quality per language from TRANSLATION_QUALITY: real languages show ✅/⚠️ with note; fictional languages always ⚠️ (expected)
