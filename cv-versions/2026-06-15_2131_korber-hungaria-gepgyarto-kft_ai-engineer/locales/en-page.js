@@ -75,6 +75,10 @@ export const EN_PAGE = {
     bookRetry: 'Retry',
     bookEmpty: 'No available slots in the next 21 days.',
     bookFailed: 'Booking failed. Please try again.',
+    bookErrMissingFields: 'Please fill in all required fields.',
+    bookErrSlotUnavailable: 'That time slot is no longer available. Please pick another.',
+    bookErrRateLimited: 'Too many bookings today from this email. Please try again tomorrow.',
+    bookErrCaptcha: 'Verification failed. Please complete the check and try again.',
     bookCooldownTitle: 'Meeting already booked!',
     bookCooldownNote:
       "You've already booked a meeting in the last 48 hours. Come back later to book again.",

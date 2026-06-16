@@ -74,6 +74,10 @@ export const FR_PAGE = {
     bookRetry: 'Réessayer',
     bookEmpty: 'Aucun créneau disponible dans les 21 prochains jours.',
     bookFailed: 'La réservation a échoué. Veuillez réessayer.',
+    bookErrMissingFields: "Veuillez remplir tous les champs obligatoires.",
+    bookErrSlotUnavailable: "Ce créneau n'est plus disponible. Veuillez en choisir un autre.",
+    bookErrRateLimited: "Trop de réservations aujourd'hui avec cette adresse e-mail. Veuillez réessayer demain.",
+    bookErrCaptcha: "La vérification a échoué. Veuillez compléter le contrôle et réessayer.",
     bookCooldownTitle: 'Rendez-vous déjà réservé !',
     bookCooldownNote:
       'Vous avez déjà réservé un rendez-vous dans les dernières 48 heures. Revenez plus tard.',

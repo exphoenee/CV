@@ -75,6 +75,10 @@ export const HU_PAGE = {
     bookRetry: 'Újrapróbálás',
     bookEmpty: 'Nincs szabad időpont a következő 21 napban.',
     bookFailed: 'Hiba a foglalás során. Kérlek próbáld újra.',
+    bookErrMissingFields: 'Tölts ki minden kötelező mezőt.',
+    bookErrSlotUnavailable: 'Ez az időpont már nem elérhető. Válassz másikat.',
+    bookErrRateLimited: 'Ma túl sok foglalás érkezett erről az emailről. Próbáld holnap.',
+    bookErrCaptcha: 'A megerősítés nem sikerült. Pipáld ki az ellenőrzést, és próbáld újra.',
     bookCooldownTitle: 'Időpont már foglalva!',
     bookCooldownNote:
       'Az elmúlt 48 órában már foglaltál időpontot. Gyere vissza később egy új foglaláshoz.',
