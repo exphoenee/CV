@@ -1,62 +1,62 @@
-# Script elhelyezési szabály (script placement rule)
+# Script Placement Rule
 
-A projektben **kétféle script** létezik, és ezeket **szigorúan elkülönített mappákban** kell tartani.
+The project has **two types of scripts**, and they must be kept in **strictly separated directories**.
 
 ---
 
-## `scripts/` — CV weboldal termék scriptjei
+## `scripts/` — CV Website Product Scripts
 
-Ide **CSAK** a CV honlap működéséhez szükséges fájlok tartoznak:
+This directory contains **ONLY** files needed for the CV website to function:
 
-| Mit | Példa |
+| What | Example |
 |---|---|
-| View-k JS logikája | `scripts/cv-plain.js`, `scripts/cv-swagger.js` |
-| Komponensek | `scripts/components/` |
-| Játékmotor | `scripts/game/main.js`, `scripts/game/entities/` |
-| Adat | `scripts/cv-data.js` |
-| Lokalizáció UI feliratok | `scripts/locales/hu.js`, `scripts/locales/en.js` (labels) |
-| Konfiguráció | `scripts/config.js` |
-| Közös API | `scripts/shared.js`, `scripts/locale.js` |
-| CSS stílusok | `styles/cv-plain.css` |
-| HTML oldalak | `index.html`, `cv-plain.html` |
+| View JS logic | `scripts/cv-plain.js`, `scripts/cv-swagger.js` |
+| Components | `scripts/components/` |
+| Game engine | `scripts/game/main.js`, `scripts/game/entities/` |
+| Data | `scripts/cv-data.js` |
+| Localization UI labels | `scripts/locales/hu.js`, `scripts/locales/en.js` (labels) |
+| Configuration | `scripts/config.js` |
+| Shared API | `scripts/shared.js`, `scripts/locale.js` |
+| CSS styles | `styles/cv-plain.css` |
+| HTML pages | `index.html`, `cv-plain.html` |
 
-Ebbe a mappába **TILOS** AI workflow-ok által használt scripteket elhelyezni.
+**It is FORBIDDEN** to place AI workflow scripts in this directory.
 
 ---
 
-## `.claude/` — AI workflow scriptjei
+## `.claude/` — AI Workflow Scripts
 
-Ide tartoznak az AI által használt összes segédeszköz, például:
+This is where all AI helper tools belong, for example:
 
-| Hely | Mit | Példa |
+| Location | What | Example |
 |---|---|---|
-| `.claude/scripts/` | Globális AI segédscriptek (több agent/skill által használt) | `cv-ledger.py`, `check-translation-lengths.py` |
-| `.claude/skills/<skill>/scripts/` | Skill-specifikus scriptek | `cv-backup/scripts/cv-backup.py` |
-| `.claude/agents/<agent>/` | Agent-definíciók és azok scriptjei | `cv-backup-agent.md` |
+| `.claude/scripts/` | Global AI helper scripts (used by multiple agents/skills) | `cv-ledger.py`, `check-translation-lengths.py` |
+| `.claude/skills/<skill>/scripts/` | Skill-specific scripts | `cv-backup/scripts/cv-backup.py` |
+| `.claude/agents/<agent>/` | Agent definitions and their scripts | `cv-backup-agent.md` |
 
-**Szabály:** Ha egy scriptet AI agent vagy skill hív meg (pl. job-apply-orchestrator, cv-translator-agent), akkor annak **`.claude/`** alatt kell lennie — SOHA nem a `scripts/` mappában.
-
----
-
-## Ellenőrző lista
-
-Új script létrehozásakor:
-
-1. **Mit csinál a script?**
-   - CV weboldal funkció (view renderelés, adat, játék, zene) → `scripts/`
-   - AI workflow támogatás (validáció, backup, fordítás, elemzés) → `.claude/`
-
-2. **Ki hívja meg?**
-   - Böngésző (HTML `<script>` tag) → `scripts/`
-   - AI agent / skill / terminál parancs → `.claude/`
-
-3. **Hova kerüljön `.claude/`-on belül?**
-   - Egyetlen agent/skill használja → `.claude/skills/<skill>/scripts/` vagy `.claude/agents/<agent>/`
-   - Több is használja → `.claude/scripts/`
+**Rule:** If a script is called by an AI agent or skill (e.g. job-apply-orchestrator, cv-translator-agent), it must be under **`.claude/`** — NEVER in the `scripts/` directory.
 
 ---
 
-## Kivételek
+## Checklist
 
-- `scripts/config.js` — bár a CV weboldal része, AI agentek is olvashatják (pl. security-review). Ez **megengedett**, mert maga a termék része.
-- `scripts/cv-data.js` — a CV adatforrása, AI agentek is módosítják (pl. job-apply, cv-improver). Ez **megengedett**, mert maga a termék adata.
+When creating a new script:
+
+1. **What does the script do?**
+   - CV website function (view rendering, data, game, music) → `scripts/`
+   - AI workflow support (validation, backup, translation, analysis) → `.claude/`
+
+2. **Who calls it?**
+   - Browser (HTML `<script>` tag) → `scripts/`
+   - AI agent / skill / terminal command → `.claude/`
+
+3. **Where does it go inside `.claude/`?**
+   - Used by a single agent/skill → `.claude/skills/<skill>/scripts/` or `.claude/agents/<agent>/`
+   - Used by multiple → `.claude/scripts/`
+
+---
+
+## Exceptions
+
+- `scripts/config.js` — although it's part of the CV website, AI agents may read it (e.g. security-review). This is **allowed**, because it's part of the product.
+- `scripts/cv-data.js` — the CV data source, AI agents also modify it (e.g. job-apply, cv-improver). This is **allowed**, because it's the product's data.

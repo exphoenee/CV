@@ -17,7 +17,7 @@ graph TD
     subgraph Skills["1 · Skill-ek (slash commandok)"]
         direction LR
         LC["/locale-check"]
-        CR["/cv-review"]
+        CR["/code-review"]
         LR["/language-reviewer"]
         SR["/security-review"]
         AR["/arch-review"]
@@ -81,8 +81,8 @@ graph TD
 | -------------------------------- | ------------------------ | -------------------------------------- | --------------------------------------------- |
 | `/locale-check`                  | Bármikor                 | Hiányzó locale kulcsok listája         | —                                             |
 | `/locale-check --fix`            | Hiányzó kulcsok javítása | `locale-agent` dispatch                | `locales/*.js`                                |
-| `/cv-review`                     | Commit előtt             | Locale, aria, biztonsági audit         | —                                             |
-| `/cv-review --fix`               | Commit előtt             | Javítások alkalmazása                  | `shared.js` / HTML                            |
+| `/code-review`                     | Commit előtt             | Locale, aria, biztonsági audit         | —                                             |
+| `/code-review --fix`               | Commit előtt             | Javítások alkalmazása                  | `shared.js` / HTML                            |
 | `/language-reviewer [lang\|all]` | Minőségellenőrzés        | Lektorálási megjegyzések               | —                                             |
 | `/security-review`               | Periodikusan             | Spam/flood biztonsági audit            | `review/YYYY-MM-DD_HHMM_security-review.md`   |
 | `/arch-review [--focus=...]`     | Architektúra-elemzés     | Template/adat/locale/CSS/tooling audit | `review/YYYY-MM-DD_HHMM_arch-review-FOCUS.md` |
@@ -309,7 +309,7 @@ graph TD
         CB["/cv-backup"]
         HR["/hr-review"]
         LRV["/language-reviewer"]
-        CRV["/cv-review"]
+        CRV["/code-review"]
     end
 
     LEDGER["cv-ledger.py<br/>(mark · log · current)"]
@@ -347,7 +347,7 @@ graph TD
 
 **2. `cv-versions/history.md`** — append-only audit napló. **Minden** CV-esemény egy sor:
 `mutation` (job-apply, cv-improver, cv-restore), `backup` (snapshot készült) és `review`
-(hr-review, language-reviewer, cv-review — read-only elemzés is). Oszlopok: Időpont · Kategória ·
+(hr-review, language-reviewer, code-review — read-only elemzés is). Oszlopok: Időpont · Kategória ·
 Művelet · Aktor · APP_ID · Mi történt · Artefaktum.
 
 **3. `cv-versions/applications.md`** — pályázat-index (egy sor / APP_ID: állás → CV-verzió +
@@ -493,7 +493,7 @@ graph LR
     CB["/cv-backup"] -->|dispatch| CBA
     CL["/cover-letter"] -->|dispatch| CLA
     LC["/locale-check --fix"] -->|dispatch| LA["locale-agent"]
-    CR["/cv-review"] -->|dispatch| VCA["view-check-agent"]
+    CR["/code-review"] -->|dispatch| VCA["view-check-agent"]
     AR["/arch-review"] -->|dispatch| ARA["arch-review-agent"]
 ```
 

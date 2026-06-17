@@ -1,5 +1,5 @@
 ---
-name: cv-review
+name: code-review
 description: >
   CV project-specific code review. Checks the current git diff for locale completeness,
   aria label compliance, security (no innerHTML with user input), config constants,
@@ -10,7 +10,7 @@ disable-model-invocation: false
 argument-hint: '[--fix]'
 ---
 
-# cv-review — CV Project Compliance Review
+# code-review — CV Project Compliance Review
 
 Reads the current git diff and checks for CV project-specific violations.
 Covers locale completeness, aria labels, security, config hygiene, and new view checklists.
@@ -189,8 +189,8 @@ Apply the fixes directly and report what was changed.
 Append a `review` row so the audit log records that this CV version was reviewed:
 
 ```bash
-python .claude/scripts/cv-ledger.py log --category=review --operation=cv-review \
-  --actor=cv-review --app-id="CV_APP_ID" --what="<N hiba · M figyelmeztetés>"
+python .claude/scripts/cv-ledger.py log --category=review --operation=code-review \
+  --actor=code-review --app-id="CV_APP_ID" --what="<N hiba · M figyelmeztetés>"
 ```
 
 If `--fix` applied changes, use `--category=mutation` and note the fixes in `--what` instead

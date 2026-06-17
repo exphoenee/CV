@@ -1,31 +1,31 @@
-# Aria label szabályok
+# Aria Label Rules
 
-Minden interaktív elem és szemantikus régió aria attribútummal rendelkezik.
-Az aria label szövegek lokalizáltak — `locale.t('ariaKulcs')` hívással állítódnak be, nem hard-coded stringek.
+Every interactive element and semantic region must have an aria attribute.
+Aria label texts are localized — set via `locale.t('ariaKey')` calls, not hard-coded strings.
 
 ---
 
-## Alapszabályok
+## Basic Rules
 
-### 1. Icon-only gombok — mindig kell `aria-label`
+### 1. Icon-only buttons — always need `aria-label`
 
-Ha egy gomb csak ikont tartalmaz (Font Awesome `<i>`), kötelező az `aria-label`:
+If a button contains only an icon (Font Awesome `<i>`), `aria-label` is required:
 
 ```html
-<!-- HELYES -->
+<!-- CORRECT -->
 <button id="music-toggle" aria-label="Open music player">
   <i class="fas fa-music" aria-hidden="true"></i>
 </button>
 
-<!-- HIBÁS — screen reader csak "button"-t olvas -->
+<!-- WRONG — screen reader only reads "button" -->
 <button id="music-toggle">
   <i class="fas fa-music"></i>
 </button>
 ```
 
-### 2. Dekoratív ikonok — mindig `aria-hidden="true"`
+### 2. Decorative icons — always `aria-hidden="true"`
 
-Ha az ikon mellett van szöveg, vagy az ikon csak vizuális dekoráció, el kell rejteni:
+If the icon has adjacent text, or is purely visual decoration, hide it:
 
 ```html
 <button><i class="fas fa-chevron-left" aria-hidden="true"></i> Back</button>
@@ -34,35 +34,35 @@ Ha az ikon mellett van szöveg, vagy az ikon csak vizuális dekoráció, el kell
 <div class="bk-confirm-check" aria-hidden="true"><i class="fa-solid fa-check"></i></div>
 ```
 
-### 3. Értelmes szövegű gombok — `aria-label` opcionális, de ha van, legyen informatív
+### 3. Buttons with meaningful text — `aria-label` is optional, but if present, be informative
 
 ```html
-<!-- Van szöveg → nem kell aria-label -->
+<!-- Has text → no aria-label needed -->
 <button>Hire Me</button>
 
-<!-- Ha a gomb szövege nem elég önmagában a kontextushoz, adj hozzá -->
+<!-- If button text alone isn't enough context, add one -->
 <button aria-label="Back to CV hub page">← Hub</button>
 ```
 
 ---
 
-## Elemtípusonkénti szabályok
+## Element-specific Rules
 
-### Modálok / dialógusok
+### Modals / Dialogs
 
 ```html
 <div role="dialog" aria-modal="true" aria-labelledby="[id-of-title-element]">
-  <h3 id="[id-of-title-element]">Cím</h3>
+  <h3 id="[id-of-title-element]">Title</h3>
   <button aria-label="Close dialog">✕</button>
 </div>
 ```
 
-- `role="dialog"` + `aria-modal="true"` kötelező
-- `aria-labelledby` a cím elem ID-jára mutat (`aria-label` helyett — a cím már látható szöveg)
-- Vészhelyzet dialógnál (pl. game over): `role="alertdialog"`
-- A bezáró gomb mindig kap `aria-label`-t: `locale.t('ariaCloseDialog')` / `ariaCloseContactForm` / `ariaCloseBooking`
+- `role="dialog"` + `aria-modal="true"` required
+- `aria-labelledby` points to the title element's ID (instead of `aria-label` — the title is already visible text)
+- For emergency dialogs (e.g. game over): `role="alertdialog"`
+- Close buttons always get `aria-label`: `locale.t('ariaCloseDialog')` / `ariaCloseContactForm` / `ariaCloseBooking`
 
-### Űrlapok és mezők
+### Forms and Fields
 
 ```html
 <form novalidate aria-label="Contact form">
@@ -78,20 +78,20 @@ Ha az ikon mellett van szöveg, vagy az ikon csak vizuális dekoráció, el kell
 </form>
 ```
 
-- `<form>` kap `aria-label`-t
-- `<label for="...">` kötelező minden inputhoz (ne `placeholder`-t használj label helyett)
-- Kötelező mezőknél: `aria-required="true"` az inputon, a `*` jel `aria-label="required"`-dal
-- Hibaüzenet span: `role="alert"` + `aria-live="polite"` (kritikus hibánál `aria-live="assertive"`)
-- `aria-describedby` az inputon a hibaüzenet span ID-jára mutat
+- `<form>` gets `aria-label`
+- `<label for="...">` is required for every input (don't use `placeholder` as a label)
+- Required fields: `aria-required="true"` on the input, `*` marked with `aria-label="required"`
+- Error span: `role="alert"` + `aria-live="polite"` (for critical errors: `aria-live="assertive"`)
+- `aria-describedby` on the input points to the error span's ID
 
-### Range inputok (csúszkák)
+### Range Inputs (sliders)
 
 ```html
 <input type="range" id="music-volume" min="0" max="1" step="0.05" aria-label="Music volume" />
 <input type="range" id="track-seek" min="0" max="100" aria-label="Track position" />
 ```
 
-- Minden range input kap `aria-label`-t (a `<label for>` kevéssé olvasóbarát csúszkáknál)
+- Every range input gets `aria-label` (`<label for>` is less screen-reader-friendly for sliders)
 
 ### Progressbar
 
@@ -105,9 +105,9 @@ Ha az ikon mellett van szöveg, vagy az ikon csak vizuális dekoráció, el kell
 ></div>
 ```
 
-- `role="progressbar"` + `aria-valuemin` + `aria-valuemax` + `aria-valuenow` kötelező
+- `role="progressbar"` + `aria-valuemin` + `aria-valuemax` + `aria-valuenow` required
 
-### Lista jellegű konténerek
+### List-like Containers
 
 ```html
 <div role="list" aria-label="Available dates">
@@ -119,10 +119,10 @@ Ha az ikon mellett van szöveg, vagy az ikon csak vizuális dekoráció, el kell
 </div>
 ```
 
-- Vizuális listák (nem `<ul>/<li>`) kapnak `role="list"` + `aria-label`-t
-- Az elemek `role="listitem"`-et kapnak
+- Visual lists (not `<ul>/<li>`) get `role="list"` + `aria-label`
+- Items get `role="listitem"`
 
-### Navigáció és régiók
+### Navigation and Regions
 
 ```html
 <header role="banner">
@@ -134,12 +134,12 @@ Ha az ikon mellett van szöveg, vagy az ikon csak vizuális dekoráció, el kell
 <div role="group" aria-label="Playback controls">...</div>
 ```
 
-- `<header>` → `role="banner"` (vagy implicit)
-- `<nav>` → mindig `aria-label` (ha több nav van az oldalon)
-- Névtelen `<div>` régiókhoz: `role="region"` + `aria-label`
-- Kapcsolódó gombok csoportja: `role="group"` + `aria-label`
+- `<header>` → `role="banner"` (or implicit)
+- `<nav>` → always `aria-label` (if there are multiple navs on the page)
+- Anonymous `<div>` regions: `role="region"` + `aria-label`
+- Related button groups: `role="group"` + `aria-label`
 
-### Combobox (egyedi legördülő)
+### Combobox (Custom Dropdown)
 
 ```html
 <div role="combobox" aria-label="Music genre" aria-haspopup="listbox" aria-expanded="false">
@@ -153,10 +153,10 @@ Ha az ikon mellett van szöveg, vagy az ikon csak vizuális dekoráció, el kell
 </div>
 ```
 
-- `aria-expanded` JS-sel frissül nyitás/záráskor (`'true'` / `'false'`)
-- Az opciók `role="option"`-t kapnak
+- `aria-expanded` is updated by JS on open/close (`'true'` / `'false'`)
+- Options get `role="option"`
 
-### Toggle gombok
+### Toggle Buttons
 
 ```html
 <button id="music-repeat" aria-label="Toggle repeat" aria-pressed="false">
@@ -164,18 +164,18 @@ Ha az ikon mellett van szöveg, vagy az ikon csak vizuális dekoráció, el kell
 </button>
 ```
 
-- `aria-pressed` JS-sel frissül állapotváltáskor (`'true'` / `'false'`)
+- `aria-pressed` is updated by JS on state change (`'true'` / `'false'`)
 
-### Live régiók
+### Live Regions
 
 ```html
-<!-- Állapot frissítések (nem sürgős) -->
+<!-- Status updates (non-urgent) -->
 <div role="status" aria-live="polite">Loading…</div>
 
-<!-- Hibaüzenetek (azonnali felolvasás) -->
+<!-- Error messages (immediate announcement) -->
 <div role="alert" aria-live="assertive">Error!</div>
 
-<!-- Toast értesítések -->
+<!-- Toast notifications -->
 <div id="cv-toaster-container" aria-live="polite" aria-label="Notifications"></div>
 
 <!-- Lyrics panel -->
@@ -184,75 +184,75 @@ Ha az ikon mellett van szöveg, vagy az ikon csak vizuális dekoráció, el kell
 
 ---
 
-## Lokalizáció: aria label kulcsok
+## Localization: Aria Label Keys
 
-Az aria labelek **lokalizáltak** — minden `aria-label` értéke `locale.t('ariaKulcs')`.
+Aria labels are **localized** — every `aria-label` value uses `locale.t('ariaKey')`.
 
-### Meglévő aria kulcsok (`scripts/locales/en.js`)
+### Existing Aria Keys (`scripts/locales/en.js`)
 
-| Kulcs                  | Érték (EN)                  |
-| ---------------------- | --------------------------- |
-| `ariaToggleTheme`      | `"Toggle light/dark theme"` |
-| `ariaOpenMusicPlayer`  | `"Open music player"`       |
-| `ariaCloseMusicPlayer` | `"Close music player"`      |
-| `ariaBackToHub`        | `"Back to CV hub"`          |
-| `ariaCloseDialog`      | `"Close dialog"`            |
-| `ariaHireForm`         | `"open contact form"`       |
-| `ariaCloseContactForm` | `"Close contact form"`      |
-| `ariaCloseBooking`     | `"Close booking dialog"`    |
-| `ariaTrackPosition`    | `"Track position"`          |
-| `ariaMusicVolume`      | `"Music volume"`            |
-| `ariaPlayMusic`        | `"Play music"`              |
-| `ariaPauseMusic`       | `"Pause music"`             |
-| `ariaNextTrack`        | `"Next track"`              |
-| `ariaPrevTrack`        | `"Previous track"`          |
-| `ariaToggleRepeat`     | `"Toggle repeat"`           |
-| `ariaShowLyrics`       | `"Show lyrics"`             |
-| `ariaGenreSelect`      | `"Music genre"`             |
-| `ariaBookSlot`         | `"Book time slot"`          |
-| `ariaContactsPopup`    | `"Contacts"`                |
-| `ariaSendMessage`      | `"Send message"`            |
+| Key                   | Value (EN)                   |
+| --------------------- | ---------------------------- |
+| `ariaToggleTheme`     | `"Toggle light/dark theme"`  |
+| `ariaOpenMusicPlayer` | `"Open music player"`        |
+| `ariaCloseMusicPlayer`| `"Close music player"`       |
+| `ariaBackToHub`       | `"Back to CV hub"`           |
+| `ariaCloseDialog`     | `"Close dialog"`             |
+| `ariaHireForm`        | `"Open contact form"`        |
+| `ariaCloseContactForm`| `"Close contact form"`       |
+| `ariaCloseBooking`    | `"Close booking dialog"`     |
+| `ariaTrackPosition`   | `"Track position"`           |
+| `ariaMusicVolume`     | `"Music volume"`             |
+| `ariaPlayMusic`       | `"Play music"`               |
+| `ariaPauseMusic`      | `"Pause music"`              |
+| `ariaNextTrack`       | `"Next track"`               |
+| `ariaPrevTrack`       | `"Previous track"`           |
+| `ariaToggleRepeat`    | `"Toggle repeat"`            |
+| `ariaShowLyrics`      | `"Show lyrics"`              |
+| `ariaGenreSelect`     | `"Music genre"`              |
+| `ariaBookSlot`        | `"Book time slot"`           |
+| `ariaContactsPopup`   | `"Contacts"`                 |
+| `ariaSendMessage`     | `"Send message"`             |
 
-### Új aria kulcs hozzáadásakor
+### When Adding a New Aria Key
 
-1. Az `en.js`-be add hozzá az `aria` prefixű kulcsot a többi aria kulcs mellé
-2. Add hozzá mind a 12 locale fájlba (lásd: [localization.md](localization.md))
-3. A kódban `locale.t('ariaUjKulcs')` hívással használd
+1. Add the `aria`-prefixed key to `en.js` alongside the other aria keys
+2. Add it to all 12 locale files (see: [localization.md](localization.md))
+3. Use `locale.t('ariaNewKey')` in code
 
-### JS-ben generált HTML esetén (shared.js stílusban)
+### For JS-generated HTML (shared.js style)
 
 ```js
-// NEM HELYES — hard-coded string, nem lokalizált
+// NOT CORRECT — hard-coded string, not localized
 '<button aria-label="Open music player">';
 
-// HELYES — locale-ból jön
+// CORRECT — comes from locale
 '<button aria-label="' + locale.t('ariaOpenMusicPlayer') + '">';
 ```
 
-### HTML fájlban (`data-i18n` nem működik aria-labelen)
+### For HTML files (`data-i18n` does NOT work on aria-label)
 
 ```html
-<!-- NEM MŰKÖDIK — data-i18n csak textContent-et frissít -->
+<!-- DOES NOT WORK — data-i18n only updates textContent -->
 <button data-i18n="ariaOpenMusicPlayer" aria-label="Open music player">
-  <!-- Helyes megoldás: JS-sel frissíteni localechange eseményen, vagy JS-ből injektálni -->
+  <!-- Correct approach: update via JS on localechange event, or inject from JS -->
 </button>
 ```
 
-Ha egy HTML fájlban van aria-label és a szövege változhat nyelvváltáskor,
-azt JS-ből kell frissíteni a `localechange` eseményre reagálva.
+If an HTML file has an aria-label whose text changes on language switch,
+it must be updated from JS by reacting to the `localechange` event.
 
 ---
 
-## Checklist új elem hozzáadásakor
+## Checklist for Adding a New Element
 
-- [ ] Icon-only gomb → `aria-label` + `aria-hidden="true"` az ikonon
-- [ ] Dekoratív ikon → `aria-hidden="true"`
-- [ ] Modál → `role="dialog"` + `aria-modal="true"` + `aria-labelledby`
-- [ ] Form → `aria-label` + mezőknél `aria-required` + `aria-describedby` (hibára)
-- [ ] Hibaüzenet span → `role="alert"` + `aria-live`
+- [ ] Icon-only button → `aria-label` + `aria-hidden="true"` on the icon
+- [ ] Decorative icon → `aria-hidden="true"`
+- [ ] Modal → `role="dialog"` + `aria-modal="true"` + `aria-labelledby`
+- [ ] Form → `aria-label` + fields with `aria-required` + `aria-describedby` (for errors)
+- [ ] Error span → `role="alert"` + `aria-live`
 - [ ] Range input → `aria-label`
-- [ ] Toggle gomb → `aria-pressed`
+- [ ] Toggle button → `aria-pressed`
 - [ ] Combobox → `role="combobox"` + `aria-haspopup` + `aria-expanded`
-- [ ] Lista konténer → `role="list"` + `aria-label`
-- [ ] Live régió → `role="status"/"alert"` + `aria-live`
-- [ ] Új aria szöveg → lokalizált kulcs mind a 12 locale fájlban
+- [ ] List container → `role="list"` + `aria-label`
+- [ ] Live region → `role="status"/"alert"` + `aria-live`
+- [ ] New aria text → localized key in all 12 locale files

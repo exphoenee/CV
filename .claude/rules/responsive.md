@@ -1,14 +1,14 @@
-# Reszponzivitás szabályok
+# Responsive Design Rules
 
-## Alapelv
+## Principle
 
-Minden CV nézet oldal mobilon, tableten és desktopon is teljes értékűen, kényelmesen használható kell legyen.
-Mobile-first megközelítés: az alap stílus mobilra vonatkozik, a nagyobb képernyőkre `min-width` media query-kkel bővítünk.
+Every CV view page must be fully and comfortably usable on mobile, tablet, and desktop.
+Mobile-first approach: base styles apply to mobile, with `min-width` media queries for larger screens.
 
-## Töréspontok
+## Breakpoints
 
 ```css
-/* Mobile — alap (nincs media query) */
+/* Mobile — base (no media query) */
 /* max ~600px */
 
 /* Tablet */
@@ -18,67 +18,67 @@ Mobile-first megközelítés: az alap stílus mobilra vonatkozik, a nagyobb kép
 @media (min-width: 901px) { ... }
 ```
 
-## Elvárások nézetenként
+## Per-View Expectations
 
-### Minden oldalon
+### Every Page
 
-- A szövegek mobilon is olvashatóak (min. 14px)
-- Gombok érintőbarátok (min. 44×44px touch target)
-- Horizontális scroll kerülendő (kivéve intentionálisan scrollozható konténerek, pl. Gantt)
-- A modálok (Hire Me, Meet) mobilon is teljes szélességben, görgethetően nyílnak meg
-- A zenelejátszó panel mobilon sem takarja a tartalmat
+- Text must be readable on mobile (min 14px)
+- Buttons must be touch-friendly (min 44×44px touch target)
+- Avoid horizontal scroll (except intentionally scrollable containers like Gantt)
+- Modals (Hire Me, Meet) must open full-width and scrollable on mobile
+- Music player panel must not obscure content on mobile
 
-### Index oldal (karuszel)
+### Index Page (carousel)
 
-- A kártyák mobilon egymás alatt, teljes szélességben jelennek meg, vagy a karuszel egy kártyát mutat egyszerre
-- A nyilak és dot-ok navigálhatók érintéssel
+- Cards stack vertically at full width on mobile, or carousel shows one card at a time
+- Arrows and dots must be touch-navigable
 
-### Plain nézet
+### Plain View
 
-- Nyomtatásra optimalizált layout (`@media print`) — a témától függetlenül fekete-fehér nyomtatás
-- A témaválasztó és a fejléc gombok mobilon összecsukódnak vagy stackelődnek
+- Print-optimized layout (`@media print`) — black and white regardless of theme
+- Theme selector and header buttons collapse or stack on mobile
 
-### Gantt nézet
+### Gantt View
 
-- A Gantt-diagram vízszintesen görgethető konténerben van — ez szándékos
-- A bal oldali névoszlop (`SIDEBAR_W`) mobilon szűkíthető vagy fix, de látható marad
-- A fejléc (kontaktok, gombok) mobilon stackelődik
+- Gantt chart is in a horizontally scrollable container — intentional
+- Left sidebar column (`SIDEBAR_W`) can be narrower or fixed on mobile, but must remain visible
+- Header (contacts, buttons) stacks on mobile
 
-### Scrumboard nézet
+### Scrumboard View
 
-- Az oszlopok mobilon egymás alá stackelődnek (flex-direction: column)
-- A kártyák teljes szélességűek mobilon
+- Columns stack vertically on mobile (flex-direction: column)
+- Cards are full-width on mobile
 
-### Swagger nézet
+### Swagger View
 
-- Az endpoint blokkok összecsukhatók — mobilon összecsukvák az alapértelmezés
-- A params-table horizontálisan görgethető ha szükséges
+- Endpoint blocks are collapsible — collapsed by default on mobile
+- Params-table scrolls horizontally if needed
 
-### JSON nézet
+### JSON View
 
-- A sorszámozás mobilon elrejthető ha helyet nyerne
-- A fold/unfold gombok érintéssel is jól kezelhetők
+- Line numbers can be hidden on mobile to save space
+- Fold/unfold buttons must work well with touch
 
-### Játék nézet
+### Game View
 
-- NippleJS joystick mobilon automatikusan megjelenik
-- Orientáció figyelmeztetés landscape módban ha szükséges
+- NippleJS joystick appears automatically on mobile
+- Orientation warning in landscape mode if needed
 
-## CSS változók és téma
+## CSS Variables and Theming
 
-A `styles/cv-index.css` tartalmaz közös CSS változókat (téma, modal, toast stílusok).
-Minden nézet-specifikus CSS fájl erre épít — ne duplikáld a változók definícióját.
+`styles/cv-index.css` contains shared CSS variables (theme, modal, toast styles).
+Each view-specific CSS file builds on these — do not duplicate variable definitions.
 
 ## Accessibility
 
-- `aria-label` attribútumok minden interaktív elemre
-- `role` attribútumok lista, dialog, navigation elemekre
-- Billentyűzettel navigálható (Tab, Enter, Escape modál bezárásra)
-- Kontrasztarány minimum 4.5:1 szövegeknél minden témán
+- `aria-label` attributes on all interactive elements
+- `role` attributes on list, dialog, navigation elements
+- Keyboard navigable (Tab, Enter, Escape for modal close)
+- Contrast ratio minimum 4.5:1 for text in all themes
 
-## Amit kerülj
+## What to Avoid
 
-- Fixált `px` szélességek a fő layout konténerekre — használj `%`, `vw`, `max-width`-t
-- `overflow: hidden` az egész body-ra — törhetné a modálok görgethetőségét mobilon
-- Kis érintési célterületek (`< 44px`) gombokon
-- Tört elrendezés orientáció-váltáskor
+- Fixed `px` widths on main layout containers — use `%`, `vw`, `max-width`
+- `overflow: hidden` on the entire body — can break modal scrolling on mobile
+- Small touch targets (`< 44px`) on buttons
+- Broken layout on orientation change

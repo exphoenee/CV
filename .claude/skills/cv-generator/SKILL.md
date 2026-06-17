@@ -497,7 +497,7 @@ Munkahelyek:
 Javaslatok:
   • Ellenőrizd a summary szövegét — lehet finomhangolni
   • Futtasd /locale-check a locale fájlok ellenőrzéséhez
-  • Futtasd /cv-review a teljes ellenőrzéshez
+  • Futtasd /code-review a teljes ellenőrzéshez
 ```
 
 ---

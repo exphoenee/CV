@@ -304,28 +304,26 @@ Build: `TRANSLATION_QUALITY = { lang: { status, notes } }` for all 11 locales.
 After updating all locale files, VALIDATE EVERY LOCALE FILE for valid JavaScript syntax.
 See `.claude/rules/js-syntax-validation.md` for the full rule.
 
+Run the automated validator — it scans ALL `.js` files in `scripts/locales/` dynamically
+(no hardcoded list), reports results, and exits with code 1 if any file fails:
+
 ```bash
-cd scripts/locales
-# Validate each file — ALL must pass, otherwise the pipeline STOPS
-node -c hu.js || { echo "FAIL: hu.js"; exit 1; }
-node -c de.js || { echo "FAIL: de.js"; exit 1; }
-node -c fr.js || { echo "FAIL: fr.js"; exit 1; }
-node -c es.js || { echo "FAIL: es.js"; exit 1; }
-node -c it.js || { echo "FAIL: it.js"; exit 1; }
-node -c asg.js || { echo "FAIL: asg.js"; exit 1; }
-node -c dot.js || { echo "FAIL: dot.js"; exit 1; }
-node -c kl.js || { echo "FAIL: kl.js"; exit 1; }
-node -c qu.js || { echo "FAIL: qu.js"; exit 1; }
-node -c goa.js || { echo "FAIL: goa.js"; exit 1; }
-node -c ya.js || { echo "FAIL: ya.js"; exit 1; }
-node -c en.js || { echo "FAIL: en.js"; exit 1; }
+python .claude/scripts/validate-locale-syntax.py
 ```
 
-**If ANY file reports a SyntaxError:** 
-1. Identify the broken string (look for single-quoted string containing `'`)
-2. Change the outer delimiter to double quotes (`"..."` instead of `'...'`)
-3. Re-run `node -c` on the fixed file
-4. Do NOT proceed until ALL files pass — the `exit 1` above ensures the pipeline CANNOT continue with a broken locale file
+For machine-readable output (JSON with per-file error details):
+
+```bash
+python .claude/scripts/validate-locale-syntax.py --json
+```
+
+**If ANY file reports a FAIL:**
+1. Read the error message — it identifies the broken file and the specific syntax error
+2. Open the file and fix the broken string (look for single-quoted string containing `'`)
+3. Either change the outer delimiter to double quotes (`"..."` instead of `'...'`)
+   or escape the apostrophe: `\'`
+4. Re-run `python .claude/scripts/validate-locale-syntax.py` to verify
+5. Do NOT proceed until ALL files pass — the script exits with code 1, stopping the pipeline
 
 ---
 
@@ -342,17 +340,105 @@ cv-data) — the validator reads it and enforces the rule. Only two things are v
 bullets, combined).
 
 ```bash
-cd scripts/locales
-python ../../.claude/scripts/check-translation-lengths.py || { echo "FAIL: Translation length budget violation detected"; exit 1; }
+python .claude/scripts/check-translation-lengths.py --json
 ```
 
-**If the script exits with code 1:**
-1. Read the output — it lists every out-of-band item (summary or a workplace total) with its status (TOO_SHORT or TOO_LONG)
-2. For each TOO_SHORT item: expand the text naturally (full verb forms, connectives, natural language structure)
-3. For each TOO_LONG item: condense the text (remove filler words, shorten lists, merge clauses)
-4. Re-run `python ../../.claude/scripts/check-translation-lengths.py`
-5. Repeat until ALL locales pass
-6. Do NOT proceed to Step 8 until the script exits with code 0 — the `exit 1` above ensures the pipeline CANNOT continue with out-of-band translations
+The `--json` flag produces structured output that the orchestrator can parse to identify
+exactly which language+field combinations need fixing. The JSON schema:
+
+```json
+{
+  "summary": { "total": 11, "passed": 8, "failed": 3 },
+  "violations": [
+    {
+      "lang": "hu",              // language code
+      "langName": "Hungarian",    // human-readable name
+      "field": "summary",         // field: "summary" or "workplace:{id}"
+      "fieldType": "hero",        // "hero" or "workplace"
+      "status": "TOO_SHORT",      // "TOO_SHORT" or "TOO_LONG"
+      "actual": 450,              // actual character count
+      "budget": 500,              // budget
+      "diff": -50,               // actual - budget (neg=too short, pos=too long)
+      "min": 475,                 // minimum allowed
+      "max": 510                  // maximum allowed
+    }
+  ],
+  "locales_checked": ["hu", "de", ...],
+  "locales_ok": [...],
+  "locales_with_issues": ["hu", ...],
+  "has_violations": true
+}
+```
+
+**If the script exits with code 1 — TARGETED REPAIR LOOP (max 3 iterations):**
+
+Parse `violations[]` from the JSON output. Each entry contains:
+- `lang` — which language to fix (e.g. `"hu"`, `"de"`)
+- `field` — which field to fix (`"summary"` or `"workplace:{id}"`)
+- `adjustBy` — **exact** chars to add (positive) or remove (negative) to reach the nearest allowed bound
+- `actual`, `budget`, `min`, `max`, `diff` — additional context
+
+Set `ITERATION = 1`. Enter the loop:
+
+### Loop condition
+While `exit_code == 1` AND `ITERATION <= 3`:
+
+1. Build `TARGETED_FIXES` from `violations[]`:
+   ```
+   TARGETED_FIXES = {
+     "hu": [
+       { "field": "summary", "mode": "expand", "adjustBy": 15 },
+       { "field": "workplace:aegex", "mode": "compress", "adjustBy": -50 }
+     ],
+     "de": [
+       { "field": "summary", "mode": "compress", "adjustBy": -12 }
+     ],
+     ...
+   }
+   ```
+   Rules for building:
+   - `mode` is derived from `status`: `TOO_SHORT` → `"expand"`, `TOO_LONG` → `"compress"`
+   - Include `adjustBy` from the violation for the translator's reference
+   - Group by language: all violations for `"hu"` go under the `"hu"` key
+
+2. Dispatch `cv-translator-agent` with `TARGETED_FIXES`:
+   ```
+   Agent: cv-translator-agent
+   ```
+   Pass:
+   - `CHANGED_FIELDS` — same as from Step 6 (or empty `{}` if only length fixes remain)
+   - `TARGETED_FIXES` — the structure built from violations[] above (with explicit `mode` per field)
+   - `JD_TITLE`, `JD_COMPANY` — for context
+
+3. After translator returns, re-run the validator:
+   ```bash
+   python .claude/scripts/check-translation-lengths.py --json
+   ```
+
+4. If exit code 0 → all fixed, proceed to Step 8
+
+5. If exit code 1 → `ITERATION += 1`, parse new violations[], and repeat from step 1
+
+### After 3 iterations — graceful exit
+
+If `ITERATION > 3` and violations remain:
+
+```
+⚠️ A hossz-korlát 3 javítási kör után sem rendeződött.
+
+Maradék violations:
+  • hu.summary — TOO_SHORT (adjustBy: +12)
+  • ...
+
+További automatikus javítás nem történik. A snapshot ezzel az állapottal készül el.
+A maradék eltérések manuálisan korrigálhatók, vagy a budget-fájl
+(.claude/reference/current-english-lengths.json) módosításával.
+```
+
+Proceed to Step 8 with the current state. The snapshot will include the remaining violations.
+
+**Efficiency principle:** Each iteration only touches exactly the languages and fields
+that are out of bounds. Locales that already pass are never read or modified.
 
 ---
 

@@ -1,1 +1,1 @@
-E:\Projects\CV\.claude\rules itt minden legyen angol nelyven, kivéve a  user facing üzenetek
+

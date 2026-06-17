@@ -1,14 +1,14 @@
-# Új nézet oldal létrehozásának checklistje
+# New View Page Creation Checklist
 
-## 1. Fájlok létrehozása
+## 1. Create Files
 
 ```
-cv-[name].html          # belépési pont HTML
-scripts/cv-[name].js    # ES Module belépési pont
-styles/cv-[name].css    # nézet-specifikus stílusok
+cv-[name].html          # entry point HTML
+scripts/cv-[name].js    # ES Module entry point
+styles/cv-[name].css    # view-specific styles
 ```
 
-### HTML template minimuma (`cv-[name].html`)
+### Minimum HTML Template (`cv-[name].html`)
 
 ```html
 <!doctype html>
@@ -16,7 +16,7 @@ styles/cv-[name].css    # nézet-specifikus stílusok
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Viktor Bozzay — [Nézet neve]</title>
+    <title>Viktor Bozzay — [View name]</title>
     <link rel="stylesheet" href="./styles/cv-index.css" />
     <link rel="stylesheet" href="./styles/cv-[name].css" />
     <link rel="stylesheet" href="./styles/lang-dropdown.css" />
@@ -30,13 +30,13 @@ styles/cv-[name].css    # nézet-specifikus stílusok
     <script type="module" src="./scripts/cv-[name].js"></script>
   </head>
   <body>
-    <!-- itt lesz generálva a tartalom JS-ből -->
+    <!-- content will be generated from JS -->
     <div id="cv-toaster-container" aria-live="polite" aria-label="Notifications"></div>
   </body>
 </html>
 ```
 
-### JS belépési pont minimuma (`scripts/cv-[name].js`)
+### Minimum JS Entry Point (`scripts/cv-[name].js`)
 
 ```js
 import { CV_DATA } from './cv-data.js';
@@ -50,15 +50,15 @@ import { initMusicPlayer } from './cv-music-player.js';
 import { THEME_KEY, THEME_DARK, THEME_LIGHT } from './config.js';
 import { langDropdownHTML, initLangDropdown } from './components/lang-dropdown.js';
 
-// ... nézet-specifikus render logika
+// ... view-specific render logic
 
 document.addEventListener('DOMContentLoaded', function() {
-  // 1. Render az oldal tartalmát CV_DATA-ból
-  // 2. Inject modálokat és playert
+  // 1. Render page content from CV_DATA
+  // 2. Inject modals and player
   document.body.insertAdjacentHTML('beforeend', hireModalHTML('[name]'));
   document.body.insertAdjacentHTML('beforeend', bookingModalHTML('[name]-bk'));
   document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
-  // 3. Inicializálás
+  // 3. Initialize
   initHireModal('[name]');
   initBookingModal('[name]-bk');
   initMusicPlayer();
@@ -67,62 +67,62 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 ```
 
-## 2. Karuszel kártya az index.html-be
+## 2. Carousel Card in index.html
 
-Az `index.html` `#cv-carousel-stage` div-jébe add hozzá:
+Add to the `#cv-carousel-stage` div in `index.html`:
 
 ```html
-<div class="cv-slide cv-slide--[name]" data-idx="[következő szám]" role="listitem">
-  <div class="cv-slide-icon" aria-hidden="true"><i class="fas fa-[ikon]"></i></div>
-  <span class="cv-slide-title" data-i18n="btn[Name]Label">I'm a [Célközönség]</span>
-  <span class="cv-slide-desc" data-i18n="btn[Name]Desc">[Leírás]</span>
-  <a class="cv-slide-cta" href="cv-[name].html" aria-label="Open [name] view — [leírás]">
+<div class="cv-slide cv-slide--[name]" data-idx="[next number]" role="listitem">
+  <div class="cv-slide-icon" aria-hidden="true"><i class="fas fa-[icon]"></i></div>
+  <span class="cv-slide-title" data-i18n="btn[Name]Label">I'm a [Target audience]</span>
+  <span class="cv-slide-desc" data-i18n="btn[Name]Desc">[Description]</span>
+  <a class="cv-slide-cta" href="cv-[name].html" aria-label="Open [name] view — [description]">
     <span data-i18n="btnCardOpen">Open this view →</span>
   </a>
 </div>
 ```
 
-A `data-idx` értéke a meglévő slidok számától függ (jelenlegi maximum: 5, tehát 6 lesz a következő).
+The `data-idx` value depends on the number of existing slides (current max: 5, so 6 would be next).
 
-## 3. Locale kulcsok (mind a 12 fájlba)
+## 3. Locale Keys (all 12 files)
 
-Legalább ezek szükségesek az új kártyához:
+At minimum, the new card requires:
 
 ```js
-// en.js-ben:
-btn[Name]Label: "I'm a [Célközönség]",
-btn[Name]Desc:  "[Nézet leírása]",
+// in en.js:
+btn[Name]Label: "I'm a [Target audience]",
+btn[Name]Desc:  "[View description]",
 
-// + minden nézet-specifikus szöveg kulcsa
+// + all view-specific text keys
 ```
 
-Minden kulcsot be kell írni mind a 12 locale fájlba. Lásd: [localization.md](localization.md)
+Every key must be added to all 12 locale files. See: [localization.md](localization.md)
 
-## 4. Kötelező elemek az oldalon
+## 4. Required Elements on the Page
 
-Minden nézet oldalnak tartalmaznia kell:
+Every view page must include:
 
-- [ ] **Zenelejátszó** — `musicPlayerHTML()` + `initMusicPlayer()`
-- [ ] **Hire Me modál** — `hireModalHTML(prefix)` + `initHireModal(prefix)`
-- [ ] **Meet / naptárfoglalás modál** — `bookingModalHTML(prefix)` + `initBookingModal(prefix)`
-- [ ] **Hire Me gomb** — `id="[prefix]-btn"` attribútummal az oldalon valahol
-- [ ] **Meet gomb** — `id="[prefix]-bk-btn"` attribútummal az oldalon valahol
-- [ ] **Toast container** — `<div id="cv-toaster-container">` a body-ban
-- [ ] **Reszponzív CSS** — az oldal mobilon is teljes értékűen használható
+- [ ] **Music player** — `musicPlayerHTML()` + `initMusicPlayer()`
+- [ ] **Hire Me modal** — `hireModalHTML(prefix)` + `initHireModal(prefix)`
+- [ ] **Meet / booking modal** — `bookingModalHTML(prefix)` + `initBookingModal(prefix)`
+- [ ] **Hire Me button** — with `id="[prefix]-btn"` attribute somewhere on the page
+- [ ] **Meet button** — with `id="[prefix]-bk-btn"` attribute somewhere on the page
+- [ ] **Toast container** — `<div id="cv-toaster-container">` in the body
+- [ ] **Responsive CSS** — the page must be fully usable on mobile
 
-## 5. Zenelejátszó elhelyezési szabály
+## 5. Music Player Placement Rule
 
-**Headerben/menüsorban van a lejátszó:** NEM kell lebegő `#music-toggle` gomb a bal alsó sarokba.
-**Nincs header:** a `musicPlayerHTML()` generál egy lebegő `#music-toggle` gombot — ez marad.
+**Player is in the header/menu bar:** Do NOT place a floating `#music-toggle` button in the bottom-left corner.
+**No header:** `musicPlayerHTML()` generates a floating `#music-toggle` button — this stays.
 
-A két megoldás egyszerre **nem** szerepelhet egy oldalon.
+These two solutions must **never** appear on the same page simultaneously.
 
-## 6. Reszponzív CSS
+## 6. Responsive CSS
 
-Lásd: [responsive.md](responsive.md)
+See: [responsive.md](responsive.md)
 
-Töréspontok iránya: mobile-first. Minimális elvárás:
+Breakpoint direction: mobile-first. Minimum expectations:
 
 - `max-width: 600px` — single-column, touch-friendly
-- `max-width: 900px` — tablet köztes állapot ha szükséges
+- `max-width: 900px` — tablet intermediate state if needed
 - `min-width: 901px` — desktop layout

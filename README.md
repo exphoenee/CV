@@ -389,7 +389,7 @@ A projekthez Claude Code skill-ek (slash parancsok) és agent-ek épültek, amel
 | Terület | Képesség | Leírás |
 |---------|----------|--------|
 | **Fordítások** | `/locale-check` | 12 nyelvi fájl szinkronizálásának ellenőrzése az angol referenciához képest. `--fix` automatikusan kiegészíti a hiányzó kulcsokat. |
-| **Kódminőség** | `/cv-review` | CV-specifikus kódreview: locale teljesség, aria kompatibilitás, biztonság, konfigurációs sértetlenség. |
+| **Kódminőség** | `/code-review` | CV-specifikus kódreview: locale teljesség, aria kompatibilitás, biztonság, konfigurációs sértetlenség. |
 | **Fordítási lektorálás** | `/language-reviewer` | 12 nyelv minőségi auditja a nyelvspecifikus szabályfájlok alapján. Csak jelent — nem javít automatikusan. |
 | **Biztonság** | `/security-review` | Spam/flood audit a Hire Me és booking modálokon (Turnstile, cooldown, rate limiting). |
 | **Architektúra** | `/arch-review` | Teljes kódbázis elemzés: templát duplikáció, adatstruktúra, locale rendszer, CSS, tooling. |

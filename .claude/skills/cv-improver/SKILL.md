@@ -230,7 +230,7 @@ Kihagyott változtatások (K db):
 
 Javaslatok:
   • Futtasd /language-reviewer hu — a frissített fordítások nyelvi ellenőrzése
-  • Futtasd /cv-review — ellenőrizd az eredményt
+  • Futtasd /code-review — ellenőrizd az eredményt
 ```
 
 ---

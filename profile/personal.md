@@ -17,6 +17,7 @@ Ez a fájl azokat a személyes adatokat tartalmazza, amik a `scripts/cv-data.js`
 - **Verzió:** 4.2.0
 - **Akcentus szín:** #ff7024
 - **Leírás:** Curriculum Vitae
+- **Nem:** Férfi
 
 ---
 

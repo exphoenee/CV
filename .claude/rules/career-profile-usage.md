@@ -16,30 +16,30 @@ Every `profile/*.md` file has the following header:
 
 ```yaml
 ---
-title: 'Frontend Tech Lead' # munkakör / fájl címe
+title: 'Frontend Tech Lead' # job title / file title
 seniority: 'Senior' # Junior | Mid | Senior | N/A
 period:
-  from: '2023-11' # YYYY-MM kezdés (null ha nem alkalmazható)
-  to: null # YYYY-MM vég (null = jelenleg is)
+  from: '2023-11' # YYYY-MM start (null if not applicable)
+  to: null # YYYY-MM end (null = current)
 profession: 'software' # software | mechanical | both
 type: 'work' # work | education | community | reference
-domain: 'enterprise SaaS, compliance' # iparág / domén — JD illesztéshez
+domain: 'enterprise SaaS, compliance' # industry / domain — for JD matching
 ---
 ```
 
 ### Field descriptions
 
-| Mező          | Lehetséges értékek                            | Használata                                                                              |
-| ------------- | --------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `title`       | szabad szöveg                                 | Munkakör megnevezése, vagy fájl típusa (pl. "LinkedIn Profile")                         |
-| `seniority`   | `Junior`, `Mid`, `Senior`, `N/A`              | Senioritás a pozícióban                                                                 |
-| `period.from` | `YYYY-MM` vagy `null`                         | Kezdő dátum                                                                             |
-| `period.to`   | `YYYY-MM` vagy `null`                         | Vég dátum (`null` = jelenleg is tart)                                                   |
-| `profession`  | `software`, `mechanical`, `both`              | Melyik szakmához tartozik                                                               |
-| `type`        | `work`, `education`, `community`, `reference` | Fájl típusa — elsődleges szűrő                                                          |
-| `domain`      | szabad szöveg                                 | Iparág/domén — JD-hez illesztéshez                                                      |
-| `leader`      | `true`, `false`                               | Volt-e vezetői/irányítási szerepe ebben a pozícióban                                    |
-| `skills`      | `[string]`                                    | Kulcs skill-ek listája — gyors relevancia ellenőrzéshez a fájl teljes beolvasása nélkül |
+| Field         | Possible values                            | Usage                                                                               |
+| ------------- | ------------------------------------------ | ----------------------------------------------------------------------------------- |
+| `title`       | free text                                  | Job title, or file type (e.g. "LinkedIn Profile")                                   |
+| `seniority`   | `Junior`, `Mid`, `Senior`, `N/A`           | Seniority level in the position                                                     |
+| `period.from` | `YYYY-MM` or `null`                        | Start date                                                                          |
+| `period.to`   | `YYYY-MM` or `null`                        | End date (`null` = current)                                                         |
+| `profession`  | `software`, `mechanical`, `both`           | Which profession it belongs to                                                      |
+| `type`        | `work`, `education`, `community`, `reference` | File type — primary filter                                                      |
+| `domain`      | free text                                  | Industry/domain — for JD matching                                                   |
+| `leader`      | `true`, `false`                            | Whether Viktor had a leadership/management role in this position                    |
+| `skills`      | `[string]`                                 | List of key skills — for quick relevance check without reading the full file        |
 
 ---
 
@@ -104,7 +104,7 @@ PROFILE_DATA = {
 If after filtering, NO files remain relevant (e.g., all are `type: "reference"` and the task needs factual work data):
 
 - ❌ Fall back to `cv-data.js` only
-- ✅ Note: "A profile fájlok között nincs releváns munkahelyi adat — csak cv-data.js alapján dolgozom."
+- ✅ Note: "No relevant work data found in profile files — working from cv-data.js only."
 
 ---
 

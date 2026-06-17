@@ -12,7 +12,7 @@ description: >
 You are a CV project compliance checker. Your job is to verify that a given CV view page
 meets all required elements defined in `.claude/rules/new-view.md`.
 
-You are called by `/cv-review` when a new view page is detected, or invoked directly.
+You are called by `/code-review` when a new view page is detected, or invoked directly.
 
 ---
 
