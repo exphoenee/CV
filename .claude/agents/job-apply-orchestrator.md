@@ -56,9 +56,11 @@ From `JD`:
 
 ## Step 1 — Load CV data and career profile
 
-### 1a — Read cv-data.js
+### 1a — Read cv-data.js (cache once, reuse everywhere)
 
-Read `scripts/cv-data.js` in full. Store as `CV_ORIGINAL`.
+Read `scripts/cv-data.js` in full. Store as `CV_ORIGINAL` AND save the file content as `CV_DATA_RAW`.
+
+**Do NOT re-read cv-data.js later — use `CV_DATA_RAW` for all subsequent steps that need the file content (Step 6 edits, Step 8c marker).**
 
 Extract:
 
@@ -142,7 +144,7 @@ based **only** on evidence in `cv-data.js` AND `profile/*.md` (PROFILE_DATA from
 
 ### 2e-1 — Collect matching evidence
 
-Determine whether ANY of Viktor's existing skills/experience genuinely qualify him for `JD_TITLE`:
+Determine whether ANY of Viktor's existing skills/experience genuinely qualify them for `JD_TITLE`:
 
 - `REQUIRED_MATCHED` — required JD skills (`JD_REQUIRED`) found as `MATCH` or `PARTIAL` in cv-data.js or PROFILE_DATA
 - `PROFILE_EVIDENCE` — concrete skills, roles, or achievements from `profile/*.md` that map to `JD_REQUIRED` / `JD_RESPONSIBILITIES`
@@ -217,7 +219,7 @@ If `n` → stop without modifying any file.
 
 ## Step 6 — Apply changes to cv-data.js
 
-Read `scripts/cv-data.js` again (to get current state for editing).
+Use `CV_DATA_RAW` from Step 1a (already cached — do NOT re-read from disk).
 
 Apply each item in `CHANGE_PLAN`:
 
@@ -260,46 +262,7 @@ Wait for cv-translator-agent to complete and collect its report.
 
 ---
 
-## Step 7b — Translation quality spot-check
-
-After cv-translator-agent completes, run an inline quality check on the translated content.
-
-For each locale that was updated:
-
-### Real languages (hu, de, fr, es, it)
-
-Read the updated `content.summary` (and any changed bullets) from the locale file.
-Load `.claude/rules/locales/<lang>.md`.
-
-Check:
-
-- Does the translated summary start with a capital letter and end with a period?
-- Are technology names preserved correctly? (TypeScript, React, Svelte, Node.js — not translated or lowercased)
-- Is the summary length within budget? (the Step 7d validator is the authority; this is just a quick eyeball)
-- Are any English sentences left untranslated (verbatim English paragraph present)?
-
-If all checks pass → mark as `✅ Ellenőrzött fordítás`
-If any check fails → mark as `⚠️ Emberi ellenőrzés ajánlott` and note the specific issue
-
-### Fictional languages (asg, dot, kl, qu, goa, ya)
-
-Read the updated `content.summary` from the locale file.
-Load `.claude/rules/locales/<lang>.md` and extract the vocabulary table.
-
-Check:
-
-- Are the established key terms present? (e.g. for `kl`: "Qapla'", "HoS", "jIH"; for `qu`: "Nossë", "Hirë", "Namárië")
-- Are the phonetic conventions preserved? (apostrophes in Klingon/Yautja, diaereses in Quenya)
-- Is the text roughly the same length as the original fictional summary?
-
-Fictional languages always receive: `⚠️ Stílus-adaptáció (emberi ellenőrzés ajánlott)`
-(This is expected — not an error, just a transparency flag.)
-
-Build: `TRANSLATION_QUALITY = { lang: { status, notes } }` for all 11 locales.
-
----
-
-## Step 7c — JS syntax validation (MANDATORY)
+## Step 7b — JS syntax validation (MANDATORY)
 
 After updating all locale files, VALIDATE EVERY LOCALE FILE for valid JavaScript syntax.
 See `.claude/rules/js-syntax-validation.md` for the full rule.
@@ -327,24 +290,29 @@ python .claude/scripts/validate-locale-syntax.py --json
 
 ---
 
-## Step 7d — Translation length validation (MANDATORY)
+## Step 7c — Translation length validation (MANDATORY)
 
 After JS syntax validation, RUN THE AUTOMATED TRANSLATION LENGTH CHECK.
 The `cv-translator-agent` is instructed to enforce the length budget, but this step provides
-an independent, automated verification that catches any over-budget fields automatically.
+an independent, automated verification that catches any over-budget pages automatically.
 
 See `.claude/rules/translation-length.md` for the rule. The budget and tolerance band live in
 a **single source of truth**, `.claude/reference/current-english-lengths.json` (NOT derived from
-cv-data) — the validator reads it and enforces the rule. Only two things are validated: the
-**hero (summary)** and each **per-workplace TOTAL** (description + all bullets + all project
-bullets, combined).
+cv-data) — the validator reads it and enforces the rule. Only three page groups are validated:
+
+- **page1**: summary + workExperience[0] + workExperience[1]
+- **page2**: workExperience[2] + workExperience[3] + workExperience[4]
+- **page3**: workExperience[5] + education + languages + community + programmingLanguages + hobbyProjects
+
+  *(education, programmingLanguages, hobbyProjects are NOT in locale files — they come from
+  cv-data.js and are always English. They contribute the same amount to every locale's page3.)*
 
 ```bash
 python .claude/scripts/check-translation-lengths.py --json
 ```
 
 The `--json` flag produces structured output that the orchestrator can parse to identify
-exactly which language+field combinations need fixing. The JSON schema:
+exactly which language+page combinations need fixing. The JSON schema:
 
 ```json
 {
@@ -353,14 +321,14 @@ exactly which language+field combinations need fixing. The JSON schema:
     {
       "lang": "hu",              // language code
       "langName": "Hungarian",    // human-readable name
-      "field": "summary",         // field: "summary" or "workplace:{id}"
-      "fieldType": "hero",        // "hero" or "workplace"
-      "status": "TOO_SHORT",      // "TOO_SHORT" or "TOO_LONG"
-      "actual": 450,              // actual character count
-      "budget": 500,              // budget
-      "diff": -50,               // actual - budget (neg=too short, pos=too long)
-      "min": 475,                 // minimum allowed
-      "max": 510                  // maximum allowed
+      "field": "page1",           // "page1", "page2", or "page3"
+      "fieldType": "page",        // always "page"
+      "status": "TOO_LONG",       // "TOO_SHORT" or "TOO_LONG"
+      "actual": 3200,             // actual character count (sum of all components on that page)
+      "budget": 3053,             // budget
+      "diff": 147,               // actual - budget (neg=too short, pos=too long)
+      "min": 2686,               // minimum allowed
+      "max": 3114                // maximum allowed
     }
   ],
   "locales_checked": ["hu", "de", ...],
@@ -370,64 +338,76 @@ exactly which language+field combinations need fixing. The JSON schema:
 }
 ```
 
-**If the script exits with code 1 — TARGETED REPAIR LOOP (max 3 iterations):**
+**If the script exits with code 1 — TARGETED REPAIR LOOP (max 1 iteration):**
 
 Parse `violations[]` from the JSON output. Each entry contains:
 - `lang` — which language to fix (e.g. `"hu"`, `"de"`)
-- `field` — which field to fix (`"summary"` or `"workplace:{id}"`)
+- `field` — which page to fix (`"page1"`, `"page2"`, or `"page3"`)
 - `adjustBy` — **exact** chars to add (positive) or remove (negative) to reach the nearest allowed bound
 - `actual`, `budget`, `min`, `max`, `diff` — additional context
 
 Set `ITERATION = 1`. Enter the loop:
 
 ### Loop condition
-While `exit_code == 1` AND `ITERATION <= 3`:
+While `exit_code == 1` AND `ITERATION <= 1`:
 
 1. Build `TARGETED_FIXES` from `violations[]`:
    ```
    TARGETED_FIXES = {
      "hu": [
-       { "field": "summary", "mode": "expand", "adjustBy": 15 },
-       { "field": "workplace:aegex", "mode": "compress", "adjustBy": -50 }
+       { "field": "page1", "mode": "compress", "adjustBy": -50 }
      ],
      "de": [
-       { "field": "summary", "mode": "compress", "adjustBy": -12 }
+       { "field": "page3", "mode": "compress", "adjustBy": -35 }
      ],
      ...
    }
    ```
    Rules for building:
    - `mode` is derived from `status`: `TOO_SHORT` → `"expand"`, `TOO_LONG` → `"compress"`
-   - Include `adjustBy` from the violation for the translator's reference
+   - `field` is the page name (`"page1"`, `"page2"`, `"page3"`)
+   - Include `adjustBy` from the violation for the reference
    - Group by language: all violations for `"hu"` go under the `"hu"` key
 
-2. Dispatch `cv-translator-agent` with `TARGETED_FIXES`:
-   ```
-   Agent: cv-translator-agent
-   ```
-   Pass:
-   - `CHANGED_FIELDS` — same as from Step 6 (or empty `{}` if only length fixes remain)
-   - `TARGETED_FIXES` — the structure built from violations[] above (with explicit `mode` per field)
-   - `JD_TITLE`, `JD_COMPANY` — for context
+2. Instead of dispatching the full cv-translator-agent again, perform a **targeted inline fix**:
+   - Read ONLY the locale file with issues
+   - Extract English component lengths from the cached `CV_DATA_RAW` (Step 1a — do NOT re-read cv-data.js from disk)
+   - For each page violation, identify WHICH component on that page **deviates most from its English length**:
+     a. List all localizable components on that page:
+        - `page1`: summary, workplace:0, workplace:1
+        - `page2`: workplace:2, workplace:3, workplace:4
+        - `page3`: workplace:5, community, languages
+        (education, programmingLanguages, hobbyProjects are fixed English — cannot be adjusted)
+     b. For each component, read its translated length from the locale file AND the English length from `CV_DATA_RAW`
+     c. Compute deviation per component: `deviation = translated_len - english_len` (positive = longer, negative = shorter)
+        Then: `deviation_ratio = deviation / english_len`
+     d. Select the component with the largest deviation IN THE DIRECTION of the fix:
+        - `mode: "compress"` (TOO_LONG): pick the component with the **largest positive** deviation_ratio
+        - `mode: "expand"` (TOO_SHORT): pick the component with the **largest negative** deviation_ratio
+        - If no component deviates in the expected direction, pick the one with the largest |deviation_ratio|
+   - Adjust ONLY the selected component by approximately `adjustBy` chars total
+     - If the selected component can't absorb the full `adjustBy` (e.g. only 10 chars over but need -50), apply
+       as much as feasible without losing meaning — the remaining violation is accepted (single iteration limit)
+   - Do NOT re-read rules files or other locale files
 
-3. After translator returns, re-run the validator:
+3. Re-run the validator:
    ```bash
    python .claude/scripts/check-translation-lengths.py --json
    ```
 
 4. If exit code 0 → all fixed, proceed to Step 8
 
-5. If exit code 1 → `ITERATION += 1`, parse new violations[], and repeat from step 1
+5. If exit code 1 → `ITERATION += 1` falls through (only 1 iteration allowed)
 
-### After 3 iterations — graceful exit
+### After 1 iteration — graceful exit
 
-If `ITERATION > 3` and violations remain:
+If `ITERATION > 1` and violations remain:
 
 ```
-⚠️ A hossz-korlát 3 javítási kör után sem rendeződött.
+⚠️ A hossz-korlát 1 javítási kör után sem rendeződött.
 
 Maradék violations:
-  • hu.summary — TOO_SHORT (adjustBy: +12)
+  • hu.page1 — TOO_LONG (adjustBy: -50)
   • ...
 
 További automatikus javítás nem történik. A snapshot ezzel az állapottal készül el.
@@ -437,8 +417,9 @@ A maradék eltérések manuálisan korrigálhatók, vagy a budget-fájl
 
 Proceed to Step 8 with the current state. The snapshot will include the remaining violations.
 
-**Efficiency principle:** Each iteration only touches exactly the languages and fields
-that are out of bounds. Locales that already pass are never read or modified.
+**Efficiency principle:** The single repair iteration only touches exactly the languages and pages
+that are out of bounds — no rules files, cv-data.js, or other locale files are re-read.
+Locales that already pass are never read or modified.
 
 ---
 
@@ -463,9 +444,22 @@ If `STATUS = "cancelled"` → note in final report that no backup was created.
 
 ---
 
-## Step 8b — Cover letter (AUTOMATIC)
+## Step 8b — Cover letter (OPTIONAL)
 
-Cover letters are ALWAYS written — no user prompt needed.
+Ask the user before dispatching:
+
+```
+Szeretnél motivációs levelet is írni ehhez az álláshoz?
+  • Angol + magyar (mindig)
+  [Ha a JD nyelve eltér az angoltól és magyartól:]
+  • [JD_PRIMARY_LANGUAGE] nyelvű levél is (ha támogatott)
+
+Igen / Nem
+```
+
+If `nem` / `n` → skip cover-letter. Set `COVER_LETTER_EN = null`, `COVER_LETTER_HU = null`.
+
+If `igen` / `y`:
 
 Detect JD primary language from JD text (`JD_PRIMARY_LANGUAGE` — e.g. `"en"`, `"hu"`, `"de"`, `"fr"`, `"es"`, `"it"`).
 
@@ -554,11 +548,13 @@ Display:
 - Position: JD_TITLE @ JD_COMPANY, OVERALL_SCORE%
 - APP_ID (azonosító + snapshot mappa neve)
 - Changes: cv-data.js modification count + locale count
-- VERSION_FOLDER contents: cv-data.js · locales/ · job-description.md · cover-letter-en.md · cover-letter-hu.md · (cover-letter-[lang].md if JD language != EN/HU)
+- VERSION_FOLDER contents: cv-data.js · locales/ · job-description.md
+  [Ha készült cover letter:] · cover-letter-en.md · cover-letter-hu.md [+ cover-letter-[lang].md ha JD nyelv != EN/HU]
+  [Ha nem készült:] · (motivációs levél nem készült)
 - Marker: kétsoros `// @job-application:` + `// @cv-last-change:` blokk a live cv-data.js + 12 content locale fájlon (cv-ledger.py)
 - Napló: új sor a `cv-versions/applications.md` indexben ÉS a `cv-versions/history.md` audit naplóban
-- Translation quality per language from TRANSLATION_QUALITY: real languages show ✅/⚠️ with note; fictional languages always ⚠️ (expected)
 - Missing keywords that could not be added (MISSING list)
+- (Translation quality check was performed by cv-translator-agent internally)
 - Suggestions: `/language-reviewer hu`, `/language-reviewer kl`, `/security-review`, `git add/commit`
 
 ---
@@ -569,6 +565,7 @@ Display:
 - ❌ Never suggest a rephrase that implies experience not traceable to cv-data.js or profile/\*.md
 - ❌ Never apply changes without user confirmation (Step 4)
 - ❌ Never modify cv-data.js if OVERALL_SCORE >= 90 and CHANGE_PLAN is empty
+- ❌ Never re-read cv-data.js from disk after Step 1a — use the cached `CV_DATA_RAW`
 - ✅ Suitability gate (Step 2e): if the job is beyond Viktor's traceable abilities/experience
   (REQUIRED_SCORE < 40 AND no qualifying profile/\*.md evidence), warn the user and require an
   explicit `igen` before proceeding. On `nem` → stop without touching any file. Never invent
@@ -582,5 +579,6 @@ Display:
 - ✅ The job-description.md must reformat the given JD only — never invent or omit requirements
 - ✅ If the backup was cancelled (no VERSION_FOLDER), skip Step 8c and say so — do not stamp a marker pointing to a missing snapshot
 - ✅ CHANGE_PLAN may be empty if score is good — always report before stopping
-- ✅ Fictional language translations are always marked ⚠️ — this is expected, not an error
+- ✅ Cover letter (Step 8b) is OPTIONAL — user must confirm before dispatching cover-letter-agent
+- ✅ Repair loop (Step 7c) runs at most 1 iteration and uses targeted inline fix — never re-dispatches cv-translator-agent
 - ✅ All user-facing output in Hungarian; code, field names, and versioned file content in English
