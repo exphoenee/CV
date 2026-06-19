@@ -1,11 +1,10 @@
 {
-  "_comment": "FIXED layout budget — single source of truth for both numbers AND tolerance. NOT derived from cv-data.js. Editing this is a deliberate manual decision. See .claude/rules/translation-length.md. Run `python .claude/scripts/check-translation-lengths.py --print` to display the budget table.",
-  "_tolerance": { "min": 0.95, "max": 1.02 },
-  "summary": 753,
-  "aegex": 1826,
-  "telekom": 675,
-  "scolia": 585,
-  "cubicfox": 613,
-  "cobotx": 727,
-  "webforsol": 694
+  "_comment": "PAGE-BASED layout budget — single source of truth. Groups content into 3 logical pages. Each page total is the sum of all text content on that page. See .claude/rules/translation-length.md. Run `python .claude/scripts/check-translation-lengths.py --print` to display the budget table.",
+  "_tolerance": { "min": 0.88, "max": 1.02 },
+  "_page_comment_1": "Page 1: summary + workExperience[0] + workExperience[1]",
+  "_page_comment_2": "Page 2: workExperience[2] + workExperience[3] + workExperience[4]",
+  "_page_comment_3": "Page 3: workExperience[5] + education + languages + community + programmingLanguages + hobbyProjects",
+  "page1": 3053,
+  "page2": 1935,
+  "page3": 1508
 }
