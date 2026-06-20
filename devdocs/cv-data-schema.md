@@ -1,34 +1,36 @@
-# CV_DATA séma dokumentáció
+# CV_DATA schema documentation
 
-`cv/cv-data.js` exportálja a `CV_DATA` konstans objektumot. Ez az egyetlen adatforrás — minden nézet (plain, swagger, json, game) innen építkezik.
+> 🌐 **Language:** 🇬🇧 English · [🇭🇺 Magyar](cv-data-schema-hu.md)
+
+`cv/cv-data.js` exports the `CV_DATA` constant object. This is the single source of truth — every view (plain, swagger, json, game) builds from it.
 
 ```
 CV_DATA
- ├── meta               (object, kötelező)
- ├── identity           (object, kötelező)
- ├── summary            (string, kötelező)
- ├── workExperience[]   (array, opcionális)
- ├── education          (object, opcionális)
- ├── skillGroups        (object, opcionális)
- ├── skillNote          (object, opcionális)
- ├── programmingLanguages[] (array, opcionális)
- ├── community          (string, opcionális)
- └── hobbyProjects[]    (array, opcionális)
+ ├── meta               (object, required)
+ ├── identity           (object, required)
+ ├── summary            (string, required)
+ ├── workExperience[]   (array, optional)
+ ├── education          (object, optional)
+ ├── skillGroups        (object, optional)
+ ├── skillNote          (object, optional)
+ ├── programmingLanguages[] (array, optional)
+ ├── community          (string, optional)
+ └── hobbyProjects[]    (array, optional)
 ```
 
 ---
 
 ## meta
 
-| Mező          | Típus               | Kötelező? |
+| Field         | Type                | Required? |
 | ------------- | ------------------- | --------- |
-| `name`        | `string`            | igen      |
-| `role`        | `string`            | igen      |
-| `version`     | `string`            | igen      |
-| `accentColor` | `string` (CSS szín) | igen      |
-| `description` | `string`            | igen      |
+| `name`        | `string`            | yes       |
+| `role`        | `string`            | yes       |
+| `version`     | `string`            | yes       |
+| `accentColor` | `string` (CSS color)| yes       |
+| `description` | `string`            | yes       |
 
-Példa:
+Example:
 
 ```js
 meta: {
@@ -44,33 +46,33 @@ meta: {
 
 ## identity
 
-| Mező        | Típus          | Kötelező?                                                                                                             |
+| Field       | Type           | Required?                                                                                                              |
 | ----------- | -------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `name`      | `string`       | igen                                                                                                                  |
-| `role`      | `string`       | igen                                                                                                                  |
-| `location`  | `string`       | igen                                                                                                                  |
-| `contacts`  | `Contact[]`    | igen                                                                                                                  |
-| `languages` | `Language[]`   | opcionális                                                                                                            |
-| `game`      | `GamePosition` | opcionális — a játékbeli „Personal HQ" (welcome) station koordinátái és felirata (lásd [GamePosition](#gameposition)) |
+| `name`      | `string`       | yes                                                                                                                   |
+| `role`      | `string`       | yes                                                                                                                   |
+| `location`  | `string`       | yes                                                                                                                   |
+| `contacts`  | `Contact[]`    | yes                                                                                                                   |
+| `languages` | `Language[]`   | optional                                                                                                              |
+| `game`      | `GamePosition` | optional — the coordinates and label of the in-game "Personal HQ" (welcome) station (see [GamePosition](#gameposition)) |
 
 ### Contact
 
-| Mező    | Típus            | Kötelező? |
+| Field   | Type             | Required? |
 | ------- | ---------------- | --------- |
-| `label` | `string`         | igen      |
-| `url`   | `string \| null` | igen      |
+| `label` | `string`         | yes       |
+| `url`   | `string \| null` | yes       |
 
-Ha `url` null, akkor csak címkeként jelenik meg (pl. "Pécs, Hungary" vagy telefonszám).
+If `url` is null, it is shown only as a label (e.g. "Pécs, Hungary" or a phone number).
 
 ### Language
 
-| Mező      | Típus            | Kötelező?  |
+| Field     | Type             | Required?  |
 | --------- | ---------------- | ---------- |
-| `name`    | `string`         | igen       |
-| `level`   | `string`         | igen       |
-| `comment` | `string \| null` | opcionális |
+| `name`    | `string`         | yes        |
+| `level`   | `string`         | yes        |
+| `comment` | `string \| null` | optional   |
 
-Példa:
+Example:
 
 ```js
 identity: {
@@ -92,69 +94,69 @@ identity: {
 
 ## summary
 
-| Mező      | Típus    | Kötelező? |
+| Field     | Type     | Required? |
 | --------- | -------- | --------- |
-| `summary` | `string` | igen      |
+| `summary` | `string` | yes       |
 
-Egyszerű szöveges bekezdés.
+A simple text paragraph.
 
 ---
 
 ## workExperience[]
 
-Egy munkahely tömb. Minden elem:
+An array of jobs. Each element:
 
-| Mező          | Típus                                  | Kötelező?                                                                                                |
-| ------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `id`          | `string`                               | igen — egyedi azonosító, pl. `"aegex"`                                                                   |
-| `company`     | `string`                               | igen                                                                                                     |
-| `logo`        | `string`                               | igen — fájlnév az `assets/images/`-ből                                                                   |
-| `title`       | `string`                               | igen — pozíció megnevezése                                                                               |
-| `period`      | `{ from: string, to: string \| null }` | igen — ISO dátum vagy `null` ha jelenlegi                                                                |
-| `periodLabel` | `string`                               | igen — megjelenítendő dátum pl. `"Nov 2023 - Present"`                                                   |
-| `isCurrent`   | `boolean`                              | igen                                                                                                     |
-| `teamSize`    | `number`                               | opcionális                                                                                               |
-| `description` | `string`                               | igen                                                                                                     |
-| `bullets`     | `string[] \| object`                   | opcionális — lehet sima tömb vagy kategorizált objektum (pl. `{ hardSkills: [...], softSkills: [...] }`) |
-| `projects`    | `Project[]`                            | opcionális — ha van, `bullets` mellett projektenként bontva                                              |
-| `skills`      | `Skill[]`                              | opcionális — `{ name, icon }` objektumok tömbje                                                          |
-| `refs`        | `Ref[]`                                | opcionális                                                                                               |
-| `hasDecor`    | `boolean`                              | opcionális — plain nézet dekorációkhoz                                                                   |
-| `game`        | `GamePosition \| null`                 | opcionális — ha van, a játékban is megjelenik házként                                                    |
+| Field         | Type                                   | Required?                                                                                              |
+| ------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `id`          | `string`                               | yes — unique identifier, e.g. `"aegex"`                                                                |
+| `company`     | `string`                               | yes                                                                                                   |
+| `logo`        | `string`                               | yes — filename from `assets/images/`                                                                   |
+| `title`       | `string`                               | yes — name of the position                                                                             |
+| `period`      | `{ from: string, to: string \| null }` | yes — ISO date or `null` if current                                                                    |
+| `periodLabel` | `string`                               | yes — date to display, e.g. `"Nov 2023 - Present"`                                                     |
+| `isCurrent`   | `boolean`                              | yes                                                                                                   |
+| `teamSize`    | `number`                               | optional                                                                                              |
+| `description` | `string`                               | yes                                                                                                   |
+| `bullets`     | `string[] \| object`                   | optional — can be a plain array or a categorized object (e.g. `{ hardSkills: [...], softSkills: [...] }`) |
+| `projects`    | `Project[]`                            | optional — if present, broken down per project alongside `bullets`                                     |
+| `skills`      | `Skill[]`                              | optional — array of `{ name, icon }` objects                                                           |
+| `refs`        | `Ref[]`                                | optional                                                                                              |
+| `hasDecor`    | `boolean`                              | optional — for plain-view decorations                                                                  |
+| `game`        | `GamePosition \| null`                 | optional — if present, also appears as a house in the game                                             |
 
 ### Project
 
-| Mező       | Típus      | Kötelező? |
+| Field      | Type       | Required? |
 | ---------- | ---------- | --------- |
-| `name`     | `string`   | igen      |
-| `subtitle` | `string`   | igen      |
-| `bullets`  | `string[]` | igen      |
+| `name`     | `string`   | yes       |
+| `subtitle` | `string`   | yes       |
+| `bullets`  | `string[]` | yes       |
 
 ### Skill
 
-| Mező   | Típus    | Kötelező?                                                      |
-| ------ | -------- | -------------------------------------------------------------- |
-| `name` | `string` | igen — készség neve, pl. `"TypeScript"`                        |
-| `icon` | `string` | igen — fájlnév az `assets/images/`-ből, pl. `"typescript.svg"` |
+| Field  | Type     | Required?                                                  |
+| ------ | -------- | --------------------------------------------------------- |
+| `name` | `string` | yes — name of the skill, e.g. `"TypeScript"`              |
+| `icon` | `string` | yes — filename from `assets/images/`, e.g. `"typescript.svg"` |
 
 ### Ref
 
-| Mező    | Típus    | Kötelező? |
+| Field   | Type     | Required? |
 | ------- | -------- | --------- |
-| `url`   | `string` | igen      |
-| `label` | `string` | igen      |
+| `url`   | `string` | yes       |
+| `label` | `string` | yes       |
 
 ### GamePosition
 
-| Mező          | Típus      | Kötelező?                                                                                                                                       |
-| ------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `x`           | `number`   | igen — világkoordináta pixelben                                                                                                                 |
-| `y`           | `number`   | igen — világkoordináta pixelben                                                                                                                 |
-| `tech`        | `string`   | igen — rövid tech stack szöveg                                                                                                                  |
-| `description` | `string`   | igen — rövid cím (a játékban a station fejléce)                                                                                                 |
-| `highlights`  | `string[]` | opcionális — extra játékbeli dialogue bullet pontok (a jelenlegi adatban nincs használva; ha hiányzik, csak a `bullets`/`projects` jelenik meg) |
+| Field         | Type       | Required?                                                                                                                                  |
+| ------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `x`           | `number`   | yes — world coordinate in pixels                                                                                                          |
+| `y`           | `number`   | yes — world coordinate in pixels                                                                                                          |
+| `tech`        | `string`   | yes — short tech-stack text                                                                                                               |
+| `description` | `string`   | yes — short title (the station's header in the game)                                                                                      |
+| `highlights`  | `string[]` | optional — extra in-game dialogue bullet points (not used in the current data; if missing, only `bullets`/`projects` are shown)           |
 
-Példa:
+Example:
 
 ```js
 {
@@ -193,31 +195,31 @@ Példa:
 
 ## education
 
-| Mező          | Típus          | Kötelező?                                                                                                                       |
-| ------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `institution` | `string`       | igen                                                                                                                            |
-| `degrees`     | `Degree[]`     | igen                                                                                                                            |
-| `game`        | `GamePosition` | opcionális — a játékbeli „Education, Community & Projects" station koordinátái és felirata (lásd [GamePosition](#gameposition)) |
+| Field         | Type           | Required?                                                                                                                      |
+| ------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `institution` | `string`       | yes                                                                                                                          |
+| `degrees`     | `Degree[]`     | yes                                                                                                                          |
+| `game`        | `GamePosition` | optional — the coordinates and label of the in-game "Education, Community & Projects" station (see [GamePosition](#gameposition)) |
 
 ### Degree
 
-| Mező    | Típus    | Kötelező? |
+| Field   | Type     | Required? |
 | ------- | -------- | --------- |
-| `title` | `string` | igen      |
-| `years` | `string` | igen      |
+| `title` | `string` | yes       |
+| `years` | `string` | yes       |
 
 ---
 
 ## skillGroups
 
-Készségek kategóriákba sorolva. Kulcsozott objektum — minden kulcs egy csoport (pl. `primary`, `backend`, `testing`, `tooling`, `ai`, `robotics`). A csoportnevek szabadon bővíthetők.
+Skills grouped into categories. A keyed object — each key is a group (e.g. `primary`, `backend`, `testing`, `tooling`, `ai`, `robotics`). The group names can be freely extended.
 
-| Mező (csoportonként) | Típus            | Kötelező?                                       |
-| -------------------- | ---------------- | ----------------------------------------------- |
-| `list`               | `string[]`       | igen — a csoportba tartozó készségek nevei      |
-| `comment`            | `string \| null` | opcionális — opcionális megjegyzés a csoporthoz |
+| Field (per group) | Type             | Required?                                  |
+| ----------------- | ---------------- | ------------------------------------------ |
+| `list`            | `string[]`       | yes — names of the skills in the group     |
+| `comment`         | `string \| null` | optional — an optional note for the group  |
 
-Példa:
+Example:
 
 ```js
 skillGroups: {
@@ -236,15 +238,15 @@ skillGroups: {
 
 ## skillNote
 
-Egyetlen, kiemelt „easter egg" jellegű készség-megjegyzés.
+A single, highlighted "easter egg"-style skill note.
 
-| Mező      | Típus            | Kötelező?  |
+| Field     | Type             | Required?  |
 | --------- | ---------------- | ---------- |
-| `key`     | `string`         | igen       |
-| `value`   | `string`         | igen       |
-| `comment` | `string \| null` | opcionális |
+| `key`     | `string`         | yes        |
+| `value`   | `string`         | yes        |
+| `comment` | `string \| null` | optional   |
 
-Példa:
+Example:
 
 ```js
 skillNote: {
@@ -258,26 +260,26 @@ skillNote: {
 
 ## programmingLanguages[]
 
-| Mező   | Típus    | Kötelező?                              |
-| ------ | -------- | -------------------------------------- |
-| `name` | `string` | igen                                   |
-| `icon` | `string` | igen — fájlnév az `assets/images/`-ből |
+| Field  | Type     | Required?                          |
+| ------ | -------- | --------------------------------- |
+| `name` | `string` | yes                               |
+| `icon` | `string` | yes — filename from `assets/images/` |
 
 ---
 
 ## community
 
-| Mező        | Típus    | Kötelező?  |
+| Field       | Type     | Required?  |
 | ----------- | -------- | ---------- |
-| `community` | `string` | opcionális |
+| `community` | `string` | optional   |
 
-Szabad szöveges leírás.
+Free-form text description.
 
 ---
 
 ## hobbyProjects[]
 
-| Mező   | Típus    | Kötelező? |
+| Field  | Type     | Required? |
 | ------ | -------- | --------- |
-| `name` | `string` | igen      |
-| `url`  | `string` | igen      |
+| `name` | `string` | yes       |
+| `url`  | `string` | yes       |
