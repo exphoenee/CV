@@ -192,8 +192,9 @@ A verzió snapshot egy **mappa**: `cv-versions/YYYY-MM-DD_ceg-slug_pozicio-slug[
 ```
 cv-versions/
   2026-06-13_acme-corp_senior-frontend-engineer/
-    cv-data.js          ← optimalizált CV adat snapshot (metaadat fejléccel)
-    locales/             ← teljes scripts/locales/ könyvtár (12 JS fájl)
+    cv-data.js              ← optimalizált CV adat snapshot (metaadat fejléccel)
+    locales/                 ← teljes scripts/locales/ könyvtár (12 JS fájl)
+    job-description.md       ← formázott állásleírás — egy fájlban: angol + magyar + eredeti
 ```
 
 A `cv-data.js` tetején lévő komment blokk:

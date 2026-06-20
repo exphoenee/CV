@@ -1,5 +1,8 @@
 export const DE_PAGE = {
   labels: {
+    footerRepo: 'Maschinenraum',
+    footerMail: 'Direkte Mail',
+    footerLinkedin: 'LinkedIn-Profil',
     cvOf: 'Lebenslauf von',
     roleLocation: 'Frontend Tech Lead · Pécs, HU',
     chooseView: 'Wähle, wie du meinen Lebenslauf ansehen möchtest',
@@ -72,13 +75,11 @@ export const DE_PAGE = {
     bookLoading: 'Verfügbare Termine werden geladen…',
     bookError: 'Termine konnten nicht geladen werden.',
     bookRetry: 'Wiederholen',
+    bookErrRetryHint: 'Bitte überprüfen Sie Ihre Angaben und versuchen Sie es erneut.',
     bookEmpty: 'Keine freien Termine in den nächsten 21 Tagen.',
     bookFailed: 'Buchung fehlgeschlagen. Bitte versuchen Sie es erneut.',
-    bookErrMissingFields: 'Bitte füllen Sie alle Pflichtfelder aus.',
-    bookErrSlotUnavailable: 'Dieser Termin ist nicht mehr verfügbar. Bitte wählen Sie einen anderen.',
-    bookErrRateLimited: 'Heute wurden zu viele Buchungen von dieser E-Mail vorgenommen. Bitte versuchen Sie es morgen.',
     bookErrDailyCap: 'Heutiges Buchungslimit erreicht. Kommen Sie morgen wieder.',
-    bookErrCaptcha: 'Verifizierung fehlgeschlagen. Bitte schließen Sie die Prüfung ab und versuchen Sie es erneut.',
+    bookErrRateLimited: 'Sie haben bereits in den letzten 24 Stunden gebucht. Bitte versuchen Sie es später erneut.',
     bookCooldownTitle: 'Termin bereits gebucht!',
     bookCooldownNote:
       'Du hast in den letzten 48 Stunden bereits einen Termin gebucht. Komm später wieder.',

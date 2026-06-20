@@ -43,6 +43,9 @@ From `JD`:
 - `JD_COMPANY` — company name or `"ismeretlen"`
 - `JD_SENIORITY` — junior / mid / senior / lead / principal
 - `JD_DOMAIN` — industry / domain if mentioned
+- `JD_PRIMARY_LANGUAGE` — detected primary language of the JD (e.g. `"en"`, `"hu"`, `"de"`, `"fr"`, `"es"`, `"it"`).
+  Detect from the JD text content (if most non-tech words are Hungarian → `"hu"`, etc.).
+  Default to `"en"` if ambiguous.
 - `TITLE_SLUG` — JD_TITLE → lowercase, spaces→hyphens, special chars removed
   e.g. `"Senior Frontend Engineer"` → `"senior-frontend-engineer"`
 - `COMPANY_SLUG` — JD_COMPANY → lowercase, spaces→hyphens, special chars removed; `"unknown"` if `"ismeretlen"`
@@ -499,11 +502,22 @@ declined the snapshot). Otherwise:
 
 ### 8c-2 — Write the formatted job description
 
-Write `VERSION_FOLDER/job-description.md` using the **job-description.md structure** from
+Write `VERSION_FOLDER/job-description.md` using the **single-file job-description.md structure** from
 `.claude/rules/version-snapshot-format.md`. Fill the YAML frontmatter from JD_TITLE, JD_COMPANY,
-JD_SENIORITY, JD_DOMAIN, DATE/TIME, OVERALL_SCORE, APP_ID. Build the body sections from
-`JD_REQUIRED`, `JD_PREFERRED`, `JD_RESPONSIBILITIES`, and blockquote the original `JD` verbatim under
-"Eredeti állásleírás". Reformat for readability only — never add or drop requirements.
+JD_SENIORITY, JD_DOMAIN, DATE/TIME, OVERALL_SCORE, APP_ID. Add `has_hungarian: true` to the frontmatter.
+
+The file contains THREE sections separated by `---` + `> Language:` markers:
+
+1. **English section** (always first): `Required Qualifications`, `Preferred Qualifications`,
+   `Responsibilities` — built from `JD_REQUIRED`, `JD_PREFERRED`, `JD_RESPONSIBILITIES`
+   in English.
+2. **Hungarian section** (always second): `Kötelező követelmények`, `Előnyben részesített`,
+   `Feladatok / felelősségek` — same content translated to Hungarian.
+3. **Original Job Description** (always last): blockquote the original `JD` verbatim under
+   `## Original Job Description`.
+
+Technology names (TypeScript, React, Jest, etc.), company names, and proper nouns
+stay unchanged in all languages. The blockquote is NEVER translated.
 
 ### 8c-3 — Stamp the live-file marker (via ledger)
 
@@ -532,7 +546,8 @@ Open `cv-versions/applications.md` (create it with the header from the rule file
 Insert a row **directly under the header row** (newest first) using the **applications.md** format:
 
 - Dátum = DATE · Pozíció/Cég/Szint = JD_TITLE/JD_COMPANY/JD_SENIORITY · ATS = OVERALL_SCORE%
-- APP_ID (mappa) = relative link to `APP_ID/` · JD = link to `APP_ID/job-description.md`
+- APP_ID (mappa) = relative link to `APP_ID/` · JD = link to `APP_ID/job-description.md` ·
+  JD (HU) = link to `APP_ID/job-description-hu.md`
 - Fordítások = count of locales updated by cv-translator-agent (e.g. `11/11`)
 - Mot. levél = `igen` if any cover letter was written (Step 8b), else `nem`
 
@@ -548,7 +563,7 @@ Display:
 - Position: JD_TITLE @ JD_COMPANY, OVERALL_SCORE%
 - APP_ID (azonosító + snapshot mappa neve)
 - Changes: cv-data.js modification count + locale count
-- VERSION_FOLDER contents: cv-data.js · locales/ · job-description.md
+- VERSION_FOLDER contents: cv-data.js · locales/ · job-description.md · job-description-hu.md
   [Ha készült cover letter:] · cover-letter-en.md · cover-letter-hu.md [+ cover-letter-[lang].md ha JD nyelv != EN/HU]
   [Ha nem készült:] · (motivációs levél nem készült)
 - Marker: kétsoros `// @job-application:` + `// @cv-last-change:` blokk a live cv-data.js + 12 content locale fájlon (cv-ledger.py)
@@ -574,7 +589,7 @@ Display:
 - ✅ VERSION_BASE = DATE_COMPANY_SLUG_TITLE_SLUG — passed to cv-backup-agent; final VERSION_FOLDER determined by the agent
 - ✅ Each version is a folder: VERSION_FOLDER/cv-data.js + VERSION_FOLDER/locales/ (created by cv-backup-agent)
 - ✅ Dispatch cv-backup-agent AFTER translation (Step 8) — snapshot contains the optimized + translated state
-- ✅ Step 8c: save the formatted JD to VERSION_FOLDER/job-description.md; stamp the marker block via `cv-ledger.py mark --set-application` (cv-data.js + 12 `<lang>.js` content files only — NOT `-page.js`); append a `mutation` row via `cv-ledger.py log`; and add/update the row in cv-versions/applications.md
+- ✅ Step 8c: save the formatted JD to VERSION_FOLDER/job-description.md (single file with English + Hungarian + Original sections); stamp the marker block via `cv-ledger.py mark --set-application` (cv-data.js + 12 `<lang>.js` content files only — NOT `-page.js`); append a `mutation` row via `cv-ledger.py log`; and add/update the row in cv-versions/applications.md
 - ✅ APP_ID = final VERSION_FOLDER basename — the one id linking JD, live files, snapshot, and the log
 - ✅ The job-description.md must reformat the given JD only — never invent or omit requirements
 - ✅ If the backup was cancelled (no VERSION_FOLDER), skip Step 8c and say so — do not stamp a marker pointing to a missing snapshot

@@ -38,9 +38,10 @@ This single id ties together, for one application:
 VERSION_FOLDER/
   cv-data.js           ← optimized CV data (see header format below)
   locales/             ← full scripts/locales/ directory copied as-is (12 JS files)
-  job-description.md    ← formatted job description this version was made for (job-apply mode only)
-  cover-letter-en.md   ← English cover letter (optional, written by cover-letter-agent)
-  cover-letter-hu.md   ← Hungarian cover letter (optional, written by cover-letter-agent)
+  job-description.md     ← formatted job description — single file: English section, then Hungarian
+                           translation, then Original Job Description blockquote (job-apply mode only)
+  cover-letter-en.md    ← English cover letter (optional, written by cover-letter-agent)
+  cover-letter-hu.md    ← Hungarian cover letter (optional, written by cover-letter-agent)
 ```
 
 ---
@@ -109,6 +110,7 @@ match the project's JS conventions. The file-copy approach eliminates all of the
 
 The formatted job description this CV version was tailored for. Written into
 `VERSION_FOLDER/job-description.md` in **job-apply mode only** (manual `/cv-backup` has no JD).
+The file contains **all languages in a single document**, clearly separated by language markers.
 
 The raw JD text the user pasted is cleaned up into readable Markdown — do not invent or
 omit requirements, only reformat what was given.
@@ -124,9 +126,13 @@ date: 'YYYY-MM-DD HH:MM'
 ats_match: 'OVERALL_SCORE%'
 cv_version: 'cv-versions/APP_ID/'
 source: 'user-provided'
+language: 'en'|'hu'|'de'|etc   ← JD_PRIMARY_LANGUAGE detected from original text
+has_hungarian: true           ← always true (Hungarian section is ALWAYS included)
 ---
 
 # JD_TITLE — JD_COMPANY
+
+> Language: English
 
 ## Required Qualifications
 
@@ -140,10 +146,40 @@ source: 'user-provided'
 
 - ...
 
+---
+
+> Language: Hungarian
+
+## Kötelező követelmények
+
+- ...
+
+## Előnyben részesített
+
+- ...
+
+## Feladatok / felelősségek
+
+- ...
+
+---
+
+> Language: Original ([lang])
+
 ## Original Job Description
 
-> [the full original JD text, blockquoted verbatim]
+> [the full original JD text in its ORIGINAL language, blockquoted verbatim — NOT translated]
 ```
+
+### Structure rules
+
+- **English section** always comes first — uses English section headers
+- **Hungarian section** always comes second — uses Hungarian section headers
+  (`Kötelező követelmények`, `Előnyben részesített`, `Feladatok / felelősségek`)
+- **Original Job Description** comes last — always blockquoted, always in the JD's original language
+- Each section is separated by `---` and a `> Language:` marker line
+- Technology names (TypeScript, React, Jest, etc.), company names, and proper nouns stay unchanged
+  in all sections
 
 ---
 
@@ -170,7 +206,7 @@ Column meaning:
 - **Position / Company / Level** — `JD_TITLE` / `JD_COMPANY` / `JD_SENIORITY`
 - **ATS** — `OVERALL_SCORE%` (`—` if no optimization was needed)
 - **APP_ID (folder)** — relative link to the snapshot folder
-- **JD** — relative link to `job-description.md`
+- **JD** — relative link to `job-description.md` (single file: English + Hungarian + Original)
 - **Translations** — how many of the 11 locales were updated, e.g. `11/11`
 - **Cover letter** — `yes` if cover letters were written, otherwise `no`
 

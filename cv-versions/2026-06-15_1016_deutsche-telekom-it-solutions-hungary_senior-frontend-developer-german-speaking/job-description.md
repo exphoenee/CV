@@ -1,18 +1,22 @@
 ---
-app_id: "2026-06-15_deutsche-telekom-it-solutions-hungary_senior-frontend-developer-german-speaking"
-title: "Senior Frontend Developer - German speaking"
-company: "Deutsche Telekom IT Solutions Hungary"
-seniority: "senior"
-domain: "telecommunications, CMS"
-date: "2026-06-15 (current)"
-ats_match: "69%"
-cv_version: "cv-versions/2026-06-15_deutsche-telekom-it-solutions-hungary_senior-frontend-developer-german-speaking/"
-source: "user-provided"
+app_id: '2026-06-15_1016_deutsche-telekom-it-solutions-hungary_senior-frontend-developer-german-speaking'
+title: 'Senior Frontend Developer - German speaking'
+company: 'Deutsche Telekom IT Solutions Hungary'
+seniority: 'senior'
+domain: 'telecommunications, CMS'
+date: '2026-06-15 10:16'
+ats_match: '69%'
+cv_version: 'cv-versions/2026-06-15_1016_deutsche-telekom-it-solutions-hungary_senior-frontend-developer-german-speaking/'
+source: 'user-provided'
+language: 'en'
+has_hungarian: true
 ---
 
 # Senior Frontend Developer (German speaking) — Deutsche Telekom IT Solutions Hungary
 
-## Kötelező követelmények
+> Language: English
+
+## Required Qualifications
 
 - Completed degree in computer science, software development, or a comparable qualification
 - Several years of professional experience (at least 5 years)
@@ -29,12 +33,12 @@ source: "user-provided"
 - Familiarity with development tools (Git, Jenkins, Docker)
 - Knowledge of Agile methods (Scrum, Kanban)
 
-## Előnyben részesített
+## Preferred Qualifications
 
 - Knowledge of DevOps practices and CI/CD
 - Initial experience with AI and machine learning in software development
 
-## Feladatok / felelősségek
+## Responsibilities
 
 - Development and implementation of CoreMedia-based content management systems (CMS) for web projects
 - Integration and optimization of Deutsche Telekom interfaces and services into CoreMedia-based systems
@@ -44,7 +48,47 @@ source: "user-provided"
 - Error analysis and troubleshooting as well as continuous improvement of existing systems
 - Technical documentation and knowledge transfer within the team and to stakeholders
 
-## Eredeti állásleírás
+---
+
+> Language: Hungarian
+
+## Kötelező követelmények
+
+- Elvégzett egyetemi/főiskolai tanulmányok számítástechnika, szoftverfejlesztés vagy hasonló területen
+- Több éves szakmai tapasztalat (legalább 5 év)
+- Hajlandóság a CoreMedia fejlesztési keretrendszer elsajátítására
+- Szilárd JavaScript és TypeScript ismeretek
+- Tapasztalat modern webtechnológiákkal (HTML, CSS, React, Angular)
+- Tapasztalat AWS cloud szolgáltatásokkal és azok integrációjával
+- Erős problémamegoldó készség és analitikus gondolkodás
+- Kiváló kommunikációs készség német és angol nyelven
+- Önálló és strukturált munkavégzés
+- Csapatjátékos, hajlandóság a tudásmegosztásra
+- Ügyfél-orientált hozzáállás és viselkedés
+- Tapasztalat RESTful API-kkal és SOAP-pal
+- Fejlesztői eszközök ismerete (Git, Jenkins, Docker)
+- Agilis módszertanok ismerete (Scrum, Kanban)
+
+## Előnyben részesített
+
+- DevOps gyakorlatok és CI/CD ismerete
+- Kezdeti tapasztalat AI-val és gépi tanulással a szoftverfejlesztésben
+
+## Feladatok / felelősségek
+
+- CoreMedia-alapú tartalomkezelő rendszerek (CMS) fejlesztése és implementálása webes projektekhez
+- Deutsche Telekom interfészek és szolgáltatások integrációja és optimalizálása CoreMedia-alapú rendszerekbe
+- Műszaki tervezés, rendszerarchitektúra és komplex szoftverprojektek kivitelezése
+- Együttműködés projektmenedzserekkel, designer-ekkel és fejlesztőkkel az ügyfél-orientált, magas minőségű megoldások szállításáért
+- Kódreview-k lebonyolítása és magas kódminőség, valamint teljesítmény biztosítása
+- Hibaelemzés és hibaelhárítás, valamint a meglévő rendszerek folyamatos fejlesztése
+- Műszaki dokumentáció és tudásátadás a csapaton belül és stakeholderek felé
+
+---
+
+> Language: Original (English)
+
+## Original Job Description
 
 > Senior Frontend Developer - German speaking
 > Deutsche Telekom IT Solutions Hungary

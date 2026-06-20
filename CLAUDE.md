@@ -153,7 +153,7 @@ Claude Code skills and agents are built into this project to automate developmen
 | `/cv-backup [label]`             | Snapshot current `cv-data.js` + 11 locale content fields → `cv-versions/DATE_[label]/`                                                                                                          | —                                             |
 | `/cv-restore <folder>`           | Restore `cv-data.js` and 11 locale content fields from a `cv-versions/` backup folder                                                                                                           | —                                             |
 | `/cover-letter [JD]`             | Write English + Hungarian cover letters grounded in `profile/*.md` → `letters/DATE_company_title/`                                                                                              | —                                             |
-| `/job-apply [JD]`                | Full pipeline: ATS analysis → cv-data.js optimization → 11 locale translations → versioned backup → JD save + log → optional cover letter. No argument: interactive `tmp/jd-draft.md` template. | —                                             |
+| `/job-apply [JD]`                | Full pipeline: ATS analysis → cv-data.js optimization → 11 locale translations → versioned backup → JD save (single file: English + Hungarian + Original) + log → optional cover letter. No argument: interactive `tmp/jd-draft.md` template. | —                                             |
 | `/arch-review [--focus=...]`     | Architecture analysis: template duplication, data structure, locale, CSS, tooling → `review/`                                                                                                   | `review/YYYY-MM-DD_HHMM_arch-review-FOCUS.md` |
 
 **Review files:** Every skill that produces a report saves it to `./review/`, in `YYYY-MM-DD_HHMM_<type>[-focus].md` format.
@@ -167,7 +167,7 @@ Three layers — kept in sync by one helper, [`.claude/scripts/cv-ledger.py`](.c
    - `// @job-application:` — which version the live CV is based on (set by `/job-apply`, reset by `/cv-restore`).
    - `// @cv-last-change:` — the most recent mutation (set by `/job-apply`, `/cv-improver`, `/cv-restore`).
 2. **`cv-versions/history.md`** — append-only audit log, one row per CV event. **Mutations** (job-apply, cv-improver, cv-restore), **backups**, and read-only **reviews** (hr-review, language-reviewer, code-review) all append a row.
-3. **`cv-versions/applications.md`** — curated index of job applications (one row per APP_ID: job → CV version + translations + cover letter); the formatted JD lives at `cv-versions/APP_ID/job-description.md`.
+3. **`cv-versions/applications.md`** — curated index of job applications (one row per APP_ID: job → CV version + translations + cover letter); the formatted JD lives at `cv-versions/APP_ID/job-description.md` (single file: English + Hungarian + Original).
 
 Skills/agents never hand-edit the marker or the logs — they call `cv-ledger.py` (`mark` / `log` / `current`). Read-only reviews call `cv-ledger.py current` to tag their report with the version they examined. Formats: [`.claude/rules/version-snapshot-format.md`](.claude/rules/version-snapshot-format.md).
 

@@ -285,15 +285,38 @@ h1 small {
 }
 .footer {
   margin-top: 28px;
-  font-size: 11px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 12px;
   color: var(--muted2);
 }
-.footer a {
+.footer-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid var(--footer-link);
+  border-radius: 8px;
   color: var(--footer-link);
   text-decoration: none;
+  text-align: center;
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
 }
-.footer a:hover {
+.footer-btn:hover,
+.footer-btn:focus-visible {
   color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+@media (max-width: 600px) {
+  .footer {
+    grid-template-columns: 1fr;
+  }
 }
 .hire-backdrop {
   position: fixed;

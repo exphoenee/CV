@@ -1,5 +1,8 @@
 export const FR_PAGE = {
   labels: {
+    footerRepo: "Salle des machines",
+    footerMail: "Courrier direct",
+    footerLinkedin: "Profil LinkedIn",
     cvOf: 'Curriculum Vitae de',
     roleLocation: 'Frontend Tech Lead · Pécs, HU',
     chooseView: 'Choisissez comment consulter mon CV',
@@ -72,13 +75,11 @@ export const FR_PAGE = {
     bookLoading: 'Chargement des créneaux disponibles…',
     bookError: 'Impossible de charger les créneaux.',
     bookRetry: 'Réessayer',
+    bookErrRetryHint: 'Veuillez vérifier vos informations et réessayer.',
     bookEmpty: 'Aucun créneau disponible dans les 21 prochains jours.',
     bookFailed: 'La réservation a échoué. Veuillez réessayer.',
-    bookErrMissingFields: "Veuillez remplir tous les champs obligatoires.",
-    bookErrSlotUnavailable: "Ce créneau n'est plus disponible. Veuillez en choisir un autre.",
-    bookErrRateLimited: "Trop de réservations aujourd'hui avec cette adresse e-mail. Veuillez réessayer demain.",
     bookErrDailyCap: "Limite de réservation atteinte aujourd'hui. Revenez demain.",
-    bookErrCaptcha: "La vérification a échoué. Veuillez compléter le contrôle et réessayer.",
+    bookErrRateLimited: 'Vous avez déjà réservé au cours des 24 dernières heures. Veuillez réessayer plus tard.',
     bookCooldownTitle: 'Rendez-vous déjà réservé !',
     bookCooldownNote:
       'Vous avez déjà réservé un rendez-vous dans les dernières 48 heures. Revenez plus tard.',
