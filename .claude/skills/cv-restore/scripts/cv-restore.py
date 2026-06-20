@@ -89,8 +89,25 @@ def read_file(path):
 
 def write_file(path, content):
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
+    # Normalize to CRLF so restored files match the repo's line-ending convention
+    # (prevents git/GitHub Desktop showing whole-file diffs). See .claude/rules/line-endings.md
+    content = content.replace("\r\n", "\n").replace("\r", "").replace("\n", "\r\n")
+    with open(path, "w", encoding="utf-8", newline="") as f:
         f.write(content)
+
+
+def _normalize_dir_crlf(directory):
+    """Rewrite every .js file in `directory` with CRLF endings (repo convention)."""
+    for name in os.listdir(directory):
+        p = os.path.join(directory, name)
+        if not (os.path.isfile(p) and name.endswith(".js")):
+            continue
+        with open(p, "rb") as f:
+            data = f.read()
+        norm = data.replace(b"\r\n", b"\n").replace(b"\r", b"").replace(b"\n", b"\r\n")
+        if norm != data:
+            with open(p, "wb") as f:
+                f.write(norm)
 
 
 # ── Restore cv-data.js ─────────────────────────────────────────────────
@@ -118,6 +135,7 @@ def restore_locales(backup_locales_dir, target_dir):
     if not os.path.isdir(backup_locales_dir):
         return False
     shutil.copytree(backup_locales_dir, target_dir, dirs_exist_ok=True)
+    _normalize_dir_crlf(target_dir)  # keep CRLF — snapshots may carry LF
     return True
 
 

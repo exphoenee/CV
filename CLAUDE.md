@@ -180,10 +180,12 @@ Detailed documentation (with Mermaid diagrams): [`devdocs/ai-workflow.md`](devdo
 - **No backend** — everything is static; Formspree and Google Apps Script are the only exceptions
 - **ES Modules** — every JS file uses `type="module"` with relative import paths
 - **No `innerHTML` with user input** — always use `escHtml()` or the `html\`\`` tag
+- **CRLF line endings** — the repo is committed with CRLF; every file written MUST stay CRLF (enforced by `.editorconfig`). Full rule: [`.claude/rules/line-endings.md`](.claude/rules/line-endings.md)
 
 ## Script Placement
 
-- `scripts/` — **Only** CV website product files (views, components, game, data, styles, HTML)
+- `scripts/` — CV website product files (views, components, game, styles, HTML)
+- `cv/` — CV data: `cv/cv-data.js` (single source of truth) + `cv/locales/` (24 locale files)
 - `.claude/` — AI workflow scripts (validation, backup, translation, pipeline tools)
 
 Full rule: [`.claude/rules/script-placement.md`](.claude/rules/script-placement.md)

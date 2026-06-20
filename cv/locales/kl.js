@@ -1,25 +1,24 @@
-// @job-application: 2026-06-20_1043_clickup_senior-frontend-engineer — Senior Frontend Engineer @ ClickUp (2026-06-20) · snapshot: cv-versions/2026-06-20_1043_clickup_senior-frontend-engineer/
-// @cv-last-change: 2026-06-20 1202 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 export const KL = {
   content: {
     summary:
-      "HoS naQHom Engineer — 5+ DIS React ma TypeScript patmey vIchenmoHpu'. vIchel: pat HoS naQHom, Redux-pat Qap, wavmey vIchenmoH, ma HoS naQHom Qu' Qap. lurDech patmey vIchelpu', CI HeH vIchenmoHpu' — Jest, Vitest, Playwright — De' legh pagh tat, qo' Qu' Qap ray'. AI qoq vIazh — Qu' Qap cha'logh Qap. SuvwI'pu' vIHaDmoH, De' legh vIvum, ma HoS naQHom pat batlh vIchenmoH — Hoch pat legh Qap, Qo'noS Hoch.",
+      "HoS naQHom Sa' jIH — 5+ DIS HoS naQHom ma Hoch-naQHom Qu'mey vIta'. lurDech patmey vIchel TypeScript, Svelte, React, Node.js. jIvumpu' DaH. AI qoq vIazh ma CI HeH vIchenmoH — HeH cendmey nargh — Qu' ray' Qap, ngeHlu' batlh. SuvwI'pu' vISa' ma vIHaDmoH. De' legh patmey vIvum. HoS naQHomlIj boQmeH jIvum. Qapla'!",
+
     workExperience: [
       {
-        id: 'aegex',
+        id: "aegex",
         description:
           "SafeSy ma FACTS — lurDech patmey vIchel vIvumpu' Hoch, pat chu' vIchenmoHpu'. AI qoq ma CI HeH vIchenmoHpu' — De' legh patmey vIvum batlh. Qu' ray' Qap, ngeHlu' batlh. Qapla'!",
         bullets: [
-          "SafeSy, FACTS — React/TypeScript pat vIchenmoH vIvumpu' Hoch: pat qech, Redux-pat UI, qo' naQHom ghom vISuv",
+          "SafeSy, FACTS — pat vIchenmoH vIvumpu': qech → chen → Qu' taH",
           "lurDech patmey vIchel — ghItlhmey chu' vIchenmoH, HeH chu' vIta'",
           "AI qoq mIwmey vIazh — ghom Qu' Qap ray'",
-          "CI HeH vIchenmoH — De' legh pagh (Jest, Vitest, Playwright) — pagh tat, qo' Qu' Qap ray'",
+          "CI HeH vIchenmoH — De' legh pagh lI'be', Qu' taH",
           "De' legh ngeHlu' vIchenmoH — batlh Qu' QaQmoHlaH",
           "wa' SuvwI' chenmoHwI' vIHaDmoH DaH",
         ],
         projects: [
           {
-            name: 'SafeSy',
+            name: "SafeSy",
             subtitle: "qo' pat DaH Qu'",
             bullets: [
               "qo' Hoch HoD ma ghom vIchenmoH — SuvwI' Hoch, DaH mIwmey ma De' legh",
@@ -28,30 +27,30 @@ export const KL = {
             ],
           },
           {
-            name: 'FACTS',
+            name: "FACTS",
             subtitle: "qoq De' ma HeH De' qo'",
             bullets: [
               "Qu' Qap vIchav: jar → cha' jar (poQlu': wa' jar) — Claude AI qoq",
               "CI HeH vIchenmoH — De' legh pagh tat, qo' Qu' Qap ray'",
-              'pat vIchenmoH PNPM monorepo — wavmey FACTS/Driver Hoch',
+              "pat vIchenmoH PNPM monorepo — wavmey FACTS/Driver Hoch",
               "CLI qoq wa' vIchenmoH — monorepo mIwmey ma SuvwI' chenmoHwI'",
             ],
           },
         ],
       },
       {
-        id: 'telekom',
+        id: "telekom",
         description:
           "Agile qo' Qu'mey vIvum — AI qoq HoS naQHom, De' leghmoH DaH, HoS naQHom-qo' naQHom pat. HeH chu' wavmey vIchenmoH. AI De' mIwmey vIazh. Qapla'.",
         bullets: [
-          "HeH chu' React wavmey vIchenmoH Redux-pat Qap — AI qo' Qu' boQmeH, qo' naQHom ghom vISuv API mIwmeyDaq",
+          "HeH chu' React wavmey vIchenmoH AI qo' Qu' boQmeH",
           "HoS naQHom lojmItmey vIchenmoH AI qo' naQHom jabbI'ID mIwmey",
           "De' leghmoH DaH vIchenmoH Qu' ma qo' legh",
           "Agile Qu' vIvum — HoS naQHom ma qo' naQHom Hoch",
         ],
       },
       {
-        id: 'scolia',
+        id: "scolia",
         description:
           "SuvwI' HoS naQHom vIvum Scolia — De' leghmoH DaH mI' chelwI' qoj argh Qu'. Qapla':",
         bullets: [
@@ -60,7 +59,7 @@ export const KL = {
         ],
       },
       {
-        id: 'cubicfox',
+        id: "cubicfox",
         description:
           "Qu' batlh HoS naQHom ghItlhmey vIchenmoH qorDu'mey Sep Hoch, Agile qo'. pat batlh, HeH HoS naQHom, jabbI'ID qorDu' — Hoch batlh.",
         bullets: [
@@ -71,7 +70,7 @@ export const KL = {
         ],
       },
       {
-        id: 'cobotx',
+        id: "cobotx",
         description:
           "qoqmoH HoS ma mIwmey Qu'mey vIta' — SuvwI' De', PLC patmey, qoq ghItlhmey. pat qo', HoD ghom, Qu' — qo' Qob taH.",
         bullets: [
@@ -83,7 +82,7 @@ export const KL = {
         ],
       },
       {
-        id: 'webforsol',
+        id: "webforsol",
         description:
           "Hoch ghItlhmey HoS naQHom-qo' naQHom vIchenmoH wa'logh qorDu'mey Sep Hoch. pat qo', taHmoHlaH ghItlhmey, Qu' Hoch ngeHlu' — batlh.",
         bullets: [
@@ -95,13 +94,15 @@ export const KL = {
         ],
       },
     ],
+
     community:
       "Pro bono HaDmoH ghItlhmey ma Hol vIchenmoH HoD Mátyás Király, Pécs (cha'Ioq 2026, DaH taH). Qu' Hoch vIchenmoH wa'logh. SuvwI' ghom vIHaDmoH: wa' ghom Qap \"Hack and Code\" 2026 (Radnóti SZKI), ma wa' ma wej 22nd Neumann János ghItlhmey Qu'. Qapla'!",
+
     identity: {
       languages: [
-        { name: 'Magyar', level: "Hol wa'DIch jIH", comment: null },
-        { name: 'Deutsch', level: "B2 — Dajmo'?", comment: null },
-        { name: 'English', level: "B2 — Qapla'", comment: null },
+        {name: "Magyar", level: "Hol wa'DIch jIH", comment: null},
+        {name: "Deutsch", level: "B2 — Dajmo'?", comment: null},
+        {name: "English", level: "B2 — Qapla'", comment: null},
       ],
     },
   },
