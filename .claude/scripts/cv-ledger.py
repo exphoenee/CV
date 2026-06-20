@@ -77,6 +77,10 @@ def _project_path(*parts):
     return os.path.join(_PROJECT_ROOT, *parts)
 
 
+# Shared CRLF normalizer (same directory) — single source of line-ending logic.
+sys.path.insert(0, _SCRIPT_DIR)
+from crlf_normalize import write_text_crlf
+
 CV_DATA_PATH = _project_path("cv", "cv-data.js")
 VERSIONS_DIR = _project_path("cv-versions")
 HISTORY_PATH = _project_path("cv-versions", "history.md")
@@ -115,9 +119,8 @@ def read_file(path):
 
 
 def write_file(path, content):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(content)
+    # CRLF-normalized write — shared logic in .claude/scripts/crlf_normalize.py
+    write_text_crlf(path, content)
 
 
 def _cell(value):

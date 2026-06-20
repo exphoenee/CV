@@ -1,9 +1,7 @@
+.parcel-cache/
 node_modules/
-cv-versions/
-cv-game.html
 review/
 tmp/
-.parcel-cache/
 dist/
 *.png
 *.wav
@@ -11,5 +9,3 @@ dist/
 *.otf
 *.jpg
 *.jfif
-letters/
-debug/

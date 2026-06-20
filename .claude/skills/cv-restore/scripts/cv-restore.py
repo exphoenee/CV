@@ -45,6 +45,10 @@ _PROJECT_ROOT = os.path.abspath(os.path.join(_SCRIPT_DIR, *([".."] * 4)))
 def _project_path(*parts):
     return os.path.join(_PROJECT_ROOT, *parts)
 
+# Shared CRLF normalizer — single source of line-ending logic (.claude/rules/line-endings.md)
+sys.path.insert(0, _project_path(".claude", "scripts"))
+from crlf_normalize import normalize_dir, write_text_crlf
+
 CV_DATA_PATH  = _project_path("cv", "cv-data.js")
 VERSIONS_DIR  = _project_path("cv-versions")
 
@@ -88,26 +92,8 @@ def read_file(path):
 
 
 def write_file(path, content):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    # Normalize to CRLF so restored files match the repo's line-ending convention
-    # (prevents git/GitHub Desktop showing whole-file diffs). See .claude/rules/line-endings.md
-    content = content.replace("\r\n", "\n").replace("\r", "").replace("\n", "\r\n")
-    with open(path, "w", encoding="utf-8", newline="") as f:
-        f.write(content)
-
-
-def _normalize_dir_crlf(directory):
-    """Rewrite every .js file in `directory` with CRLF endings (repo convention)."""
-    for name in os.listdir(directory):
-        p = os.path.join(directory, name)
-        if not (os.path.isfile(p) and name.endswith(".js")):
-            continue
-        with open(p, "rb") as f:
-            data = f.read()
-        norm = data.replace(b"\r\n", b"\n").replace(b"\r", b"").replace(b"\n", b"\r\n")
-        if norm != data:
-            with open(p, "wb") as f:
-                f.write(norm)
+    # CRLF-normalized write — shared logic in .claude/scripts/crlf_normalize.py
+    write_text_crlf(path, content)
 
 
 # ── Restore cv-data.js ─────────────────────────────────────────────────
@@ -135,7 +121,7 @@ def restore_locales(backup_locales_dir, target_dir):
     if not os.path.isdir(backup_locales_dir):
         return False
     shutil.copytree(backup_locales_dir, target_dir, dirs_exist_ok=True)
-    _normalize_dir_crlf(target_dir)  # keep CRLF — snapshots may carry LF
+    normalize_dir(target_dir, exts=[".js"], recursive=False)  # keep CRLF — snapshots may carry LF
     return True
 
 
