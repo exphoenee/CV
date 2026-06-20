@@ -1,47 +1,52 @@
-# AI Workflow — CV Projekt
+# AI Workflow — CV Project
 
-A CV projekthez épített AI asszisztens rendszer dokumentációja.
-A rendszer Claude Code skill-ekből és agent-ekből áll, amelyek a fejlesztési,
-tartalom-karbantartási és álláspályázati munkafolyamatokat automatizálják.
+> 🌐 **Language:** 🇬🇧 English · [🇭🇺 Magyar](ai-workflow-hu.md)
+
+Documentation of the AI assistant system built for the CV project.
+The system consists of Claude Code skills and agents that automate development,
+content-maintenance, and job-application workflows.
 
 ---
 
-## Architektúra áttekintés
+## Architecture overview
 
-A rendszer három rétegből áll: a felhasználó **skill-eket** (slash commandok) hív; egyes skill-ek **ügynököket** indítanak (dispatch); a skill-ek és ügynökök közös **adatforrásokon** dolgoznak. Az alábbi áttekintés az orchestrációt mutatja — a részletes, kulcsonkénti adatfolyamokat a lenti dedikált diagramok és táblázatok írják le.
+The system has three layers: the user invokes **skills** (slash commands); some skills launch **agents** (dispatch); skills and agents work on shared **data sources**. The overview below shows the orchestration — the detailed, per-key data flows are described by the dedicated diagrams and tables further down.
 
 ```mermaid
-graph TD
-    User(["👤 Felhasználó"])
+graph TB
+    User(["👤 User"])
 
-    subgraph Skills["1 · Skill-ek (slash commandok)"]
-        direction LR
-        LC["/locale-check"]
-        CR["/code-review"]
-        LR["/language-reviewer"]
-        SR["/security-review"]
-        AR["/arch-review"]
-        HR["/hr-review"]
-        CI["/cv-improver"]
-        CL["/cover-letter"]
+    subgraph Skills["Skills (slash commands)"]
+        subgraph DevSkills["Development"]
+            LC["/locale-check"]
+            CR["/code-review"]
+            LR["/language-reviewer"]
+            SR["/security-review"]
+            AR["/arch-review"]
+        end
+        subgraph ContentSkills["Content"]
+            HR["/hr-review"]
+            CI["/cv-improver"]
+            CL["/cover-letter"]
+        end
+        subgraph BackupSkills["Backup"]
+            CB["/cv-backup"]
+            CVR["/cv-restore"]
+        end
         JA["/job-apply"]
-        CB["/cv-backup"]
-        CVR["/cv-restore"]
     end
 
-    subgraph Agents["2 · Ügynökök (dispatch)"]
-        direction LR
+    subgraph Agents["Agents (dispatch)"]
         JAO["job-apply-orchestrator"]
-        CTA["cv-translator-agent"]
-        CBA["cv-backup-agent"]
-        CLA["cover-letter-agent"]
         LA["locale-agent"]
         VCA["view-check-agent"]
         ARA["arch-review-agent"]
+        CBA["cv-backup-agent"]
+        CLA["cover-letter-agent"]
+        CTA["cv-translator-agent"]
     end
 
-    subgraph Data["3 · Adatforrások"]
-        direction LR
+    subgraph Data["Data sources"]
         CVD["cv-data.js"]
         LOC["locales/*.js ×12"]
         RULES["rules/locales/*.md ×12"]
@@ -53,60 +58,60 @@ graph TD
 
     User ==> Skills
 
-    %% Skill → ügynök dispatch (a szaggatott él feltételes)
+    %% Skill → agent dispatch
     LC -. --fix .-> LA
-    CR -. új nézet .-> VCA
+    CR -. new view .-> VCA
     AR --> ARA
     CB --> CBA
     CL --> CLA
     JA --> JAO
 
-    %% Orchestrator → al-ügynökök
+    %% Orchestrator → sub-agents
     JAO --> CTA
     JAO --> CBA
-    JAO -. opcionális .-> CLA
+    JAO -. optional .-> CLA
 
-    %% Réteg → adat (összevont hozzáférés)
+    %% Layer → data
     Skills ==> Data
     Agents ==> Data
 ```
 
 ---
 
-## Skill-ek részletezése
+## Skills in detail
 
-### Fejlesztési skill-ek
+### Development skills
 
-| Skill                            | Trigger                  | Output                                 | Review fájl                                   |
+| Skill                            | Trigger                  | Output                                 | Review file                                   |
 | -------------------------------- | ------------------------ | -------------------------------------- | --------------------------------------------- |
-| `/locale-check`                  | Bármikor                 | Hiányzó locale kulcsok listája         | —                                             |
-| `/locale-check --fix`            | Hiányzó kulcsok javítása | `locale-agent` dispatch                | `locales/*.js`                                |
-| `/code-review`                     | Commit előtt             | Locale, aria, biztonsági audit         | —                                             |
-| `/code-review --fix`               | Commit előtt             | Javítások alkalmazása                  | `shared.js` / HTML                            |
-| `/language-reviewer [lang\|all]` | Minőségellenőrzés        | Lektorálási megjegyzések               | —                                             |
-| `/security-review`               | Periodikusan             | Spam/flood biztonsági audit            | `review/YYYY-MM-DD_HHMM_security-review.md`   |
-| `/arch-review [--focus=...]`     | Architektúra-elemzés     | Template/adat/locale/CSS/tooling audit | `review/YYYY-MM-DD_HHMM_arch-review-FOCUS.md` |
+| `/locale-check`                  | Anytime                  | List of missing locale keys            | —                                             |
+| `/locale-check --fix`            | Fix missing keys         | `locale-agent` dispatch                | `locales/*.js`                                |
+| `/code-review`                   | Before commit            | Locale, aria, security audit           | —                                             |
+| `/code-review --fix`             | Before commit            | Apply fixes                            | `shared.js` / HTML                            |
+| `/language-reviewer [lang\|all]` | Quality check            | Proofreading notes                     | —                                             |
+| `/security-review`               | Periodically             | Spam/flood security audit              | `review/YYYY-MM-DD_HHMM_security-review.md`   |
+| `/arch-review [--focus=...]`     | Architecture analysis    | Template/data/locale/CSS/tooling audit | `review/YYYY-MM-DD_HHMM_arch-review-FOCUS.md` |
 
-### Tartalom és backup skill-ek
+### Content and backup skills
 
-| Skill                   | Trigger                 | Output                                        | Review fájl                                       |
-| ----------------------- | ----------------------- | --------------------------------------------- | ------------------------------------------------- |
-| `/hr-review`            | Általános CV ellenőrzés | ATS minőségértékelés                          | — / `review/YYYY-MM-DD_HHMM_hr-review-general.md` |
-| `/hr-review <JD>`       | Állásra pályázás előtt  | Kulcsszó-egyezés + javaslatok                 | `review/YYYY-MM-DD_HHMM_hr-review-SLUG.md`        |
-| `/cv-improver <report>` | Hr-review után          | cv-data.js módosítás                          | `cv/cv-data.js`                              |
-| `/cv-backup [label]`    | Kézi mentési pont       | Snapshot mappa: `cv-versions/DATE_[label]/`   | —                                                 |
-| `/cv-restore <folder>`  | Visszaállítás           | cv-data.js + 11 locale content visszaállítva  | —                                                 |
-| `/cover-letter [JD]`    | Motivációs levél        | EN + HU levél → `letters/DATE_company_title/` | —                                                 |
-| `/job-apply [JD]`       | Állásra pályázáskor     | Teljes pipeline (lásd lent)                   | `cv-versions/DATE_ceg_pozicio/`                   |
+| Skill                   | Trigger                | Output                                        | Review file                                       |
+| ----------------------- | ---------------------- | --------------------------------------------- | ------------------------------------------------- |
+| `/hr-review`            | General CV check       | ATS quality assessment                        | — / `review/YYYY-MM-DD_HHMM_hr-review-general.md` |
+| `/hr-review <JD>`       | Before applying        | Keyword match + recommendations               | `review/YYYY-MM-DD_HHMM_hr-review-SLUG.md`        |
+| `/cv-improver <report>` | After hr-review        | cv-data.js modification                       | `cv/cv-data.js`                                   |
+| `/cv-backup [label]`    | Manual save point      | Snapshot folder: `cv-versions/DATE_[label]/`  | —                                                 |
+| `/cv-restore <folder>`  | Restore                | cv-data.js + 11 locale contents restored      | —                                                 |
+| `/cover-letter [JD]`    | Cover letter           | EN + HU letter → `letters/DATE_company_title/` | —                                                 |
+| `/job-apply [JD]`       | When applying for a job | Full pipeline (see below)                     | `cv-versions/DATE_company_position/`              |
 
-> **Review fájlok egységes helye:** `./review/` — dátum-időbélyeges fájlnevekkel (`YYYY-MM-DD_HHMM_<típus>[-fókusz].md`)
+> **Unified location of review files:** `./review/` — with date-timestamped filenames (`YYYY-MM-DD_HHMM_<type>[-focus].md`)
 
 ---
 
 ## Job-apply pipeline
 
-Ez a legösszetettebb munkafolyamat — a `/job-apply` skill triggereli a `job-apply-orchestrator` agentet,
-amely a végén a `cv-backup-agent`-et hívja a verzió snapshot elkészítéséhez.
+This is the most complex workflow — the `/job-apply` skill triggers the `job-apply-orchestrator` agent,
+which at the end calls `cv-backup-agent` to create the version snapshot.
 
 ```mermaid
 sequenceDiagram
@@ -117,87 +122,87 @@ sequenceDiagram
     participant CBA as cv-backup-agent
     participant CLA as cover-letter-agent
 
-    User->>JA: /job-apply [állásleírás.txt | inline szöveg]
+    User->>JA: /job-apply [job-description.txt | inline text]
     JA->>JAO: dispatch(JD)
 
-    alt Nincs argumentum (Step 0a)
-        JAO->>JAO: Létrehozza: tmp/jd-draft.md sablont
-        JAO->>User: 📝 Töltsd ki és mentsd el, majd: kész
-        User->>JAO: kész (vagy n = megszakít)
-        JAO->>JAO: Beolvassa tmp/jd-draft.md tartalmát
+    alt No argument (Step 0a)
+        JAO->>JAO: Creates: tmp/jd-draft.md template
+        JAO->>User: 📝 Fill it in and save, then: done
+        User->>JAO: done (or n = cancel)
+        JAO->>JAO: Reads the contents of tmp/jd-draft.md
     end
 
-    JAO->>JAO: 0b. JD metaadatok kinyerése (title, company, VERSION_BASE...)
-    JAO->>JAO: 1. cv-data.js betöltése
-    JAO->>JAO: 2. HR/ATS elemzés (kulcsszó-lefedettség, pontozás)
-    JAO->>JAO: 2d. Változtatási terv összeállítása (CHANGE_PLAN)
+    JAO->>JAO: 0b. Extract JD metadata (title, company, VERSION_BASE...)
+    JAO->>JAO: 1. Load cv-data.js
+    JAO->>JAO: 2. HR/ATS analysis (keyword coverage, scoring)
+    JAO->>JAO: 2d. Assemble the change plan (CHANGE_PLAN)
 
-    alt OVERALL_SCORE >= 90% és CHANGE_PLAN üres (Step 3)
-        JAO->>User: ✅ Nem szükséges optimalizálás
-    else Van optimalizálás
-        JAO->>User: 📋 Teljes változtatási terv (Step 4) — VERSION_BASE, változások, hiányzó kulcsszavak
-        User->>JAO: Jóváhagyás (y/n)
+    alt OVERALL_SCORE >= 90% and CHANGE_PLAN empty (Step 3)
+        JAO->>User: ✅ No optimization needed
+    else Optimization needed
+        JAO->>User: 📋 Full change plan (Step 4) — VERSION_BASE, changes, missing keywords
+        User->>JAO: Approval (y/n)
 
-        alt Jóváhagyva
-            JAO->>JAO: 6. cv-data.js módosítása
-            JAO->>CTA: dispatch(CHANGED_FIELDS, 11 locale)
+        alt Approved
+            JAO->>JAO: 6. Modify cv-data.js
+            JAO->>CTA: dispatch(CHANGED_FIELDS, 11 locales)
 
-            loop Minden locale (11 db)
-                CTA->>CTA: Szabályfájl betöltése (.claude/rules/locales/<lang>.md)
-                CTA->>CTA: Fordítás / stílus-adaptáció
-                CTA->>CTA: locales/<lang>.js content mezők frissítése
+            loop Each locale (11)
+                CTA->>CTA: Load rule file (.claude/rules/locales/<lang>.md)
+                CTA->>CTA: Translation / style adaptation
+                CTA->>CTA: Update locales/<lang>.js content fields
             end
 
-            CTA->>JAO: Fordítások kész
+            CTA->>JAO: Translations done
 
-            Note over JAO: Step 7b — Fordítási minőségellenőrzés
-            JAO->>JAO: Valódi nyelvek: főváros, technév, hossz, angol maradék
-            JAO->>JAO: Fiktív nyelvek: kulcsszótár, fonetikai konvenciók
+            Note over JAO: Step 7b — Translation quality check
+            JAO->>JAO: Real languages: capital, tech name, length, English leftovers
+            JAO->>JAO: Fictional languages: key vocabulary, phonetic conventions
 
             JAO->>CBA: dispatch(VERSION_BASE, JD metadata, scores)
 
-            Note over CBA: cv-backup-agent — Verziókezelés
-            CBA->>CBA: cv-versions/ vizsgálata (VERSION_BASE alapján)
+            Note over CBA: cv-backup-agent — Version control
+            CBA->>CBA: Inspect cv-versions/ (based on VERSION_BASE)
 
-            alt Létezik korábbi verzió
-                CBA->>User: ⚠️ Meglévő verziók listája (dátum, ATS%)
-                CBA->>User: [a] Új verzió · [b] Felülír · [n] Leáll
-                User->>CBA: Választás
+            alt A previous version exists
+                CBA->>User: ⚠️ List of existing versions (date, ATS%)
+                CBA->>User: [a] New version · [b] Overwrite · [n] Stop
+                User->>CBA: Choice
             end
 
-            CBA->>CBA: VERSION_FOLDER létrehozása
-            CBA->>CBA: cv-data.js snapshot írása (metadat fejléccel)
-            CBA->>CBA: locales/ könyvtár másolása (12 JS fájl)
+            CBA->>CBA: Create VERSION_FOLDER
+            CBA->>CBA: Write cv-data.js snapshot (with metadata header)
+            CBA->>CBA: Copy locales/ directory (12 JS files)
             CBA->>JAO: VERSION_FOLDER, STATUS
 
-            Note over JAO: Step 8 — Motivációs levél (opcionális)
-            JAO->>User: Szeretnél motivációs levelet is? (y/n)
+            Note over JAO: Step 8 — Cover letter (optional)
+            JAO->>User: Would you like a cover letter too? (y/n)
             alt y
                 JAO->>CLA: dispatch(JD metadata, PROFILE_DATA, OUTPUT_FOLDER=VERSION_FOLDER)
-                CLA->>CLA: cover-letter-en.md + cover-letter-hu.md (+ JD-nyelv, ha eltér)
+                CLA->>CLA: cover-letter-en.md + cover-letter-hu.md (+ JD language, if different)
                 CLA->>JAO: COVER_LETTER_*, STATUS
             end
 
-            JAO->>User: ✅ Pipeline kész (összefoglaló + fordítási minőség + backup mappa + levelek)
-        else Elutasítva
-            JAO->>User: Pipeline leállítva
+            JAO->>User: ✅ Pipeline done (summary + translation quality + backup folder + letters)
+        else Rejected
+            JAO->>User: Pipeline stopped
         end
     end
 ```
 
-### Amit a verzió mappa tartalmaz
+### What the version folder contains
 
-A verzió snapshot egy **mappa**: `cv-versions/YYYY-MM-DD_ceg-slug_pozicio-slug[-vN]/`
+The version snapshot is a **folder**: `cv-versions/YYYY-MM-DD_company-slug_position-slug[-vN]/`
 
 ```
 cv-versions/
   2026-06-13_acme-corp_senior-frontend-engineer/
-    cv-data.js              ← optimalizált CV adat snapshot (metaadat fejléccel)
-    locales/                 ← teljes cv/locales/ könyvtár (12 JS fájl)
-    job-description.md       ← formázott állásleírás — egy fájlban: angol + magyar + eredeti
+    cv-data.js              ← optimized CV data snapshot (with metadata header)
+    locales/                 ← full cv/locales/ directory (12 JS files)
+    job-description.md       ← formatted job description — single file: English + Hungarian + original
 ```
 
-A `cv-data.js` tetején lévő komment blokk:
+The comment block at the top of `cv-data.js`:
 
 ```js
 /**
@@ -217,26 +222,26 @@ A `cv-data.js` tetején lévő komment blokk:
  */
 ```
 
-A `locales/` mappa tartalmazza mind a 12 locale fájlt (hu, de, fr, es, it, asg, dot, kl, qu, goa, ya + en) az eredeti JS formátumban.
-Visszaállítás: `/cv-restore <mappa-neve>` — a `cv/locales/` könyvtár teljes egészében visszamásolódik.
+The `locales/` folder holds all 12 locale files (hu, de, fr, es, it, asg, dot, kl, qu, goa, ya + en) in the original JS format.
+Restore: `/cv-restore <folder-name>` — the entire `cv/locales/` directory is copied back.
 
-### Verziókezelési logika (cv-backup-agent)
+### Version-control logic (cv-backup-agent)
 
-A `cv-backup-agent` kezeli a verzióütközéseket, ha ugyanarra a cégre/pozícióra már létezik snapshot:
+The `cv-backup-agent` handles version conflicts when a snapshot for the same company/position already exists:
 
-| Opció           | Eredmény                   | Mappa neve                |
+| Option          | Result                     | Folder name               |
 | --------------- | -------------------------- | ------------------------- |
-| `[a]` Új verzió | Új mappa létrehozása       | `SLUG-v2/`, `SLUG-v3/`... |
-| `[b]` Felülírás | Legutóbbi mappa felülírása | változatlan               |
-| `[n]` Leállás   | Semmi nem változik         | —                         |
+| `[a]` New version | Create a new folder      | `SLUG-v2/`, `SLUG-v3/`... |
+| `[b]` Overwrite | Overwrite the latest folder | unchanged                |
+| `[n]` Stop      | Nothing changes            | —                         |
 
 ---
 
-## CV Backup és Restore
+## CV Backup and Restore
 
-A backup/restore rendszer önállóan is használható — nem csak a `/job-apply` pipeline részeként.
+The backup/restore system can also be used on its own — not only as part of the `/job-apply` pipeline.
 
-### `/cv-backup [label]` — Kézi mentési pont
+### `/cv-backup [label]` — Manual save point
 
 ```
 /cv-backup                    → cv-versions/2026-06-13_manual/
@@ -244,66 +249,66 @@ A backup/restore rendszer önállóan is használható — nem csak a `/job-appl
 /cv-backup before-big-edit    → cv-versions/2026-06-13_manual_before-big-edit/
 ```
 
-Mikor érdemes használni:
+When it's worth using:
 
-- Kézi szerkesztés előtt
-- Kísérletezés, refaktor előtt
-- Amikor nem állásra pályázol, de el akarod menteni a jelenlegi állapotot
+- Before a manual edit
+- Before experimenting or refactoring
+- When you're not applying for a job but want to save the current state
 
-A `/cv-backup` skill mögött egy Python CLI script is található
-`.claude/skills/cv-backup/scripts/cv-backup.py`, amely közvetlenül is futtatható:
+Behind the `/cv-backup` skill there is also a Python CLI script,
+`.claude/skills/cv-backup/scripts/cv-backup.py`, which can be run directly:
 
 ```bash
-python .claude/skills/cv-backup/scripts/cv-backup.py                           # kézi snapshot
-python .claude/skills/cv-backup/scripts/cv-backup.py --label pre-refactor      # megnevezett snapshot
+python .claude/skills/cv-backup/scripts/cv-backup.py                           # manual snapshot
+python .claude/skills/cv-backup/scripts/cv-backup.py --label pre-refactor      # named snapshot
 python .claude/skills/cv-backup/scripts/cv-backup.py \
     --company "Acme Corp" --title "Senior FE" --score 87 \
     --required-score 95 --preferred-score 72 \
     --changes "summary + skill order" --seniority Senior --domain SaaS
 ```
 
-### `/cv-restore <folder>` — Visszaállítás
+### `/cv-restore <folder>` — Restore
 
 ```
 /cv-restore 2026-06-13_acme-corp_senior-frontend-engineer
 /cv-restore 2026-06-13_manual_pre-refactor
 ```
 
-A skill visszaállítja:
+The skill restores:
 
-- `cv/cv-data.js` — a snapshot tartalmát (fejléc komment nélkül)
-- `cv/locales/hu.js` ... `ya.js` — mind a 11 locale `content` mezőjét
+- `cv/cv-data.js` — the contents of the snapshot (without the header comment)
+- `cv/locales/hu.js` ... `ya.js` — all 11 locale `content` fields
 
-A visszaállítás CLI scripttel is végezhető:
+The restore can also be done with the CLI script:
 
 ```bash
-python .claude/skills/cv-restore/scripts/cv-restore.py <folder-name>           # visszaállítás
-python .claude/skills/cv-restore/scripts/cv-restore.py --list                  # backupok listázása
-python .claude/skills/cv-restore/scripts/cv-restore.py <folder> --yes          # jóváhagyás kihagyása
+python .claude/skills/cv-restore/scripts/cv-restore.py <folder-name>           # restore
+python .claude/skills/cv-restore/scripts/cv-restore.py --list                  # list backups
+python .claude/skills/cv-restore/scripts/cv-restore.py <folder> --yes          # skip confirmation
 ```
 
-**Biztonsági lépések:**
+**Safety steps:**
 
-1. Megmutatja a snapshot metaadatait (pozíció, dátum, ATS%, módosítások)
-2. Felsorolja a felülírandó fájlokat
-3. Csak `y` jóváhagyás után módosít bármit
-4. A jóváhagyás után **automatikusan** készít egy `pre-restore` biztonsági mentést a jelenlegi
-   állapotról (`cv-versions/DATE_manual_pre-restore/`), mielőtt bármit felülírna — ha ez nem
-   sikerül, megszakítja a visszaállítást (`--no-backup` kapcsolja ki)
-5. A visszaállítás után a markert a visszaállított verzióra állítja és sort ír a `history.md`-be
+1. Shows the snapshot's metadata (position, date, ATS%, modifications)
+2. Lists the files to be overwritten
+3. Modifies nothing without a `y` confirmation
+4. After confirmation it **automatically** creates a `pre-restore` backup of the current
+   state (`cv-versions/DATE_manual_pre-restore/`) before overwriting anything — if this fails,
+   it aborts the restore (`--no-backup` turns it off)
+5. After the restore it sets the marker to the restored version and writes a row to `history.md`
 
 ---
 
-## CV verzió-követhetőség (traceability)
+## CV version traceability
 
-Cél: bármikor megválaszolható legyen, **mikor melyik CV-verzióval mi történt**. Az egész CV-állapot
-egyetlen azonosítóval (`APP_ID` = a snapshot mappa neve, `DATE_company_title`) követhető, három,
-egymást kiegészítő rétegen át. Mindhárom réteget egyetlen helper tartja szinkronban:
+Goal: it should always be answerable **when, which CV version, and what happened**. The entire CV state
+is traceable through a single identifier (`APP_ID` = the snapshot folder name, `DATE_company_title`) across
+three complementary layers. All three layers are kept in sync by a single helper:
 [`.claude/scripts/cv-ledger.py`](../.claude/scripts/cv-ledger.py).
 
 ```mermaid
 graph TD
-    subgraph Ops["CV-t érintő műveletek"]
+    subgraph Ops["CV-affecting operations"]
         JA["/job-apply"]
         CI["/cv-improver"]
         CVR["/cv-restore"]
@@ -315,14 +320,14 @@ graph TD
 
     LEDGER["cv-ledger.py<br/>(mark · log · current)"]
 
-    subgraph Trace["Követhetőségi rétegek"]
-        MARK["Live marker blokk<br/>cv-data.js + 12 &lt;lang&gt;.js<br/>@job-application + @cv-last-change"]
-        HIST["cv-versions/history.md<br/>append-only audit napló"]
-        APPS["cv-versions/applications.md<br/>pályázat-index + job-description.md"]
+    subgraph Trace["Traceability layers"]
+        MARK["Live marker block<br/>cv-data.js + 12 &lt;lang&gt;.js<br/>@job-application + @cv-last-change"]
+        HIST["cv-versions/history.md<br/>append-only audit log"]
+        APPS["cv-versions/applications.md<br/>application index + job-description.md"]
     end
 
     JA -->|"mark --set-application · log mutation"| LEDGER
-    CI -->|"mark (csak @cv-last-change) · log mutation"| LEDGER
+    CI -->|"mark (@cv-last-change only) · log mutation"| LEDGER
     CVR -->|"mark --set-application · log mutation"| LEDGER
     CB -->|"log backup"| LEDGER
     HR -->|"current · log review"| LEDGER
@@ -334,89 +339,89 @@ graph TD
     JA --> APPS
 ```
 
-**1. Live marker blokk** — kétsoros comment a `cv/cv-data.js` és a 12 CV-tartalom locale
-(`cv/locales/<lang>.js`, **nem** a `-page.js` felirat-fájlok) tetején:
+**1. Live marker block** — a two-line comment at the top of `cv/cv-data.js` and the 12 CV-content locale
+files (`cv/locales/<lang>.js`, **not** the `-page.js` label files):
 
 ```js
 // @job-application: APP_ID — Title @ Company (date) · snapshot: cv-versions/APP_ID/
-// @cv-last-change: YYYY-MM-DD HHMM — művelet (aktor) · see cv-versions/history.md
+// @cv-last-change: YYYY-MM-DD HHMM — operation (actor) · see cv-versions/history.md
 ```
 
-- `@job-application` — melyik verzióra van hangolva a live CV. `/job-apply` állítja be, `/cv-restore`
-  a visszaállított verzióra írja át. A `/cv-improver` **nem** változtatja (csak a tartalom drift-el).
-- `@cv-last-change` — a legutóbbi bármilyen módosítás. `/job-apply`, `/cv-improver`, `/cv-restore` frissíti.
+- `@job-application` — which version the live CV is tuned for. Set by `/job-apply`, rewritten by `/cv-restore`
+  to the restored version. `/cv-improver` does **not** change it (only the content drifts).
+- `@cv-last-change` — the most recent change of any kind. Updated by `/job-apply`, `/cv-improver`, `/cv-restore`.
 
-**2. `cv-versions/history.md`** — append-only audit napló. **Minden** CV-esemény egy sor:
-`mutation` (job-apply, cv-improver, cv-restore), `backup` (snapshot készült) és `review`
-(hr-review, language-reviewer, code-review — read-only elemzés is). Oszlopok: Időpont · Kategória ·
-Művelet · Aktor · APP_ID · Mi történt · Artefaktum.
+**2. `cv-versions/history.md`** — an append-only audit log. **Every** CV event is one row:
+`mutation` (job-apply, cv-improver, cv-restore), `backup` (a snapshot was created), and `review`
+(hr-review, language-reviewer, code-review — read-only analysis too). Columns: Timestamp · Category ·
+Operation · Actor · APP_ID · What happened · Artifact.
 
-**3. `cv-versions/applications.md`** — pályázat-index (egy sor / APP_ID: állás → CV-verzió +
-fordítások + motivációs levél). A formázott állásleírás a `cv-versions/APP_ID/job-description.md`-ben.
+**3. `cv-versions/applications.md`** — application index (one row / APP_ID: job → CV version +
+translations + cover letter). The formatted job description is in `cv-versions/APP_ID/job-description.md`.
 
-**Vezérelv:** egyetlen skill/agent sem írja kézzel a markert vagy a naplót — mindig a
-`cv-ledger.py`-t hívják (`mark` / `log` / `current`). A read-only review-k a `current`-tel olvassák
-ki a vizsgált verziót, és a riportjuk fejlécébe teszik. Formátumok:
+**Guiding principle:** no skill/agent writes the marker or the log by hand — they always call
+`cv-ledger.py` (`mark` / `log` / `current`). Read-only reviews read the examined version with `current`
+and put it in their report header. Formats:
 [`.claude/rules/version-snapshot-format.md`](../.claude/rules/version-snapshot-format.md).
 
 ---
 
-## Fordítási minőség-ellenőrzés (Step 7b)
+## Translation quality check (Step 7b)
 
-A fordítások elkészülte után az orchestrator automatikusan spot-checket futtat:
+After the translations are complete, the orchestrator automatically runs a spot-check:
 
-### Valódi nyelvek (hu, de, fr, es, it)
+### Real languages (hu, de, fr, es, it)
 
-| Ellenőrzés                              | ✅ átmegy                             | ⚠️ figyelmeztet          |
-| --------------------------------------- | ------------------------------------- | ------------------------ |
-| Nagybetűs kezdés és pont végén          | ✓                                     | Hiányzik                 |
-| Technológia nevek megőrzése             | TypeScript, React, Svelte stb. megvan | kisbetűs vagy lefordítva |
-| Summary hossz a fix budget −5%/+2% sávjában | Belül                             | Kívül                    |
-| Nem marad lefordítatlan angol mondat    | Nincs angol bekezdés                  | Van angol bekezdés       |
+| Check                                    | ✅ passes                            | ⚠️ warns                 |
+| ---------------------------------------- | ------------------------------------- | ------------------------ |
+| Capitalized start and period at the end  | ✓                                     | Missing                  |
+| Technology names preserved               | TypeScript, React, Svelte etc. present | lowercased or translated |
+| Summary length within the fixed budget's −5%/+2% band | Inside                  | Outside                  |
+| No untranslated English sentence remains | No English paragraph                  | There is an English paragraph |
 
-Eredmény: `✅ Ellenőrzött fordítás` vagy `⚠️ Emberi ellenőrzés ajánlott`
+Result: `✅ Verified translation` or `⚠️ Human review recommended`
 
-### Fiktív nyelvek (asg, dot, kl, qu, goa, ya)
+### Fictional languages (asg, dot, kl, qu, goa, ya)
 
-Mindig: `⚠️ Stílus-adaptáció (emberi ellenőrzés ajánlott)` — ez várt viselkedés, nem hiba.
+Always: `⚠️ Style adaptation (human review recommended)` — this is expected behavior, not an error.
 
-A spot-check ellenőrzi a kulcsszótár meglétét és a fonetikai konvenciókat (pl. aposztróf Klingonban, diaeresis Quenya-ban), de a stílus-adaptáció kreatív jellege miatt az emberi ellenőrzés mindig javasolt.
+The spot-check verifies the presence of the key vocabulary and the phonetic conventions (e.g. apostrophe in Klingon, diaeresis in Quenya), but because of the creative nature of style adaptation, human review is always advised.
 
 ---
 
-## Fordítási hossz-budget (Step 7d)
+## Translation length budget (Step 7d)
 
-A Step 7b emberi szintű spot-check; rajta felül a Step 7d egy **automatikus, kötelező**
-ellenőrzés futtatja a [`check-translation-lengths.py`](../.claude/scripts/check-translation-lengths.py)
-scriptet, ami a [`.claude/rules/translation-length.md`](../.claude/rules/translation-length.md)
-szabályt kényszeríti ki.
+Step 7b is a human-level spot-check; on top of it, Step 7d runs an **automatic, mandatory**
+check via the [`check-translation-lengths.py`](../.claude/scripts/check-translation-lengths.py)
+script, which enforces the [`.claude/rules/translation-length.md`](../.claude/rules/translation-length.md)
+rule.
 
-**A budget FIX, beégetett — NEM a `cv-data.js`-ből számolódik futásonként.** Két helyen él,
-és a kettőnek egyeznie kell:
+**The budget is FIXED and hard-coded — it is NOT computed from `cv-data.js` per run.** It lives in two places,
+and the two must match:
 
-1. a szabályfájl táblázata (mérvadó, kézzel karbantartott),
-2. [`.claude/reference/current-english-lengths.json`](../.claude/reference/current-english-lengths.json) — ugyanaz JSON-ban, ezt olvassa a script.
+1. the rule file's table (authoritative, manually maintained),
+2. [`.claude/reference/current-english-lengths.json`](../.claude/reference/current-english-lengths.json) — the same in JSON, which the script reads.
 
-Csak **két dolgot** ellenőriz, mindkettőt a budget **−5% … +2%** sávjában:
+It checks only **two things**, both within the budget's **−5% … +2%** band:
 
-- **hero (summary)** — az összefoglaló hossza,
-- **munkahelyenkénti összeg** — `description` + összes `bullets[]` + összes `projects[].bullets[]` együtt.
+- **hero (summary)** — the length of the summary,
+- **per-workplace total** — `description` + all `bullets[]` + all `projects[].bullets[]` together.
 
-NINCS ellenőrizve: community, education, hobbyProjects, programmingLanguages, skillGroups.
+NOT checked: community, education, hobbyProjects, programmingLanguages, skillGroups.
 
 ```bash
 cd cv/locales
-python ../../.claude/scripts/check-translation-lengths.py   # exit 1, ha bármi a sávon kívül
+python ../../.claude/scripts/check-translation-lengths.py   # exit 1 if anything is outside the band
 ```
 
-Ha a script 1-gyel lép ki, a pipeline **nem mehet tovább** a Step 8-ra: a túl rövid mezőket
-bővíteni, a túl hosszúakat tömöríteni kell, majd újra futtatni, amíg 0-val ki nem lép. A
-`cv-translator-agent` már a fordítás közben is erre a budget-re dolgozik; a Step 7d csak a
-független, automatikus megerősítés.
+If the script exits with 1, the pipeline **cannot proceed** to Step 8: the too-short fields must be
+expanded and the too-long ones compressed, then run again until it exits with 0. The
+`cv-translator-agent` already works to this budget during translation; Step 7d is just the
+independent, automatic confirmation.
 
-> ⚠️ A budget-ot soha ne generáld újra a `cv-data.js`-ből. Ha az angol tartalom változik
-> (pl. egy `/job-apply` átírja a summary-t), a budget akkor sem változik — a fix
-> layout-kapacitást védi. Módosítása tudatos, kézi döntés: a táblázatot ÉS a JSON-t együtt.
+> ⚠️ Never regenerate the budget from `cv-data.js`. If the English content changes
+> (e.g. a `/job-apply` rewrites the summary), the budget still does not change — it protects the fixed
+> layout capacity. Modifying it is a deliberate, manual decision: the table AND the JSON together.
 
 ---
 
@@ -424,66 +429,66 @@ független, automatikus megerősítés.
 
 ```mermaid
 flowchart LR
-    EN["cv/locales/en.js\n(referencia)"]
+    EN["cv/locales/en.js\n(reference)"]
     LC["/locale-check"]
     LA["locale-agent"]
-    MISSING["Hiányzó kulcsok"]
+    MISSING["Missing keys"]
     FILES["locales/hu de fr es it\nasg dot kl qu goa ya"]
 
-    EN -->|"kulcsok kinyerése"| LC
-    LC -->|"összehasonlítás"| MISSING
+    EN -->|"extract keys"| LC
+    LC -->|"compare"| MISSING
     MISSING -->|"--fix"| LA
-    LA -->|"kulcsok hozzáadása\nstílus-konzisztensen"| FILES
+    LA -->|"add keys\nstyle-consistently"| FILES
 ```
 
-Az `en.js` mindig a referencia. A `locale-agent` a kulcs beillesztésekor:
+`en.js` is always the reference. When inserting a key, the `locale-agent`:
 
-- Valódi nyelveknél (hu, de, fr, es, it): fordítja az értéket
-- Fiktív nyelveknél (asg, dot, kl, qu, goa, ya): a szomszéd kulcsok stílusát másolja
+- For real languages (hu, de, fr, es, it): translates the value
+- For fictional languages (asg, dot, kl, qu, goa, ya): copies the style of the neighboring keys
 
 ---
 
-## Hogyan triggereld a skill-eket és agent-eket
+## How to trigger the skills and agents
 
 ### Job-apply pipeline
 
 ```
-/job-apply állásleírás.txt
+/job-apply job-description.txt
 /job-apply "Senior Frontend Engineer at Acme Corp. Requirements: React, TypeScript..."
-/job-apply                    ← interaktív sablon (tmp/jd-draft.md)
+/job-apply                    ← interactive template (tmp/jd-draft.md)
 ```
 
-Ha nincs argumentum, az orchestrator interaktívan megnyitja a `tmp/jd-draft.md` sablont.
-A sablont kitöltöd, mentesz, majd beírod: `kész`
+If there is no argument, the orchestrator interactively opens the `tmp/jd-draft.md` template.
+You fill in the template, save, then type: `done`
 
-### Backup és restore
-
-```
-/cv-backup                          ← egyszerű snapshot
-/cv-backup pre-refactor             ← megnevezett snapshot
-/cv-restore 2026-06-13_manual       ← visszaállítás mappa névvel
-```
-
-### Sub-agentek közvetlen hívása
-
-A `cv-translator-agent` hívható közvetlenül is, ha már módosítottad a cv-data.js-t
-és csak a fordításokat akarod frissíteni:
+### Backup and restore
 
 ```
-Futtasd a cv-translator-agent agentet. A megváltozott mezők:
-- summary: régi szöveg → új szöveg
-- Aegex bullet 1: régi → új
+/cv-backup                          ← simple snapshot
+/cv-backup pre-refactor             ← named snapshot
+/cv-restore 2026-06-13_manual       ← restore with a folder name
 ```
 
-A `cv-backup-agent` is hívható önállóan, ha az orchestratoron kívül szeretnél snapshotot:
+### Calling sub-agents directly
+
+The `cv-translator-agent` can also be called directly if you've already modified cv-data.js
+and only want to refresh the translations:
 
 ```
-Futtasd a cv-backup-agent agentet. MODE=manual, VERSION_BASE=2026-06-13_manual_test
+Run the cv-translator-agent. The changed fields:
+- summary: old text → new text
+- Aegex bullet 1: old → new
+```
+
+The `cv-backup-agent` can also be called on its own if you want a snapshot outside the orchestrator:
+
+```
+Run the cv-backup-agent. MODE=manual, VERSION_BASE=2026-06-13_manual_test
 ```
 
 ---
 
-## Agent-ek közötti kapcsolatok
+## Relationships between agents
 
 ```mermaid
 graph LR
@@ -498,70 +503,70 @@ graph LR
     AR["/arch-review"] -->|dispatch| ARA["arch-review-agent"]
 ```
 
-Jelenleg nincs körkörös függőség — a gráf irányított és aciklikus (DAG).
+There is currently no circular dependency — the graph is directed and acyclic (DAG).
 
 ---
 
-## Szabályfájlok
+## Rule files
 
-A `.claude/rules/locales/` mappában mind a 12 locale-hoz van szabályfájl:
+In the `.claude/rules/locales/` directory there is a rule file for each of the 12 locales:
 
-| Fájl     | Tartalom                                               |
+| File     | Content                                                |
 | -------- | ------------------------------------------------------ |
-| `en.md`  | Angol CV írásstílus, igeidők, terminológia             |
-| `hu.md`  | Magyar szakmai regiszter, igeragozás, tegező forma     |
-| `de.md`  | Német CV konvenciók, főnév-nagybetűzés, Sie-forma      |
-| `fr.md`  | Francia CV, vouvoiement, tipográfiai szabályok         |
-| `es.md`  | Spanyol CV, usted/tuteo, hangsúlyjelek                 |
-| `it.md`  | Olasz CV, lei/tu forma, participio passato             |
-| `asg.md` | Asgardian stílusszabályok, kulcsszótár                 |
-| `dot.md` | Dothraki stílus, `anha`/`anni` pronominák              |
-| `kl.md`  | Klingon fonetika, Q/H/D nagybetűk, aposztróf szabályok |
-| `qu.md`  | Quenya fonetika, diaeresis (`ë`), szótár               |
-| `goa.md` | Goa'uld stílus, `Kree!` parancsok, apostróf szavak     |
-| `ya.md`  | Yautja stílus, gutturális hangok, szótár               |
+| `en.md`  | English CV writing style, tenses, terminology          |
+| `hu.md`  | Hungarian professional register, conjugation, informal address |
+| `de.md`  | German CV conventions, noun capitalization, Sie form   |
+| `fr.md`  | French CV, vouvoiement, typographic rules              |
+| `es.md`  | Spanish CV, usted/tuteo, accent marks                  |
+| `it.md`  | Italian CV, lei/tu form, participio passato            |
+| `asg.md` | Asgardian style rules, key vocabulary                  |
+| `dot.md` | Dothraki style, `anha`/`anni` pronouns                 |
+| `kl.md`  | Klingon phonetics, Q/H/D capitals, apostrophe rules    |
+| `qu.md`  | Quenya phonetics, diaeresis (`ë`), vocabulary          |
+| `goa.md` | Goa'uld style, `Kree!` commands, apostrophe words      |
+| `ya.md`  | Yautja style, guttural sounds, vocabulary              |
 
-A `language-reviewer`, `cv-translator-agent` és `cover-letter-agent` ezeket töltik be futás közben.
+The `language-reviewer`, `cv-translator-agent`, and `cover-letter-agent` load these at run time.
 
-Egyéb szabályfájlok:
+Other rule files:
 
-| Fájl                                         | Tartalom                                                                                                                                 |
-| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `.claude/rules/jd-draft-template.md`         | A `tmp/jd-draft.md` pontos sablonja és kezelési logikája                                                                                 |
-| `.claude/rules/version-snapshot-format.md`   | Verzió mappa névformátum, cv-data.js fejléc blokk, locales/, job-description.md, history.md, applications.md és a marker blokk formátuma |
-| `.claude/rules/arch-review-report-format.md` | Az arch-review riport teljes markdown sablona                                                                                            |
+| File                                         | Content                                                                                                                                |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `.claude/rules/jd-draft-template.md`         | The exact template and handling logic of `tmp/jd-draft.md`                                                                            |
+| `.claude/rules/version-snapshot-format.md`   | Version folder naming format, cv-data.js header block, locales/, job-description.md, history.md, applications.md, and the marker block format |
+| `.claude/rules/arch-review-report-format.md` | The full markdown template of the arch-review report                                                                                  |
 
 ---
 
-## Skill scriptek (CLI eszközök)
+## Skill scripts (CLI tools)
 
-Néhány skillhez tartozik önálló Python CLI script, amely a skill `.claude/skills/{skillName}/scripts/`
-mappájában található. Ezek közvetlenül futtathatók a projekt gyökeréből:
+Some skills have a standalone Python CLI script, located in the skill's `.claude/skills/{skillName}/scripts/`
+directory. These can be run directly from the project root:
 
-| Script                                                | Skill           | Funkció                                                                                                                                 |
-| ----------------------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `.claude/scripts/cv-ledger.py`                        | _(megosztott)_  | Verzió-követhetőség: marker blokk (`mark`), audit napló (`log`), aktuális verzió (`current`) — lásd a _CV verzió-követhetőség_ szekciót |
-| `.claude/skills/cv-backup/scripts/cv-backup.py`       | `/cv-backup`    | CV snapshot készítése (automatikusan `backup` sort ír a history.md-be a cv-ledger-en át)                                                |
-| `.claude/skills/cv-restore/scripts/cv-restore.py`     | `/cv-restore`   | CV visszaállítása backupból (auto pre-restore mentés + marker + history napló)                                                          |
-| `.claude/skills/locale-check/scripts/locale-check.py` | `/locale-check` | Locale kulcsok ellenőrzése (JSON kimenettel is)                                                                                         |
+| Script                                                | Skill           | Function                                                                                                                                |
+| ----------------------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `.claude/scripts/cv-ledger.py`                        | _(shared)_      | Version traceability: marker block (`mark`), audit log (`log`), current version (`current`) — see the _CV version traceability_ section |
+| `.claude/skills/cv-backup/scripts/cv-backup.py`       | `/cv-backup`    | Create a CV snapshot (automatically writes a `backup` row to history.md via cv-ledger)                                                 |
+| `.claude/skills/cv-restore/scripts/cv-restore.py`     | `/cv-restore`   | Restore the CV from a backup (auto pre-restore save + marker + history log)                                                            |
+| `.claude/skills/locale-check/scripts/locale-check.py` | `/locale-check` | Check locale keys (with JSON output too)                                                                                              |
 
-### locale-check.py — parancssori használat
+### locale-check.py — command-line usage
 
 ```bash
-python .claude/skills/locale-check/scripts/locale-check.py                     # ellenőrzés
-python .claude/skills/locale-check/scripts/locale-check.py --json              # JSON kimenet (tool-oknak)
-python .claude/skills/locale-check/scripts/locale-check.py --fix               # AI agent által (nem CLI-ből)
+python .claude/skills/locale-check/scripts/locale-check.py                     # check
+python .claude/skills/locale-check/scripts/locale-check.py --json              # JSON output (for tools)
+python .claude/skills/locale-check/scripts/locale-check.py --fix               # via AI agent (not from CLI)
 ```
 
-> **Megjegyzés:** A CLI scriptek önállóan is használhatók, de a `/skill` parancsok többletszolgáltatást nyújtanak
-> (AI agentekkel való interakció, verzióütközés-kezelés, stb.).
+> **Note:** The CLI scripts can be used standalone, but the `/skill` commands provide added value
+> (interaction with AI agents, version-conflict handling, etc.).
 
 ---
 
-## Ideiglenes fájlok
+## Temporary files
 
-| Fájl              | Mikor keletkezik               | Mikor törölhető          |
+| File              | When it is created             | When it can be deleted   |
 | ----------------- | ------------------------------ | ------------------------ |
-| `tmp/jd-draft.md` | `/job-apply` argumentum nélkül | Pipeline befejezése után |
+| `tmp/jd-draft.md` | `/job-apply` without an argument | After the pipeline finishes |
 
-A `tmp/` mappa a `.gitignore`-ba kerülhet — csak ideiglenes szerkesztési célra való.
+The `tmp/` folder can be added to `.gitignore` — it is only meant for temporary editing.

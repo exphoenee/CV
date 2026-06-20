@@ -1,46 +1,48 @@
 # CV — Viktor Bozzay
 
-Többnézetes, interaktív önéletrajz böngészőben. Egy központi adatforrásból (CV_DATA) hat különböző megjelenítés és egy RPG játék építkezik. Az indítóoldal karuszel-navigációval, 12 nyelven és témaváltással várja a látogatót.
+> 🌐 **Language:** 🇬🇧 English · [🇭🇺 Magyar](README-hu.md)
 
-## Tartalom
+A multi-view, interactive CV in the browser. Six different presentations and an RPG game are built from a single source of truth (CV_DATA). The landing page welcomes visitors with carousel navigation, 12 languages, and theme switching.
+
+## Contents
 
 - [CV — Viktor Bozzay](#cv--viktor-bozzay)
-  - [Tartalom](#tartalom)
-  - [Nézetek](#nézetek)
-  - [Architektúra](#architektúra)
-    - [Adatréteg](#adatréteg)
-    - [Megjelenítő réteg](#megjelenítő-réteg)
-    - [Közös réteg](#közös-réteg)
-    - [Konfiguráció](#konfiguráció)
-  - [Technológiai stack](#technológiai-stack)
-  - [Könyvtárstruktúra](#könyvtárstruktúra)
-  - [Lokalizáció](#lokalizáció)
-  - [Játékmotor](#játékmotor)
-  - [Zenelejátszó](#zenelejátszó)
-  - [Téma rendszer](#téma-rendszer)
-  - [E-mail domain validáció](#e-mail-domain-validáció)
-  - [Kapcsolatfelvétel](#kapcsolatfelvétel)
-  - [Naptári foglalás](#naptári-foglalás)
+  - [Contents](#contents)
+  - [Views](#views)
+  - [Architecture](#architecture)
+    - [Data layer](#data-layer)
+    - [Presentation layer](#presentation-layer)
+    - [Shared layer](#shared-layer)
+    - [Configuration](#configuration)
+  - [Technology stack](#technology-stack)
+  - [Directory structure](#directory-structure)
+  - [Localization](#localization)
+  - [Game engine](#game-engine)
+  - [Music player](#music-player)
+  - [Theme system](#theme-system)
+  - [Email domain validation](#email-domain-validation)
+  - [Contact](#contact)
+  - [Calendar booking](#calendar-booking)
     - [Backend — Google Apps Script (Code.gs)](#backend--google-apps-script-codegs)
     - [Frontend — Booking Modal](#frontend--booking-modal)
-  - [AI munkafolyamat](#ai-munkafolyamat)
-    - [Képességek áttekintése](#képességek-áttekintése)
-    - [Részletes dokumentáció](#részletes-dokumentáció)
-  - [Futtatás](#futtatás)
+  - [AI workflow](#ai-workflow)
+    - [Capability overview](#capability-overview)
+    - [Detailed documentation](#detailed-documentation)
+  - [Running](#running)
 
-## Nézetek
+## Views
 
-| Útvonal              | Célközönség        | Leírás                                                                                                                      |
-| -------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| `index.html`         | —                  | Indítóoldal — karuszel-navigáció a hat CV nézet felé                                                                        |
-| `cv-plain.html`      | Olvasó             | Hagyományos, nyomtatható önéletrajz téma-váltással (light/dark/superdark/nightvision/predator) és dekorációs effektekkel    |
-| `cv-gantt.html`      | Projektmenedzser   | Projektidővonal Gantt-diagram formátumban (2020–2027), cégenként és projektenként lebontva                                  |
-| `cv-scrumboard.html` | Scrum Master       | Kanban/Scrum tábla — munkáltatónként oszlopokba rendezett karrierkártyák drag-and-drop nélkül                               |
-| `cv-swagger.html`    | Frontend fejlesztő | API-dokumentáció stílusú CV — OpenAPI-szerű UI összecsukható szekciókkal és endpoint-blokkokkal (GET/POST/PUT/PATCH/DELETE) |
-| `cv-json.html`       | Backend fejlesztő  | JSON / VS Code-szerű CV — szintaxiskiemeléssel, összecsukható régiókkal ("folding"), sorszámozással                         |
-| `cv-game.html`       | Gamer              | RPG játék CV — pixel-art világban lehet felfedezni a CV-t házak (stationök) meglátogatásával                                |
+| Path                 | Target audience    | Description                                                                                                                |
+| -------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| `index.html`         | —                  | Landing page — carousel navigation toward the six CV views                                                                 |
+| `cv-plain.html`      | Reader             | Traditional, printable CV with theme switching (light/dark/superdark/nightvision/predator) and decorative effects         |
+| `cv-gantt.html`      | Project manager    | Project timeline in Gantt-chart format (2020–2027), broken down by company and project                                     |
+| `cv-scrumboard.html` | Scrum Master       | Kanban/Scrum board — career cards arranged into columns per employer, without drag-and-drop                                |
+| `cv-swagger.html`    | Frontend developer | API-documentation-style CV — OpenAPI-like UI with collapsible sections and endpoint blocks (GET/POST/PUT/PATCH/DELETE)     |
+| `cv-json.html`       | Backend developer  | JSON / VS Code-style CV — with syntax highlighting, collapsible regions ("folding"), and line numbering                    |
+| `cv-game.html`       | Gamer              | RPG game CV — explore the CV in a pixel-art world by visiting houses (stations)                                            |
 
-## Architektúra
+## Architecture
 
 ```
 CV_DATA (cv-data.js)
@@ -52,192 +54,193 @@ CV_DATA (cv-data.js)
     ├── cv-scrumboard.js        →                 → cv-scrumboard.html
     ├── game/world/stations.js  → game/main.js    → cv-game.html
     │
-    ├── locale.js  ─── LocaleManager (12 nyelv)
-    ├── config.js  ─── globális konstansok, feature flag-ek
-    ├── shared.js  ─── közös segédfüggvények
-    └── cv-music-player.js ─── zenelejátszó
+    ├── locale.js  ─── LocaleManager (12 languages)
+    ├── config.js  ─── global constants, feature flags
+    ├── shared.js  ─── shared helper functions
+    └── cv-music-player.js ─── music player
 ```
 
-Minden nézet saját CSS-t és egyedi JavaScript belépési pontot használ (`type="module"`). A render komponensek a `scripts/components/` mappában nézetenként szétválasztva találhatók.
+Every view uses its own CSS and a dedicated JavaScript entry point (`type="module"`). The render components are separated per view in the `scripts/components/` directory.
 
-### Adatréteg
+### Data layer
 
-`cv/cv-data.js` exportálja a `CV_DATA` konstans objektumot, amely tartalmazza a teljes önéletrajzi adatot:
+`cv/cv-data.js` exports the `CV_DATA` constant object, which holds the entire CV data:
 
-- `meta`, `identity` (név, szerepkör, lokáció, elérhetőségek, nyelvek)
-- `summary` (rövid bemutatkozás)
-- `workExperience[]` (munkahelyek projektekkel, stackekkel, referenciákkal)
-- `education[]` (tanulmányok)
-- `skills[]` (technológiai készségek kategóriákba sorolva)
-- `community[]` (közösségi tevékenységek)
-- `hobbyProjects[]` (mellékprojektek)
+- `meta`, `identity` (name, role, location, contacts, languages)
+- `summary` (short introduction)
+- `workExperience[]` (jobs with projects, stacks, references)
+- `education[]` (studies)
+- `skills[]` (technical skills grouped into categories)
+- `community[]` (community activities)
+- `hobbyProjects[]` (side projects)
 
-A teljes mezőszintű séma (típusok, kötelező/opcionális mezők, példák) a [devdocs/cv-data-schema.md](devdocs/cv-data-schema.md) dokumentumban található.
+The complete field-level schema (types, required/optional fields, examples) is documented in [devdocs/cv-data-schema.md](devdocs/cv-data-schema.md).
 
-### Megjelenítő réteg
+### Presentation layer
 
-Minden nézet saját komponenskészlettel rendereli az adatokat:
+Each view renders the data with its own set of components:
 
-- **Plain** — Template literálokkal épített HTML szekciók (`header`, `work-item`, `education`, `languages`, `programming-languages`, `community`, `hobby-projects`)
-- **Gantt** — Canvas-alapú idővonalas diagram, cégenként és projektenként színezett sávokkal, görgethetően
-- **Scrumboard** — Kanban-stílusú kártyák munkáltatónként oszlopba rendezve, stack-chipekkel
-- **Swagger** — OpenAPI-stílusú UI komponensek (`endpoint-block`, `tag-section`, `summary-bar`, `params-table`, `responses`, `stack-chips`, `_icons`)
-- **JSON** — Rekurzívan épített, szintaxiskiemelt JSON megjelenítés foldolható régiókkal, sorszámozott sorokkal
+- **Plain** — HTML sections built with template literals (`header`, `work-item`, `education`, `languages`, `programming-languages`, `community`, `hobby-projects`)
+- **Gantt** — Canvas-based timeline chart, with bars colored per company and project, scrollable
+- **Scrumboard** — Kanban-style cards arranged into columns per employer, with stack chips
+- **Swagger** — OpenAPI-style UI components (`endpoint-block`, `tag-section`, `summary-bar`, `params-table`, `responses`, `stack-chips`, `_icons`)
+- **JSON** — Recursively built, syntax-highlighted JSON rendering with foldable regions and numbered lines
 
-### Közös réteg
+### Shared layer
 
-`scripts/shared.js` tartalmazza az összes nézet által használt segédfüggvényeket:
+`scripts/shared.js` holds the helper functions used by every view:
 
 - `escHtml` / `skillChip` / `refLinks` / `renderBullets`
-- `initHireModal` / `hireModalHTML` — kapcsolatfelvételi űrlap modal (lokalizált)
-- `initBookingModal` / `bookingModalHTML` — naptári időpontfoglalás modal (lokalizált)
-- `musicPlayerHTML` — zenelejátszó HTML generálása
-- `MUSIC_GENRES` — közös zenei lista (18 műfaj)
-- `initFormspree` — Formspree űrlap bekötés
-- `initThemeToggle` / `getSystemTheme` — téma váltás
-- `saveState` / `loadState` / `restoreCollapseStates` — UI állapot perzisztálás
-- `showToast` — értesítési toast megjelenítés
+- `initHireModal` / `hireModalHTML` — contact form modal (localized)
+- `initBookingModal` / `bookingModalHTML` — calendar booking modal (localized)
+- `musicPlayerHTML` — music player HTML generation
+- `MUSIC_GENRES` — shared music list (18 genres)
+- `initFormspree` — Formspree form binding
+- `initThemeToggle` / `getSystemTheme` — theme switching
+- `saveState` / `loadState` / `restoreCollapseStates` — UI state persistence
+- `showToast` — notification toast display
 
-### Konfiguráció
+### Configuration
 
-`scripts/config.js` exportálja a globális konstansokat és feature flag-eket:
+`scripts/config.js` exports the global constants and feature flags:
 
-- `BOOKING_SCRIPT_URL` — Google Apps Script végpont URL
-- `THEME_KEY`, `THEME_DARK`, `THEME_LIGHT`, `PLAIN_ONLY_THEMES` — téma kezelés
-- `MUSIC_STATE_KEY`, `MUSIC_TIME_KEY`, stb. — zenelejátszó LocalStorage kulcsok
-- `SFX_VOLUME_KEY`, `CURSOR_KEY` — játék beállítások
+- `BOOKING_SCRIPT_URL` — Google Apps Script endpoint URL
+- `THEME_KEY`, `THEME_DARK`, `THEME_LIGHT`, `PLAIN_ONLY_THEMES` — theme handling
+- `MUSIC_STATE_KEY`, `MUSIC_TIME_KEY`, etc. — music player LocalStorage keys
+- `SFX_VOLUME_KEY`, `CURSOR_KEY` — game settings
 
-## Technológiai stack
+## Technology stack
 
-| Technológia             | Használat                                                                                           |
+| Technology              | Usage                                                                                               |
 | ----------------------- | --------------------------------------------------------------------------------------------------- |
-| Vanilla JS (ES Modules) | Nincs keretrendszer, nincs bundler — tiszta moduláris JS                                            |
-| CSS (vanilla)           | Nézetenként elkülönített CSS fájlok, preprocesszor nélkül                                           |
-| Canvas 2D API           | Játékmotor renderelés és Gantt-diagram                                                              |
-| BMP → tilemap           | A játéktérkép BMP kép pixeladataiból épül fel, bitmaszkos autotile-lal (RPG Maker 2000/2003 stílus) |
-| Intl.DateTimeFormat     | Lokalizált dátumok a booking modálban (fiktív nyelveknél angol fallback)                            |
-| Formspree               | Kapcsolatfelvételi űrlap küldése                                                                    |
-| NippleJS                | Mobilos virtuális joystick                                                                          |
-| LocalStorage            | UI állapot, zenei beállítások, téma, nyelv perzisztálása                                            |
-| SessionStorage          | E-mail domain ellenőrzés cache-elése (MX lookup)                                                    |
-| Font Awesome            | Ikonok                                                                                              |
-| Press Start 2P          | Pixel-art retro betűtípus (játék nézet)                                                             |
+| Vanilla JS (ES Modules) | No framework, no bundler — pure modular JS                                                           |
+| CSS (vanilla)           | Per-view separated CSS files, without a preprocessor                                                 |
+| Canvas 2D API           | Game engine rendering and the Gantt chart                                                            |
+| BMP → tilemap           | The game map is built from the pixel data of a BMP image, with bitmask autotiling (RPG Maker 2000/2003 style) |
+| Intl.DateTimeFormat     | Localized dates in the booking modal (English fallback for fictional languages)                      |
+| Formspree               | Sending the contact form                                                                             |
+| NippleJS                | Mobile virtual joystick                                                                              |
+| LocalStorage            | Persisting UI state, music settings, theme, and language                                            |
+| SessionStorage          | Caching email domain checks (MX lookup)                                                              |
+| Font Awesome            | Icons                                                                                                |
+| Press Start 2P          | Pixel-art retro font (game view)                                                                     |
 
-## Könyvtárstruktúra
+## Directory structure
 
 ```
 CV/
-├── index.html              # Indítóoldal (karuszel)
-├── cv-plain.html           # Hagyományos CV
-├── cv-gantt.html           # Gantt-diagram CV
+├── index.html              # Landing page (carousel)
+├── cv-plain.html           # Traditional CV
+├── cv-gantt.html           # Gantt-chart CV
 ├── cv-scrumboard.html      # Scrumboard/Kanban CV
-├── cv-swagger.html         # Swagger-stílusú CV
+├── cv-swagger.html         # Swagger-style CV
 ├── cv-json.html            # JSON CV
-├── cv-game.html            # RPG játék CV
+├── cv-game.html            # RPG game CV
 │
 ├── scripts/
-│   ├── cv-data.js          # CV adatok (egyetlen forrás)
-│   ├── shared.js           # Közös segédfüggvények
-│   ├── locale.js           # LocaleManager — 12 nyelv kezelése
-│   ├── config.js           # Globális konstansok, feature flag-ek
-│   ├── cv-music-player.js  # Zenelejátszó
-│   ├── cv-plain.js         # Plain belépési pont
-│   ├── cv-swagger.js       # Swagger belépési pont
-│   ├── cv-json.js          # JSON belépési pont
-│   ├── cv-gantt.js         # Gantt belépési pont
-│   ├── cv-scrumboard.js    # Scrumboard belépési pont
-│   ├── cv-index.js         # Index belépési pont
+│   ├── cv-data.js          # CV data (single source of truth)
+│   ├── shared.js           # Shared helper functions
+│   ├── locale.js           # LocaleManager — handles 12 languages
+│   ├── config.js           # Global constants, feature flags
+│   ├── cv-music-player.js  # Music player
+│   ├── cv-plain.js         # Plain entry point
+│   ├── cv-swagger.js       # Swagger entry point
+│   ├── cv-json.js          # JSON entry point
+│   ├── cv-gantt.js         # Gantt entry point
+│   ├── cv-scrumboard.js    # Scrumboard entry point
+│   ├── cv-index.js         # Index entry point
 │   │
-│   ├── locales/            # Fordítási fájlok
-│   │   ├── en.js           # Angol
-│   │   ├── hu.js           # Magyar
-│   │   ├── de.js           # Német
-│   │   ├── fr.js           # Francia
-│   │   ├── es.js           # Spanyol
-│   │   ├── it.js           # Olasz
-│   │   ├── asg.js          # Asgardian (fiktív)
-│   │   ├── dot.js          # Dothraki (fiktív)
-│   │   ├── kl.js           # Klingon (fiktív)
-│   │   ├── qu.js           # Quenya (fiktív)
-│   │   ├── goa.js          # Goa'uld (fiktív)
-│   │   └── ya.js           # Yautja (fiktív)
+│   ├── locales/            # Translation files
+│   │   ├── en.js           # English
+│   │   ├── hu.js           # Hungarian
+│   │   ├── de.js           # German
+│   │   ├── fr.js           # French
+│   │   ├── es.js           # Spanish
+│   │   ├── it.js           # Italian
+│   │   ├── asg.js          # Asgardian (fictional)
+│   │   ├── dot.js          # Dothraki (fictional)
+│   │   ├── kl.js           # Klingon (fictional)
+│   │   ├── qu.js           # Quenya (fictional)
+│   │   ├── goa.js          # Goa'uld (fictional)
+│   │   └── ya.js           # Yautja (fictional)
 │   │
 │   ├── components/
-│   │   ├── lang-dropdown.js  # Nyelvválasztó dropdown komponens
-│   │   ├── plain/            # Plain CV komponensek
-│   │   ├── swagger/          # Swagger UI komponensek
-│   │   └── json/             # JSON viewer komponensek
+│   │   ├── lang-dropdown.js  # Language selector dropdown component
+│   │   ├── plain/            # Plain CV components
+│   │   ├── swagger/          # Swagger UI components
+│   │   └── json/             # JSON viewer components
 │   │
 │   └── game/
-│       ├── main.js         # GameEngine osztály
-│       ├── mobile-input.js # Mobilos kezelés
-│       ├── audio/          # Hangeffekt kezelés
+│       ├── main.js         # GameEngine class
+│       ├── mobile-input.js # Mobile handling
+│       ├── audio/          # Sound effect handling
 │       ├── map/            # Tilemap + autotile
-│       ├── world/          # Stationök, spawnok
-│       └── entities/       # Játékbeli entitások
+│       ├── world/          # Stations, spawns
+│       └── entities/       # In-game entities
 │           ├── base/       # GameObject, Npc, DecorObject
 │           ├── player/
 │           ├── enemies/    # Skeleton
 │           ├── npcs/       # Chicken, Cow, Pig, Sheep
-│           ├── obstacles/  # Tree, House, Chest, stb.
-│           └── decor/      # Virág, gomba, szikla, stb.
+│           ├── obstacles/  # Tree, House, Chest, etc.
+│           └── decor/      # Flower, mushroom, rock, etc.
 │
 ├── styles/
-│   ├── cv-index.css        # Téma-változók, modal + toast stílusok (közös alap)
+│   ├── cv-index.css        # Theme variables, modal + toast styles (shared base)
 │   ├── cv-plain.css
 │   ├── cv-gantt.css
 │   ├── cv-scrumboard.css
 │   ├── cv-swagger.css
 │   ├── cv-json.css
 │   ├── cv-game.css
-│   ├── lang-dropdown.css   # Nyelvválasztó dropdown
+│   ├── lang-dropdown.css   # Language selector dropdown
 │   └── cv-music-player.css
 │
 ├── assets/
-│   ├── music/       # 18 MP3, borítókép, Python eszközök
-│   ├── sfx/         # 18 WAV hangeffekt
+│   ├── music/       # 18 MP3s, cover art, Python tools
+│   ├── sfx/         # 18 WAV sound effects
 │   ├── sprites/     # Pixel-art sprite pack
-│   └── images/      # Logók, skill ikonok, téma ikonok
+│   └── images/      # Logos, skill icons, theme icons
 │
 ├── .claude/
-│   ├── rules/            # Projekt konvenciók, AI szabályok
-│   │   └── translation-length.md   # Fordítási hossz-budget (fix, beégetett)
+│   ├── rules/            # Project conventions, AI rules
+│   │   └── translation-length.md   # Translation length budget (fixed, hard-coded)
 │   ├── reference/
-│   │   └── current-english-lengths.json  # Fix hossz-budget JSON (kézzel karbantartott)
-│   ├── scripts/          # Globális AI segédscriptek
-│   │   ├── cv-ledger.py                   # Marker + history.md kezelő
-│   │   └── check-translation-lengths.py  # Fordítási hossz-budget ellenőrző
-│   ├── agents/           # AI agent definíciók
+│   │   └── current-english-lengths.json  # Fixed length-budget JSON (manually maintained)
+│   ├── scripts/          # Global AI helper scripts
+│   │   ├── cv-ledger.py                   # Marker + history.md handler
+│   │   └── check-translation-lengths.py  # Translation length-budget checker
+│   ├── agents/           # AI agent definitions
 │   └── skills/
 │       ├── cv-backup/
 │       │   └── scripts/
 │       │       └── cv-backup.py     # CV snapshot backup
 │       ├── cv-restore/
 │       │   └── scripts/
-│       │       └── cv-restore.py    # CV visszaállítás
+│       │       └── cv-restore.py    # CV restore
 │       ├── locale-check/
 │       │   └── scripts/
-│       │       └── locale-check.py  # Locale kulcs ellenőrzés
-│       └── ... (további skill definíciók)
+│       │       └── locale-check.py  # Locale key check
+│       └── ... (further skill definitions)
 │
-└── devdocs/                 # Tervezési dokumentumok
-    ├── ai-workflow.md       # AI skill/agent munkafolyamatok
-    ├── cv-data-schema.md    # CV_DATA mezőszintű séma
-    └── game-dev-notes.md    # Játékmotor fejlesztői jegyzetek
+└── devdocs/                 # Design documents
+    ├── ai-workflow.md       # AI skill/agent workflows
+    ├── cv-data-schema.md    # CV_DATA field-level schema
+    ├── game-dev-notes.md    # Game engine developer notes
+    └── skills-and-agents-guide.md  # Full skills & agents reference
 ```
 
-## Lokalizáció
+## Localization
 
-A teljes felület 12 nyelven elérhető, a `scripts/locale.js` `LocaleManager` osztályán keresztül:
+The entire interface is available in 12 languages, through the `LocaleManager` class in `scripts/locale.js`:
 
-| Kód   | Nyelv     |
+| Code  | Language  |
 | ----- | --------- |
-| `en`  | Angol     |
-| `hu`  | Magyar    |
-| `de`  | Német     |
-| `fr`  | Francia   |
-| `es`  | Spanyol   |
-| `it`  | Olasz     |
+| `en`  | English   |
+| `hu`  | Hungarian |
+| `de`  | German    |
+| `fr`  | French    |
+| `es`  | Spanish   |
+| `it`  | Italian   |
 | `asg` | Asgardian |
 | `dot` | Dothraki  |
 | `kl`  | Klingon   |
@@ -245,168 +248,168 @@ A teljes felület 12 nyelven elérhető, a `scripts/locale.js` `LocaleManager` o
 | `goa` | Goa'uld   |
 | `ya`  | Yautja    |
 
-A kiválasztott nyelv `localStorage`-ban marad, az oldalváltások között is megőrződik. A böngésző alapértelmezett nyelve automatikusan detektálódik. Fiktív nyelveknél (`kl`, `qu`, `goa`, `ya`, `asg`, `dot`) az Intl.DateTimeFormat angol fallback-re vált.
+The selected language is kept in `localStorage` and persists across page navigations. The browser's default language is detected automatically. For fictional languages (`kl`, `qu`, `goa`, `ya`, `asg`, `dot`), `Intl.DateTimeFormat` falls back to English.
 
-A `data-i18n` attribútummal jelölt DOM elemek automatikusan frissülnek, amikor a felhasználó nyelvet vált — beleértve a nyitva lévő modálok szövegeit is.
+DOM elements marked with the `data-i18n` attribute update automatically when the user switches language — including the text of any open modals.
 
-## Játékmotor
+## Game engine
 
-A `scripts/game/` alatt található RPG motor Canvas 2D-re épül:
+The RPG engine under `scripts/game/` is built on Canvas 2D:
 
-- **Game loop** — `requestAnimationFrame` alapú, fix időlépéses fizikával
-- **Entitás rendszer** — `GameObject` ősosztály → specializált entitások (Player, Skeleton, NPC-k, House-ok, dekorációk)
-- **Tilemap** — BMP-ből betöltött pálya, 32×32 pixeles tile-okkal, bitmaszkos autotile-lal (256 varáció tile-onként)
-- **Ütközésdetekció** — AABB-alapú, collisionBox rendszer
-- **Dialogue rendszer** — House-ok ajtajához lépve CV tartalom jelenik meg NPC-szerű ablakban
-- **Combat** — Skeleton ellenségek, támadás (space), életerő rendszer
-- **Pause menü** — Játék szüneteltetése zenei vezérlőkkel
-- **Mobilos támogatás** — NippleJS joystick, reszponzív UI, tájolásfigyelés
+- **Game loop** — `requestAnimationFrame`-based, with fixed-time-step physics
+- **Entity system** — `GameObject` base class → specialized entities (Player, Skeleton, NPCs, Houses, decorations)
+- **Tilemap** — map loaded from BMP, with 32×32-pixel tiles and bitmask autotiling (256 variations per tile)
+- **Collision detection** — AABB-based, collisionBox system
+- **Dialogue system** — stepping up to a House's door shows CV content in an NPC-like window
+- **Combat** — Skeleton enemies, attacking (space), health system
+- **Pause menu** — pause the game with music controls
+- **Mobile support** — NippleJS joystick, responsive UI, orientation awareness
 
-A motor részletes fejlesztői dokumentációja (új station/entitás hozzáadása, BMP → tilemap pipeline, collision rendszer, dialogue rendszer, térkép szerkesztése) a [devdocs/game-dev-notes.md](devdocs/game-dev-notes.md) fájlban olvasható.
+The detailed developer documentation of the engine (adding a new station/entity, the BMP → tilemap pipeline, the collision system, the dialogue system, editing the map) can be read in [devdocs/game-dev-notes.md](devdocs/game-dev-notes.md).
 
-## Zenelejátszó
+## Music player
 
-18 zeneszám 6 műfaj saját szöveggel (magyar és német nyelvű dalszövegek). Funkciók:
+18 tracks across 6 genres with their own lyrics (Hungarian and German lyrics). Features:
 
-- Műfajválasztó egyedi legördülő menüvel
-- Lejátszás/szünet, következő/előző, megállítás
-- Ismétlési módok: nincs / összes / egy
-- Hangerőszabályzó
-- Kereső csúszka (seek)
-- Dalszöveg panel
-- Fade-in/fade-out átmenetek
-- Állapot perzisztálás localStorage-ban
+- Genre selector with a custom dropdown menu
+- Play/pause, next/previous, stop
+- Repeat modes: none / all / one
+- Volume control
+- Seek slider
+- Lyrics panel
+- Fade-in/fade-out transitions
+- State persistence in localStorage
 
-## Téma rendszer
+## Theme system
 
-A plain nézet több témát támogat CSS-változókon keresztül:
+The plain view supports multiple themes through CSS variables:
 
 - `light` / `dark` / `superdark` / `nightvision` / `predator`
-- A `data-theme` attribútum vezérli a CSS-változók értékét
-- A választás localStorage-ban marad meg
+- The `data-theme` attribute drives the value of the CSS variables
+- The choice is kept in localStorage
 
-## E-mail domain validáció
+## Email domain validation
 
-A kapcsolatfelvételi és foglalási űrlapokon az e-mail mező valódi domain-ellenőrzéssel rendelkezik, backend és API-kulcs nélkül.
+On the contact and booking forms, the email field has real domain validation, without a backend or API key.
 
-- **Módszer**: Cloudflare DNS-over-HTTPS (`1.1.1.1`) MX rekord lekérdezés közvetlenül a böngészőből — CORS-barát, ingyenes, korlát nélküli
-- **Implementáció**: `checkEmailDomain()` helper a `shared.js`-ben, `CHECK_EMAIL_DOMAIN` boolean flag a `config.js`-ben
-- **Blur listener**: az e-mail mezőből kilépve előre lefuttatja az ellenőrzést — submitnál már sessionStorage cache-ből tölt
-- **Fail-open**: hálózati hiba, offline mód vagy timeout esetén az ellenőrzés átengedi a formot (a Formspree/GAS fog majd hibát adni)
-- **Cache**: `sessionStorage`-ban domain-enként tárolva (`mx_gmail.com = '1'`) — ugyanarra a domainre nem fut újra hálózati kérés
-- **Lokalizálva**: `errEmailVerifying` és `errEmailNoMailServer` kulcsok mind a 12 locale fájlban
+- **Method**: Cloudflare DNS-over-HTTPS (`1.1.1.1`) MX record lookup directly from the browser — CORS-friendly, free, unlimited
+- **Implementation**: the `checkEmailDomain()` helper in `shared.js`, the `CHECK_EMAIL_DOMAIN` boolean flag in `config.js`
+- **Blur listener**: leaving the email field runs the check ahead of time — at submit it loads from the sessionStorage cache
+- **Fail-open**: on network error, offline mode, or timeout, the check lets the form through (Formspree/GAS will report an error)
+- **Cache**: stored per domain in `sessionStorage` (`mx_gmail.com = '1'`) — no repeat network request for the same domain
+- **Localized**: the `errEmailVerifying` and `errEmailNoMailServer` keys in all 12 locale files
 
-| Eset                              | Viselkedés                         |
-| --------------------------------- | ---------------------------------- |
-| Érvényes domain (pl. `gmail.com`) | Ellenőrzés átmegy, form beküldhető |
-| Nem létező domain                 | Hibaüzenet az e-mail mező alatt    |
-| Offline / hálózati hiba           | Fail-open — form átengedi          |
-| Ugyanaz a domain másodszor        | Nincs újabb hálózati kérés (cache) |
+| Case                                | Behavior                                |
+| ----------------------------------- | --------------------------------------- |
+| Valid domain (e.g. `gmail.com`)     | Check passes, form can be submitted     |
+| Non-existent domain                 | Error message below the email field     |
+| Offline / network error            | Fail-open — the form is let through      |
+| Same domain a second time           | No new network request (cache)          |
 
-## Kapcsolatfelvétel
+## Contact
 
-Minden nézet tartalmaz egy **Hire me** gombot, amely egy modális kapcsolatfelvételi űrlapot nyit meg.
+Every view contains a **Hire me** button that opens a modal contact form.
 
-- Az üzenet küldése a [Formspree](https://formspree.io) szolgáltatáson keresztül történik
-- A modál szövegei (cím, mezőfeliratok, placeholder-ek, sikeres küldés visszajelzése) teljesen lokalizáltak — 12 nyelven elérhető
-- Nyelváltáskor a nyitva lévő modál szövegei azonnal frissülnek (`localechange` eseményre reagál)
-- Játék nézetben a modál megnyitásakor a játékmotor lefagy (`isFrozen = true`), bezáráskor folytatódik
+- The message is sent through the [Formspree](https://formspree.io) service
+- The modal's texts (title, field labels, placeholders, success confirmation) are fully localized — available in 12 languages
+- On language switch, the texts of an open modal update immediately (it reacts to the `localechange` event)
+- In the game view, opening the modal freezes the game engine (`isFrozen = true`); it resumes when closed
 
-## Naptári foglalás
+## Calendar booking
 
-Minden nézet tartalmaz egy **Meet** gombot, amely online időpontfoglalást nyit meg.
+Every view contains a **Meet** button that opens online appointment booking.
 
 ### Backend — Google Apps Script (Code.gs)
 
-A foglalási rendszer egy [Google Apps Script](https://script.google.com) backendet használ, amely a Google Calendar API-ra épül. A GAS projekt külön repository-ban található:
+The booking system uses a [Google Apps Script](https://script.google.com) backend built on the Google Calendar API. The GAS project lives in a separate repository:
 
-> 📁 [GAS]([E:/Projects/GoogleCalendarAPI/](https://github.com/exphoenee/GoogleCalendarAPI)) — `Code.gs`, `index.html`, `app.js`, `config.js`, `style.css`
+> 📁 [GAS](https://github.com/exphoenee/GoogleCalendarAPI) — `Code.gs`, `index.html`, `app.js`, `config.js`, `style.css`
 
-**Architektúra:**
+**Architecture:**
 
 ```
-Böngésző (scripts/shared.js — initBookingModal)
+Browser (scripts/shared.js — initBookingModal)
     │
     ▼ HTTPS GET (query params)
 Code.gs (Google Apps Script — doGet)
     │
-    ├── Google Calendar API (naptár ellenőrzés + esemény létrehozás + meghívó)
-    └── ScriptProperties (foglalási adatok perzisztálása)
+    ├── Google Calendar API (calendar check + event creation + invite)
+    └── ScriptProperties (persisting booking data)
 ```
 
-**Végpontok:**
+**Endpoints:**
 
-| `action` paraméter | Művelet |
-|--------------------|--------|
-| `slots` (alapértelmezett) | Szabad időpontok listája a naptárból, figyelembe véve a munkaidőt és rate limitet |
-| `debug` | Részletes napi bontás hibakereséshez |
-| `book` + `name`, `email`, `start`, `end`, `topic` | Foglalás létrehozása — validálás, rate limit ellenőrzés, calendar esemény + meghívó |
+| `action` parameter | Operation |
+|--------------------|-----------|
+| `slots` (default) | List of free slots from the calendar, taking working hours and rate limit into account |
+| `debug` | Detailed per-day breakdown for debugging |
+| `book` + `name`, `email`, `start`, `end`, `topic` | Create a booking — validation, rate-limit check, calendar event + invite |
 
-**Rate limiting (3 szint):**
+**Rate limiting (3 levels):**
 
-1. **Per-email 24 órás blokk** — egy email címről csak egy foglalás 24 óránként (`RATE_LIMITED` hiba)
-2. **Globális napi limit** — maximum 5 foglalás naponta összesen (`DAILY_CAP_REACHED` hiba)
-3. **Interjú dátum nyilvántartás** — ha egy napra már van foglalás, az egész nap eltűnik a választóból
+1. **Per-email 24-hour block** — only one booking per email address every 24 hours (`RATE_LIMITED` error)
+2. **Global daily limit** — a maximum of 5 bookings per day in total (`DAILY_CAP_REACHED` error)
+3. **Interview-date tracking** — if a day already has a booking, the whole day disappears from the selector
 
-A frontend a hibakódokat lokalizált üzenetekre fordítja (`bookErrRateLimited`, `bookErrDailyCap` locale kulcsok mind a 12 nyelven).
+The frontend translates the error codes into localized messages (the `bookErrRateLimited`, `bookErrDailyCap` locale keys in all 12 languages).
 
-**Konfiguráció (Code.gs tetején):**
+**Configuration (top of Code.gs):**
 
-| Változó | Alapérték | Leírás |
-|---------|-----------|--------|
-| `SLOT_MINUTES` | 30 | Egy időpont hossza percben |
-| `BUFFER_MINUTES` | 30 | Szünet minden megbeszélés után |
-| `DAYS_AHEAD` | 21 | Hány napra előre mutasson időpontokat |
-| `GLOBAL_DAILY_MAX` | 5 | Maximum foglalások száma naponta |
-| `WORKING_HOURS` | 8-17 (H-P) | Munkaidő intervallumok naponként |
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `SLOT_MINUTES` | 30 | Length of one slot in minutes |
+| `BUFFER_MINUTES` | 30 | Break after each meeting |
+| `DAYS_AHEAD` | 21 | How many days ahead to show slots for |
+| `GLOBAL_DAILY_MAX` | 5 | Maximum number of bookings per day |
+| `WORKING_HOURS` | 8-17 (Mon–Fri) | Working-hour intervals per day |
 
 ### Frontend — Booking Modal
 
-A CV oldalon a foglalási felület `scripts/shared.js` `initBookingModal()` / `bookingModalHTML()` függvényeivel van implementálva:
+On the CV page, the booking UI is implemented with the `initBookingModal()` / `bookingModalHTML()` functions in `scripts/shared.js`:
 
-1. **Dátum választás** — a GAS-től kapott szabad időpontok alapján nap-kártyák jelennek meg
-2. **Időpont választás** — a kiválasztott nap szabad időpontjai
-3. **Adatok megadása** — név, email, téma + Cloudflare Turnstile CAPTCHA
-4. **Visszaigazolás** — sikeres foglalás esetén
+1. **Date selection** — day cards appear based on the free slots received from GAS
+2. **Time selection** — the free slots of the selected day
+3. **Entering details** — name, email, topic + Cloudflare Turnstile CAPTCHA
+4. **Confirmation** — on a successful booking
 
-Lokalizáció:
-- A dátumok és napnevek `Intl.DateTimeFormat` API-val formázva a kiválasztott nyelven
-- Fiktív nyelveknél (`kl`, `qu`, `goa`, `ya`, `asg`, `dot`) angol fallback
-- Nyelváltáskor a dátumkártyák azonnal újrarenderelődnek
-- Hibák modalban jelennek meg (nem `alert()`), a hibaüzenetek locale-váltáskor újrafordítódnak
+Localization:
+- Dates and day names are formatted with the `Intl.DateTimeFormat` API in the selected language
+- English fallback for fictional languages (`kl`, `qu`, `goa`, `ya`, `asg`, `dot`)
+- On language switch, the date cards re-render immediately
+- Errors appear in the modal (not via `alert()`); error messages are re-translated on language switch
 
-Biztonság:
-- Turnstile CAPTCHA kötelező a foglalás elküldéséhez (submit gomb disabled, amíg nincs elfogadva)
-- E-mail domain validáció DNS-over-HTTPS-en keresztül (Cloudflare 1.1.1.1, MX rekord)
-- Játék nézetben a modal lefagyasztja a motort (`isFrozen = true`), MutationObserver figyeli a bezárást
+Security:
+- Turnstile CAPTCHA is required to send a booking (submit button disabled until accepted)
+- Email domain validation via DNS-over-HTTPS (Cloudflare 1.1.1.1, MX record)
+- In the game view, the modal freezes the engine (`isFrozen = true`); a MutationObserver watches for the close
 
-## AI munkafolyamat
+## AI workflow
 
-A projekthez Claude Code skill-ek (slash parancsok) és agent-ek épültek, amelyek a fejlesztési, tartalom-karbantartási és álláspályázási munkafolyamatokat automatizálják.
+Claude Code skills (slash commands) and agents have been built for this project to automate development, content-maintenance, and job-application workflows.
 
-### Képességek áttekintése
+### Capability overview
 
-| Terület | Képesség | Leírás |
-|---------|----------|--------|
-| **Fordítások** | `/locale-check` | 12 nyelvi fájl szinkronizálásának ellenőrzése az angol referenciához képest. `--fix` automatikusan kiegészíti a hiányzó kulcsokat. |
-| **Kódminőség** | `/code-review` | CV-specifikus kódreview: locale teljesség, aria kompatibilitás, biztonság, konfigurációs sértetlenség. |
-| **Fordítási lektorálás** | `/language-reviewer` | 12 nyelv minőségi auditja a nyelvspecifikus szabályfájlok alapján. Csak jelent — nem javít automatikusan. |
-| **Biztonság** | `/security-review` | Spam/flood audit a Hire Me és booking modálokon (Turnstile, cooldown, rate limiting). |
-| **Architektúra** | `/arch-review` | Teljes kódbázis elemzés: templát duplikáció, adatstruktúra, locale rendszer, CSS, tooling. |
-| **HR/ATS optimalizáció** | `/hr-review` | Általános vagy állásleírás-specifikus ATS minőségértékelés. Csak a meglévő skilleket emeli ki — nem talál ki újat. |
-| **CV javítás** | `/cv-improver` | HR-review jelentés alapján módosítja a `cv-data.js`-t. Diff előnézetet mutat, mielőtt ír. |
-| **Motivációs levél** | `/cover-letter` | Angol + magyar motivációs levél generálása a `profile/*.md` és `cv-data.js` alapján. |
-| **Teljes álláspályázat** | `/job-apply` | Teljes pipeline: ATS elemzés → CV optimalizáció → 11 nyelvű fordítás → verzió snapshot (`job-description.md` angol + magyar + eredeti) → opcionális motivációs levél. |
-| **Verziókezelés** | `/cv-backup` / `/cv-restore` | CV adatok verziózott snapshot készítése és visszaállítása a `cv-versions/` mappába. |
+| Area | Capability | Description |
+|------|------------|-------------|
+| **Translations** | `/locale-check` | Verify that the 12 locale files are in sync with the English reference. `--fix` automatically fills in the missing keys. |
+| **Code quality** | `/code-review` | CV-specific code review: locale completeness, aria compatibility, security, config integrity. |
+| **Translation proofreading** | `/language-reviewer` | Quality audit of 12 languages based on the language-specific rule files. Reports only — does not auto-fix. |
+| **Security** | `/security-review` | Spam/flood audit of the Hire Me and booking modals (Turnstile, cooldown, rate limiting). |
+| **Architecture** | `/arch-review` | Full codebase analysis: template duplication, data structure, locale system, CSS, tooling. |
+| **HR/ATS optimization** | `/hr-review` | General or job-description-specific ATS quality assessment. Highlights only existing skills — never invents new ones. |
+| **CV improvement** | `/cv-improver` | Modifies `cv-data.js` based on an HR-review report. Shows a diff preview before writing. |
+| **Cover letter** | `/cover-letter` | Generates English + Hungarian cover letters from `profile/*.md` and `cv-data.js`. |
+| **Full job application** | `/job-apply` | Full pipeline: ATS analysis → CV optimization → 11-language translation → version snapshot (`job-description.md` English + Hungarian + original) → optional cover letter. |
+| **Version control** | `/cv-backup` / `/cv-restore` | Create and restore versioned snapshots of the CV data in the `cv-versions/` directory. |
 
-### Részletes dokumentáció
+### Detailed documentation
 
-A skill-ek, agent-ek, azok adatfolyamai, valamint a teljes job-apply pipeline lépésenkénti leírása (Mermaid diagramokkal) a [devdocs/ai-workflow.md](devdocs/ai-workflow.md) dokumentumban található.
+The step-by-step description of the skills, agents, their data flows, and the full job-apply pipeline (with Mermaid diagrams) is documented in [devdocs/ai-workflow.md](devdocs/ai-workflow.md). The complete reference guide to the skills and agents can be read in [devdocs/skills-and-agents-guide.md](devdocs/skills-and-agents-guide.md).
 
-## Futtatás
+## Running
 
 ```bash
 npx http-server -p 8080 -c-1
 ```
 
-A moduláris JS (`type="module"`) miatt HTTP-kiszolgáló szükséges — a `file://` protokoll CORS hibát dob.
+Because of the modular JS (`type="module"`), an HTTP server is required — the `file://` protocol throws a CORS error.
