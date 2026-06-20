@@ -1046,7 +1046,7 @@ canvas {
   position: absolute;
   left: calc(5% + 35px);
   bottom: calc(5% + 25px);
-  width: min(22dvw, 22dvh, 120px);
+  width: min(33dvw, 33dvh, 180px);
   aspect-ratio: 1;
 }
 #attack-btn {
