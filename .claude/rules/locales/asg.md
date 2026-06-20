@@ -1,6 +1,6 @@
 # Asgardian (asg) — Style Consistency Rules
 
-Covers `scripts/locales/asg.js`. Asgardian is a fictional language with an Old Norse /
+Covers `cv/locales/asg.js`. Asgardian is a fictional language with an Old Norse /
 archaic Norse-English character. No correct translation exists — consistency is the only standard.
 
 ---

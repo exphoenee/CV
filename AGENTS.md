@@ -5,7 +5,7 @@ Summary for AI agents (Claude Code and other assistants). Detailed rules live in
 ## Project Nature
 
 - **Static HTML site** — no backend, no bundler, no framework
-- **Data:** `scripts/cv-data.js` → `CV_DATA` — single source of truth for all CV content
+- **Data:** `cv/cv-data.js` → `CV_DATA` — single source of truth for all CV content
 - **JS:** Vanilla ES Modules (`type="module"`), import/export syntax
 - **CSS:** Vanilla CSS, no preprocessor
 - **Run:** `npx http-server -p 8080 -c-1` (`file://` protocol breaks ES Module CORS)
@@ -15,7 +15,7 @@ Summary for AI agents (Claude Code and other assistants). Detailed rules live in
 ### When adding new UI text
 
 Add the new `labels` key to all 12 locale files:
-`scripts/locales/` → `en.js`, `hu.js`, `de.js`, `fr.js`, `es.js`, `it.js`, `asg.js`, `dot.js`, `kl.js`, `qu.js`, `goa.js`, `ya.js`
+`cv/locales/` → `en.js`, `hu.js`, `de.js`, `fr.js`, `es.js`, `it.js`, `asg.js`, `dot.js`, `kl.js`, `qu.js`, `goa.js`, `ya.js`
 
 Details: [`.claude/rules/localization.md`](.claude/rules/localization.md)
 
@@ -100,7 +100,7 @@ These can be run directly from the project root:
 | `view-check-agent`       | Validates a view page against the required-elements checklist (music player, modals, toast, aria, responsive CSS, carousel registration, locale keys).                                                                | `/code-review` (when a new view is detected) |
 | `job-apply-orchestrator` | Orchestrates the full job application pipeline: JD parsing, ATS scoring, cv-data.js modification, translation dispatch, backup dispatch. Saves `job-description.md` (single file: English + Hungarian + Original). Version conflict resolution is delegated to cv-backup-agent.                 | `/job-apply`                               |
 | `cv-translator-agent`    | Translates/adapts changed `cv-data.js` fields into all 11 non-English locale `content` fields. Loads per-language style rules from `.claude/rules/locales/<lang>.md`.                                                 | `job-apply-orchestrator`                   |
-| `cv-backup-agent`        | Creates a versioned snapshot folder in `cv-versions/`: writes `cv-data.js` (with metadata header) and copies `scripts/locales/` into `locales/` (12 JS files in original format). Handles version conflict detection. | `/cv-backup`, `job-apply-orchestrator`     |
+| `cv-backup-agent`        | Creates a versioned snapshot folder in `cv-versions/`: writes `cv-data.js` (with metadata header) and copies `cv/locales/` into `locales/` (12 JS files in original format). Handles version conflict detection. | `/cv-backup`, `job-apply-orchestrator`     |
 | `cover-letter-agent`     | Writes English + Hungarian cover letters grounded in `profile/*.md` and `cv-data.js`. Detects JD language for tone calibration. Saves `cover-letter-en.md` + `cover-letter-hu.md` to the target folder.               | `/cover-letter`, `job-apply-orchestrator`  |
 | `arch-review-agent`      | Full codebase architecture analysis: template duplication, data structure quality, locale system, CSS, tooling/DX. Produces a scored matrix and tiered proposals.                                                     | `/arch-review`                             |
 

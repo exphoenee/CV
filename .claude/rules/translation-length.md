@@ -2,7 +2,7 @@
 
 ## Reference
 
-The **reference is a FIXED budget** — it is **NOT** calculated from the current `scripts/cv-data.js`.
+The **reference is a FIXED budget** — it is **NOT** calculated from the current `cv/cv-data.js`.
 The budget has a **single source of truth**:
 
 **`.claude/reference/current-english-lengths.json`** — contains the page budget numbers **and**

@@ -12,7 +12,7 @@ argument-hint: '[label]'
 
 # cv-backup — Manual CV Snapshot
 
-Creates a point-in-time backup of the current `scripts/cv-data.js` and all 11 locale content
+Creates a point-in-time backup of the current `cv/cv-data.js` and all 11 locale content
 fields into `cv-versions/`. Useful before manual edits, experiments, or refactoring.
 
 ## Step 1 — Parse argument

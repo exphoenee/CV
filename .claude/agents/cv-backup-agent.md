@@ -3,7 +3,7 @@ name: cv-backup-agent
 description: >
   Creates a versioned snapshot of the current cv-data.js and all 11 locale content fields.
   Handles version conflict detection (asks user when a matching folder already exists).
-  Copies the entire scripts/locales/ directory into VERSION_FOLDER/locales/ for a clean,
+  Copies the entire cv/locales/ directory into VERSION_FOLDER/locales/ for a clean,
   format-preserving backup.
   Called by job-apply-orchestrator and by the /cv-backup skill.
 ---
@@ -76,7 +76,7 @@ Create `VERSION_FOLDER/` directory.
 
 ## Step 3 — Write cv-data.js snapshot
 
-Read `scripts/cv-data.js` in full.
+Read `cv/cv-data.js` in full.
 
 Prepend the header block from `.claude/rules/version-snapshot-format.md` (cv-data.js section), filling in:
 
@@ -92,14 +92,14 @@ Write the result to `VERSION_FOLDER/cv-data.js`.
 
 ## Step 4 — Copy locales/ directory
 
-Copy the entire `scripts/locales/` directory to `VERSION_FOLDER/locales/`.
+Copy the entire `cv/locales/` directory to `VERSION_FOLDER/locales/`.
 All 12 locale files (hu.js, de.js, fr.js, es.js, it.js, asg.js, dot.js, kl.js, qu.js,
 goa.js, ya.js) are preserved in their **original JS format** — no JSON conversion,
 no content extraction, no syntax risk.
 
 ```python
 import shutil
-shutil.copytree("scripts/locales", "VERSION_FOLDER/locales")
+shutil.copytree("cv/locales", "VERSION_FOLDER/locales")
 ```
 
 **Why file copy instead of JSON extraction:** JSON serialization converts single-quoted
@@ -137,7 +137,7 @@ STATUS = "ok"
 
 ## Hard Constraints
 
-- ❌ Never modify `scripts/cv-data.js` or any locale file — read-only
+- ❌ Never modify `cv/cv-data.js` or any locale file — read-only
 - ❌ Never overwrite an existing version folder without user confirmation (Step 1)
 - ✅ Always snapshot the CURRENT state of the files as they are at call time
 - ✅ Use `.claude/rules/version-snapshot-format.md` for both file formats

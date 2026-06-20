@@ -4,8 +4,8 @@ cv-ledger.py  —  CV traceability ledger
 
 Single owner of the two CV-traceability mechanisms:
 
-  1. The live-file marker block stamped at the top of scripts/cv-data.js and the
-     12 CV-content locale files (scripts/locales/<lang>.js — NOT the *-page.js label files):
+  1. The live-file marker block stamped at the top of cv/cv-data.js and the
+     12 CV-content locale files (cv/locales/<lang>.js — NOT the *-page.js label files):
 
          // @job-application: APP_ID — TITLE @ COMPANY (DATE) · snapshot: cv-versions/APP_ID/
          // @cv-last-change: YYYY-MM-DD HHMM — OPERATION (ACTOR) · see cv-versions/history.md
@@ -77,7 +77,7 @@ def _project_path(*parts):
     return os.path.join(_PROJECT_ROOT, *parts)
 
 
-CV_DATA_PATH = _project_path("scripts", "cv-data.js")
+CV_DATA_PATH = _project_path("cv", "cv-data.js")
 VERSIONS_DIR = _project_path("cv-versions")
 HISTORY_PATH = _project_path("cv-versions", "history.md")
 
@@ -89,7 +89,7 @@ CONTENT_LANGS = ["en", "hu", "de", "fr", "es", "it",
 def _marker_target_files():
     files = [CV_DATA_PATH]
     for lang in CONTENT_LANGS:
-        files.append(_project_path("scripts", "locales", f"{lang}.js"))
+        files.append(_project_path("cv", "locales", f"{lang}.js"))
     return files
 
 

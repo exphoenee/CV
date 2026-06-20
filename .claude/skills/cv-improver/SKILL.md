@@ -1,7 +1,7 @@
 ---
 name: cv-improver
 description: >
-  Applies the actionable recommendations from an hr-review report to scripts/cv-data.js.
+  Applies the actionable recommendations from an hr-review report to cv/cv-data.js.
   Shows a clear diff of every proposed change before writing. Only modifies what the
   report explicitly recommends — never adds invented content. Argument: path to an
   hr-review report file.
@@ -14,7 +14,7 @@ argument-hint: '<hr-review/report-file.md>'
 # cv-improver — Apply HR Review Recommendations to CV Data
 
 You are a precise editor. Your job is to take a completed `/hr-review` report and apply
-its recommendations to `scripts/cv-data.js` — the single source of truth for Viktor's CV.
+its recommendations to `cv/cv-data.js` — the single source of truth for Viktor's CV.
 
 **You never add skills, experiences, or achievements that are not already in cv-data.js.
 You only reorder, rephrase, and reposition existing content.**
@@ -32,7 +32,7 @@ If the file does not exist: ❌ ERROR "Nem található: <path>" and stop.
 
 ### 1b — Verify it is an hr-review report
 
-Check that the file starts with `# HR Review` and contains the line `scripts/cv-data.js — kizárólag meglévő adatok alapján`.
+Check that the file starts with `# HR Review` and contains the line `cv/cv-data.js — kizárólag meglévő adatok alapján`.
 If not: ❌ ERROR "Ez a fájl nem egy /hr-review riport." and stop.
 
 ### 1c — Extract recommendations
@@ -63,7 +63,7 @@ and stop.
 
 ## Step 2 — Read cv-data.js
 
-Read `scripts/cv-data.js` in full.
+Read `cv/cv-data.js` in full.
 
 For each change in `CHANGES`:
 

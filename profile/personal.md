@@ -6,7 +6,7 @@ type: 'reference'
 
 # Personal
 
-Ez a fájl azokat a személyes adatokat tartalmazza, amik a `scripts/cv-data.js`-ben szerepelnek, de **nincsenek meg** a többi `profile/*.md` fájlban. A `/cv-generator` skill ebből építi fel a cv-data.js személyes adatait.
+Ez a fájl azokat a személyes adatokat tartalmazza, amik a `cv/cv-data.js`-ben szerepelnek, de **nincsenek meg** a többi `profile/*.md` fájlban. A `/cv-generator` skill ebből építi fel a cv-data.js személyes adatait.
 
 ---
 

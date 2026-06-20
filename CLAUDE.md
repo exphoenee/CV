@@ -8,7 +8,7 @@ An HTTP server is required — the `file://` protocol breaks ES Module CORS.
 
 ## Single Source of Truth
 
-**`scripts/cv-data.js` → `CV_DATA`**
+**`cv/cv-data.js` → `CV_DATA`**
 
 This is the only place for all CV content. Never duplicate data into other files.
 Every view (plain, swagger, json, gantt, scrumboard, game) renders from this object in JavaScript.
@@ -33,18 +33,18 @@ Localization system: `scripts/locale.js` → `LocaleManager` → `locale.t('key'
 
 | Code  | File                     | Note                  |
 | ----- | ------------------------ | --------------------- |
-| `en`  | `scripts/locales/en.js`  | English (fallback)    |
-| `hu`  | `scripts/locales/hu.js`  | Hungarian             |
-| `de`  | `scripts/locales/de.js`  | German                |
-| `fr`  | `scripts/locales/fr.js`  | French                |
-| `es`  | `scripts/locales/es.js`  | Spanish               |
-| `it`  | `scripts/locales/it.js`  | Italian               |
-| `asg` | `scripts/locales/asg.js` | Asgardian (fictional) |
-| `dot` | `scripts/locales/dot.js` | Dothraki (fictional)  |
-| `kl`  | `scripts/locales/kl.js`  | Klingon (fictional)   |
-| `qu`  | `scripts/locales/qu.js`  | Quenya (fictional)    |
-| `goa` | `scripts/locales/goa.js` | Goa'uld (fictional)   |
-| `ya`  | `scripts/locales/ya.js`  | Yautja (fictional)    |
+| `en`  | `cv/locales/en.js`  | English (fallback)    |
+| `hu`  | `cv/locales/hu.js`  | Hungarian             |
+| `de`  | `cv/locales/de.js`  | German                |
+| `fr`  | `cv/locales/fr.js`  | French                |
+| `es`  | `cv/locales/es.js`  | Spanish               |
+| `it`  | `cv/locales/it.js`  | Italian               |
+| `asg` | `cv/locales/asg.js` | Asgardian (fictional) |
+| `dot` | `cv/locales/dot.js` | Dothraki (fictional)  |
+| `kl`  | `cv/locales/kl.js`  | Klingon (fictional)   |
+| `qu`  | `cv/locales/qu.js`  | Quenya (fictional)    |
+| `goa` | `cv/locales/goa.js` | Goa'uld (fictional)   |
+| `ya`  | `cv/locales/ya.js`  | Yautja (fictional)    |
 
 **Rule:** When adding a new `labels` key, it must go into all 12 files.
 `en.js` is the reference — derive structure from it. For fictional languages, follow the style of neighboring keys.
@@ -110,7 +110,7 @@ Detailed checklist: [`.claude/rules/new-view.md`](.claude/rules/new-view.md)
 
 1. Create `cv-[name].html`, `scripts/cv-[name].js`, and `styles/cv-[name].css`
 2. Add a `.cv-slide` card to `#cv-carousel-stage` in `index.html`
-3. Add the new view's label keys to all 12 locale files under `scripts/locales/`
+3. Add the new view's label keys to all 12 locale files under `cv/locales/`
 4. Ensure responsive CSS at all breakpoints
 
 ## Accessibility — Aria Labels
@@ -163,7 +163,7 @@ Claude Code skills and agents are built into this project to automate developmen
 Every CV version is identified by an `APP_ID` = its snapshot folder name (`DATE_company_title`).
 Three layers — kept in sync by one helper, [`.claude/scripts/cv-ledger.py`](.claude/scripts/cv-ledger.py) — make it traceable **when, which version, what happened**:
 
-1. **Live-file marker block** — a two-line comment at the top of `scripts/cv-data.js` and the 12 CV-content locale files (`scripts/locales/<lang>.js` — **not** the `-page.js` label files):
+1. **Live-file marker block** — a two-line comment at the top of `cv/cv-data.js` and the 12 CV-content locale files (`cv/locales/<lang>.js` — **not** the `-page.js` label files):
    - `// @job-application:` — which version the live CV is based on (set by `/job-apply`, reset by `/cv-restore`).
    - `// @cv-last-change:` — the most recent mutation (set by `/job-apply`, `/cv-improver`, `/cv-restore`).
 2. **`cv-versions/history.md`** — append-only audit log, one row per CV event. **Mutations** (job-apply, cv-improver, cv-restore), **backups**, and read-only **reviews** (hr-review, language-reviewer, code-review) all append a row.

@@ -2,7 +2,7 @@
 """
 validate-locale-syntax.py
 
-Validates ALL JS files in scripts/locales/ using Node.js syntax checking (node -c).
+Validates ALL JS files in cv/locales/ using Node.js syntax checking (node -c).
 Scans the directory dynamically — no hardcoded file lists — so it automatically
 picks up any new locale files.
 
@@ -35,11 +35,11 @@ from pathlib import Path
 # ── Paths ──────────────────────────────────────────────────────────────
 _SCRIPT_DIR = Path(__file__).resolve().parent
 _PROJECT_ROOT = _SCRIPT_DIR.parent.parent   # .claude/scripts/ -> .claude/ -> project root
-LOCALES_DIR = _PROJECT_ROOT / "scripts" / "locales"
+LOCALES_DIR = _PROJECT_ROOT / "cv" / "locales"
 
 
 def find_locale_files():
-    """Return sorted list of all .js files in scripts/locales/."""
+    """Return sorted list of all .js files in cv/locales/."""
     if not LOCALES_DIR.exists():
         print(f"ERROR: {LOCALES_DIR} does not exist", file=sys.stderr)
         sys.exit(1)

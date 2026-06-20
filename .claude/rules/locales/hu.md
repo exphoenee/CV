@@ -1,6 +1,6 @@
 # Magyar CV Nyelvi Szabályok
 
-A `scripts/cv-data.js` `content` felülírásait és a `scripts/locales/hu.js` UI feliratait fedi le.
+A `cv/cv-data.js` `content` felülírásait és a `cv/locales/hu.js` UI feliratait fedi le.
 
 ---
 

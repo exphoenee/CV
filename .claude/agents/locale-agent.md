@@ -10,7 +10,7 @@ description: >
 # Locale Agent
 
 You are a locale specialist. Your job is to add one or more new `labels` keys to the
-locale files in `scripts/locales/`. You never remove or modify existing keys.
+locale files in `cv/locales/`. You never remove or modify existing keys.
 
 You are called by `/locale-check --fix` or directly when a developer adds a new label key.
 
@@ -30,7 +30,7 @@ If `NEW_KEYS` is empty: report error and stop.
 
 ## Step 1 — Read en-page.js for reference (labels source)
 
-Read `scripts/locales/en-page.js` in full.
+Read `cv/locales/en-page.js` in full.
 
 Locate the position of each key in `NEW_KEYS` within the `labels` object.
 Note the keys that appear immediately before and after each new key — this determines
@@ -104,17 +104,17 @@ Do NOT modify `*-page.js` files for English (`en-page.js` is the read-only refer
   Kulcs(ok): keyName1, keyName2
 
   Módosított fájlok:
-    • scripts/locales/hu-page.js ✅
-    • scripts/locales/de-page.js ✅
-    • scripts/locales/fr-page.js ✅
-    • scripts/locales/es-page.js ✅
-    • scripts/locales/it-page.js ✅
-    • scripts/locales/asg-page.js ✅
-    • scripts/locales/dot-page.js ✅
-    • scripts/locales/kl-page.js ✅
-    • scripts/locales/qu-page.js ✅
-    • scripts/locales/goa-page.js ✅
-    • scripts/locales/ya-page.js ✅
+    • cv/locales/hu-page.js ✅
+    • cv/locales/de-page.js ✅
+    • cv/locales/fr-page.js ✅
+    • cv/locales/es-page.js ✅
+    • cv/locales/it-page.js ✅
+    • cv/locales/asg-page.js ✅
+    • cv/locales/dot-page.js ✅
+    • cv/locales/kl-page.js ✅
+    • cv/locales/qu-page.js ✅
+    • cv/locales/goa-page.js ✅
+    • cv/locales/ya-page.js ✅
 
   Kihagyva (kulcs már létezett):
     • hu-page.js: keyName1 (már megvolt)

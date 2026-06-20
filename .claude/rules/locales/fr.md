@@ -1,6 +1,6 @@
 # Français — Règles linguistiques CV
 
-Couvre les labels `scripts/locales/fr.js` et tout contenu CV en français.
+Couvre les labels `cv/locales/fr.js` et tout contenu CV en français.
 
 ---
 

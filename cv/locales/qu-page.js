@@ -1,5 +1,8 @@
 export const QU_PAGE = {
   labels: {
+    footerRepo: 'Carmë Mardë',
+    footerMail: 'Centa',
+    footerLinkedin: 'LinkedIn Quenta',
     cvOf: 'Quenta i:',
     roleLocation: 'Ohtar Noldo Yesta-Nárë · Pécs, HU',
     chooseView: 'Maquë cendalë quentanyë?',

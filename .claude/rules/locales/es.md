@@ -1,6 +1,6 @@
 # Español — Reglas lingüísticas del CV
 
-Cubre los labels de `scripts/locales/es.js` y cualquier contenido de CV en español.
+Cubre los labels de `cv/locales/es.js` y cualquier contenido de CV en español.
 
 ---
 

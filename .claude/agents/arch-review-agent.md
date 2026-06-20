@@ -48,7 +48,7 @@ Build: `CSS_FILES = [{ name, path, lineCount, mediaQueryCount, varUsageCount }]`
 
 ### 1d — Locale files
 
-Read: `scripts/locales/en.js` in full.
+Read: `cv/locales/en.js` in full.
 Read the first 60 lines of each other locale file (hu, de, fr, es, it, asg, dot, kl, qu, goa, ya).
 Build: `LOCALE_KEYS_EN = [list of all key names from en.js labels object]`
 
@@ -96,7 +96,7 @@ Findings to report:
 
 ### B — Data Structure (focus: data)
 
-Read `scripts/cv-data.js` in full.
+Read `cv/cv-data.js` in full.
 
 Metrics to extract:
 

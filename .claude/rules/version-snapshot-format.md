@@ -29,7 +29,7 @@ This single id ties together, for one application:
 
 - the snapshot folder `cv-versions/APP_ID/`
 - the formatted job description `cv-versions/APP_ID/job-description.md`
-- the `// @job-application: APP_ID` marker stamped into the live `scripts/cv-data.js` and every `scripts/locales/*.js`
+- the `// @job-application: APP_ID` marker stamped into the live `cv/cv-data.js` and every `cv/locales/*.js`
 - the row in `cv-versions/applications.md`
 
 ## VERSION_FOLDER contents
@@ -37,7 +37,7 @@ This single id ties together, for one application:
 ```
 VERSION_FOLDER/
   cv-data.js           ← optimized CV data (see header format below)
-  locales/             ← full scripts/locales/ directory copied as-is (12 JS files)
+  locales/             ← full cv/locales/ directory copied as-is (12 JS files)
   job-description.md     ← formatted job description — single file: English section, then Hungarian
                            translation, then Original Job Description blockquote (job-apply mode only)
   cover-letter-en.md    ← English cover letter (optional, written by cover-letter-agent)
@@ -48,7 +48,7 @@ VERSION_FOLDER/
 
 ## cv-data.js header comment block
 
-Prepend this comment block to the full content of `scripts/cv-data.js`:
+Prepend this comment block to the full content of `cv/cv-data.js`:
 
 ```js
 /**
@@ -64,7 +64,7 @@ Prepend this comment block to the full content of `scripts/cv-data.js`:
  * Locale:        locales/ directory — full locale files included
  * ============================================================
  * Point-in-time snapshot for the above position.
- * Do not import directly — use scripts/cv-data.js.
+ * Do not import directly — use cv/cv-data.js.
  */
 ```
 
@@ -72,7 +72,7 @@ Prepend this comment block to the full content of `scripts/cv-data.js`:
 
 ## locales/ directory structure
 
-The complete `scripts/locales/` directory is copied as-is into the backup folder.
+The complete `cv/locales/` directory is copied as-is into the backup folder.
 All 12 locale files (hu.js, de.js, fr.js, es, it, asg, dot, kl, qu, goa, ya) are preserved
 in their **original JS format** — no JSON conversion, no content extraction.
 
@@ -217,9 +217,9 @@ Column meaning:
 So that anyone reading the **live working files** can tell which application the current CV is
 tuned for **and when it last changed**, a two-line marker block is stamped at the **top** of:
 
-- `scripts/cv-data.js`
-- the **12 CV-content** locale files `scripts/locales/<lang>.js` (`en` + the 11 translated)
-- **NOT** the `scripts/locales/<lang>-page.js` label files — those hold page UI labels, not
+- `cv/cv-data.js`
+- the **12 CV-content** locale files `cv/locales/<lang>.js` (`en` + the 11 translated)
+- **NOT** the `cv/locales/<lang>-page.js` label files — those hold page UI labels, not
   job-specific CV content, so they never carry the marker.
 
 ```js
@@ -296,7 +296,7 @@ python .claude/scripts/cv-ledger.py current
 
 Notes:
 
-- `mark` stamps `scripts/cv-data.js` + the 12 `<lang>.js` content files automatically — callers
+- `mark` stamps `cv/cv-data.js` + the 12 `<lang>.js` content files automatically — callers
   never list the files themselves.
 - Table cells are sanitized (`|` → `/`, newlines → spaces) by the helper.
 - The helper writes files as UTF-8; the `—`/`·` characters render correctly in the files even if a

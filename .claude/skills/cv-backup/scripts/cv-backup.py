@@ -2,7 +2,7 @@
 """
 cv-backup.py  —  CV Snapshot Backup
 
-Creates a versioned snapshot of scripts/cv-data.js and all 11 locale
+Creates a versioned snapshot of cv/cv-data.js and all 11 locale
 content fields into cv-versions/. Supports manual and job-apply modes.
 
 Usage:
@@ -57,22 +57,22 @@ _PROJECT_ROOT = os.path.abspath(os.path.join(_SCRIPT_DIR, *([".."] * 4)))
 def _project_path(*parts):
     return os.path.join(_PROJECT_ROOT, *parts)
 
-CV_DATA_PATH    = _project_path("scripts", "cv-data.js")
+CV_DATA_PATH    = _project_path("cv", "cv-data.js")
 VERSIONS_DIR    = _project_path("cv-versions")
 CV_LEDGER_SCRIPT = _project_path(".claude", "scripts", "cv-ledger.py")
 
 LOCALE_FILES = {
-    "hu":  _project_path("scripts", "locales", "hu.js"),
-    "de":  _project_path("scripts", "locales", "de.js"),
-    "fr":  _project_path("scripts", "locales", "fr.js"),
-    "es":  _project_path("scripts", "locales", "es.js"),
-    "it":  _project_path("scripts", "locales", "it.js"),
-    "asg": _project_path("scripts", "locales", "asg.js"),
-    "dot": _project_path("scripts", "locales", "dot.js"),
-    "kl":  _project_path("scripts", "locales", "kl.js"),
-    "qu":  _project_path("scripts", "locales", "qu.js"),
-    "goa": _project_path("scripts", "locales", "goa.js"),
-    "ya":  _project_path("scripts", "locales", "ya.js"),
+    "hu":  _project_path("cv", "locales", "hu.js"),
+    "de":  _project_path("cv", "locales", "de.js"),
+    "fr":  _project_path("cv", "locales", "fr.js"),
+    "es":  _project_path("cv", "locales", "es.js"),
+    "it":  _project_path("cv", "locales", "it.js"),
+    "asg": _project_path("cv", "locales", "asg.js"),
+    "dot": _project_path("cv", "locales", "dot.js"),
+    "kl":  _project_path("cv", "locales", "kl.js"),
+    "qu":  _project_path("cv", "locales", "qu.js"),
+    "goa": _project_path("cv", "locales", "goa.js"),
+    "ya":  _project_path("cv", "locales", "ya.js"),
 }
 LOCALE_LANGS = sorted(LOCALE_FILES.keys())
 
@@ -255,7 +255,7 @@ def main():
     _out(f"   {OK} cv-data.js")
 
     # Copy entire locales/ directory
-    locales_src = _project_path("scripts", "locales")
+    locales_src = _project_path("cv", "locales")
     locales_dst = os.path.join(vf, "locales")
     if os.path.exists(locales_dst):
         shutil.rmtree(locales_dst)

@@ -61,7 +61,7 @@ From `JD`:
 
 ### 1a — Read cv-data.js (cache once, reuse everywhere)
 
-Read `scripts/cv-data.js` in full. Store as `CV_ORIGINAL` AND save the file content as `CV_DATA_RAW`.
+Read `cv/cv-data.js` in full. Store as `CV_ORIGINAL` AND save the file content as `CV_DATA_RAW`.
 
 **Do NOT re-read cv-data.js later — use `CV_DATA_RAW` for all subsequent steps that need the file content (Step 6 edits, Step 8c marker).**
 
@@ -242,7 +242,7 @@ Locate each bullet string in the relevant `workExperience[].bullets[]` or
 `workExperience[].projects[].bullets[]`. Replace with the rephrased version.
 Preserve formatting exactly.
 
-Write the updated file back to `scripts/cv-data.js`.
+Write the updated file back to `cv/cv-data.js`.
 
 Track which fields changed and their new values:
 `CHANGED_FIELDS = { summary: {old, new}, bullets: [{company, old, new}], skillOrder: {...} }`
@@ -270,7 +270,7 @@ Wait for cv-translator-agent to complete and collect its report.
 After updating all locale files, VALIDATE EVERY LOCALE FILE for valid JavaScript syntax.
 See `.claude/rules/js-syntax-validation.md` for the full rule.
 
-Run the automated validator — it scans ALL `.js` files in `scripts/locales/` dynamically
+Run the automated validator — it scans ALL `.js` files in `cv/locales/` dynamically
 (no hardcoded list), reports results, and exits with code 1 if any file fails:
 
 ```bash
@@ -521,7 +521,7 @@ stay unchanged in all languages. The blockquote is NEVER translated.
 
 ### 8c-3 — Stamp the live-file marker (via ledger)
 
-Run the ledger helper — it stamps the two-line marker block on `scripts/cv-data.js` and the 12
+Run the ledger helper — it stamps the two-line marker block on `cv/cv-data.js` and the 12
 `<lang>.js` content files (it excludes the `-page.js` label files and handles idempotency itself):
 
 ```bash

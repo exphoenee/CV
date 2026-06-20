@@ -1,4 +1,4 @@
-import { CV_DATA } from './cv-data.js';
+import { CV_DATA } from '../cv/cv-data.js';
 import { renderSwaggerContent } from './components/swagger/index.js';
 import {
   initHireModal,

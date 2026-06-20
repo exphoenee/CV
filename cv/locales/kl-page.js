@@ -1,5 +1,8 @@
 export const KL_PAGE = {
   labels: {
+    footerRepo: "QuQ pa'",
+    footerMail: "jabbI'ID",
+    footerLinkedin: "LinkedIn ghItlh",
     cvOf: "ghItlh vIta'wI':",
     roleLocation: "HoS naQHom SuvwI' · tera' ra'DIvwI' · Pécs, HU",
     chooseView: 'nuqneH? yIwIv:',

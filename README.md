@@ -62,7 +62,7 @@ Minden nézet saját CSS-t és egyedi JavaScript belépési pontot használ (`ty
 
 ### Adatréteg
 
-`scripts/cv-data.js` exportálja a `CV_DATA` konstans objektumot, amely tartalmazza a teljes önéletrajzi adatot:
+`cv/cv-data.js` exportálja a `CV_DATA` konstans objektumot, amely tartalmazza a teljes önéletrajzi adatot:
 
 - `meta`, `identity` (név, szerepkör, lokáció, elérhetőségek, nyelvek)
 - `summary` (rövid bemutatkozás)

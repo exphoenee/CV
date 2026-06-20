@@ -46,10 +46,10 @@ ATS:     [ATS match from header]
 Módosítások: [Changes from header]
 
 Visszaállítandó fájlok:
-  scripts/cv-data.js          ← felülírja a jelenlegit
-  scripts/locales/*.js        ← felülírva a backupból (11-12 fájl)
+  cv/cv-data.js          ← felülírja a jelenlegit
+  cv/locales/*.js        ← felülírva a backupból (11-12 fájl)
 
-⚠️  A jelenlegi scripts/cv-data.js és scripts/locales/ tartalma felülíródik.
+⚠️  A jelenlegi cv/cv-data.js és cv/locales/ tartalma felülíródik.
     A megerősítés után automatikusan készül egy pre-restore biztonsági mentés
     (cv-versions/DATE_manual_pre-restore/), mielőtt bármit felülírnánk.
 
@@ -64,17 +64,17 @@ Read `cv-versions/FOLDER_NAME/cv-data.js` in full.
 
 Strip the header comment block: remove everything from the first `/**` up to and including the closing `*/` and any immediately following blank line.
 
-Write the stripped content to `scripts/cv-data.js`.
+Write the stripped content to `cv/cv-data.js`.
 
 ## Step 4 — Restore locale files
 
-Copy the entire `cv-versions/FOLDER_NAME/locales/` directory over `scripts/locales/`.
+Copy the entire `cv-versions/FOLDER_NAME/locales/` directory over `cv/locales/`.
 This restores all 12 locale files (hu, de, fr, es, it, asg, dot, kl, qu, goa, ya) in their
 **original JS format** — no parsing, no serialization, no JSON conversion.
 
 ```python
 import shutil
-shutil.copytree("cv-versions/FOLDER_NAME/locales", "scripts/locales", dirs_exist_ok=True)
+shutil.copytree("cv-versions/FOLDER_NAME/locales", "cv/locales", dirs_exist_ok=True)
 ```
 
 **Why this is better than the old approach:**
@@ -83,7 +83,7 @@ shutil.copytree("cv-versions/FOLDER_NAME/locales", "scripts/locales", dirs_exist
 - No JSON serialization that converts single quotes to double quotes
 - No complex JS re-serialization during restore
 - The files are byte-identical to the original — marker lines, comments, formatting all preserved
-- If a new locale file is added to `scripts/locales/`, it gets automatically backed up and restored
+- If a new locale file is added to `cv/locales/`, it gets automatically backed up and restored
 
 ## Step 4b — Traceability marker + audit log (automatic)
 
@@ -107,8 +107,8 @@ script reports it as a warning.
 Pre-restore mentés: cv-versions/DATE_manual_pre-restore/
 Forrás: cv-versions/FOLDER_NAME/
 Visszaállítva:
-  ✓ scripts/cv-data.js (header stripped)
-  ✓ scripts/locales/   (N fájl visszamásolva)
+  ✓ cv/cv-data.js (header stripped)
+  ✓ cv/locales/   (N fájl visszamásolva)
 🧾 Marker a visszaállított verzióra állítva + sor a history.md-ben
 
 Javaslat: Ellenőrizd a változásokat git diff-fel, majd indítsd el a szervert.

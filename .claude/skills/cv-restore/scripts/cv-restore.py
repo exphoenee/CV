@@ -45,21 +45,21 @@ _PROJECT_ROOT = os.path.abspath(os.path.join(_SCRIPT_DIR, *([".."] * 4)))
 def _project_path(*parts):
     return os.path.join(_PROJECT_ROOT, *parts)
 
-CV_DATA_PATH  = _project_path("scripts", "cv-data.js")
+CV_DATA_PATH  = _project_path("cv", "cv-data.js")
 VERSIONS_DIR  = _project_path("cv-versions")
 
 LOCALE_PATHS = {
-    "hu":  _project_path("scripts", "locales", "hu.js"),
-    "de":  _project_path("scripts", "locales", "de.js"),
-    "fr":  _project_path("scripts", "locales", "fr.js"),
-    "es":  _project_path("scripts", "locales", "es.js"),
-    "it":  _project_path("scripts", "locales", "it.js"),
-    "asg": _project_path("scripts", "locales", "asg.js"),
-    "dot": _project_path("scripts", "locales", "dot.js"),
-    "kl":  _project_path("scripts", "locales", "kl.js"),
-    "qu":  _project_path("scripts", "locales", "qu.js"),
-    "goa": _project_path("scripts", "locales", "goa.js"),
-    "ya":  _project_path("scripts", "locales", "ya.js"),
+    "hu":  _project_path("cv", "locales", "hu.js"),
+    "de":  _project_path("cv", "locales", "de.js"),
+    "fr":  _project_path("cv", "locales", "fr.js"),
+    "es":  _project_path("cv", "locales", "es.js"),
+    "it":  _project_path("cv", "locales", "it.js"),
+    "asg": _project_path("cv", "locales", "asg.js"),
+    "dot": _project_path("cv", "locales", "dot.js"),
+    "kl":  _project_path("cv", "locales", "kl.js"),
+    "qu":  _project_path("cv", "locales", "qu.js"),
+    "goa": _project_path("cv", "locales", "goa.js"),
+    "ya":  _project_path("cv", "locales", "ya.js"),
 }
 LOCALE_LANGS = sorted(LOCALE_PATHS.keys())
 
@@ -112,7 +112,7 @@ def restore_cv_data(backup_path, target_path):
 # ── Restore locale content ─────────────────────────────────────────────
 def restore_locales(backup_locales_dir, target_dir):
     """Copy all locale files from the backup's locales/ directory back to
-    scripts/locales/. This is a simple file copy — no parsing, no serialization,
+    cv/locales/. This is a simple file copy — no parsing, no serialization,
     no JSON conversion. The files are restored exactly as they were backed up.
     """
     if not os.path.isdir(backup_locales_dir):
@@ -286,11 +286,11 @@ def main():
     _out(f"   Modositasok: {meta['changes']}\n")
 
     _out(f"   Visszaallitando fajlok:")
-    _out(f"     scripts/cv-data.js          <- felulirja a jelenlegit")
+    _out(f"     cv/cv-data.js          <- felulirja a jelenlegit")
     for lang in LOCALE_LANGS:
-        _out(f"     scripts/locales/{lang}.js       <- content mezo frissul")
+        _out(f"     cv/locales/{lang}.js       <- content mezo frissul")
 
-    _out(f"\n   {WARN} A jelenlegi scripts/cv-data.js tartalma elvész.")
+    _out(f"\n   {WARN} A jelenlegi cv/cv-data.js tartalma elvész.")
     _out(f"       Javasolt: elozoleg python .claude/skills/cv-backup/scripts/cv-backup.py --label pre-restore\n")
 
     if not args.yes:
@@ -312,14 +312,14 @@ def main():
     # Restore cv-data.js
     _out(f"\n   Visszaallitas folyamatban...")
     if restore_cv_data(cv_back, CV_DATA_PATH):
-        _out(f"   {OK} scripts/cv-data.js")
+        _out(f"   {OK} cv/cv-data.js")
 
     # Restore locale files — new format (locales/ directory) or old format (locale-content.json)
-    locales_target = _project_path("scripts", "locales")
+    locales_target = _project_path("cv", "locales")
     if new_format:
         if restore_locales(loc_dir, locales_target):
             count = len([f for f in os.listdir(loc_dir) if f.endswith('.js')])
-            _out(f"   {OK} scripts/locales/  ({count} locale files restored)")
+            _out(f"   {OK} cv/locales/  ({count} locale files restored)")
     else:
         count = restore_locales_old_format(loc_json, locales_target)
         _out(f"   {WARN} Regi formatumu backup (locale-content.json) — {count} locale frissitve")
