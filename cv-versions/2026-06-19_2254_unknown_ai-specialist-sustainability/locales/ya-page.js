@@ -1,5 +1,8 @@
 export const YA_PAGE = {
   labels: {
+    footerRepo: 'Kainde Tek',
+    footerMail: 'Sain',
+    footerLinkedin: 'LinkedIn Yin',
     cvOf: 'Yin tekai:',
     roleLocation: "Kwei Hk'nde · Pecs, HU",
     chooseView: 'Yin-del. Kainde nain-de:',

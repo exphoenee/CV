@@ -41,7 +41,7 @@ Read all three files in full:
 Also read:
 
 - `index.html` (to check carousel registration)
-- `scripts/locales/en.js` (to check locale key coverage)
+- `cv/locales/en.js` (to check locale key coverage)
 
 ---
 
@@ -81,7 +81,7 @@ Run all checks. Record each as ✅ PASS | ❌ FAIL | ⚠️ WARN.
 ### CHECK 6 — Locale key coverage
 
 Scan the JS file for all `locale.t('keyName')` calls and all HTML file for `data-i18n="keyName"` attributes.
-For each key found: check it exists in `scripts/locales/en.js`.
+For each key found: check it exists in `cv/locales/en.js`.
 Missing keys → ❌ FAIL per key: "Hiányzó locale kulcs: 'keyName'"
 
 ### CHECK 7 — Responsive CSS

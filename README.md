@@ -62,7 +62,7 @@ Minden nézet saját CSS-t és egyedi JavaScript belépési pontot használ (`ty
 
 ### Adatréteg
 
-`scripts/cv-data.js` exportálja a `CV_DATA` konstans objektumot, amely tartalmazza a teljes önéletrajzi adatot:
+`cv/cv-data.js` exportálja a `CV_DATA` konstans objektumot, amely tartalmazza a teljes önéletrajzi adatot:
 
 - `meta`, `identity` (név, szerepkör, lokáció, elérhetőségek, nyelvek)
 - `summary` (rövid bemutatkozás)
@@ -396,7 +396,7 @@ A projekthez Claude Code skill-ek (slash parancsok) és agent-ek épültek, amel
 | **HR/ATS optimalizáció** | `/hr-review` | Általános vagy állásleírás-specifikus ATS minőségértékelés. Csak a meglévő skilleket emeli ki — nem talál ki újat. |
 | **CV javítás** | `/cv-improver` | HR-review jelentés alapján módosítja a `cv-data.js`-t. Diff előnézetet mutat, mielőtt ír. |
 | **Motivációs levél** | `/cover-letter` | Angol + magyar motivációs levél generálása a `profile/*.md` és `cv-data.js` alapján. |
-| **Teljes álláspályázat** | `/job-apply` | Teljes pipeline: ATS elemzés → CV optimalizáció → 11 nyelvű fordítás → verzió snapshot → opcionális motivációs levél. |
+| **Teljes álláspályázat** | `/job-apply` | Teljes pipeline: ATS elemzés → CV optimalizáció → 11 nyelvű fordítás → verzió snapshot (`job-description.md` angol + magyar + eredeti) → opcionális motivációs levél. |
 | **Verziókezelés** | `/cv-backup` / `/cv-restore` | CV adatok verziózott snapshot készítése és visszaállítása a `cv-versions/` mappába. |
 
 ### Részletes dokumentáció

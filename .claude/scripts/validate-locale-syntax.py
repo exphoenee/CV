@@ -2,7 +2,7 @@
 """
 validate-locale-syntax.py
 
-Validates ALL JS files in scripts/locales/ using Node.js syntax checking (node -c).
+Validates ALL JS files in cv/locales/ using Node.js syntax checking (node -c).
 Scans the directory dynamically — no hardcoded file lists — so it automatically
 picks up any new locale files.
 
@@ -35,11 +35,11 @@ from pathlib import Path
 # ── Paths ──────────────────────────────────────────────────────────────
 _SCRIPT_DIR = Path(__file__).resolve().parent
 _PROJECT_ROOT = _SCRIPT_DIR.parent.parent   # .claude/scripts/ -> .claude/ -> project root
-LOCALES_DIR = _PROJECT_ROOT / "scripts" / "locales"
+LOCALES_DIR = _PROJECT_ROOT / "cv" / "locales"
 
 
 def find_locale_files():
-    """Return sorted list of all .js files in scripts/locales/."""
+    """Return sorted list of all .js files in cv/locales/."""
     if not LOCALES_DIR.exists():
         print(f"ERROR: {LOCALES_DIR} does not exist", file=sys.stderr)
         sys.exit(1)
@@ -47,26 +47,40 @@ def find_locale_files():
 
 
 def validate_file(filepath):
-    """Run node -c on a single JS file. Returns (status, error_msg)."""
+    """Syntax-check a single locale JS file in ES-module mode. Returns (status, error_msg).
+
+    The locale files are ES modules (`export const ...`) and the browser loads them
+    as modules. Plain `node -c file.js` parses `.js` as CommonJS and does NOT catch
+    module-context errors such as an apostrophe prematurely terminating a single-quoted
+    string (e.g. 'cha' yomme'). Feeding the source via stdin with
+    `--input-type=module --check` forces ES-module parsing, matching the browser.
+    """
     try:
+        source = filepath.read_text(encoding="utf-8")
+    except OSError as e:
+        return ("fail", f"could not read file: {e}")
+    try:
+        # Pass the source as UTF-8 bytes (not text=) — on Windows, text-mode stdin
+        # would be encoded with the console codepage (e.g. cp1250) and crash on
+        # characters like 'ð' or '→', silently feeding node empty input → false OK.
         result = subprocess.run(
-            ["node", "-c", str(filepath)],
+            ["node", "--check", "--input-type=module"],
+            input=source.encode("utf-8"),
             capture_output=True,
-            text=True,
             timeout=30,
         )
     except FileNotFoundError:
         return ("fail", "'node' not found in PATH — is Node.js installed?")
     except subprocess.TimeoutExpired:
-        return ("fail", f"node -c timed out after 30 seconds (file may be too large or corrupt)")
+        return ("fail", "node --check timed out after 30 seconds (file may be too large or corrupt)")
 
     if result.returncode == 0:
         return ("ok", None)
 
-    # Extract meaningful error from stderr (node -c writes errors to stderr)
-    error = result.stderr.strip()
+    # Extract meaningful error from stderr (node writes errors to stderr)
+    error = result.stderr.decode("utf-8", "replace").strip()
     if not error:
-        error = result.stdout.strip()
+        error = result.stdout.decode("utf-8", "replace").strip()
     if not error:
         error = f"node -c exited with code {result.returncode}"
     return ("fail", error)

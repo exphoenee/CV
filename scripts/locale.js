@@ -1,32 +1,32 @@
-import { CV_DATA } from './cv-data.js';
+import { CV_DATA } from '../cv/cv-data.js';
 
 // CV content per language (backup-relevant)
-import { EN } from './locales/en.js';
-import { HU } from './locales/hu.js';
-import { DE } from './locales/de.js';
-import { FR } from './locales/fr.js';
-import { ES } from './locales/es.js';
-import { IT } from './locales/it.js';
-import { DOT } from './locales/dot.js';
-import { KL } from './locales/kl.js';
-import { QU } from './locales/qu.js';
-import { GOA } from './locales/goa.js';
-import { ASG } from './locales/asg.js';
-import { YA } from './locales/ya.js';
+import { EN } from '../cv/locales/en.js';
+import { HU } from '../cv/locales/hu.js';
+import { DE } from '../cv/locales/de.js';
+import { FR } from '../cv/locales/fr.js';
+import { ES } from '../cv/locales/es.js';
+import { IT } from '../cv/locales/it.js';
+import { DOT } from '../cv/locales/dot.js';
+import { KL } from '../cv/locales/kl.js';
+import { QU } from '../cv/locales/qu.js';
+import { GOA } from '../cv/locales/goa.js';
+import { ASG } from '../cv/locales/asg.js';
+import { YA } from '../cv/locales/ya.js';
 
 // Page UI labels per language (NOT backup-relevant — page-only translations)
-import { EN_PAGE } from './locales/en-page.js';
-import { HU_PAGE } from './locales/hu-page.js';
-import { DE_PAGE } from './locales/de-page.js';
-import { FR_PAGE } from './locales/fr-page.js';
-import { ES_PAGE } from './locales/es-page.js';
-import { IT_PAGE } from './locales/it-page.js';
-import { DOT_PAGE } from './locales/dot-page.js';
-import { KL_PAGE } from './locales/kl-page.js';
-import { QU_PAGE } from './locales/qu-page.js';
-import { GOA_PAGE } from './locales/goa-page.js';
-import { ASG_PAGE } from './locales/asg-page.js';
-import { YA_PAGE } from './locales/ya-page.js';
+import { EN_PAGE } from '../cv/locales/en-page.js';
+import { HU_PAGE } from '../cv/locales/hu-page.js';
+import { DE_PAGE } from '../cv/locales/de-page.js';
+import { FR_PAGE } from '../cv/locales/fr-page.js';
+import { ES_PAGE } from '../cv/locales/es-page.js';
+import { IT_PAGE } from '../cv/locales/it-page.js';
+import { DOT_PAGE } from '../cv/locales/dot-page.js';
+import { KL_PAGE } from '../cv/locales/kl-page.js';
+import { QU_PAGE } from '../cv/locales/qu-page.js';
+import { GOA_PAGE } from '../cv/locales/goa-page.js';
+import { ASG_PAGE } from '../cv/locales/asg-page.js';
+import { YA_PAGE } from '../cv/locales/ya-page.js';
 
 const CV_CONTENT = {
   en: EN,

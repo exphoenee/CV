@@ -1,6 +1,6 @@
 # CV_DATA séma dokumentáció
 
-`scripts/cv-data.js` exportálja a `CV_DATA` konstans objektumot. Ez az egyetlen adatforrás — minden nézet (plain, swagger, json, game) innen építkezik.
+`cv/cv-data.js` exportálja a `CV_DATA` konstans objektumot. Ez az egyetlen adatforrás — minden nézet (plain, swagger, json, game) innen építkezik.
 
 ```
 CV_DATA

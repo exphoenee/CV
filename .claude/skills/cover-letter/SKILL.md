@@ -49,7 +49,7 @@ From `JD`:
 
 ## Step 3 — Load CV data and career profile
 
-Read `scripts/cv-data.js`. Extract:
+Read `cv/cv-data.js`. Extract:
 
 - `CV_SUMMARY`, `CV_BULLETS_ALL` (all bullets with company/period context), `CV_EXPERIENCE_SUMMARY`
 

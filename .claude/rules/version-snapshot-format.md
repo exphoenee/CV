@@ -29,7 +29,7 @@ This single id ties together, for one application:
 
 - the snapshot folder `cv-versions/APP_ID/`
 - the formatted job description `cv-versions/APP_ID/job-description.md`
-- the `// @job-application: APP_ID` marker stamped into the live `scripts/cv-data.js` and every `scripts/locales/*.js`
+- the `// @job-application: APP_ID` marker stamped into the live `cv/cv-data.js` and every `cv/locales/*.js`
 - the row in `cv-versions/applications.md`
 
 ## VERSION_FOLDER contents
@@ -37,17 +37,18 @@ This single id ties together, for one application:
 ```
 VERSION_FOLDER/
   cv-data.js           ← optimized CV data (see header format below)
-  locales/             ← full scripts/locales/ directory copied as-is (12 JS files)
-  job-description.md    ← formatted job description this version was made for (job-apply mode only)
-  cover-letter-en.md   ← English cover letter (optional, written by cover-letter-agent)
-  cover-letter-hu.md   ← Hungarian cover letter (optional, written by cover-letter-agent)
+  locales/             ← full cv/locales/ directory copied as-is (12 JS files)
+  job-description.md     ← formatted job description — single file: English section, then Hungarian
+                           translation, then Original Job Description blockquote (job-apply mode only)
+  cover-letter-en.md    ← English cover letter (optional, written by cover-letter-agent)
+  cover-letter-hu.md    ← Hungarian cover letter (optional, written by cover-letter-agent)
 ```
 
 ---
 
 ## cv-data.js header comment block
 
-Prepend this comment block to the full content of `scripts/cv-data.js`:
+Prepend this comment block to the full content of `cv/cv-data.js`:
 
 ```js
 /**
@@ -63,7 +64,7 @@ Prepend this comment block to the full content of `scripts/cv-data.js`:
  * Locale:        locales/ directory — full locale files included
  * ============================================================
  * Point-in-time snapshot for the above position.
- * Do not import directly — use scripts/cv-data.js.
+ * Do not import directly — use cv/cv-data.js.
  */
 ```
 
@@ -71,7 +72,7 @@ Prepend this comment block to the full content of `scripts/cv-data.js`:
 
 ## locales/ directory structure
 
-The complete `scripts/locales/` directory is copied as-is into the backup folder.
+The complete `cv/locales/` directory is copied as-is into the backup folder.
 All 12 locale files (hu.js, de.js, fr.js, es, it, asg, dot, kl, qu, goa, ya) are preserved
 in their **original JS format** — no JSON conversion, no content extraction.
 
@@ -109,6 +110,7 @@ match the project's JS conventions. The file-copy approach eliminates all of the
 
 The formatted job description this CV version was tailored for. Written into
 `VERSION_FOLDER/job-description.md` in **job-apply mode only** (manual `/cv-backup` has no JD).
+The file contains **all languages in a single document**, clearly separated by language markers.
 
 The raw JD text the user pasted is cleaned up into readable Markdown — do not invent or
 omit requirements, only reformat what was given.
@@ -124,9 +126,13 @@ date: 'YYYY-MM-DD HH:MM'
 ats_match: 'OVERALL_SCORE%'
 cv_version: 'cv-versions/APP_ID/'
 source: 'user-provided'
+language: 'en'|'hu'|'de'|etc   ← JD_PRIMARY_LANGUAGE detected from original text
+has_hungarian: true           ← always true (Hungarian section is ALWAYS included)
 ---
 
 # JD_TITLE — JD_COMPANY
+
+> Language: English
 
 ## Required Qualifications
 
@@ -140,10 +146,40 @@ source: 'user-provided'
 
 - ...
 
+---
+
+> Language: Hungarian
+
+## Kötelező követelmények
+
+- ...
+
+## Előnyben részesített
+
+- ...
+
+## Feladatok / felelősségek
+
+- ...
+
+---
+
+> Language: Original ([lang])
+
 ## Original Job Description
 
-> [the full original JD text, blockquoted verbatim]
+> [the full original JD text in its ORIGINAL language, blockquoted verbatim — NOT translated]
 ```
+
+### Structure rules
+
+- **English section** always comes first — uses English section headers
+- **Hungarian section** always comes second — uses Hungarian section headers
+  (`Kötelező követelmények`, `Előnyben részesített`, `Feladatok / felelősségek`)
+- **Original Job Description** comes last — always blockquoted, always in the JD's original language
+- Each section is separated by `---` and a `> Language:` marker line
+- Technology names (TypeScript, React, Jest, etc.), company names, and proper nouns stay unchanged
+  in all sections
 
 ---
 
@@ -170,7 +206,7 @@ Column meaning:
 - **Position / Company / Level** — `JD_TITLE` / `JD_COMPANY` / `JD_SENIORITY`
 - **ATS** — `OVERALL_SCORE%` (`—` if no optimization was needed)
 - **APP_ID (folder)** — relative link to the snapshot folder
-- **JD** — relative link to `job-description.md`
+- **JD** — relative link to `job-description.md` (single file: English + Hungarian + Original)
 - **Translations** — how many of the 11 locales were updated, e.g. `11/11`
 - **Cover letter** — `yes` if cover letters were written, otherwise `no`
 
@@ -181,9 +217,9 @@ Column meaning:
 So that anyone reading the **live working files** can tell which application the current CV is
 tuned for **and when it last changed**, a two-line marker block is stamped at the **top** of:
 
-- `scripts/cv-data.js`
-- the **12 CV-content** locale files `scripts/locales/<lang>.js` (`en` + the 11 translated)
-- **NOT** the `scripts/locales/<lang>-page.js` label files — those hold page UI labels, not
+- `cv/cv-data.js`
+- the **12 CV-content** locale files `cv/locales/<lang>.js` (`en` + the 11 translated)
+- **NOT** the `cv/locales/<lang>-page.js` label files — those hold page UI labels, not
   job-specific CV content, so they never carry the marker.
 
 ```js
@@ -260,7 +296,7 @@ python .claude/scripts/cv-ledger.py current
 
 Notes:
 
-- `mark` stamps `scripts/cv-data.js` + the 12 `<lang>.js` content files automatically — callers
+- `mark` stamps `cv/cv-data.js` + the 12 `<lang>.js` content files automatically — callers
   never list the files themselves.
 - Table cells are sanitized (`|` → `/`, newlines → spaces) by the helper.
 - The helper writes files as UTF-8; the `—`/`·` characters render correctly in the files even if a

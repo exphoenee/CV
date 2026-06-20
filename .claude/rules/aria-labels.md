@@ -188,7 +188,7 @@ If the icon has adjacent text, or is purely visual decoration, hide it:
 
 Aria labels are **localized** — every `aria-label` value uses `locale.t('ariaKey')`.
 
-### Existing Aria Keys (`scripts/locales/en.js`)
+### Existing Aria Keys (`cv/locales/en.js`)
 
 | Key                   | Value (EN)                   |
 | --------------------- | ---------------------------- |

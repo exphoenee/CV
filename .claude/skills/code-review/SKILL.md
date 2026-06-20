@@ -58,7 +58,7 @@ If the diff is empty: report "Nincs változás a HEAD-hez képest." and stop.
 
 ### 2a — New keys added to en-page.js?
 
-If `scripts/locales/en-page.js` appears in the diff:
+If `cv/locales/en-page.js` appears in the diff:
 
 - Extract all keys added in the diff (`+  keyName:` lines inside `labels: { ... }`)
 - For each new key: check whether the same key exists in the other 11 page locale files (`*-page.js`)
@@ -67,13 +67,13 @@ If `scripts/locales/en-page.js` appears in the diff:
 ### 2b — New locale key used in JS/HTML but not defined?
 
 Scan changed `.js` and `.html` files for `locale.t('keyName')` calls.
-For each key found: verify it exists in `scripts/locales/en-page.js` (the page labels source of truth).
+For each key found: verify it exists in `cv/locales/en-page.js` (the page labels source of truth).
 If missing → ❌ ERROR: "locale kulcs nincs definiálva en-page.js-ben: 'keyName'"
 
 ### 2c — data-i18n attribute used?
 
 Scan changed `.html` files for `data-i18n="keyName"` attributes.
-For each key found: verify it exists in `scripts/locales/en-page.js` (the page labels source of truth).
+For each key found: verify it exists in `cv/locales/en-page.js` (the page labels source of truth).
 If missing → ❌ ERROR: "data-i18n kulcs nincs definiálva en-page.js-ben: 'keyName'"
 
 ---
@@ -86,7 +86,7 @@ Scan changed `.js` and `.html` files.
 
 If `aria-label="` appears with a literal string (not `locale.t(...)` output):
 
-- Check whether the literal string matches a known aria key value from `scripts/locales/en-page.js`
+- Check whether the literal string matches a known aria key value from `cv/locales/en-page.js`
 - If yes → ⚠️ WARNING: "Hardcoded aria-label — használj locale.t('ariaKulcs') helyette"
 - If the string is clearly a one-off, non-localized technical label → skip
 
@@ -203,5 +203,5 @@ If `--fix` applied changes, use `--category=mutation` and note the fixes in `--w
 - ❌ Never modify `en-page.js` or any locale file in this skill — that is locale-agent's job
 - ❌ Never fix security issues silently — always show the exact change before applying
 - ✅ Read each changed file in full before reporting — don't rely on diff context lines alone
-- ✅ Skip `scripts/locales/` files from Section 4 (innerHTML in locale files is not a concern)
+- ✅ Skip `cv/locales/` files from Section 4 (innerHTML in locale files is not a concern)
 - ✅ False positives are OK — flag uncertain cases as WARNING, not ERROR

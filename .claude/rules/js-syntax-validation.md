@@ -2,7 +2,7 @@
 
 ## Why
 
-Locale files (`scripts/locales/<lang>.js`) are ES module JavaScript files. A single
+Locale files (`cv/locales/<lang>.js`) are ES module JavaScript files. A single
 unescaped apostrophe inside a single-quoted string breaks the entire application with a
 `SyntaxError (Unexpected identifier)` — this has happened in production.
 
@@ -18,7 +18,7 @@ Fictional languages (Klingon, Goa'uld, Yautja, Dothraki) deliberately use apostr
 python .claude/scripts/validate-locale-syntax.py
 ```
 
-The script scans ALL `.js` files in `scripts/locales/` dynamically, runs `node -c` on each one,
+The script scans ALL `.js` files in `cv/locales/` dynamically, runs `node -c` on each one,
 and reports which files passed or failed with the exact error message. It exits with code 1
 if any file fails, and code 0 only when all files pass.
 
@@ -37,7 +37,7 @@ If any file fails:
 python .claude/scripts/validate-locale-syntax.py
 ```
 
-The script scans ALL `.js` files in `scripts/locales/` dynamically, validates each one,
+The script scans ALL `.js` files in `cv/locales/` dynamically, validates each one,
 and reports which files passed or failed with the exact error message. Exits with code 1
 if any file fails — suitable for pipeline use.
 

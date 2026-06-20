@@ -1,6 +1,6 @@
 # Yautja (ya) — Style Consistency Rules
 
-Covers `scripts/locales/ya.js`. Yautja is the Predator species language from the Predator franchise.
+Covers `cv/locales/ya.js`. Yautja is the Predator species language from the Predator franchise.
 Sparse, guttural, hunter-centric. Honor through the hunt. Economy of words.
 
 ---

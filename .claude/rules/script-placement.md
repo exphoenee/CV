@@ -13,8 +13,8 @@ This directory contains **ONLY** files needed for the CV website to function:
 | View JS logic | `scripts/cv-plain.js`, `scripts/cv-swagger.js` |
 | Components | `scripts/components/` |
 | Game engine | `scripts/game/main.js`, `scripts/game/entities/` |
-| Data | `scripts/cv-data.js` |
-| Localization UI labels | `scripts/locales/hu.js`, `scripts/locales/en.js` (labels) |
+| Data | `cv/cv-data.js` |
+| Localization UI labels | `cv/locales/hu.js`, `cv/locales/en.js` (labels) |
 | Configuration | `scripts/config.js` |
 | Shared API | `scripts/shared.js`, `scripts/locale.js` |
 | CSS styles | `styles/cv-plain.css` |
@@ -59,4 +59,4 @@ When creating a new script:
 ## Exceptions
 
 - `scripts/config.js` — although it's part of the CV website, AI agents may read it (e.g. security-review). This is **allowed**, because it's part of the product.
-- `scripts/cv-data.js` — the CV data source, AI agents also modify it (e.g. job-apply, cv-improver). This is **allowed**, because it's the product's data.
+- `cv/cv-data.js` — the CV data source, AI agents also modify it (e.g. job-apply, cv-improver). This is **allowed**, because it's the product's data.

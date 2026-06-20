@@ -1,6 +1,6 @@
 # English CV Language Rules
 
-Covers both `scripts/cv-data.js` English content and `scripts/locales/en.js` UI labels.
+Covers both `cv/cv-data.js` English content and `cv/locales/en.js` UI labels.
 
 ---
 

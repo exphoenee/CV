@@ -34,7 +34,7 @@ From the calling orchestrator, you receive:
   ```
 - `JD_TITLE`, `JD_COMPANY` — job context (for tone guidance)
 - `TARGET_LOCALES` — list of locale codes to update (default: all 11)
-- `CV_DATA_RAW` — (optional) the full text of `scripts/cv-data.js`, already cached by orchestrator.
+- `CV_DATA_RAW` — (optional) the full text of `cv/cv-data.js`, already cached by orchestrator.
   When provided, do NOT read `cv-data.js` from disk — use this value instead.
 - `TARGETED_FIXES` — optional, for length-budget repairs. When present, overrides
   `TARGET_LOCALES` — ONLY the languages and fields listed here get processed.
@@ -78,13 +78,13 @@ Determine which locales to process:
 
 For each locale in the determined set:
 
-1. Read `scripts/locales/<lang>.js` in full → store as `LOCALE_FILE[lang]`
+1. Read `cv/locales/<lang>.js` in full → store as `LOCALE_FILE[lang]`
 2. Read `.claude/rules/locales/<lang>.md` → store as `RULES[lang]`
    If rule file missing: proceed with generic style guidance
 
 Also read the English CV data for context:
 - If `CV_DATA_RAW` was provided in Step 0 → use it directly (do NOT read from disk)
-- Otherwise → read `scripts/cv-data.js` from disk
+- Otherwise → read `cv/cv-data.js` from disk
 
 Read `.claude/rules/translation-length.md` → store as `LENGTH_RULE`. This is a HARD
 constraint enforced on three **page groups**:
@@ -98,7 +98,7 @@ constraint enforced on three **page groups**:
 
 The budget (numbers **and** tolerance band) lives in a **single source of truth**:
 `.claude/reference/current-english-lengths.json`. It is fixed — NOT derived from
-`scripts/cv-data.js`. Run the validator to see the budget table:
+`cv/cv-data.js`. Run the validator to see the budget table:
 
 ```bash
 python .claude/scripts/check-translation-lengths.py --print
@@ -280,7 +280,7 @@ For each language that was updated:
 - For each changed field, locate the corresponding key in `LOCALE_FILE[lang]`
 - Replace ONLY the updated value — do not touch any other field
 - Match the exact formatting (indentation, quotes, commas) of the file
-- Write the updated file back to `scripts/locales/<lang>.js`
+- Write the updated file back to `cv/locales/<lang>.js`
 
 ---
 

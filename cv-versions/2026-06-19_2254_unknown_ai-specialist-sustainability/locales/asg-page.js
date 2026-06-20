@@ -1,5 +1,8 @@
 export const ASG_PAGE = {
   labels: {
+    footerRepo: 'Vélarúm',
+    footerMail: 'Beint bréf',
+    footerLinkedin: 'LinkedIn skjöl',
     cvOf: 'Lifsrit:',
     roleLocation: 'Framhlið Taknileiðtogi · Miðgarðr · Pecs, HU',
     chooseView: 'Hvat kýss þu? Sja lifsrit:',

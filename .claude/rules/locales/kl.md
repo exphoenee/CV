@@ -1,6 +1,6 @@
 # Klingon (kl) — Style Consistency Rules
 
-Covers `scripts/locales/kl.js`. Inspired by tlhIngan Hol (Klingon) but adapted for a CV context.
+Covers `cv/locales/kl.js`. Inspired by tlhIngan Hol (Klingon) but adapted for a CV context.
 Not strict linguistic Klingon — style and feel matter more than accuracy.
 
 ---

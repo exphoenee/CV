@@ -1,5 +1,8 @@
 export const DOT_PAGE = {
   labels: {
+    footerRepo: 'Arakh Okre',
+    footerMail: 'Alegra',
+    footerLinkedin: 'LinkedIn Arakh',
     cvOf: 'Arakh anni tat:',
     roleLocation: 'Khal Frantend · Pecs, HU',
     chooseView: 'Hash yer dothrae chek? Tih ma me:',

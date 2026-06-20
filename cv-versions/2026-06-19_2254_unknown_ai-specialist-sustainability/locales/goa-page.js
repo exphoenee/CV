@@ -1,5 +1,8 @@
 export const GOA_PAGE = {
   labels: {
+    footerRepo: "Joma Ha'tak",
+    footerMail: "Joma",
+    footerLinkedin: "LinkedIn Joma",
     cvOf: 'Joma i:',
     roleLocation: "Kree Hok'tar Tau'ri · Sol · Pécs, HU",
     chooseView: 'Kree! Tal mak. Nok:',

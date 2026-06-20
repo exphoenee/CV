@@ -14,8 +14,8 @@ argument-hint: '[--dry-run]'
 
 # cv-generator — Generate CV Data from Profile Files
 
-You generate a complete `scripts/cv-data.js` from scratch by reading `profile/*.md`
-files. Use when `scripts/cv-data.js` does not exist, is empty, or needs regeneration.
+You generate a complete `cv/cv-data.js` from scratch by reading `profile/*.md`
+files. Use when `cv/cv-data.js` does not exist, is empty, or needs regeneration.
 
 **You never invent content.** Every piece of data must be traceable to a profile file
 or be a sensible default (e.g., meta information, game coordinates).
@@ -26,13 +26,13 @@ or be a sensible default (e.g., meta information, game coordinates).
 
 Check if `--dry-run` was passed as argument. If yes, skip Step 0 and jump to Step 11.
 
-Otherwise, check if `scripts/cv-data.js` exists and has valid content.
+Otherwise, check if `cv/cv-data.js` exists and has valid content.
 
 ### If exists and valid:
 
 Show a summary:
 ```
-📋 A scripts/cv-data.js már létezik (vVERSION — N munkahely, M skill csoport)
+📋 A cv/cv-data.js már létezik (vVERSION — N munkahely, M skill csoport)
    Felülírjam?
 ```
 
@@ -388,9 +388,9 @@ meta: {
 
 ---
 
-## Step 9 — Write scripts/cv-data.js
+## Step 9 — Write cv/cv-data.js
 
-Build the complete CV_DATA object and write to `scripts/cv-data.js`:
+Build the complete CV_DATA object and write to `cv/cv-data.js`:
 
 ```js
 /**
@@ -424,7 +424,7 @@ Use the exact same JS syntax style as existing cv-data.js:
 
 ## Step 10 — Generate locale content files
 
-### English (scripts/locales/en.js)
+### English (cv/locales/en.js)
 
 ```js
 export const EN = {
@@ -478,7 +478,7 @@ Nem írtam fájlokat a --dry-run miatt.
 ```markdown
 ✅ CV generálva a profile/*.md fájlokból
 
-📄 scripts/cv-data.js — létrehozva (N munkahely, M skill csoport)
+📄 cv/cv-data.js — létrehozva (N munkahely, M skill csoport)
 🌐 12 locale fájl — ellenőrizve (en: content:null, 11 fordítás: megtartva)
 📁 Forrás: profile/*.md (N fájl feldolgozva)
 

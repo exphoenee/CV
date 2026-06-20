@@ -1,6 +1,6 @@
 # Dothraki (dot) — Style Consistency Rules
 
-Covers `scripts/locales/dot.js`. Dothraki is a constructed fictional language (Game of Thrones).
+Covers `cv/locales/dot.js`. Dothraki is a constructed fictional language (Game of Thrones).
 Inspired by real Dothraki but adapted for a CV context — consistency over linguistic accuracy.
 
 ---

@@ -23,7 +23,7 @@ tracking systems parse CVs and how hiring managers evaluate frontend/tech lead c
 - **General mode** (no argument): assess the CV's overall ATS-readiness and quality
 
 **You never invent skills, experiences, or achievements. Every recommendation must be
-grounded in what already exists in `scripts/cv-data.js`.**
+grounded in what already exists in `cv/cv-data.js`.**
 
 ---
 
@@ -67,7 +67,7 @@ If no argument was provided:
 
 ### 2a — Read cv-data.js
 
-Read `scripts/cv-data.js` in full.
+Read `cv/cv-data.js` in full.
 
 Extract:
 
@@ -364,7 +364,7 @@ _Csak átrendezés és átfogalmazás — semmi új adat nem lett hozzáadva._
 ---
 
 _Generálta: /hr-review skill — Viktor Bozzay CV-je alapján_
-_Forrás adat: scripts/cv-data.js — kizárólag meglévő adatok alapján_
+_Forrás adat: cv/cv-data.js — kizárólag meglévő adatok alapján_
 ```
 
 ---
@@ -427,7 +427,7 @@ Logging failure is non-fatal — the review result still stands.
 
 ## Hard Constraints
 
-- ❌ Never add a skill, technology, or achievement that is NOT in `scripts/cv-data.js` OR `profile/*.md`
+- ❌ Never add a skill, technology, or achievement that is NOT in `cv/cv-data.js` OR `profile/*.md`
 - ❌ Never suggest implying experience that cannot be traced to cv-data.js or profile/\*.md
 - ❌ Never mark a real gap as "covered" — call it what it is
 - ❌ Never rewrite bullets to claim experience Viktor doesn't have

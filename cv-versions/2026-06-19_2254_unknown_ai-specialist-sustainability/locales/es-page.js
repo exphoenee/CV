@@ -1,5 +1,8 @@
 export const ES_PAGE = {
   labels: {
+    footerRepo: 'Sala de máquinas',
+    footerMail: 'Correo directo',
+    footerLinkedin: 'Perfil de LinkedIn',
     cvOf: 'Currículum Vítae de',
     roleLocation: 'Frontend Tech Lead · Pécs, HU',
     chooseView: 'Elige cómo ver mi CV',

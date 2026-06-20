@@ -1,5 +1,8 @@
 export const HU_PAGE = {
   labels: {
+    footerRepo: 'Motortér',
+    footerMail: 'Közvetlen levél',
+    footerLinkedin: 'LinkedIn Profil',
     cvOf: 'Önéletrajz',
     roleLocation: 'Frontend Tech Lead · Pécs, HU',
     chooseView: 'Válaszd ki, hogyan tekinted meg az önéletrajzom',
@@ -73,13 +76,11 @@ export const HU_PAGE = {
     bookLoading: 'Szabad időpontok betöltése…',
     bookError: 'Nem sikerült betölteni az időpontokat.',
     bookRetry: 'Újrapróbálás',
+    bookErrRetryHint: 'Ellenőrizd az adataidat és próbáld újra.',
     bookEmpty: 'Nincs szabad időpont a következő 21 napban.',
     bookFailed: 'Hiba a foglalás során. Kérlek próbáld újra.',
-    bookErrMissingFields: 'Tölts ki minden kötelező mezőt.',
-    bookErrSlotUnavailable: 'Ez az időpont már nem elérhető. Válassz másikat.',
-    bookErrRateLimited: 'Ma túl sok foglalás érkezett erről az emailről. Próbáld holnap.',
     bookErrDailyCap: 'A mai foglalási limit betelt. Gyere vissza holnap.',
-    bookErrCaptcha: 'A megerősítés nem sikerült. Pipáld ki az ellenőrzést, és próbáld újra.',
+    bookErrRateLimited: 'Az elmúlt 24 órában már foglaltál. Kérlek próbáld meg később.',
     bookCooldownTitle: 'Időpont már foglalva!',
     bookCooldownNote:
       'Az elmúlt 48 órában már foglaltál időpontot. Gyere vissza később egy új foglaláshoz.',

@@ -6,6 +6,6 @@
   "printWidth": 100,
   "arrowParens": "always",
   "bracketSpacing": true,
-  "endOfLine": "lf",
+  "endOfLine": "crlf",
   "quoteProps": "as-needed"
 }

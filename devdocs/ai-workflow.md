@@ -93,7 +93,7 @@ graph TD
 | ----------------------- | ----------------------- | --------------------------------------------- | ------------------------------------------------- |
 | `/hr-review`            | Általános CV ellenőrzés | ATS minőségértékelés                          | — / `review/YYYY-MM-DD_HHMM_hr-review-general.md` |
 | `/hr-review <JD>`       | Állásra pályázás előtt  | Kulcsszó-egyezés + javaslatok                 | `review/YYYY-MM-DD_HHMM_hr-review-SLUG.md`        |
-| `/cv-improver <report>` | Hr-review után          | cv-data.js módosítás                          | `scripts/cv-data.js`                              |
+| `/cv-improver <report>` | Hr-review után          | cv-data.js módosítás                          | `cv/cv-data.js`                              |
 | `/cv-backup [label]`    | Kézi mentési pont       | Snapshot mappa: `cv-versions/DATE_[label]/`   | —                                                 |
 | `/cv-restore <folder>`  | Visszaállítás           | cv-data.js + 11 locale content visszaállítva  | —                                                 |
 | `/cover-letter [JD]`    | Motivációs levél        | EN + HU levél → `letters/DATE_company_title/` | —                                                 |
@@ -192,8 +192,9 @@ A verzió snapshot egy **mappa**: `cv-versions/YYYY-MM-DD_ceg-slug_pozicio-slug[
 ```
 cv-versions/
   2026-06-13_acme-corp_senior-frontend-engineer/
-    cv-data.js          ← optimalizált CV adat snapshot (metaadat fejléccel)
-    locales/             ← teljes scripts/locales/ könyvtár (12 JS fájl)
+    cv-data.js              ← optimalizált CV adat snapshot (metaadat fejléccel)
+    locales/                 ← teljes cv/locales/ könyvtár (12 JS fájl)
+    job-description.md       ← formázott állásleírás — egy fájlban: angol + magyar + eredeti
 ```
 
 A `cv-data.js` tetején lévő komment blokk:
@@ -212,12 +213,12 @@ A `cv-data.js` tetején lévő komment blokk:
  * Locale:        locales/ directory — full locale files included
  * ============================================================
  * Point-in-time snapshot for the above position.
- * Do not import directly — use scripts/cv-data.js.
+ * Do not import directly — use cv/cv-data.js.
  */
 ```
 
 A `locales/` mappa tartalmazza mind a 12 locale fájlt (hu, de, fr, es, it, asg, dot, kl, qu, goa, ya + en) az eredeti JS formátumban.
-Visszaállítás: `/cv-restore <mappa-neve>` — a `scripts/locales/` könyvtár teljes egészében visszamásolódik.
+Visszaállítás: `/cv-restore <mappa-neve>` — a `cv/locales/` könyvtár teljes egészében visszamásolódik.
 
 ### Verziókezelési logika (cv-backup-agent)
 
@@ -270,8 +271,8 @@ python .claude/skills/cv-backup/scripts/cv-backup.py \
 
 A skill visszaállítja:
 
-- `scripts/cv-data.js` — a snapshot tartalmát (fejléc komment nélkül)
-- `scripts/locales/hu.js` ... `ya.js` — mind a 11 locale `content` mezőjét
+- `cv/cv-data.js` — a snapshot tartalmát (fejléc komment nélkül)
+- `cv/locales/hu.js` ... `ya.js` — mind a 11 locale `content` mezőjét
 
 A visszaállítás CLI scripttel is végezhető:
 
@@ -333,8 +334,8 @@ graph TD
     JA --> APPS
 ```
 
-**1. Live marker blokk** — kétsoros comment a `scripts/cv-data.js` és a 12 CV-tartalom locale
-(`scripts/locales/<lang>.js`, **nem** a `-page.js` felirat-fájlok) tetején:
+**1. Live marker blokk** — kétsoros comment a `cv/cv-data.js` és a 12 CV-tartalom locale
+(`cv/locales/<lang>.js`, **nem** a `-page.js` felirat-fájlok) tetején:
 
 ```js
 // @job-application: APP_ID — Title @ Company (date) · snapshot: cv-versions/APP_ID/
@@ -404,7 +405,7 @@ Csak **két dolgot** ellenőriz, mindkettőt a budget **−5% … +2%** sávjáb
 NINCS ellenőrizve: community, education, hobbyProjects, programmingLanguages, skillGroups.
 
 ```bash
-cd scripts/locales
+cd cv/locales
 python ../../.claude/scripts/check-translation-lengths.py   # exit 1, ha bármi a sávon kívül
 ```
 
@@ -423,7 +424,7 @@ független, automatikus megerősítés.
 
 ```mermaid
 flowchart LR
-    EN["scripts/locales/en.js\n(referencia)"]
+    EN["cv/locales/en.js\n(referencia)"]
     LC["/locale-check"]
     LA["locale-agent"]
     MISSING["Hiányzó kulcsok"]

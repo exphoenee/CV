@@ -1,5 +1,8 @@
 export const HU_PAGE = {
   labels: {
+    footerRepo: 'Motortér',
+    footerMail: 'Közvetlen levél',
+    footerLinkedin: 'LinkedIn Profil',
     cvOf: 'Önéletrajz',
     roleLocation: 'Frontend Tech Lead · Pécs, HU',
     chooseView: 'Válaszd ki, hogyan tekinted meg az önéletrajzom',

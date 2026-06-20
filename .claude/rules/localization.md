@@ -18,7 +18,7 @@ On language switch, the `localechange` event fires — modals react to this to u
 ## The 12 Files and Their Location
 
 ```
-scripts/locales/
+cv/locales/
   en.js   → export const EN = { labels: {...}, content: null }
   hu.js   → export const HU = { labels: {...}, content: {...} }
   de.js   → export const DE = ...
@@ -64,7 +64,7 @@ causes a SyntaxError that breaks the entire application.
 python .claude/scripts/validate-locale-syntax.py
 ```
 
-The script scans ALL `.js` files in `scripts/locales/` dynamically and validates each one.
+The script scans ALL `.js` files in `cv/locales/` dynamically and validates each one.
 
 **Details:** `.claude/rules/js-syntax-validation.md`
 

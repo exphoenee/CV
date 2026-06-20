@@ -1,6 +1,6 @@
 # Goa'uld (goa) — Style Consistency Rules
 
-Covers `scripts/locales/goa.js`. Goa'uld is a fictional language from Stargate SG-1.
+Covers `cv/locales/goa.js`. Goa'uld is a fictional language from Stargate SG-1.
 Commanding, imperious, self-aggrandizing — system lords speak as gods.
 
 ---

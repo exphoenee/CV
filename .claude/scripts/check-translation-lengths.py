@@ -59,8 +59,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 REFERENCE_FILE = ROOT / '.claude' / 'reference' / 'current-english-lengths.json'
-CV_DATA_FILE = ROOT / 'scripts' / 'cv-data.js'
-LOCALES_DIR = ROOT / 'scripts' / 'locales'
+CV_DATA_FILE = ROOT / 'cv' / 'cv-data.js'
+LOCALES_DIR = ROOT / 'cv' / 'locales'
 
 LANG_NAMES = {
     'hu': 'Hungarian', 'de': 'German', 'fr': 'French', 'es': 'Spanish',
@@ -491,7 +491,7 @@ for lf_name in LOCALES:
     if FILTER_LANGS and lang not in FILTER_LANGS:
         continue
 
-    fp = ROOT / 'scripts' / 'locales' / lf_name
+    fp = ROOT / 'cv' / 'locales' / lf_name
     if not fp.exists():
         results[lang] = {'status': 'error', 'reason': 'file not found'}
         continue

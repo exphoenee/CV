@@ -1,6 +1,6 @@
 # Quenya (qu) — Style Consistency Rules
 
-Covers `scripts/locales/qu.js`. Quenya is Tolkien's High Elvish language — poetic, flowing, ancient.
+Covers `cv/locales/qu.js`. Quenya is Tolkien's High Elvish language — poetic, flowing, ancient.
 Not strict linguistic Quenya — style and feel matter. Mellifluous, vowel-rich, dignified.
 
 ---

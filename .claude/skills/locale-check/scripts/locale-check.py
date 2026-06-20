@@ -2,7 +2,7 @@
 """
 locale-check.py  —  Locale Completeness Audit
 
-Compares all 12 locale page files in scripts/locales/ against en-page.js
+Compares all 12 locale page files in cv/locales/ against en-page.js
 as the source of truth. Reports any missing `labels` keys per file.
 
 Usage:
@@ -39,7 +39,7 @@ _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) if "__file__" in dir() 
 # Script is at .claude/skills/locale-check/scripts/ — go up 4 levels to project root
 _PROJECT_ROOT = os.path.abspath(os.path.join(_SCRIPT_DIR, *([".."] * 4)))
 
-LOCALES_DIR = os.path.join(_PROJECT_ROOT, "scripts", "locales")
+LOCALES_DIR = os.path.join(_PROJECT_ROOT, "cv", "locales")
 EN_FILE = "en-page.js"
 PAGE_FILES = [
     "hu-page.js", "de-page.js", "fr-page.js", "es-page.js", "it-page.js",

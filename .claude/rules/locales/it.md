@@ -1,6 +1,6 @@
 # Italiano — Regole linguistiche CV
 
-Copre i label di `scripts/locales/it.js` e qualsiasi contenuto CV in italiano.
+Copre i label di `cv/locales/it.js` e qualsiasi contenuto CV in italiano.
 
 ---
 

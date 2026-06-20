@@ -285,7 +285,7 @@ a felhasználót és explicit `igen`-t kér a folytatáshoz.
 
 **Trigger:** Agent tool hívás (vagy közvetlen dispachtel)
 
-**Funkció:** Teljes `scripts/cv-data.js` generálása a `profile/*.md` fájlokból.
+**Funkció:** Teljes `cv/cv-data.js` generálása a `profile/*.md` fájlokból.
 Használd, ha a `cv-data.js` hiányzik, sérült, vagy újra kell generálni.
 
 **Működés:**
@@ -614,9 +614,9 @@ Step 9 - Végeredmény
 
 | Fájl / Mappa | Leírás | Ki írja |
 |-------------|--------|---------|
-| `scripts/cv-data.js` | CV adatok egyetlen forrása | `/job-apply`, `/cv-improver`, `cv-generator` |
-| `scripts/locales/*.js` | 12 locale fájl (en + 11 fordítás) | `cv-translator-agent`, `locale-agent` |
-| `scripts/locales/*-page.js` | 12 UI label fájl | `locale-agent` |
+| `cv/cv-data.js` | CV adatok egyetlen forrása | `/job-apply`, `/cv-improver`, `cv-generator` |
+| `cv/locales/*.js` | 12 locale fájl (en + 11 fordítás) | `cv-translator-agent`, `locale-agent` |
+| `cv/locales/*-page.js` | 12 UI label fájl | `locale-agent` |
 | `scripts/config.js` | Feature flag-ek, URL-ek, storage kulcsok | Kézzel |
 | `scripts/shared.js` | Közös komponensek (modálok, music player) | Kézzel |
 | `profile/*.md` | Karrier profil (anti-hallucináció bázis) | Kézzel |

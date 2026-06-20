@@ -1,6 +1,6 @@
 # Deutsch — CV Sprachregeln
 
-Gilt für `scripts/locales/de.js` UI-Labels und etwaige deutsche CV-Inhaltserweiterungen.
+Gilt für `cv/locales/de.js` UI-Labels und etwaige deutsche CV-Inhaltserweiterungen.
 
 ---
 

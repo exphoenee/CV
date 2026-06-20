@@ -1,4 +1,4 @@
-import { CV_DATA } from './cv-data.js';
+import { CV_DATA } from '../cv/cv-data.js';
 import { renderJsonCV } from './components/json/index.js';
 import {
   initHireModal,

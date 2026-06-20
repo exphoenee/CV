@@ -4,8 +4,8 @@ cv-ledger.py  —  CV traceability ledger
 
 Single owner of the two CV-traceability mechanisms:
 
-  1. The live-file marker block stamped at the top of scripts/cv-data.js and the
-     12 CV-content locale files (scripts/locales/<lang>.js — NOT the *-page.js label files):
+  1. The live-file marker block stamped at the top of cv/cv-data.js and the
+     12 CV-content locale files (cv/locales/<lang>.js — NOT the *-page.js label files):
 
          // @job-application: APP_ID — TITLE @ COMPANY (DATE) · snapshot: cv-versions/APP_ID/
          // @cv-last-change: YYYY-MM-DD HHMM — OPERATION (ACTOR) · see cv-versions/history.md
@@ -77,7 +77,11 @@ def _project_path(*parts):
     return os.path.join(_PROJECT_ROOT, *parts)
 
 
-CV_DATA_PATH = _project_path("scripts", "cv-data.js")
+# Shared CRLF normalizer (same directory) — single source of line-ending logic.
+sys.path.insert(0, _SCRIPT_DIR)
+from crlf_normalize import write_text_crlf
+
+CV_DATA_PATH = _project_path("cv", "cv-data.js")
 VERSIONS_DIR = _project_path("cv-versions")
 HISTORY_PATH = _project_path("cv-versions", "history.md")
 
@@ -89,7 +93,7 @@ CONTENT_LANGS = ["en", "hu", "de", "fr", "es", "it",
 def _marker_target_files():
     files = [CV_DATA_PATH]
     for lang in CONTENT_LANGS:
-        files.append(_project_path("scripts", "locales", f"{lang}.js"))
+        files.append(_project_path("cv", "locales", f"{lang}.js"))
     return files
 
 
@@ -115,9 +119,8 @@ def read_file(path):
 
 
 def write_file(path, content):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(content)
+    # CRLF-normalized write — shared logic in .claude/scripts/crlf_normalize.py
+    write_text_crlf(path, content)
 
 
 def _cell(value):

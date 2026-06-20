@@ -66,12 +66,12 @@ For each language in `TARGET_LANGS`:
 
 ### 3a — Locale page labels file (UI labels)
 
-Read `scripts/locales/<lang>-page.js`.
+Read `cv/locales/<lang>-page.js`.
 Extract all `labels: { ... }` key-value pairs: `LABELS[lang] = { key: value, ... }`.
 
 ### 3b — CV content (English source)
 
-Read `scripts/cv-data.js` in full.
+Read `cv/cv-data.js` in full.
 Extract:
 
 - `CV_SUMMARY`: the `summary` field
@@ -80,7 +80,7 @@ Extract:
 - `CV_COMMUNITY`: the `community` field
 
 For `en`: this IS the content to review.
-For `hu`: also read `scripts/locales/hu.js` `content` field (if present) — that overrides CV content for Hungarian.
+For `hu`: also read `cv/locales/hu.js` `content` field (if present) — that overrides CV content for Hungarian.
 For other locales: they typically only override `content`, not `labels` (labels are in `-page.js` files) — note this in the report.
 
 ---

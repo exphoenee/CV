@@ -1,0 +1,12 @@
+root = true
+
+# Viktor Bozzay CV — line-ending & encoding convention
+# The repository is committed with CRLF line endings. Every editor and tool
+# MUST preserve CRLF so git shows line-level diffs (not whole-file delete+add).
+# See: .claude/rules/line-endings.md
+
+[*]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = false
