@@ -1,89 +1,91 @@
-# Game fejlesztői jegyzetek
+# Game developer notes
 
-## Tartalom
+> 🌐 **Language:** 🇬🇧 English · [🇭🇺 Magyar](game-dev-notes-hu.md)
 
-- [Architektúra áttekintés](#architekt%C3%BAra-%C3%A1ttekint%C3%A9s)
-- [Új House (station) hozzáadása](#%C3%BAj-house-station-hozz%C3%A1ad%C3%A1sa)
-- [Új entitás hozzáadása](#%C3%BAj-entit%C3%A1s-hozz%C3%A1ad%C3%A1sa)
+## Contents
+
+- [Architecture overview](#architecture-overview)
+- [Adding a new House (station)](#adding-a-new-house-station)
+- [Adding a new entity](#adding-a-new-entity)
 - [BMP → tilemap pipeline](#bmp--tilemap-pipeline)
-- [Collision box rendszer](#collision-box-rendszer)
-- [Entitás spawn rendszer](#entit%C3%A1s-spawn-rendszer)
-- [Dialogue rendszer](#dialogue-rendszer)
-- [Térkép szerkesztése](#t%C3%A9rk%C3%A9p-szerkeszt%C3%A9se)
+- [Collision box system](#collision-box-system)
+- [Entity spawn system](#entity-spawn-system)
+- [Dialogue system](#dialogue-system)
+- [Editing the map](#editing-the-map)
 
-## Architektúra áttekintés
+## Architecture overview
 
 ```
 cv-game.html
   └── <script type="module" src="scripts/game/main.js">
-        └── GameEngine osztály
-              ├── map/map.js          — tile definíciók, BMP betöltő
-              ├── map/renderMap.js    — bitmaszkos autotile renderelő
-              ├── world/stations.js   — CV station-ök (házak) generálása CV_DATA-ból
-              ├── world/spawns.js     — entitás spawn pozíciók
-              ├── entities/base/GameObject.js  — ősosztály
-              ├── entities/base/Npc.js         — NPC ősosztály
-              ├── entities/base/DecorObject.js — dekoráció ősosztály
+        └── GameEngine class
+              ├── map/map.js          — tile definitions, BMP loader
+              ├── map/renderMap.js    — bitmask autotile renderer
+              ├── world/stations.js   — CV stations (houses) generated from CV_DATA
+              ├── world/spawns.js     — entity spawn positions
+              ├── entities/base/GameObject.js  — base class
+              ├── entities/base/Npc.js         — NPC base class
+              ├── entities/base/DecorObject.js — decoration base class
               ├── entities/player/Player.js
               ├── entities/enemies/Skeleton.js
               ├── entities/npcs/ (Chicken, Cow, Pig, Sheep)
               ├── entities/obstacles/ (Tree, SmallTree, Chest, House)
-              ├── entities/decor/ (Flower, Mushroom, Log, stb.)
+              ├── entities/decor/ (Flower, Mushroom, Log, etc.)
               └── mobile-input.js     — touch input (nipple.js)
 ```
 
-### GameEngine életciklus
+### GameEngine lifecycle
 
-1. `init()` — BMP betöltése → tile grid → asset preload
-2. `buildWorld()` — entitások példányosítása (player, house-ok, NPC-k, ellenségek, dekorációk)
-3. Eseményfigyelők beállítása (dialogue, pause menü, hire modal, start screen, game over)
-4. `loop(time)` — `requestAnimationFrame` ciklus: input → update → collision → render
-5. Renderelési sorrend: tilemap → dekorációk → entitások (Y-alapú depth sort) → UI overlay
+1. `init()` — load BMP → tile grid → asset preload
+2. `buildWorld()` — instantiate entities (player, houses, NPCs, enemies, decorations)
+3. Set up event listeners (dialogue, pause menu, hire modal, start screen, game over)
+4. `loop(time)` — `requestAnimationFrame` cycle: input → update → collision → render
+5. Render order: tilemap → decorations → entities (Y-based depth sort) → UI overlay
 
 ---
 
-## Új House (station) hozzáadása
+## Adding a new House (station)
 
-Egy House a játékban egy CV munkahelyet vagy szekciót képvisel. Minden House-hoz tartozik egy dialogue ablak a CV tartalommal.
+A House in the game represents a CV job or section. Each House has a dialogue window with the CV content.
 
-### 1. CV_DATA bővítése
+### 1. Extend CV_DATA
 
-Ha az új munkahely még nincs a CV_DATA-ban, add hozzá a `workExperience[]` tömbhöz. A `game` mező opcionális — ha kihagyod, nem jelenik meg házként a játékban.
+If the new job is not yet in CV_DATA, add it to the `workExperience[]` array. The `game` field is optional — if you omit it, it does not appear as a house in the game.
 
 ```js
 {
-  id: "ujceg",          // egyedi string azonosító
-  company: "Új Cég Kft.",
-  // ... többi mező ...
+  id: "newco",          // unique string identifier
+  company: "New Co Ltd.",
+  // ... other fields ...
   game: {
-    x: 600,             // X pozíció pixelben (játék világkoordináta)
-    y: 500,             // Y pozíció pixelben
+    x: 600,             // X position in pixels (game world coordinate)
+    y: 500,             // Y position in pixels
     tech: "React · Node.js · PostgreSQL",
-    description: "Új Cég Kft. (2026)",
+    description: "New Co Ltd. (2026)",
     highlights: [
-      "Első highlight bullet a dialogue-ban.",
-      "Második highlight."
+      "First highlight bullet in the dialogue.",
+      "Second highlight."
     ]
   }
 }
 ```
 
-### 2. HOUSE_LABELS bővítése
+### 2. Extend HOUSE_LABELS
 
-A `scripts/game/entities/obstacles/House.js` fájlban add hozzá a `HOUSE_LABELS` maphez:
+In `scripts/game/entities/obstacles/House.js`, add to the `HOUSE_LABELS` map:
 
 ```js
 const HOUSE_LABELS = {
-  // ... meglévők ...
-  ujceg: { shortLabel: 'Új Cég', period: '2026' },
+  // ... existing ...
+  newco: { shortLabel: 'New Co', period: '2026' },
 };
 ```
 
-A `shortLabel` jelenik meg a ház fölött lebegő névjegyben. A `period` az alatta lévő dátum.
+The `shortLabel` appears in the nameplate floating above the house. The `period` is the date below it.
 
-### 3. Pozíció ellenőrzése
+### 3. Check the position
 
-A `(x, y)` koordináta a játék világában pixelben értendő. A tilemap 32×32 pixeles tile-okból áll. Háznak olyan területet válassz, ahol a tilemap nem solid (pl. fű). Jelenleg használt pozíciók:
+The `(x, y)` coordinate is in pixels in the game world. The tilemap is made of 32×32-pixel tiles. Choose an area for a house where the tilemap is not solid (e.g. grass). Currently used positions:
 
 | Station               | X    | Y   |
 | --------------------- | ---- | --- |
@@ -98,17 +100,17 @@ A `(x, y)` koordináta a játék világában pixelben értendő. A tilemap 32×3
 
 ---
 
-## Új entitás hozzáadása
+## Adding a new entity
 
-### 1. Osztály létrehozása
+### 1. Create the class
 
-Entitás típusonként más ősosztályt használj:
+Use a different base class depending on the entity type:
 
-- **Interaktív / fizikai objektum** → `GameObject` (`entities/base/GameObject.js`)
-- **NPC (állat, karakter)** → `Npc` (`entities/base/Npc.js`)
-- **Dekoráció** → `DecorObject` (`entities/base/DecorObject.js`)
+- **Interactive / physical object** → `GameObject` (`entities/base/GameObject.js`)
+- **NPC (animal, character)** → `Npc` (`entities/base/Npc.js`)
+- **Decoration** → `DecorObject` (`entities/base/DecorObject.js`)
 
-Példa egy egyszerű új entitásra:
+Example of a simple new entity:
 
 ```js
 // scripts/game/entities/obstacles/Pumpkin.js
@@ -136,15 +138,15 @@ export default class Pumpkin extends GameObject {
 }
 ```
 
-### 2. Entitás regisztrálása
+### 2. Register the entity
 
-1. **Import** a `main.js` fájlban:
+1. **Import** in `main.js`:
 
 ```js
 import Pumpkin from './entities/obstacles/Pumpkin.js';
 ```
 
-2. **DECOR_CLASSES** map bővítése a `buildWorld()`-ban:
+2. **Extend the DECOR_CLASSES** map in `buildWorld()`:
 
 ```js
 const DECOR_CLASSES = {
@@ -156,7 +158,7 @@ const DECOR_CLASSES = {
 };
 ```
 
-3. **Spawn** hozzáadása a `spawns.js`-ban:
+3. **Add a spawn** in `spawns.js`:
 
 ```js
 decorations: [
@@ -169,85 +171,85 @@ decorations: [
 
 ## BMP → tilemap pipeline
 
-### Hogyan működik
+### How it works
 
-1. A `scripts/game/map/map.bmp` fájl egy színes bitmap, ahol minden pixel egy tile-t reprezentál
-2. `loadMapGridFromImage()` (`map.js:128`) betölti a BMP-t egy Canvas segítségével
-3. Minden pixel RGB értékét egy tile típusra képezi le:
+1. The `scripts/game/map/map.bmp` file is a color bitmap where each pixel represents a tile
+2. `loadMapGridFromImage()` (`map.js:128`) loads the BMP using a Canvas
+3. It maps each pixel's RGB value to a tile type:
 
-| Szín  | RGB       | Tile típus         | Solid? |
-| ----- | --------- | ------------------ | ------ |
-| Zöld  | `#00FF00` | `G` — Grass (fű)   | nem    |
-| Sárga | `#FFFF00` | `P` — Path (út)    | nem    |
-| Kék   | `#0000FF` | `W` — Water (víz)  | igen   |
-| Piros | `#FF0000` | `C` — Cliff (domb) | igen   |
+| Color  | RGB       | Tile type          | Solid? |
+| ------ | --------- | ------------------ | ------ |
+| Green  | `#00FF00` | `G` — Grass        | no     |
+| Yellow | `#FFFF00` | `P` — Path         | no     |
+| Blue   | `#0000FF` | `W` — Water        | yes    |
+| Red    | `#FF0000` | `C` — Cliff        | yes    |
 
-4. Az eredmény egy `mapGrid[][]` kétdimenziós tömb (karakterekkel)
-5. `MapRenderer` bitmaszkos autotile-lal rendereli: minden tile megvizsgálja a 8 szomszédját, és egy 256-bejegyzésű lookup tábla alapján kiválasztja a megfelelő sprite kockát a tile sheet-ből
+4. The result is a `mapGrid[][]` two-dimensional array (of characters)
+5. `MapRenderer` renders with bitmask autotiling: each tile examines its 8 neighbors and, based on a 256-entry lookup table, selects the appropriate sprite cell from the tile sheet
 
-### Bitmaszk autotile
+### Bitmask autotile
 
-Az RPG Maker 2000/2003 algoritmust követi. Minden tile 8 bitben tárolja a szomszédviszonyokat:
+It follows the RPG Maker 2000/2003 algorithm. Each tile stores its neighbor relations in 8 bits:
 
 ```
 Bit:   7   6   5   4   3   2   1   0
        NW  W   SW  S   SE  E   NE  N
 ```
 
-A lookup tábla (`renderMap.js`) mind a 256 lehetséges maszkhoz hozzárendeli a tile sheet megfelelő kockáját. A diagonális bitek csak akkor aktívak, ha mindkét szomszédos kardinális bit is aktív.
+The lookup table (`renderMap.js`) assigns the appropriate cell of the tile sheet to each of the 256 possible masks. The diagonal bits are only active if both adjacent cardinal bits are also active.
 
-### Tile sheet formátum
+### Tile sheet format
 
-A sprite-ok 16×16 pixelesek, dupla skálán (32×32) rajzolódnak ki. A sheet elrendezése:
+The sprites are 16×16 pixels and are drawn at double scale (32×32). The sheet layout:
 
 ```
-Sor 0: [cornerBR] [straightHT / edgeS] [cornerBL]
-Sor 1: [straightVL / edgeE] [center] [straightVR / edgeW]
-Sor 2: [cornerTR] [straightHB / edgeN] [cornerTL]
-Sor 3: [innerBR] [innerBL] [—]
-Sor 4: [innerTR] [innerTL] [—]
-Sor 5: [deco]
+Row 0: [cornerBR] [straightHT / edgeS] [cornerBL]
+Row 1: [straightVL / edgeE] [center] [straightVR / edgeW]
+Row 2: [cornerTR] [straightHB / edgeN] [cornerTL]
+Row 3: [innerBR] [innerBL] [—]
+Row 4: [innerTR] [innerTL] [—]
+Row 5: [deco]
 ```
 
-### Térkép szerkesztése
+### Editing the map
 
-Bármely pixelgrafikus szerkesztőben (Paint, GIMP, Aseprite) szerkeszthető. Fontos:
+It can be edited in any pixel-graphics editor (Paint, GIMP, Aseprite). Important:
 
-- A kép szélessége és magassága határozza meg a tile grid dimenzióit
-- Csak a fenti 4 színt használd (a tilekeresés pontos RGB egyezést ellenőriz kis tűréssel)
-- 1 pixel a BMP-ben = 1 tile a játékban (32×32 képernyőpixel)
+- The image's width and height determine the dimensions of the tile grid
+- Use only the 4 colors above (the tile lookup checks for an exact RGB match with a small tolerance)
+- 1 pixel in the BMP = 1 tile in the game (32×32 screen pixels)
 
 ---
 
-## Collision box rendszer
+## Collision box system
 
-Minden `GameObject` rendelkezik egy `collisionBox`-szal, amely a sprite-on belül definiálja a fizikai ütközési területet.
+Every `GameObject` has a `collisionBox` that defines the physical collision area within the sprite.
 
 ```js
 collisionBox: {
-  offsetX: 15,   // eltolás a sprite bal felső sarkától
-  offsetY: 58,   // eltolás a sprite bal felső sarkától
-  width: 65,     // szélesség pixelben
-  height: 55,    // magasság pixelben
+  offsetX: 15,   // offset from the sprite's top-left corner
+  offsetY: 58,   // offset from the sprite's top-left corner
+  width: 65,     // width in pixels
+  height: 55,    // height in pixels
 }
 ```
 
-- Ha nincs megadva, a teljes sprite méretet használja (`width × height`)
-- A `solid: true` entitások ütköznek a playerrel és egymással
-- Az ütközés AABB (tengelyirányú téglalap) alapú
-- Dekorációk (`solid: false`) nem blokkolják a mozgást
+- If not specified, it uses the full sprite size (`width × height`)
+- `solid: true` entities collide with the player and with each other
+- Collision is AABB (axis-aligned bounding box) based
+- Decorations (`solid: false`) do not block movement
 
-### Tippek collisionBox beállításhoz
+### Tips for setting collisionBox
 
-- Házaknál az ajtó alatti részt érdemes solid-nak hagyni, a tetőt nem
-- Fák esetén a törzs alsó 1/3-a elég
-- NPC-knél a sprite magasság ~60%-a, középre igazítva
+- For houses, it's worth keeping the part below the door solid, but not the roof
+- For trees, the bottom 1/3 of the trunk is enough
+- For NPCs, about 60% of the sprite height, centered
 
 ---
 
-## Entitás spawn rendszer
+## Entity spawn system
 
-A `scripts/game/world/spawns.js` exportálja az `ENTITY_SPAWNS` objektumot. Ez tartalmazza az összes entitás kezdőpozícióját.
+`scripts/game/world/spawns.js` exports the `ENTITY_SPAWNS` object. It holds the starting position of every entity.
 
 ```js
 export const ENTITY_SPAWNS = {
@@ -268,35 +270,35 @@ export const ENTITY_SPAWNS = {
 };
 ```
 
-A `buildWorld()` (`main.js:293`) szerint:
+According to `buildWorld()` (`main.js:293`):
 
-- `decorations` → `DECOR_CLASSES` map alapján példányosítva (`solid` esetén `obstacles[]`, különben `decorations[]`)
-- `npcs` → típus szerinti switch (Chicken, Cow, Pig, Sheep) → `npcs[]`
-- `enemies` → mind `Skeleton` → `enemies[]`
+- `decorations` → instantiated based on the `DECOR_CLASSES` map (into `obstacles[]` if `solid`, otherwise `decorations[]`)
+- `npcs` → switch by type (Chicken, Cow, Pig, Sheep) → `npcs[]`
+- `enemies` → all `Skeleton` → `enemies[]`
 - `CV_STATIONS` → `House` → `obstacles[]`
 
-Az összes entitás a `rebuildGameObjectList()`-ben kerül egyesítésre a render listába.
+All entities are merged into the render list in `rebuildGameObjectList()`.
 
 ---
 
-## Dialogue rendszer
+## Dialogue system
 
-Amikor a player a House ajtajához lép (door trigger terület), a játék megjeleníti a CV tartalmat egy glassmorphic overlay ablakban.
+When the player steps up to a House's door (door trigger area), the game shows the CV content in a glassmorphic overlay window.
 
-- House-k méretének és ajtajának koordinátái a `House.js:15-48`-ban:
-  - House: 96×128 pixel
+- The size and door coordinates of Houses are in `House.js:15-48`:
+  - House: 96×128 pixels
   - Door trigger: `doorOffsetX: 36, doorOffsetY: 110, doorWidth: 24, doorHeight: 20`
-  - A trigger terület a ház aljánál, az ajtó előtt van
-- `checkDoorTrigger(player)` AABB alapú overlapping vizsgálat
-- `setupDialogueListeners()` a `main.js`-ben kezeli az E/Enter billentyűt
-- A dialogue UI a `scripts/game/main.js` `showStationContent()` és `hideStationContent()` metódusaiban
-- A játék lefagy (`this.isFrozen = true`) amíg a dialogue nyitva van
+  - The trigger area is at the bottom of the house, in front of the door
+- `checkDoorTrigger(player)` is an AABB-based overlap check
+- `setupDialogueListeners()` in `main.js` handles the E/Enter key
+- The dialogue UI is in the `showStationContent()` and `hideStationContent()` methods of `scripts/game/main.js`
+- The game freezes (`this.isFrozen = true`) while the dialogue is open
 
-### Layout mezők a dialogue-ban
+### Layout fields in the dialogue
 
-A `stations.js` `generateExpContent()` függvény állítja elő a HTML tartalmat a CV_DATA alapján. A tartalom lehet:
+The `generateExpContent()` function in `stations.js` produces the HTML content based on CV_DATA. The content can be:
 
-- Projektek listája (bullets)
-- Készségek
-- Referencia linkek
-- Game-specifikus highlight bullet-ok (exp.game.highlights)
+- A list of projects (bullets)
+- Skills
+- Reference links
+- Game-specific highlight bullets (exp.game.highlights)

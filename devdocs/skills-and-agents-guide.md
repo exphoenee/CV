@@ -1,408 +1,410 @@
-# Skills & Agents — Teljes Referenciaútmutató
+# Skills & Agents — Complete Reference Guide
 
-## Bevezetés
+> 🌐 **Language:** 🇬🇧 English · [🇭🇺 Magyar](skills-and-agents-guide-hu.md)
 
-A CV projekthez egy AI-asszisztens rendszer tartozik, amely **skill-ekből** (slash command-ökből)
-és **agent-ekből** (speciális AI-alapú feldolgozók) épül fel. A rendszer Claude Code-ben fut,
-és a `.claude/` könyvtár alatt található minden konfiguráció.
+## Introduction
 
-**Alapelvek:**
-- **Skill-ek** (= `/parancsok`) a felhasználó által közvetlenül használható műveletek
-- **Agent-ek** a skill-ek által meghívott specializált AI feldolgozók
-- Minden művelet naplózva van a `cv-versions/history.md` fájlban
-- Minden review riport a `review/` mappába kerül
-- A felhasználói felület nyelve magyar, a fájlnevek és kód angol
+The CV project comes with an AI-assistant system built from **skills** (slash commands)
+and **agents** (specialized AI-based processors). The system runs in Claude Code,
+and all configuration is found under the `.claude/` directory.
 
----
-
-# 1. Skill-ek Részletes Leírása
-
-## 1.1 Fejlesztési / Karbantartási Skill-ek
+**Principles:**
+- **Skills** (= `/commands`) are operations the user can use directly
+- **Agents** are specialized AI processors invoked by the skills
+- Every operation is logged in the `cv-versions/history.md` file
+- Every review report goes into the `review/` folder
+- The user-interface language is Hungarian; the file names and code are English
 
 ---
 
-### `/locale-check` — Locale Kulcsok Ellenőrzése
+# 1. Skills in Detail
 
-**Trigger:** `/locale-check` vagy `/locale-check --fix`
+## 1.1 Development / Maintenance Skills
 
-**Funkció:** Ellenőrzi, hogy mind a 12 locale fájl (`*-page.js`) ugyanazokat a `labels` kulcsokat
-tartalmazza-e, mint az `en-page.js` referencia. Képes automatikusan kiegészíteni a hiányzó
-kulcsokat a `--fix` kapcsolóval.
+---
 
-**Hogyan működik:**
-1. Kiolvassa az `en-page.js`-ből az összes `labels` kulcsot → ez a referencia
-2. Minden másik `*-page.js` fájlt összehasonlít ezzel
-3. Jelenti a hiányzó kulcsokat fájlonként
+### `/locale-check` — Locale Key Check
 
-**`--fix` mód:**
-- Meghívja a `locale-agent`-et, amely:
-  - Valós nyelvekhez (hu, de, fr, es, it): lefordítja az új kulcs értékét
-  - Fiktív nyelvekhez (asg, dot, kl, qu, goa, ya): stílus-konzisztens adaptációt készít
+**Trigger:** `/locale-check` or `/locale-check --fix`
 
-**Használati esetek:**
+**Function:** Checks whether all 12 locale files (`*-page.js`) contain the same `labels` keys
+as the `en-page.js` reference. It can automatically fill in the missing
+keys with the `--fix` switch.
+
+**How it works:**
+1. Reads all `labels` keys from `en-page.js` → this is the reference
+2. Compares every other `*-page.js` file with it
+3. Reports the missing keys per file
+
+**`--fix` mode:**
+- Calls the `locale-agent`, which:
+  - For real languages (hu, de, fr, es, it): translates the new key's value
+  - For fictional languages (asg, dot, kl, qu, goa, ya): makes a style-consistent adaptation
+
+**Use cases:**
 ```bash
-/locale-check              # csak ellenőrzés, nincs módosítás
-/locale-check --fix        # hiányzó kulcsok automatikus kiegészítése
+/locale-check              # check only, no modification
+/locale-check --fix        # automatically fill in missing keys
 ```
 
-**Mit NEM csinál:**
-- Nem módosítja az `en.js`-t (az a referencia, read-only)
-- Nem töröl kulcsokat
-- Csak a `labels` objektumot ellenőrzi, a `content`-et nem
+**What it does NOT do:**
+- Does not modify `en.js` (that's the reference, read-only)
+- Does not delete keys
+- Only checks the `labels` object, not `content`
 
 ---
 
-### `/code-review` — CV Projekt Kompatibilitási Ellenőrzés
+### `/code-review` — CV Project Compatibility Check
 
-**Trigger:** `/code-review` vagy `/code-review --fix`
+**Trigger:** `/code-review` or `/code-review --fix`
 
-**Funkció:** Teljes körű kódreview a CV projekthez. Ellenőrzi a locale teljességet,
-aria label megfelelőséget, XSS biztonságot, config hibriditást, és új nézet checklist-et.
+**Function:** A full code review for the CV project. Checks locale completeness,
+aria label compliance, XSS security, config hygiene, and the new-view checklist.
 
-**Ellenőrzési területek:**
-1. **Locale komplettség** — új kulcsok hozzáadva az összes `*-page.js`-hez?
-2. **Aria label megfelelőség** — hardcoded vs. `locale.t()` használat, icon-only gombok
-3. **Biztonság** — `.innerHTML` dinamikus tartalommal, `insertAdjacentHTML` ellenőrzés
-4. **Config higiénia** — hardcoded URL-ek, localStorage kulcsok
-5. **Új nézet checklist** — ha új `cv-*.html` fájlt érzékel, meghívja a `view-check-agent`-et
+**Areas checked:**
+1. **Locale completeness** — new keys added to every `*-page.js`?
+2. **Aria label compliance** — hardcoded vs. `locale.t()` usage, icon-only buttons
+3. **Security** — `.innerHTML` with dynamic content, `insertAdjacentHTML` check
+4. **Config hygiene** — hardcoded URLs, localStorage keys
+5. **New-view checklist** — if it detects a new `cv-*.html` file, it calls the `view-check-agent`
 
-**`--fix` mód:**
-- Csak a fixálható figyelmeztetéseket javítja (pl. hardcoded aria string-ek)
-- Biztonsági problémákat NEM auto-fixál — mindig mutatja a változtatást
+**`--fix` mode:**
+- Fixes only the fixable warnings (e.g. hardcoded aria strings)
+- Does NOT auto-fix security issues — always shows the change
 
-**Mit NEM csinál:**
-- Nem módosít locale fájlokat (azt a `locale-agent` csinálja)
-- Nem alkalmaz biztonsági változtatásokat megerősítés nélkül
-
----
-
-### `/language-reviewer` — Nyelvi Lektorálás
-
-**Trigger:** `/language-reviewer <lang>` vagy `/language-reviewer all`
-
-**Funkció:** Professzionális nyelvi lektorálás. Ellenőrzi a CV tartalmat és UI label-eket
-nyelvspecifikus szabályok alapján.
-
-**Paraméterek:**
-- `<lang>` — egy specifikus nyelv: `en`, `hu`, `de`, `fr`, `es`, `it`, `asg`, `dot`, `kl`, `qu`, `goa`, `ya`
-- `all` — az összes nyelv ellenőrzése
-
-**Ellenőrzési szempontok:**
-- Regiszter és hangnem (formális/informális, tegező/magázó)
-- Igeidő konzisztencia
-- Technikai terminológia helyessége (TypeScript, React, stb.)
-- Nyelvspecifikus nyelvtan ( nemek, esetek, igeragozás)
-- Kulcsszótár konzisztencia (fiktív nyelveknél)
-- `en-page.js`-hez képest hiányzó kulcsok
-- Helykitöltő szövegek kulturális illeszkedése
-
-**Mit NEM csinál:**
-- Soha nem módosít fájlokat — csak jelent
-- Nem javasol tartalmi változtatásokat (skill-ek, tapasztalat, dátumok)
+**What it does NOT do:**
+- Does not modify locale files (the `locale-agent` does that)
+- Does not apply security changes without confirmation
 
 ---
 
-### `/security-review` — Biztonsági Audit
+### `/language-reviewer` — Language Proofreading
 
-**Trigger:** `/security-review` vagy `/security-review --fix`
+**Trigger:** `/language-reviewer <lang>` or `/language-reviewer all`
 
-**Funkció:** A CV oldal interaktív funkcióinak (Hire Me űrlap, Booking modál) spam- és
-biztonsági auditja. Mivel a site backend nélküli, a fókusz a kliens-oldali védelmen van.
+**Function:** Professional language proofreading. Checks the CV content and UI labels
+based on language-specific rules.
 
-**Ellenőrzött területek:**
-1. **Hire Me űrlap (Formspree):** rate limiting, input validáció, bot védelem, XSS
-2. **Booking modál (Google Apps Script):** rate limiting, slot validáció, bot védelem
-3. **Egyéb funkciók:** music player, theme toggle, language selector
+**Parameters:**
+- `<lang>` — a specific language: `en`, `hu`, `de`, `fr`, `es`, `it`, `asg`, `dot`, `kl`, `qu`, `goa`, `ya`
+- `all` — check all languages
 
-**Kockázati mátrix:**
-- CRITICAL — azonnal kihasználható, inbox/calendar flood
-- HIGH — könnyű exploit (incognito, DevTools)
-- MEDIUM — mérsékelt erőfeszítés kell
-- LOW — elméleti, nehezen kihasználható
+**Aspects checked:**
+- Register and tone (formal/informal, formal/informal address)
+- Tense consistency
+- Correctness of technical terminology (TypeScript, React, etc.)
+- Language-specific grammar (genders, cases, conjugation)
+- Key-vocabulary consistency (for fictional languages)
+- Keys missing relative to `en-page.js`
+- Cultural fit of placeholder texts
 
-**`--fix` mód:**
-- Csak kliens-oldali változtatásokat alkalmaz (`shared.js`, `config.js`)
-- Megerősítést kér minden változtatáshoz
-- NEM auto-fixál: CAPTCHA hozzáadást, GAS szerveroldali validációt, Formspree konfigurációt
-
-**Riport:** `review/YYYY-MM-DD_HHMM_security-review.md`
+**What it does NOT do:**
+- Never modifies files — only reports
+- Does not suggest content changes (skills, experience, dates)
 
 ---
 
-### `/arch-review` — Architektúra Elemzés
+### `/security-review` — Security Audit
+
+**Trigger:** `/security-review` or `/security-review --fix`
+
+**Function:** A spam and security audit of the CV site's interactive features (Hire Me form,
+Booking modal). Since the site has no backend, the focus is on client-side protection.
+
+**Areas checked:**
+1. **Hire Me form (Formspree):** rate limiting, input validation, bot protection, XSS
+2. **Booking modal (Google Apps Script):** rate limiting, slot validation, bot protection
+3. **Other features:** music player, theme toggle, language selector
+
+**Risk matrix:**
+- CRITICAL — immediately exploitable, inbox/calendar flood
+- HIGH — easy exploit (incognito, DevTools)
+- MEDIUM — moderate effort required
+- LOW — theoretical, hard to exploit
+
+**`--fix` mode:**
+- Applies only client-side changes (`shared.js`, `config.js`)
+- Asks for confirmation for every change
+- Does NOT auto-fix: adding CAPTCHA, GAS server-side validation, Formspree configuration
+
+**Report:** `review/YYYY-MM-DD_HHMM_security-review.md`
+
+---
+
+### `/arch-review` — Architecture Analysis
 
 **Trigger:** `/arch-review [--focus=...]`
 
-**Funkció:** Mély architekturális elemzés a CV projektről. Feltárja a template duplikációt,
-adatstruktúra minőséget, locale rendszer karbantarthatóságát, CSS architektúrát és tooling
-lehetőségeket.
+**Function:** A deep architectural analysis of the CV project. It uncovers template duplication,
+data-structure quality, locale-system maintainability, CSS architecture, and tooling
+opportunities.
 
-**Fókusz opciók:**
-| Opció | Elemzett terület |
-|-------|------------------|
-| `--focus=all` | Minden (alapértelmezett) |
-| `--focus=templating` | HTML template duplikáció |
-| `--focus=data` | cv-data.js séma és struktúra |
-| `--focus=localization` | Locale rendszer (12 fájl, kulcs-szinkron) |
-| `--focus=css` | CSS architektúra (változók, breakpointok) |
-| `--focus=tooling` | Tooling/DX (build script, validáció) |
+**Focus options:**
+| Option | Area analyzed |
+|--------|---------------|
+| `--focus=all` | Everything (default) |
+| `--focus=templating` | HTML template duplication |
+| `--focus=data` | cv-data.js schema and structure |
+| `--focus=localization` | Locale system (12 files, key sync) |
+| `--focus=css` | CSS architecture (variables, breakpoints) |
+| `--focus=tooling` | Tooling/DX (build script, validation) |
 
-**Javaslatok Tier-ek szerint:**
-| Tier | Időigény | Példa |
-|------|----------|-------|
-| Tier 1 — Gyors győzelem | ⚡ < 1 óra | JSDoc typedef hozzáadása |
-| Tier 2 — Közepes | 🔧 1–3 nap | Locale validációs script |
-| Tier 3 — Stratégiai | 💪 nagyobb | HTML template generator |
-| Tier 4 — Tech evolúció | 🏗️ jelentős | Vite dev-only / TypeScript |
+**Recommendations by tier:**
+| Tier | Effort | Example |
+|------|--------|---------|
+| Tier 1 — Quick win | ⚡ < 1 hour | Add JSDoc typedef |
+| Tier 2 — Medium | 🔧 1–3 days | Locale validation script |
+| Tier 3 — Strategic | 💪 larger | HTML template generator |
+| Tier 4 — Tech evolution | 🏗️ significant | Vite dev-only / TypeScript |
 
-**Riport:** `review/YYYY-MM-DD_HHMM_arch-review-FOCUS.md`
-
----
-
-## 1.2 Tartalom / HR Skill-ek
+**Report:** `review/YYYY-MM-DD_HHMM_arch-review-FOCUS.md`
 
 ---
 
-### `/hr-review` — HR & ATS Optimalizációs Review
-
-**Trigger:** `/hr-review [állásleírás]`
-
-**Funkció:** Két módban működik:
-1. **Általános mód** (argumentum nélkül) — a CV általános ATS-készültségének értékelése
-2. **JD mód** (állásleírással) — kulcsszó-egyezés és célzott optimalizációs javaslatok
-
-**JD mód lépései:**
-1. Állásleírás értelmezése (required/preferred skills, responsibilities)
-2. Kulcsszó lefedettség vizsgálata a cv-data.js és profile/*.md alapján
-3. Pontozás: `OVERALL_SCORE = required_match * 0.7 + preferred_match * 0.3`
-4. Változtatási terv: summary átírás, skill sorrend, bullet átfogalmazás, hiányzó skill-ek
-
-**Anti-hallucináció védelem:**
-- Minden javaslatnak a `cv-data.js`-ben VAGY `profile/*.md`-ben kell gyökereznie
-- Soha nem talál ki új skill-t vagy tapasztalatot
-- A `profile/*.md` fájlokat YAML frontmatter alapján szűri
-
-**Riport:** `review/YYYY-MM-DD_HHMM_hr-review-SLUG.md`
-**Ha nincs érdemi megállapítás:** nem készül fájl — inline üzenet jelenik meg
+## 1.2 Content / HR Skills
 
 ---
 
-### `/cv-improver` — HR Review Javaslatok Alkalmazása
+### `/hr-review` — HR & ATS Optimization Review
+
+**Trigger:** `/hr-review [job-description]`
+
+**Function:** Works in two modes:
+1. **General mode** (no argument) — evaluates the CV's general ATS readiness
+2. **JD mode** (with a job description) — keyword matching and targeted optimization recommendations
+
+**JD mode steps:**
+1. Parse the job description (required/preferred skills, responsibilities)
+2. Analyze keyword coverage based on cv-data.js and profile/*.md
+3. Scoring: `OVERALL_SCORE = required_match * 0.7 + preferred_match * 0.3`
+4. Change plan: summary rewrite, skill order, bullet rephrasing, missing skills
+
+**Anti-hallucination protection:**
+- Every recommendation must be rooted in `cv-data.js` OR `profile/*.md`
+- Never invents a new skill or experience
+- Filters the `profile/*.md` files based on YAML frontmatter
+
+**Report:** `review/YYYY-MM-DD_HHMM_hr-review-SLUG.md`
+**If there are no substantive findings:** no file is created — an inline message appears
+
+---
+
+### `/cv-improver` — Applying HR Review Recommendations
 
 **Trigger:** `/cv-improver <review-file.md>`
 
-**Funkció:** Egy `/hr-review` riport ajánlásainak alkalmazása a `cv-data.js`-re.
-Minden változtatást előzetesen megmutat és megerősítést kér.
+**Function:** Applies the recommendations of a `/hr-review` report to `cv-data.js`.
+Shows every change in advance and asks for confirmation.
 
-**Folyamat:**
-1. HR review riport betöltése és validálása (fejléc ellenőrzés)
-2. Változtatási terv felépítése (summary, skill order, rephrase)
-3. Terv megjelenítése és jóváhagyás kérése
-4. **Automata biztonsági mentés** (`cv-backup-agent` dispatch)
-5. Változtatások alkalmazása
-6. Locale fordítások újragenerálása (`cv-translator-agent` dispatch)
-7. Marker frissítés + audit napló
+**Process:**
+1. Load and validate the HR review report (header check)
+2. Build the change plan (summary, skill order, rephrase)
+3. Display the plan and ask for approval
+4. **Automatic backup** (`cv-backup-agent` dispatch)
+5. Apply the changes
+6. Regenerate the locale translations (`cv-translator-agent` dispatch)
+7. Marker update + audit log
 
-**Biztonsági védelem:**
-- Backup nélkül nem módosít semmit
-- Minden változtatást előzetesen mutat
-- `unlocatable` elemeket jelent, nem hagyja ki csendben
-
----
-
-### `/cover-letter` — Motivációs Levél Generálás
-
-**Trigger:** `/cover-letter [állásleírás]`
-
-**Funkció:** Professzionális motivációs levelek generálása angol, magyar és (opcionálisan)
-a JD nyelvén. Minden állítás a `cv-data.js`-ben és `profile/*.md`-ben gyökerezik.
-
-**Kimenetek** (`letters/DATE_company_title/`):
-| Fájl | Mindig? | Nyelv |
-|------|---------|-------|
-| `cover-letter-en.md` | ✅ Igen | Angol |
-| `cover-letter-hu.md` | ✅ Igen | Magyar |
-| `cover-letter-[lang].md` | ❌ Csak ha a JD nyelve de/fr/es/it | JD nyelve |
-
-**Levél struktúra:**
-1. **Opening** — specifikus hook: miért pont ez a cég/szerepkör
-2. **Para 1** — 2-3 specifikus tapasztalat a JD követelményekhez igazítva
-3. **Para 2** — Egy konkrét eredmény/achievement
-4. **Para 3** — Rövid illeszkedési jelzés + call to action
-
-**Anti-hallucináció:** Minden bekezdés tartalmaz legalább egy citable állítást az EVIDENCE
-térképből.
+**Safety protections:**
+- Modifies nothing without a backup
+- Shows every change in advance
+- Reports `unlocatable` items, doesn't skip them silently
 
 ---
 
-### `/job-apply` — Teljes Álláspályázati Pipeline
+### `/cover-letter` — Cover Letter Generation
 
-**Trigger:** `/job-apply [állásleírás]`
+**Trigger:** `/cover-letter [job-description]`
 
-**Funkció:** A legösszetettebb munkafolyamat. Elvégzi a teljes optimalizációs pipeline-t:
-JD elemzés → ATS pontozás → cv-data.js módosítás → fordítás → verzió snapshot →
-motivációs levél → naplózás.
+**Function:** Generates professional cover letters in English, Hungarian, and (optionally)
+the JD's language. Every statement is rooted in `cv-data.js` and `profile/*.md`.
 
-**Teljes lépéssor:**
+**Outputs** (`letters/DATE_company_title/`):
+| File | Always? | Language |
+|------|---------|----------|
+| `cover-letter-en.md` | ✅ Yes | English |
+| `cover-letter-hu.md` | ✅ Yes | Hungarian |
+| `cover-letter-[lang].md` | ❌ Only if the JD's language is de/fr/es/it | JD's language |
+
+**Letter structure:**
+1. **Opening** — a specific hook: why exactly this company/role
+2. **Para 1** — 2-3 specific experiences aligned to the JD requirements
+3. **Para 2** — One concrete result/achievement
+4. **Para 3** — A short fit signal + call to action
+
+**Anti-hallucination:** Every paragraph contains at least one citable statement from the EVIDENCE
+map.
+
+---
+
+### `/job-apply` — Full Job-Application Pipeline
+
+**Trigger:** `/job-apply [job-description]`
+
+**Function:** The most complex workflow. It performs the full optimization pipeline:
+JD analysis → ATS scoring → cv-data.js modification → translation → version snapshot →
+cover letter → logging.
+
+**Full step sequence:**
 ```
-0a. JD beolvasás (fájl / inline / tmp/jd-draft.md sablon)
-0b. Metaadatok kinyerése (title, company, VERSION_BASE)
-1.  cv-data.js + profile/*.md betöltése
-2.  HR/ATS elemzés (kulcsszó, pontozás, változtatási terv)
-2e. Alkalmasági kapu (ha < 40% required match, figyelmeztet)
-3.  Döntés: ha OVERALL_SCORE >= 90% és nincs változtatás → stop
-4.  Terv megjelenítése és jóváhagyás
-6.  cv-data.js módosítása
-7.  cv-translator-agent dispatch (11 locale fordítás)
-7b. Fordítási minőség spot-check
-7c. JS szintaxis validáció (validate-locale-syntax.py)
-7d. Fordítási hossz validáció (check-translation-lengths.py --json)
-    → Hibás esetén targetált javítási ciklus (--lang=hu,de szűrővel a re-run-okon)
-    → Max 3 iteráció, utána graciőz kilépés
+0a. JD read (file / inline / tmp/jd-draft.md template)
+0b. Extract metadata (title, company, VERSION_BASE)
+1.  Load cv-data.js + profile/*.md
+2.  HR/ATS analysis (keywords, scoring, change plan)
+2e. Suitability gate (if < 40% required match, warns)
+3.  Decision: if OVERALL_SCORE >= 90% and no change → stop
+4.  Display the plan and ask for approval
+6.  Modify cv-data.js
+7.  cv-translator-agent dispatch (11-locale translation)
+7b. Translation quality spot-check
+7c. JS syntax validation (validate-locale-syntax.py)
+7d. Translation length validation (check-translation-lengths.py --json)
+    → On failure, a targeted fix cycle (with --lang=hu,de filter on the re-runs)
+    → Max 3 iterations, then a graceful exit
 8.  cv-backup-agent dispatch (snapshot)
-8b. cover-letter-agent dispatch (automata)
-8c. Alkalmazás regisztráció (JD mentés, marker, log)
-9.  Végeredmény jelentés
+8b. cover-letter-agent dispatch (automatic)
+8c. Application registration (JD save, marker, log)
+9.  Final result report
 ```
 
-**Alkalmasági kapu (Step 2e):**
-Ha `REQUIRED_SCORE < 40%` ÉS nincs releváns `profile/*.md` bizonyíték, figyelmezteti
-a felhasználót és explicit `igen`-t kér a folytatáshoz.
+**Suitability gate (Step 2e):**
+If `REQUIRED_SCORE < 40%` AND there is no relevant `profile/*.md` evidence, it warns
+the user and asks for an explicit `yes` to continue.
 
-**Verzió snapshot:** `cv-versions/DATE_company_title/` — tartalmazza:
-- `cv-data.js` (optimalizált, metaadat fejléccel)
-- `locales/` (11 locale fájl)
-- `job-description.md` (formázott állásleírás)
-- `cover-letter-en.md` + `cover-letter-hu.md` (+ opcionális JD nyelvű levél)
-
----
-
-## 1.3 Generátor Skill
+**Version snapshot:** `cv-versions/DATE_company_title/` — contains:
+- `cv-data.js` (optimized, with metadata header)
+- `locales/` (11 locale files)
+- `job-description.md` (formatted job description)
+- `cover-letter-en.md` + `cover-letter-hu.md` (+ optional JD-language letter)
 
 ---
 
-### `cv-generator` — CV Adat Generálás Profile Fájlokból
+## 1.3 Generator Skill
 
-**Trigger:** Agent tool hívás (vagy közvetlen dispachtel)
+---
 
-**Funkció:** Teljes `cv/cv-data.js` generálása a `profile/*.md` fájlokból.
-Használd, ha a `cv-data.js` hiányzik, sérült, vagy újra kell generálni.
+### `cv-generator` — CV Data Generation from Profile Files
 
-**Működés:**
-1. `profile/*.md` fájlok beolvasása és YAML frontmatter alapján kategorizálása
-2. Munkahelyi tapasztalatok kinyerése (10 cég, a mechanikai szerepektől a frontendig)
-3. Identity, education, community, hobbyProjects, skillGroups összeállítása
-4. `cv-data.js` generálása a pontos JS formátumban (single quotes, trailing commas)
-5. 12 locale fájl ellenőrzése/megtartása (content:null új fájlokhoz)
+**Trigger:** Agent tool call (or dispatched directly)
 
-**`--dry-run` mód:**
-- Előnézetet mutat anélkül, hogy bármit írna
-- Hasznos, mielőtt felülírnád a meglévő cv-data.js-t
+**Function:** Generates the full `cv/cv-data.js` from the `profile/*.md` files.
+Use it if `cv-data.js` is missing, corrupted, or needs to be regenerated.
 
-**Biztonsági védelem:**
-- Ha a `cv-data.js` már létezik, automata backup készül (`cv-backup-agent`) a felülírás előtt
-- Soha nem talál ki tartalmat — minden adatnak a `profile/*.md`-ben kell gyökereznie
-- A játék térkép koordinátái (8 station) FIXEK — soha nem változnak
+**Operation:**
+1. Read the `profile/*.md` files and categorize them by YAML frontmatter
+2. Extract work experience (10 companies, from mechanical roles to frontend)
+3. Assemble identity, education, community, hobbyProjects, skillGroups
+4. Generate `cv-data.js` in the exact JS format (single quotes, trailing commas)
+5. Check/preserve the 12 locale files (content:null for new files)
 
-**Példák:**
+**`--dry-run` mode:**
+- Shows a preview without writing anything
+- Useful before you overwrite the existing cv-data.js
+
+**Safety protections:**
+- If `cv-data.js` already exists, an automatic backup is made (`cv-backup-agent`) before overwriting
+- Never invents content — all data must be rooted in `profile/*.md`
+- The game map coordinates (8 stations) are FIXED — they never change
+
+**Examples:**
 ```bash
-# Agent tool hívás:
-# "Futtasd a cv-generator agentet. --dry-run"
-# "Futtasd a cv-generator agentet."
+# Agent tool call:
+# "Run the cv-generator agent. --dry-run"
+# "Run the cv-generator agent."
 ```
 
 ---
 
-## 1.4 Backup / Restore Skill-ek
+## 1.4 Backup / Restore Skills
 
 ---
 
-### `/cv-backup` — Kézi Snapshot
+### `/cv-backup` — Manual Snapshot
 
 **Trigger:** `/cv-backup [label]`
 
-**Funkció:** Pillanatnyi állapot mentése a `cv-data.js`-ről és minden locale fájlról.
+**Function:** Saves a point-in-time state of `cv-data.js` and every locale file.
 
-**Példák:**
+**Examples:**
 ```bash
 /cv-backup                        → cv-versions/2026-06-13_HHMM_manual/
 /cv-backup pre-refactor           → cv-versions/2026-06-13_HHMM_manual_pre-refactor/
 /cv-backup before-big-edit        → cv-versions/2026-06-13_HHMM_manual_before-big-edit/
 ```
 
-**Mikor használd:**
-- Kézi szerkesztés előtt
-- Refaktor előtt
-- Kísérletezés előtt
-- Amikor nem állásra pályázol, de menteni akarod az állapotot
+**When to use it:**
+- Before a manual edit
+- Before a refactor
+- Before experimenting
+- When you're not applying for a job but want to save the state
 
-**Tipp:** A snapshotok a `cv-versions/applications.md`-be és `history.md`-be is bekerülnek.
+**Tip:** The snapshots are also added to `cv-versions/applications.md` and `history.md`.
 
 ---
 
-### `/cv-restore` — Visszaállítás Snapshotból
+### `/cv-restore` — Restore from Snapshot
 
-**Trigger:** `/cv-restore <mappa-név>`
+**Trigger:** `/cv-restore <folder-name>`
 
-**Funkció:** Visszaállítja a `cv-data.js`-t és minden locale `content`-et egy korábbi
-snapshotból.
+**Function:** Restores `cv-data.js` and every locale `content` from an earlier
+snapshot.
 
-**Folyamat:**
-1. Snapshot metaadatok megjelenítése (pozíció, dátum, ATS%, módosítások)
-2. Felülírandó fájlok listázása
-3. Megerősítés kérése
-4. **Automata pre-restore backup** (a jelenlegi állapot mentése)
-5. Fájlok visszaállítása
-6. Marker frissítés + audit napló
+**Process:**
+1. Display the snapshot metadata (position, date, ATS%, modifications)
+2. List the files to be overwritten
+3. Ask for confirmation
+4. **Automatic pre-restore backup** (saving the current state)
+5. Restore the files
+6. Marker update + audit log
 
-**Biztonság:**
-- Megerősítés nélkül nem módosít semmit
-- A pre-restore backup automatikus (kivéve `--no-backup`)
-- A marker a visszaállított verzióra áll
+**Safety:**
+- Modifies nothing without confirmation
+- The pre-restore backup is automatic (except `--no-backup`)
+- The marker is set to the restored version
 
-**Parancssori segéd:**
+**Command-line helper:**
 ```bash
 python .claude/skills/cv-restore/scripts/cv-restore.py <folder>       # restore
-python .claude/skills/cv-restore/scripts/cv-restore.py --list          # lista
-python .claude/skills/cv-restore/scripts/cv-restore.py <folder> --yes  # megerősítés nélkül
+python .claude/skills/cv-restore/scripts/cv-restore.py --list          # list
+python .claude/skills/cv-restore/scripts/cv-restore.py <folder> --yes  # without confirmation
 ```
 
 ---
 
-# 2. Agent-ek Részletes Leírása
+# 2. Agents in Detail
 
-Az agent-ek a skill-ek által meghívott, specializált AI-alapú folyamatok. Közvetlenül is
-meghívhatók, ha a felhasználó pontosan tudja, mit szeretne.
+The agents are specialized AI-based processes invoked by the skills. They can also be
+invoked directly if the user knows exactly what they want.
 
 ---
 
-## 2.1 Alap Agent-ek
+## 2.1 Core Agents
 
-### `cv-translator-agent` — CV Tartalom Fordító
+### `cv-translator-agent` — CV Content Translator
 
-**Meghívja:** `job-apply-orchestrator`, `cv-improver`
+**Invoked by:** `job-apply-orchestrator`, `cv-improver`
 
-**Funkció:** Az angol `cv-data.js`-ben történt változások propagálása mind a 11 locale fájl
-`content` mezőjébe. Csak a ténylegesen változott mezőket fordítja — nem fordít újra
-változatlan tartalmat.
+**Function:** Propagates the changes made in the English `cv-data.js` into the `content` field
+of all 11 locale files. It only translates the fields that actually changed — it does not
+re-translate unchanged content.
 
-**Bemeneti paraméterek:**
-| Paraméter | Típus | Kötelező? | Leírás |
-|-----------|-------|-----------|--------|
-| `CHANGED_FIELDS` | objektum | igen | Summary, bullets, jobDescriptions változások |
-| `JD_TITLE` | string | opcionális | Hangnem kalibrációhoz |
-| `JD_COMPANY` | string | opcionális | Hangnem kalibrációhoz |
-| `TARGET_LOCALES` | string[] | nem | Alapértelmezett: mind a 11 |
-| `TARGETED_FIXES` | objektum | nem | Célzott hossz-javítások |
+**Input parameters:**
+| Parameter | Type | Required? | Description |
+|-----------|------|-----------|-------------|
+| `CHANGED_FIELDS` | object | yes | Summary, bullets, jobDescriptions changes |
+| `JD_TITLE` | string | optional | For tone calibration |
+| `JD_COMPANY` | string | optional | For tone calibration |
+| `TARGET_LOCALES` | string[] | no | Default: all 11 |
+| `TARGETED_FIXES` | object | no | Targeted length fixes |
 
-**Működés:**
-1. Betölti a nyelvspecifikus szabályfájlokat (`.claude/rules/locales/<lang>.md`)
-2. A meglévő tartalmat kontextusként használja a stílus kalibrációhoz
-3. Valós nyelvek (hu, de, fr, es, it): pontos fordítás
-4. Fiktív nyelvek (asg, dot, kl, qu, goa, ya): stílus-adaptáció a meglévő szótárral
-5. **HARD constraint:** betartja a fordítási hossz budget-et (-5% / +2% tűrés)
+**Operation:**
+1. Loads the language-specific rule files (`.claude/rules/locales/<lang>.md`)
+2. Uses the existing content as context for style calibration
+3. Real languages (hu, de, fr, es, it): accurate translation
+4. Fictional languages (asg, dot, kl, qu, goa, ya): style adaptation with the existing vocabulary
+5. **HARD constraint:** observes the translation length budget (-5% / +2% tolerance)
 
-**TARGETED_FIXES formátum (hossz-korrekcióhoz):**
+**TARGETED_FIXES format (for length correction):**
 ```json
 {
   "hu": [
@@ -411,397 +413,397 @@ változatlan tartalmat.
   ]
 }
 ```
-- `mode: "expand"` → szöveg bővítése (TOO_SHORT)
-- `mode: "compress"` → szöveg tömörítése (TOO_LONG)
-- `mode: "translate"` → újrafordítás angolból
+- `mode: "expand"` → expand the text (TOO_SHORT)
+- `mode: "compress"` → compress the text (TOO_LONG)
+- `mode: "translate"` → re-translate from English
 
-**Munkahely TOTAL repair stratégia:**
-- Minden komponens (description, bullets, project bullets) külön mérése
-- Legjobb jelölt kiválasztása (ahol a módosítás természetes)
-- Csak a kiválasztott komponens módosítása, új összeg ellenőrzése
-- Validátor futtatása a megerősítéshez
+**Workplace TOTAL repair strategy:**
+- Measure each component (description, bullets, project bullets) separately
+- Select the best candidate (where the change is natural)
+- Modify only the selected component, check the new total
+- Run the validator to confirm
 
-**Kimenet:** Jelentés arról, mely locale fájlok frissültek.
-
----
-
-### `cv-backup-agent` — Verzió Snapshot Készítő
-
-**Meghívja:** `job-apply-orchestrator`, `cv-backup` skill, `cv-improver`
-
-**Funkció:** Pontos időbeli snapshot készítése a `cv-data.js`-ről és minden locale fájlról.
-
-**Bemeneti paraméterek:**
-| Paraméter | Típus | Kötelező? | Leírás |
-|-----------|-------|-----------|--------|
-| `MODE` | string | igen | `"job-apply"` vagy `"manual"` |
-| `VERSION_BASE` | string | igen | Mappanév base (pl. `2026-06-15_0915_manual`) |
-| `JD_TITLE` | string | igen | Pozíció neve |
-| `JD_COMPANY` | string | igen | Cég neve |
-| `JD_SENIORITY` | string | opcionális | Szenioritás |
-| `JD_DOMAIN` | string | opcionális | Domain |
-| `OVERALL_SCORE` | string | opcionális | ATS% |
-| `REQUIRED_SCORE` | string | opcionális | Required% |
-| `PREFERRED_SCORE` | string | opcionális | Preferred% |
-| `CHANGE_SUMMARY` | string | opcionális | Változtatások leírása |
-| `HR_REVIEW_FILE` | string | opcionális | HR review report elérés |
-| `DATE` | string | igen | YYYY-MM-DD |
-| `TIME` | string | igen | HHMM |
-
-**Verzióütközés kezelés:**
-- Ha a `VERSION_BASE`-re már létezik mappa: [a] új verzió (-v2, -v3...) / [b] felülírás / [n] leáll
-- Minden snapshot tartalmaz: `cv-data.js` (metaadat fejléccel) + `locales/` (12 JS fájl)
-
-**Fontos:** A locales/ könyvtár file copy-val másolódik, nem JSON konverzióval —
-így megmarad az eredeti JS formátum (single quotes, trailing commas, stb.).
+**Output:** A report of which locale files were updated.
 
 ---
 
-### `cover-letter-agent` — Motivációs Levél Író
+### `cv-backup-agent` — Version Snapshot Creator
 
-**Meghívja:** `job-apply-orchestrator`, `cover-letter` skill
+**Invoked by:** `job-apply-orchestrator`, `cv-backup` skill, `cv-improver`
 
-**Funkció:** Professzionális, személyre szabott motivációs levelek írása angol, magyar
-és JD-nyelvű változatban.
+**Function:** Creates an accurate point-in-time snapshot of `cv-data.js` and every locale file.
 
-**Bemeneti paraméterek:**
-| Paraméter | Típus | Kötelező? | Leírás |
-|-----------|-------|-----------|--------|
-| `JD_TITLE` | string | igen | Pozíció |
-| `JD_COMPANY` | string | igen | Cég |
-| `JD_DOMAIN` | string | opcionális | Domain |
-| `JD_SENIORITY` | string | opcionális | Szenioritás |
-| `JD_REQUIRED` | string[] | igen | Elvárt skill-ek |
-| `JD_RESPONSIBILITIES` | string[] | igen | Felelősségek |
-| `JD_PRIMARY_LANGUAGE` | string | igen | JD nyelve |
-| `PROFILE_DATA` | objektum/null | igen | Profil adatok |
-| `CV_SUMMARY` | string | igen | Összefoglaló |
-| `CV_BULLETS_ALL` | array | igen | Bullet-ek |
-| `CV_EXPERIENCE_SUMMARY` | string | igen | Tapasztalatok |
-| `OUTPUT_FOLDER` | string | igen | Kimeneti mappa |
-| `DATE` | string | igen | Dátum |
-| `TIME` | string | igen | Idő |
+**Input parameters:**
+| Parameter | Type | Required? | Description |
+|-----------|------|-----------|-------------|
+| `MODE` | string | yes | `"job-apply"` or `"manual"` |
+| `VERSION_BASE` | string | yes | Folder-name base (e.g. `2026-06-15_0915_manual`) |
+| `JD_TITLE` | string | yes | Position name |
+| `JD_COMPANY` | string | yes | Company name |
+| `JD_SENIORITY` | string | optional | Seniority |
+| `JD_DOMAIN` | string | optional | Domain |
+| `OVERALL_SCORE` | string | optional | ATS% |
+| `REQUIRED_SCORE` | string | optional | Required% |
+| `PREFERRED_SCORE` | string | optional | Preferred% |
+| `CHANGE_SUMMARY` | string | optional | Description of changes |
+| `HR_REVIEW_FILE` | string | optional | HR review report path |
+| `DATE` | string | yes | YYYY-MM-DD |
+| `TIME` | string | yes | HHMM |
 
-**Bizonyíték alapú működés:**
-1. Bizonyíték térkép építése a `cv-data.js` + `profile/*.md` alapján
-2. Legjobb bizonyítékok kiválasztása a JD-hez (OPENING_HOOK, PARA1-3)
-3. Levél írása 3-4 tömör bekezdésben
-4. Anti-hallucináció: minden állításnak citable-nek kell lennie
+**Version-conflict handling:**
+- If a folder already exists for the `VERSION_BASE`: [a] new version (-v2, -v3...) / [b] overwrite / [n] stop
+- Every snapshot contains: `cv-data.js` (with metadata header) + `locales/` (12 JS files)
 
-**Kimenet:**
-- `OUTPUT_FOLDER/cover-letter-en.md` (mindig)
-- `OUTPUT_FOLDER/cover-letter-hu.md` (mindig)
-- `OUTPUT_FOLDER/cover-letter-[de|fr|es|it].md` (ha JD nyelve ettől eltér)
+**Important:** The locales/ directory is copied by file copy, not by JSON conversion —
+so the original JS format is preserved (single quotes, trailing commas, etc.).
 
 ---
 
-### `locale-agent` — Locale Kulcs Hozzáadó
+### `cover-letter-agent` — Cover Letter Writer
 
-**Meghívja:** `/locale-check --fix`
+**Invoked by:** `job-apply-orchestrator`, `cover-letter` skill
 
-**Funkció:** Új `labels` kulcsok hozzáadása mind a 12 `*-page.js` fájlhoz.
+**Function:** Writes professional, personalized cover letters in English, Hungarian,
+and the JD's language.
 
-**Bemenet:**
-- `NEW_KEYS` — kulcsnevek listája
-- `EN_VALUES` — angol referencia értékek
-- `TARGET_FILES` — mely fájlokat frissítse (alapértelmezett: mind a 11 nem-angolt)
+**Input parameters:**
+| Parameter | Type | Required? | Description |
+|-----------|------|-----------|-------------|
+| `JD_TITLE` | string | yes | Position |
+| `JD_COMPANY` | string | yes | Company |
+| `JD_DOMAIN` | string | optional | Domain |
+| `JD_SENIORITY` | string | optional | Seniority |
+| `JD_REQUIRED` | string[] | yes | Required skills |
+| `JD_RESPONSIBILITIES` | string[] | yes | Responsibilities |
+| `JD_PRIMARY_LANGUAGE` | string | yes | JD's language |
+| `PROFILE_DATA` | object/null | yes | Profile data |
+| `CV_SUMMARY` | string | yes | Summary |
+| `CV_BULLETS_ALL` | array | yes | Bullets |
+| `CV_EXPERIENCE_SUMMARY` | string | yes | Experiences |
+| `OUTPUT_FOLDER` | string | yes | Output folder |
+| `DATE` | string | yes | Date |
+| `TIME` | string | yes | Time |
 
-**Fordítási stratégia:**
-| Nyelv | Típus | Megközelítés |
-|-------|-------|-------------|
-| hu | Valós | Pontos fordítás |
-| de | Valós | Pontos fordítás |
-| fr | Valós | Pontos fordítás |
-| es | Valós | Pontos fordítás |
-| it | Valós | Pontos fordítás |
-| asg | Fiktív | Stílus-konzisztens, óészaki hangulat |
-| dot | Fiktív | Rövid, mássalhangzó-gazdag szavak |
-| kl | Fiktív | Kemény hangzók, aposztrófok |
-| qu | Fiktív | Elvies, dallamos magánhangzók |
-| goa | Fiktív | Pompás, parancsoló hangvétel |
-| ya | Fiktív | Gutturális, ritka szavak |
+**Evidence-based operation:**
+1. Build an evidence map based on `cv-data.js` + `profile/*.md`
+2. Select the best evidence for the JD (OPENING_HOOK, PARA1-3)
+3. Write the letter in 3-4 concise paragraphs
+4. Anti-hallucination: every statement must be citable
 
-**Korlátok:**
-- Soha nem módosítja az `en-page.js`-t (az a referencia)
-- Soha nem módosít `<lang>.js` fájlokat (csak `*-page.js`)
-- Meglévő kulcsokat soha nem töröl
-
----
-
-### `view-check-agent` — Új Nézet Ellenőrző
-
-**Meghívja:** `/code-review` (új view detektálásakor)
-
-**Funkció:** Ellenőrzi, hogy egy új CV nézet megfelel-e a projekt kötelező elemeinek.
-
-**Ellenőrzési checklist:**
-| # | Ellenőrzés | Mit vizsgál |
-|---|------------|-------------|
-| 1 | Music player | `musicPlayerHTML()` + `initMusicPlayer()` importálva? |
-| 2 | Hire Me modál | `hireModalHTML()` + `initHireModal()` használva? |
-| 3 | Booking modál | `bookingModalHTML()` + `initBookingModal()` használva? |
-| 4 | Toast container | `<div id="cv-toaster-container">` jelen van? |
-| 5 | Carousel regisztráció | `.cv-slide` elem az `index.html`-ben? |
-| 6 | Locale kulcsok | Minden `locale.t()` kulcs létezik `en.js`-ben? |
-| 7 | Reszponzív CSS | Van `@media` query? Megvan a mobil breakpoint? |
-| 8 | Accessibility | Van aria-label minden icon-only gombon? |
-| 9 | Biztonság | Nincs `.innerHTML` dinamikus tartalommal? |
-
-**Kimenet:** PASS / FAIL / WARN jelentés minden ellenőrzésre.
+**Output:**
+- `OUTPUT_FOLDER/cover-letter-en.md` (always)
+- `OUTPUT_FOLDER/cover-letter-hu.md` (always)
+- `OUTPUT_FOLDER/cover-letter-[de|fr|es|it].md` (if the JD's language differs from these)
 
 ---
 
-### `arch-review-agent` — Architektúra Elemző
+### `locale-agent` — Locale Key Adder
 
-**Meghívja:** `/arch-review` skill
+**Invoked by:** `/locale-check --fix`
 
-**Funkció:** Mély architekturális elemzés a teljes kódbázison. Öt dimenzióban vizsgál:
+**Function:** Adds new `labels` keys to all 12 `*-page.js` files.
+
+**Input:**
+- `NEW_KEYS` — list of key names
+- `EN_VALUES` — English reference values
+- `TARGET_FILES` — which files to update (default: all 11 non-English)
+
+**Translation strategy:**
+| Language | Type | Approach |
+|----------|------|----------|
+| hu | Real | Accurate translation |
+| de | Real | Accurate translation |
+| fr | Real | Accurate translation |
+| es | Real | Accurate translation |
+| it | Real | Accurate translation |
+| asg | Fictional | Style-consistent, Old Norse feel |
+| dot | Fictional | Short, consonant-rich words |
+| kl | Fictional | Hard sounds, apostrophes |
+| qu | Fictional | Abstract, melodic vowels |
+| goa | Fictional | Pompous, commanding tone |
+| ya | Fictional | Guttural, sparse words |
+
+**Limits:**
+- Never modifies `en-page.js` (that's the reference)
+- Never modifies `<lang>.js` files (only `*-page.js`)
+- Never deletes existing keys
+
+---
+
+### `view-check-agent` — New View Checker
+
+**Invoked by:** `/code-review` (when a new view is detected)
+
+**Function:** Checks whether a new CV view meets the project's required elements.
+
+**Check checklist:**
+| # | Check | What it inspects |
+|---|-------|------------------|
+| 1 | Music player | `musicPlayerHTML()` + `initMusicPlayer()` imported? |
+| 2 | Hire Me modal | `hireModalHTML()` + `initHireModal()` used? |
+| 3 | Booking modal | `bookingModalHTML()` + `initBookingModal()` used? |
+| 4 | Toast container | `<div id="cv-toaster-container">` present? |
+| 5 | Carousel registration | `.cv-slide` element in `index.html`? |
+| 6 | Locale keys | Does every `locale.t()` key exist in `en.js`? |
+| 7 | Responsive CSS | Is there an `@media` query? Is the mobile breakpoint there? |
+| 8 | Accessibility | Is there an aria-label on every icon-only button? |
+| 9 | Security | No `.innerHTML` with dynamic content? |
+
+**Output:** A PASS / FAIL / WARN report for every check.
+
+---
+
+### `arch-review-agent` — Architecture Analyzer
+
+**Invoked by:** `/arch-review` skill
+
+**Function:** A deep architectural analysis of the entire codebase. It inspects five dimensions:
 templating, data, localization, CSS, tooling.
 
-**Elemzési folyamat:**
-1. Teljes kódbázis inventory (HTML, JS, CSS, locale fájlok)
-2. 5 dimenziós analízis (a focus-tól függően)
-3. Pontozás: Pain Level (🔴/🟡/🟢) × Improvement Potential × Effort
-4. Proposálok összeállítása Tier-ek szerint
-5. Riport írása a `.claude/rules/arch-review-report-format.md` sablon alapján
+**Analysis process:**
+1. Full codebase inventory (HTML, JS, CSS, locale files)
+2. 5-dimensional analysis (depending on the focus)
+3. Scoring: Pain Level (🔴/🟡/🟢) × Improvement Potential × Effort
+4. Assemble proposals by tier
+5. Write the report based on the `.claude/rules/arch-review-report-format.md` template
 
-**Visszatérési értékek:**
-- `REPORT_FILE` — riport fájl elérési útja
-- `PAIN_HIGH/MED/LOW` — fájdalompont listák
-- `PROPOSAL_COUNTS` — tier-enkénti proposál számok
-- `TOP_RECOMMENDATION` — legfontosabb teendő
+**Return values:**
+- `REPORT_FILE` — the report file's path
+- `PAIN_HIGH/MED/LOW` — pain-point lists
+- `PROPOSAL_COUNTS` — per-tier proposal counts
+- `TOP_RECOMMENDATION` — the most important task
 
-**Korlát:** Csak olvasás — soha nem módosít fájlokat.
+**Limit:** Read only — never modifies files.
 
 ---
 
-### `job-apply-orchestrator` — Álláspályázati Vezérlő
+### `job-apply-orchestrator` — Job-Application Controller
 
-**Meghívja:** `/job-apply` skill
+**Invoked by:** `/job-apply` skill
 
-**Funkció:** A teljes job-apply pipeline orchestrálása. Ez a legbonyolultabb agent —
-11 lépésből álló folyamatot vezényel le, más agent-eket hív meg.
+**Function:** Orchestrates the full job-apply pipeline. This is the most complex agent —
+it conducts an 11-step process and invokes other agents.
 
-**Teljes lépéssor:**
+**Full step sequence:**
 ```
 Step 0 - JD parse + metadata
-Step 1 - CV adatok + profil betöltése
-Step 2 - HR/ATS elemzés + pontozás + változtatási terv
-Step 2e - Alkalmasági kapu
-Step 3 - Döntés (90%+ és nincs változtatás → stop)
-Step 4 - Terv megjelenítése + jóváhagyás
-Step 6 - cv-data.js módosítása
+Step 1 - Load CV data + profile
+Step 2 - HR/ATS analysis + scoring + change plan
+Step 2e - Suitability gate
+Step 3 - Decision (90%+ and no change → stop)
+Step 4 - Display the plan + approval
+Step 6 - Modify cv-data.js
 Step 7 - cv-translator-agent dispatch
-Step 7b - Fordítási minőség spot-check
-Step 7c - JS szintaxis validáció
-Step 7d - Fordítási hossz validáció (max 3 iteráció)
+Step 7b - Translation quality spot-check
+Step 7c - JS syntax validation
+Step 7d - Translation length validation (max 3 iterations)
 Step 8 - cv-backup-agent dispatch
 Step 8b - cover-letter-agent dispatch
-Step 8c - Alkalmazás regisztráció (JD mentés + marker + log)
-Step 9 - Végeredmény
+Step 8c - Application registration (JD save + marker + log)
+Step 9 - Final result
 ```
 
-**Kritikus biztonsági lépések:**
-- Step 4: Minden változtatást jóvá kell hagyni
-- Step 2e: Ha a jelölt nem felel meg, figyelmeztet
-- Step 7d: Max 3 iteráció, utána graciőz kilépés
+**Critical safety steps:**
+- Step 4: Every change must be approved
+- Step 2e: If the candidate is not suitable, it warns
+- Step 7d: Max 3 iterations, then a graceful exit
 
 ---
 
-# 3. Közös Adatforrások és Fájlok
+# 3. Shared Data Sources and Files
 
-## 3.1 Adatforrások
+## 3.1 Data Sources
 
-| Fájl / Mappa | Leírás | Ki írja |
-|-------------|--------|---------|
-| `cv/cv-data.js` | CV adatok egyetlen forrása | `/job-apply`, `/cv-improver`, `cv-generator` |
-| `cv/locales/*.js` | 12 locale fájl (en + 11 fordítás) | `cv-translator-agent`, `locale-agent` |
-| `cv/locales/*-page.js` | 12 UI label fájl | `locale-agent` |
-| `scripts/config.js` | Feature flag-ek, URL-ek, storage kulcsok | Kézzel |
-| `scripts/shared.js` | Közös komponensek (modálok, music player) | Kézzel |
-| `profile/*.md` | Karrier profil (anti-hallucináció bázis) | Kézzel |
+| File / Folder | Description | Who writes it |
+|---------------|-------------|---------------|
+| `cv/cv-data.js` | Single source of truth for CV data | `/job-apply`, `/cv-improver`, `cv-generator` |
+| `cv/locales/*.js` | 12 locale files (en + 11 translations) | `cv-translator-agent`, `locale-agent` |
+| `cv/locales/*-page.js` | 12 UI label files | `locale-agent` |
+| `scripts/config.js` | Feature flags, URLs, storage keys | By hand |
+| `scripts/shared.js` | Shared components (modals, music player) | By hand |
+| `profile/*.md` | Career profile (anti-hallucination base) | By hand |
 
-## 3.2 Kimeneti Fájlok
+## 3.2 Output Files
 
-| Fájl / Mappa | Leírás | Ki írja |
-|-------------|--------|---------|
-| `review/*.md` | Review riportok (hr, security, arch) | `/hr-review`, `/security-review`, `/arch-review` |
-| `cv-versions/APP_ID/` | Verzió snapshot mappák | `cv-backup-agent` |
-| `cv-versions/applications.md` | Pályázati index | `job-apply-orchestrator` |
-| `cv-versions/history.md` | Audit napló (append-only) | `cv-ledger.py` |
-| `letters/DATE_company_title/` | Motivációs levelek | `cover-letter-agent` |
-| `tmp/jd-draft.md` | Ideiglenes JD sablon | `/job-apply` (csak argumentum nélkül) |
+| File / Folder | Description | Who writes it |
+|---------------|-------------|---------------|
+| `review/*.md` | Review reports (hr, security, arch) | `/hr-review`, `/security-review`, `/arch-review` |
+| `cv-versions/APP_ID/` | Version snapshot folders | `cv-backup-agent` |
+| `cv-versions/applications.md` | Application index | `job-apply-orchestrator` |
+| `cv-versions/history.md` | Audit log (append-only) | `cv-ledger.py` |
+| `letters/DATE_company_title/` | Cover letters | `cover-letter-agent` |
+| `tmp/jd-draft.md` | Temporary JD template | `/job-apply` (only without an argument) |
 
-## 3.3 CLI Segéd Script-ek
+## 3.3 CLI Helper Scripts
 
-| Script | Skill-hez tartozik | Használat |
-|--------|-------------------|-----------|
-| `.claude/scripts/check-translation-lengths.py` | — (pipeline) | Fordítási hossz validáció |
-| `.claude/scripts/validate-locale-syntax.py` | — (pipeline) | JS szintaxis validáció |
-| `.claude/scripts/cv-ledger.py` | — (megosztott) | Marker, napló, verzió lekérdezés |
-| `.claude/skills/cv-backup/scripts/cv-backup.py` | `/cv-backup` | Snapshot CLI-ből |
-| `.claude/skills/cv-restore/scripts/cv-restore.py` | `/cv-restore` | Restore CLI-ből |
-| `.claude/skills/locale-check/scripts/locale-check.py` | `/locale-check` | Locale ellenőrzés CLI-ből |
+| Script | Belongs to skill | Usage |
+|--------|------------------|-------|
+| `.claude/scripts/check-translation-lengths.py` | — (pipeline) | Translation length validation |
+| `.claude/scripts/validate-locale-syntax.py` | — (pipeline) | JS syntax validation |
+| `.claude/scripts/cv-ledger.py` | — (shared) | Marker, log, version query |
+| `.claude/skills/cv-backup/scripts/cv-backup.py` | `/cv-backup` | Snapshot from CLI |
+| `.claude/skills/cv-restore/scripts/cv-restore.py` | `/cv-restore` | Restore from CLI |
+| `.claude/skills/locale-check/scripts/locale-check.py` | `/locale-check` | Locale check from CLI |
 
 ---
 
-# 4. Gyakori Használati Minta
+# 4. Common Usage Patterns
 
-## 4.1 Új állásra jelentkezés
+## 4.1 Applying for a new job
 
 ```bash
-# 1. Lépés: ATS review a cv-data.js módosítása nélkül
+# Step 1: ATS review without modifying cv-data.js
 /job-apply "Senior Frontend Engineer at Acme Corp. Requirements:..."
 
-# VAGY fájlból:
-/job-apply allasleiras.txt
+# OR from a file:
+/job-apply job-description.txt
 
-# VAGY sablonból (interaktív):
+# OR from a template (interactive):
 /job-apply
-# → tmp/jd-draft.md kitöltése, majd "kész"
+# → fill in tmp/jd-draft.md, then "done"
 
-# 2. Lépés: A pipeline végigfut, eredmény:
-#   ✅ cv-data.js optimalizálva
-#   ✅ 11 locale frissítve
+# Step 2: the pipeline runs through, result:
+#   ✅ cv-data.js optimized
+#   ✅ 11 locales updated
 #   ✅ Snapshot: cv-versions/2026-06-15_acme-corp_senior-frontend-engineer/
-#   ✅ Cover letter-ek angolul + magyarul
+#   ✅ Cover letters in English + Hungarian
 ```
 
-## 4.2 Kézi CV módosítás
+## 4.2 Manual CV modification
 
 ```bash
-# 1. Backup a jelenlegi állapotról
+# 1. Backup the current state
 /cv-backup before-edits
 
-# 2. cv-data.js kézi szerkesztése...
-# (a fájl szerkesztése a kedvenc editorban)
+# 2. Manually edit cv-data.js...
+# (editing the file in your favorite editor)
 
-# 3. Változások propagálása a locale-okba
-# → közvetlen agent hívás:
-# "Futtasd a cv-translator-agent agentet. A megváltozott mezők:
-#   summary: régi → új
-#   Aegex bullet 1: régi → új"
+# 3. Propagate the changes into the locales
+# → direct agent call:
+# "Run the cv-translator-agent. The changed fields:
+#   summary: old → new
+#   Aegex bullet 1: old → new"
 
-# VAGY használd a /cv-improver-t egy HR review report-ból
+# OR use /cv-improver from an HR review report
 ```
 
-## 4.3 Visszaállítás
+## 4.3 Restoring
 
 ```bash
-# 1. Backupok listázása (a mappa nevek alapján)
+# 1. List the backups (by their folder names)
 /cv-restore 2026-06-15_0915_manual_pre-refactor
 
-# 2. Megerősítés után automatikus pre-restore backup + visszaállítás
+# 2. After confirmation, an automatic pre-restore backup + restore
 
-# CLI-ből is:
+# From CLI too:
 python .claude/skills/cv-restore/scripts/cv-restore.py --list
 ```
 
-## 4.4 Rendszeres karbantartás
+## 4.4 Regular maintenance
 
 ```bash
-# Heti/2 hetente:
-/locale-check              # locale kulcsok ellenőrzése
-/code-review                 # teljes kódreview
-/language-reviewer all     # nyelvi lektorálás
+# Weekly / every 2 weeks:
+/locale-check              # check locale keys
+/code-review               # full code review
+/language-reviewer all     # language proofreading
 
-# Periodikusan:
-/security-review           # spam/flood védelem audit
-/arch-review               # architektúra elemzés
+# Periodically:
+/security-review           # spam/flood protection audit
+/arch-review               # architecture analysis
 ```
 
 ---
 
-# 5. Hibakeresési Tippek
+# 5. Troubleshooting Tips
 
-## 5.1 Gyakori problémák
+## 5.1 Common problems
 
-| Probléma | Valószínű ok | Megoldás |
-|----------|-------------|----------|
-| `/locale-check` hiányzó kulcsokat jelez | Új UI elem került be, de nincs minden locale-ban | `/locale-check --fix` |
-| `check-translation-lengths.py` hibát jelez | Fordítás túl hosszú/rövid | A pipeline Step 7d automatikusan javítja max 3 körben |
-| JS szintaxis hiba locale fájlban | Aposztróf single-quote stringben | `validate-locale-syntax.py --json` megmondja a pontos helyet |
-| `cv-translator-agent` nem talál szabályfájlt | `.claude/rules/locales/<lang>.md` hiányzik | Ellenőrizd a fájl meglétét |
-| Pipeline leáll a Step 4-nél | Változtatási terv elutasítva | Futtasd újra és fogadd el, vagy manuálisan módosíts |
+| Problem | Likely cause | Solution |
+|---------|-------------|----------|
+| `/locale-check` reports missing keys | A new UI element was added but isn't in every locale | `/locale-check --fix` |
+| `check-translation-lengths.py` reports an error | Translation too long/short | The pipeline's Step 7d fixes it automatically in max 3 rounds |
+| JS syntax error in a locale file | Apostrophe in a single-quote string | `validate-locale-syntax.py --json` tells you the exact spot |
+| `cv-translator-agent` can't find a rule file | `.claude/rules/locales/<lang>.md` is missing | Check that the file exists |
+| Pipeline stops at Step 4 | The change plan was rejected | Run it again and accept, or modify manually |
 
-## 5.2 Kilépési kódok
+## 5.2 Exit codes
 
 | Script | 0 | 1 |
 |--------|---|---|
-| `check-translation-lengths.py` | Minden hossz a sávon belül | Van TOO_SHORT vagy TOO_LONG |
-| `validate-locale-syntax.py` | Minden fájl valid JS | Van szintaktikai hiba |
-| `cv-ledger.py mark` | Marker sikeresen beállítva | Hiba a marker beállításában |
-| `cv-ledger.py log` | Napló sor sikeresen hozzáadva | Hiba a naplózásban |
+| `check-translation-lengths.py` | Every length within the band | There is a TOO_SHORT or TOO_LONG |
+| `validate-locale-syntax.py` | Every file is valid JS | There is a syntax error |
+| `cv-ledger.py mark` | Marker set successfully | Error setting the marker |
+| `cv-ledger.py log` | Log row added successfully | Error while logging |
 
-## 5.3 Mit tegyél ha...
+## 5.3 What to do if...
 
-**...a pipeline végtelen hurokba kerül?**
-- Nem lehetséges — a Step 7d-nek max 3 iterációs korlátja van
+**...the pipeline gets into an infinite loop?**
+- Not possible — Step 7d has a max-3-iteration limit
 
-**...a fordító agent rosszul fordít?**
-- Futtasd: `/language-reviewer <lang>` — csak jelent, nem javít
-- Ha a hiba ismétlődő, frissítsd a `.claude/rules/locales/<lang>.md` szabályfájlt
+**...the translator agent translates poorly?**
+- Run: `/language-reviewer <lang>` — only reports, does not fix
+- If the error is recurring, update the `.claude/rules/locales/<lang>.md` rule file
 
-**...a motivációs levél gyenge?**
-- A levél sablon — szabadon szerkeszthető a `cover-letter-*.md` fájlokban
-- Ellenőrizd, hogy a `profile/*.md` fájlok elég részletesek-e
-- Futtasd: `/language-reviewer en` és `/language-reviewer hu`
+**...the cover letter is weak?**
+- The letter is a template — freely editable in the `cover-letter-*.md` files
+- Check whether the `profile/*.md` files are detailed enough
+- Run: `/language-reviewer en` and `/language-reviewer hu`
 
 ---
 
-# 6. Verziókövetési Rendszer
+# 6. Version-Tracking System
 
-A teljes CV állapot egyetlen azonosítóval követhető: **APP_ID** = snapshot mappa neve
+The entire CV state is traceable through a single identifier: **APP_ID** = the snapshot folder name
 (= `DATE_company_title`).
 
-**Három réteg:**
-1. **Live marker blokk** — `cv-data.js` + 12 `<lang>.js` fájl tetején:
+**Three layers:**
+1. **Live marker block** — at the top of `cv-data.js` + 12 `<lang>.js` files:
    ```
    // @job-application: APP_ID — Title @ Company
-   // @cv-last-change: YYYY-MM-DD HHMM — művelet (aktor)
+   // @cv-last-change: YYYY-MM-DD HHMM — operation (actor)
    ```
-2. **Audit napló** — `cv-versions/history.md` (append-only)
-3. **Pályázati index** — `cv-versions/applications.md` (egy sor / APP_ID)
+2. **Audit log** — `cv-versions/history.md` (append-only)
+3. **Application index** — `cv-versions/applications.md` (one row / APP_ID)
 
-**Minden mutáció a `cv-ledger.py`-n keresztül történik** — soha nem kézzel írva a markert.
+**Every mutation goes through `cv-ledger.py`** — the marker is never written by hand.
 
-A `cv-ledger.py` támogatott műveletei:
-| Parancs | Funkció |
-|---------|---------|
-| `mark --set-application ...` | Marker beállítása új alkalmazáshoz |
-| `mark --operation ...` | Csak `@cv-last-change` frissítése |
-| `log --category ... --operation ...` | Audit napló sor hozzáadása |
-| `current` | Aktuális marker kiolvasása |
-
----
-
-# 7. Szabályfájlok Referencia
-
-| Fájl | Tartalom |
-|------|----------|
-| `.claude/rules/locales/<lang>.md` (×12) | Nyelvspecifikus fordítási szabályok |
-| `.claude/rules/translation-length.md` | Fordítási hosszkorlát szabály |
-| `.claude/rules/localization.md` | Locale rendszer használati útmutató |
-| `.claude/rules/js-syntax-validation.md` | JavaScript szintaxis validációs szabály |
-| `.claude/rules/aria-labels.md` | Aria label követelmények |
-| `.claude/rules/new-view.md` | Új nézet létrehozás checklist |
-| `.claude/rules/shared-api.md` | `shared.js` exportok referenciája |
-| `.claude/rules/responsive.md` | Reszponzív CSS szabályok |
-| `.claude/rules/career-profile-usage.md` | Profile fájlok YAML-szűrési logikája |
-| `.claude/rules/version-snapshot-format.md` | Verzió mappa formátumok |
-| `.claude/rules/jd-draft-template.md` | JD sablon formátum |
-| `.claude/rules/arch-review-report-format.md` | Arch review riport sablon |
-| `.claude/rules/script-placement.md` | Script mappa szétválasztási szabály |
+The operations supported by `cv-ledger.py`:
+| Command | Function |
+|---------|----------|
+| `mark --set-application ...` | Set the marker for a new application |
+| `mark --operation ...` | Update only `@cv-last-change` |
+| `log --category ... --operation ...` | Add an audit-log row |
+| `current` | Read the current marker |
 
 ---
 
-# 8. Architektúra Ábra
+# 7. Rule Files Reference
+
+| File | Content |
+|------|---------|
+| `.claude/rules/locales/<lang>.md` (×12) | Language-specific translation rules |
+| `.claude/rules/translation-length.md` | Translation length-limit rule |
+| `.claude/rules/localization.md` | Locale system usage guide |
+| `.claude/rules/js-syntax-validation.md` | JavaScript syntax validation rule |
+| `.claude/rules/aria-labels.md` | Aria label requirements |
+| `.claude/rules/new-view.md` | New view creation checklist |
+| `.claude/rules/shared-api.md` | `shared.js` exports reference |
+| `.claude/rules/responsive.md` | Responsive CSS rules |
+| `.claude/rules/career-profile-usage.md` | YAML filtering logic for profile files |
+| `.claude/rules/version-snapshot-format.md` | Version folder formats |
+| `.claude/rules/jd-draft-template.md` | JD template format |
+| `.claude/rules/arch-review-report-format.md` | Arch review report template |
+| `.claude/rules/script-placement.md` | Script folder separation rule |
+
+---
+
+# 8. Architecture Diagram
 
 ```mermaid
 graph TD
-    User([👤 Felhasználó])
+    User([👤 User])
 
-    subgraph Skills["Skill-ek (slash commandok)"]
+    subgraph Skills["Skills (slash commands)"]
         LC["/locale-check"]
         CR["/code-review"]
         LR["/language-reviewer"]
@@ -816,7 +818,7 @@ graph TD
         CVR["/cv-restore"]
     end
 
-    subgraph Agents["Agent-ek (AI folyamatok)"]
+    subgraph Agents["Agents (AI processes)"]
         JAO["job-apply-orchestrator"]
         CTA["cv-translator-agent"]
         CBA["cv-backup-agent"]
@@ -826,7 +828,7 @@ graph TD
         ARA["arch-review-agent"]
     end
 
-    subgraph Data["Adatforrások"]
+    subgraph Data["Data sources"]
         CVD["cv-data.js"]
         LOC["locales/*.js ×12"]
         RULES["rules/locales/*.md ×12"]
@@ -840,7 +842,7 @@ graph TD
     User ==> Skills
 
     LC -. --fix .-> LA
-    CR -. új nézet .-> VCA
+    CR -. new view .-> VCA
     AR --> ARA
     CB --> CBA
     CL --> CLA
@@ -848,12 +850,12 @@ graph TD
 
     JAO --> CTA
     JAO --> CBA
-    JAO -. opcionális .-> CLA
+    JAO -. optional .-> CLA
 
     Skills ==> Data
     Agents ==> Data
 ```
 
 ---
-*Utolsó frissítés: 2026. június*
-*A dokumentum a `.claude/` könyvtárban található SKILL.md és agent fájlok alapján készült.*
+*Last updated: June 2026*
+*This document was created based on the SKILL.md and agent files in the `.claude/` directory.*
