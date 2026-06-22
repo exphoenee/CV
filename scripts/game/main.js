@@ -612,6 +612,7 @@ class GameEngine {
   setupPauseMenuListeners() {
     const resumeBtn = document.getElementById('btn-resume-game');
     const backdrop = document.getElementById('pause-backdrop');
+    const pauseBox = document.querySelector('.pause-box');
 
     const fullscreenBtn = document.getElementById('btn-fullscreen');
     if (fullscreenBtn) {
@@ -624,6 +625,17 @@ class GameEngine {
     if (backdrop) {
       backdrop.addEventListener('click', () => this.resumeGame());
     }
+
+    const updateCompactPause = () => {
+      if (!pauseBox) return;
+      const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      pauseBox.classList.toggle('compact-pause', vh < 420);
+    };
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', updateCompactPause);
+    }
+    window.addEventListener('resize', updateCompactPause);
+    updateCompactPause();
 
     // Music Player Setup
     const audio = document.getElementById('game-music-audio');
