@@ -1,17 +1,17 @@
 /**
  * cv-data.js — Job Application Snapshot
- * @job-application: 2026-06-22_molin-ai_senior-software-engineer
- * @title: Senior Software Engineer
- * @company: Molin AI
+ * @job-application: 2026-06-22_diligent_senior-software-engineer-nodejs-react
+ * @title: Senior Software Engineer (NodeJS, React)
+ * @company: Diligent
  * @seniority: senior
- * @domain: AI, e-commerce, conversational AI
- * @ats-score: 75%
+ * @domain: GRC SaaS, governance, risk, compliance
+ * @ats-score: 80%
  * @operation: job-apply
  * @actor: job-apply-orchestrator
  * @date: 2026-06-22
  */
-// @job-application: 2026-06-22_molin-ai_senior-software-engineer — Senior Software Engineer @ Molin AI (2026-06-22) · snapshot: cv-versions/2026-06-22_molin-ai_senior-software-engineer/
-// @cv-last-change: 2026-06-22 0909 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
+// @job-application: 2026-06-22_galactic-fleet_senior-software-engineer-frontend-focus — Senior Software Engineer / Frontend focus @ Galactic Fleet (2026-06-22) · snapshot: cv-versions/2026-06-22_galactic-fleet_senior-software-engineer-frontend-focus/
+// @cv-last-change: 2026-06-22 0920 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 /**
  * cv-data.js
  * Central CV data object — single source of truth for all CV views.
@@ -53,7 +53,7 @@ export const CV_DATA = {
     },
   },
   summary:
-    "Frontend Developer with 5+ years of experience shipping production web applications with React, TypeScript, and Node.js. I've owned features end to end — from architecture and UI to API integration and deployment — across enterprise platforms. I'm a power user of Claude Code and Codex, using AI as a force multiplier to accelerate development while maintaining engineering quality. I focus on clean code, fast iteration, and scalable, maintainable frontend systems.",
+    "Software Engineer with 5+ years of experience building production web applications with React, TypeScript, and Node.js. I've modernized legacy systems through full rewrites and migration to modern stacks, working with SQL databases, REST APIs, and microservices architecture. I introduced automated testing strategies, CI pipelines with quality gates, and code standards. I focus on clean code, well-tested solutions, and continuous process improvement.",
   workExperience: [
     {
       id: "aegex",
@@ -69,7 +69,7 @@ export const CV_DATA = {
         "I led the architectural modernization of two enterprise legacy systems. I own end-to-end delivery of SafeSy and FACTS, including system design, frontend architecture, and backend integration. I introduced AI-assisted development workflows and CI-driven quality pipelines, enabling an evidence-based engineering process and significantly improving delivery speed and release reliability.",
 
       bullets: [
-        "I owned features end to end for two enterprise platforms (SafeSy, FACTS) — architecture, UI, API integration, and deployment — shipping production frontend applications with React, TypeScript, and Node.js",
+        "I modernized and built features for two enterprise platforms (SafeSy, FACTS) — architecture, database design, REST API integration, and deployment — with React, TypeScript, Node.js, and SQL",
         "I led the modernization of legacy systems through full rewrites and migration to modern frontend stacks",
         "I introduced AI-assisted development workflows improving engineering throughput and consistency",
         "I implemented a CI pipeline with automated quality gates and testing strategy from scratch",

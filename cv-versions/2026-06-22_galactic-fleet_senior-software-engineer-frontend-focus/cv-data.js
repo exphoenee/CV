@@ -1,11 +1,11 @@
 /**
  * cv-data.js — Job Application Snapshot
- * @job-application: 2026-06-22_molin-ai_senior-software-engineer
- * @title: Senior Software Engineer
- * @company: Molin AI
+ * @job-application: 2026-06-22_galactic-fleet_senior-software-engineer-frontend-focus
+ * @title: Senior Software Engineer / Frontend focus
+ * @company: Galactic Fleet
  * @seniority: senior
- * @domain: AI, e-commerce, conversational AI
- * @ats-score: 75%
+ * @domain: gaming, voice-controlled AI entertainment
+ * @ats-score: 60%
  * @operation: job-apply
  * @actor: job-apply-orchestrator
  * @date: 2026-06-22
@@ -53,7 +53,7 @@ export const CV_DATA = {
     },
   },
   summary:
-    "Frontend Developer with 5+ years of experience shipping production web applications with React, TypeScript, and Node.js. I've owned features end to end — from architecture and UI to API integration and deployment — across enterprise platforms. I'm a power user of Claude Code and Codex, using AI as a force multiplier to accelerate development while maintaining engineering quality. I focus on clean code, fast iteration, and scalable, maintainable frontend systems.",
+    "Frontend Developer with 5+ years of experience building interactive, production web applications with React, TypeScript, and Node.js. I've developed real-time, data-driven interfaces including WebSocket-based live systems and cross-platform UI solutions. I'm a power user of Claude Code and Codex, using AI to accelerate development. I focus on clean code, performant architecture, and creating engaging user experiences across devices.",
   workExperience: [
     {
       id: "aegex",
@@ -69,7 +69,7 @@ export const CV_DATA = {
         "I led the architectural modernization of two enterprise legacy systems. I own end-to-end delivery of SafeSy and FACTS, including system design, frontend architecture, and backend integration. I introduced AI-assisted development workflows and CI-driven quality pipelines, enabling an evidence-based engineering process and significantly improving delivery speed and release reliability.",
 
       bullets: [
-        "I owned features end to end for two enterprise platforms (SafeSy, FACTS) — architecture, UI, API integration, and deployment — shipping production frontend applications with React, TypeScript, and Node.js",
+        "I built interactive, real-time frontend experiences for two enterprise platforms (SafeSy, FACTS) — architecture, UI, API integration, and deployment — with React, TypeScript, and Node.js",
         "I led the modernization of legacy systems through full rewrites and migration to modern frontend stacks",
         "I introduced AI-assisted development workflows improving engineering throughput and consistency",
         "I implemented a CI pipeline with automated quality gates and testing strategy from scratch",

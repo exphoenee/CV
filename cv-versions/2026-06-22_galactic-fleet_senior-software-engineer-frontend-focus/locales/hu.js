@@ -3,14 +3,14 @@
 export const HU = {
   content: {
     summary:
-      "Frontend fejlesztő vagyok 5+ év tapasztalattal produktív webes alkalmazások szállításában React, TypeScript és Node.js technológiákkal. Jellemzően end-to-end felelősséget vállaltam a funkciókért — architektúrától és UI-tól az API integrációig és telepítésig — vállalati platformokon. Claude Code és Codex power user vagyok, AI-t használok erőszorzóként a fejlesztés gyorsítására miközben fenntartom a mérnöki minőséget. Tiszta kódra, gyors iterációra és skálázható, karbantartható frontend rendszerekre fókuszálok.",
+      "Frontend fejlesztő vagyok 5+ év tapasztalattal interaktív, produktív webes alkalmazások fejlesztésében React, TypeScript és Node.js technológiákkal. Valós idejű, adatvezérelt felületeket fejlesztettem, beleértve WebSocket-alapú élő rendszereket és cross-platform UI megoldásokat. Claude Code és Codex power user vagyok, AI-t használok a fejlesztés gyorsítására. Tiszta kódra, teljesítményorientált architektúrára és magával ragadó felhasználói élményekre fókuszálok eszközök széles skáláján.",
     workExperience: [
       {
         id: "aegex",
         description:
           "A SafeSy és FACTS rendszerek teljes körű architektúrális modernizációját vezettem — a rendszertervezéstől az éles üzemig. AI-asszisztált fejlesztési folyamatokat és CI-vezérelt minőségi pipeline-okat honosítottam meg, amelyek evidenciaalapú mérnöki kultúrát teremtettek és jelentősen növelték a szállítási sebességet és a kiadási megbízhatóságot.",
         bullets: [
-          "End-to-end felelősséget vállaltam két vállalati platform funkcióiért (SafeSy, FACTS) — architektúra, UI, API integráció és telepítés — produktív frontend alkalmazásokat szállítva React, TypeScript és Node.js technológiákkal",
+          "Interaktív, valós idejű frontend élményeket építettem két vállalati platformon (SafeSy, FACTS) — architektúra, UI, API integráció és telepítés — React, TypeScript és Node.js technológiákkal",
           "Legacy rendszerek modernizációját vezettem teljes újraírással és modern frontend stack-re való migrációval",
           "AI-asszisztált fejlesztési munkafolyamatokat vezettem be, növelve a mérnöki teljesítményt és konzisztenciát",
           "CI pipeline-t implementáltam automatizált minőségi kapukkal és tesztelési stratégiával a semmiből",

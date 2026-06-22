@@ -1,16 +1,16 @@
-// @job-application: 2026-06-22_molin-ai_senior-software-engineer — Senior Software Engineer @ Molin AI (2026-06-22) · snapshot: cv-versions/2026-06-22_molin-ai_senior-software-engineer/
-// @cv-last-change: 2026-06-22 0909 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
+// @job-application: 2026-06-22_galactic-fleet_senior-software-engineer-frontend-focus — Senior Software Engineer / Frontend focus @ Galactic Fleet (2026-06-22) · snapshot: cv-versions/2026-06-22_galactic-fleet_senior-software-engineer-frontend-focus/
+// @cv-last-change: 2026-06-22 0920 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 export const HU = {
   content: {
     summary:
-      "Frontend fejlesztő vagyok 5+ év tapasztalattal produktív webes alkalmazások szállításában React, TypeScript és Node.js technológiákkal. Jellemzően end-to-end felelősséget vállaltam a funkciókért — architektúrától és UI-tól az API integrációig és telepítésig — vállalati platformokon. Claude Code és Codex power user vagyok, AI-t használok erőszorzóként a fejlesztés gyorsítására miközben fenntartom a mérnöki minőséget. Tiszta kódra, gyors iterációra és skálázható, karbantartható frontend rendszerekre fókuszálok.",
+      "Szoftverfejlesztő vagyok 5+ év tapasztalattal produktív webes alkalmazások fejlesztésében React, TypeScript és Node.js technológiákkal. Legacy rendszereket modernizáltam teljes újraírással és modern stackekre való migrációval, SQL adatbázisokkal, REST API-kkal és mikroszolgáltatás architektúrával dolgozva. Automatizált tesztelési stratégiákat, minőségi kapukkal ellátott CI pipeline-okat és kódszabványokat vezettem be. Tiszta kódra, jól tesztelt megoldásokra és folyamatos folyamatfejlesztésre fókuszálok.",
     workExperience: [
       {
         id: "aegex",
         description:
           "A SafeSy és FACTS rendszerek teljes körű architektúrális modernizációját vezettem — a rendszertervezéstől az éles üzemig. AI-asszisztált fejlesztési folyamatokat és CI-vezérelt minőségi pipeline-okat honosítottam meg, amelyek evidenciaalapú mérnöki kultúrát teremtettek és jelentősen növelték a szállítási sebességet és a kiadási megbízhatóságot.",
         bullets: [
-          "End-to-end felelősséget vállaltam két vállalati platform funkcióiért (SafeSy, FACTS) — architektúra, UI, API integráció és telepítés — produktív frontend alkalmazásokat szállítva React, TypeScript és Node.js technológiákkal",
+          "Két vállalati platform (SafeSy, FACTS) modernizálása és funkciók fejlesztése — architektúra, adatbázis-tervezés, REST API integráció és telepítés — React, TypeScript, Node.js és SQL technológiákkal",
           "Legacy rendszerek modernizációját vezettem teljes újraírással és modern frontend stack-re való migrációval",
           "AI-asszisztált fejlesztési munkafolyamatokat vezettem be, növelve a mérnöki teljesítményt és konzisztenciát",
           "CI pipeline-t implementáltam automatizált minőségi kapukkal és tesztelési stratégiával a semmiből",

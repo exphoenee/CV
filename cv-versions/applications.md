@@ -4,6 +4,9 @@ Minden sor egy optimalizált CV-verzióhoz tartozik. Az APP_ID egyben a `cv-vers
 
 | Dátum | Pozíció | Cég | Szint | ATS | APP_ID (mappa) | JD | Fordítások | Mot. levél |
 |---|---|---|---|---|---|---|---|---|
+| 2026-06-22 | Senior Software Engineer (NodeJS, React) | Diligent | senior | 80% | [2026-06-22_diligent_senior-software-engineer-nodejs-react](2026-06-22_diligent_senior-software-engineer-nodejs-react/) | JD (inline) | EN/HU | igen |
+| 2026-06-22 | Senior Software Engineer / Frontend focus | Galactic Fleet | senior | 60% | [2026-06-22_galactic-fleet_senior-software-engineer-frontend-focus](2026-06-22_galactic-fleet_senior-software-engineer-frontend-focus/) | JD (inline) | EN/HU | igen |
+| 2026-06-22 | Senior Software Engineer | Molin AI | senior | 75% | [2026-06-22_molin-ai_senior-software-engineer](2026-06-22_molin-ai_senior-software-engineer/) | JD (inline) | EN/HU | igen |
 | 2026-06-22 | Mid/Senior frontend fejlesztő | Food Revo Kft. | mid/senior | 85% | [2026-06-22_food-revo_mid-senior-frontend-fejleszto](2026-06-22_food-revo_mid-senior-frontend-fejleszto/) | JD (inline) | EN/HU | igen |
 | 2026-06-22 | Senior Software Engineer - Frontend - Pro | Kraken | senior | 60% | [2026-06-22_kraken_senior-software-engineer-frontend-pro](2026-06-22_kraken_senior-software-engineer-frontend-pro/) | JD (inline) | 11/11 | nem |
 | 2026-06-22 | Senior Frontend Developer | Crowded | senior | 45% | [2026-06-22_crowded_senior-frontend-developer](2026-06-22_crowded_senior-frontend-developer/) | [JD](2026-06-22_crowded_senior-frontend-developer/job-description.md) | 11/11 | igen |
