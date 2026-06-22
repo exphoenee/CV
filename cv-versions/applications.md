@@ -4,6 +4,7 @@ Minden sor egy optimalizált CV-verzióhoz tartozik. Az APP_ID egyben a `cv-vers
 
 | Dátum | Pozíció | Cég | Szint | ATS | APP_ID (mappa) | JD | Fordítások | Mot. levél |
 |---|---|---|---|---|---|---|---|---|
+| 2026-06-22 | Mid/Senior frontend fejlesztő | Food Revo Kft. | mid/senior | 85% | [2026-06-22_food-revo_mid-senior-frontend-fejleszto](2026-06-22_food-revo_mid-senior-frontend-fejleszto/) | JD (inline) | EN/HU | igen |
 | 2026-06-22 | Senior Software Engineer - Frontend - Pro | Kraken | senior | 60% | [2026-06-22_kraken_senior-software-engineer-frontend-pro](2026-06-22_kraken_senior-software-engineer-frontend-pro/) | JD (inline) | 11/11 | nem |
 | 2026-06-22 | Senior Frontend Developer | Crowded | senior | 45% | [2026-06-22_crowded_senior-frontend-developer](2026-06-22_crowded_senior-frontend-developer/) | [JD](2026-06-22_crowded_senior-frontend-developer/job-description.md) | 11/11 | igen |
 | 2026-06-20 | Senior Frontend Engineer | ClickUp | senior | 90% | [2026-06-20_1043_clickup_senior-frontend-engineer](2026-06-20_1043_clickup_senior-frontend-engineer/) | [JD](2026-06-20_1043_clickup_senior-frontend-engineer/job-description.md) | 11/11 | igen |
