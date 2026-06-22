@@ -4,6 +4,7 @@ Minden sor egy optimalizált CV-verzióhoz tartozik. Az APP_ID egyben a `cv-vers
 
 | Dátum | Pozíció | Cég | Szint | ATS | APP_ID (mappa) | JD | Fordítások | Mot. levél |
 |---|---|---|---|---|---|---|---|---|
+| 2026-06-22 | Senior Frontend Developer | Crowded | senior | 45% | [2026-06-22_crowded_senior-frontend-developer](2026-06-22_crowded_senior-frontend-developer/) | [JD](2026-06-22_crowded_senior-frontend-developer/job-description.md) | 11/11 | igen |
 | 2026-06-20 | Senior Frontend Engineer | ClickUp | senior | 90% | [2026-06-20_1043_clickup_senior-frontend-engineer](2026-06-20_1043_clickup_senior-frontend-engineer/) | [JD](2026-06-20_1043_clickup_senior-frontend-engineer/job-description.md) | 11/11 | igen |
 | 2026-06-19 | AI Specialist Sustainability | ismeretlen (SWICON partner) | mid | 58% | [2026-06-19_2254_unknown_ai-specialist-sustainability](2026-06-19_2254_unknown_ai-specialist-sustainability/) | [JD](2026-06-19_2254_unknown_ai-specialist-sustainability/job-description.md) | — | nem |
 | 2026-06-15 | AI Engineer | Körber Hungária Gépgyártó Kft. | mid | 62% | [2026-06-15_2131_korber-hungaria-gepgyarto-kft_ai-engineer](2026-06-15_2131_korber-hungaria-gepgyarto-kft_ai-engineer/) | [JD](2026-06-15_2131_korber-hungaria-gepgyarto-kft_ai-engineer/job-description.md) | 10/11 | igen |
