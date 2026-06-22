@@ -88,12 +88,13 @@ Online Sudoku game and puzzle solver prototype.
 
 ---
 
-## CreateDOMBlocks NPM Package
+## createDOMBlocks
 
 **Mar 2022 – May 2022** · Associated with WebforSol
 
-Published NPM package — a JavaScript library expanding HTML rendering options in JS. Builds on the earlier DOMElemJS library.  
-`JavaScript, OOP`
+A TypeScript library for creating complex HTML blocks and form elements using JavaScript. Builds on the earlier DOMElemJS library. Supports form inputs, buttons, tables, modals, and lists with full TypeScript type safety.  
+[Try it](https://exphoenee.github.io/createDOMBlocks/) · [Source](https://github.com/exphoenee/createDOMBlocks) · [NPM](https://www.npmjs.com/package/createdomblocks)  
+`TypeScript, JavaScript, OOP`
 
 ---
 

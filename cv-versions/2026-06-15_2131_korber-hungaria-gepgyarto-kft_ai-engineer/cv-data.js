@@ -446,5 +446,9 @@ export const CV_DATA = {
       name: 'romannumbersjs',
       url: 'https://www.npmjs.com/package/romannumbersjs',
     },
+    {
+      name: 'createDOMBlocks',
+      url: 'https://exphoenee.github.io/createDOMBlocks/',
+    },
   ],
 };
