@@ -50,10 +50,10 @@ Ez a fájl azokat a személyes adatokat tartalmazza, amik a `cv/cv-data.js`-ben 
 - **Sudoku Solver API** — https://github.com/exphoenee/SudokuSolver-API
 - **Bullseyes** — https://github.com/exphoenee/bullseyes
 - **Space Dodge** — https://github.com/BZZYFMLY/Space-dodge
-- **Arrganizer** — https://github.com/ViktorBozzay/Arrganizer
+- **Arrganizer** — https://viktorbozzay.github.io/ArrganizerDocs/
 - **Space Game** — https://github.com/exphoenee/SpaceGame
 - **Rock Paper Scissors** — https://github.com/exphoenee/RockPaperScissors
 - **Auditorium** — https://github.com/exphoenee/auditorium
 - **BA Team** — https://exphoenee.github.io/ba-team-docs/#home
 - **domelemjs (npm)** — https://www.npmjs.com/package/domelemjs
-- **romannumbersjs (npm)** — https://www.npmjs.com/package/romannumbersjs
+- **romannumbersjs (npm)** — https://exphoenee.github.io/RomanNumbersJS/

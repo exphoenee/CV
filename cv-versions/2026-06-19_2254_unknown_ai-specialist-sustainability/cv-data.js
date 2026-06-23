@@ -433,7 +433,7 @@ export const CV_DATA = {
     },
     { name: 'Bullseyes', url: 'https://github.com/exphoenee/bullseyes' },
     { name: 'Space Dodge', url: 'https://github.com/BZZYFMLY/Space-dodge' },
-    { name: 'Arrganizer', url: 'https://github.com/ViktorBozzay/Arrganizer' },
+    { name: 'Arrganizer', url: 'https://viktorbozzay.github.io/ArrganizerDocs/' },
     { name: 'Space Game', url: 'https://github.com/exphoenee/SpaceGame' },
     {
       name: 'Rock Paper Scissors',
@@ -444,7 +444,7 @@ export const CV_DATA = {
     { name: 'domelemjs', url: 'https://www.npmjs.com/package/domelemjs' },
     {
       name: 'romannumbersjs',
-      url: 'https://www.npmjs.com/package/romannumbersjs',
+      url: 'https://exphoenee.github.io/RomanNumbersJS/',
     },
     {
       name: 'createDOMBlocks',
