@@ -4,6 +4,8 @@ Minden sor egy optimalizált CV-verzióhoz tartozik. Az APP_ID egyben a `cv-vers
 
 | Dátum | Pozíció | Cég | Szint | ATS | APP_ID (mappa) | JD | Fordítások | Mot. levél |
 |---|---|---|---|---|---|---|---|---|
+| 2026-06-23 | Senior Frontend Engineer (React/TS) | BlueThrone | senior | 68% | [2026-06-23_2145_bluethrone_senior-frontend-engineer](2026-06-23_2145_bluethrone_senior-frontend-engineer/) | [JD](2026-06-23_2145_bluethrone_senior-frontend-engineer/job-description.md) | EN/HU | igen |
+| 2026-06-23 | Software Engineer | PrestoSports | mid/senior | 87% | [2026-06-23_1953_prestosports_software-engineer](2026-06-23_1953_prestosports_software-engineer/) | [JD](2026-06-23_1953_prestosports_software-engineer/job-description.md) | EN/HU | igen |
 | 2026-06-22 | Senior Software Engineer (NodeJS, React) | Diligent | senior | 80% | [2026-06-22_diligent_senior-software-engineer-nodejs-react](2026-06-22_diligent_senior-software-engineer-nodejs-react/) | JD (inline) | EN/HU | igen |
 | 2026-06-22 | Senior Software Engineer / Frontend focus | Galactic Fleet | senior | 60% | [2026-06-22_galactic-fleet_senior-software-engineer-frontend-focus](2026-06-22_galactic-fleet_senior-software-engineer-frontend-focus/) | JD (inline) | EN/HU | igen |
 | 2026-06-22 | Senior Software Engineer | Molin AI | senior | 75% | [2026-06-22_molin-ai_senior-software-engineer](2026-06-22_molin-ai_senior-software-engineer/) | JD (inline) | EN/HU | igen |
