@@ -421,6 +421,16 @@
   font-family: sans-serif;
 }
 
+#music-spotify {
+  color: #1DB954;
+}
+
+#music-spotify:hover {
+  background: rgba(29, 185, 84, 0.15);
+  box-shadow: 0 0 12px rgba(29, 185, 84, 0.25);
+  color: #1ed760;
+}
+
 #music-lyrics.active {
   color: #ff7024;
   background: rgba(255, 112, 36, 0.12);
@@ -760,6 +770,18 @@
   background: rgba(255, 112, 36, 0.2);
 }
 
+[data-theme='dark'] #music-spotify,
+[data-theme='superdark'] #music-spotify {
+  color: #1DB954;
+}
+
+[data-theme='dark'] #music-spotify:hover,
+[data-theme='superdark'] #music-spotify:hover {
+  background: rgba(29, 185, 84, 0.2);
+  box-shadow: 0 0 12px rgba(29, 185, 84, 0.3);
+  color: #1ed760;
+}
+
 [data-theme='dark'] #music-lyrics.active,
 [data-theme='superdark'] #music-lyrics.active {
   color: #ff7024;
@@ -890,6 +912,16 @@
 [data-theme='nightvision'] #music-playpause:hover {
   background: linear-gradient(135deg, #00cc00, #008800);
   box-shadow: 0 4px 20px rgba(0, 255, 0, 0.5);
+}
+
+[data-theme='nightvision'] #music-spotify {
+  color: #1DB954;
+}
+
+[data-theme='nightvision'] #music-spotify:hover {
+  background: rgba(29, 185, 84, 0.2);
+  box-shadow: 0 0 12px rgba(29, 185, 84, 0.3);
+  color: #1ed760;
 }
 
 [data-theme='nightvision'] #music-repeat.active,
@@ -1038,6 +1070,15 @@
 [data-theme='predator'] #music-playpause:hover {
   background: linear-gradient(135deg, rgba(255, 51, 0, 0.25), rgba(255, 51, 0, 0.1));
   box-shadow: 0 4px 20px rgba(255, 51, 0, 0.4);
+}
+
+[data-theme='predator'] #music-spotify {
+  color: #1DB954;
+}
+
+[data-theme='predator'] #music-spotify:hover {
+  background: rgba(29, 185, 84, 0.15);
+  color: #1ed760;
 }
 
 [data-theme='predator'] #music-repeat.active,

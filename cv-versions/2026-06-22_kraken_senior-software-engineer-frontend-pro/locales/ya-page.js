@@ -140,5 +140,6 @@ export const YA_PAGE = {
     ariaCloseContactForm: 'Close contact form',
     ariaContactsPopup: 'Contacts',
     ariaSendMessage: 'Send message',
+    ariaSpotify: 'Open Spotify album',
   },
 };

@@ -142,5 +142,6 @@ export const HU_PAGE = {
     ariaCloseContactForm: 'Kapcsolatfelvételi űrlap bezárása',
     ariaContactsPopup: 'Kapcsolatok',
     ariaSendMessage: 'Üzenet küldése',
+    ariaSpotify: 'Spotify album megnyitása',
   },
 };

@@ -34,6 +34,7 @@ export function initMusicPlayer() {
     var volumeSlider = document.getElementById('music-volume');
     var lyricsBtn = document.getElementById('music-lyrics');
     var lyricsPanel = document.getElementById('music-lyrics-panel');
+    var spotifyBtn = document.getElementById('music-spotify');
 
     var customSelect = document.getElementById('custom-genre-select');
     if (!customSelect) return;
@@ -502,6 +503,13 @@ export function initMusicPlayer() {
     }
 
     if (lyricsBtn) lyricsBtn.addEventListener('click', toggleLyrics);
+
+    if (spotifyBtn) {
+      spotifyBtn.addEventListener('click', function () {
+        var url = spotifyBtn.getAttribute('data-spotify-url');
+        if (url) window.open(url, '_blank', 'noopener,noreferrer');
+      });
+    }
 
     var savedTime = parseFloat(localStorage.getItem(MUSIC_TIME_KEY));
     var savedState = localStorage.getItem(MUSIC_STATE_KEY);

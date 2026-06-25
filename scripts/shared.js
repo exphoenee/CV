@@ -509,9 +509,9 @@ export function musicPlayerHTML() {
     '          <button id="music-next" class="transport-btn" title="Next" aria-label="' +
     t('ariaNextTrack') +
     '"><i class="fas fa-forward-step" aria-hidden="true"></i></button>' +
+    '          <button id="music-spotify" class="transport-btn" title="Spotify" aria-label="' + t('ariaSpotify') + '" data-spotify-url="https://open.spotify.com/album/5OzeHwj4jxqCHY6vFn8ihO?si=Y6vpOeHnSia1wPg64usMfA"><i class="fab fa-spotify" aria-hidden="true"></i></button>' +
     '          <button id="music-lyrics" class="transport-btn" aria-label="' +
-    t('ariaShowLyrics') +
-    '" title="Lyrics"><i class="fas fa-file-lines" aria-hidden="true"></i></button>' +
+    t('ariaShowLyrics') +      '" title="Lyrics"><i class="fas fa-file-lines" aria-hidden="true"></i></button>' +
     '        </div>' +
     '        <div class="volume-bottom-row">' +
     '          <span class="volume-label" aria-hidden="true"><i class="fas fa-volume-high"></i></span>' +
