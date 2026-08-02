@@ -87,6 +87,7 @@ export const ES_PAGE = {
     errEmailVerifying: 'Verificando servidor de correo…',
     errEmailNoMailServer: 'Este dominio no acepta correos.',
     errMessageTooShort: 'El mensaje debe tener al menos 20 caracteres y 4 palabras.',
+    errOffensive: "Por favor, elimina cualquier lenguaje inapropiado de tu mensaje.",
     errSendFailed: 'Error al enviar. Por favor, inténtalo de nuevo.',
     sbBoardView: 'Vista Tablero Scrum',
     sbBacklog: 'Pendiente',

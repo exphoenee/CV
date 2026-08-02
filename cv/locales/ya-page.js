@@ -87,6 +87,7 @@ export const YA_PAGE = {
     errEmailVerifying: 'Del kainde tih…',
     errEmailNoMailServer: 'Del kainde ú-gkei.',
     errMessageTooShort: "Yin ú-gkei hk'nde. Cha'nain mae hk'dei.",
+    errOffensive: "Sain ú-gkei. Kehrite nain!",
     errSendFailed: 'Yin gkei ú-kehrite. Kehrite nain thari.',
     sbBoardView: 'Kwei-nde Tabl',
     sbBacklog: "Nau'gkon di'tkae",

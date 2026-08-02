@@ -89,6 +89,7 @@ export const EN_PAGE = {
     errEmailVerifying: 'Checking mail server…',
     errEmailNoMailServer: 'This domain does not accept email.',
     errMessageTooShort: 'Message must be at least 20 characters and 4 words.',
+    errOffensive: "Please remove any inappropriate language from your message.",
     errSendFailed: 'Failed to send. Please try again.',
     sbBoardView: 'Scrum Board View',
     sbBacklog: 'Backlog',

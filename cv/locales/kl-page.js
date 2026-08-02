@@ -87,6 +87,7 @@ export const KL_PAGE = {
     errEmailVerifying: "jabbI'ID legh…",
     errEmailNoMailServer: "jabbI'ID Qapla' pagh.",
     errMessageTooShort: "ghItlh tIn poQlu'. cha'maH De' loS mu' yIghItlh.",
+    errOffensive: "jabbI'ID luj. yIngeH je!",
     errSendFailed: "ngeHlu'be'. yIngeH je.",
     sbBoardView: "Suvwı' mI' naDev",
     sbBacklog: "Qu' DIch",

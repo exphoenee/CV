@@ -87,6 +87,7 @@ export const ASG_PAGE = {
     errEmailVerifying: 'Athuga póstþjón…',
     errEmailNoMailServer: 'Þetta lén tekur ekki við tölvupósti.',
     errMessageTooShort: 'Skilaboð verða að vera að minnsta kosti 20 stafir og 4 orð.',
+    errOffensive: "Skilaboð mega eigi innihalda ósæmileg orð.",
     errSendFailed: 'Sending tókst ekki. Reyndu aftur.',
     sbBoardView: 'Scrum Tafl-Sýn',
     sbBacklog: 'Ógjört verk',

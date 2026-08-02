@@ -89,6 +89,7 @@ export const HU_PAGE = {
     errEmailVerifying: 'Levelezőszerver ellenőrzése…',
     errEmailNoMailServer: 'Ez a domain nem fogad e-mailt.',
     errMessageTooShort: 'Az üzenet legalább 20 karakter és 4 szó legyen.',
+    errOffensive: "Kérlek, távolítsd el a nem odavaló kifejezéseket az üzenetedből.",
     errSendFailed: 'Küldés sikertelen. Kérjük, próbálja újra.',
     sbBoardView: 'Scrum Tábla Nézet',
     sbBacklog: 'Backlog',

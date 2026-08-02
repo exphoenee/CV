@@ -7,6 +7,7 @@ import {
   CHECK_EMAIL_DOMAIN,
 } from './config.js';
 import { locale } from './locale.js';
+import { FORBIDDEN_WORDS } from '../cv/forbidden-words.js';
 
 export function showToast(message) {
   var container = document.getElementById('cv-toaster-container');
@@ -205,7 +206,8 @@ export function initHireModal(prefix) {
     if (fsError) {
       fsError.classList.add('cv-error-hidden');
       fsError.textContent = '';
-    }      if (isOnCooldown()) {
+    }
+    if (isOnCooldown()) {
       form.style.display = 'none';
       if (hireCooldown) hireCooldown.classList.remove('cv-success-hidden');
     } else {
@@ -253,6 +255,7 @@ export function initHireModal(prefix) {
     var msgVal = document.getElementById(prefix + '-message').value.trim();
     var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
     var wordCount = msgVal.split(/\s+/).filter(Boolean).length;
+    var forbidden = findForbiddenWord(msgVal);
 
     document.getElementById(prefix + '-name-err').textContent = nameVal
       ? ''
@@ -260,10 +263,11 @@ export function initHireModal(prefix) {
     document.getElementById(prefix + '-email-err').textContent = emailOk
       ? ''
       : locale.t('errEmailInvalid');
-    document.getElementById(prefix + '-msg-err').textContent =
-      msgVal.length >= 20 && wordCount >= 4 ? '' : locale.t('errMessageTooShort');
+    document.getElementById(prefix + '-msg-err').textContent = forbidden
+      ? locale.t('errOffensive')
+      : msgVal.length >= 20 && wordCount >= 4 ? '' : locale.t('errMessageTooShort');
 
-    if (!nameVal || !emailOk || msgVal.length < 20 || wordCount < 4) return;
+    if (!nameVal || !emailOk || forbidden || msgVal.length < 20 || wordCount < 4) return;
 
     var form = this;
     var submitBtn = form.querySelector('[type="submit"]');
@@ -407,6 +411,28 @@ export function restoreCollapseStates(key) {
 
 export function initFormspree(_selector) {
   // Submission is handled directly in initHireModal via fetch — no external SDK needed.
+}
+
+/* ------------------------------------------------------------
+   Forbidden-word filter, shared by the hire and booking forms.
+   Screens free-text fields against all six languages' lists with a
+   Unicode-aware word-boundary regex, so accented characters and
+   compounds stay matched while innocent neighbours ("class",
+   "szarvas") do not. Returns the matched word, or null.
+   ------------------------------------------------------------ */
+var _escapeRe = function (s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
+var _forbiddenWords = Object.values(FORBIDDEN_WORDS).flat();
+var _forbiddenRe = new RegExp(
+  '(?<![\\p{L}\\p{N}])(' + _forbiddenWords.map(_escapeRe).join('|') + ')(?![\\p{L}\\p{N}])',
+  'iu',
+);
+
+export function findForbiddenWord(text) {
+  var m = String(text ?? '').match(_forbiddenRe);
+  return m ? m[1] : null;
 }
 
 export async function checkEmailDomain(email) {
@@ -998,7 +1024,6 @@ export function initBookingModal(prefix) {
     document.getElementById(p + '-bk-form').reset();
     document.getElementById(p + '-bk-email-err').textContent = '';
     document.getElementById(p + '-bk-topic-err').textContent = '';
-    resetTurnstile();
     if (bkIsOnCooldown()) {
       show(p + '-bk-cooldown');
     } else {
@@ -1020,13 +1045,14 @@ export function initBookingModal(prefix) {
     var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
     var topicWordCount = topicVal.split(/\s+/).filter(Boolean).length;
     var topicOk = topicVal.length >= 20 && topicWordCount >= 4;
+    var forbidden = findForbiddenWord(topicVal);
     document.getElementById(p + '-bk-email-err').textContent = emailOk
       ? ''
       : locale.t('errEmailInvalid');
-    document.getElementById(p + '-bk-topic-err').textContent = topicOk
-      ? ''
-      : locale.t('errMessageTooShort');
-    if (!nameVal || !emailOk || !topicOk) return;
+    document.getElementById(p + '-bk-topic-err').textContent = forbidden
+      ? locale.t('errOffensive')
+      : topicOk ? '' : locale.t('errMessageTooShort');
+    if (!nameVal || !emailOk || forbidden || !topicOk) return;
 
     var submitBtn = document.getElementById(p + '-bk-submit');
     var emailErr = document.getElementById(p + '-bk-email-err');

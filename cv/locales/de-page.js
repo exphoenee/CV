@@ -88,6 +88,7 @@ export const DE_PAGE = {
     errEmailVerifying: 'Mailserver wird geprüft…',
     errEmailNoMailServer: 'Diese Domain empfängt keine E-Mails.',
     errMessageTooShort: 'Die Nachricht muss mindestens 20 Zeichen und 4 Wörter enthalten.',
+    errOffensive: "Bitte entferne unangemessene Sprache aus deiner Nachricht.",
     errSendFailed: 'Senden fehlgeschlagen. Bitte versuche es erneut.',
     sbBoardView: 'Scrum-Board-Ansicht',
     sbBacklog: 'Backlog',

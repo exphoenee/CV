@@ -87,6 +87,7 @@ export const DOT_PAGE = {
     errEmailVerifying: 'Hrazef chek vaes…',
     errEmailNoMailServer: 'Chiori vo nakhoe hrazef.',
     errMessageTooShort: "Zhilat anni kash. Cha'ioq mae hrazef ma loS zhokwa.",
+    errOffensive: "Alegra anni vos. Nakhoe vosecchi!",
     errSendFailed: 'Chiori vos nakhoe. Nakhoe vosecchi.',
     sbBoardView: 'Sash Drogo Mahrazh',
     sbBacklog: 'Adavranaz',

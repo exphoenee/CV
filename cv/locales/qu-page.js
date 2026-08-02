@@ -87,6 +87,7 @@ export const QU_PAGE = {
     errEmailVerifying: 'Centan esse-quenta…',
     errEmailNoMailServer: 'Ú-centapoldo sírë.',
     errMessageTooShort: 'Quenta pitya. Erin ná lé quëtë cainen.',
+    errOffensive: "Centa úmaira. Áva yesta!",
     errSendFailed: 'Centa úlendë. Áva yesta.',
     sbBoardView: 'Parmë Ardassëo',
     sbBacklog: 'Lúmequenta',

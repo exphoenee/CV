@@ -87,6 +87,7 @@ export const GOA_PAGE = {
     errEmailVerifying: 'Joma rel kree…',
     errEmailNoMailServer: 'Joma rel ú-chel.',
     errMessageTooShort: "Kree! Joma hok'tar kash. Erin tal cha'ioq mae.",
+    errOffensive: "Kree! Joma ú-chel. Kree nain!",
     errSendFailed: 'Kree! Joma ú-rel. Kree nain.',
     sbBoardView: "Joma Lo'taur Kree",
     sbBacklog: 'Joma secu',
