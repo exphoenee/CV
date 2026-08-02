@@ -3,6 +3,7 @@ export const QU_PAGE = {
     footerRepo: 'Carmë Mardë',
     footerMail: 'Centa',
     footerLinkedin: 'LinkedIn Quenta',
+    portfolio: 'Quentar Cárëo',
     cvOf: 'Quenta i:',
     roleLocation: 'Ohtar Noldo Yesta-Nárë · Pécs, HU',
     chooseView: 'Maquë cendalë quentanyë?',
@@ -142,5 +143,6 @@ export const QU_PAGE = {
     ariaContactsPopup: 'Contacts',
     ariaSendMessage: 'Send message',
     ariaSpotify: 'Open Spotify album',
+    ariaPortfolio: 'Cenda quentar',
   },
 };

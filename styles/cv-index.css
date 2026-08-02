@@ -286,7 +286,7 @@ h1 small {
 .footer {
   margin-top: 28px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   font-size: 12px;
   color: var(--muted2);
@@ -495,6 +495,22 @@ h1 small {
 
 .btns.margin-top .btn {
   flex: 1;
+}
+
+@media (max-width: 600px) {
+  /* A flex item implicit min-width:auto a tartalom minimális szélességéhez
+     kötődik, ezért hosszú (pl. magyar) címkéknél a két gomb eltérő széles
+     lenne. A min-width:0 engedi, hogy a flex egyenlően ossza el őket, a
+     overflow-wrap pedig a hosszú szavakat is a gombon belül tartja. */
+  .btns.margin-top .btn {
+    min-width: 0;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .btns.margin-top .btn .label,
+  .btns.margin-top .btn .desc {
+    overflow-wrap: anywhere;
+  }
 }
 
 /* ---- Carousel ---- */

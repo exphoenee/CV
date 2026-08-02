@@ -9,6 +9,8 @@ import {
   hideLoadingOverlay,
 } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
+import { PORTFOLIO_URL } from './config.js';
+import { locale } from './locale.js';
 
 if (!document.getElementById('music-player')) {
   document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
@@ -57,6 +59,18 @@ initThemeToggle({
 
 initFormspree('#hire-index-form');
 initMusicPlayer();
+
+// Portfolio link (top menu) — href from config, aria label localized
+(function () {
+  var link = document.getElementById('portfolio-link');
+  if (!link) return;
+  link.href = PORTFOLIO_URL;
+  function applyPortfolioAria() {
+    link.setAttribute('aria-label', locale.t('ariaPortfolio'));
+  }
+  applyPortfolioAria();
+  window.addEventListener('localechange', applyPortfolioAria);
+})();
 
 // Carousel
 (function () {

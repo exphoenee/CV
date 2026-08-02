@@ -3,6 +3,7 @@ export const DE_PAGE = {
     footerRepo: 'Maschinenraum',
     footerMail: 'Direkte Mail',
     footerLinkedin: 'LinkedIn-Profil',
+    portfolio: 'Portfolio',
     cvOf: 'Lebenslauf von',
     roleLocation: 'Frontend Tech Lead · Pécs, HU',
     chooseView: 'Wähle, wie du meinen Lebenslauf ansehen möchtest',
@@ -143,5 +144,6 @@ export const DE_PAGE = {
     ariaContactsPopup: 'Contacts',
     ariaSendMessage: 'Send message',
     ariaSpotify: 'Open Spotify album',
+    ariaPortfolio: 'Portfolio-Website öffnen',
   },
 };

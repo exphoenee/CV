@@ -3,6 +3,7 @@ export const YA_PAGE = {
     footerRepo: 'Kainde Tek',
     footerMail: 'Sain',
     footerLinkedin: 'LinkedIn Yin',
+    portfolio: 'Yin Kainde',
     cvOf: 'Yin tekai:',
     roleLocation: "Kwei Hk'nde · Pecs, HU",
     chooseView: 'Yin-del. Kainde nain-de:',
@@ -142,5 +143,6 @@ export const YA_PAGE = {
     ariaContactsPopup: 'Contacts',
     ariaSendMessage: 'Send message',
     ariaSpotify: 'Open Spotify album',
+    ariaPortfolio: 'Pauk yin kainde',
   },
 };

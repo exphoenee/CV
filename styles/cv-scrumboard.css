@@ -212,6 +212,17 @@ body {
   border-color: var(--accent);
   color: var(--accent);
 }
+.sb-btn-portfolio {
+  background: var(--surface2);
+  color: var(--accent);
+  border-color: var(--accent);
+  text-decoration: none;
+}
+.sb-btn-portfolio:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
 
 /* ── Contacts popup (mobile) ──────────────────────────────────────────────── */
 

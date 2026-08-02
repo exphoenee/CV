@@ -112,6 +112,9 @@ body {
 .menubar-item:hover {
   background: rgba(255, 255, 255, 0.1);
 }
+a.menubar-item {
+  cursor: pointer;
+}
 .menubar-center {
   flex: 1;
   display: flex;

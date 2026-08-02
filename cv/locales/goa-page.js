@@ -3,6 +3,7 @@ export const GOA_PAGE = {
     footerRepo: "Joma Ha'tak",
     footerMail: "Joma",
     footerLinkedin: "LinkedIn Joma",
+    portfolio: "Joma Hok'tar",
     cvOf: 'Joma i:',
     roleLocation: "Kree Hok'tar Tau'ri · Sol · Pécs, HU",
     chooseView: 'Kree! Tal mak. Nok:',
@@ -142,5 +143,6 @@ export const GOA_PAGE = {
     ariaContactsPopup: 'Contacts',
     ariaSendMessage: 'Send message',
     ariaSpotify: 'Open Spotify album',
+    ariaPortfolio: "Kree joma Hok'tar",
   },
 };

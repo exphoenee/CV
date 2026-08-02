@@ -1,4 +1,5 @@
 import { escHtml } from '../../shared.js';
+import { PORTFOLIO_URL } from '../../config.js';
 import { swgGet } from './ui/endpoint-block.js';
 import { swgTagSection } from './ui/tag-section.js';
 import { renderIdentitySection } from './sections/identity.js';
@@ -30,18 +31,25 @@ export function renderSwaggerContent(data) {
       '</p><p>',
   );
 
-  data.identity.contacts.forEach(function (c, i) {
+  var visibleContacts = data.identity.contacts.filter(function (c) {
+    if (!c.url) return true;
+    if (c.url.indexOf('mailto:') === 0) return false;
+    if (c.label.indexOf('bozzayviktor') > -1) return false;
+    return true;
+  });
+  visibleContacts.forEach(function (c, i) {
     if (i > 0) parts.push('&nbsp;·&nbsp; ');
     if (c.url) {
-      if (c.url.indexOf('mailto:') === 0) {
-        parts.push('<a href="' + E(c.url) + '">' + E(c.label) + '</a>');
-      } else {
-        parts.push('<a href="' + E(c.url) + '" target="_blank">' + E(c.label) + '</a>');
-      }
+      parts.push('<a href="' + E(c.url) + '" target="_blank">' + E(c.label) + '</a>');
     } else {
       parts.push(E(c.label));
     }
   });
+  parts.push(
+    '&nbsp;·&nbsp; <a href="' +
+      E(PORTFOLIO_URL) +
+      '" target="_blank" rel="noopener noreferrer">Portfolió</a>',
+  );
 
   parts.push('</p></div></div></div></div></section></div>');
 

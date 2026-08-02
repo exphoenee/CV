@@ -3,6 +3,7 @@ export const ASG_PAGE = {
     footerRepo: 'Vélarúm',
     footerMail: 'Beint bréf',
     footerLinkedin: 'LinkedIn skjöl',
+    portfolio: 'Verkasafn',
     cvOf: 'Lifsrit:',
     roleLocation: 'Framhlið Taknileiðtogi · Miðgarðr · Pecs, HU',
     chooseView: 'Hvat kýss þu? Sja lifsrit:',
@@ -142,5 +143,6 @@ export const ASG_PAGE = {
     ariaContactsPopup: 'Contacts',
     ariaSendMessage: 'Send message',
     ariaSpotify: 'Open Spotify album',
+    ariaPortfolio: 'Opna verkasafn',
   },
 };

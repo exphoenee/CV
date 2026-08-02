@@ -12,7 +12,7 @@ import {
   hideLoadingOverlay,
 } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
-import { THEME_KEY, THEME_DARK, THEME_LIGHT } from './config.js';
+import { THEME_KEY, THEME_DARK, THEME_LIGHT, PORTFOLIO_URL } from './config.js';
 import { langDropdownHTML, initLangDropdown } from './components/lang-dropdown.js';
 
 // ── Colors ────────────────────────────────────────────────────────────────────
@@ -120,22 +120,17 @@ function renderColumn(colId, label, color, cardsHtml) {
 function renderPage() {
   const t = locale.t.bind(locale);
 
-  const contacts = CV_DATA.identity.contacts
-    .filter((c) => c.url)
-    .slice(0, 4)
-    .map(
-      (c) =>
-        `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`,
-    )
-    .join('');
+  // The personal site (bozzayviktor.hu) and the personal email are not shown on this page.
+  const visibleContacts = CV_DATA.identity.contacts.filter(
+    (c) => c.url && c.label !== 'bozzayviktor.hu' && c.label !== 'bozzay.viktor@gmail.com',
+  );
 
-  const allContactLinks = CV_DATA.identity.contacts
-    .filter((c) => c.url)
-    .map(
-      (c) =>
-        `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`,
-    )
-    .join('');
+  const contactLink = (c) =>
+    `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`;
+
+  const contacts = visibleContacts.slice(0, 4).map(contactLink).join('');
+
+  const allContactLinks = visibleContacts.map(contactLink).join('');
 
   const inProgressCards = [renderCard(CV_DATA.workExperience[0]), renderCard(COMMUNITY_ROW)];
   const doneCards = CV_DATA.workExperience.slice(1).map(renderCard);
@@ -172,6 +167,9 @@ function renderPage() {
             ${allContactLinks}
           </div>
         </div>
+        <a class="sb-btn sb-btn-portfolio" id="scrumboard-portfolio-btn" href="${PORTFOLIO_URL}" target="_blank" rel="noopener noreferrer" aria-label="${t('ariaPortfolio')}">
+          <i class="fa-solid fa-briefcase" aria-hidden="true"></i><span class="sb-btn-label"> ${t('portfolio')}</span>
+        </a>
         <button class="sb-btn sb-btn-hire" id="hire-scrumboard-btn" aria-label="${t('hireMe')} — ${t('ariaHireForm')}">
           <i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span class="sb-btn-label"> ${t('hireMe')}</span>
         </button>

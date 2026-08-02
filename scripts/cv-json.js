@@ -10,7 +10,7 @@ import {
   hideLoadingOverlay,
 } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
-import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES } from './config.js';
+import { THEME_KEY, THEME_DARK, THEME_LIGHT, PLAIN_ONLY_THEMES, PORTFOLIO_URL } from './config.js';
 
 document.body.insertAdjacentHTML('beforeend', musicPlayerHTML());
 
@@ -206,6 +206,11 @@ hideLoadingOverlay();
 document.getElementById('wc-close-btn')?.addEventListener('click', function () {
   window.location.href = 'index.html';
 });
+
+var portfolioLink = document.getElementById('portfolio-json-link');
+if (portfolioLink) {
+  portfolioLink.href = PORTFOLIO_URL;
+}
 
 (function () {
   var saved = localStorage.getItem(THEME_KEY);

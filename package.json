@@ -8,6 +8,7 @@
     "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
+    "jsdom": "^30.0.1",
     "pngjs": "^7.0.0"
   },
   "devDependencies": {

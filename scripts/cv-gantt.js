@@ -11,7 +11,7 @@ import {
   hideLoadingOverlay,
 } from './shared.js';
 import { initMusicPlayer } from './cv-music-player.js';
-import { THEME_KEY, THEME_DARK, THEME_LIGHT } from './config.js';
+import { THEME_KEY, THEME_DARK, THEME_LIGHT, PORTFOLIO_URL } from './config.js';
 import { createLangDropdown } from './components/lang-dropdown.js';
 
 // ── Chart config ──────────────────────────────────────────────────────────────
@@ -379,22 +379,17 @@ function renderPage() {
   const communityRow = { ...COMMUNITY_ROW, description: data.community };
   const todayX = todayPx();
 
-  const contacts = CV_DATA.identity.contacts
-    .filter((c) => c.url)
-    .slice(0, 4)
-    .map(
-      (c) =>
-        `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`,
-    )
-    .join('');
+  // The personal site (bozzayviktor.hu) and the personal email are not shown on this page.
+  const visibleContacts = CV_DATA.identity.contacts.filter(
+    (c) => c.url && c.label !== 'bozzayviktor.hu' && c.label !== 'bozzay.viktor@gmail.com',
+  );
 
-  const allContactLinks = CV_DATA.identity.contacts
-    .filter((c) => c.url)
-    .map(
-      (c) =>
-        `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`,
-    )
-    .join('');
+  const contactLink = (c) =>
+    `<a href="${c.url}" target="${c.url.startsWith('mailto') ? '_self' : '_blank'}" rel="noopener noreferrer">${c.label}</a>`;
+
+  const contacts = visibleContacts.slice(0, 4).map(contactLink).join('');
+
+  const allContactLinks = visibleContacts.map(contactLink).join('');
 
   const careerGroup = renderGroupDivider(locale.t('ganttCareerTimeline'));
   const commGroup = renderGroupDivider(locale.t('ganttCommunity'));
@@ -443,6 +438,9 @@ function renderPage() {
             ${allContactLinks}
           </div>
         </div>
+        <a class="gt-btn gt-btn-portfolio" id="gantt-portfolio-btn" href="${PORTFOLIO_URL}" target="_blank" rel="noopener noreferrer" aria-label="${locale.t('ariaPortfolio')}">
+          <i class="fa-solid fa-briefcase" aria-hidden="true"></i><span class="gt-btn-label"> ${locale.t('portfolio')}</span>
+        </a>
         <button class="gt-btn gt-btn-hire" id="hire-gantt-btn" aria-label="${locale.t('hireMe')} — ${locale.t('ariaHireForm')}">
           <i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span class="gt-btn-label"> ${locale.t('hireMe')}</span>
         </button>

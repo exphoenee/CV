@@ -247,6 +247,17 @@ body {
   border-color: var(--accent);
   color: var(--accent);
 }
+.gt-btn-portfolio {
+  background: var(--surface2);
+  color: var(--accent);
+  border-color: var(--accent);
+  text-decoration: none;
+}
+.gt-btn-portfolio:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
 
 /* ── Main Gantt layout ───────────────────────────────────────────────────────── */
 

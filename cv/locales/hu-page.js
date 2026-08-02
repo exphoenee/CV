@@ -3,6 +3,7 @@ export const HU_PAGE = {
     footerRepo: 'Motortér',
     footerMail: 'Közvetlen levél',
     footerLinkedin: 'LinkedIn Profil',
+    portfolio: 'Portfolió',
     cvOf: 'Önéletrajz',
     roleLocation: 'Frontend Tech Lead · Pécs, HU',
     chooseView: 'Válaszd ki, hogyan tekinted meg az önéletrajzom',
@@ -144,5 +145,6 @@ export const HU_PAGE = {
     ariaContactsPopup: 'Kapcsolatok',
     ariaSendMessage: 'Üzenet küldése',
     ariaSpotify: 'Spotify album megnyitása',
+    ariaPortfolio: 'Portfolió megnyitása',
   },
 };

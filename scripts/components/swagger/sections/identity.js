@@ -29,31 +29,22 @@ export function renderIdentitySection(data) {
   );
 
   var contactResp = '';
-  var contactMap = { email: null, phone: null, github: null, linkedin: null, website: null };
+  var contactMap = { phone: null, github: null, linkedin: null };
   data.identity.contacts.forEach(function (c) {
     var label = c.label;
-    if (label.indexOf('@') > -1) contactMap.email = c;
-    else if (label.indexOf('+36') > -1) contactMap.phone = c;
+    if (label.indexOf('+36') > -1) contactMap.phone = c;
     else if (label.indexOf('github') > -1) contactMap.github = c;
     else if (label.indexOf('linkedin') > -1) contactMap.linkedin = c;
-    else if (label.indexOf('bozzayviktor') > -1) contactMap.website = c;
   });
   var contactEntries = [
-    { key: 'email', comment: null },
     { key: 'phone', comment: null },
     { key: 'github', comment: "// phoenix, with extra e's" },
     { key: 'linkedin', comment: null },
-    { key: 'website', comment: null },
   ];
   contactEntries.forEach(function (entry) {
     var c = contactMap[entry.key];
     if (c && c.url) {
-      var href =
-        entry.key === 'email'
-          ? 'mailto:' + c.label
-          : entry.key === 'phone'
-            ? 'tel:' + c.label
-            : c.url;
+      var href = entry.key === 'phone' ? 'tel:' + c.label : c.url;
       var comment = entry.comment ? ' <em>' + entry.comment + '</em>' : '';
       contactResp +=
         '<p class="cv-kv"><code>' +

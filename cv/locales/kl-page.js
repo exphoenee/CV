@@ -3,6 +3,7 @@ export const KL_PAGE = {
     footerRepo: "QuQ pa'",
     footerMail: "jabbI'ID",
     footerLinkedin: "LinkedIn ghItlh",
+    portfolio: "Qu' ghItlh",
     cvOf: "ghItlh vIta'wI':",
     roleLocation: "HoS naQHom SuvwI' · tera' ra'DIvwI' · Pécs, HU",
     chooseView: 'nuqneH? yIwIv:',
@@ -142,5 +143,6 @@ export const KL_PAGE = {
     ariaContactsPopup: 'Contacts',
     ariaSendMessage: 'Send message',
     ariaSpotify: 'Open Spotify album',
+    ariaPortfolio: "Qu' ghItlh yIlegh",
   },
 };

@@ -3,6 +3,7 @@ export const DOT_PAGE = {
     footerRepo: 'Arakh Okre',
     footerMail: 'Alegra',
     footerLinkedin: 'LinkedIn Arakh',
+    portfolio: 'Arakh Anni',
     cvOf: 'Arakh anni tat:',
     roleLocation: 'Khal Frantend · Pecs, HU',
     chooseView: 'Hash yer dothrae chek? Tih ma me:',
@@ -142,5 +143,6 @@ export const DOT_PAGE = {
     ariaContactsPopup: 'Contacts',
     ariaSendMessage: 'Send message',
     ariaSpotify: 'Open Spotify album',
+    ariaPortfolio: 'Tih arakh anni',
   },
 };
