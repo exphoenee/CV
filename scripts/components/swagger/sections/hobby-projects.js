@@ -7,11 +7,11 @@ export function renderHobbyProjectsSection(data) {
   var hobbyResp = '';
   data.hobbyProjects.forEach(function (p) {
     hobbyResp +=
-      '<p class="cv-kv"><code>' +
-      E(p.name.replace(/[\s-]/g, '').toLowerCase()) +
-      '</code><a href="' +
+      '<p class="cv-kv"><a href="' +
       E(p.url) +
-      '" target="_blank">' +
+      '" target="_blank" rel="noopener noreferrer"><code>' +
+      E(p.name.replace(/[\s-]/g, '').toLowerCase()) +
+      '</code>' +
       E(p.name) +
       '</a></p>';
   });

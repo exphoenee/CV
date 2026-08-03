@@ -407,30 +407,30 @@ export const CV_DATA = {
   hobbyProjects: [
     {
       name: 'Real-time Space Travel',
-      url: 'https://github.com/exphoenee/realtime_space_travel',
+      url: 'https://exphoenee.github.io/dev-portfolio/#projects',
     },
     {
       name: 'Sudoku Solver API',
-      url: 'https://github.com/exphoenee/SudokuSolver-API',
+      url: 'https://exphoenee.github.io/dev-portfolio/#projects',
     },
-    { name: 'Bullseyes', url: 'https://github.com/exphoenee/bullseyes' },
-    { name: 'Space Dodge', url: 'https://github.com/BZZYFMLY/Space-dodge' },
-    { name: 'Arrganizer', url: 'https://viktorbozzay.github.io/ArrganizerDocs/' },
-    { name: 'Space Game', url: 'https://github.com/exphoenee/SpaceGame' },
+    { name: 'Bullseyes', url: 'https://exphoenee.github.io/dev-portfolio/#projects' },
+    { name: 'Space Dodge', url: 'https://exphoenee.github.io/dev-portfolio/#projects' },
+    { name: 'Arrganizer', url: 'https://exphoenee.github.io/dev-portfolio/#projects' },
+    { name: 'Space Game', url: 'https://exphoenee.github.io/dev-portfolio/#projects' },
     {
       name: 'Rock Paper Scissors',
-      url: 'https://github.com/exphoenee/RockPaperScissors',
+      url: 'https://exphoenee.github.io/dev-portfolio/#projects',
     },
-    { name: 'Auditorium', url: 'https://github.com/exphoenee/auditorium' },
-    { name: 'BA Team', url: 'https://exphoenee.github.io/ba-team-docs/#home' },
-    { name: 'domelemjs', url: 'https://www.npmjs.com/package/domelemjs' },
+    { name: 'Auditorium', url: 'https://exphoenee.github.io/dev-portfolio/#projects' },
+    { name: 'BA Team', url: 'https://exphoenee.github.io/dev-portfolio/#projects' },
+    { name: 'domelemjs', url: 'https://exphoenee.github.io/dev-portfolio/#projects' },
     {
       name: 'romannumbersjs',
-      url: 'https://exphoenee.github.io/RomanNumbersJS/',
+      url: 'https://exphoenee.github.io/dev-portfolio/#projects',
     },
     {
       name: 'createDOMBlocks',
-      url: 'https://exphoenee.github.io/createDOMBlocks/',
+      url: 'https://exphoenee.github.io/dev-portfolio/#projects',
     },
   ],
 };
