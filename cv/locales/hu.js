@@ -83,7 +83,7 @@ export const HU = {
       {
         id: "webforsol",
         description:
-          "Full-stack webes alkalmazásokat szállítottam egyáni vállalkozó fejlesztőként különböző iparágak ügyfelei számára. Rendszertervezésre, karbantartható architektúrára és skálázható webes megoldások teljes körű szállítására összpontosítottam.",
+          "Full-stack webes alkalmazásokat szállítottam egyéni vállalkozó fejlesztőként különböző iparágak ügyfelei számára. Rendszertervezésre, karbantartható architektúrára és skálázható webes megoldások teljes körű szállítására összpontosítottam.",
         bullets: [
           "Full-stack alkalmazásokat építettem React, Next.js, Node.js, PHP és relációs/nem relációs adatbázisok segítségével",
           "REST API-okat és moduláris backend architektúrákat terveztem és valósítottam meg kliens rendszerekhez",
