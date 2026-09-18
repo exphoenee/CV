@@ -1,7 +1,9 @@
+// @job-application: 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs — Frontend Developer (Vue.js) @ Deutsche Telekom IT Solutions (2026-08-29) · snapshot: cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/
+// @cv-last-change: 2026-08-29 2202 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 export const QU = {
   content: {
     summary:
-      "Noldo Yesta-Nárëo — lúmi 5+ Yesta-Nárë ar Yesta-Tárë-Nórë cárëo istanyë — turinyë cantëa nórëo ar yára tengwaron nórissë TypeScript, Svelte, React, Node.js. Turinye quentar ilyë nossëo — laurëa cárëa, mára lendëa. AI-parmë antanye ar CI-sirë cárienye — cendë-andon vinya — cárëa sí taita, lendëa sí alcarinquë. Ohtari tirinyë ar istamórë antanye. Tengwar-cantëa istanyë mára. Yesta-Nárë lya tirinyë, ní cárë. Aiya ar Namárië!",
+      "Noldo Yesta-Nárëo ní — lúmi 5+ Yesta-Nárë cárëo hirë-nossë Ardassë tengwaron. Vinya tengwar (ES6+), TypeScript, cantëa-cárëa Yesta-Nárë, REST-tárë centa React, Svelte, Node.js. Turinye yára nórë cantëa ilyë vinyassë, sí-cárëa antanye (Redux, Redux Saga), ohtari cantëa ar tárë-nórë nossë Agile lendëassë. AI-parmë antanye ar Git CI-sirë cárienye — cárëa sí taita, ohtar-cantëa alcarinquë, lendëa sí alcarinquë. Ohtari tirinyë ar istamórë antanye, tengwar-cantëa istanyë, CI alcarinquë, ar sanya cantëa Yesta-Nárë. Aiya ar Namárië!",
 
     workExperience: [
       {
@@ -9,7 +11,7 @@ export const QU = {
         description:
           "SafeSy ar FACTS — yára cantëa nórë turinye ilyë, cantëa vinya antanye. AI-parmë ar CI-sirë cárienye — tengwar-cantëa istanyë mára. Cárëa sí taita, lendëa sí alcarinquë. Aiya Noldo!",
         bullets: [
-          "SafeSy, FACTS — cantëa ar lendëa turinye: quentë → cárëa → Ardassë",
+          "SafeSy, FACTS — atta hirë-nossëo Yesta-Nárë-web cantëa ar lendëa turinye: quentë → cárëa → Ardassë",
           "Yára tengwar nórë turinye — ilyë cárëa vinya, tárë-sirë vinya",
           "AI-parmë cárëa antanye — nossë cárëa sí taita",
           "CI-sirë cárienye — tengwar-cendë váqua tat, nórë-cárëa Qob sí taita",
@@ -64,7 +66,7 @@ export const QU = {
           "Alcarinquë Yesta-Nórë quenta cárienye hirë-nossëo Ardassë ilyë, Agile nórë. Cantëa alcarinquë, tárë Yesta-Nárëo, centa hirë — ilyë alcarinquë.",
         bullets: [
           "Alcarinquë React ar Next.js quenta cárienye hirë-nossëo Ardassë ilyë",
-          "Cantëa Yesta-Nárëo alcarinquë turinye — tárë-sirë Namárië antanye",
+          "Cantëa Yesta-Nárëo alcarinquë turinye — tengwar-cantëa ar mára lendëa antanye nossë ilyë",
           "Centa hirë-nossëo cárienye — váqua alcarinquë turinye",
           "Cantëa ar Tárë-Nórë nossë cárienye — nórë alcarinquë Ardassë ilyë",
         ],

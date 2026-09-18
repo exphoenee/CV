@@ -1,3 +1,5 @@
+// @job-application: 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs — Frontend Developer (Vue.js) @ Deutsche Telekom IT Solutions (2026-08-29) · snapshot: cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/
+// @cv-last-change: 2026-08-29 2202 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 /**
  * cv-data.js
  * Central CV data object — single source of truth for all CV views.
@@ -39,7 +41,7 @@ export const CV_DATA = {
     },
   },
   summary:
-    "Frontend Tech Lead with 5+ years of frontend and full-stack experience, specializing in frontend architecture, system design, and large-scale legacy modernization with TypeScript, Svelte, React, and Node.js. I've led full rewrites and migrations of enterprise systems to modern stacks, improving maintainability and scalability of core platforms. I've introduced AI-assisted development workflows and built CI pipelines with automated quality gates, significantly increasing delivery speed, engineering consistency, and release reliability. I lead and mentor engineers, focusing on evidence-driven refactoring, CI-quality standards, and sustainable, system-level frontend foundations.",
+    "Frontend Tech Lead with 5+ years of frontend development experience in enterprise-critical web applications, specializing in modern JavaScript (ES6+), TypeScript, component-based frontend architecture, and REST API integration with React, Svelte, and Node.js. I've led full rewrites and migrations of enterprise legacy systems to modern stacks, implementing state management solutions (Redux, Redux Saga) and collaborating with design and backend teams in Agile delivery environments. I introduced AI-assisted development workflows and built Git-based CI pipelines with automated quality gates, significantly increasing delivery speed, engineering consistency, and release reliability. I lead and mentor engineers, focusing on evidence-driven refactoring, CI-quality standards, and sustainable, system-level frontend foundations.",
   workExperience: [
     {
       id: 'aegex',
@@ -55,7 +57,7 @@ export const CV_DATA = {
         'I led the architectural modernization of two enterprise legacy systems. I own end-to-end delivery of SafeSy and FACTS, including system design, frontend architecture, and backend integration. I introduced AI-assisted development workflows and CI-driven quality pipelines, enabling an evidence-based engineering process and significantly improving delivery speed and release reliability.',
 
       bullets: [
-        'I owned architecture and delivery of two enterprise systems (SafeSy, FACTS) from design to production',
+        'I owned architecture and delivery of two enterprise-critical web applications (SafeSy, FACTS) from design to production',
         'I led the modernization of legacy systems through full rewrites and migration to modern frontend stacks',
         'I introduced AI-assisted development workflows improving engineering throughput and consistency',
         'I implemented a CI pipeline with automated quality gates and testing strategy from scratch',
@@ -178,7 +180,7 @@ export const CV_DATA = {
       bullets: [
         'I built a real-time React-based UI for live sports scoring and match tracking',
         'I implemented low-latency data visualization components for live performance analytics',
-        'I integrated WebSocket-based real-time data streams into the frontend architecture',
+        'I integrated WebSocket-based real-time data streams into the frontend architecture, implementing complex state management with Redux Saga',
         'I partnered with design and backend teams to ship low-latency, high-throughput real-time UI under live data load',
       ],
 
@@ -220,7 +222,7 @@ export const CV_DATA = {
 
       bullets: [
         'I built production-ready React and Next.js frontend applications for international clients',
-        'I improved frontend architecture consistency by defining and enforcing code standards across the team',
+        'I improved frontend architecture consistency by defining and enforcing coding standards and best practices across the team',
         'I redesigned the client requirement gathering process, reducing ambiguity and iteration cycles',
         'I collaborated with design and backend teams to deliver scalable, cross-browser UI systems',
       ],
@@ -367,7 +369,7 @@ export const CV_DATA = {
   },
   skillGroups: {
     primary: {
-      list: ['TypeScript', 'JavaScript', 'Svelte', 'React', 'Node.js', 'SCSS', 'HTML', 'CSS'],
+      list: ['JavaScript', 'TypeScript', 'HTML', 'CSS', 'React', 'Svelte', 'Node.js', 'SCSS'],
       comment: null,
     },
     backend: {

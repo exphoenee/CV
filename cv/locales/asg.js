@@ -1,7 +1,9 @@
+// @job-application: 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs — Frontend Developer (Vue.js) @ Deutsche Telekom IT Solutions (2026-08-29) · snapshot: cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/
+// @cv-last-change: 2026-08-29 2202 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 export const ASG = {
   content: {
     summary:
-      "Ek em framhlið taknileiðtogi með 5+ ara framhlið ok full-stack starfsferil, kunnattr i kerfissmið ok storum endursmiðum gamalla kerfa með TypeScript, Svelte, React ok Node.js. Ek hef leiðt fulla endursmið storra stofnanakerfa til nýrra staflana ok batt viðhaldshafni þeirra. Ek hef innleitt AI-meðliðsverklag ok smiðað CI-pipar með sjalfvirkum gaðahliðum er mjök aukið hefr afköst, samkvamni ok areiðanleika utgafna. Ek leiði ok þjalfa verkfraðinga, ok legg aherslu a sannanlegataktar endurbatur, CI-gaðastaðla ok sjalfbaran framhliðargrunn.",
+      "Ek em framhlið taknileiðtogi með 5+ ara framhlið smiði i storum stofnanavefforritum, kunnattr i nyju JavaScript (ES6+), TypeScript, ihlutabundinni framhliðarsmið ok REST API samtengingu með React, Svelte ok Node.js. Ek hef leiðt fulla endursmið ok flutning storra stofnanakerfa til nýrra staflana, innleitt stöðustjornunarlausnir (Redux, Redux Saga) ok starfat með hönnunar- ok bakhliðarsveitum i Agile afhendingaumhverfi. Ek innleiddi AI-meðliðsverklag ok smiðaði Git-byggða CI-pipara með sjalfvirkum gaðahliðum, er mjök aukið hefr afhendingarhraða, smiðarsamkvamni ok areiðanleika utgafna. Ek leiði ok þjalfa verkfraðinga, ok legg aherslu a sannanlegataktar endurbatur, CI-gaðastaðla ok sjalfbaran, kerfisvitt framhliðargrunn.",
 
     workExperience: [
       {
@@ -9,7 +11,7 @@ export const ASG = {
         description:
           "Ek leiðti kerfislegar endurbyggingar tveggja storra stofnanakerfa. Ek rað yfir allri afhendingu SafeSy ok FACTS — kerfissmið, framhliðarbygging ok bakhliðarsamtengingu. Ek innleiddi AI-meðliðsverklag ok CI-gaðapipar, er gert hefr sannanlegataktar smiðiferli mögulegt ok aukið afhendingarhraða ok areiðanleika utgafna.",
         bullets: [
-          "Ek atti smið ok afhendingu tveggja stofnanakerfa (SafeSy, FACTS) fra hönnun til framleiðslu",
+          "Ek atti smið ok afhendingu tveggja storra vefforrita (SafeSy, FACTS) fra hönnun til framleiðslu",
           "Ek leiðti endursmið gamalla kerfa með fullum endursmiðum til nýrra framhliðarstafla",
           "Ek innleiddi AI-meðliðsverklag er aukið hefr afköst ok samkvamni",
           "Ek innleiddi CI-pipar með sjalfvirkum gaðahliðum ok profunaraatlun fra grunni",
@@ -56,7 +58,7 @@ export const ASG = {
         bullets: [
           "Ek smiðaði rauntima React-notendaviðmot fyrir lifandi iþrottastiggjöf ok leikrakningu",
           "Ek innleiddi lagseinkun gagnasýningaihlutir fyrir lifandi frammistöðugreiningu",
-          "Ek samþatti WebSocket-rauntimagagnastraumar i framhliðarsmiðina",
+          "Ek samþatti WebSocket-rauntimagagnastraumar i framhliðarsmiðina, ok innleiddi flokna stöðustjornun með Redux Saga",
           "Ek vann með hönnunar- ok bakhliðarsveitum að afhenda svarlag, haframmistöðu notendaviðmotskerfi",
         ],
       },
@@ -66,7 +68,7 @@ export const ASG = {
           "Ek afhenti framleiðslugaða framhliðarforrit fyrir alþjoðlega viðskiptavini i Agile-umhverfi. Ek lagði aherslu a sveigjanleika notendaviðmotssmiðar, framhliðarstaðla ok batta kröfuskýrni milli hagsmunaaðila ok þrounarsveitanna.",
         bullets: [
           "Ek smiðaði framleiðslutilbuin React ok Next.js framhliðarforrit fyrir alþjoðlega viðskiptavini",
-          "Ek batti samkvamni framhliðarsmiðar með þvi að skilgreina ok framfylgja koðastaðlum yfir sveitina",
+          "Ek batti samkvamni framhliðarsmiðar með þvi að skilgreina ok framfylgja koðastaðlum ok bestu venjum yfir alla sveitina",
           "Ek endurhannað kröfuöflunarlegt ferli, minnkað tviraðni ok itrekunarhringa",
           "Ek vann með hönnunar- ok bakhliðarsveitum að afhenda sveigjanleg, fjölvafrasam notendaviðmotskerfi",
         ],

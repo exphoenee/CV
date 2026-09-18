@@ -1,14 +1,16 @@
+// @job-application: 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs — Frontend Developer (Vue.js) @ Deutsche Telekom IT Solutions (2026-08-29) · snapshot: cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/
+// @cv-last-change: 2026-08-29 2202 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 export const HU = {
   content: {
     summary:
-      "Frontend Tech Leadként 5+ év frontend és full-stack tapasztalattal frontend architektúrára, rendszertervezésre és nagyszabású legacy rendszerek modernizációjára specializálódtam TypeScript, Svelte, React és Node.js technológiákkal. Vállalati rendszerek teljes újraírását és migrációját vezettem modern stackekre, javítva az alapplatformok karbantarthatóságát és skálázhatóságát. AI-asszisztált munkafolyamatokat vezettem be, és automatizált minőségi kapukkal ellátott CI pipeline-okat építettem. Mérnököket vezetek és mentorálok, az evidencián alapuló refaktorálásra és a fenntartható, rendszerszintű frontend alapokra fókuszálva.",
+      "Frontend Tech Leadként 5+ év tapasztalattal rendelkezem vállalati kritikus webalkalmazásokban, modern JavaScript (ES6+), TypeScript, komponens-alapú architektúra és REST API integráció terén, React, Svelte és Node.js technológiákkal. Legacy rendszerek teljes újraírását és migrációját vezettem modern stackekre, állapotkezelési megoldásokkal (Redux, Redux Saga), dizájn- és backend csapatokkal agilis környezetben. AI-asszisztált munkafolyamatokat vezettem be, Git-alapú CI pipeline-okat építettem automatizált minőségi kapukkal, növelve a szállítási sebességet és a megbízhatóságot. Mérnököket vezetek és mentorálok, evidenciaalapú refaktorálásra és fenntartható frontend alapokra fókuszálva.",
     workExperience: [
       {
         id: "aegex",
         description:
           "A SafeSy és FACTS rendszerek teljes körű architektúrális modernizációját vezettem — a rendszertervezéstől az éles üzemig. AI-asszisztált fejlesztési folyamatokat és CI-vezérelt minőségi pipeline-okat honosítottam meg, amelyek evidenciaalapú mérnöki kultúrát teremtettek és jelentősen növelték a szállítási sebességet és a kiadási megbízhatóságot.",
         bullets: [
-          "Két vállalati rendszer (SafeSy, FACTS) architektúráját és szállítását vettem a kezembe, a tervezéstől a produkcióig",
+          "Két vállalati kritikus fontosságú webalkalmazás (SafeSy, FACTS) architektúráját és szállítását vettem a kezembe, a tervezéstől a produkcióig",
           "Legacy rendszerek modernizációját vezettem teljes újraírással és modern frontend stack-re való migrációval",
           "AI-asszisztált fejlesztési munkafolyamatokat vezettem be, növelve a mérnöki teljesítményt és konzisztenciát",
           "CI pipeline-t implementáltam automatizált minőségi kapukkal és tesztelési stratégiával a semmiből",
@@ -63,7 +65,7 @@ export const HU = {
           "Production ready frontend alkalmazásokat szállítottam nemzetközi ügyfelek számára agilis környezetben. Skálázható UI architektúrára, frontend szabványokra és a stakeholderek és fejlesztési csapatok közötti igénytisztázás javítására összpontosítottam.",
         bullets: [
           "Production ready React és Next.js frontend alkalmazásokat fejlesztettem nemzetközi ügyfeleknek",
-          "Javítottam a frontend architektúra konzisztenciáját kódszabványok meghatározásával és érvényesítésével a csapatban",
+          "Javítottam a frontend architektúra konzisztenciáját kódolási szabványok és legjobb gyakorlatok meghatározásával és érvényesítésével a csapatban",
           "Újraterveztem az ügyféligény-összegyűjtési folyamatot, csökkentve a félreérthetőséget és az iterációs köröket",
           "Együttműködtem a dizájn és backend csapatokkal skálázható, böngészőfüggetlen UI rendszerek szállításáért",
         ],

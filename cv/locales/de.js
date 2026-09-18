@@ -1,7 +1,9 @@
+// @job-application: 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs — Frontend Developer (Vue.js) @ Deutsche Telekom IT Solutions (2026-08-29) · snapshot: cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/
+// @cv-last-change: 2026-08-29 2202 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 export const DE = {
   content: {
     summary:
-      "Frontend Tech Lead mit über 5 Jahren Erfahrung in Frontend und Full-Stack, spezialisiert auf Frontend-Architektur, Systemdesign und die Modernisierung großer Legacy-Systeme mit TypeScript, Svelte, React und Node.js. Ich habe vollständige Rewrites und Migrationen auf moderne Stacks geleitet und so Wartbarkeit und Skalierbarkeit der Kernplattformen verbessert. Ich habe KI-gestützte Workflows eingeführt und CI-Pipelines mit automatisierten Quality Gates aufgebaut, was Liefergeschwindigkeit und Release-Zuverlässigkeit deutlich steigerte. Ich leite und mentoriere Ingenieure mit Fokus auf evidenzbasiertes Refactoring und nachhaltige, systemweite Frontend-Grundlagen.",
+      "Frontend Tech Lead mit 5+ Jahren Erfahrung in der Frontend-Entwicklung für unternehmenskritische Webanwendungen, spezialisiert auf modernes JavaScript (ES6+), TypeScript, komponentenbasierte Architektur und REST-API-Integration mit React, Svelte und Node.js. Ich habe vollständige Rewrites und Migrationen von Legacy-Systemen auf moderne Stacks geleitet, State-Management-Lösungen (Redux, Redux Saga) implementiert und mit Design- und Backend-Teams in agilen Umgebungen zusammengearbeitet. Ich habe KI-gestützte Workflows eingeführt und Git-basierte CI-Pipelines mit automatisierten Quality Gates aufgebaut, was Liefergeschwindigkeit und Release-Zuverlässigkeit steigerte. Ich leite und mentoriere Ingenieure mit Fokus auf evidenzbasiertes Refactoring und nachhaltige Frontend-Grundlagen.",
 
     workExperience: [
       {
@@ -9,7 +11,7 @@ export const DE = {
         description:
           "Ich leitete die architektonische Modernisierung von SafeSy und FACTS mit vollständiger End-to-End-Verantwortung: Systemdesign, Frontend-Architektur und Backend-Integration. KI-gestützte Workflows und CI-Qualitätspipelines steigerten Liefergeschwindigkeit und Release-Zuverlässigkeit erheblich.",
         bullets: [
-          "Ich übernahm Architektur und Lieferung zweier Unternehmenssysteme (SafeSy, FACTS) vom Design bis zur Produktion",
+          "Ich übernahm Architektur und Lieferung zweier unternehmenskritischer Webanwendungen (SafeSy, FACTS) vom Design bis zur Produktion",
           "Ich leitete die Modernisierung von Legacy-Systemen durch vollständige Rewrites und Migration auf moderne Frontend-Stacks",
           "Ich führte KI-gestützte Entwicklungs-Workflows ein und steigerte Entwicklerdurchsatz und Konsistenz",
           "Ich implementierte eine CI-Pipeline mit automatisierten Quality Gates und einer Teststrategie von Grund auf",
@@ -64,7 +66,7 @@ export const DE = {
           "Ich lieferte produktionsreife Frontend-Anwendungen für internationale Kunden in einem agilen Umfeld. Ich fokussierte mich auf skalierbare UI-Architektur, Frontend-Standards und die Verbesserung der Anforderungsklarheit zwischen Stakeholdern und Entwicklungsteams.",
         bullets: [
           "Ich entwickelte produktionsreife React und Next.js Frontend-Anwendungen für internationale Kunden",
-          "Ich verbesserte die Konsistenz der Frontend-Architektur durch Definition und Durchsetzung von Code-Standards im Team",
+          "Ich verbesserte die Konsistenz der Frontend-Architektur durch Definition und Durchsetzung von Coding-Standards und Best Practices im gesamten Team",
           "Ich überarbeitete den Prozess zur Erfassung von Kundenanforderungen und reduzierte Mehrdeutigkeiten und Iterationszyklen",
           "Ich arbeitete mit Design- und Backend-Teams zusammen, um skalierbare, browserübergreifende UI-Systeme zu liefern",
         ],

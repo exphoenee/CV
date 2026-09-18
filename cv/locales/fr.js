@@ -1,7 +1,9 @@
+// @job-application: 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs — Frontend Developer (Vue.js) @ Deutsche Telekom IT Solutions (2026-08-29) · snapshot: cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/
+// @cv-last-change: 2026-08-29 2202 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 export const FR = {
   content: {
     summary:
-      "Frontend Tech Lead avec plus de 5 ans d'expérience en frontend et full-stack, spécialisé dans l'architecture frontend, la conception de systèmes et la modernisation à grande échelle de systèmes legacy avec TypeScript, Svelte, React et Node.js. J'ai dirigé des réécritures complètes et des migrations vers des stacks modernes, améliorant la maintenabilité et la scalabilité des plateformes. J'ai introduit des workflows assistés par IA et construit des pipelines CI avec des quality gates automatisés. Je dirige et encadre des ingénieurs, axé sur le refactoring basé sur les preuves et des fondations frontend durables à l'échelle du système.",
+      "Frontend Tech Lead avec 5+ ans d'expérience en développement frontend pour des applications web critiques d'entreprise, spécialisé en JavaScript moderne (ES6+), TypeScript, architecture à base de composants et API REST avec React, Svelte et Node.js. J'ai dirigé des réécritures et migrations de systèmes legacy vers des stacks modernes, en implémentant la gestion d'état (Redux, Redux Saga) et en collaborant avec les équipes design et backend en Agile. J'ai introduit des workflows assistés par IA et construit des pipelines CI Git avec quality gates automatisés, augmentant la vitesse de livraison et la fiabilité des releases. Je dirige et encadre des ingénieurs, axé sur le refactoring basé sur les preuves et des fondations frontend durables.",
 
     workExperience: [
       {
@@ -9,7 +11,7 @@ export const FR = {
         description:
           "J'ai dirigé la modernisation architecturale de deux systèmes legacy d'entreprise. J'assume la responsabilité totale de bout en bout pour SafeSy et FACTS, incluant la conception système, l'architecture frontend et l'intégration backend. J'ai introduit des workflows de développement assistés par IA et des pipelines qualité pilotés par CI, permettant un processus d'ingénierie basé sur les preuves et améliorant significativement la vitesse de livraison et la fiabilité des releases.",
         bullets: [
-          "J'ai pris en charge l'architecture et la livraison de deux systèmes d'entreprise (SafeSy, FACTS) du design à la production",
+          "J'ai pris en charge l'architecture et la livraison de deux applications web critiques d'entreprise (SafeSy, FACTS) du design à la production",
           "J'ai dirigé la modernisation de systèmes legacy via des réécritures complètes et la migration vers des stacks frontend modernes",
           "J'ai introduit des workflows de développement assistés par IA améliorant le débit et la cohérence des équipes",
           "J'ai mis en place un pipeline CI avec des quality gates automatisés et une stratégie de test de zéro",
@@ -65,7 +67,7 @@ export const FR = {
           "J'ai livré des applications frontend de qualité production pour des clients internationaux dans un environnement Agile. Je me suis concentré sur l'architecture UI scalable, les standards frontend et l'amélioration de la clarté des exigences entre parties prenantes et équipes de développement.",
         bullets: [
           "J'ai construit des applications frontend React et Next.js prêtes pour la production pour des clients internationaux",
-          "J'ai amélioré la cohérence de l'architecture frontend en définissant et appliquant des standards de code au sein de l'équipe",
+          "J'ai amélioré la cohérence de l'architecture frontend en définissant des standards de code et bonnes pratiques pour l'équipe",
           "J'ai repensé le processus de recueil des exigences clients, réduisant l'ambiguïté et les cycles d'itération",
           "J'ai collaboré avec les équipes design et backend pour livrer des systèmes UI scalables et compatibles multi-navigateurs",
         ],

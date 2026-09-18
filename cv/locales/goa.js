@@ -1,7 +1,9 @@
+// @job-application: 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs — Frontend Developer (Vue.js) @ Deutsche Telekom IT Solutions (2026-08-29) · snapshot: cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/
+// @cv-last-change: 2026-08-29 2202 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 export const GOA = {
   content: {
     summary:
-      "Tek'ma'te! Kree Hok'tar Yesta-Tau'ri — 5+ noc Yesta-Tau'ri ar Hoch-Tau'ri kel'shah. Joc'kree ha'tak rel'tac noc ar tau'kree hok'noc TypeScript, Svelte, React, Node.js — chel nok, kree! AI lo'taur kree ar CI zat'tel kel'shani — zat'tel noc nargh — kree taita, naquadah hok. Hok'tar lo'taur noc kree, hok'tar rel kree. Yesta-Tau'ri lya kree, joma secu. Tal mak — chel nok!",
+      "Kree! Kree Hok'tar Yesta-Tau'ri — 5+ noc Yesta-Tau'ri kel'shah ha'tak rel'tac hok'ha'tak. Vinya joma (ES6+), TypeScript, wav-ha'tak Yesta-Tau'ri, REST-tárë kree React, Svelte, Node.js. Yára ha'tak rel'tac noc kree kel'shani vinya, naquadah kel'shani (Redux, Redux Saga), lo'taur ar nak-tau'ri jaffa kree Agile kel'shah. AI lo'taur kree ar Git CI zat'tel kel'shani — kree taita, hok'noc kel'shah, naquadah hok. Hok'tar lo'taur noc kree, hok'tar rel kree, CI hok kree. Tal mak — chel nok!",
 
     workExperience: [
       {
@@ -9,7 +11,7 @@ export const GOA = {
         description:
           "SafeSy ar FACTS — rel'tac ha'tak kel'shani noc ilye, hok'noc ha'tak kree. AI lo'taur ar CI zat'tel kel'shani — joma hok'noc istanye. Kree taita, naquadah hok. Jaffa kree!",
         bullets: [
-          "SafeSy, FACTS — ha'tak ar rel kel'shani: joma → kel'shah → naquadah",
+          "SafeSy, FACTS — rel hok'noc Yesta-Tau'ri-web ha'tak ar rel kel'shani: joma → kel'shah → naquadah",
           "Rel'tac joma kel'shani — ilye hok tau'kree, táre zat'tel hok",
           "AI lo'taur kel'shah kree — jaffa kel'shah sí taita",
           "CI zat'tel kel'shani — joma noc váqua tat, naquadah Qob sí taita",
@@ -64,7 +66,7 @@ export const GOA = {
           "Hok'noc Yesta ha'tak joma kel'shani lo'taur Tau'ri ilye, Agile ha'tak. Ha'tak hok'noc, táre Yesta-Tau'ri, joma lo'taur — ilye chel nok.",
         bullets: [
           "Hok'noc React ar Next.js joma kel'shani lo'taur Tau'ri ilye",
-          "Ha'tak Yesta-Tau'ri hok'noc kel'shani — táre zat'tel chel nok kree",
+          "Ha'tak Yesta-Tau'ri hok'noc kel'shani — joma zat'tel ar chel nok kree jaffa ilye",
           "Joma lo'taur kel'shani — váqua hok'noc kel'shani",
           "Ha'tak ar Nak-Tau'ri jaffa kel'shani — ha'tak hok'noc Tau'ri ilye",
         ],

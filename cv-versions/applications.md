@@ -4,6 +4,7 @@ Minden sor egy optimalizált CV-verzióhoz tartozik. Az APP_ID egyben a `cv-vers
 
 | Dátum | Pozíció | Cég | Szint | ATS | APP_ID (mappa) | JD | Fordítások | Mot. levél |
 |---|---|---|---|---|---|---|---|---|
+| 2026-08-29 | Frontend Developer (Vue.js) | Deutsche Telekom IT Solutions | senior | 51% | [2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs](2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/) | [JD](2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/job-description.md) | 11/11 | igen |
 | 2026-06-23 | Senior Frontend Engineer (React/TS) | BlueThrone | senior | 68% | [2026-06-23_2145_bluethrone_senior-frontend-engineer](2026-06-23_2145_bluethrone_senior-frontend-engineer/) | [JD](2026-06-23_2145_bluethrone_senior-frontend-engineer/job-description.md) | EN/HU | igen |
 | 2026-06-23 | Software Engineer | PrestoSports | mid/senior | 87% | [2026-06-23_1953_prestosports_software-engineer](2026-06-23_1953_prestosports_software-engineer/) | [JD](2026-06-23_1953_prestosports_software-engineer/job-description.md) | EN/HU | igen |
 | 2026-06-22 | Senior Software Engineer (NodeJS, React) | Diligent | senior | 80% | [2026-06-22_diligent_senior-software-engineer-nodejs-react](2026-06-22_diligent_senior-software-engineer-nodejs-react/) | JD (inline) | EN/HU | igen |

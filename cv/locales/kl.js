@@ -1,7 +1,9 @@
+// @job-application: 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs — Frontend Developer (Vue.js) @ Deutsche Telekom IT Solutions (2026-08-29) · snapshot: cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/
+// @cv-last-change: 2026-08-29 2202 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 export const KL = {
   content: {
     summary:
-      "HoS naQHom Sa' jIH — 5+ DIS HoS naQHom ma Hoch-naQHom Qu'mey vIta'. lurDech patmey vIchel TypeScript, Svelte, React, Node.js. jIvumpu' DaH. AI qoq vIazh ma CI HeH vIchenmoH — HeH cendmey nargh — Qu' ray' Qap, ngeHlu' batlh. SuvwI'pu' vISa' ma vIHaDmoH. De' legh patmey vIvum. HoS naQHomlIj boQmeH jIvum. Qapla'!",
+      "HoS naQHom Sa' jIH — 5+ DIS HoS naQHom Qu' qach patmey Hoch. javtlhamey De' chu' (ES6+), TypeScript, wav-lurDech HoS naQHom, REST API rap vIta' React, Svelte, Node.js. lurDech patmey qan vIchel, HoS chu' vIchel — De' pat vIazh (Redux, Redux Saga), SuvwI'pu' qo' naQHom ghom vISuv Agile mIwmeyDaq. AI qoq vIazh ma Git CI HeH vIchenmoH — HeH cendmey nargh — Qu' ray' Qap, HoS naQHom lI', ngeHlu' batlh. SuvwI'pu' vISa' ma vIHaDmoH. De' legh mIwmey, CI batlh, yIn-baS HoS naQHom vIvum. Qapla'!",
 
     workExperience: [
       {
@@ -9,7 +11,7 @@ export const KL = {
         description:
           "SafeSy ma FACTS — lurDech patmey vIchel vIvumpu' Hoch, pat chu' vIchenmoHpu'. AI qoq ma CI HeH vIchenmoHpu' — De' legh patmey vIvum batlh. Qu' ray' Qap, ngeHlu' batlh. Qapla'!",
         bullets: [
-          "SafeSy, FACTS — pat vIchenmoH vIvumpu': qech → chen → Qu' taH",
+          "SafeSy, FACTS — cha' HoS naQHom qach-webmey pat vIchenmoH vIvumpu': qech → chen → Qu' taH",
           "lurDech patmey vIchel — ghItlhmey chu' vIchenmoH, HeH chu' vIta'",
           "AI qoq mIwmey vIazh — ghom Qu' Qap ray'",
           "CI HeH vIchenmoH — De' legh pagh lI'be', Qu' taH",
@@ -64,7 +66,7 @@ export const KL = {
           "Qu' batlh HoS naQHom ghItlhmey vIchenmoH qorDu'mey Sep Hoch, Agile qo'. pat batlh, HeH HoS naQHom, jabbI'ID qorDu' — Hoch batlh.",
         bullets: [
           "Qu' batlh React ma Next.js ghItlhmey vIchenmoH qorDu'mey Sep Hoch",
-          "pat HoS naQHom batlh vIchav — HeH Qapla' vIazh",
+          "pat HoS naQHom batlh vIchav — HeH De' ma pIm chu' vIazh ghom Hoch",
           "poQlu' qorDu' vIchav — pagh Daj vIHoH",
           "qech ma qo' naQHom ghom vISuv — patmey nI'moHlaH vIchenmoH",
         ],

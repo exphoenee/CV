@@ -1,7 +1,9 @@
+// @job-application: 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs — Frontend Developer (Vue.js) @ Deutsche Telekom IT Solutions (2026-08-29) · snapshot: cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/
+// @cv-last-change: 2026-08-29 2202 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 export const ES = {
   content: {
     summary:
-      "Frontend Tech Lead con más de 5 años de experiencia en frontend y full-stack, especializado en arquitectura frontend, diseño de sistemas y modernización a gran escala de sistemas legacy con TypeScript, Svelte, React y Node.js. He liderado reescrituras completas y migraciones de sistemas empresariales a stacks modernos, mejorando la mantenibilidad y escalabilidad de las plataformas. He introducido flujos de trabajo asistidos por IA y construido pipelines CI con quality gates automatizados. Lidero y mentorizo a ingenieros, enfocándome en el refactoring basado en evidencias y en bases frontend sostenibles a nivel de sistema.",
+      "Frontend Tech Lead con más de 5 años de experiencia en desarrollo frontend para aplicaciones web críticas de empresa, especializado en JavaScript moderno (ES6+), TypeScript, arquitectura basada en componentes e integración de APIs REST con React, Svelte y Node.js. He liderado reescrituras y migraciones de sistemas legacy a stacks modernos, implementando soluciones de gestión de estado (Redux, Redux Saga) y colaborando con equipos de diseño y backend en entornos Agile. He introducido flujos de trabajo asistidos por IA y construido pipelines CI basados en Git con quality gates automatizados, aumentando la velocidad de entrega y la fiabilidad de los releases. Lidero y mentorizo a ingenieros, enfocándome en el refactoring basado en evidencias y bases frontend sostenibles.",
 
     workExperience: [
       {
@@ -9,7 +11,7 @@ export const ES = {
         description:
           "Lideré la modernización arquitectónica de SafeSy y FACTS con responsabilidad completa end-to-end: diseño de sistemas, arquitectura frontend e integración backend. Workflows asistidos por IA y pipelines CI mejoraron significativamente la velocidad de entrega y la fiabilidad de los releases.",
         bullets: [
-          "Tomé posesión de la arquitectura y entrega de dos sistemas empresariales (SafeSy, FACTS) desde el diseño hasta la producción",
+          "Tomé posesión de la arquitectura y entrega de dos aplicaciones web críticas de empresa (SafeSy, FACTS) desde el diseño hasta la producción",
           "Lideré la modernización de sistemas legacy mediante reescrituras completas y migración a stacks frontend modernos",
           "Introduje flujos de trabajo de desarrollo asistidos por IA mejorando el rendimiento y la consistencia del equipo",
           "Implementé un pipeline CI con quality gates automatizados y una estrategia de pruebas desde cero",
@@ -65,7 +67,7 @@ export const ES = {
           "Entregué aplicaciones frontend de calidad de producción para clientes internacionales en un entorno Agile. Me enfoqué en arquitectura UI escalable, estándares frontend y mejora de la claridad de requisitos entre partes interesadas y equipos de desarrollo.",
         bullets: [
           "Construí aplicaciones frontend React y Next.js listas para producción para clientes internacionales",
-          "Mejoré la consistencia de la arquitectura frontend definiendo y aplicando estándares de código en el equipo",
+          "Mejoré la consistencia de la arquitectura frontend definiendo y aplicando estándares de código y buenas prácticas en todo el equipo",
           "Rediseñé el proceso de captura de requisitos de clientes, reduciendo la ambigüedad y los ciclos de iteración",
           "Colaboré con equipos de diseño y backend para entregar sistemas UI escalables y compatibles con múltiples navegadores",
         ],

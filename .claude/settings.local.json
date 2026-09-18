@@ -18,7 +18,21 @@
       "Bash(git worktree *)",
       "Bash(Get-ChildItem -Path \"C:\\\\Projects\\\\own\\\\CV\\\\scripts\\\\game\\\\\" -Recurse -File | Select-Object -ExpandProperty FullName)",
       "PowerShell(Rename-Item \"c:\\\\Projects\\\\own\\\\CV\\\\assets\\\\images\\\\project managment.svg\" \"project management.svg\")",
-      "PowerShell(Rename-Item \"c:\\\\Projects\\\\own\\\\CV\\\\scripts\\\\components\\\\swagger\\\\ui\\\\_icons.js\" \"icons.js\")"
+      "PowerShell(Rename-Item \"c:\\\\Projects\\\\own\\\\CV\\\\scripts\\\\components\\\\swagger\\\\ui\\\\_icons.js\" \"icons.js\")",
+      "Bash(node -e ' *)",
+      "Bash(python .claude/scripts/validate-locale-syntax.py)",
+      "Bash(python .claude/scripts/check-translation-lengths.py)",
+      "Bash(git stash *)",
+      "Bash(python .claude/scripts/crlf_normalize.py cv/locales)",
+      "Bash(python -c ' *)",
+      "Bash(python .claude/scripts/crlf_normalize.py \"cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs\")",
+      "Bash(python .claude/scripts/cv-ledger.py log --category backup --operation cv-backup --actor cv-backup --app-id 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs --what 'Snapshot for Deutsche Telekom IT Solutions Frontend Developer \\(Vue.js\\) application: summary rewrite + skill reorder + 3 bullet rephrases' --artifact cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(python .claude/scripts/crlf_normalize.py \"cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/job-description.md\")",
+      "Bash(python .claude/scripts/cv-ledger.py mark --set-application --app-id 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs --title 'Frontend Developer \\(Vue.js\\)' --company 'Deutsche Telekom IT Solutions' --operation job-apply --actor job-apply-orchestrator)",
+      "Bash(python .claude/scripts/cv-ledger.py log --category mutation --operation job-apply --actor job-apply-orchestrator --app-id 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs --what 'summary rewrite + skill order + 3 bullet rephrases; 11 locale translations' --artifact cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/)",
+      "Bash(python .claude/scripts/crlf_normalize.py \"cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/cover-letter-en.md\" \"cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/cover-letter-hu.md\" \"cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/cover-letter-de.md\")",
+      "Bash(python .claude/scripts/cv-ledger.py log --category mutation --operation cover-letter --actor cover-letter-agent --app-id \"2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs\" --what \"EN + HU + DE cover letters written\" --artifact \"cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/\")"
     ]
   }
 }

@@ -1,7 +1,9 @@
+// @job-application: 2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs — Frontend Developer (Vue.js) @ Deutsche Telekom IT Solutions (2026-08-29) · snapshot: cv-versions/2026-08-29_deutsche-telekom-it-solutions_frontend-developer-vuejs/
+// @cv-last-change: 2026-08-29 2202 — job-apply (job-apply-orchestrator) · see cv-versions/history.md
 export const DOT = {
   content: {
     summary:
-      "Khal Frantend anha — 5+ vaesi Frantend ma full-stack dothralat. Anha ray athkidhar ma rhaesh alegra ma hadaen vaesi nakhoe ha typeScript, Svelte, React, node.js. Anha ray chek athlanar khalasar haji. AI-hrazef anha ray azh ma CI arakh anha ray chen — tih chek arakh — dothralat ray fin, nakhoe ray chek. Anha ray khal ma asavvakkar mahrazh alegra. tih-alegra athkidhar anha ray chek. San athchomari yeroon.",
+      "Khal Frantend anha — 5+ vaesi Frantend dothralat ha hadaen vaes-webforrit. Anha ray athkidhar ES6+ javaScript, typeScript, ihlut Frantend arakh, REST API athkidhar ha React, Svelte, node.js. Anha ray chek hadaen vaesi nakhoe khalasar haji modern arakh — state athkidhar anha ray azh (Redux, Redux Saga), hönnun ma Bakhend khalasar anha ray dothrak Agile nakhoe. AI-hrazef anha ray azh ma Git CI arakh anha ray chen — tih chek arakh — dothralat ray fin, smið samkvamni, nakhoe ray chek. Anha ray khal ma asavvakkar mahrazh alegra, tih-alegra athkidhar, CI chek arakh. San athchomari yeroon.",
 
     workExperience: [
       {
@@ -9,7 +11,7 @@ export const DOT = {
         description:
           "safesy -  ma fActs — hadaen vaesi athkidhar anha ray nakhoe haji, athkidhar vekhat ha dothralat. AI-hrazef ma CI arakh anha ray azh — tih-alegra athkidhar anha ray chen. Dothralat ray fin, nakhoe ray chek. Qapla'... vo, anha Dothraki. me nem nesa!",
         bullets: [
-          "safesy - , fActs — athkidhar ma nakhoe anha ray ta': athkidhar → dothralat",
+          "safesy - , fActs — hadaen vaes-webforrit athkidhar ma nakhoe anha ray ta': athkidhar → dothralat",
           "Hadaen vaesi anha ray nakhoe — haji alegra vekhat, modern arakh",
           "AI-hrazef dothralat anha ray azh — khalasar dothralat ray fin",
           "CI arakh anha ray chen — tih chek ma arakh dothralat vo tat",
@@ -64,7 +66,7 @@ export const DOT = {
           "nakhoe chek frantend alegra anha ray chen ha khaleen rhaeshi haji, Agile vaes. Athkidhar chek, arakh Frantend, tih chiori khaleen — haji chek.",
         bullets: [
           "nakhoe chek react ma Next.js alegra anha ray chen ha khaleen rhaeshi haji",
-          "Athkidhar Frantend chek anha ray fin — arakh me nem nesa anha ray azh",
+          "Athkidhar Frantend chek anha ray fin — arakh chek ma khalasar dothralat anha ray azh ha khalasar haji",
           "tih chiori khaleen anha ray chen — vo chek anha ray nakhoe",
           "Athkidhar ma Bakhend khalasar anha ray dothrak — vaes chek rhaeshi haji",
         ],
